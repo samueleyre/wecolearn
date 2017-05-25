@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
  
- 
 @Component({
     moduleId: module.id,
     templateUrl: 'template.html'
@@ -8,14 +7,9 @@ import { Component, OnInit } from '@angular/core';
  
 export class HomeComponent implements OnInit {
     
-    constructor(private userService: UserService) { }
+    constructor() { }
  
     ngOnInit() {
         // get users from secure api end point
-        this.userService.getUsers()
-            .subscribe(users => {
-                this.users = users;
-            });
     }
- 
 }

@@ -7,14 +7,14 @@ export class TokenService {
     public token: string;
  
     public set( token: string ): void {
-        localStorage.setItem('token', token );
+        window.localStorage.setItem('token', token );
     }
  
     public get(): string|null {
-        return localStorage.getItem('token');
+        return window.localStorage.getItem('token');
     }
 
-    public function clear() : void {
-        localStorage.removeItem('token');
+    public clear(): void {
+        window.localStorage.removeItem('token');
     }
 }
