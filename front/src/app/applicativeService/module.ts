@@ -1,20 +1,20 @@
-import {  NgModule }      	from '@angular/core';
-import {  HttpModule } from '@angular/http';
+import {  NgModule }      	       from '@angular/core';
+import {  HttpModule }             from '@angular/http';
 
 import {   
       //HttpModule, 
       Http, 
       XHRBackend, 
       RequestOptions
-    }                           from '@angular/http';
+    }                              from '@angular/http';
 
 
-import { AuthenticationService} from './authentication/service';
-import { AuthGuard }            from './authguard/service';
-import { environment  }          from './config/environment';
-import { InterceptedHttp }        from './interceptor/InterceptedHttp';
-import { httpFactory }            from './interceptor/httpFactory';
-import { routing }                from './routing/app.routing';
+import { AuthenticationService}    from './authentication/service';
+import { AuthGuard }               from './authguard/service';
+import { environment  }            from './config/environment';
+import { InterceptedHttp }         from './interceptor/InterceptedHttp';
+import { httpFactory }             from './interceptor/httpFactory';
+import { routing }                 from './routing/app.routing';
 import { TokenService }            from './token/service';
 
 @NgModule({
