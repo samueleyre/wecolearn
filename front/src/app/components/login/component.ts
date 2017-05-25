@@ -7,7 +7,6 @@ import { Router }                from '@angular/router';
 import { AuthenticationService } from './../../applicativeService/authentication/service';
  
 @Component({
-    moduleId: module.id,
     templateUrl: 'template.html'
 })
  

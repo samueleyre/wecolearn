@@ -1,29 +1,32 @@
 import { NgModule }      	from '@angular/core';
+import { FormsModule }		from '@angular/forms';
 import { BrowserModule } 	from '@angular/platform-browser';
-import { 	
-			//HttpModule, 
-			Http, 
-			XHRBackend, 
-			RequestOptions
-		} 					from '@angular/http';
+import { RouterModule }		from '@angular/router';
 
-import { AppComponent }  	from './app.component';
+import { ApplicativeModule }	from './applicativeService/module'; 
 
-import { httpFactory }		from './applicativeService/interceptor/httpFactory';
+import { AppComponent }		from './app.component'
+import { LoginComponent }	from './components/login/component';
+import { HomeComponent }	from './components/home/component';
+
+
+import { routing }			from './applicativeService/routing/app.routing';
 
 @NgModule({
-  imports:      [   
-  					BrowserModule,
+  imports:[   
+  			BrowserModule,
+  			FormsModule,
+  			ApplicativeModule,
+  			RouterModule,
   					//HttpModule 
-  				],
-  declarations: [ AppComponent ],
-  bootstrap:    [ AppComponent ],
-  providers: [
-        {
-            provide: Http,
-            useFactory: httpFactory,
-            deps: [XHRBackend, RequestOptions]
-        }
-    ]
+  ],
+  declarations: [ 
+  				LoginComponent,
+        		HomeComponent,
+        		AppComponent,
+  ],
+  bootstrap:[ 
+  	AppComponent 
+  ],
 })
 export class AppModule { }
