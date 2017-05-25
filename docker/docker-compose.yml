@@ -1,0 +1,66 @@
+web:
+    build: nginx
+    ports:
+        - "80:80"
+    volumes:
+        - ./../.:/src
+        - ./nginx/site.silex.conf:/etc/nginx/conf.d/site.conf
+    links:
+        - php
+php:
+    build: php
+    volumes:
+        - ./../.:/src
+        - ./php/conf:/usr/local/etc/php/conf.d
+        - /var/log/php/error:/var/log/php/error
+        - /var/log/RunProgrammation:/var/log/RunProgrammation
+    links:
+        - db
+        - rabbit
+
+node:
+    volumes:
+       - ./../front/:/src
+       - /var/log/RunProgrammation:/var/log/RunProgrammation
+    tty: true
+    build: node
+    ports:
+      - "8080:8080"
+
+
+rabbit:
+    build: rabbit
+    tty: true
+    ports:
+        - "5672:5672"
+    volumes:
+        - ./:/root
+        - /var/log/rabbitmq_bg:/var/log/rabbimq
+    
+
+db:
+  image: mariadb
+  restart: always
+  ports:
+    - "3306:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=b1otope
+    - MYSQL_DATABASE=ambrieu
+    - MYSQL_USER=ed
+    - MYSQL_PASSWORD=b1otope
+    - TERM=dumb
+  volumes:
+    - ./db:/etc/mysql/conf.d
+    - ./:/opt
+  tty: true
+
+phpmyadmin:
+   image: corbinu/docker-phpmyadmin
+   restart: always
+   ports :
+    - "85:80"
+   environment:
+    - MYSQL_USERNAME=root
+    - MYSQL_PASSWORD=b1otope
+   links:
+    - db:mysql
