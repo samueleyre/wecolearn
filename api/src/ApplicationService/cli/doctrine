@@ -1,5 +1,0 @@
-#!/usr/local/bin/php
-<?php
-require_once './../utilities/doctrine.php';
-
-return \Doctrine\ORM\Tools\Console\ConsoleRunner::createHelperSet($entityManager);
