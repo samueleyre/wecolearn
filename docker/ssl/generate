@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p /src/appService/var/jwt
+openssl genrsa -out /src/appService/var/jwt/private.pem -aes256 -passout pass:edyIsSooColl_changeId!
+openssl rsa -pubout -in /src/appService/var/jwt/private.pem -out /src/appService/var/jwt/public.pem -passin pass:edyIsSooColl_changeId!

@@ -9,11 +9,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get install -y  --no-install-recommends \
       git \
       curl \
-      wget \
       vim \
       zlib1g-dev \
-      screen \
-      nmap \
       libxml2-utils \
       libxml2-dev \
       postfix \

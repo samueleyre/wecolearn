@@ -11,12 +11,17 @@ php:
     build: php
     volumes:
         - ./../.:/src
+        - ./../appService/var/jwt:/src/appService/var/jwt
         - ./php/conf:/usr/local/etc/php/conf.d
         - /var/log/php/error:/var/log/php/error
         - /var/log/RunProgrammation:/var/log/RunProgrammation
     links:
         - db
         - rabbit
+ssl:
+  build: ssl
+  volumes:
+      - ./../appService/var/jwt:/src/appService/var/jwt
 
 node:
     volumes:
