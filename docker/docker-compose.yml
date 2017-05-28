@@ -1,19 +1,13 @@
 web:
-    build: nginx
+    build: php
     ports:
         - "80:80"
+    
     volumes:
         - ./../.:/src
-        - ./nginx/site.silex.conf:/etc/nginx/conf.d/site.conf
-    links:
-        - php
-php:
-    build: php
-    volumes:
-        - ./../.:/src
+        - ./php/conf/dev.conf:/etc/nginx/conf.d/site.conf
         - ./../appService/var/jwt:/src/appService/var/jwt
-        - ./php/conf:/usr/local/etc/php/conf.d
-        - /var/log/php/error:/var/log/php/error
+        - ./php/ini:/usr/local/etc/php/conf.d
         - /var/log/RunProgrammation:/var/log/RunProgrammation
     links:
         - db

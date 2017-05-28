@@ -1,50 +1,178 @@
-FROM php:7.0.10-fpm
-
-# Install bcmath RUN docker-php-ext-install bcmath
-
-RUN apt-get update
+FROM phusion/baseimage:latest
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get install -y  --no-install-recommends \
-      git \
+      
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      autoconf \
+      build-essential \
+      bison \
+      bzip2 \
       curl \
-      vim \
-      zlib1g-dev \
-      libxml2-utils \
+      re2c \
+      lbzip2 \
+      libcurl4-gnutls-dev \
+      libfreetype6-dev \
+      libldap-2.4-2 \
+      libldb-dev \
+      libldap2-dev \
+      libpng-dev \
+      libssl-dev \
+      libsslcommon2-dev \
+      libtool-bin \
       libxml2-dev \
+      libxml2-utils \
+      libzip-dev \
       postfix \
-      mailutils \
-      net-tools \
-      cron \
-    && rm -rf /var/lib/apt/lists/*
+      re2c \
+      gcc \
+      git \
+      vim \
+      wget \
+      zlib1g-dev \
+      libgmp-dev \
+      libgmp3-dev \
+      libbz2-dev \
+      libjpeg-dev \
+      libxpm-dev \
+      libmcrypt-dev \
+      libpspell-dev \
+      librecode-dev  
 
+RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
 
-# Add crontab file in the cron directory
-ADD crontab /etc/cron.d/alive-cron
+RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
+      && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so
 
-# Give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/alive-cron
+RUN git clone https://github.com/php/php-src
 
-RUN crontab /etc/cron.d/alive-cron
+RUN cd php-src && git checkout PHP-7.1.6 && ./buildconf --force && ./configure --prefix=/usr/local/php7 \
+      --with-config-file-path=/usr/local/etc \
+      --with-config-file-scan-dir=/usr/local/etc/php-fpm.d \
+      --enable-bcmath \
+      --enable-calendar \
+      --enable-exif \
+      --enable-ftp \
+      --enable-intl \
+      --enable-mbstring \
+      --enable-pcntl \
+      --enable-sysvmsg \
+      --enable-sysvsem \
+      --enable-sysvshm \
+      --enable-fpm \
+      --enable-wddx \
+      --enable-zip \
+      --with-fpm \
+      --with-curl \
+      --with-mcrypt \
+      --with-iconv \
+      --with-gmp=/usr/include/x86_64-linux-gnu \
+      --with-pspell \
+      --with-gd \
+      --with-jpeg-dir=/usr \
+      --with-png-dir=/usr \
+      --with-zlib-dir=/usr \
+      --with-xpm-dir=/usr \
+      --with-freetype-dir=/usr \
+      --with-fpm-user=www-data \
+      --with-fpm-group=www-data \
+      --with-t1lib=/usr \
+      --enable-gd-native-ttf \
+      --enable-gd-jis-conv \
+      --with-openssl \
+      --with-pdo-mysql \
+      --with-gettext=/usr \
+      --with-zlib=/usr \
+      --with-bz2 \
+      --with-recode=/usr \
+      --with-ldap \
+      --with-xdebug \
+      && make clean \
+      && make -j `cat /proc/cpuinfo | grep processor | wc -l` \
+      && make install 
 
-# Create the log file to be able to run tail
-RUN touch /var/log/cron.log
+#binary
 
+RUN ln -s /usr/local/php7/bin/php /usr/bin/php
+RUN ln -s /usr/local/php7/sbin/php-fpm /usr/sbin/php-fpm
+
+#config files
+
+RUN mkdir -p /usr/local/etc/php-fpm.d
+ADD conf/php-fpm.conf /usr/local/etc/php-fpm.conf
+ADD conf/www.conf /usr/local/etc/php-fpm.d/www.conf
+
+#unix socker
+
+RUN touch /var/run/php7-fpm.sock
+
+#RUN mkdir -p /var/log/php-fpm
+#RUN chmod -R 777 /var/log/php-fpm
+
+#wrights.
 RUN usermod -u 500 www-data
 
-RUN docker-php-ext-install bcmath zip pdo_mysql xmlrpc
+#php service
+
+RUN mkdir -p /etc/sv/php
+ADD run/php /etc/sv/php/run
+RUN chmod +x /etc/sv/php/run
+RUN ln -s /etc/sv/php /etc/service/php
+
+#log php
+RUN mkdir -p /etc/sv/php/log
+ADD log/php /etc/sv/php/log/run
+RUN chmod +x /etc/sv/php/log/run
+
+#composer
 
 RUN curl -sS https://getcomposer.org/installer | php
-
 RUN mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
 
-ADD scriptmail.sh /root/scriptmail.sh
+#workdir
 
+WORKDIR /src/
+
+# Install Nginx.
+RUN \
+  add-apt-repository -y ppa:nginx/stable && \
+  apt-get update && \
+  apt-get install -y nginx && \
+  rm -rf /var/lib/apt/lists/* && \
+  echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
+  chown -R www-data:www-data /var/lib/nginx
+
+#remove default conf
+RUN rm /etc/nginx/sites-enabled/default
+
+# Define mountable directories.
+VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+
+# Define working directory.
 WORKDIR /src
 
-RUN mkdir /var/log/RunProgrammation
+# Expose ports.
+EXPOSE 80
+EXPOSE 443
 
-RUN mkdir -p /var/log/php/error/
+#service
 
-RUN touch /var/log/php/error/log
+RUN mkdir -p /etc/sv/nginx
+ADD run/nginx /etc/sv/nginx/run
+RUN chmod +x /etc/sv/nginx/run
+RUN ln -s /etc/sv/nginx /etc/service/nginx
+
+#log
+RUN mkdir -p /etc/sv/nginx/log
+ADD log/nginx /etc/sv/nginx/log/run
+RUN chmod +x /etc/sv/nginx/log/run
+
+RUN mkdir -p /var/log/php
+RUN mkdir -p /var/log/nginx
+
+
+#launch command
+
+#launch command
+
+CMD ["/sbin/my_init"]

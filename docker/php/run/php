@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+#exec chpst -u www-data php-fpm -F
+exec /sbin/setuser root /usr/sbin/php-fpm -F --fpm-config /usr/local/etc/php-fpm.conf -c /usr/local/etc/conf.d/ 
+#>> /var/log/php-fpm.log.ini 2>&1
