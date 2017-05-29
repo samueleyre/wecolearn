@@ -1,3 +1,5 @@
+ENV DISABLE_SYSLOG 1
+
 FROM phusion/baseimage:latest
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -83,7 +85,7 @@ RUN cd php-src && git checkout PHP-7.1.6 && ./buildconf --force && ./configure -
       --with-pdo-mysql \
       --with-gettext=/usr \
       --with-zlib=/usr \
-      --with-bz2 \
+            --with-bz2 \
       --with-recode=/usr \
       --with-ldap \
       --with-xdebug \
@@ -98,13 +100,18 @@ RUN ln -s /usr/local/php7/sbin/php-fpm /usr/sbin/php-fpm
 
 #config files
 
-#RUN mkdir -p /usr/local/etc/php-fpm.d
+RUN mkdir -p /usr/local/etc/php-fpm.d
 #RUN touch /usr/local/etc/php-fpm.conf
 #RUN touch /usr/local/etc/php-fpm.d/www.conf
+
+ADD php-fpmConf/php-fpm.conf /usr/local/etc/php-fpm.conf
+ADD phpConf/www.conf /usr/local/etc/php-fpm.d/www.conf
+ADD ini/php.ini /usr/local/etc/php.ini
 
 #unix socket
 
 RUN touch /var/run/php7-fpm.sock
+RUN chmod 660 /var/run/php7-fpm.sock
 
 #wrights.
 RUN usermod -u 500 www-data
@@ -159,16 +166,17 @@ ADD run/nginx /etc/sv/nginx/run
 RUN chmod +x /etc/sv/nginx/run
 RUN ln -s /etc/sv/nginx /etc/service/nginx
 
-#log
-RUN mkdir -p /etc/sv/nginx/log
-ADD log/nginx /etc/sv/nginx/log/run
-RUN chmod +x /etc/sv/nginx/log/run
+#log nginx
+#RUN mkdir -p /etc/sv/nginx/log
+#ADD log/nginx /etc/sv/nginx/log/run
+#RUN chmod +x /etc/sv/nginx/log/run
 
 RUN mkdir -p /var/log/php
 RUN mkdir -p /var/log/nginx
 
+#TODO relocalize
+RUN chown www-data:www-data /var/run/php7-fpm.sock
 
-#launch command
 
 #launch command
 

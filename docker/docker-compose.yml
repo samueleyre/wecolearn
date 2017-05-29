@@ -1,4 +1,6 @@
-web:
+version: "3.1"
+services:
+  web:
     build: php
     ports:
         - "80:80"
@@ -7,19 +9,22 @@ web:
         - ./../.:/src
         - ./php/nginxConf/dev.conf:/etc/nginx/conf.d/site.conf
         - ./../appService/var/jwt:/src/appService/var/jwt
-        - ./php/ini/php.ini:/usr/local/etc/php.ini
-        - ./php/phpConf:/usr/local/etc/php-fpm.d
-        - ./php/php-fpmConf/php-fpm.conf:/usr/local/etc/php-fpm.conf
+        #- ./php/ini/php.ini:/usr/local/etc/php.ini
+        #- ./php/phpConf:/usr/local/etc/php-fpm.d
+        #- ./php/php-fpmConf/php-fpm.conf:/usr/local/etc/php-fpm.conf
         - ./var/log/RunProgrammation:/var/log/RunProgrammation
+        #- /dev/log:/dev/log
     links:
         - db
         - rabbit
-ssl:
-  build: ssl
-  volumes:
-      - ./../appService/var/jwt:/src/appService/var/jwt
+    #logging:
+    #  driver: syslog
+  ssl:
+    build: ssl
+    volumes:
+        - ./../appService/var/jwt:/src/appService/var/jwt
 
-node:
+  node:
     volumes:
        - ./../front/:/src
        - /var/log/RunProgrammation:/var/log/RunProgrammation
@@ -29,7 +34,7 @@ node:
       - "8080:8080"
 
 
-rabbit:
+  rabbit:
     build: rabbit
     tty: true
     ports:
@@ -37,31 +42,35 @@ rabbit:
     volumes:
         - ./:/root
         - /var/log/rabbitmq_bg:/var/log/rabbimq
-    
+    logging:
+      driver: syslog
+      
 
-db:
-  image: mariadb
-  restart: always
-  ports:
-    - "3306:3306"
-  environment:
-    - MYSQL_ROOT_PASSWORD=b1otope
-    - MYSQL_DATABASE=ambrieu
-    - MYSQL_USER=ed
-    - MYSQL_PASSWORD=b1otope
-    - TERM=dumb
-  volumes:
-    - ./db:/etc/mysql/conf.d
-    - ./:/opt
-  tty: true
+  db:
+    image: mariadb
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=b1otope
+      - MYSQL_DATABASE=ambrieu
+      - MYSQL_USER=ed
+      - MYSQL_PASSWORD=b1otope
+      - TERM=dumb
+    volumes:
+      - ./db:/etc/mysql/conf.d
+      - ./:/opt
+    tty: true
+    logging:
+      driver: syslog
 
-phpmyadmin:
-   image: corbinu/docker-phpmyadmin
-   restart: always
-   ports :
-    - "85:80"
-   environment:
-    - MYSQL_USERNAME=root
-    - MYSQL_PASSWORD=b1otope
-   links:
-    - db:mysql
+  phpmyadmin:
+    image: corbinu/docker-phpmyadmin
+    restart: always
+    ports :
+      - "85:80"
+    environment:
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=b1otope
+    links:
+      - db:mysql
