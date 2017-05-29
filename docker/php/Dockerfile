@@ -98,16 +98,13 @@ RUN ln -s /usr/local/php7/sbin/php-fpm /usr/sbin/php-fpm
 
 #config files
 
-RUN mkdir -p /usr/local/etc/php-fpm.d
-ADD conf/php-fpm.conf /usr/local/etc/php-fpm.conf
-ADD conf/www.conf /usr/local/etc/php-fpm.d/www.conf
+#RUN mkdir -p /usr/local/etc/php-fpm.d
+#RUN touch /usr/local/etc/php-fpm.conf
+#RUN touch /usr/local/etc/php-fpm.d/www.conf
 
-#unix socker
+#unix socket
 
 RUN touch /var/run/php7-fpm.sock
-
-#RUN mkdir -p /var/log/php-fpm
-#RUN chmod -R 777 /var/log/php-fpm
 
 #wrights.
 RUN usermod -u 500 www-data
@@ -120,9 +117,9 @@ RUN chmod +x /etc/sv/php/run
 RUN ln -s /etc/sv/php /etc/service/php
 
 #log php
-RUN mkdir -p /etc/sv/php/log
-ADD log/php /etc/sv/php/log/run
-RUN chmod +x /etc/sv/php/log/run
+#RUN mkdir -p /etc/sv/php/log
+#ADD log/php /etc/sv/php/log/run
+#RUN chmod +x /etc/sv/php/log/run
 
 #composer
 

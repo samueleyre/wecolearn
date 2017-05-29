@@ -5,10 +5,12 @@ web:
     
     volumes:
         - ./../.:/src
-        - ./php/conf/dev.conf:/etc/nginx/conf.d/site.conf
+        - ./php/nginxConf/dev.conf:/etc/nginx/conf.d/site.conf
         - ./../appService/var/jwt:/src/appService/var/jwt
-        - ./php/ini:/usr/local/etc/php/conf.d
-        - /var/log/RunProgrammation:/var/log/RunProgrammation
+        - ./php/ini/php.ini:/usr/local/etc/php.ini
+        - ./php/phpConf:/usr/local/etc/php-fpm.d
+        - ./php/php-fpmConf/php-fpm.conf:/usr/local/etc/php-fpm.conf
+        - ./var/log/RunProgrammation:/var/log/RunProgrammation
     links:
         - db
         - rabbit
