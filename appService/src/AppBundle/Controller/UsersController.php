@@ -2,10 +2,14 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
-use AppBundle\Entity\User;
 
 class UsersController extends Controller
 {
@@ -23,30 +27,67 @@ class UsersController extends Controller
 
     } 
 
-    // "post_users"    [POST] /users
-    public function postUsersAction(Request $request )
+    // nota annotation should'nt be necessary because type is rest : contribute
+    /**
+    * @Route("/users" )
+    * @Method({"POST"})
+    * @ParamConverter("user", class="AppBundle\Entity\User", converter="fos_rest.request_body")
+    */
+    public function postUsersAction( User $user )
     {
         
+        // find a way to inject conditionnaly some role management.
+        // should be created only by me and admin role.
         $userManager = $this->get('fos_user.user_manager');
-        $em = $this->getDoctrine()->getManager();
-
-        $email = $request->request->get('email');
-        $password = $request->request->get('password');
         
-        $user = new User();
-        $user->setEmail( $email );
-        $user->setUsername( $email );
-        $user->setPlainPassword( $password );
+        // roles. default is ROLE_USER.
+        if( count( $user->getRoles() ) == 0 && ! in_array('ROLE_USER', $user->getRoles())) {
+            $user->addRole('ROLE_USER');
+        }
+        // password.
+        $user->setPlainPassword( $user->getPassword() );
+        $user->setPassword(null);
+
+        //should be in configuration.
+        $user->setEnabled(true);    
 
         $userManager->updateUser( $user );
 
-        $em->flush();
-
-        return [ 'success' => true, 'message' => 'User created' ];
+        return [ 'success' => true, 'message' => 'User created.' ];
     }
 
-    public function patchUsersAction()
-    {} // "patch_users"   [PATCH] /users
+    // nota annotation should'nt be necessary because type is rest, contribute
+    /**
+    * @Route("/users" )
+    * @Method({"PATCH"})
+    * @ParamConverter("user", class="AppBundle\Entity\User", converter="fos_rest.request_body")
+    */
+    public function patchUsersAction( User $user )
+    {
+        // should be update only by me and admin role.
+        $userManager = $this->get('fos_user.user_manager');
+        $em = $this->getDoctrine()->getManager();
+
+        if( empty( $user->isEnabled() ) ) {
+            $user->setEnabled( true );
+        }
+
+        if(!empty( $user->getPassword())) {
+            $user->setPlainPassword( $user->getPassword());
+        }
+
+        $userManager->updateCanonicalFields($user);
+        $userManager->updatePassword($user);
+
+        $em->merge( $user );
+        $em->flush();
+        
+
+        
+        return ['success' => true, 'message' => 'User edited.'];
+
+
+    } // "patch_users"   [PATCH] /users
 
     public function getUserAction($slug)
     {} // "get_user"      [GET] /users/{slug}
