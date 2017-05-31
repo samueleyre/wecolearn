@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use AppBundle\Entity\User;
+
 class UsersController extends Controller
 {
     public function optionsUsersAction()
@@ -25,10 +27,22 @@ class UsersController extends Controller
     public function postUsersAction(Request $request )
     {
         
+        $userManager = $this->get('fos_user.user_manager');
+        $em = $this->getDoctrine()->getManager();
+
         $email = $request->request->get('email');
         $password = $request->request->get('password');
+        
+        $user = new User();
+        $user->setEmail( $email );
+        $user->setUsername( $email );
+        $user->setPlainPassword( $password );
 
-        return [ 'email' => $email, 'password' => $password ];
+        $userManager->updateUser( $user );
+
+        $em->flush();
+
+        return [ 'success' => true, 'message' => 'User created' ];
     }
 
     public function patchUsersAction()

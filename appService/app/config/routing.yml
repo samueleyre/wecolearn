@@ -3,5 +3,6 @@ app:
     type: annotation
 
 users:
+    #prefix: /api #odo : uncomment 
     type:     rest
     resource: '@AppBundle/Controller/UsersController.php'
