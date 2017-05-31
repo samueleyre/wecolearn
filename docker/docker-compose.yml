@@ -13,7 +13,7 @@ services:
         #- ./php/phpConf:/usr/local/etc/php-fpm.d
         #- ./php/php-fpmConf/php-fpm.conf:/usr/local/etc/php-fpm.conf
         - ./var/log/RunProgrammation:/var/log/RunProgrammation
-        #- /dev/log:/dev/log
+        - /dev/log:/dev/log
     links:
         - db
         - rabbit

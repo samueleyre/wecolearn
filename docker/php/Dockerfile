@@ -1,10 +1,7 @@
-ENV DISABLE_SYSLOG 1
-
-FROM phusion/baseimage:latest
+FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND noninteractive
 
-      
 RUN apt-get update && apt-get install -y --no-install-recommends \
       autoconf \
       build-essential \
@@ -39,16 +36,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       libxpm-dev \
       libmcrypt-dev \
       libpspell-dev \
-      librecode-dev  
+      librecode-dev \
+      runit 
 
 RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
 
 RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
       && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so
 
-RUN git clone https://github.com/php/php-src
+RUN wget http://au1.php.net/get/php-7.1.5.tar.gz/from/this/mirror && tar xvzf mirror
 
-RUN cd php-src && git checkout PHP-7.1.6 && ./buildconf --force && ./configure --prefix=/usr/local/php7 \
+RUN cd php-7.1.5 && ./buildconf --force && ./configure --prefix=/usr/local/php7 \
       --with-config-file-path=/usr/local/etc \
       --with-config-file-scan-dir=/usr/local/etc/php-fpm.d \
       --enable-bcmath \
@@ -130,6 +128,7 @@ RUN ln -s /etc/sv/php /etc/service/php
 
 #composer
 
+RUN apt-get install ca-certificates
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
 
@@ -138,6 +137,7 @@ RUN mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
 WORKDIR /src/
 
 # Install Nginx.
+RUN apt-get install -y software-properties-common 
 RUN \
   add-apt-repository -y ppa:nginx/stable && \
   apt-get update && \
@@ -180,4 +180,4 @@ RUN chown www-data:www-data /var/run/php7-fpm.sock
 
 #launch command
 
-CMD ["/sbin/my_init"]
+CMD ["/usr/bin/runsvdir","-P", "/etc/service"]
