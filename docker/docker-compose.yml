@@ -4,21 +4,16 @@ services:
     build: php
     ports:
         - "80:80"
-    
+        - "443:443"
     volumes:
         - ./../.:/src
         - ./php/nginxConf/dev.conf:/etc/nginx/conf.d/site.conf
         - ./../appService/var/jwt:/src/appService/var/jwt
-        #- ./php/ini/php.ini:/usr/local/etc/php.ini
-        #- ./php/phpConf:/usr/local/etc/php-fpm.d
-        #- ./php/php-fpmConf/php-fpm.conf:/usr/local/etc/php-fpm.conf
         - ./var/log/RunProgrammation:/var/log/RunProgrammation
         - /dev/log:/dev/log
     links:
         - db
         - rabbit
-    #logging:
-    #  driver: syslog
   ssl:
     build: ssl
     volumes:
