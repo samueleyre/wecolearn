@@ -74,11 +74,15 @@ sensio_framework_extra:
 
 jms_serializer:
     metadata:
-        auto_detection: true
+        auto_detection: false
         directories:
+            AppBundle:
+                namespace_prefix: AppBundle
+                path:             "@AppBundle/Resources/config/serializer"
             FOSUserBundle:
                 namespace_prefix: "FOS\\UserBundle"
                 path:             "@AppBundle/Resources/config/serializer/fos"
+
 
 # FOS Rest
 fos_rest:
@@ -105,7 +109,7 @@ fos_rest:
 fos_user:
     db_driver:              orm
     firewall_name:          login
-    user_class:             Acme\Bundle\ApiBundle\Entity\User
+    user_class:             AppBundle\Entity\User
     use_listener:           true
     use_username_form_type: true
     model_manager_name:     null  # change it to the name of your entity/document manager if you don't want to use the default one.

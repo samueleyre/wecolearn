@@ -81,7 +81,7 @@ class UsersController extends Controller
 
         $em->merge( $user );
         $em->flush();
-        
+
 
         
         return ['success' => true, 'message' => 'User edited.'];
@@ -89,8 +89,16 @@ class UsersController extends Controller
 
     } // "patch_users"   [PATCH] /users
 
+    // "get_user"      [GET] /users/{slug}
     public function getUserAction($slug)
-    {} // "get_user"      [GET] /users/{slug}
+    {
+        
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(['id' => $slug ]);
+
+        return $user;
+
+    }
 
     public function editUserAction($slug)
     {} // "edit_user"     [GET] /users/{slug}/edit
