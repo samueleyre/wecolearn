@@ -7,9 +7,7 @@ import { TokenService }     from './../token/service';
 @Injectable()
 export class InterceptedHttp extends Http {
     
-    private tokenService : TokenService;
-
-    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, tokenService : TokenService) {
+    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, private tokenService : TokenService) {
         super(backend, defaultOptions);
 
 
@@ -20,6 +18,7 @@ export class InterceptedHttp extends Http {
         let self = this;
 
         return super.request( url, options ).catch((error: Response) => {
+            
             if (
                     ( error.status === 401 || error.status === 403 ) 
                     //&& ( window.location.href.match(/\?/g) || []).length < 2
@@ -62,7 +61,7 @@ export class InterceptedHttp extends Http {
             options.headers = new Headers();
         }
         options.headers.append('Content-Type', 'application/json');
-        options.headers.append('Authorization', 'Basic ' + this.tokenService.get());
+        options.headers.append('Authorization', 'Bearer ' + this.tokenService.get());
 
         return options;
     }

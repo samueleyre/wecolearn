@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
  
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService) { }
+        private authenticationService: AuthenticationService ) { }
  
     ngOnInit() {
         // reset login status
@@ -27,15 +27,18 @@ export class LoginComponent implements OnInit {
     login() {
         this.loading = true;
         this.authenticationService.login(this.model.email, this.model.password)
-            .subscribe(result => {
-                if (result === true) {
-                    // login successful
-                    this.router.navigate(['/']);
-                } else {
-                    // login failed
-                    this.error = "L'email ou le mot de passe ne sont pas valide";
-                    this.loading = false;
+            .subscribe(
+                    result => {
+                        if ( result === true ) {
+                        // login successful
+                            this.router.navigate(['/']);
+                        }
+                    },
+                    error => {
+                        this.error = "L'email ou le mot de passe ne sont pas valide";
+                        this.loading = false;
+                    
                 }
-            });
+            );
     }
 }

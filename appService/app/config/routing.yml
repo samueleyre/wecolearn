@@ -6,3 +6,6 @@ users:
     #prefix: /api #odo : uncomment 
     type:     rest
     resource: '@AppBundle/Controller/UsersController.php'
+
+api_login_check:
+   path: /api/login_check

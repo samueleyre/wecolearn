@@ -96,16 +96,6 @@ RUN cd php-7.1.5 && ./buildconf --force && ./configure --prefix=/usr/local/php7 
 RUN ln -s /usr/local/php7/bin/php /usr/bin/php
 RUN ln -s /usr/local/php7/sbin/php-fpm /usr/sbin/php-fpm
 
-#config files
-
-RUN mkdir -p /usr/local/etc/php-fpm.d
-#RUN touch /usr/local/etc/php-fpm.conf
-#RUN touch /usr/local/etc/php-fpm.d/www.conf
-
-ADD php-fpmConf/php-fpm.conf /usr/local/etc/php-fpm.conf
-ADD phpConf/www.conf /usr/local/etc/php-fpm.d/www.conf
-ADD ini/php.ini /usr/local/etc/php.ini
-
 #unix socket
 
 RUN touch /var/run/php7-fpm.sock
@@ -120,11 +110,6 @@ RUN mkdir -p /etc/sv/php
 ADD run/php /etc/sv/php/run
 RUN chmod +x /etc/sv/php/run
 RUN ln -s /etc/sv/php /etc/service/php
-
-#log php
-#RUN mkdir -p /etc/sv/php/log
-#ADD log/php /etc/sv/php/log/run
-#RUN chmod +x /etc/sv/php/log/run
 
 #composer
 
@@ -166,16 +151,27 @@ ADD run/nginx /etc/sv/nginx/run
 RUN chmod +x /etc/sv/nginx/run
 RUN ln -s /etc/sv/nginx /etc/service/nginx
 
-#log nginx
-#RUN mkdir -p /etc/sv/nginx/log
-#ADD log/nginx /etc/sv/nginx/log/run
-#RUN chmod +x /etc/sv/nginx/log/run
-
-RUN mkdir -p /var/log/php
-RUN mkdir -p /var/log/nginx
-
 #TODO relocalize
 RUN chown www-data:www-data /var/run/php7-fpm.sock
+
+#config files
+
+RUN mkdir -p /usr/local/etc/php-fpm.d
+#RUN touch /usr/local/etc/php-fpm.conf
+#RUN touch /usr/local/etc/php-fpm.d/www.conf
+
+ADD php-fpmConf/php-fpm.conf /usr/local/etc/php-fpm.conf
+ADD phpConf/www.conf /usr/local/etc/php-fpm.d/www.conf
+ADD ini/php.ini /usr/local/etc/php.ini
+
+#cron + logrotate
+#RUN apt-get update && apt-get install -y cron logrotate
+
+#cron service
+#RUN mkdir -p /etc/sv/cron
+#ADD run/cron /etc/sv/cron/run
+#RUN chmod +x /etc/sv/cron/run
+#RUN ln -s /etc/sv/cron /etc/service/cron
 
 
 #launch command
