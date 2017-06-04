@@ -1,5 +1,6 @@
-import {  NgModule }      	       from '@angular/core';
-import {  HttpModule }             from '@angular/http';
+import { NgModule }      	          from '@angular/core';
+import { HttpModule }               from '@angular/http';
+import { LocalStorageModule }       from 'angular-2-local-storage';
 
 import {   
       //HttpModule, 
@@ -7,8 +8,7 @@ import {
       XHRBackend, 
       RequestOptions
     }                              from '@angular/http';
-
-
+  
 import { AuthenticationService}    from './authentication/service';
 import { AuthGuard }               from './authguard/service';
 import { environment  }            from './config/environment';
@@ -19,8 +19,12 @@ import { TokenService }            from './token/service';
 
 @NgModule({
   imports:[   
-  			routing,
         HttpModule,
+        LocalStorageModule.withConfig({
+            prefix: 'my-app',
+            storageType: 'localStorage'
+        }),
+        routing
   ],
   
   declarations: [ 
@@ -31,7 +35,7 @@ import { TokenService }            from './token/service';
         {
             provide: Http,
             useFactory: httpFactory,
-            deps: [XHRBackend, RequestOptions]
+            deps: [XHRBackend, RequestOptions, TokenService ]
         },
         AuthenticationService,
         AuthGuard,

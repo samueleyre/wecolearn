@@ -38,6 +38,8 @@ module.exports = {
         include: helpers.root('src', 'app'),
         loader: 'raw-loader'
       }
+      
+
     ]
   },
 

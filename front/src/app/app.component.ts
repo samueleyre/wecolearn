@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'my-app',
-  template: '<router-outlet></router-outlet>',
+  templateUrl	: 'app.template.html',
+  //styleUrls : ['app.css']
 })
 export class AppComponent {
   title = 'Minimal NgModule';
