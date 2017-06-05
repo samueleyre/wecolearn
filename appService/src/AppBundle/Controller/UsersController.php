@@ -18,8 +18,13 @@ class UsersController extends Controller
         return [];
     } // "options_users" [OPTIONS] /users
 
+     // "get_users"     [GET] /users
     public function getUsersAction()
-    {} // "get_users"     [GET] /users
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        
+        return $userManager->findUsers();
+    }
 
     // "new_users"     [GET] /users/new
     public function newUsersAction(Request $request )

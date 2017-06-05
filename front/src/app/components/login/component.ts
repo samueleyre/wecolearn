@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.model.email, this.model.password)
             .subscribe(
                     result => {
-                        if ( result === true ) {
+                        if ( result === true )  {
                         // login successful
                             this.router.navigate(['/']);
                         }
