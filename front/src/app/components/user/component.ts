@@ -4,27 +4,25 @@ import {
         OnChanges 
    }                              from '@angular/core';
 import { Router }                 from '@angular/router';
-import { UserService }            from './../../user/service';
-import { EmmitterService }        from './../../emmitter/service';
-}
+import { UserService }            from './../../applicativeService/user/service';
+import { User }            from './../../applicativeService/user/model';
+
+
+
  
 @Component({
     templateUrl: 'template.html'
 })
  
-export class UserComponent implements OnInit, OnChanges {
+export class UserComponent implements OnInit {
     
     users: User[];
-    edit: boolean = false;
+    edition: boolean = false;
     user : User;
     
-    @Input() listId: string;
-    @Input() editId: string;
-
     constructor(
         private router: Router,
         private userService : UserService, 
-        private emmitterService : EmmitterService,
     ) { }
  
     ngOnInit() {
@@ -36,31 +34,26 @@ export class UserComponent implements OnInit, OnChanges {
             });
     }
 
-    ngOnChange( change: any ) {
-        emmitterService.get('LIST_CHANGE').subscribe(
-            (users:User[]) => this.users = users
-        ) 
-    }
- 
+   
     submit() {
         
-        if(this.edit) {
+        if(this.edition) {
             this.userService.patch( this.user ).subscribe( 
                     users => this.users = users, 
                     error => { console.log(error) }
                 );
-            this.edit = false; 
+            this.edition = false; 
         } else {
-           this.userService.post( this.user).subscribe() {
+           this.userService.post(this.user).subscribe(
                users => this.users = users,
-               error => { console.log(error)
-              }
-           }
+               error => { console.log(error) }
+           ); 
+           
         }
     }
 
     edit( id : number ) {
-        this.edit = true;
+        this.edition = true;
         this.user = this.users[id];
     }
 

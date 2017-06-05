@@ -16,6 +16,7 @@ import { InterceptedHttp }         from './interceptor/InterceptedHttp';
 import { httpFactory }             from './interceptor/httpFactory';
 import { routing }                 from './routing/app.routing';
 import { TokenService }            from './token/service';
+import { UserService }             from './user/service';
 
 @NgModule({
   imports:[   
@@ -41,6 +42,7 @@ import { TokenService }            from './token/service';
         AuthGuard,
         InterceptedHttp,
         TokenService,
+        UserService,
         //XHRBackend, 
         //RequestOptions,
     ],

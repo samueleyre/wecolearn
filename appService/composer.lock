@@ -1613,12 +1613,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lexik/LexikJWTAuthenticationBundle.git",
-                "reference": "0409f26fcc7ff259e9eff8e408e78c844cb12c62"
+                "reference": "5e9685bf80e465367a5d94e1758298e337bdd074"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/0409f26fcc7ff259e9eff8e408e78c844cb12c62",
-                "reference": "0409f26fcc7ff259e9eff8e408e78c844cb12c62",
+                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/5e9685bf80e465367a5d94e1758298e337bdd074",
+                "reference": "5e9685bf80e465367a5d94e1758298e337bdd074",
                 "shasum": ""
             },
             "require": {
@@ -1702,7 +1702,7 @@
                 "rest",
                 "symfony"
             ],
-            "time": "2017-05-29 12:33:13"
+            "time": "2017-05-30 12:05:43"
         },
         {
             "name": "monolog/monolog",

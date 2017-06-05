@@ -24,6 +24,7 @@ class UsersController extends Controller
         $userManager = $this->get('fos_user.user_manager');
         
         return $userManager->findUsers();
+
     }
 
     // "new_users"     [GET] /users/new
