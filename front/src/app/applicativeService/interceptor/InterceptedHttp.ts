@@ -1,13 +1,15 @@
-import { Injectable } from "@angular/core";
+import { Injectable }         from "@angular/core";
+import { Router }             from '@angular/router';
 import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from "@angular/http";
-import { Observable } from "rxjs/Rx";
-import { environment }      from "./../config/environment";
-import { TokenService }     from './../token/service';
+import { Observable }         from "rxjs/Rx";
+import { environment }        from "./../config/environment";
+import { TokenService }       from './../token/service';
 
 @Injectable()
 export class InterceptedHttp extends Http {
     
-    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, private tokenService : TokenService) {
+    constructor( backend: ConnectionBackend,defaultOptions: RequestOptions,public tokenService : TokenService, public router : Router ) 
+    {
         super(backend, defaultOptions);
 
 
@@ -23,7 +25,8 @@ export class InterceptedHttp extends Http {
                     ( error.status === 401 || error.status === 403 ) 
                     //&& ( window.location.href.match(/\?/g) || []).length < 2
                 ) {
-                    self.tokenService.clear();
+                    this.tokenService.clear();
+                    this.router.navigate(['/login']);
             }
             return Observable.throw(error);
         });;

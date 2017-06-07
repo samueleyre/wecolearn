@@ -17,6 +17,9 @@ monolog:
         console:
             type: console
             channels: ['!event', '!doctrine']
+        syslog:
+            type: syslog
+            level: error
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:

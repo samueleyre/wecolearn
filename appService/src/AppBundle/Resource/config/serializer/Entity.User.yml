@@ -1,9 +1,0 @@
-AppBundle\Entity\User:
-    exclusion_policy: ALL
-    xml_root_name:    page
-    access_order:     alphabetical
-    properties:
-        username:
-            expose: true
-        email:
-            expose: true

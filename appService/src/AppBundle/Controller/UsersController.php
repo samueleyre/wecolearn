@@ -11,6 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use JMS\Serializer\SerializationContext;
+
 class UsersController extends Controller
 {
     public function optionsUsersAction()
@@ -21,6 +23,7 @@ class UsersController extends Controller
      // "get_users"     [GET] /users
     public function getUsersAction()
     {
+        
         $userManager = $this->get('fos_user.user_manager');
         
         return $userManager->findUsers();
@@ -35,9 +38,14 @@ class UsersController extends Controller
 
     // nota annotation should'nt be necessary because type is rest : contribute
     /**
-    * @Route("/users" )
+    * @Route("/api/users" )
     * @Method({"POST"})
-    * @ParamConverter("user", class="AppBundle\Entity\User", converter="fos_rest.request_body")
+    * @ParamConverter(
+        "user", 
+        class="AppBundle\Entity\User", 
+        converter="fos_rest.request_body",
+        options={"deserializationContext"={"groups"={"input"} } }
+    )
     */
     public function postUsersAction( User $user )
     {
@@ -59,7 +67,7 @@ class UsersController extends Controller
 
         $userManager->updateUser( $user );
 
-        return [ 'success' => true, 'message' => 'User created.' ];
+        return $userManager->findUsers();
     }
 
     // nota annotation should'nt be necessary because type is rest, contribute

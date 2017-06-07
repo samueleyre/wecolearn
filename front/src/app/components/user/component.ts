@@ -16,22 +16,27 @@ import { User }            from './../../applicativeService/user/model';
  
 export class UserComponent implements OnInit {
     
+    user : User;
     users: User[];
     edition: boolean = false;
-    user : User;
     
     constructor(
         private router: Router,
         private userService : UserService, 
-    ) { }
+    ) {
+        this.users = [];
+        this.user = new User('','','',0);
+    }
  
     ngOnInit() {
         // reset login status
+        
         this.userService.get().subscribe( users => {
                 this.users = users;
             }, error => {
                 console.log('Error in get comments', error );
             });
+
     }
 
    
@@ -45,7 +50,10 @@ export class UserComponent implements OnInit {
             this.edition = false; 
         } else {
            this.userService.post(this.user).subscribe(
-               users => this.users = users,
+               users => {
+                   this.users = users;
+                   console.log('NEW USERS', users ); 
+               },
                error => { console.log(error) }
            ); 
            

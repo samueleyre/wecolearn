@@ -3,6 +3,10 @@ FOS\UserBundle\Model\User:
     access_order:     alphabetical
     properties:
         username:
-            expose: true
+          groups: [ input, output ]
         email:
-            expose: true
+          groups: [ input, output ]
+        password:
+          groups: [ input ]
+        id:
+          groups: [ output ] 

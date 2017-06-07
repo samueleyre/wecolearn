@@ -1,5 +1,7 @@
 import { NgModule }      	          from '@angular/core';
 import { HttpModule }               from '@angular/http';
+import { Router }                   from '@angular/router';
+
 import { LocalStorageModule }       from 'angular-2-local-storage';
 
 import {   
@@ -36,7 +38,7 @@ import { UserService }             from './user/service';
         {
             provide: Http,
             useFactory: httpFactory,
-            deps: [XHRBackend, RequestOptions, TokenService ]
+            deps: [XHRBackend, RequestOptions, TokenService, Router ]
         },
         AuthenticationService,
         AuthGuard,

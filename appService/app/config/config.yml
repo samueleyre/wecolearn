@@ -74,7 +74,7 @@ sensio_framework_extra:
 
 jms_serializer:
     metadata:
-        auto_detection: true
+        auto_detection: false
         directories:
             AppBundle:
                 namespace_prefix: AppBundle
@@ -99,6 +99,7 @@ fos_rest:
         default_format: json
     serializer:
         serialize_null: true
+        groups:               [output]
     param_fetcher_listener: true
     body_listener: true
     body_converter:
