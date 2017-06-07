@@ -72,13 +72,19 @@ class UsersController extends Controller
 
     // nota annotation should'nt be necessary because type is rest, contribute
     /**
-    * @Route("/users" )
+    * @Route("/api/users" )
     * @Method({"PATCH"})
-    * @ParamConverter("user", class="AppBundle\Entity\User", converter="fos_rest.request_body")
+    * @ParamConverter(
+            "user", 
+            class="AppBundle\Entity\User", 
+            converter="fos_rest.request_body",
+            options={"deserializationContext"={"groups"={"input"} } }
+    )
     */
     public function patchUsersAction( User $user )
     {
         // should be update only by me and admin role.
+        
         $userManager = $this->get('fos_user.user_manager');
         $em = $this->getDoctrine()->getManager();
 
@@ -98,7 +104,27 @@ class UsersController extends Controller
 
 
         
-        return ['success' => true, 'message' => 'User edited.'];
+        return $userManager->findUsers();
+
+
+    }
+
+
+    /**
+    * @Route("/api/users/{id}" )
+    * @Method({"DELETE"})
+    */
+    public function deleteUserAction( $id )
+    {
+        // should be update only by me and admin role.
+        
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(['id'=> $id ]);
+        if( $user ) {
+            $userManager->deleteUser( $user );
+        }
+
+        return $userManager->findUsers();
 
 
     } // "patch_users"   [PATCH] /users
@@ -131,9 +157,6 @@ class UsersController extends Controller
 
     public function removeUserAction($slug)
     {} // "remove_user"   [GET] /users/{slug}/remove
-
-    public function deleteUserAction($slug)
-    {} // "delete_user"   [DELETE] /users/{slug}
 
     public function getUserCommentsAction($slug)
     {} // "get_user_comments"    [GET] /users/{slug}/comments

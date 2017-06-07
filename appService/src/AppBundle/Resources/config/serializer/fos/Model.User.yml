@@ -8,5 +8,4 @@ FOS\UserBundle\Model\User:
           groups: [ input, output ]
         password:
           groups: [ input ]
-        id:
-          groups: [ output ] 
+        

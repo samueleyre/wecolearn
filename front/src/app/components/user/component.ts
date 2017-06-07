@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
         private userService : UserService, 
     ) {
         this.users = [];
-        this.user = new User('','','',0);
+        this.user = new User( null,'','','');
     }
  
     ngOnInit() {
@@ -47,22 +47,27 @@ export class UserComponent implements OnInit {
                     users => this.users = users, 
                     error => { console.log(error) }
                 );
-            this.edition = false; 
+            this.edition = false;
+
         } else {
            this.userService.post(this.user).subscribe(
                users => {
                    this.users = users;
-                   console.log('NEW USERS', users ); 
                },
                error => { console.log(error) }
            ); 
-           
         }
+
+        this.user = new User( null, '', '', '' );
     }
 
     edit( id : number ) {
-        this.edition = true;
-        this.user = this.users[id];
+        for( let i in this.users ) {
+            if( this.users[i].id === id ) {
+                this.user = this.users[i];
+                this.edition = true;
+            }
+        }
     }
 
     delete( id : number ) {

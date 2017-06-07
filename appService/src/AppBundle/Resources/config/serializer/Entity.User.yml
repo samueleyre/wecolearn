@@ -2,3 +2,6 @@ AppBundle\Entity\User:
     exclusion_policy: all
     xml_root_name:    page
     access_order:     alphabetical
+    properties:
+      id:
+          groups: [ output, input ] 
