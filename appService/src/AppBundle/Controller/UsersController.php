@@ -11,15 +11,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use JMS\Serializer\SerializationContext;
-
 class UsersController extends Controller
 {
+    // "options_users" [OPTIONS] /users
     public function optionsUsersAction()
     {
         return [];
-    } // "options_users" [OPTIONS] /users
-
+    } 
      // "get_users"     [GET] /users
     public function getUsersAction()
     {
@@ -30,12 +28,7 @@ class UsersController extends Controller
 
     }
 
-    // "new_users"     [GET] /users/new
-    public function newUsersAction(Request $request )
-    {
-
-    } 
-
+    
     // nota annotation should'nt be necessary because type is rest : contribute
     /**
     * @Route("/api/users" )
@@ -108,8 +101,7 @@ class UsersController extends Controller
 
 
     }
-
-
+    
     /**
     * @Route("/api/users/{id}" )
     * @Method({"DELETE"})
@@ -127,7 +119,7 @@ class UsersController extends Controller
         return $userManager->findUsers();
 
 
-    } // "patch_users"   [PATCH] /users
+    }
 
     // "get_user"      [GET] /users/{slug}
     public function getUserAction($slug)

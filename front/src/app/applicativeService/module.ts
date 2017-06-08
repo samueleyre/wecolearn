@@ -20,6 +20,7 @@ import { routing }                 from './routing/app.routing';
 import { TokenService }            from './token/service';
 import { UserService }             from './user/service';
 
+
 @NgModule({
   imports:[   
         HttpModule,
@@ -27,7 +28,8 @@ import { UserService }             from './user/service';
             prefix: 'my-app',
             storageType: 'localStorage'
         }),
-        routing
+        routing,
+        
   ],
   
   declarations: [ 

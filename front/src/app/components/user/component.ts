@@ -1,11 +1,15 @@
 import { 
         Component, 
         OnInit,
-        OnChanges 
+        OnChanges,
+        ViewChild,
+        Input
    }                              from '@angular/core';
+import { NgForm }                 from '@angular/forms';
 import { Router }                 from '@angular/router';
 import { UserService }            from './../../applicativeService/user/service';
 import { User }            from './../../applicativeService/user/model';
+import { PopinConfirmService }    from './../../applicativeService/popin/confirm/service';
 
 
 
@@ -22,7 +26,8 @@ export class UserComponent implements OnInit {
     
     constructor(
         private router: Router,
-        private userService : UserService, 
+        private userService : UserService,
+        private confirm : PopinConfirmService
     ) {
         this.users = [];
         this.user = new User( null,'','','');
@@ -40,7 +45,7 @@ export class UserComponent implements OnInit {
     }
 
    
-    submit() {
+    submit(f:NgForm) {
         
         if(this.edition) {
             this.userService.patch( this.user ).subscribe( 
@@ -57,8 +62,8 @@ export class UserComponent implements OnInit {
                error => { console.log(error) }
            ); 
         }
-
         this.user = new User( null, '', '', '' );
+        f.resetForm();
     }
 
     edit( id : number ) {
@@ -72,13 +77,20 @@ export class UserComponent implements OnInit {
 
     delete( id : number ) {
 
-        this.userService.delete( id ).subscribe(
-            users => this.users = users,
-            error => {
-                console.log('ERRORS', error );
+        this
+        .confirm
+        .setMessage( 'Vous allez supprimer un utilisateur, êtes vous sûr ?')
+        .subscribe( confirm => {
+            if( true == confirm ) {
+                this.userService.delete( id ).subscribe(
+                    users => this.users = users,
+                    error => {
+                        console.log('ERRORS', error );
+                    }
+                )
+            } else {
+                console.log('CONFIRMATION', confirm );
             }
-        )
+        });
     }
-
-
 }

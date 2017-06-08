@@ -5,6 +5,9 @@ import { NgModule }        from '@angular/core';
 import { RouterModule }    from '@angular/router';
 import { NgbModule }       from '@ng-bootstrap/ng-bootstrap';
 
+import { PopinConfirmService }     from './applicativeService/popin/confirm/service';
+import { PopinConfirmModule }     from './applicativeService/popin/confirm/module';
+
 
 import { ApplicativeModule }	from './applicativeService/module'; 
 
@@ -25,6 +28,7 @@ import { routing }			    from './applicativeService/routing/app.routing';
         HttpModule,
         NgbModule.forRoot(),
         RouterModule,
+        PopinConfirmModule,
          
   ],
   declarations: [ 
@@ -33,7 +37,9 @@ import { routing }			    from './applicativeService/routing/app.routing';
           UserComponent,
           EqualValidator,
         	AppComponent,
-
+  ],
+  providers : [
+    //PopinConfirmService
   ],
   bootstrap:[ 
   	AppComponent 
