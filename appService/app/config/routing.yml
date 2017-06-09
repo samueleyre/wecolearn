@@ -1,3 +1,8 @@
+bg:
+    resource: "@BgBundle/Resources/config/routing.yml"
+    prefix:   api
+    type:     rest
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation

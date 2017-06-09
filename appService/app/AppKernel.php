@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
 
             new AppBundle\AppBundle(),
+            new Bg\BgBundle\BgBundle(),
         ];
 
         if ( in_array( $this->getEnvironment(), ['dev', 'test'], true ) ) {
