@@ -1,4 +1,1 @@
-blogs:
-    #prefix: /api #odo : uncomment 
-    type:     rest
-    resource: '@BgBundle/Controller/BlogsController.php'
+

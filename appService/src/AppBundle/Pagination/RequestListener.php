@@ -33,7 +33,11 @@ class RequestListener {
         	} else {
         		$this->service->setPaginationQuery(new PaginationQuery(1, 10));
         	}
+        } else {
+
+        	syslog(LOG_ERR, 'no pagiation header');
         }
+
         
     }
 }

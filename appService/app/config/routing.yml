@@ -1,17 +1,16 @@
-bg:
-    resource: "@BgBundle/Resources/config/routing.yml"
-    prefix:   api
-    type:     rest
-
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
 users:
-    #prefix: /api #odo : uncomment 
     type:     rest
     prefix:   api
     resource: '@AppBundle/Controller/UsersController.php'
+
+blogs:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/BlogsController.php'
 
 api_login_check:
    path: /api/login_check

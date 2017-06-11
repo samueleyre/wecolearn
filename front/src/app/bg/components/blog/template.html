@@ -1,29 +1,27 @@
-<!--
 <div class="col-md-6 col-md-offset-3">
     <div class="alert alert-info">
     </div>
-    <h2>Administration des comptes</h2>
+    <h2>Administration des blogs</h2>
     <form name="form" (ngSubmit)="f.form.valid && submit(f)" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="username">Nom d'utlisateur</label>
-            <input type="text" class="form-control" name="username" [(ngModel)]="user.username" #username="ngModel" required />
-            <div *ngIf="f.submitted && !username.valid" class="help-block">Le nom d'utilisateur est obligatoire</div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+            <label for="username">Nom du blog</label>
+            <input type="text" class="form-control" name="name" [(ngModel)]="blog.name" #name="ngModel" required />
+            <div *ngIf="f.submitted && !name.valid" class="help-block">Le nom du blog est obligatoire</div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required />
-            <div *ngIf="f.submitted && !email.valid" class="help-block">L'email est obligatoire</div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !url.valid }">
+            <label for="username">Url du blog</label>
+            <input type="text" class="form-control" name="url" [(ngModel)]="blog.url" #url="ngModel" required />
+            <div *ngIf="f.submitted && !url.valid" class="help-block">L'url du blog est obligatoire</div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-            <label for="password">Mot de passe</label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required validateEqual="confirmPassword" reverse="true"/>
-            <div *ngIf="f.submitted && password.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !login.valid }">
+            <label for="username">Login du blog</label>
+            <input type="text" class="form-control" name="login" [(ngModel)]="blog.login" #login="ngModel" required />
+            <div *ngIf="f.submitted && !login.valid" class="help-block">Le login du blog est obligatoire</div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !confirmPassword.valid }">
-            <label for="confirmPassword">Confirmer le mot de passe</label>
-            <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" required validateEqual="password" />
-            <div *ngIf="f.submitted && confirmPassword.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
-            <div *ngIf="( confirmPassword.hasError('validateEqual') || password.hasError('validateEqual') )" class="help-block">Les mots de passe ne correspondent pas</div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !pass.valid }">
+            <label for="username">Mot de passe du blog</label>
+            <input type="text" class="form-control" name="pass" [(ngModel)]="blog.pass" #login="ngModel" required />
+            <div *ngIf="f.submitted && !pass.valid" class="help-block">Le mot de passe du blog est obligatoire</div>
         </div>
         <div class="form-group">
             <button *ngIf="!edition" type="submit" [disabled]="loading" class="btn btn-primary">Ajouter</button> 
@@ -33,8 +31,7 @@
         <div *ngIf="error" class="alert alert-danger">{{error}}</div>
     </form>
 </div>
--->
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-9 col-md-offset-3">
     <h2>Liste des Blogs</h2>
     <div class="table-responsive">
         <table class="table table-striped">

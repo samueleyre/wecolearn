@@ -6,6 +6,8 @@ use AppBundle\Pagination\PaginationTrait;
 use AppBundle\Pagination\PaginationInterface;
 use Doctrine\ORM\EntityManager;
 
+use Bg\BgBundle\Entity\Blog;
+
 class BlogService implements PaginationInterface {
 
 	use PaginationTrait;
@@ -20,8 +22,6 @@ class BlogService implements PaginationInterface {
 	public function get() {
 		$query = "SELECT b FROM BgBundle:Blog b";
 
-		syslog(LOG_ERR, $this->getPaginationQuery()->size());
-
 		$ret = 
 			$this
 				->em
@@ -30,7 +30,6 @@ class BlogService implements PaginationInterface {
 				->setFirstResult($this->getPaginationQuery()->offset())
 				->getResult()
 		;
-
 		return $ret;
 
 
@@ -46,5 +45,39 @@ class BlogService implements PaginationInterface {
 
 		
 	}
-}
 
+	private function findById( $id ) {
+		$query = sprintf("SELECT b FROM BgBundle:Blog b WHERE b.id = %d ", $id);
+		return 
+			$this
+				->em
+				->createQuery( $query)
+				->setMaxResults(1)
+				->getSingleResult()
+		;
+	}
+
+	public function patch( Blog $blog) {
+
+		$this->em->merge( $blog );
+		$this->em->flush();
+		return $this;
+	
+	}
+
+	public function post( Blog $blog ) {
+		
+		$this->em->persist( $blog );
+		$this->em->flush();
+		return $this;
+	
+	}
+	
+	public function delete( $id ) {
+		
+		$blog = $this->findById( $id );
+		$this->em->remove(  $blog );
+		$this->em->flush();
+		return $this;
+	}
+}

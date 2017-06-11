@@ -8,11 +8,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use  FOS\RestBundle\Controller\Annotations\Post;
+use  FOS\RestBundle\Controller\Annotations\Patch;
+use  FOS\RestBundle\Controller\Annotations\Delete;
+use  FOS\RestBundle\Controller\Annotations\Get;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Pagination\Annotation as Pagination;
-
 
 
 class BlogsController extends Controller
@@ -25,124 +29,84 @@ class BlogsController extends Controller
         
     } 
      // "get_blogs"     [GET] /blogs
+    
     /**
+	* @Get("/blogs")
     * @Pagination(perPage="5",service="blog.service")
-	*/
+    */
     public function getBlogsAction()
     {
         
-        $service = $this->get('blog.service');
-
-        return $service->get();
-
-    }
+        return $this->get('blog.service')->get();
+		
+	}
 
     
     /**
-    * @Route("/api/blogs" )
-    * @Method({"POST"})
+    * @Pagination(perPage="5",service="blog.service")
+    * @Post("/blogs")
     * @ParamConverter(
-        "user", 
-        class="BgBundle\Entity\Blog", 
+        "blog",
+        class="Bg\BgBundle\Entity\Blog", 
         converter="fos_rest.request_body",
         options={"deserializationContext"={"groups"={"input"} } }
     )
     */
-    public function postBlogsAction( Blog $user )
+    public function postBlogsAction( Blog $blog )
     {
         
-        /*
-        // find a way to inject conditionnaly some role management.
-        // should be created only by me and admin role.
-        $userManager = $this->get('fos_user.user_manager');
+        return $this->get('blog.service')->post( $blog )->get();
         
-        // roles. default is ROLE_USER.
-        if( count( $user->getRoles() ) == 0 && ! in_array('ROLE_USER', $user->getRoles())) {
-            $user->addRole('ROLE_USER');
-        }
-        // password.
-        $user->setPlainPassword( $user->getPassword() );
-        $user->setPassword(null);
-
-        //should be in configuration.
-        $user->setEnabled(true);    
-
-        $userManager->updateUser( $user );
-
-        return $userManager->findUsers();
-        */
     }
 
-    // nota annotation should'nt be necessary because type is rest, contribute
     /**
-    * @Route("/api/blogs" )
-    * @Method({"PATCH"})
+    * @Pagination(perPage="5",service="blog.service")
+    * @Patch("/blogs")
     * @ParamConverter(
-            "user", 
-            class="BgBundle\Entity\Blog", 
+            "blog", 
+            class="Bg\BgBundle\Entity\Blog", 
             converter="fos_rest.request_body",
             options={"deserializationContext"={"groups"={"input"} } }
     )
-    */
+	*/
     public function patchBlogsAction( Blog $blog )
     {
         // should be update only by me and admin role.
-        
-        /*
-        $userManager = $this->get('fos_user.user_manager');
-        $em = $this->getDoctrine()->getManager();
-
-        if( empty( $user->isEnabled() ) ) {
-            $user->setEnabled( true );
-        }
-
-        if(!empty( $user->getPassword())) {
-            $user->setPlainPassword( $user->getPassword());
-        }
-
-        $userManager->updateCanonicalFields($user);
-        $userManager->updatePassword($user);
-
-        $em->merge( $user );
-        $em->flush();
-
-
-        
-        return $userManager->findUsers();
-		*/
-
+        return $this->get('blog.service')->patch( $blog )->get();
     }
     
     /**
-    * @Route("/api/blogs/{id}" )
+    * @Pagination(perPage="5",service="blog.service")
+    * @Delete("/blogs/{id}" )
     * @Method({"DELETE"})
     */
     public function deleteBlogAction( $id )
     {
-        // should be update only by me and admin role.
-        
-        /*
-        $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(['id'=> $id ]);
-        if( $user ) {
-            $userManager->deleteUser( $user );
-        }
-
-        return $userManager->findUsers();
-
-		*/
+        return $this->get('blog.service')->delete( $id )->get();
     }
 
     // "get_blog"      [GET] /blogs/{slug}
     public function getBlogAction( $slug )
     {
         
-        /*
-        $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(['id' => $slug ]);
-
-        return $user;
-        */
-
     }
+
+    public function editBlogAction($slug)
+    {} // "edit_user"     [GET] /users/{slug}/edit
+
+    public function putBlogAction($slug)
+    {} // "put_user"      [PUT] /users/{slug}
+
+    public function patchBlogAction($slug)
+    {} // "patch_user"    [PATCH] /users/{slug}
+
+    public function lockBlogAction($slug)
+    {} // "lock_user"     [PATCH] /users/{slug}/lock
+
+    public function banBlogAction($slug)
+    {} // "ban_user"      [PATCH] /users/{slug}/ban
+
+    public function removeBlogAction($slug)
+    {} // "remove_user"   [GET] /users/{slug}/remove
+
 }
