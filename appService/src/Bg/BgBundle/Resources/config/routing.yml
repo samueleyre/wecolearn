@@ -1,5 +1,4 @@
 blogs:
     #prefix: /api #odo : uncomment 
     type:     rest
-    prefix:   api
     resource: '@BgBundle/Controller/BlogsController.php'

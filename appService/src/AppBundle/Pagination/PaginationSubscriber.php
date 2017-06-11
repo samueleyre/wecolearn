@@ -1,5 +1,5 @@
-    <?php
-// src/AppBundle/EventSubscriber/TokenSubscriber.php
+<?php
+
 namespace AppBundle\Pagination;
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -16,6 +16,7 @@ class PaginationSubscriber implements EventSubscriberInterface
     public function __construct( ContainerInterface $container )
     {   
         $this->container = $container;
+        
     }
 
     public function onKernelController(FilterControllerEvent $event)
@@ -36,21 +37,19 @@ class PaginationSubscriber implements EventSubscriberInterface
         $reflectionClass = new \ReflectionClass($controller[0]);
         $reader = new AnnotationReader();
 
-        // TODO check if reflexion method is not just enough.
-        foreach ($reflectionClass->getMethods() as $reflectionMethod ) {
-            if( $reflectionMethod == $method
-                && $paginationAnnotation =  
-                    $reader->getMethodAnnotation( $reflectionMethod, 'AppBundle\\Pagination\\Annotation' ) ) 
-            {
+        
+        if( $paginationAnnotation =  
+                $reader->getMethodAnnotation( $method, 'AppBundle\\Pagination\\Annotation' ) ) 
+        {
 
-                $paginationQuery = $this->container->get('pagination.service')->getPaginationQuery();
-                $paginationQuery->perPage = $paginationAnnotation->perPage;
-                $service = $this->container->get( $paginationAnnotation->service );
-                $paginationQuery->count =  $service->count();
-                $service->setPaginationQuery($paginationQuery );
+            $paginationQuery = $this->container->get('pagination.service')->getPaginationQuery();
+            $paginationQuery->perPage = $paginationAnnotation->perPage;
+            $service = $this->container->get( $paginationAnnotation->service );
+            $paginationQuery->count =  $service->count();
+            $service->setPaginationQuery($paginationQuery );
 
-            }
         }
+        
     }
 
     public static function getSubscribedEvents()

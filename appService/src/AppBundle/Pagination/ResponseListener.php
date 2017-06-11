@@ -16,8 +16,8 @@ class ResponseListener {
 		$response = $event->getResponse();
 
 		if( $paginationQuery = $this->service->getPaginationQuery() ) {
-			$response->headers->add('X-Pagination', $paginationQuery->getHeader());
+			$response->headers->set('X-Pagination', $paginationQuery->getHeader());
 		}
-		$event->setResponse( $reponse );
+		$event->setResponse( $response );
 	}
 }

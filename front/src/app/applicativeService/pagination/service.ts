@@ -8,24 +8,34 @@ export class PaginationService {
 
 	public static pagination: Pagination;
 
-	init(): void {
+	static init(): void {
 		PaginationService.pagination = new Pagination( 1, 5, 1 );
 	}
 	
-	first() : number {
+	static first() : number {
 		return 1;
 	}
 	
-	previous() : boolean {
+	static previous() : boolean {
 		let ret = false;
-		if( PaginationService.pagination.page > 1) { 
+		if( PaginationService.pagination.page > 1 ) { 
 			PaginationService.pagination.page --;
 			ret = true;
 		}
 		return ret;
 	}
 
-	next(): boolean {
+	static page( page: number ): number {
+		let ret = page;
+		if( page > 0 && page < PaginationService.pagination.maxPage ) {
+			PaginationService.pagination.page = page;
+		} else {
+			ret = PaginationService.pagination.page; 
+		}
+		return ret;
+	}
+
+	static next(): boolean {
 		let ret = false;
 		if ( PaginationService.pagination.page < PaginationService.pagination.maxPage ) { 
 			PaginationService.pagination.page ++;
@@ -35,7 +45,7 @@ export class PaginationService {
 
 	}
 
-	last() : number {
+	static last() : number {
 		return PaginationService.pagination.maxPage;
 	}
 
@@ -50,32 +60,36 @@ export class PaginationService {
 	*/
 
 	static fromHeader( header: string ): void {
-		let matches = header.match('/^page=(\d+) perPage=(\d+) maxPage=(\d+)$/');
-		if( matches[1] && matches[2] && matches[3] ) {
-			PaginationService.pagination = new Pagination( 
-					parseInt(matches[1]), 
-					parseInt(matches[2]), 
-					parseInt(matches[3])
-				)
-			;
-			let pages = [];
-			
-			for( var i=1; i <= PaginationService.pagination.maxPage;i++) {
-				pages.push(i);
+		if( header ) {
+			let matches = header.match('/^page=(\d+) perPage=(\d+) maxPage=(\d+)$/');
+			if( matches[1] && matches[2] && matches[3] ) {
+				PaginationService.pagination = new Pagination( 
+						parseInt(matches[1]), 
+						parseInt(matches[2]), 
+						parseInt(matches[3])
+					)
+				;
+				let pages = [];
+				
+				for( var i=1; i <= PaginationService.pagination.maxPage;i++) {
+					pages.push(i);
+				}
+				EmitterService.get('PAGINATION_CHANGE').emit( pages );
 			}
-			EmitterService.get('PAGINATION_CHANGE').emit( pages );
 		}
 	}
 
 	static toHeader():string {
 		
+		if(! PaginationService.pagination ) PaginationService.init();
+
 		let page = PaginationService.pagination.page;
 		let perPage = PaginationService.pagination.perPage;
 		
 		return `page=${page} perPage=${perPage}`;
 	}
 
-	change():Observable<Array<number>> {
+	static change():Observable<Array<number>> {
 		return EmitterService.get('PAGINATION_CHANGE');
 	}
 }

@@ -15,18 +15,18 @@ class PaginationQuery {
 	}
 
 	public function getHeader() {
-		return sprintf('page=%d perPage=%d maxPage=%d', $this->page, , $this->perPage , $this->maxPage());
+		return sprintf('page=%d perPage=%d maxPage=%d', $this->page , $this->perPage , $this->maxPage());
 	}
 
-	public function start() {
-		$ret = $this->perPage * $this->page - 1;
+	public function offset() {
+		$ret = $this->perPage * ( $this->page - 1 );
 		if( $ret < 0 ) $ret = 0;
-		if( $this->page > $this->maxPage()) $ret = $this->perPage * $this->maxPage() - 1;
+		if( $this->page > $this->maxPage()) $ret = $this->perPage * ( $this->maxPage() - 1 );
 		return $ret;
 	}
 
 	public function size() {
-		return empty($this->perPage)?5:$this->perPage();
+		return empty($this->perPage)?5:$this->perPage;
 	}
 
 	public function maxPage() {

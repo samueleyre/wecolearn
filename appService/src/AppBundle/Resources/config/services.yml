@@ -1,21 +1,22 @@
-pagination.service:
-    class: AppBundle\Pagination\Service
+services:
+  pagination.service:
+      class: AppBundle\Pagination\Service
 
-pagination.request:
-    class: AppBundle\Pagination\RequestListener
-    arguments: [ @pagination.service ]
+  pagination.request:
+      class: AppBundle\Pagination\RequestListener
+      arguments: [ '@pagination.service' ]
+      tags:
+          - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+  pagination.subscriber:
+    class: AppBundle\Pagination\PaginationSubscriber
+    arguments: [ '@service_container' ]
     tags:
-        - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+        - { name: kernel.event_subscriber }
 
-pagination.subscriber:
-  class: AppBundle\Pagination\PaginationSubscriber
-  arguments: [ @service_container ]
-  tags:
-      - { name: kernel.event_subscriber }
-
-pagination.response:
-    class: AppBundle\Pagination\ResponseListener
-    arguments: [ @pagination.service ]
-    tags:
-        - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+  pagination.response:
+      class: AppBundle\Pagination\ResponseListener
+      arguments: [ '@pagination.service' ]
+      tags:
+          - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 

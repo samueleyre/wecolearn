@@ -7,6 +7,8 @@ import { NgbModule }       from '@ng-bootstrap/ng-bootstrap';
 
 import { PopinConfirmService }     from './applicativeService/popin/confirm/service';
 import { PopinConfirmModule }     from './applicativeService/popin/confirm/module';
+import { EqualValidator }    from './applicativeService/form/validator/equalValidator';
+import { routing }          from './applicativeService/routing/app.routing';
 
 
 import { ApplicativeModule }	from './applicativeService/module'; 
@@ -16,9 +18,7 @@ import { LoginComponent }	  from './components/login/component';
 import { HomeComponent }	  from './components/home/component';
 import { UserComponent }    from './components/user/component';
 
-import { EqualValidator }    from './applicativeService/form/validator/equalValidator';
-
-import { routing }			    from './applicativeService/routing/app.routing';
+import { BgModule }          from './bg/module';
 
 @NgModule({
   imports:[   
@@ -27,8 +27,11 @@ import { routing }			    from './applicativeService/routing/app.routing';
         FormsModule,
         HttpModule,
         NgbModule.forRoot(),
+        BgModule,
         RouterModule,
         PopinConfirmModule,
+        BgModule,
+        routing,
          
   ],
   declarations: [ 

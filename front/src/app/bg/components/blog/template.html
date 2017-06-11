@@ -1,0 +1,59 @@
+<!--
+<div class="col-md-6 col-md-offset-3">
+    <div class="alert alert-info">
+    </div>
+    <h2>Administration des comptes</h2>
+    <form name="form" (ngSubmit)="f.form.valid && submit(f)" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+            <label for="username">Nom d'utlisateur</label>
+            <input type="text" class="form-control" name="username" [(ngModel)]="user.username" #username="ngModel" required />
+            <div *ngIf="f.submitted && !username.valid" class="help-block">Le nom d'utilisateur est obligatoire</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required />
+            <div *ngIf="f.submitted && !email.valid" class="help-block">L'email est obligatoire</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+            <label for="password">Mot de passe</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required validateEqual="confirmPassword" reverse="true"/>
+            <div *ngIf="f.submitted && password.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !confirmPassword.valid }">
+            <label for="confirmPassword">Confirmer le mot de passe</label>
+            <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" required validateEqual="password" />
+            <div *ngIf="f.submitted && confirmPassword.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
+            <div *ngIf="( confirmPassword.hasError('validateEqual') || password.hasError('validateEqual') )" class="help-block">Les mots de passe ne correspondent pas</div>
+        </div>
+        <div class="form-group">
+            <button *ngIf="!edition" type="submit" [disabled]="loading" class="btn btn-primary">Ajouter</button> 
+            <button *ngIf="edition" type="submit" [disabled]="loading" class="btn btn-primary">Modifier</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    </form>
+</div>
+-->
+<div class="col-md-6 col-md-offset-3">
+    <h2>Liste des Blogs</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Modifier</th>
+              <th>Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let blog of blogs">
+              <td>{{ blog.name }}</td>
+              <td><button (click)="edit(blog.id)" class="btn">Modifier</button></td>
+              <td><button (click)="delete(blog.id)" class="btn">Supprimer</button></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <pagination (change)="change($event)"></pagination>
+</div>
+      

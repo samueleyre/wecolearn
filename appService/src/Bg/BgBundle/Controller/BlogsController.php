@@ -2,7 +2,7 @@
 
 namespace Bg\BgBundle\Controller;
 
-use BgBundle\Entity\Blog;
+use Bg\BgBundle\Entity\Blog;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -22,15 +22,18 @@ class BlogsController extends Controller
     public function optionsBlogsAction()
     {
         return [];
+        
     } 
      // "get_blogs"     [GET] /blogs
     /**
-	* @Pagination(perPage="5",service="blog.service")
+    * @Pagination(perPage="5",service="blog.service")
 	*/
     public function getBlogsAction()
     {
         
-        
+        $service = $this->get('blog.service');
+
+        return $service->get();
 
     }
 
@@ -81,7 +84,7 @@ class BlogsController extends Controller
             options={"deserializationContext"={"groups"={"input"} } }
     )
     */
-    public function patchBlogsAction( User $user )
+    public function patchBlogsAction( Blog $blog )
     {
         // should be update only by me and admin role.
         

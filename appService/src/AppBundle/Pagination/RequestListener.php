@@ -13,7 +13,7 @@ class RequestListener {
 
 	private $service;
 	
-	public function construct( Service $paginationService ) {
+	public function __construct( Service $paginationService ) {
 		$this->service = $paginationService;
 	}
 
@@ -27,8 +27,11 @@ class RequestListener {
 
         $request = $event->getRequest();
         if( $paginationHeader = $request->headers->get('X-Pagination')) {
+			
 			if(	preg_match('#page=([0-9]+?) perPage=([0-9]+?)#', $paginationHeader, $match)) {
         		$this->service->setPaginationQuery(new PaginationQuery($match[1], $match[2]));
+        	} else {
+        		$this->service->setPaginationQuery(new PaginationQuery(1, 10));
         	}
         }
         

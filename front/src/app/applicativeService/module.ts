@@ -28,8 +28,6 @@ import { UserService }             from './user/service';
             prefix: 'my-app',
             storageType: 'localStorage'
         }),
-        routing,
-        
   ],
   
   declarations: [ 

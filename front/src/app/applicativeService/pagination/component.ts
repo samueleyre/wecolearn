@@ -1,5 +1,4 @@
-import { Component, Ouput, OnInit }          from '@angular/core';
-
+import { Component, Output, OnInit, EventEmitter }          from '@angular/core';
 import { PaginationService }          from './service';
 
 @Component({
@@ -8,11 +7,13 @@ import { PaginationService }          from './service';
 })
 export class PaginationComponent implements OnInit{
   
-  page : number;
   
   @Output() change : EventEmitter<number> = new EventEmitter();
 
-  ngOnInit() {
+  pages: Array<number>;
+  page: number;
+  
+  ngOnInit(): void {
     PaginationService.init();
     this.pages = [1];
     PaginationService.change().subscribe( pages => {
@@ -22,35 +23,33 @@ export class PaginationComponent implements OnInit{
 
   }
 
-  previous() {
+  previous(): void {
     if(PaginationService.previous()) {
       this.page --;
       this.change.emit(this.page);
     }
   }
 
-  next() {
+  next(): void {
     if( PaginationService.next()) {
       this.page ++;
       this.change.emit(this.page);
     }
   }
 
-  first() {
+  first(): void {
     let current = this.page;
     this.page = PaginationService.first();
     if( current != this.page) this.change.emit(this.page);
   }
 
-  last() {
+  last(): void {
     let current = this.page;
     this.page = PaginationService.last();
     if( current != this.page) this.change.emit(this.page);
   }
 
-  page(page: number ) {
+  go(page: number ):void {
     this.page = PaginationService.page( page );
   }
-
-
 }

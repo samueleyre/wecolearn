@@ -2,8 +2,8 @@
 
 namespace Bg\BgBundle\Service;
 
-use AppBundle\Pagination\Trait as PaginationTrait;
-use AppBundle\Pagination\Interface as PaginationInterface;
+use AppBundle\Pagination\PaginationTrait;
+use AppBundle\Pagination\PaginationInterface;
 use Doctrine\ORM\EntityManager;
 
 class BlogService implements PaginationInterface {
@@ -18,29 +18,28 @@ class BlogService implements PaginationInterface {
 
 	
 	public function get() {
-		$query = sprint(
-			"SELECT FROM BgBundle:Blog LIMIT %d, %d",
-			 	$this->getPaginationQuery()->start(),
-			 	$this->getPaginationQuery()->size()
-			)
-		;
+		$query = "SELECT b FROM BgBundle:Blog b";
 
 		return 
 			$this
 				->em
 				->createQuery( $query )
+				->setMaxResults( $this->getPaginationQuery()->size() )
+				->setFirstResult($this->getPaginationQuery()->offset())
 				->getResult()
 		;
 
 	}
 
 	public function count() {
-		return 
-			$this
-				->em
-				->createQuery('SELECT COUNT(*) as N FROM BgBundle:Blog')
-				->getSingleResult()
-		;
+		
+		$qb = $this->em->createQueryBuilder();
+		$qb->select('count(b.id)');
+		$qb->from('BgBundle:Blog','b');
+
+		return $qb->getQuery()->getSingleScalarResult();
+
+		
 	}
 }
 
