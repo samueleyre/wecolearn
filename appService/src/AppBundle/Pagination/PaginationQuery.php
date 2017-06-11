@@ -10,6 +10,8 @@ class PaginationQuery {
 	
 	public function __construct( $page, $perPage ) {
 
+		//syslog(LOG_ERR, $perPage);
+
 		$this->page = $page;
 		$this->perPage = $perPage;
 	}
@@ -26,7 +28,7 @@ class PaginationQuery {
 	}
 
 	public function size() {
-		return empty($this->perPage)?5:$this->perPage;
+		return $this->perPage;
 	}
 
 	public function maxPage() {

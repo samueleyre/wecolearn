@@ -82,6 +82,9 @@ jms_serializer:
             FOSUserBundle:
                 namespace_prefix: "FOS\\UserBundle"
                 path:             "@AppBundle/Resources/config/serializer/fos"
+            BgBundle:
+                namespace_prefix: "Bg\\BgBundle"
+                path:             "@BgBundle/Resources/config/serializer"
 
 
 # FOS Rest

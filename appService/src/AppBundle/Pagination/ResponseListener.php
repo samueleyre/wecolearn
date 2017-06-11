@@ -17,6 +17,7 @@ class ResponseListener {
 
 		if( $paginationQuery = $this->service->getPaginationQuery() ) {
 			$response->headers->set('X-Pagination', $paginationQuery->getHeader());
+			$response->headers->set("Access-Control-Expose-Headers", 'X-Pagination');
 		}
 		$event->setResponse( $response );
 	}

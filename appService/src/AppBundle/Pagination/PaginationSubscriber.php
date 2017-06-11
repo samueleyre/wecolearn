@@ -32,18 +32,16 @@ class PaginationSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $reader = new AnnotationReader();
+        
         $object = new \ReflectionObject($controller[0]); // get controller
         $method = $object->getMethod($controller[1]);
-        $reflectionClass = new \ReflectionClass($controller[0]);
-        $reader = new AnnotationReader();
-
         
-        if( $paginationAnnotation =  
-                $reader->getMethodAnnotation( $method, 'AppBundle\\Pagination\\Annotation' ) ) 
+        
+        if( $paginationAnnotation = $reader->getMethodAnnotation( $method, 'AppBundle\\Pagination\\Annotation' ) ) 
         {
 
             $paginationQuery = $this->container->get('pagination.service')->getPaginationQuery();
-            $paginationQuery->perPage = $paginationAnnotation->perPage;
             $service = $this->container->get( $paginationAnnotation->service );
             $paginationQuery->count =  $service->count();
             $service->setPaginationQuery($paginationQuery );

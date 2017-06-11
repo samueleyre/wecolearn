@@ -9,7 +9,9 @@ export class PaginationService {
 	public static pagination: Pagination;
 
 	static init(): void {
-		PaginationService.pagination = new Pagination( 1, 5, 1 );
+		if(!PaginationService.pagination) {
+			PaginationService.pagination = new Pagination( 1, 10, 1 );
+		}
 	}
 	
 	static first() : number {
@@ -27,7 +29,7 @@ export class PaginationService {
 
 	static page( page: number ): number {
 		let ret = page;
-		if( page > 0 && page < PaginationService.pagination.maxPage ) {
+		if( page > 0 && page <= PaginationService.pagination.maxPage ) {
 			PaginationService.pagination.page = page;
 		} else {
 			ret = PaginationService.pagination.page; 
@@ -37,7 +39,7 @@ export class PaginationService {
 
 	static next(): boolean {
 		let ret = false;
-		if ( PaginationService.pagination.page < PaginationService.pagination.maxPage ) { 
+		if ( PaginationService.pagination.page <= PaginationService.pagination.maxPage ) { 
 			PaginationService.pagination.page ++;
 			ret = true;
 		}
@@ -61,7 +63,7 @@ export class PaginationService {
 
 	static fromHeader( header: string ): void {
 		if( header ) {
-			let matches = header.match('/^page=(\d+) perPage=(\d+) maxPage=(\d+)$/');
+			let matches = header.match(/^page=(\d+) perPage=(\d+) maxPage=(\d+)$/);
 			if( matches[1] && matches[2] && matches[3] ) {
 				PaginationService.pagination = new Pagination( 
 						parseInt(matches[1]), 

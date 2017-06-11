@@ -20,7 +20,9 @@ class BlogService implements PaginationInterface {
 	public function get() {
 		$query = "SELECT b FROM BgBundle:Blog b";
 
-		return 
+		syslog(LOG_ERR, $this->getPaginationQuery()->size());
+
+		$ret = 
 			$this
 				->em
 				->createQuery( $query )
@@ -28,6 +30,9 @@ class BlogService implements PaginationInterface {
 				->setFirstResult($this->getPaginationQuery()->offset())
 				->getResult()
 		;
+
+		return $ret;
+
 
 	}
 

@@ -1,6 +1,6 @@
 export class Pagination {
 
-	public perPage: number = 5;
+	public perPage: number = 10;
 	public page: number = 1;
 	public maxPage: number = 1;
 

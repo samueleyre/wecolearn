@@ -1,31 +1,32 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Premier">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Premier</span>
-      </a>
+      <button class="page-link btn btn-link" (click)="first()" aria-label="Premier">
+        <span>Premier</span>
+      </button>
     </li>
-    <li class="page-item disabled">
-      <a class="page-link" href="#" aria-label="Précédent">
+    <li class="page-item">
+      <button class="page-link btn btn-link" (click)="previous()" aria-label="Précédent">
         <span aria-hidden="true">&laquo;</span>
         <span class="sr-only">Précédent</span>
-      </a>
+      </button>
     </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item active"><a class="page-link" href="#">2 <span class="sr-only">(current)</span></a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li *ngFor="let currentPage of pages" class="page-item" ngClass="{'active disabled' : currentPage == page }">
+      <button class="page-link btn btn-link" (click)="go(currentPage)">
+        {{ currentPage }}
+        <span class="sr-only">(courant)</span>
+      </button>
+    </li>
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Suivant">
+      <button class="page-link btn btn-link" (click)="next()" aria-label="Suivant">
         <span aria-hidden="true">&raquo;</span>
         <span class="sr-only">Suivant</span>
-      </a>
+      </button>
     </li>
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Dernier">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Dernier</span>
-      </a>
+      <button class="page-link btn btn-links" (click)="last()" aria-label="Dernier">
+        <span>Dernier</span>
+      </button>
     </li>
   </ul>
 </nav>
