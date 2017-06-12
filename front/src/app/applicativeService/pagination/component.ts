@@ -9,12 +9,13 @@ export class PaginationComponent implements OnInit{
   
   
   @Output() change : EventEmitter<number> = new EventEmitter();
-
+  
   pages: Array<number>;
   page: number;
   maxPage:number;
 
   size: number;
+
   
   ngOnInit(): void {
     PaginationService.init();

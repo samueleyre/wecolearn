@@ -12,5 +12,11 @@ blogs:
     prefix:   api
     resource: '@BgBundle/Controller/BlogsController.php'
 
+clients:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/ClientsController.php'
+
+
 api_login_check:
    path: /api/login_check

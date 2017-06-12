@@ -43,10 +43,19 @@ class PaginationSubscriber implements EventSubscriberInterface
         {
 
             $paginationQuery = $this->container->get('pagination.service')->getPaginationQuery();
-            syslog(LOG_ERR, 'pagination query'.get_class($paginationQuery));
             $service = $this->container->get( $paginationAnnotation->service );
             if( $service ) {
-                syslog(LOG_ERR, 'service class'.get_class($service));
+            
+                if( isset( $paginationAnnotation->setters ) 
+                        && is_array($paginationAnnotation->setters)
+                        ) 
+                {
+
+                    foreach( $paginationAnnotation->setters as $setter => $value ) {
+                        $service->$function( $value );
+                    }
+                }
+
                 $service->setPaginationQuery($paginationQuery );
                 $paginationQuery->count =  $service->count();
             }

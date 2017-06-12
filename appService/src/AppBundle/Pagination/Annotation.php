@@ -7,15 +7,22 @@ namespace AppBundle\Pagination;
 final class Annotation
 {
     /**
-     * Parameter name
+     * Query Service
      *
      * @var string
      */
     public $service;
     /**
-     * Parameter description
+     * Paramter perPage
      *
      * @var string
      */
     public $perPage;
+    /**
+     * Service setters
+     *
+     * @var array
+     */
+    public $setters;
+
 }

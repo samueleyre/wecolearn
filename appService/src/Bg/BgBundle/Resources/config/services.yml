@@ -2,3 +2,6 @@ services:
   blog.service:
     class: Bg\BgBundle\Service\BlogService
     arguments: ['@doctrine.orm.entity_manager']
+  gppd.service:
+    class: Bg\BgBundle\Service\GPPDService
+    arguments: ['@doctrine.orm.entity_manager']

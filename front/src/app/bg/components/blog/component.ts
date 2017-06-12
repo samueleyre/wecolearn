@@ -5,8 +5,10 @@ import {
    }                             from '@angular/core';
 import { NgForm }             from '@angular/forms';
 
-import { Blog }                    from './model'; 
+import { Blog }                    from './model';
 import { BlogService }             from './service';
+import { GPPDService }             from './../../service/gppd';
+
 import { PopinConfirmService }    from './../../../applicativeService/popin/confirm/service';
 
 @Component({
@@ -20,7 +22,7 @@ export class BlogComponent implements OnInit {
     blog: Blog;
     edition:boolean = false;
     
-    constructor( private service: BlogService, private confirm: PopinConfirmService ) {
+    constructor( private service: GPPDService, private confirm: PopinConfirmService ) {
         this.blog = new Blog();
     } 
     
@@ -30,27 +32,29 @@ export class BlogComponent implements OnInit {
     }
 
     private load() : void {
-        this.service.get().subscribe( blogs => {
+        this.service.get().subscribe( ( blogs: Blog[] ) => {
             this.blogs  = blogs;
-        })
+        });
     }
  
-    change(event: number ) : void {
+    change( event: number ) : void {
         this.load();
     }
 
     submit(f:NgForm) {
-        
+            
         if(this.edition) {
             this.service.patch( this.blog ).subscribe( 
-                    blogs => this.blogs = blogs, 
+                    ( blogs: Blog[] ) => { 
+                        this.blogs = blogs;
+                    }, 
                     error => { console.log(error) }
                 );
             this.edition = false;
 
         } else {
            this.service.post(this.blog).subscribe(
-               blogs => {
+               ( blogs: Blog[] ) => {
                    this.blogs = blogs;
                },
                error => { console.log(error) }
@@ -63,7 +67,8 @@ export class BlogComponent implements OnInit {
     edit( id : number ) {
         for( let i in this.blogs ) {
             if( this.blogs[i].id === id ) {
-                this.blog = this.blogs[i];
+                this.blog = new Blog();
+                this.blog.set( this.blogs[i] );
                 this.edition = true;
             }
         }
@@ -77,7 +82,9 @@ export class BlogComponent implements OnInit {
         .subscribe( confirm => {
             if( true == confirm ) {
                 this.service.delete( id ).subscribe(
-                    blogs => this.blogs = blogs,
+                    ( blogs: Blog[] ) => { 
+                        this.blogs = blogs
+                    },
                     error => {
                         console.log('ERRORS', error );
                     }

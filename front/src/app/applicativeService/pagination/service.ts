@@ -10,7 +10,7 @@ export class PaginationService {
 
 	static init(): void {
 		if(!PaginationService.pagination) {
-			PaginationService.pagination = new Pagination( 1, 10, 1 );
+			PaginationService.pagination = new Pagination( 1, 7, 1 );
 		}
 	}
 	

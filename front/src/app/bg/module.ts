@@ -6,6 +6,8 @@ import { FormsModule }             from '@angular/forms';
 import { route }                  from './route';
 import { BlogComponent }          from './components/blog/component';
 import { BlogService }            from './components/blog/service';
+import { GPPDService }            from './service/gppd';
+
 
 import { PopinConfirmModule }        from './../applicativeService/popin/confirm/module';
 
@@ -29,6 +31,7 @@ import { PaginationModule }        from './../applicativeService/pagination/modu
   ],
   providers : [
     BlogService,
+    GPPDService
   ],
   entryComponents: [
     
