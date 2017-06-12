@@ -52,7 +52,7 @@ class PaginationSubscriber implements EventSubscriberInterface
                 {
 
                     foreach( $paginationAnnotation->setters as $setter => $value ) {
-                        $service->$function( $value );
+                        $service->$setter( $value );
                     }
                 }
 

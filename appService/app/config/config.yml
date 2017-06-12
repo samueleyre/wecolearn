@@ -74,7 +74,7 @@ sensio_framework_extra:
 
 jms_serializer:
     metadata:
-        auto_detection: false
+        auto_detection: true
         directories:
             AppBundle:
                 namespace_prefix: AppBundle

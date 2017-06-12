@@ -5,9 +5,11 @@ import {
    }                             from '@angular/core';
 import { NgForm }             from '@angular/forms';
 
-import { Blog }                    from './model';
-import { BlogService }             from './service';
+import { Blog }                    from './entity';
+
 import { GPPDService }             from './../../service/gppd';
+import { GPPDComponent }             from './../../component/gppd';
+
 
 import { PopinConfirmService }    from './../../../applicativeService/popin/confirm/service';
 
@@ -16,14 +18,10 @@ import { PopinConfirmService }    from './../../../applicativeService/popin/conf
 })
 
 @Injectable()
-export class BlogComponent implements OnInit {
+export class BlogComponent extends GPPDComponent implements OnInit {
     
-    blogs: Array<Blog> = [];
-    blog: Blog;
-    edition:boolean = false;
-    
-    constructor( private service: GPPDService, private confirm: PopinConfirmService ) {
-        this.blog = new Blog();
+    constructor( protected service: GPPDService, protected confirm: PopinConfirmService ) {
+        super(service, confirm );
     } 
     
     ngOnInit() {
@@ -31,67 +29,17 @@ export class BlogComponent implements OnInit {
         
     }
 
-    private load() : void {
-        this.service.get().subscribe( ( blogs: Blog[] ) => {
-            this.blogs  = blogs;
-        });
-    }
- 
-    change( event: number ) : void {
-        this.load();
+    getMessage() {
+        return 'Vous allez effacer ce blog, êtes vous sûr ?';
     }
 
-    submit(f:NgForm) {
-            
-        if(this.edition) {
-            this.service.patch( this.blog ).subscribe( 
-                    ( blogs: Blog[] ) => { 
-                        this.blogs = blogs;
-                    }, 
-                    error => { console.log(error) }
-                );
-            this.edition = false;
-
-        } else {
-           this.service.post(this.blog).subscribe(
-               ( blogs: Blog[] ) => {
-                   this.blogs = blogs;
-               },
-               error => { console.log(error) }
-           ); 
-        }
-        this.blog = new Blog();
-        f.resetForm();
+    getApi() {
+        return '/api/blogs';
     }
 
-    edit( id : number ) {
-        for( let i in this.blogs ) {
-            if( this.blogs[i].id === id ) {
-                this.blog = new Blog();
-                this.blog.set( this.blogs[i] );
-                this.edition = true;
-            }
-        }
+    getEntity() {
+        return new Blog();
     }
 
-    delete( id : number ) {
-
-        this
-        .confirm
-        .setMessage( `Vous allez supprimer ce blog, êtes vous sûr ?`)
-        .subscribe( confirm => {
-            if( true == confirm ) {
-                this.service.delete( id ).subscribe(
-                    ( blogs: Blog[] ) => { 
-                        this.blogs = blogs
-                    },
-                    error => {
-                        console.log('ERRORS', error );
-                    }
-                )
-            } else {
-                console.log('CONFIRMATION', confirm );
-            }
-        });
-    }
+    
 }

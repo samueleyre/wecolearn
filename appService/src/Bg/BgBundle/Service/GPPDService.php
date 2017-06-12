@@ -25,7 +25,7 @@ class GPPDService implements PaginationInterface {
 	}
 
 	public function get() {
-		$query = sprintf("SELECT b FROM %s b", $this->entityRef );
+		$query = sprintf("SELECT entity FROM %s entity", $this->entityRef );
 
 		$ret = 
 			$this
@@ -43,8 +43,8 @@ class GPPDService implements PaginationInterface {
 	public function count() {
 		
 		$qb = $this->em->createQueryBuilder();
-		$qb->select('count(b.id)');
-		$qb->from(sprintf('%s', $this->entityRef ),'b');
+		$qb->select('count(entity.id)');
+		$qb->from(sprintf('%s', $this->entityRef ),'entity');
 
 		return $qb->getQuery()->getSingleScalarResult();
 
@@ -62,7 +62,7 @@ class GPPDService implements PaginationInterface {
 		;
 	}
 
-	public function patch( Entity $entity ) {
+	public function patch( $entity ) {
 
 		$this->em->merge( $entity );
 		$this->em->flush();
@@ -70,9 +70,9 @@ class GPPDService implements PaginationInterface {
 	
 	}
 
-	public function post( Entity $entity ) {
+	public function post( $entity ) {
 		
-		$this->em->persist( $blog );
+		$this->em->persist( $entity );
 		$this->em->flush();
 		return $this;
 	

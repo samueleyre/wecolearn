@@ -7,16 +7,8 @@ users:
     prefix:   api
     resource: '@AppBundle/Controller/UsersController.php'
 
-blogs:
-    type:     rest
-    prefix:   api
-    resource: '@BgBundle/Controller/BlogsController.php'
-
-clients:
-    type:     rest
-    prefix:   api
-    resource: '@BgBundle/Controller/ClientsController.php'
-
+bg:
+  resource: '@BgBundle/Resources/config/routing/routes.yml'
 
 api_login_check:
    path: /api/login_check

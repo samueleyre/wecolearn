@@ -23,14 +23,7 @@ use AppBundle\Pagination\Annotation as Pagination;
 class ClientsController extends GPPDController
 {
     
-    protected $entityRef;
-
-    public function __construct() {
-        
-        parent::__construct();
-        
-        $this->entityRef = 'BgBundle:Client';
-    }
+    protected $entityRef = 'BgBundle:Client';
 
     // "options_blogs" [OPTIONS] /blogs
     public function optionClientsAction()
@@ -62,8 +55,8 @@ class ClientsController extends GPPDController
         setters={"setEntityRef":"BgBundle:Client"}
         )
     * @ParamConverter(
-        "blog",
-            class="Bg\BgBundle\Entity\Client", 
+        "client",
+        class="Bg\BgBundle\Entity\Client", 
         converter="fos_rest.request_body",
         options={"deserializationContext"={"groups"={"input"} } }
     )
@@ -85,7 +78,7 @@ class ClientsController extends GPPDController
         setters={"setEntityRef":"BgBundle:Client"}
       )
     * @ParamConverter(
-            "blog", 
+            "client", 
             class="Bg\BgBundle\Entity\Client", 
             converter="fos_rest.request_body",
             options={"deserializationContext"={"groups"={"input"} } }
@@ -98,13 +91,13 @@ class ClientsController extends GPPDController
     }
     
     /**
-    * @Delete("/blogs/{id}" )
+    * @Delete("/clients/{id}")
     * @Pagination(
         perPage="5",service="gppd.service", 
         setters={"setEntityRef":"BgBundle:Client"}
       )
     */
-    public function delete( $id )
+    public function deleteClientsAction( $id )
     {
         return $this->deleteAction( $id );
     }

@@ -1,0 +1,9 @@
+blogs:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/BlogsController.php'
+
+clients:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/ClientsController.php'

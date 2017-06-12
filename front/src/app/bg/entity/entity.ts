@@ -1,4 +1,4 @@
-export class Entity {
+	export class Entity {
 
 	public serialize(): object {
 		let ret  = {};

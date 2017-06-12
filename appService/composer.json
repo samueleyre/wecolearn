@@ -29,6 +29,7 @@
         "friendsofsymfony/rest-bundle": "^2.0.0",
         "friendsofsymfony/user-bundle": "dev-master",
         "incenteev/composer-parameter-handler": "^2.0",
+        "jms/di-extra-bundle": "dev-master",
         "jms/serializer-bundle": "dev-master",
         "lexik/jwt-authentication-bundle": "dev-master",
         "nelmio/cors-bundle": "^1.5",

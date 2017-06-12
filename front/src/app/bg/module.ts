@@ -3,16 +3,14 @@ import { NgModule  }               from '@angular/core';
 import { RouterModule }            from '@angular/router';
 import { FormsModule }             from '@angular/forms';
 
-import { route }                  from './route';
-import { BlogComponent }          from './components/blog/component';
-import { BlogService }            from './components/blog/service';
-import { GPPDService }            from './service/gppd';
-
-
 import { PopinConfirmModule }        from './../applicativeService/popin/confirm/module';
-
 import { PaginationModule }        from './../applicativeService/pagination/module';
 
+import { route }                  from './route';
+import { GPPDService }            from './service/gppd';
+
+import { BlogComponent }          from './components/blog/component';
+import { ClientComponent }          from './components/client/component';
 
 
 @NgModule({
@@ -28,9 +26,9 @@ import { PaginationModule }        from './../applicativeService/pagination/modu
   ],
   declarations: [ 
   	BlogComponent,
+    ClientComponent,
   ],
   providers : [
-    BlogService,
     GPPDService
   ],
   entryComponents: [

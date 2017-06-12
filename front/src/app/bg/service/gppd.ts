@@ -10,9 +10,13 @@ import { IEntity }                  from './../entity/interface'
 @Injectable()
 export class GPPDService {
 
-	route: string = '/api/blogs';
+	route: string = '/api';
 	
 	constructor( private http : Http ) {}
+
+	setApi(route: string ){
+		this.route = route;
+	}
 
 	
 	get(): Observable<IEntity[]> {
