@@ -19,32 +19,41 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Pagination\Annotation as Pagination;
 
 
-class BlogsController extends Controller
+
+class BlogsController extends GPPDController
 {
     
+    protected $entityRef = 'BgBundle:Blog';
+
     // "options_blogs" [OPTIONS] /blogs
-    public function optionsBlogsAction()
+    public function optionClientsAction()
     {
-        return [];
+        return $this->optionAction();
         
     } 
-     // "get_blogs"     [GET] /blogs
     
     /**
 	* @Get("/blogs")
-    * @Pagination(perPage="5",service="blog.service")
+    * @Pagination(
+        perPage="5",
+        service="gppd.service", 
+        setters={"setEntityRef":"BgBundle:Client"}
+     )
     */
     public function getBlogsAction()
     {
         
-        return $this->get('blog.service')->get();
+        return $this->getAction();
 		
 	}
-
     
     /**
-    * @Pagination(perPage="5",service="blog.service")
     * @Post("/blogs")
+    * @Pagination(
+        perPage="5",
+        service="gppd.service", 
+        setters={"setEntityRef":"BgBundle:Blog"}
+        )
     * @ParamConverter(
         "blog",
         class="Bg\BgBundle\Entity\Blog", 
@@ -55,58 +64,41 @@ class BlogsController extends Controller
     public function postBlogsAction( Blog $blog )
     {
         
-        return $this->get('blog.service')->post( $blog )->get();
+        return 
+            $this
+                ->postAction($blog);
         
     }
-
+    
     /**
-    * @Pagination(perPage="5",service="blog.service")
     * @Patch("/blogs")
+    * @Pagination(
+        perPage="5",
+        service="gppd.service", 
+        setters={"setEntityRef":"BgBundle:Blog"}
+      )
     * @ParamConverter(
             "blog", 
             class="Bg\BgBundle\Entity\Blog", 
             converter="fos_rest.request_body",
             options={"deserializationContext"={"groups"={"input"} } }
-    )
+      )
 	*/
     public function patchBlogsAction( Blog $blog )
     {
-        // should be update only by me and admin role.
-        return $this->get('blog.service')->patch( $blog )->get();
+        return $this->patchAction( $blog );
+            
     }
     
     /**
-    * @Pagination(perPage="5",service="blog.service")
-    * @Delete("/blogs/{id}" )
-    * @Method({"DELETE"})
+    * @Delete("/blogs/{id}")
+    * @Pagination(
+        perPage="5",service="gppd.service", 
+        setters={"setEntityRef":"BgBundle:Client"}
+      )
     */
-    public function deleteBlogAction( $id )
+    public function deleteBlogsAction( $id )
     {
-        return $this->get('blog.service')->delete( $id )->get();
+        return $this->deleteAction( $id );
     }
-
-    // "get_blog"      [GET] /blogs/{slug}
-    public function getBlogAction( $slug )
-    {
-        
-    }
-
-    public function editBlogAction($slug)
-    {} // "edit_user"     [GET] /users/{slug}/edit
-
-    public function putBlogAction($slug)
-    {} // "put_user"      [PUT] /users/{slug}
-
-    public function patchBlogAction($slug)
-    {} // "patch_user"    [PATCH] /users/{slug}
-
-    public function lockBlogAction($slug)
-    {} // "lock_user"     [PATCH] /users/{slug}/lock
-
-    public function banBlogAction($slug)
-    {} // "ban_user"      [PATCH] /users/{slug}/ban
-
-    public function removeBlogAction($slug)
-    {} // "remove_user"   [GET] /users/{slug}/remove
-
 }

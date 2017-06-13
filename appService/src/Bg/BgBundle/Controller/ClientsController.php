@@ -69,7 +69,7 @@ class ClientsController extends GPPDController
                 ->postAction($client);
         
     }
-
+    
     /**
     * @Patch("/clients")
     * @Pagination(

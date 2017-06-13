@@ -14,11 +14,12 @@ export class PaginationService {
 		}
 	}
 	
-	static first() : number {
-		return 1;
+	static first(): number {
+		PaginationService.pagination.page = 1;
+		return PaginationService.pagination.page;
 	}
 	
-	static previous() : boolean {
+	static previous(): boolean {
 		let ret = false;
 		if( PaginationService.pagination.page > 1 ) { 
 			PaginationService.pagination.page --;
@@ -47,8 +48,9 @@ export class PaginationService {
 
 	}
 
-	static last() : number {
-		return PaginationService.pagination.maxPage;
+	static last(): number {
+		PaginationService.pagination.page = PaginationService.pagination.maxPage;
+		return PaginationService.pagination.page;
 	}
 
 	/*
