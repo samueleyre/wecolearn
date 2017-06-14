@@ -1,0 +1,11 @@
+Bg\BgBundle\Entity\Clef:
+    exclusion_policy: all
+    access_order:     alphabetical
+    properties:
+        idClient:
+          serialized_name: idClient
+          groups: [ input, output ]
+          type: integer
+        url:
+          groups: [ input, output ]
+          type: string

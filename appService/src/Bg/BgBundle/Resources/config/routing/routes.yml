@@ -12,3 +12,8 @@ ancres:
     type:     rest
     prefix:   api
     resource: '@BgBundle/Controller/AncresController.php'
+
+clefs:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/ClefsController.php'

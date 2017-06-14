@@ -28,8 +28,12 @@ class RequestListener {
         $request = $event->getRequest();
         if( $paginationHeader = $request->headers->get('X-Pagination')) {
 			
-			if(	preg_match('#page=([0-9]*?) perPage=([0-9]+?)$#', $paginationHeader, $match)) {
-				$this->service->setPaginationQuery(new PaginationQuery($match[1], $match[2]));
+			if(	preg_match('#page=([0-9]*?) perPage=([0-9]+?)(( disabled=1)|)$#', $paginationHeader, $match)) {
+				$disabled = false;
+                if(isset($match[4])) {
+                    $disabled = true;
+                }
+                $this->service->setPaginationQuery(new PaginationQuery($match[1], $match[2], $disabled ));
         	} else {
         		$this->service->setPaginationQuery(new PaginationQuery(1, 10));
         	}

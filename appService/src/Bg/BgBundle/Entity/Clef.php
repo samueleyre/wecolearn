@@ -16,7 +16,7 @@ class Clef extends Phrase {
 	protected $idClient;
 
 	/**
-     * @ORM\Column(type="string",name="url",length="255")
+     * @ORM\Column(type="string",name="url",length=255)
      */
 	protected $url;
 

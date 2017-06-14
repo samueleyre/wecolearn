@@ -7,7 +7,6 @@ import 'rxjs/add/operator/map'
 import { IEntity }                  from './../entity/interface' 
 
 
-@Injectable()
 export class GPPDService {
 
 	route: string = '/api';
@@ -20,6 +19,7 @@ export class GPPDService {
 
 	
 	get(): Observable<IEntity[]> {
+		console.log('ROUTE',this.route );
 		return this.http.get(`${this.route}`).map((response: Response) => {
 				return response.json();
 			})

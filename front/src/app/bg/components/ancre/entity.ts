@@ -4,7 +4,7 @@ export class Ancre extends Entity implements IEntity  {
 
 	public id: 		number|null;
 	public phrase: 	string;
-	public idLanguage: string;
+	public idLanguage: number;
 
 	constructor() {
 		super();

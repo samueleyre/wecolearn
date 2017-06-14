@@ -36,6 +36,7 @@ export class GPPDComponent {
     }
 
     protected load() : void {
+        this.service.setApi(this.getApi());
         this.service.get().subscribe( ( entities: IEntity[] ) => {
             this.entities  = entities;
         });

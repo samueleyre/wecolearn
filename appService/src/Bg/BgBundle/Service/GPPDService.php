@@ -40,6 +40,19 @@ class GPPDService implements PaginationInterface {
 
 	}
 
+	public function getAll() {
+		
+		$query = sprintf("SELECT entity FROM %s entity", $this->entityRef );
+
+		$ret = 
+			$this
+				->em
+				->createQuery( $query )
+				->getResult()
+		;
+		return $ret;		
+	}
+
 	public function count() {
 		
 		$qb = $this->em->createQueryBuilder();

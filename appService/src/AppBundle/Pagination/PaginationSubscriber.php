@@ -45,7 +45,9 @@ class PaginationSubscriber implements EventSubscriberInterface
             $paginationQuery = $this->container->get('pagination.service')->getPaginationQuery();
             $service = $this->container->get( $paginationAnnotation->service );
             if( $service ) {
-            
+                
+
+
                 if( isset( $paginationAnnotation->setters ) 
                         && is_array($paginationAnnotation->setters)
                         ) 
@@ -54,10 +56,18 @@ class PaginationSubscriber implements EventSubscriberInterface
                     foreach( $paginationAnnotation->setters as $setter => $value ) {
                         $service->$setter( $value );
                     }
+
+                    $paginationQuery->count =  $service->count();
+
+                    if( $paginationQuery->disabled ) {
+                        
+                        $paginationQuery->perPage = $paginationQuery->count;
+
+                    }
                 }
 
                 $service->setPaginationQuery($paginationQuery );
-                $paginationQuery->count =  $service->count();
+                
             }
 
         }

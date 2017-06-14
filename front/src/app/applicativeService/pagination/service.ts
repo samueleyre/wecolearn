@@ -7,11 +7,19 @@ import { Observable }       from "rxjs/Rx";
 export class PaginationService {
 
 	public static pagination: Pagination;
-
+	
 	static init(): void {
 		if(!PaginationService.pagination) {
-			PaginationService.pagination = new Pagination( 1, 7, 1 );
+			PaginationService.pagination = new Pagination( 1, 7, 1 , false);
 		}
+	}
+
+	static disable() {
+		PaginationService.pagination.disabled = true;
+	}
+
+	static enable() {
+		PaginationService.pagination.disabled = false;	
 	}
 	
 	static first(): number {
@@ -70,7 +78,8 @@ export class PaginationService {
 				PaginationService.pagination = new Pagination( 
 						parseInt(matches[1]), 
 						parseInt(matches[2]), 
-						parseInt(matches[3])
+						parseInt(matches[3]),
+						false
 					)
 				;
 				let pages = [];
@@ -89,8 +98,14 @@ export class PaginationService {
 
 		let page = PaginationService.pagination.page;
 		let perPage = PaginationService.pagination.perPage;
+
+		let disabled = '';
+		if( true == PaginationService.pagination.disabled ) {
+			PaginationService.enable();
+			disabled = ' disabled=1';
+		}
 		
-		return `page=${page} perPage=${perPage}`;
+		return `page=${page} perPage=${perPage}${disabled}`;
 	}
 
 	static change():Observable<Array<number>> {

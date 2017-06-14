@@ -15,7 +15,7 @@ export class SelectLanguageComponent {
 		this._idLanguage = 1;
 	}
 
-	onChange( newValue:number ) {
+	onChange( newValue:string ) {
 		this._idLanguage  = parseInt(newValue);
 		this.idLanguageChange.emit(this._idLanguage);
 	}

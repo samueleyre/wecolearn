@@ -6,14 +6,16 @@ class PaginationQuery {
 
 	public $page;
 	public $perPage;
+	public $disbled;
 	public $count;
 	
-	public function __construct( $page, $perPage ) {
+	public function __construct( $page, $perPage, $disabled = false ) {
 
 		//syslog(LOG_ERR, $perPage);
 
 		$this->page = $page;
 		$this->perPage = $perPage;
+		$this->disabled = $disabled;
 	}
 
 	public function getHeader() {
