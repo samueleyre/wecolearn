@@ -2,7 +2,7 @@
 
 namespace Bg\BgBundle\Controller;
 
-use Bg\BgBundle\Entity\Blog;
+use Bg\BgBundle\Entity\Ancre;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -20,27 +20,27 @@ use AppBundle\Pagination\Annotation as Pagination;
 
 
 
-class BlogsController extends GPPDController
+class AncresController extends GPPDController
 {
     
-    protected $entityRef = 'BgBundle:Blog';
+    protected $entityRef = 'BgBundle:Ancre';
 
-    // "options_blogs" [OPTIONS] /blogs
-    public function optionBlogsAction()
+    // "options_ancres" [OPTIONS] /ancres
+    public function optionAncresAction()
     {
         return $this->optionAction();
         
     } 
     
     /**
-	* @Get("/blogs")
+	* @Get("/ancres")
     * @Pagination(
         perPage="5",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Blog"}
+        setters={"setEntityRef":"BgBundle:Ancre"}
      )
     */
-    public function getBlogsAction()
+    public function getAncresAction()
     {
         
         return $this->getAction();
@@ -48,56 +48,56 @@ class BlogsController extends GPPDController
 	}
     
     /**
-    * @Post("/blogs")
+    * @Post("/ancres")
     * @Pagination(
         perPage="5",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Blog"}
+        setters={"setEntityRef":"BgBundle:Ancre"}
         )
     * @ParamConverter(
-        "blog",
-        class="Bg\BgBundle\Entity\Blog", 
+        "ancre",
+        class="Bg\BgBundle\Entity\Ancre", 
         converter="fos_rest.request_body",
         options={"deserializationContext"={"groups"={"input"} } }
     )
     */
-    public function postBlogsAction( Blog $blog )
+    public function postAncresAction( Ancre $ancre )
     {
         
         return 
             $this
-                ->postAction($blog);
+                ->postAction($ancre);
         
     }
     
     /**
-    * @Patch("/blogs")
+    * @Patch("/ancres")
     * @Pagination(
         perPage="5",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Blog"}
+        setters={"setEntityRef":"BgBundle:Ancre"}
       )
     * @ParamConverter(
-            "blog", 
-            class="Bg\BgBundle\Entity\Blog", 
+            "ancre", 
+            class="Bg\BgBundle\Entity\Ancre", 
             converter="fos_rest.request_body",
             options={"deserializationContext"={"groups"={"input"} } }
       )
 	*/
-    public function patchBlogsAction( Blog $blog )
+    public function patchAncresAction( Ancre $ancre  )
     {
-        return $this->patchAction( $blog );
+        return $this->patchAction( $ancre );
             
     }
     
     /**
-    * @Delete("/blogs/{id}")
+    * @Delete("/ancres/{id}")
     * @Pagination(
         perPage="5",service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Blog"}
+        setters={"setEntityRef":"BgBundle:Client"}
       )
     */
-    public function deleteBlogsAction( $id )
+    public function deleteAncresAction( $id )
     {
         return $this->deleteAction( $id );
     }

@@ -7,3 +7,8 @@ clients:
     type:     rest
     prefix:   api
     resource: '@BgBundle/Controller/ClientsController.php'
+
+ancres:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/AncresController.php'

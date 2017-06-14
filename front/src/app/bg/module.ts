@@ -1,17 +1,20 @@
-import { BrowserModule }           from '@angular/platform-browser';
-import { NgModule  }               from '@angular/core';
-import { RouterModule }            from '@angular/router';
-import { FormsModule }             from '@angular/forms';
+import { BrowserModule }            from '@angular/platform-browser';
+import { NgModule  }                from '@angular/core';
+import { RouterModule }             from '@angular/router';
+import { FormsModule }              from '@angular/forms';
 
-import { PopinConfirmModule }        from './../applicativeService/popin/confirm/module';
-import { PaginationModule }        from './../applicativeService/pagination/module';
+import { PopinConfirmModule }       from './../applicativeService/popin/confirm/module';
+import { PaginationModule }         from './../applicativeService/pagination/module';
 
-import { route }                  from './route';
-import { GPPDService }            from './service/gppd';
+import { route }                    from './route';
 
-import { BlogComponent }          from './components/blog/component';
+import { GPPDService }              from './service/gppd';
+
+import { BlogComponent }            from './components/blog/component';
 import { ClientComponent }          from './components/client/component';
-
+import { AncreComponent }          from './components/ancre/component';
+import { SelectLanguageComponent }  from './components/select/language/component';
+  
 
 @NgModule({
   imports:[
@@ -27,6 +30,8 @@ import { ClientComponent }          from './components/client/component';
   declarations: [ 
   	BlogComponent,
     ClientComponent,
+    AncreComponent,
+    SelectLanguageComponent,
   ],
   providers : [
     GPPDService

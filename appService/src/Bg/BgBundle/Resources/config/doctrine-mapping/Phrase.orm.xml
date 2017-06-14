@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Bg\BgBundle\Entity\Phrase">
+
+        <field name="phrase" column="phrase" type="string" length="600" />
+
+        <field name="used" column="used" type="integer" />
+
+        <field name="count" column="count" type="integer" />
+
+        <field name="idLanguage" column="idLanguage" type="integer" />
+
+    </mapped-superclass>
+
+</doctrine-mapping>

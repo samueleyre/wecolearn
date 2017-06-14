@@ -1,0 +1,14 @@
+Bg\BgBundle\Entity\Ancre:
+    exclusion_policy: all
+    access_order:     alphabetical
+    properties:
+        id:
+          groups: [ input, output ]
+          type: integer
+        phrase:
+          groups: [ input, output ]
+          type: string
+        idLanguage:
+          serialized_name: 'idLanguage'
+          groups: [ input, output ]
+          type: integer
