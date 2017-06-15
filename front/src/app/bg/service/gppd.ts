@@ -19,12 +19,13 @@ export class GPPDService {
 
 	
 	get(): Observable<IEntity[]> {
-		console.log('ROUTE',this.route );
 		return this.http.get(`${this.route}`).map((response: Response) => {
 				return response.json();
 			})
 		;
 	}
+
+	
 
 	patch(entity: any ): Observable<IEntity[]> {
 		console.log( 'serialiazed', entity.serialize());

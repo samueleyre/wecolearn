@@ -3,25 +3,26 @@ import {
         OnInit,
         Injectable,
         Inject 
-   }                             from '@angular/core';
-import { NgForm }             from '@angular/forms';
+   }                                  from '@angular/core';
+import { Http }                       from '@angular/http';
+import { NgForm }                     from '@angular/forms';
 
-import { Clef }                    from './entity';
+import { Clef }                        from './entity';
 
-import { GPPDService }             from './../../service/gppd';
-import { GPPDComponent }             from './../../component/gppd';
+import { GPPDService }                 from './../../service/gppd';
+import { GPPDComponent }               from './../../component/gppd';
 
 
-import { PopinConfirmService }    from './../../../applicativeService/popin/confirm/service';
+import { PopinConfirmService }         from './../../../applicativeService/popin/confirm/service';
 
 @Component({
-    templateUrl: 'template.html'
+    templateUrl: 'template.html',
 })
 
 @Injectable()
 export class ClefComponent extends GPPDComponent implements OnInit {
     
-    constructor( @Inject(GPPDService) protected service : GPPDService , protected confirm: PopinConfirmService ) {
+    constructor( protected service : GPPDService , protected confirm: PopinConfirmService ) {
         super(service, confirm );
     } 
     

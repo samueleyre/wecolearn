@@ -61,16 +61,7 @@ export class PaginationService {
 		return PaginationService.pagination.page;
 	}
 
-	/*
-	static setPagination( page, maxPage, perPage ): void {
-		PaginationService.pagination = new Pagination( page, perPage, maxPage );
-	}
-
-	static getPagination(): Pagination {
-		return PaginationService.pagination;
-	}
-	*/
-
+	
 	static fromHeader( header: string ): void {
 		if( header ) {
 			let matches = header.match(/^page=(\d+) perPage=(\d+) maxPage=(\d+)$/);
@@ -103,6 +94,7 @@ export class PaginationService {
 		if( true == PaginationService.pagination.disabled ) {
 			PaginationService.enable();
 			disabled = ' disabled=1';
+			console.log('DISABLED');
 		}
 		
 		return `page=${page} perPage=${perPage}${disabled}`;

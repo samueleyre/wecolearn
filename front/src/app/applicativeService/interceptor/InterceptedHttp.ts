@@ -82,8 +82,6 @@ export class InterceptedHttp extends Http {
         options.headers.append('Content-Type', 'application/json');
         options.headers.append('Authorization', 'Bearer ' + this.tokenService.get());
         
-        console.log(PaginationService.toHeader());
-
         options.headers.append('X-Pagination',PaginationService.toHeader());
 
         return options;
