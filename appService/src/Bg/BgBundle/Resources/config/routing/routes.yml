@@ -17,3 +17,8 @@ clefs:
     type:     rest
     prefix:   api
     resource: '@BgBundle/Controller/ClefsController.php'
+
+neutres:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/NeutresController.php'

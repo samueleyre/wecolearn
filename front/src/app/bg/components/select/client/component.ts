@@ -8,7 +8,7 @@ import { PaginationService } 	from './../../../../applicativeService/pagination/
 
 @Component({
 	selector: 'select-client',
-	template : `{{ _idClientv }}<select [(ngModel)]="_idClient" (ngModelChange)="onChange($event)" class="form-control">
+	template : `<select [(ngModel)]="_idClient" (ngModelChange)="onChange($event)" class="form-control">
   					<option *ngFor="let client of _clients" value="{{ client.id }}">{{ client.name }}</option>
   				</select>`,
   	
@@ -31,7 +31,7 @@ export class SelectClientComponent implements OnInit {
 		}).subscribe( clients => {
 			this._clients = clients;
 			if( typeof clients === 'object' && clients !== null && typeof clients[0] !== 'undefined') {
-				this.onChange(clients[0].id); 
+				this.onChange( clients[0].id ); 
 			}
 		});
 	}
