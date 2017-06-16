@@ -5,3 +5,9 @@ services:
   gppd.service:
     class: Bg\BgBundle\Service\GPPDService
     arguments: ['@doctrine.orm.entity_manager']
+
+  subscriber.phrase_subscriber:
+      class: Bg\BgBundle\Subscriber\PhraseSubscriber
+      arguments: []
+      tags:
+          - { name: doctrine.event_subscriber } 

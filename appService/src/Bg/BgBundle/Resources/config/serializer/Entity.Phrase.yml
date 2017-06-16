@@ -12,3 +12,6 @@ Bg\BgBundle\Entity\Phrase:
           serialized_name: 'idLanguage'
           type: string
           groups: [ input, output ]
+        count:
+          type: integer
+          groups: [ output ]

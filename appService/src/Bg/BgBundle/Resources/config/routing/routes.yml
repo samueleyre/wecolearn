@@ -18,6 +18,11 @@ clefs:
     prefix:   api
     resource: '@BgBundle/Controller/ClefsController.php'
 
+titres:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/TitresController.php'
+
 neutres:
     type:     rest
     prefix:   api

@@ -17,12 +17,14 @@ import { BlogComponent }            from './components/blog/component';
 import { ClientComponent }          from './components/client/component';
 import { AncreComponent }           from './components/ancre/component';
 import { ClefComponent }            from './components/clef/component';
+import { TitreComponent }            from './components/titre/component';
+
 import { NeutreComponent }          from './components/neutre/component';
 import { NeutreGeneratorComponent } from './components/neutre-generator/component';
 
 import { SelectLanguageComponent }  from './components/select/language/component';
 import { SelectClientComponent }    from './components/select/client/component';
-  
+import { LanguageComponent }        from './component/language';
 
 @NgModule({
   imports:[
@@ -41,10 +43,13 @@ import { SelectClientComponent }    from './components/select/client/component';
     ClientComponent,
     AncreComponent,
     ClefComponent,
+    TitreComponent,
     NeutreComponent,
     NeutreGeneratorComponent,
     SelectLanguageComponent,
+    LanguageComponent,
     SelectClientComponent,
+
 
   ],
   providers : [

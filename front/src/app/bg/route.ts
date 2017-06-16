@@ -6,7 +6,7 @@ import { AncreComponent } 		from './components/ancre/component';
 import { ClefComponent } 		from './components/clef/component';
 import { NeutreComponent }      from './components/neutre/component';
 import { NeutreGeneratorComponent } from './components/neutre-generator/component';
-
+import { TitreComponent }            from './components/titre/component';
 
 
 import { AuthGuard } 			from './../applicativeService/authguard/service';
@@ -16,6 +16,7 @@ const appRoutes: Routes = [
     { path: 'client', component: ClientComponent , canActivate: [AuthGuard] },
     { path: 'ancre',  component: AncreComponent ,  canActivate: [AuthGuard] },
     { path: 'clef',   component: ClefComponent ,   canActivate: [AuthGuard] },
+    { path: 'titre',   component: TitreComponent ,   canActivate: [AuthGuard] },
     { path: 'neutre',   component: NeutreComponent ,   canActivate: [AuthGuard] },
     { path: 'neutre-generator',   component: NeutreGeneratorComponent ,   canActivate: [AuthGuard] }
 ];
