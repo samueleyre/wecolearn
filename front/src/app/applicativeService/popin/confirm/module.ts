@@ -20,7 +20,7 @@ import { PopinConfirmService }    from './service';
     PopinConfirmService
   ],
   entryComponents: [
-    PopinConfirmComponent, //supose to be good for AOT compiling
+    PopinConfirmComponent,
   ]
 })
 export class PopinConfirmModule { }

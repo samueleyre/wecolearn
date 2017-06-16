@@ -7,6 +7,7 @@ import { Http }                     from '@angular/http';
 
 import { PopinConfirmModule }       from './../applicativeService/popin/confirm/module';
 import { PaginationModule }         from './../applicativeService/pagination/module';
+import { UploadModule }             from './../applicativeService/upload/module';
 
 import { route }                    from './route';
 
@@ -17,10 +18,10 @@ import { BlogComponent }            from './components/blog/component';
 import { ClientComponent }          from './components/client/component';
 import { AncreComponent }           from './components/ancre/component';
 import { ClefComponent }            from './components/clef/component';
-import { TitreComponent }            from './components/titre/component';
-
+import { TitreComponent }           from './components/titre/component';
 import { NeutreComponent }          from './components/neutre/component';
 import { NeutreGeneratorComponent } from './components/neutre-generator/component';
+import { BgUploadComponent }        from './components/upload/component';
 
 import { SelectLanguageComponent }  from './components/select/language/component';
 import { SelectClientComponent }    from './components/select/client/component';
@@ -34,9 +35,11 @@ import { LanguageComponent }        from './component/language';
       PaginationModule,
       PopinConfirmModule,
       FormsModule,
+      UploadModule, 
   ],
   exports : [
-    RouterModule
+    RouterModule,
+    UploadModule,
   ],
   declarations: [ 
   	BlogComponent,
@@ -46,6 +49,7 @@ import { LanguageComponent }        from './component/language';
     TitreComponent,
     NeutreComponent,
     NeutreGeneratorComponent,
+    BgUploadComponent,
     SelectLanguageComponent,
     LanguageComponent,
     SelectClientComponent,

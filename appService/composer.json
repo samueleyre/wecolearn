@@ -33,6 +33,7 @@
         "jms/serializer-bundle": "dev-master",
         "lexik/jwt-authentication-bundle": "dev-master",
         "nelmio/cors-bundle": "^1.5",
+        "nuovo/spreadsheet-reader": "dev-master",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "symfony/monolog-bundle": "^3.0.2",
