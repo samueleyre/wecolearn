@@ -4,6 +4,8 @@ import { NgModule  }                from '@angular/core';
 import { FormsModule }              from '@angular/forms';
 import { UploadComponent }          from './component';
 import { FileUploadModule }         from 'ng2-file-upload';
+import { TokenService }             from './../token/service';
+import { HeaderBag }                from './../interceptor/header-bag';
 
 @NgModule({
   imports:[
@@ -18,7 +20,8 @@ import { FileUploadModule }         from 'ng2-file-upload';
   	UploadComponent,
   ],
   providers : [
-  
+    HeaderBag,
+    TokenService,  
   ],
   entryComponents: [
      UploadComponent, 

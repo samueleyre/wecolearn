@@ -19,7 +19,7 @@ import { httpFactory }             from './interceptor/httpFactory';
 import { routing }                 from './routing/app.routing';
 import { TokenService }            from './token/service';
 import { UserService }             from './user/service';
-
+import { HeaderBag }               from './interceptor/header-bag'
 
 @NgModule({
   imports:[   
@@ -29,22 +29,24 @@ import { UserService }             from './user/service';
             storageType: 'localStorage'
         }),
   ],
-  
-  declarations: [ 
-  				  
-            
+  exports : [
+    
+  ]
+  ,declarations: [ 
+    				  
   ],
   providers: [
         {
             provide: Http,
-            useFactory: httpFactory,
-            deps: [XHRBackend, RequestOptions, TokenService, Router ]
+            useFactory:   httpFactory,
+            deps: [XHRBackend, RequestOptions, TokenService, Router, HeaderBag ]
         },
         AuthenticationService,
         AuthGuard,
         InterceptedHttp,
         TokenService,
         UserService,
+        HeaderBag,
         //XHRBackend, 
         //RequestOptions,
     ],

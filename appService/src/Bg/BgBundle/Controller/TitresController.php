@@ -102,3 +102,4 @@ class TitresController extends GPPDController
         return $this->deleteAction( $id );
     }
 }
+    

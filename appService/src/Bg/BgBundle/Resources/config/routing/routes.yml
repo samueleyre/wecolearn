@@ -32,3 +32,8 @@ neutres-generator:
     type:     rest
     prefix:   api
     resource: '@BgBundle/Controller/NeutresGeneratorController.php'
+
+uploads:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/UploadsController.php'

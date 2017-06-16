@@ -6,11 +6,12 @@ import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 import { environment }        from "./../config/environment";
 import { TokenService }       from './../token/service';
 import { PaginationService}    from './../pagination/service';
+import { HeaderBag }            from './header-bag';
 
 @Injectable()
 export class InterceptedHttp extends Http {
     
-    constructor( backend: ConnectionBackend,defaultOptions: RequestOptions,public tokenService : TokenService, public router : Router ) 
+    constructor( backend: ConnectionBackend,defaultOptions: RequestOptions,public tokenService : TokenService, public router : Router , private headerBag : HeaderBag ) 
     {
         super(backend, defaultOptions);
 
@@ -68,6 +69,11 @@ export class InterceptedHttp extends Http {
         return super.delete(url, this.getRequestOptionArgs(options));
     }
 
+    options(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        url = this.updateUrl(url);
+        return super.options(url, this.getRequestOptionArgs(options));
+    }
+
     private updateUrl(req: string) {
         return  environment.origin + req;
     }
@@ -79,10 +85,10 @@ export class InterceptedHttp extends Http {
         if (options.headers == null) {
             options.headers = new Headers();
         }
-        options.headers.append('Content-Type', 'application/json');
-        options.headers.append('Authorization', 'Bearer ' + this.tokenService.get());
-        
-        options.headers.append('X-Pagination',PaginationService.toHeader());
+        let headers = this.headerBag.get([]);    
+        for( let header in headers ) {
+            options.headers.append( header, headers[header]);
+        }
 
         return options;
     }
