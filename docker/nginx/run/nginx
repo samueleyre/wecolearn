@@ -1,2 +1,0 @@
-#!/bin/bash
-exec /sbin/setuser root /usr/sbin/nginx >> /var/log/nginx.log.ini 2>&1
