@@ -22,3 +22,8 @@ neutres:
     type:     rest
     prefix:   api
     resource: '@BgBundle/Controller/NeutresController.php'
+
+neutres-generator:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/NeutresGeneratorController.php'
