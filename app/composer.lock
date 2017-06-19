@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "24409b5839e9ce5580f7554cb4a8ad14",
+    "content-hash": "ec2f93bbfb222462a14bc9650438da92",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1467,12 +1467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSDiExtraBundle.git",
-                "reference": "52072e64cf9226d336dd32cc4407c83200954d15"
+                "reference": "251bd727fcb9b4ed3dca7c8a85b7a8d42c090937"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSDiExtraBundle/zipball/52072e64cf9226d336dd32cc4407c83200954d15",
-                "reference": "52072e64cf9226d336dd32cc4407c83200954d15",
+                "url": "https://api.github.com/repos/schmittjoh/JMSDiExtraBundle/zipball/251bd727fcb9b4ed3dca7c8a85b7a8d42c090937",
+                "reference": "251bd727fcb9b4ed3dca7c8a85b7a8d42c090937",
                 "shasum": ""
             },
             "require": {
@@ -1491,6 +1491,7 @@
                 "doctrine/orm": "~2.3",
                 "jms/security-extra-bundle": "~1.0",
                 "phpcollection/phpcollection": ">=0.2,<0.3-dev",
+                "phpunit/phpunit": "^5.0.0",
                 "sensio/framework-extra-bundle": "~2.0|~3.0",
                 "symfony/browser-kit": "~2.3|~3.0",
                 "symfony/class-loader": "~2.3|~3.0",
@@ -1529,7 +1530,7 @@
                 "annotations",
                 "dependency injection"
             ],
-            "time": "2017-06-01 15:42:15"
+            "time": "2017-06-16 22:54:24"
         },
         {
             "name": "jms/metadata",
@@ -1702,12 +1703,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "041f09cbf4a8425cc3ecceab77c7f8cd4bd3625d"
+                "reference": "8b78967bd52b0e5b8012d84f8b9e9316b6fc98f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/041f09cbf4a8425cc3ecceab77c7f8cd4bd3625d",
-                "reference": "041f09cbf4a8425cc3ecceab77c7f8cd4bd3625d",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/8b78967bd52b0e5b8012d84f8b9e9316b6fc98f3",
+                "reference": "8b78967bd52b0e5b8012d84f8b9e9316b6fc98f3",
                 "shasum": ""
             },
             "require": {
@@ -1772,7 +1773,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2017-05-17 14:34:31"
+            "time": "2017-06-13 14:13:17"
         },
         {
             "name": "lexik/jwt-authentication-bundle",
@@ -1780,12 +1781,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lexik/LexikJWTAuthenticationBundle.git",
-                "reference": "e30bde8a52c60e692b1d70dd0b4748d247a3ce7b"
+                "reference": "328f8e3e7750a6173f306ed4b6015f515ea8f0e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/e30bde8a52c60e692b1d70dd0b4748d247a3ce7b",
-                "reference": "e30bde8a52c60e692b1d70dd0b4748d247a3ce7b",
+                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/328f8e3e7750a6173f306ed4b6015f515ea8f0e2",
+                "reference": "328f8e3e7750a6173f306ed4b6015f515ea8f0e2",
                 "shasum": ""
             },
             "require": {
@@ -1869,20 +1870,20 @@
                 "rest",
                 "symfony"
             ],
-            "time": "2017-06-09 15:27:51"
+            "time": "2017-06-17 05:30:11"
         },
         {
             "name": "monolog/monolog",
-            "version": "1.22.1",
+            "version": "1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0"
+                "reference": "fd8c787753b3a2ad11bc60c063cff1358a32a3b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1e044bc4b34e91743943479f1be7a1d5eb93add0",
-                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
+                "reference": "fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
                 "shasum": ""
             },
             "require": {
@@ -1903,7 +1904,7 @@
                 "phpunit/phpunit-mock-objects": "2.3.0",
                 "ruflin/elastica": ">=0.90 <3.0",
                 "sentry/sentry": "^0.13",
-                "swiftmailer/swiftmailer": "~5.3"
+                "swiftmailer/swiftmailer": "^5.3|^6.0"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
@@ -1947,7 +1948,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2017-03-13T07:08:03+00:00"
+            "time": "2017-06-19T01:22:40+00:00"
         },
         {
             "name": "namshi/jose",
@@ -2068,6 +2069,54 @@
                 "crossdomain"
             ],
             "time": "2017-04-24T09:12:42+00:00"
+        },
+        {
+            "name": "nuovo/spreadsheet-reader",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nuovo/spreadsheet-reader.git",
+                "reference": "f6bd49d101042eaa71b0fbd82e7a57e5a276dc3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nuovo/spreadsheet-reader/zipball/f6bd49d101042eaa71b0fbd82e7a57e5a276dc3d",
+                "reference": "f6bd49d101042eaa71b0fbd82e7a57e5a276dc3d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zip": "*",
+                "php": ">= 5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martins Pilsetnieks",
+                    "email": "pilsetnieks@gmail.com",
+                    "homepage": "http://www.nuovo.lv/"
+                }
+            ],
+            "description": "Spreadsheet reader library for Excel, OpenOffice and structured text files",
+            "homepage": "https://github.com/nuovo/spreadsheet-reader",
+            "keywords": [
+                "OpenOffice",
+                "csv",
+                "excel",
+                "ods",
+                "spreadsheet",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2015-04-30 08:54:58"
         },
         {
             "name": "ocramius/package-versions",
@@ -2281,6 +2330,63 @@
                 "set"
             ],
             "time": "2015-05-17T12:39:23+00:00"
+        },
+        {
+            "name": "phpoffice/phpexcel",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPExcel.git",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Maarten Balliauw",
+                    "homepage": "http://blog.maartenballiauw.be"
+                },
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://blog.rootslabs.net"
+                },
+                {
+                    "name": "Erik Tilt"
+                }
+            ],
+            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "OpenXML",
+                "excel",
+                "php",
+                "spreadsheet",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2015-05-01T07:00:55+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -3636,7 +3742,8 @@
         "friendsofsymfony/user-bundle": 20,
         "jms/di-extra-bundle": 20,
         "jms/serializer-bundle": 20,
-        "lexik/jwt-authentication-bundle": 20
+        "lexik/jwt-authentication-bundle": 20,
+        "nuovo/spreadsheet-reader": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

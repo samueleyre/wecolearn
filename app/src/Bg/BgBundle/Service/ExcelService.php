@@ -8,30 +8,35 @@ class ExcelService {
 	/**
 	*	@return Array[feuille][ligne][colonne]
 	*/
-	public static function toArray( $filname ) {
+	public static function toArray( $filename ) {
 
 		$ret = [];
-		$tableur = \PHPExcel_IOFactory::load($file);
+		$tableur = \PHPExcel_IOFactory::load($filename);
 		$i = 0;
-		$j = 0;
-		$k = 1;
+		$j = 1;
+		$k = 0;
 
-		while( $sheet = $tableur->getSheet($i)) {
-			while( $value = $sheet->getCell(\PHPExcel_Cell::stringFromColumnIndex($k).($j))->getValue()) {
+		try { 
+			while( $sheet = $tableur->getSheet($i) )  {	
 				while( $value = $sheet->getCell(\PHPExcel_Cell::stringFromColumnIndex($k).($j))->getValue()) {
-						if(!isset($ret[$i])) $ret[$i] = [];
-						if(!isset($ret[$i][$j])) $ret[$i][$j] = [];
-						$ret[$i][$j][$k] = $value;
-						$j++;
+					while( $value = $sheet->getCell(\PHPExcel_Cell::stringFromColumnIndex($k).($j))->getValue()) {
+							if(!isset($ret[$i])) $ret[$i] = [];
+							if(!isset($ret[$i][$j])) $ret[$i][$j] = [];
+							$ret[$i][$j][$k] = $value;
+
+							syslog(LOG_ERR, $value );
+							$k++;
 					}
+					$j++;
+					$k = 0;
 				}
-				$k++;
-				$j = 0;
+				$i++;
+				$j=1;
+				$k=0;	
 
 			}
-			$i++;
-			$j=0;
-			$k=0;
+		} catch(\Exception $e ) {
+
 		}
 		return $ret;
 	}

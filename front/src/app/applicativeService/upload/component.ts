@@ -1,4 +1,8 @@
-import { Component, Input, EventEmitter, Injectable }   from '@angular/core';
+import { Component, 
+    Input, 
+    EventEmitter, 
+    Injectable, 
+    Output }                  from '@angular/core';
 import { FileUploader }       from 'ng2-file-upload';
 import { environment }        from './../config/environment';
 import { HeaderBag }          from './../interceptor/header-bag';
@@ -25,6 +29,10 @@ export class UploadComponent {
   
   private emitter:EventEmitter<string> = new EventEmitter();
 
+  @Output()
+  public complete:EventEmitter<any> = new EventEmitter();
+
+
   constructor( protected headerBag : HeaderBag ) {}
   
   @Input()
@@ -35,6 +43,11 @@ export class UploadComponent {
               url: environment.origin + url + '?filename='+filename,
               headers : this.headerBag.get([]),
           });
+
+      this.uploader.onSuccessItem = (item:any, response:any, status:any, headers:any) => {
+        console.log( response );
+        this.complete.emit( JSON.parse(response) );
+      }
 
         //console.log( 'headers', this.uploader.options.headers);  
     })

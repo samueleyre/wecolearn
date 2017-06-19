@@ -1,3 +1,44 @@
 <div class="col-md-12 col-md-offset-3">
-	<p><upload [url]="'/api/uploads'" [filename]="'file'"></upload></p>
+	<p><upload [url]="'/api/uploads'" [filename]="'file'" (complete)="onComplete($event)"></upload></p>
+</div>
+<div class="col-md-9 col-md-offset-3">
+    <h2>Phrase Clefs uploadées</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Phrase</th>
+              <th>Url</th>
+              <th>Langue</th>
+              <th>Client</th>
+              <th>Ajouter</th>
+              <th>Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let clef of clefs; let i = index;">
+              <td>
+                <textarea [(ngModel)]="clef.phrase" #phrase="ngModel"></textarea>
+              </td>
+              <td>
+                <textarea [(ngModel)]="clef.url" #url="ngModel"></textarea>
+              </td>
+              <td>
+                <select-language [(idLanguage)]="clef.idLanguage" ></select-language>
+              </td>
+              <td>
+                <select-client [(idClient)]="clef.idClient" ></select-client>
+                {{ clef.idClient }}
+              </td>
+              
+              <td>
+                <button [disabled]="posting" (click)="post(clef, index, $event)" class="btn">Ajouter</button>
+              </td>
+              <td>
+                <button (click)="delete(clef)" class="btn">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
 </div>

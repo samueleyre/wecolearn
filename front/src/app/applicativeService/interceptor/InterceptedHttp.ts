@@ -9,6 +9,8 @@ import { ConnectionBackend,
     Http, 
     Headers }                     from "@angular/http";
 import { Observable }             from "rxjs/Rx";
+import 'rxjs/add/operator/do'
+import { Subject }                from 'rxjs/Subject';
 import { BehaviorSubject }        from 'rxjs/BehaviorSubject';
 import { environment }            from "./../config/environment";
 import { TokenService }           from './../token/service';
@@ -25,36 +27,35 @@ export class InterceptedHttp extends Http {
 
     }
 
-    preRequest(url: string | Request, options?:RequestOptionsArgs):BehaviorSubject<Response>  {
+    preRequest(url: string | Request, options?:RequestOptionsArgs):Observable<Response>  {
         
         var ret = new BehaviorSubject(new Response(new ResponseOptions ));
 
-        super
+        return super
         .request( url, options )
         .catch( ( error: Response ) => {
-            console.log('ERRROR STATUS', error.status );
             if ( error.status === 401 || error.status === 403 ) { // unauthorized or forbidden //
                     this.tokenService.clear();
                     this.router.navigate(['/login']);
             }
-            return Observable.throw(error);    
-        
+            if( 500 <= error.status ) {
+                console.log(error.json().message);
+                console.log(error.json().trace );
+            }
+            return Observable.throw(error);
+
         })
-        .subscribe( ( response:Response ) => {
-                PaginationService.fromHeader( response.headers.get('X-Pagination') );
-                ret.next( response );
-        }, ( error: Response ) => {
-                ret.error( error );    
+        .do((response: Response) => {
+            PaginationService.fromHeader( response.headers.get('X-Pagination') );
+            
         })
         ;
-
-        return ret;
     } 
 
     request(url: string | Request, options?: RequestOptionsArgs ): Observable<Response> {
         
         return this.preRequest( url, options )
-        .asObservable();
+        ;
     }
 
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {

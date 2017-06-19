@@ -5,6 +5,7 @@ import {
 import { Http }                   from '@angular/http';
 
 import { IEntity }                 from './../../entity/interface';
+import { Clef }                    from './../clef/entity';
 
 
 
@@ -17,24 +18,36 @@ import { PopinConfirmService }    from './../../../applicativeService/popin/conf
 @Injectable()
 export class BgUploadComponent  {
     
-    public neutres: IEntity[];
+    public clefs: IEntity[];
+    public disabled = false;
     
     constructor( private confirm: PopinConfirmService, private http: Http ) {
         
     } 
     
-    post( neutre : IEntity , index : number ) {
+ 
+    onComplete(response : any ) {
+        this.clefs = response;
+    }
+
+
+    post( neutre : IEntity , index : number, $event:any ) {
         
-        //let entity = new IEntity();
-        //entity.set( neutre );
+        let entity = new Clef();
+        entity.set( neutre );
+        this.disabled = true;
 
-        let entity:any;
-
-        this.http.post('/api/neutres', entity.serialize()).map(( response : any ) => {
+        this.http.post('/api/clefs', entity.serialize())
+        
+        .map(( response : any ) => {
             return response.json();            
         })
         .subscribe( ( neutre : IEntity ) => {
-            this.neutres.splice( index, 1 );
+            console.log('ON SUBSC>RIBV');
+
+            this.clefs.splice( index, 1 );
+            $event.stopPropagation();
+            this.disabled = false;
             
         });
     }
@@ -45,7 +58,7 @@ export class BgUploadComponent  {
         .setMessage('Êtes vous sur de vouloir supprimer cette Phrase')
         .subscribe( (confirm : boolean) => {
             if( confirm ) {
-                  this.neutres.splice( index, 1 );
+                  this.clefs.splice( index, 1 );
             }
         });
     }

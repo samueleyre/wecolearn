@@ -1,3 +1,8 @@
+uploads:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/UploadsController.php'
+
 blogs:
     type:     rest
     prefix:   api
@@ -33,7 +38,3 @@ neutres-generator:
     prefix:   api
     resource: '@BgBundle/Controller/NeutresGeneratorController.php'
 
-uploads:
-    type:     rest
-    prefix:   api
-    resource: '@BgBundle/Controller/UploadsController.php'

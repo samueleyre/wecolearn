@@ -24,18 +24,19 @@ class UploadsController {
 
     /**
     * @Post("/uploads")
-    * @Get("/uploads")
     */
-    public function postFilesAction( Request $request ) {
+    public function postUploadsAction( Request $request ) {
 
          
 
-        $file = $request->files->get($request->query->get('filename','file'));
+        $file = $request->files->get('file');
 
+        $filename = $file->getPathName();
+        
         return 
             ToPhraseService::toPhrase(
-                ExcelSercie::toArray(
-                        $file->getPathName()
+                ExcelService::toArray(
+                        $filename
                     )
                 )
             ;

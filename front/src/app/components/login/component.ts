@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
         // reset login status
         this.authenticationService.logout();
     }
- 
+
     login() {
         this.loading = true;
         this.authenticationService.login(this.model.email, this.model.password)
