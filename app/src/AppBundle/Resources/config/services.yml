@@ -14,9 +14,15 @@ services:
     tags:
         - { name: kernel.event_subscriber }
 
+  AppBundle\Exception\ExceptionSubscriber:
+    class: AppBundle\Exception\ExceptionSubscriber
+    arguments:  ['@service_container', '@logger']
+    tags:
+      - { name: kernel.event_subscriber }
+
   pagination.response:
-      class: AppBundle\Pagination\ResponseListener
-      arguments: [ '@pagination.service' ]
-      tags:
-          - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+    class: AppBundle\Pagination\ResponseListener
+    arguments: [ '@pagination.service' ]
+    tags:
+        - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 

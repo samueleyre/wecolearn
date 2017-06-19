@@ -69,10 +69,12 @@ export class InterceptedHttp extends Http {
         return super.delete(url, this.getRequestOptionArgs(options));
     }
 
+    /*
     options(url: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
         return super.options(url, this.getRequestOptionArgs(options));
     }
+    */
 
     private updateUrl(req: string) {
         return  environment.origin + req;
@@ -86,8 +88,10 @@ export class InterceptedHttp extends Http {
             options.headers = new Headers();
         }
         let headers = this.headerBag.get([]);    
-        for( let header in headers ) {
-            options.headers.append( header, headers[header]);
+        for( let i in headers ) {
+            for(let header in headers[i]) {
+                options.headers.append( header, headers[i][header]);
+            }
         }
 
         return options;

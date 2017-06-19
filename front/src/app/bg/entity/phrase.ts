@@ -1,5 +1,5 @@
-import { IEntity } from './../../entity/interface';
-import { Entity } from './../../entity/entity';
+import { IEntity } from './interface';
+import { Entity } from './entity';
 export class Phrase extends Entity implements IEntity  {
 
 	public id: 		number|null;

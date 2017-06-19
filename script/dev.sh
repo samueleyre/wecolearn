@@ -1,7 +1,6 @@
 #!/bin/bash
 
-sudo find ./../appService -type d -exec chmod 775 {} \;
-sudo find ./../appService -type f -exec chmod 664 {} \;
-sudo chmod +x ./../appService/bin/console
+sudo find ./../app/var -type d -exec chmod 775 {} \;
+sudo find ./../app/var -type f -exec chmod 664 {} \;
 
-sudo chown -R etouraille:www-data ./../appService
+sudo chown -R etouraille:www-data ./../app
