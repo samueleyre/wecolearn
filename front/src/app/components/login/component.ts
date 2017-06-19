@@ -30,11 +30,12 @@ export class LoginComponent implements OnInit {
             .subscribe(
                     result => {
                         if ( result === true )  {
-                        // login successful
+                            // login successful
                             this.router.navigate(['/']);
                         }
                     },
                     error => {
+                        //console.log('ERROR', error );
                         this.error = "L'email ou le mot de passe ne sont pas valide";
                         this.loading = false;
                     

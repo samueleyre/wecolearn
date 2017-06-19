@@ -12,8 +12,8 @@ export class HeaderBag {
 		console.log('PARAMS', params )
 		let ret = [ 
 		  //{ 'Content-Type' : 'application/json'},
-          { 'Authorization' :  'Bearer ' + this.tokenService.get() },
-          { 'X-Pagination' :  PaginationService.toHeader() }
+          { name : 'Authorization' ,  value : 'Bearer ' + this.tokenService.get() },
+          { name : 'X-Pagination' , value :   PaginationService.toHeader() }
          ];
 
          return ret;

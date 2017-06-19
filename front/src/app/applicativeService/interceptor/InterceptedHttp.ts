@@ -1,12 +1,19 @@
-import { Injectable }         from "@angular/core";
-import { Router }             from '@angular/router';
-import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, ResponseOptions, Http, Headers} from "@angular/http";
-import { Observable }         from "rxjs/Rx";
-import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
-import { environment }        from "./../config/environment";
-import { TokenService }       from './../token/service';
-import { PaginationService}    from './../pagination/service';
-import { HeaderBag }            from './header-bag';
+import { Injectable      }        from "@angular/core";
+import { Router }                 from '@angular/router';
+import { ConnectionBackend, 
+    RequestOptions, 
+    Request, 
+    RequestOptionsArgs, 
+    Response, 
+    ResponseOptions, 
+    Http, 
+    Headers }                     from "@angular/http";
+import { Observable }             from "rxjs/Rx";
+import { BehaviorSubject }        from 'rxjs/BehaviorSubject';
+import { environment }            from "./../config/environment";
+import { TokenService }           from './../token/service';
+import { PaginationService}       from './../pagination/service';
+import { HeaderBag }              from './header-bag';
 
 @Injectable()
 export class InterceptedHttp extends Http {
@@ -25,23 +32,29 @@ export class InterceptedHttp extends Http {
         super
         .request( url, options )
         .catch( ( error: Response ) => {
+            console.log('ERRROR STATUS', error.status );
             if ( error.status === 401 || error.status === 403 ) { // unauthorized or forbidden //
                     this.tokenService.clear();
                     this.router.navigate(['/login']);
             }
-            return BehaviorSubject.throw(error);
+            return Observable.throw(error);    
         
-        }).subscribe( ( response:Response ) => {
+        })
+        .subscribe( ( response:Response ) => {
                 PaginationService.fromHeader( response.headers.get('X-Pagination') );
                 ret.next( response );
-        });
+        }, ( error: Response ) => {
+                ret.error( error );    
+        })
+        ;
 
         return ret;
     } 
 
     request(url: string | Request, options?: RequestOptionsArgs ): Observable<Response> {
         
-        return this.preRequest( url, options ).asObservable();
+        return this.preRequest( url, options )
+        .asObservable();
     }
 
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
@@ -89,9 +102,8 @@ export class InterceptedHttp extends Http {
         }
         let headers = this.headerBag.get([]);    
         for( let i in headers ) {
-            for(let header in headers[i]) {
-                options.headers.append( header, headers[i][header]);
-            }
+                options.headers.append( headers[i].name, headers[i].value);
+            
         }
 
         return options;

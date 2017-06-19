@@ -28,18 +28,31 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $exception = $event->getException();
 
         // si erreur
-        if( $code = $exception->getCode() > 500 ) {
+        //if( $code = $exception->getCode() >= 500 ) {
+
 
             $this->logger->info(  $trace = $exception->getTraceAsString());
-            $this->logger->error( $$exception->getMessage());
+            $this->logger->error( $message = $exception->getMessage());
 
-            if( 'production' !== $this->container->get('env') ) {
-                $ret = ['error' => $code, 'message' => $message, 'trace' => $trace ];
-                $response = new JsonRresponse( $ret , $code );
-                $event->setResponse( $response );
+            //if( 'production' !== $this->container->get('env') ) {
+                
+                $ret = ['code' => 500, 'message' => $message, 'trace' => $trace ];
+                
+            /*
+            } else {
 
-            } 
-        }
+                $ret = [
+                    'code' => 500, 
+                    'message' => 'Erreur', 
+                    'trace' => 'email: edouard.touraille@gmail.com'
+                    ]
+                ;
+            }
+            */
+            $response = new JsonResponse( $ret, 500 );
+            $response->headers->set( 'Access-Control-Allow-Origin', '*');
+            $event->setResponse( $response );
+        //}
 
     }
 
