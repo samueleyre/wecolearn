@@ -46,6 +46,16 @@ class ClientsController extends GPPDController
         return $this->getAction();
 		
 	}
+
+    /**
+    * @Get("/clients/avec-clefs")
+    */
+    public function getClientsWithClefAction()
+    {
+        
+        return $this->get('client.repository')->fetchClientsAvecClefs();
+        
+    }
     
     /**
     * @Post("/clients")

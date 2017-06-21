@@ -15,10 +15,12 @@ export class PaginationService {
 	}
 
 	static disable() {
+		PaginationService.init();
 		PaginationService.pagination.disabled = true;
 	}
 
 	static enable() {
+		PaginationService.init();
 		PaginationService.pagination.disabled = false;	
 	}
 	

@@ -29,10 +29,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
         // si erreur
         //if( $code = $exception->getCode() >= 500 ) {
-
+            $message = sprintf('%s %s %s' , $exception->getMessage(), $exception->getFile(), $exception->getLine() );  
 
             $this->logger->info(  $trace = $exception->getTraceAsString());
-            $this->logger->error( $message = $exception->getMessage());
+            $this->logger->error( $message );
 
             //if( 'production' !== $this->container->get('env') ) {
                 

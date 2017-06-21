@@ -10,4 +10,8 @@ services:
       class: Bg\BgBundle\Subscriber\PhraseSubscriber
       arguments: []
       tags:
-          - { name: doctrine.event_subscriber } 
+          - { name: doctrine.event_subscriber }
+  client.repository:
+    class: Bg\BgBundle\Repository\ClientRepository
+    arguments: ['@doctrine.orm.entity_manager']
+  

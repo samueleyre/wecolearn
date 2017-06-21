@@ -1,0 +1,46 @@
+Bg\BgBundle\Entity\Programmation:
+    exclusion_policy: all
+    access_order:     alphabetical
+    properties:
+        totalNumberProgrammation:
+          groups: [ input, output ]
+          type: integer
+          serialized_name: totalNumberProgrammation
+        neutralSentenceNumber:
+          groups: [ input, output ]
+          type: integer
+          serialized_name: neutralSentenceNumberMin
+        idBlog:
+          groups: [ input, output ]
+          type: integer 
+          serialized_name: idBlog
+        name:
+          groups: [ input, output ]
+          type: string
+        isPage:
+          groups: [ input, output ]
+          type: integer
+          serialized_name: isPage
+        idLanguage:
+          groups: [ input, output ]
+          type: integer
+          serialized_name: idLanguage
+        idClient:
+          groups: [ input, output ]
+          type: integer 
+          serialized_name: idClient
+        anchorSentenceNumber:
+          groups: [ input, output ]
+          type: integer
+          serialized_name: anchorSentenceNumber
+        isBlank:
+          groups: [ input, output ]
+          type: integer
+          serialized_name: isBlank
+        pause:
+          groups: [ input, output ]
+          type: integer
+        titleOption:
+          groups: [ input, output ]
+          type: integer
+          serialized_name: titleOption

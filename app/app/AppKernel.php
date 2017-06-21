@@ -23,8 +23,11 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
 
+            new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
+
             new AppBundle\AppBundle(),
             new Bg\BgBundle\BgBundle(),
+
         ];
 
         if ( in_array( $this->getEnvironment(), ['dev', 'test'], true ) ) {

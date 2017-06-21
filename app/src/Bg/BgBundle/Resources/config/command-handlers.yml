@@ -1,0 +1,6 @@
+services:
+  persist_masse_handler:
+    class: Bg\BgBundle\Metier\Masse\PersistMasseCommandHandler
+    arguments: ['@doctrine.orm.entity_manager']
+    tags:
+        - { name: command_handler, handles: Bg\BgBundle\Metier\Masse\PersistMasse }

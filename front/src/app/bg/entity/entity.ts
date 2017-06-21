@@ -1,11 +1,20 @@
-	export class Entity {
+export class Entity {
 
 	public serialize(): object {
 		let ret  = {};
-		Object.getOwnPropertyNames(this).forEach(name => {
-            ret[name] = this[name];
-        });
-      	return ret;
+		this.recurse( this, ret );
+		return ret;
+	}
+
+	private  recurse( ref: any, ret : any ) {
+		Object.getOwnPropertyNames(ref).forEach(name => {
+	        if( typeof ref[name]!== 'object' ) {
+	        	ret[name] = ref[name];
+	        } else {
+	        	ret[name] = {};
+	        	this.recurse(ref[name],ret[name])
+	        }
+		});
 	}
 
 	public set( entityObject : any ) {

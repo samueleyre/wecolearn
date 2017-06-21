@@ -6,3 +6,5 @@ Bg\BgBundle\Entity\Client:
           groups: [ input, output ]
         name:
           groups: [ input, output ]
+        url:
+          groups: [ input, output ]

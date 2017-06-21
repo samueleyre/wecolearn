@@ -21,6 +21,7 @@
     },
     "require": {
         "php": ">=5.5.9",
+        "PHPOffice/PHPExcel": "^1.8",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/doctrine-fixtures-bundle": "2.3.0",
@@ -34,9 +35,9 @@
         "lexik/jwt-authentication-bundle": "dev-master",
         "nelmio/cors-bundle": "^1.5",
         "nuovo/spreadsheet-reader": "dev-master",
-        "PHPOffice/PHPExcel": "^1.8",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
+        "simple-bus/symfony-bridge": "^4.1",
         "symfony/monolog-bundle": "^3.0.2",
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^2.3.10",

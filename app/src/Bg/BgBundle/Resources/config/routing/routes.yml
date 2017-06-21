@@ -3,6 +3,11 @@ uploads:
     prefix:   api
     resource: '@BgBundle/Controller/UploadsController.php'
 
+masses:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/MassesController.php'
+
 blogs:
     type:     rest
     prefix:   api

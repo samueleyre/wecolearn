@@ -24,71 +24,55 @@ export class InterceptedHttp extends Http {
     {
         super(backend, defaultOptions);
 
-
     }
 
-    preRequest(url: string | Request, options?:RequestOptionsArgs):Observable<Response>  {
+    request( url: string | Request, options?: RequestOptionsArgs ): Observable<Response> {
         
-        var ret = new BehaviorSubject(new Response(new ResponseOptions ));
-
         return super
-        .request( url, options )
-        .catch( ( error: Response ) => {
-            if ( error.status === 401 || error.status === 403 ) { // unauthorized or forbidden //
-                    this.tokenService.clear();
-                    this.router.navigate(['/login']);
-            }
-            if( 500 <= error.status ) {
-                console.log(error.json().message);
-                console.log(error.json().trace );
-            }
-            return Observable.throw(error);
+            .request( url, options )
+            .catch( ( error: Response ) => {
+                if ( error.status === 401 || error.status === 403 ) { // unauthorized or forbidden //
+                        this.tokenService.clear();
+                        this.router.navigate(['/login']);
+                }
+                if( 500 <= error.status ) {
+                    console.log(error.json().message);
+                    console.log(error.json().trace );
+                }
+                return Observable.throw(error);
 
-        })
-        .do((response: Response) => {
-            PaginationService.fromHeader( response.headers.get('X-Pagination') );
-            
-        })
-        ;
-    } 
-
-    request(url: string | Request, options?: RequestOptionsArgs ): Observable<Response> {
-        
-        return this.preRequest( url, options )
+            })
+            .do((response: Response) => {
+                PaginationService.fromHeader( response.headers.get('X-Pagination') );
+                
+            })
         ;
     }
 
-    get(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    get( url: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
         return super.get(url, this.getRequestOptionArgs(options));
     }
 
-    post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+    post( url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
         return super.post(url, body, this.getRequestOptionArgs(options));
     }
 
-    put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+    put( url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
         return super.put(url, body, this.getRequestOptionArgs(options));
     }
 
-    patch(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+    patch( url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
         return super.patch(url, body, this.getRequestOptionArgs(options));
     }
 
-    delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    delete( url: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
         return super.delete(url, this.getRequestOptionArgs(options));
     }
-
-    /*
-    options(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.options(url, this.getRequestOptionArgs(options));
-    }
-    */
 
     private updateUrl(req: string) {
         return  environment.origin + req;
