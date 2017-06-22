@@ -52,7 +52,7 @@ class Programmation
     public $idLanguageTitle;
     
     /**
-     * @ORM\Column(type="integer",name="idPhraseClef")
+     * @ORM\Column(type="integer",name="idPhraseClef", nullable=true)
      */
     public $idPhraseClef;
 
@@ -62,7 +62,7 @@ class Programmation
     public $isBlank;
 
 	/**
-     * @ORM\Column(type="integer",name="isException")
+     * @ORM\Column(type="integer",name="isException", nullable=true)
      */
     public $isException;
 
@@ -108,6 +108,9 @@ class Programmation
     public $used=0;
 
 
+    public function __construct() {
+        $this->time = new \Datetime();
+    }
 
     public function getId() {
     	return $this->id;

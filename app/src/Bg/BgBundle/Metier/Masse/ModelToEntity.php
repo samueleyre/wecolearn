@@ -37,7 +37,10 @@ class ModelToEntity {
                     }
                 }
 
-                $programmation->idClient = $model->getClient()->getId();
+                $programmation->idClient = $model->client->getId();
+                $programmation->idLanguageAnchor = $model->idLanguage;
+                $programmation->idLanguageNeutral = $model->idLanguage;
+                $programmation->idLanguageTitle = $model->idLanguage;  
 
                 $programmation
                 	->neutralSentenceNumber = 
