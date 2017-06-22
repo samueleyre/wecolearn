@@ -9,10 +9,11 @@ import { NeutreGeneratorComponent } 	from './components/neutre-generator/compone
 import { TitreComponent }            	from './components/titre/component';
 import { BgUploadComponent }            from './components/upload/component';
 import { MasseComponent }            	from './components/masse/component';
+import { LaunchComponent }          	from './components/launch/component'
 
 
 
-import { AuthGuard } 			from './../applicativeService/authguard/service';
+import { AuthGuard } 					from './../applicativeService/authguard/service';
  
 const appRoutes: Routes = [
     { path: 'blog',     component: BlogComponent ,   canActivate: [AuthGuard] },
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
     { path: 'neutre',   component: NeutreComponent ,   canActivate: [AuthGuard] },
     { path: 'neutre-generator',   component: NeutreGeneratorComponent ,   canActivate: [AuthGuard] },
     { path: 'upload',   component: BgUploadComponent ,   canActivate: [AuthGuard] },
-    { path: 'masse',    component: MasseComponent ,   canActivate: [AuthGuard] }
+    { path: 'masse',    component: MasseComponent ,   canActivate: [AuthGuard] },
+    { path: 'launch',   component: LaunchComponent ,   canActivate: [AuthGuard] }
 ];
 
 export const route = RouterModule.forChild(appRoutes);

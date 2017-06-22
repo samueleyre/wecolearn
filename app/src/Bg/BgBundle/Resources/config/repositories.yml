@@ -1,0 +1,4 @@
+services:
+  masse.repository:
+    class: Bg\BgBundle\Repository\MasseRepository
+    arguments: [ '@doctrine.orm.entity_manager' ]

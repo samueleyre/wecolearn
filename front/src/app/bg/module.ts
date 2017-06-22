@@ -22,7 +22,8 @@ import { TitreComponent }           from './components/titre/component';
 import { NeutreComponent }          from './components/neutre/component';
 import { NeutreGeneratorComponent } from './components/neutre-generator/component';
 import { BgUploadComponent }        from './components/upload/component';
-import { MasseComponent }        from './components/masse/component';
+import { MasseComponent }           from './components/masse/component';
+import { LaunchComponent }          from './components/launch/component';
 
 import { SelectLanguageComponent }  from './components/select/language/component';
 import { SelectClientComponent }    from './components/select/client/component';
@@ -53,6 +54,7 @@ import { LanguageComponent }        from './component/language';
     NeutreGeneratorComponent,
     MasseComponent,
     BgUploadComponent,
+    LaunchComponent,
     SelectLanguageComponent,
     LanguageComponent,
     SelectClientComponent,
