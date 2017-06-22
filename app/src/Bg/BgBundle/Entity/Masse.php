@@ -20,7 +20,6 @@ class Masse  {
 
     /**
      * @ORM\Column(type="string")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     public $name;
 
@@ -28,6 +27,12 @@ class Masse  {
      * @ORM\OneToMany(targetEntity="Bg\BgBundle\Entity\Programmation", mappedBy="masse", cascade={"persist"})
      */
 	public $programmations;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    public $launched=0;
+
 
 
 	public function getId() {

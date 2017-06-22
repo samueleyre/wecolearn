@@ -22,6 +22,7 @@
     "require": {
         "php": ">=5.5.9",
         "PHPOffice/PHPExcel": "^1.8",
+        "curl/curl": "^1.6",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/doctrine-fixtures-bundle": "2.3.0",
@@ -29,6 +30,7 @@
         "doctrine/orm": "^2.5",
         "friendsofsymfony/rest-bundle": "^2.0.0",
         "friendsofsymfony/user-bundle": "dev-master",
+        "hieu-le/wordpress-xmlrpc-client": "^2.5",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/di-extra-bundle": "dev-master",
         "jms/serializer-bundle": "dev-master",

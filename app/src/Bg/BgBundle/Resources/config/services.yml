@@ -14,4 +14,10 @@ services:
   client.repository:
     class: Bg\BgBundle\Repository\ClientRepository
     arguments: ['@doctrine.orm.entity_manager']
+
+  command.run_programmation:
+    class: Bg\BgBundle\Command\RunProgrammation
+    arguments : [ '@logger', '@doctrine.orm.entity_manager']
+    tags: 
+      - { name: console.command }
   
