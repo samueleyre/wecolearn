@@ -14,3 +14,8 @@ services:
     arguments: ['@doctrine.orm.entity_manager']
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Command\FetchEntity }
+  fetch_random_entity:
+    class: Bg\BgBundle\Metier\CommandHandler\FetchRandomEntityCommandHandler
+    arguments: ['@doctrine.orm.entity_manager']
+    tags:
+        - { name: command_handler, handles: Bg\BgBundle\Metier\Command\FetchRandomEntity }

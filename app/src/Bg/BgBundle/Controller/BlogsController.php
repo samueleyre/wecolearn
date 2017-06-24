@@ -40,9 +40,13 @@ class BlogsController extends GPPDController
         setters={"setEntityRef":"BgBundle:Blog"}
      )
     */
-    public function getBlogsAction()
+    public function getBlogsAction(Request $request )
     {
         
+        if( 1 == $request->query->get('alive') ) {
+            return $this->get('blog.repository')->fetchAlive();
+        }
+
         return $this->getAction();
 		
 	}

@@ -4,7 +4,7 @@ namespace Bg\BgBundle\Metier\CommandHandler;
 
 use Bg\BgBundle\Metier\Command\FetchEntity;
 
-class FetchEntityCommandHandler {
+class FetchRandomEntityCommandHandler {
 
 	private $em;
 
@@ -29,30 +29,45 @@ class FetchEntityCommandHandler {
 
 		
 		$cond = '';
-		$sep = 'WHERE';
+		$sep = '';
 		foreach( $conditions as $key => $value ) {
 			$cond .= sprintf(" %s entity.%s = '%s' ", $sep , $key , $value );
 			$sep = 'AND';
 		}
-		
 		$query = sprintf(
-			"
-				SELECT entity 
-				FROM %s entity 
-				%s", 
-				get_class( $entity), 
-				$cond 
-			)
-		;
+			"SELECT COUNT(entity) 
+			FROM %s entity 
+			WHERE %s", get_class( $entity), $cond );
 
-		
-		$ret =  
+		$count =  
 			$this
 				->em
 				->createQuery( $query )
-				->getResult()
+				->getSingleScalarResult()
 		;
+		
+		$rand = rand(1, $count );
 
+		$query = sprintf(
+			"SELECT entity 
+			FROM %s entity 
+			WHERE %s", get_class( $entity), $cond );
+
+		
+
+		$q = $this->em->createQuery($query);
+		$iterableResult = $q->iterate();
+		$index = 1;
+		$ret = null;
+		while (($row = $iterableResult->next()) !== false) {
+		    if( $index == $rand ) {
+		    	$ret = $row[0];
+		    	
+		    } else {
+		    	$this->em->detach($row[0]);		
+		    }
+		    $index ++;
+		}
 		return $ret;
 	}
 }

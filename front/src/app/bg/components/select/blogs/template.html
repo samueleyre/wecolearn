@@ -1,3 +1,9 @@
+<h1>Total : {{ count }}</h1>
+<div>
+	<label for="alive">Alive</label>
+	<input id="alive" type="checkbox" [ngModel]="alive" 
+(ngModelChange)="aliveChange($event)" />
+</div>
 <div class="row">
 	<div class="col-xs-10 col-md-10" [hidden]="page!=i" *ngFor="let _page of _pages;let i=index;">
 		<ul class="thumbnail">

@@ -13,7 +13,7 @@ use Bg\BgBundle\Entity\Ancre;
 use Bg\BgBundle\Entity\Clef;
 use Bg\BgBundle\Entity\Neutre;
 
-use Bg\BgBundle\Metier\Command\FetchEntity;
+use Bg\BgBundle\Metier\Command\FetchRandomEntity as FetchEntity;
 use Bg\BgBundle\Metier\Command\UpdateEntity;
 
 class Main {

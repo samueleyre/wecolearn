@@ -17,22 +17,43 @@ export class SelectBlogsComponent implements OnInit {
 	private _blogs: Blog[] = [];
 	public page: number = 0;
 	public perPage : number = 20;
+	public alive:boolean = false;
+	public count: number = 0;
 
 
 	constructor( protected http: Http ) {
 	}
 
 	ngOnInit(): void {
+		this.load();
+	}
+
+	private load() {
+		
+		console.log('LOADED', true);
 		PaginationService.disable();
-		this.http.get('/api/blogs')
+		let endpoint = '/api/blogs';
+		if( this.alive ) {
+			endpoint += '?alive=1';
+			console.log(endpoint);
+		}
+		this.http.get(endpoint)
 		.map( response   => {
 			return response.json();
 		}).subscribe( blogs => {
+			console.log('set pages', true);
 			this.setPages( blogs );
 		});
 	}
 
+	aliveChange( newValue : boolean ) {
+		this.alive = newValue;
+		this.load();
+	}
+
 	private setPages( blogs: Blog[] ) : void {
+		this._pages = [];
+		this.count = blogs.length;
 		blogs.forEach( ( blog:Blog, i:number ) => {
 			let floor = Math.floor( i / this.perPage  );
 			if( typeof this._pages[floor] === 'undefined') this._pages[floor] = [];

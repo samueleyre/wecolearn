@@ -2,6 +2,6 @@
 
 namespace Bg\BgBundle\Metier\Command;
 
-class FetchEntity extends Fetch {
+class FetchRandomEntity extends Fetch {
 
 }

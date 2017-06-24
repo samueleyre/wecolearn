@@ -27,4 +27,22 @@ class BlogRepository {
 		;
 		return $ret;
 	}
+
+	public function fetchAlive() {
+		$query = sprintf("
+			SELECT blog	
+			FROM BgBundle:Blog blog
+			JOIN BgBundle:BlogState blogState
+			WITH blog.id = blogState.idBlog
+			WHERE blogState.state = 1
+		");
+
+		$ret = 
+			$this
+				->em
+				->createQuery( $query )
+				->getResult()
+		;
+		return $ret;	
+	}
 }

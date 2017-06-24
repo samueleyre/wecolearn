@@ -25,13 +25,20 @@ class WordPress {
 
     }
 
+    public function ping() {
+        return $this->client->deletePost(
+            $this->client->newPost('Awsome!','Awsome!')
+            )
+        ;
+    }
+
     public function newPost($title,$content)
     {
-        $this->client->newPost($title,$content);
+        return $this->client->newPost($title,$content);
     }
 
     public function newPage($title,$content)
     {
-        $this->client->newPost($title,$content,array('post_type'=>'page'));
+        return $this->client->newPost($title,$content,array('post_type'=>'page'));
     }
 }

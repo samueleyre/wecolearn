@@ -20,4 +20,10 @@ services:
     arguments : [ '@logger', '@doctrine.orm.entity_manager', '@command_bus']
     tags: 
       - { name: console.command }
-  
+
+  command.alive:
+    class: Bg\BgBundle\Command\Alive
+    arguments : [ '@logger', '@doctrine.orm.entity_manager', '@command_bus']
+    tags: 
+      - { name: console.command }
+    
