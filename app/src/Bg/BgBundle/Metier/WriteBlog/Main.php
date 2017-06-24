@@ -6,7 +6,7 @@
  * Time: 16:53
  */
 
-namespace BG\BgBundle\Metier\WriteBlog;
+namespace Bg\BgBundle\Metier\WriteBlog;
 
 
 class Main {

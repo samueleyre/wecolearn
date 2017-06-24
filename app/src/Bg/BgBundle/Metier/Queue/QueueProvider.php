@@ -22,17 +22,16 @@ class QueueProvider {
 
 		$ret = [];
 		$sql = "
-		SELECT DISTINCT idClient 
-		FROM masse 
-		JOIN programmation 
-		ON programmation.idMasse = masse.id 
-		WHERE used = 0  AND launched = 1 
-		GROUP BY idClient";
+		SELECT DISTINCT programmation.idClient 
+		FROM BgBundle:Masse masse 
+		JOIN BgBundle:Programmation programmation 
+		WHERE programmation.used = 0  AND masse.launched = 1 
+		GROUP BY programmation.idClient";
 
 		$res = 
 			$this
 				->em
-				->createNativeQuery($sql, new ResultSetMapping())
+				->createQuery($sql)
 				->getResult()
 		;
 
@@ -40,13 +39,15 @@ class QueueProvider {
 			$ret[] = $prog['idClient'];
 		}
 
+
+
 		return 
 			$ret 
 		;
 	}
 
 	protected function getQueue($idClient) {
-		return new Main( $idClient, $this->log );
+		return new Main( $idClient, $this->log , $this->em );
 	}
 
 	protected function addNewQueues() {
@@ -62,21 +63,25 @@ class QueueProvider {
 		$this->addNewQueues();
 		$ret = [];
 		foreach($this->queues as $idClient => $queue) {
-			$ret[$this->getClient($idClient)] = $queue->tic();
+			$tikked = $queue->tic();
+			if( isset($tikked) ) $ret[$this->getClient($idClient)] = $tikked;
 		}
 		return $ret;
 	}
 
 	protected function getClient( $idClient ) {
 		
-		$sql = sprintf('SELECT name FROM client WHERE id = %d LIMIT 1', $idClient );
+		$sql = sprintf('SELECT client FROM BgBundle:Client client WHERE client.id = %d ', $idClient );
 		$res = 
 			$this
 				->em
-				->createNativeQuery($sql, new ResultSetMapping())
+				->createQuery($sql)
+				->setMaxResults(1)
 				->getSingleResult()
 		;
-		return $res['name'];
+		$name = $res->getName();
+		$this->em->detach($res);
+		return $name;
 	}
 
 	public function __toString() {

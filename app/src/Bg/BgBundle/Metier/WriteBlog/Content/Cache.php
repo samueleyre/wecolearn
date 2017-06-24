@@ -1,6 +1,6 @@
 <?php
 
-namespace OP\WriteBlog\Content;
+namespace Bg\BgBundle\Metier\WriteBlog\Content;
 
 
 class Cache {

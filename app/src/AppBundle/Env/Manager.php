@@ -8,7 +8,7 @@ class Manager {
 		1 => 'dev',
 		2 => 'staging',
 		3 => 'production'
-	]
+	];
 
 	const DEV = 1;
 	const STAGING = 2;

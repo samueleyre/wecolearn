@@ -4,3 +4,13 @@ services:
     arguments: ['@doctrine.orm.entity_manager']
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Masse\PersistMasse }
+  udpate_entity:
+    class: Bg\BgBundle\Metier\CommandHandler\UpdateEntityCommandHandler
+    arguments: ['@doctrine.orm.entity_manager']
+    tags:
+        - { name: command_handler, handles: Bg\BgBundle\Metier\Command\UpdateEntity }
+  fetch_entity:
+    class: Bg\BgBundle\Metier\CommandHandler\FetchEntityCommandHandler
+    arguments: ['@doctrine.orm.entity_manager']
+    tags:
+        - { name: command_handler, handles: Bg\BgBundle\Metier\Command\FetchEntity }

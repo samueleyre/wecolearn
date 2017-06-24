@@ -17,7 +17,7 @@ services:
 
   command.run_programmation:
     class: Bg\BgBundle\Command\RunProgrammation
-    arguments : [ '@logger', '@doctrine.orm.entity_manager']
+    arguments : [ '@logger', '@doctrine.orm.entity_manager', '@command_bus']
     tags: 
       - { name: console.command }
   

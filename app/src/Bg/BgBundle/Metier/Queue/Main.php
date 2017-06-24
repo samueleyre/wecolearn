@@ -1,6 +1,6 @@
 <?php
 
-namespace Bg\BgBundle\Service\Metier\Queue;
+namespace Bg\BgBundle\Metier\Queue;
 
 class Main {
     
@@ -49,8 +49,8 @@ class Main {
         $programmations = $this->repository->fetchUnUsedForClient( $this->idClient );
         $ret = array();
         foreach($programmations as $prog) {
-            if( false === array_search($prog->id,$this->unUsedProgrammation)) {
-                $ret[] = $prog->id;
+            if( false === array_search($prog->getId(),$this->unUsedProgrammation)) {
+                $ret[] = $prog->getId();
             }
         }
         return $ret;
@@ -74,7 +74,7 @@ class Main {
         $pause = $prog->pause;
         $samePauseLastIndex = $this->whereIsLastSameTime($pause);
         $t = 1;
-        foreach($this->queue as $index => $array_prog) {
+        foreach( $this->queue as $index => $array_prog ) {
             if(false === $samePauseLastIndex ) {
                 if($t == $pause) {
                     if(is_array($this->queue[$index])) {
@@ -105,7 +105,6 @@ class Main {
             }
             $this->queue[] = $add;
         }
-        //$this->dump_queue($this->queue);
         return $this;
     }
 
@@ -131,7 +130,7 @@ class Main {
         if( is_array( $progs ) ) {
             foreach($progs as $prog) {
                 foreach( $this->unUsedProgrammation as $index =>$id_prog) {
-                    if($prog->id == $id_prog) {
+                    if($prog->getId() == $id_prog) {
                         unset($this->unUsedProgrammation[$index]);
                     }
                 }
@@ -163,7 +162,7 @@ class Main {
                 $infoProg = $model->getRowFromQuery( $sql );
                 */
                 //$ret .= sprintf('[ client : \"%s\", blog : \"%s\" ]', $infoProg['client_name'], $infoProg['blog_name']) . "\n";
-                $ret .= sprintf("[ %d ]", $prog->id);
+                $ret .= sprintf("[ %d ]", $prog->getId());
             }
         }
         return $ret;

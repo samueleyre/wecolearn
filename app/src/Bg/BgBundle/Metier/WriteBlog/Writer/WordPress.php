@@ -6,7 +6,7 @@
  * Time: 16:54
  */
 
-namespace BG\BgBundle\Metier\WriteBlog\Writer;
+namespace Bg\BgBundle\Metier\WriteBlog\Writer;
 
 
 class WordPress {

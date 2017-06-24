@@ -10,19 +10,19 @@ class BlogRepository {
 	
 	}
 
-	public function fetchById( $id ) {
+	public function findById( $id ) {
 		
 		$query = sprintf("
 			SELECT blog	
 			FROM BgBundle:Blog blog 
 			WHERE blog.id = %s
-			LIMIT 1
 		", $id);
 
 		$ret = 
 			$this
 				->em
 				->createQuery( $query )
+				->setMaxResults(1)
 				->getSingleResult()
 		;
 		return $ret;

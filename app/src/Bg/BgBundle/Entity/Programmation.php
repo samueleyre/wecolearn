@@ -73,7 +73,7 @@ class Programmation
 
      /**
      * @ORM\ManyToOne(targetEntity="Bg\BgBundle\Entity\Masse", inversedBy="programmations")
-     * @ORM\JoinColumn(name="idMasse", referencedColumnName="id")
+     * @ORM\JoinColumn(name="idMasse", referencedColumnName="id",onDelete="CASCADE")
      */
     public $masse;
 

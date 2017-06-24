@@ -13,10 +13,10 @@ class RunProgrammation extends Command
 {
     private $logger;
 
-    public function __construct(LoggerInterface $logger, $em )
+    public function __construct(LoggerInterface $logger, $em, $commandBus )
     {
         
-        $this->run = new CronRunProgrammation( $logger, $em );
+        $this->run = new CronRunProgrammation( $logger, $em , $commandBus );
 
         parent::__construct();
     }

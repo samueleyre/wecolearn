@@ -15,7 +15,7 @@ class ProgrammationRepository {
 		$query = sprintf("
 			SELECT programmation	
 			FROM BgBundle:Programmation programmation 
-			WHERE programmation.idClient = %s AND used = 0
+			WHERE programmation.idClient = %s AND programmation.used = 0
 		", $idClient);
 
 		$ret = 
@@ -32,14 +32,14 @@ class ProgrammationRepository {
 		$query = sprintf("
 			SELECT programmation	
 			FROM BgBundle:Programmation programmation 
-			WHERE prgrammation.id = %s
-			LIMIT 1
-		", $id);
+			WHERE programmation.id = %d
+			", $id);
 
 		$ret = 
 			$this
 				->em
 				->createQuery( $query )
+				->setMaxResults(1)
 				->getSingleResult()
 		;
 		return $ret;
