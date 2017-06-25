@@ -28,9 +28,9 @@ class Evolution {
 		$res = [];
 
 		foreach( $this->idMasse() as $idMasse ) {
-			$res[$idMasse] = $this->evolution($idMasse);
+			$res[] = $this->evolution($idMasse);
 		}
-		$this->persist->set(self::KEY, $res);
+		$ret = $this->persist->set(self::KEY, $res);
 	}
 
 	public function idMasse( ) {
@@ -40,7 +40,7 @@ class Evolution {
 				foreach( $value as $programmation ) {
 					if( $programmation instanceof Programmation ) {
 						$idMasse = $programmation->masse->getId();
-						if(false == array_search($idMasse, $ret)) {
+						if( false === array_search($idMasse, $ret)) {
 							$ret[] = $idMasse;
 						}
 					}
@@ -88,12 +88,14 @@ class Evolution {
 		}
 		$ret = new Model();
 		$ret->idMasse = $idMasse;
-		$ret->tics = $tic;
+		$ret->tics = $tics;
 		$ret->next = $firstTics;
 		$ret->nextProgrammation = $firstEncounteredProgrammations;
 		$ret->lastProgrammation = $lastEencounteredProgrammation;
 		$ret->last = $lastTic;
 		$ret->programmations = $encounteredProgrammation;
 		$ret->elapsed = $this->elapsed( $idMasse );
+
+		return $ret;
 	} 
 }

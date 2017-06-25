@@ -4,6 +4,7 @@ namespace  Bg\BgBundle\Metier\Exception\Manager;
 
 use \HieuLe\WordpressXmlrpcClient\Exception\NetworkException;
 
+use Bg\BgBundle\Metier\Exception\UninterceptedException;
 
 
 class UrlExceptionManager {
@@ -34,7 +35,7 @@ class UrlExceptionManager {
 		if(!$this->isValid( $exception ) ) {
 			$this->logger->warning('Not valid Url exception');
 			$this->logger->warning( sprintf('Exception message :  %s', $exception->getMessage() ));
-			throw new \OP\Exception\UninterceptedException( $exception->getMessage() );
+			throw new UninterceptedException( $exception->getMessage() );
 		
 		} else {
 			

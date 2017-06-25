@@ -57,7 +57,6 @@ class RunProgrammation {
         $rowProg = null;
         $pause = 30;
         while(count($clientsProgs) > 0 ) {
-            dump($clientsProgs);
             foreach($clientsProgs as $clientName => $arrayProgs) {
                 if( null !== $arrayProgs && count($arrayProgs) > 0 ) {
 
@@ -101,11 +100,11 @@ class RunProgrammation {
                                 
                                 } catch(\Exception $e ) {
                                     
-                                    $EM = new UrlExceptionManager( $this->logger );
+                                    $EM = new UrlExceptionManager( $this->log );
                                     try {
                                         
                                         $this->log->warning('Exception catched and processed');
-                                        $EM->isException($e,$blogRow->url, $this );
+                                        $EM->isException($e,$blogRow->getUrl(), $this );
                                     
                                     } catch(\Exception $e) {
 
@@ -148,17 +147,17 @@ class RunProgrammation {
             
                 $sleepTime = rand(1,1);
                 $time = isset($updatedTime)?$updatedTime->format('Y-m-d H:i:s'):null;
-                $this->log->info("Sleep for {$sleepTime} after publishing for {$clientName} for blog : {$idBlog} at time ${time}\n");
+                //$this->log->info("Sleep for {$sleepTime} after publishing for {$clientName} for blog : {$idBlog} at time ${time}\n");
                 //sleep($sleepTime);
 
             }    
             
-            $sleepTime = 1;
+            $sleepTime = 10;
             if( Env::getEnv() < Env::PRODUCTION ) {
-                $sleepTime = 1;
+                $sleepTime = 10;
             }
             $this->log->info("Sleep for {$sleepTime} seconds before new tic\n");
-            //sleep($sleepTime);
+            sleep($sleepTime);
             $clientsProgs = $queueProvider->tic();
         }
         $this->log->info('no more programations availables');

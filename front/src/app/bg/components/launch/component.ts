@@ -10,7 +10,7 @@ import { Masse }                      from './model';
 import { GPPDService }                from './../../service/gppd';
 import { GPPDComponent }              from './../../component/gppd';
 import { PopinConfirmService }        from './../../../applicativeService/popin/confirm/service';
-
+import { EvolutionService }            from './../evolution/service';
 @Component({
     templateUrl: 'template.html'
 })
@@ -22,12 +22,13 @@ export class LaunchComponent implements OnInit {
     public remaining:number = 0;
     public remainingLaunched:number = 0;
     
-    constructor(protected http:Http ) {
+    constructor(protected http:Http , private evolutionService : EvolutionService ) {
 
     }
 
     ngOnInit() {
         this.load();
+        this.evolutionService.launch(true);
     }
 
     private load() {

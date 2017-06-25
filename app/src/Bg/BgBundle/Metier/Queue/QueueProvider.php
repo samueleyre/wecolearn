@@ -64,7 +64,7 @@ class QueueProvider {
 		$this->addNewQueues();
 		$ret = [];
 		foreach($this->queues as $idClient => $queue) {
-			$this->evolution->addQueue( $queue->getQueue());
+			$this->evolution->addQueue( $idClient, $queue->getQueue());
 			$tikked = $queue->tic();
 			if( isset($tikked) ) $ret[$this->getClient($idClient)] = $tikked;
 		}

@@ -6,8 +6,8 @@ use Bg\BgBundle\Model\Evolution as Model;
 
 use  FOS\RestBundle\Controller\Annotations\Get;
 
-use AppBundle\Persist\Memcache\Main as Persist;
 use Bg\BgBundle\Metier\Queue\Evolution as Metier;
+use AppBundle\Persist\Memcache\Main;
 
 
 class EvolutionsController
@@ -26,7 +26,9 @@ class EvolutionsController
     public function getEvolutionsAction()
     {
         
-        return ( new Persist() )->get( Metier::KEY );
+        $persist = new Main();
+
+        return $persist->get( Metier::KEY );
 		
 	}
 }

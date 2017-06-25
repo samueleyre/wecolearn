@@ -2,7 +2,7 @@
 
 namespace Bg\BgBundle\Metier\CommandHandler;
 
-use Bg\BgBundle\Metier\Command\FetchEntity;
+use Bg\BgBundle\Metier\Command\FetchRandomEntity;
 
 class FetchRandomEntityCommandHandler {
 
@@ -12,7 +12,7 @@ class FetchRandomEntityCommandHandler {
 		$this->em = $em;
 	}
 
-	public function handle(FetchEntity $command ) {
+	public function handle(FetchRandomEntity $command ) {
 
 		$command
 			->setResponse( 
