@@ -45,13 +45,11 @@ class MassesController extends Controller
     {
         
         
-        $ret = $this->get('command_bus')->handle( new PersistMasse( $masse ));
+        $this->get('command_bus')->handle( new PersistMasse( $masse ));
         
-        $ret = \Bg\BgBundle\Metier\Masse\ModelToEntity::convert( $masse );
+        //$ret = \Bg\BgBundle\Metier\Masse\ModelToEntity::convert( $masse );
 
-        syslog(LOG_ERR, 'class: '.get_class($ret));
-        
-        return $ret;
+        return [];
         
     }
 

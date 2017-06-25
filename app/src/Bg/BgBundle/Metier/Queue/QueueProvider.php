@@ -15,6 +15,7 @@ class QueueProvider {
 		$this->log = $logger;
 		$this->em = $em;
 		$this->addNewQueues();
+		$this->evolution = new Evolution();
 		
 	}
 
@@ -63,9 +64,11 @@ class QueueProvider {
 		$this->addNewQueues();
 		$ret = [];
 		foreach($this->queues as $idClient => $queue) {
+			$this->evolution->addQueue( $queue->getQueue());
 			$tikked = $queue->tic();
 			if( isset($tikked) ) $ret[$this->getClient($idClient)] = $tikked;
 		}
+		$this->evolution->setResponse();
 		return $ret;
 	}
 

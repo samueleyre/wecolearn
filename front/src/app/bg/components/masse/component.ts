@@ -11,6 +11,8 @@ import { GPPDService }                from './../../service/gppd';
 import { GPPDComponent }              from './../../component/gppd';
 import { PopinConfirmService }        from './../../../applicativeService/popin/confirm/service';
 
+import { MessageService }             from './../../../applicativeService/message/service';    
+
 @Component({
     templateUrl: 'template.html'
 })
@@ -33,6 +35,7 @@ export class MasseComponent  {
         .map(response => {
             return response.json();
         }).subscribe( response => {
+            MessageService.info("Programmation en masse ajoutée");
             console.log( response );
         });
        

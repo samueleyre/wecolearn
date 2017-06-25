@@ -25,7 +25,7 @@ class PaginationQuery {
 	public function offset() {
 		$ret = $this->perPage * ( $this->page - 1 );
 		if( $ret < 0 ) $ret = 0;
-		if( $this->page > $this->maxPage()) $ret = $this->perPage * ( $this->maxPage() - 1 );
+		if( $this->page > $this->maxPage() && $this->maxPage() > 0 ) $ret = $this->perPage * ( $this->maxPage() - 1 );
 		return $ret;
 	}
 
@@ -34,6 +34,7 @@ class PaginationQuery {
 	}
 
 	public function maxPage() {
-		return ceil( $this->count / $this->perPage );
+		$ret = ceil( $this->count / $this->perPage );
+		return $ret;
 	}
 }

@@ -13,6 +13,7 @@ import { route }                    from './route';
 
 import { GPPDService }              from './service/gppd';
 import { GPPDFactory }              from './service/gppd.factory';
+import { EvolutionService }         from './components/evolution/service';
 
 import { BlogComponent }            from './components/blog/component';
 import { ClientComponent }          from './components/client/component';
@@ -29,6 +30,7 @@ import { SelectLanguageComponent }  from './components/select/language/component
 import { SelectClientComponent }    from './components/select/client/component';
 import { SelectBlogsComponent }    from './components/select/blogs/component';
 import { LanguageComponent }        from './component/language';
+import { EvolutionComponent }       from './components/evolution/component';
 
 @NgModule({
   imports:[
@@ -54,13 +56,12 @@ import { LanguageComponent }        from './component/language';
     NeutreGeneratorComponent,
     MasseComponent,
     BgUploadComponent,
+    EvolutionComponent,
     LaunchComponent,
     SelectLanguageComponent,
     LanguageComponent,
     SelectClientComponent,
     SelectBlogsComponent,
-
-
   ],
   providers : [
     {
@@ -68,6 +69,7 @@ import { LanguageComponent }        from './component/language';
             useFactory: GPPDFactory,
             deps: [Http ]
     },
+    EvolutionService,
   ],
   entryComponents: [
     

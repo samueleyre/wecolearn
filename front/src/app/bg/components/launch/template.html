@@ -8,6 +8,7 @@
             <tr>
               <th>Nom de la publication</th>
               <th>En Cours / Lancer</th>
+              <th>Progression</th>
             </tr>
           </thead>
           <tbody>
@@ -18,6 +19,9 @@
                 <span [hidden]="masse.launched">
                   <button (click)="launch(masse)" class="btn">Lancer</button></span>
               </td>
+              <td>
+                <evolution></evolution>
+              </td> 
             </tr>
           </tbody>
         </table>

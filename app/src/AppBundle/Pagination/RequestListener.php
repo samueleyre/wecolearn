@@ -33,7 +33,7 @@ class RequestListener {
                 if(isset($match[4])) {
                     $disabled = true;
                 }
-                $this->service->setPaginationQuery(new PaginationQuery($match[1], $match[2], $disabled ));
+                $this->service->setPaginationQuery(new PaginationQuery($match[1],$match[2] , $disabled ));
         	} else {
         		$this->service->setPaginationQuery(new PaginationQuery(1, 10));
         	}

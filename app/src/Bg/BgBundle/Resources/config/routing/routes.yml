@@ -43,3 +43,7 @@ neutres-generator:
     prefix:   api
     resource: '@BgBundle/Controller/NeutresGeneratorController.php'
 
+evolutions:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/EvolutionsController.php'

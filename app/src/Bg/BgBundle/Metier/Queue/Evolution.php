@@ -1,0 +1,99 @@
+<?php
+
+namespace Bg\BgBundle\Metier\Queue;
+
+use Bg\BgBundle\Entity\Programmation;
+use Bg\BgBundle\Model\Evolution as Model;
+use AppBundle\Persist\Memcache\Main as Persist;
+
+class Evolution {
+
+	const KEY = 'EVOLUTION';
+
+	private $currentQueuesByClient = [];
+	private $persist;
+	private $timePerMasse = [];
+
+	public function __construct() {
+		$this->persist = new Persist();
+		$this->persist->set( self::KEY, []);
+	}
+
+	public function addQueue( $idClient , $queue ) {
+		$this->currentQueuesByClient[$idClient] = $queue;
+		
+	}
+
+	public function setResponse() {
+		$res = [];
+
+		foreach( $this->idMasse() as $idMasse ) {
+			$res[$idMasse] = $this->evolution($idMasse);
+		}
+		$this->persist->set(self::KEY, $res);
+	}
+
+	public function idMasse( ) {
+		$ret = [];
+		foreach( $this->currentQueuesByClient as $idClient => $queue ) {
+			foreach( $queue as $value ) {
+				foreach( $value as $programmation ) {
+					if( $programmation instanceof Programmation ) {
+						$idMasse = $programmation->masse->getId();
+						if(false == array_search($idMasse, $ret)) {
+							$ret[] = $idMasse;
+						}
+					}
+				}
+			}
+		}
+		return $ret;
+	}
+
+	private function elapsed ( $idMasse ) {
+		if(!isset($this->timePerMasse[$idMasse])) {
+			$this->timePerMasse[$idMasse] = time();
+		}
+		return time() - $this->timePerMasse[$idMasse]; 
+	}
+
+	private function evolution( $idMasse ):Model {
+		
+		$encounteredProgrammation = 0;
+		$tics = 0;
+		$lastTic = null;
+		$firstTics = null;
+		$firstMasse = false;
+		$firstEncounteredProgrammations = null;
+		$encounteredProgrammation = 0;
+		foreach($this->currentQueuesByClient as $idClient => $queue ) {
+			foreach( $queue as $value ) {
+				$tics ++;
+				foreach( $value as $programmation ) {
+					if( $programmation instanceof Programmation ) {
+						$encounteredProgrammation ++;
+						if($programmation->masse->getId() === $idMasse ) {
+							$lastTic = $tics;
+							$lastEencounteredProgrammation = $encounteredProgrammation;
+							$encounteredProgrammation ++;
+							if(!$firstMasse) {
+								$firstMasse = true;
+								$firstTics = $tics;
+								$firstEncounteredProgrammations = $encounteredProgrammation;
+							}
+						}
+					}
+				}
+			}
+		}
+		$ret = new Model();
+		$ret->idMasse = $idMasse;
+		$ret->tics = $tic;
+		$ret->next = $firstTics;
+		$ret->nextProgrammation = $firstEncounteredProgrammations;
+		$ret->lastProgrammation = $lastEencounteredProgrammation;
+		$ret->last = $lastTic;
+		$ret->programmations = $encounteredProgrammation;
+		$ret->elapsed = $this->elapsed( $idMasse );
+	} 
+}

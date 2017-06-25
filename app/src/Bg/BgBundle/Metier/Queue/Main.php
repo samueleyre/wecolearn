@@ -27,6 +27,10 @@ class Main {
         $this->refreshQueue();
         
     }
+
+    public function getQueue() {
+        return $this->queue;
+    }
     
     /**
      * @return array();

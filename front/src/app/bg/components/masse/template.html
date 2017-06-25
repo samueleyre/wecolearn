@@ -1,6 +1,4 @@
 <div class="col-md-10 col-md-offset-1">
-    <div class="alert alert-info">
-    </div>
     <h2>Programmation en masse</h2>
     <form name="form" (ngSubmit)="f.form.valid && submit(f)" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">

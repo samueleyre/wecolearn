@@ -10,6 +10,9 @@ import {
       XHRBackend, 
       RequestOptions
     }                              from '@angular/http';
+
+import { MessageModule }           from './message/module';
+
   
 import { AuthenticationService}    from './authentication/service';
 import { AuthGuard }               from './authguard/service';
@@ -28,9 +31,10 @@ import { HeaderBag }               from './interceptor/header-bag'
             prefix: 'my-app',
             storageType: 'localStorage'
         }),
+        MessageModule,
   ],
   exports : [
-    
+    MessageModule
   ]
   ,declarations: [ 
     				  
