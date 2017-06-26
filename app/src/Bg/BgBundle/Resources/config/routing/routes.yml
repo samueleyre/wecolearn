@@ -52,3 +52,8 @@ programmations:
     type:     rest
     prefix:   api
     resource: '@BgBundle/Controller/ProgrammationsController.php'
+
+recherches:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/RecherchesController.php'

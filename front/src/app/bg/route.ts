@@ -11,6 +11,7 @@ import { BgUploadComponent }            from './components/upload/component';
 import { MasseComponent }            	from './components/masse/component';
 import { LaunchComponent }          	from './components/launch/component';
 import { ProgrammationComponent }       from './components/programmation/component';
+import { RechercheComponent }           from './components/recherche/component';
 
 
 
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
     { path: 'masse',    component: MasseComponent ,   canActivate: [AuthGuard] },
     { path: 'launch',   component: LaunchComponent ,   canActivate: [AuthGuard] },
     { path: 'programmation',   component: ProgrammationComponent ,   canActivate: [AuthGuard] },
+    { path: 'recherche',   component: RechercheComponent ,   canActivate: [AuthGuard] },
 ];
 
 export const route = RouterModule.forChild(appRoutes);

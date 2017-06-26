@@ -26,6 +26,7 @@ import { BgUploadComponent }        from './components/upload/component';
 import { MasseComponent }           from './components/masse/component';
 import { LaunchComponent }          from './components/launch/component';
 import { ProgrammationComponent }   from './components/programmation/component';
+import { RechercheComponent }       from './components/recherche/component';
 
 import { SelectLanguageComponent }  from './components/select/language/component';
 import { SelectClientComponent }    from './components/select/client/component';
@@ -65,6 +66,7 @@ import { ExceptionComponent }         from './components/exception/component';
     EvolutionComponent,
     LaunchComponent,
     ProgrammationComponent,
+    RechercheComponent,
 
     SelectLanguageComponent,
     LanguageComponent,
