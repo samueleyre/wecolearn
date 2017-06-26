@@ -2,45 +2,73 @@ Bg\BgBundle\Entity\Programmation:
     exclusion_policy: all
     access_order:     alphabetical
     properties:
-        totalNumberProgrammation:
+        id:
           groups: [ input, output ]
           type: integer
-          serialized_name: totalNumberProgrammation
-        neutralSentenceNumber:
+        anchorPosition:
+          groups: [ input, output ]
+          type: string
+          serialized_name: anchorPosition
+        anchorSentenceNumber:
+          serialized_name: anchorSentenceNumber
           groups: [ input, output ]
           type: integer
-          serialized_name: neutralSentenceNumberMin
+        idClient:
+          serialized_name: idClient
+          groups: [ input, output ]
+          type: integer
         idBlog:
-          groups: [ input, output ]
-          type: integer 
           serialized_name: idBlog
+          groups: [ input, output ]
+          type: integer
+        idLanguageAnchor:
+          serialized_name: idLanguageAnchor
+          groups: [ input, output ]
+          type: integer
+        idLanguageNeutral:
+          serialized_name: idLanguageNeutral
+          groups: [ input, output ]
+          type: integer
+        idLanguageTitle:
+          serialized_name: idLanguageTitle
+          groups: [ input, output ]
+          type: integer
+        idPhraseClef:
+          serialized_name: idPhraseClef
+          groups: [ input, output ]
+          type: integer
+        isBlank:
+          serialized_name: isBlank
+          groups: [ input, output ]
+          type: integer
+        isException:
+          serialized_name: isException
+          groups: [ input, output ]
+          type: integer
+        isPage:
+          serialized_name: isPage
+          groups: [ input, output ]
+          type: integer
+        masse:
+          groups: [ input, output ]
+          type: Bg\BgBundle\Entity\Masse
         name:
           groups: [ input, output ]
           type: string
-        isPage:
+        neutralSentenceNumber:
+          serialized_name: neutralSentenceNumber
           groups: [ input, output ]
           type: integer
-          serialized_name: isPage
-        idLanguage:
-          groups: [ input, output ]
-          type: integer
-          serialized_name: idLanguage
-        idClient:
-          groups: [ input, output ]
-          type: integer 
-          serialized_name: idClient
-        anchorSentenceNumber:
-          groups: [ input, output ]
-          type: integer
-          serialized_name: anchorSentenceNumber
-        isBlank:
-          groups: [ input, output ]
-          type: integer
-          serialized_name: isBlank
         pause:
           groups: [ input, output ]
           type: integer
+        time:
+          groups: [ input, output ]
+          type: DateTime
         titleOption:
+          serialized_name: titleOption
           groups: [ input, output ]
           type: integer
-          serialized_name: titleOption
+        used:
+          groups: [ input, output ]
+          type: integer

@@ -25,12 +25,18 @@ import { NeutreGeneratorComponent } from './components/neutre-generator/componen
 import { BgUploadComponent }        from './components/upload/component';
 import { MasseComponent }           from './components/masse/component';
 import { LaunchComponent }          from './components/launch/component';
+import { ProgrammationComponent }   from './components/programmation/component';
 
 import { SelectLanguageComponent }  from './components/select/language/component';
 import { SelectClientComponent }    from './components/select/client/component';
 import { SelectBlogsComponent }    from './components/select/blogs/component';
 import { LanguageComponent }        from './component/language';
 import { EvolutionComponent }       from './components/evolution/component';
+import { DisplayBlogComponent }      from './components/display/blog/component';
+import { DisplayClientComponent }    from './components/display/client/component';
+import { DisplayClefComponent }       from './components/display/clef/component';
+import { ExceptionComponent }         from './components/exception/component';
+
 
 @NgModule({
   imports:[
@@ -40,7 +46,7 @@ import { EvolutionComponent }       from './components/evolution/component';
       PaginationModule,
       PopinConfirmModule,
       FormsModule,
-      UploadModule, 
+      UploadModule,
   ],
   exports : [
     RouterModule,
@@ -58,10 +64,16 @@ import { EvolutionComponent }       from './components/evolution/component';
     BgUploadComponent,
     EvolutionComponent,
     LaunchComponent,
+    ProgrammationComponent,
+
     SelectLanguageComponent,
     LanguageComponent,
     SelectClientComponent,
     SelectBlogsComponent,
+    DisplayBlogComponent,
+    DisplayClientComponent,
+    DisplayClefComponent,
+    ExceptionComponent,
   ],
   providers : [
     {

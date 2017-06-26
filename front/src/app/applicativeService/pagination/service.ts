@@ -17,11 +17,12 @@ export class PaginationService {
 	static disable() {
 		PaginationService.init();
 		PaginationService.pagination.disabled = true;
+		
 	}
 
 	static enable() {
 		PaginationService.init();
-		PaginationService.pagination.disabled = false;	
+		PaginationService.pagination.disabled = false;
 	}
 	
 	static first(): number {
@@ -65,41 +66,45 @@ export class PaginationService {
 
 	
 	static fromHeader( header: string ): void {
+		PaginationService.enable();
 		if( header ) {
-			let matches = header.match(/^page=(\d+) perPage=(\d+) maxPage=(\d+)$/);
-			if( matches[1] && matches[2] && matches[3] ) {
-				PaginationService.pagination = new Pagination( 
-						parseInt(matches[1]), 
-						parseInt(matches[2]), 
-						parseInt(matches[3]),
-						false
-					)
-				;
-				let pages = [];
-				
-				for( var i=1; i <= PaginationService.pagination.maxPage;i++) {
-					pages.push(i);
+			let matches = header.match(/^page=(\d+) perPage=(\d+) maxPage=(\d+) disabled=(.+)$/);
+			if( matches[1] && matches[2] && matches[3] && matches[4] ) {
+				if( matches[4] === 'false') { 
+					PaginationService.pagination = new Pagination( 
+							parseInt(matches[1]), 
+							parseInt(matches[2]), 
+							parseInt(matches[3]),
+							false
+						)
+					;
+					let pages = [];
+					
+					for( var i=1; i <= PaginationService.pagination.maxPage;i++) {
+						pages.push(i);
+					}
+					
+					EmitterService.get('PAGINATION_CHANGE').emit( pages );
+					
 				}
-				EmitterService.get('PAGINATION_CHANGE').emit( pages );
 			}
 		}
 	}
 
 	static toHeader():string {
 		
-		if(! PaginationService.pagination ) PaginationService.init();
+		if(! PaginationService.pagination ){
+			PaginationService.init();
+		}
 
 		let page = PaginationService.pagination.page;
 		let perPage = PaginationService.pagination.perPage;
 
 		let disabled = '';
-		if( true == PaginationService.pagination.disabled ) {
-			PaginationService.enable();
+		if( true === PaginationService.pagination.disabled ) {
 			disabled = ' disabled=1';
-			console.log('DISABLED');
 		}
-		
-		return `page=${page} perPage=${perPage}${disabled}`;
+			return `page=${page} perPage=${perPage}${disabled}`;
 	}
 
 	static change():Observable<Array<number>> {

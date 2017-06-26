@@ -55,7 +55,10 @@ class PaginationSubscriber implements EventSubscriberInterface
                     }
                 }
                 
-                $paginationQuery->count =  $service->count();
+
+                $count = $service->count();
+                //syslog(LOG_ERR, 'count : '.$count );
+                $paginationQuery->count =  $count;
                 
                 if( $paginationQuery->disabled ) {
                     $paginationQuery->perPage = $paginationQuery->count;

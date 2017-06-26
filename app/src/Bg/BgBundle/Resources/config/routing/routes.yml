@@ -47,3 +47,8 @@ evolutions:
     type:     rest
     prefix:   api
     resource: '@BgBundle/Controller/EvolutionsController.php'
+
+programmations:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/ProgrammationsController.php'

@@ -6,7 +6,7 @@ class PaginationQuery {
 
 	public $page;
 	public $perPage;
-	public $disbled;
+	public $disabled;
 	public $count;
 	
 	public function __construct( $page, $perPage, $disabled = false ) {
@@ -19,7 +19,8 @@ class PaginationQuery {
 	}
 
 	public function getHeader() {
-		return sprintf('page=%d perPage=%d maxPage=%d', $this->page , $this->perPage , $this->maxPage());
+		$disabled = $this->disabled?'true':'false';
+		return sprintf('page=%d perPage=%d maxPage=%d disabled=%s', $this->page , $this->perPage , $this->maxPage(), $disabled );
 	}
 
 	public function offset() {

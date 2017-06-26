@@ -9,7 +9,6 @@ export class HeaderBag {
 	}
 
 	get(params : any|undefined ):any[] {
-		console.log('PARAMS', params )
 		let ret = [ 
 		  //{ 'Content-Type' : 'application/json'},
           { name : 'Authorization' ,  value : 'Bearer ' + this.tokenService.get() },
