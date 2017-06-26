@@ -2,12 +2,15 @@ import {
         Component, 
         OnInit,
         Injectable,
-        Input 
+        Input,
+        Output,
+        EventEmitter
    }                                  from '@angular/core';
 import { Http }                       from '@angular/http';
 import { DomSanitizer }               from '@angular/platform-browser'
 import { Evolution }                  from './model';
-import { EvolutionService }           from './service'; 
+import { EvolutionService }           from './service';
+import { EvolutionEvent }             from './event'; 
 
 @Component({
     templateUrl: 'template.html',
@@ -21,6 +24,7 @@ export class EvolutionComponent implements OnInit {
     public sanitizedPercent : any;
     
     @Input() public idMasse: number;
+    @Output() public reload: EventEmitter<boolean> = new EventEmitter();
     
     constructor(protected http:Http, private sanitizer : DomSanitizer, private service : EvolutionService ) {
         this.sanitizedPercent = this.sanitizer.bypassSecurityTrustStyle(`1%`);
@@ -28,18 +32,23 @@ export class EvolutionComponent implements OnInit {
 
     ngOnInit() {
         this.service.getEvolutions()
-        .subscribe( ( evolutions : Evolution[]) => {
-            this.setProgress( evolutions );
+        .subscribe( ( event: EvolutionEvent ) => {
+            this.setProgress( event.evolutions, event.isHot );
         });
     }
 
-    private setProgress( evolutions : Evolution[] ) {
-        evolutions.forEach( (evolution: any) => {
+    private setProgress( evolutions : Evolution[] , isHot : boolean ) {
+        let hasOneMasse = false;
+        evolutions.forEach( ( evolution: any ) => {
             if( evolution.idMasse == this.idMasse ) {
+                hasOneMasse = true;
                 let end = 10 * ( parseInt(evolution.lastProgrammation) * ( this.progTime ) + parseInt(evolution.last) - parseInt(evolution.lastProgrammation));
                 let string =  parseInt(evolution.elapsed) / end * 100  + '%'
                 this.sanitizedPercent = this.sanitizer.bypassSecurityTrustStyle(string);
             }
-        })
+        });
+        if( !hasOneMasse && isHot ) {
+            this.reload.emit( true );
+        }
     } 
 }

@@ -152,9 +152,9 @@ class RunProgrammation {
 
             }    
             
-            $sleepTime = 10;
+            $sleepTime = 1;
             if( Env::getEnv() < Env::PRODUCTION ) {
-                $sleepTime = 10;
+                $sleepTime = 1;
             }
             $this->log->info("Sleep for {$sleepTime} seconds before new tic\n");
             sleep($sleepTime);

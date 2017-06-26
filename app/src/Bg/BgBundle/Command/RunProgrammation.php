@@ -17,7 +17,7 @@ class RunProgrammation extends Command
     {
         
         $this->run = new CronRunProgrammation( $logger, $em , $commandBus );
-
+        $this->logger = $logger;
         parent::__construct();
     }
 
@@ -30,7 +30,12 @@ class RunProgrammation extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->run->go();
-        
+        while( true ) {
+            $usage1 = memory_get_usage();
+            $this->run->go();
+            $usage2 = memory_get_usage();
+            $this->logger->info( sprintf('Memory Usage : %s Ko',($usage2 - $usage1)/1024));
+            sleep(600);
+        }
     }
 }

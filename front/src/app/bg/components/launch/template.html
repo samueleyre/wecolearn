@@ -20,7 +20,7 @@
                   <button (click)="launch(masse)" class="btn">Lancer</button></span>
               </td>
               <td>
-                <evolution [idMasse]="masse.id" ></evolution>
+                <evolution [idMasse]="masse.id" (reload)="load($event)"></evolution>
               </td> 
             </tr>
           </tbody>

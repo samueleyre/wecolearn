@@ -28,7 +28,11 @@ class EvolutionsController
         
         $persist = new Main();
 
-        return $persist->get( Metier::KEY );
+        $ret = $persist->get( Metier::KEY );
+
+        if( ! $ret ) $ret = [];
+
+        return $ret;
 		
 	}
 }

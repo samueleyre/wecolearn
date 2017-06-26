@@ -31,7 +31,7 @@ export class LaunchComponent implements OnInit {
         this.evolutionService.launch(true);
     }
 
-    private load() {
+    load( event?:any ) {
         this.http.get('/api/masses?unused=1')
         .map((response) => {
             return response.json();
@@ -47,6 +47,7 @@ export class LaunchComponent implements OnInit {
 
     launch( masse : Masse ) {
         masse.launched = 1;
+        this.evolutionService.launch();
         this.http.patch('/api/masses?unused=1', masse )
         .map(response => {
             return response.json();

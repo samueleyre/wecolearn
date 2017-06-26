@@ -1,13 +1,17 @@
 import { Injectable, EventEmitter }		from '@angular/core';
 import { Http }							from '@angular/http';
 import { Evolution }					from './model';
+import { EvolutionEvent }             from './event'; 
 
 @Injectable()
 export class EvolutionService {
 
 	private reload : boolean = true;
-	private emitter : EventEmitter<Evolution[]> = new EventEmitter();
+	private emitter : EventEmitter<EvolutionEvent> = new EventEmitter();
 	private loopEmitter : EventEmitter<any> = new EventEmitter();
+
+	private waitFor: number = 5000;
+	private firstLoops: number = 0;
 
 	constructor( private http: Http ) {
 		this.loopEmitter.subscribe( ( event:any ) => {
@@ -29,17 +33,24 @@ export class EvolutionService {
 
 	private load() {
 		setTimeout(() => {
+			this.firstLoops ++;
 			this.http.get('/api/evolutions').map( response => {
 				return response.json();
 			}).subscribe((evolutions: Evolution[]) => {
 				console.log('Evolutions', evolutions );
-				if( evolutions.length == 0 ) this.reload = false; 
-				this.emitter.emit( evolutions );
+				let isHot = ( this.firstLoops * this.waitFor ) >= 1000 * 610 ;
+				if( evolutions.length == 0 && isHot ) { 
+					this.reload = false;
+				}
+				let event = new EvolutionEvent();
+				event.evolutions = evolutions;
+				event.isHot = isHot;
+				this.emitter.emit( event );
 				if( this.reload ) {
 					this.load();
 					
 				}
 			});	
-		},5000 );
+		},this.waitFor );
 	}
 }
