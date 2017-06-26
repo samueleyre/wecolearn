@@ -1,0 +1,27 @@
+{
+  "name": "google_search_api",
+  "version": "0.0.1",
+  "description": "Api de recherche du rank d'une url pour une recherche donnée",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@op:searchApi"
+  },
+  "keywords": [
+    "search",
+    "rank",
+    "link",
+    "google"
+  ],
+  "author": "Edouard Touraille,Andy Hulstkamp",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "phantomjs": "^2.1.7"
+  }
+}
