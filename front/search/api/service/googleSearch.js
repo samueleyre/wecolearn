@@ -1,63 +1,9 @@
 /**
- * Created by andy hulstkamp
+ * Adapted from andy hulstkamp by édouard Touraille
  */
+var phantom = require('phantom');
 
-var webpage = require("webpage"),
-    fs = require("fs");
-
-var debug = false,
-    pageIndex = 0,
-    allLinks = [],
-    //url = "https://www.google.com/?hl=fr",
-    searchTerm = "mongodb vs couchdb",
-    maxSearchPages = 3;
-
-var createPage = function () {
-
-    var page = webpage.create();
-
-    //set some headers to get the content we want
-    page.customHeaders = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:22.0) Gecko/20130404 Firefox/22.0",
-        "Accept-Language": "en"
-    };
-
-    //smaller size might get you the mobile versions of a site
-    page.viewportSize = { width: 1280, height: 800 };
-
-    //good to debug and abort request, we do not wish to invoke cause they slow things down (e.g. tons of plugins)
-    page.onResourceRequested = function (requestData, networkRequest) {
-        log(["onResourceRequested", JSON.stringify(networkRequest), JSON.stringify(requestData)]);
-        //in case we do not want to invoke the request
-        //networkRequest.abort();
-    };
-
-    //what dd we get
-    page.onResourceReceived = function (response) {
-        log(["onResourceReceived", JSON.stringify(response)]);
-    };
-
-    //what went wrong
-    page.onResourceError = function (error) {
-        log(["onResourceError", JSON.stringify(error)]);
-    };
-
-    page.onLoadStarted = function() {
-        console.log("loading page...");
-    };
-
-    page.onLoadFinished = function(status) {
-        var currentUrl = page.evaluate(function() {
-            return window.location.href;
-        });
-        console.log("onLoadFinished", currentUrl, status);
-    };
-
-    return page;
-}
-
-
-var collectLinks = function () {
+var collectLinks = function ( page ) {
     var hrefs = page.evaluate(function () {
         var links = document.querySelectorAll("h3.r a");
         return Array.prototype.map.call(links, function (anchor) {
@@ -68,122 +14,88 @@ var collectLinks = function () {
 }
 
 
-/*
- * collect all links on the search page, and use paging to go to the next page
- */
-var collectAndNext = function () {
-
-    //for debugging purposes
-    page.render("./snapshots/searchPage-" + pageIndex + ".png");
-
-    //collect all links on the page
-    var links = collectLinks();
-    allLinks = allLinks.concat(links);
-
-    //evaluate and invoke request for next page
-    var next = page.evaluate(function () {
-        //next button on google search page
-        var btn = document.getElementById("pnnext");
-        //invoke click event on the next button
-        var ev = document.createEvent("MouseEvent");
-        ev.initEvent("click", true, true);
-        btn.dispatchEvent(ev);
-    });
-
-    //allow the next page to load
-    setTimeout(function () {
-
-        //goto next page and collect link or - if we reached max . process all collected links
-        //and scrape he pages
-        if (++pageIndex >= maxSearchPages) {
-            scrapeAll(allLinks);
-        } else {
-            collectAndNext();
-        }
-    }, 2000);
-}
-
-/**
- * scrape all pages
- * @param links
- */
-var scrapeAll = function (links) {
-    var index = 0;
-
-    //scrape a page at url
-    var scrapePage = function (index, url) {
-
-        log(["scrape page ", index, url]);
-
-        //open the page
-        page.open(url, function (status) {
-
-            log(["page loaded", status]);
-
-            //write the content of the page as plainText to disc
-            //more advanced processing could be done in page.evaluate
-            //fs.write("./scraped/page" + index + ".txt", page.plainText, "w");
-
-            page.render("./snapshots/page" + index + ".png");
-
-            //scrape next link or abort
-            index++;
-            var u = links[index];
-            if (u) {
-
-                //give it some time to process
-                setTimeout(function () {
-                    scrapePage(index, u)
-                }, 7000);
-            }
-            else {
-                phantom.exit();
-            }
-        })
-    };
-    scrapePage(index, links[index]);
-}
-
-var log = function (args) {
-    if (debug) {
-        console.log(args);
-    }
-}
-
-var page = createPage();
-
-exports.search = function (searchTerm) {
-
-    var url = "https://www.google.com/?hl=fr";
+var getUrl = function ( q , index ) {
     
-    page.open(url, function () {
+    let start  = 10 * index;
+    let ret =  'https://www.google.fr/search?q=' + q +'&start=' + start;
+    return ret;
+}
 
-        //give scripts and ajax call some time to execute and throttle execution to not appear as a robot
-        //google might block us
-        setTimeout(function () {
-
-            //for debugging purposes, to see whats happening
-            page.render("search.png");
-
-            //any js can be injected on the page and used inside evaluate, inject jQuery for convenience, injected returns true if all went well
-            var injected = page.injectJs('../../libs/jquery-2.0.3.min.js');
-            if (!injected) {
-                throw Error("jquery could not be injected");
-            }
-
-            //anything that is invoked on the page must be executed inside evaluate.
-            //evaluate is sandboxed, only simple types are allowed as arguments and return types
-            var f = page.evaluate(function (searchTerm) {
-                $("input").val(searchTerm);
-                $("form").submit();
-            }, searchTerm);
-
-            //give it some time to execute
-            setTimeout(function () {
-                //collect links and goto next page
-                collectAndNext();
-            }, 2000);
-
-        }, 2000);
+var cookies = function( page, index , cookies ) {
+    page.property('cookies').then(function( cookies) {
+        console.log(cookies);
     });
-};
+}
+
+var iterate = function ( page , q ,  maxIndex, index, allLinks, cb) {
+
+    page.evaluate(function( q, index ) {
+        document.location.href = 'https://www.google.fr/search?q=' + q +'&start=' + index * 10
+    } ,q, index ).then(function() {
+        setTimeout(function() {
+            page.property('plainText').then(function(content) {
+                console.log(content);
+            });
+            collectLinks( page ).then(function( links ) {
+                console.log( links);
+                allLinks.push( links );
+                if( index ++ > maxIndex ) {
+                    cb( null, allLinks );
+                } else {
+                    iterate( page, q, maxIndex, index, allLinks, cb );
+                }
+            });
+        },4000);
+    });
+}
+
+exports.search = function ( req, cb ) { 
+
+
+    
+    /*
+    (function(cb){ 
+        
+        var scraper = require('google-search-scraper');
+
+        var DeathByCaptcha = require('deathbycaptcha');
+
+        var dbc = new DeathByCaptcha('edouard.touraille', 'oldB1otopeCellule');
+
+        var ret = [];
+        
+        var options = {
+          query: 'vidal sassoun',
+          host: 'www.google.fr',
+          lang: 'fr',
+          age: 'd1', // last 24 hours ([hdwmy]\d? as in google URL)
+          limit: 100,
+          params: {},
+          solver: dbc // params will be copied as-is in the search URL query string
+        };
+
+        let rets = [];
+        scraper.search( options, function( err, url ) {
+            ret.push(url);
+            console.log(err);
+        });
+
+    })(cb)
+    */
+
+    
+    (function(cb) {
+        allLinks = [];
+        phantom.create().then( function ( ph ) {
+            ph.createPage().then(function( page ) {
+                let q = 'toto';
+                let index = 10;
+                page.open(getUrl(q, index )).then(function(status) {
+                    iterate( page, q, 3, 0, allLinks, cb);    
+                })
+            }); 
+        });
+
+    })(cb);
+
+}

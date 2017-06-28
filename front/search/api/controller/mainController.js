@@ -1,4 +1,4 @@
-var service = require('./../service/googleSearch'),
+var service = require('./../service/googleSearch');
   
 exports.search = function(req, res) {
   

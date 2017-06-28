@@ -4,7 +4,7 @@ namespace AppBundle\GoogleSearchApi\Model;
 
 class Response {
 
-	public $rank;
-	public $page;
-	public $isReachable = true;
+	public $pageRank = null;
+	public $positionInPage = null;
+	
 }

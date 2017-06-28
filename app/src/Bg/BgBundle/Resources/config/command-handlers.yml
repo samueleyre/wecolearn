@@ -19,3 +19,9 @@ services:
     arguments: ['@doctrine.orm.entity_manager']
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Command\FetchRandomEntity }
+
+  launch_page_rank_recherche:
+    class: Bg\BgBundle\Metier\Recherche\Handler\LaunchPageRankRechercheCommandHandler
+    arguments: ['@doctrine.orm.entity_manager', '@google_api_fetch_url_rank' ]
+    tags:
+        - { name: command_handler, handles: Bg\BgBundle\Metier\Recherche\Command\LaunchPageRankRecherche }

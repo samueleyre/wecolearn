@@ -31,4 +31,9 @@ services:
     arguments : [ '@logger', '@doctrine.orm.entity_manager', '@command_bus']
     tags: 
       - { name: console.command }
-  
+
+  google_api_fetch_url_rank:
+    class: AppBundle\GoogleSearchApi\Handler\FetchRankCommandHandler
+    arguments: [ '@doctrine.orm.entity_manager' ]
+    tags:
+        - { name: command_handler, handles: AppBundle\GoogleSearchApi\Message\FetchRank }

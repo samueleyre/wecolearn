@@ -1,21 +1,23 @@
 <?php
 
-namespace AppBundle\GoogleSerchApi\Message;
+namespace AppBundle\GoogleSearchApi\Message;
 
-use AppBundle\GoogleSerchApi\Model\Recherche;
-use AppBundle\GoogleSerchApi\Model\Response;
+use AppBundle\GoogleSearchApi\Model\Recherche;
+use AppBundle\GoogleSearchApi\Model\Response;
 
-class FetchResult {
+class FetchRank {
 
 	protected $response;
 	protected $recherche;
 
 
-	public function __construct( Recheche $recherche ) {
+	public function __construct( Recherche $recherche ) {
 		$this->recherche = $recherche;
 	}
 
 	public function setResponse( Response $response ) {
+		dump('response setted');
+		dump($response);
 		$this->response = $response;
 	}
 

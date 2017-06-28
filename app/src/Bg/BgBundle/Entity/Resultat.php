@@ -22,12 +22,12 @@ class Resultat
     public $date;
 
     /**
-     * @ORM\Column(type="integer",name="rank")
+     * @ORM\Column(type="integer",name="rank", nullable=true)
      */
     public $rank;
 
     /**
-     * @ORM\Column(type="integer",name="page")
+     * @ORM\Column(type="integer",name="page", nullable=true)
      */
     public $page;
     
@@ -40,5 +40,12 @@ class Resultat
     
     public function getId() {
     	return $this->id;
+    }
+
+    public function setRecherche( Recherche $recherche ) {
+        
+        $recherche->resultats->add( $this );
+        $this->recherche = $recherche;
+    
     }
 }

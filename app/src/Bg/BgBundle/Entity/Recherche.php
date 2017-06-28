@@ -33,7 +33,7 @@ class Recherche
     public $url;
 
     /**
-     * @ORM\OneToMany(targetEntity="Bg\BgBundle\Entity\Resultat", mappedBy="recherche")
+     * @ORM\OneToMany(targetEntity="Bg\BgBundle\Entity\Resultat", mappedBy="recherche", cascade={"persist"})
      */
     public $resultats;
 

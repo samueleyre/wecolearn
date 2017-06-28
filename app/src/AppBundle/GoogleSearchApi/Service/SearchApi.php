@@ -2,32 +2,42 @@
 
 namespace AppBundle\GoogleSearchApi\Service;
 
+use Goutte\Client;
+
 class SearchApi {
 
 	public function __construct() {
-		$this->curl = new \Curl\Curl();
-		$this->key = 'AIzaSyDgLGetGChNxVyLjLlnNbLfftSAamPJPb0';
-		$this->url= 'https://www.google.fr/search?q=toto&oq=toto&aqs=chrome..69i57j0l5.4760j0j9&sourceid=chrome&ie=UTF-8';
-		//?fields=kind,items(title,characteristics/length)	
+
+		$config = [
+    		'proxy' => [
+        		'http' => 'xx.xx.xx.xx:8080'
+        	]
+    	];
+		$this->client = new Client();
+		//$this->client->setClient(new \GuzzleHttp\Client($config));
+
 	}
 
-	public function get( ) {
-		$search = "John Scodt";
-		$this->curl->get($this->url 
-			/*
-			,[
-			'q' => 'hello john scodt',
-			'key' => $this->key,
-			'cx' => '006165896850956203093:gi0iupelq9w'
-			]*/
-		);
+	public function get( $q, $index = 0 ) {
+		
+		$query = sprintf( 'https://www.google.com/search?q=%s&start=%d', urlencode($q), 10 * $index );
 
-		//if( $this->curl->error ) {
-			//return $this->curl->error_message;
-		//} else {
-			return $this->curl->response;
-		//}
+		$ret = [];
 
-	
+		$crawler = $this->client->request('GET', $query );
+
+		$crawler->filter('h3.r a')->each(function ( $node ) use ( &$ret ) {
+			 $res = $this->matchUrl($node->getNode(0)->getAttribute('href'));
+			 $ret[] = $res;
+		});
+		return $ret;
+	}
+
+	protected function matchUrl( $element ) {
+		$ret = null;
+		if( preg_match('/(http(|s):\/\/([^\/]*?))\//', $element, $match) ) {
+			$ret =  $match[1];
+		}
+		return $ret;
 	}
 }

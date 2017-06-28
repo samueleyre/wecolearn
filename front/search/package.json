@@ -21,7 +21,11 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "deathbycaptcha": "0.0.3",
     "express": "^4.15.3",
-    "phantomjs": "^2.1.7"
+    "jquery": "^3.2.1",
+    "phantom": "^4.0.4",
+    "phantomjs": "^2.1.7",
+    "webpage": "^0.3.0"
   }
 }

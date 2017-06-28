@@ -9,6 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Bg\BgBundle\Metier\Cron\Alive as CronAlive;
 
+use Bg\BgBundle\Metier\Recherche\Model\Recherche;
+
 class Test extends Command
 {
     private $logger;
@@ -19,6 +21,9 @@ class Test extends Command
         //$this->alive = new CronAlive( $logger, $em , $commandBus );
 
         parent::__construct();
+
+        $this->command = $commandBus;
+
     }
 
     protected function configure()
@@ -30,8 +35,11 @@ class Test extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $search = new \AppBundle\GoogleSearchApi\Service\SearchApi();
-        (dump($search->get()));
+        
+        $command = new \Bg\BgBundle\Metier\Recherche\Command\LaunchPageRankRecherche;
+        
+        $this->command->handle( $command );
+        
         
     }
 }
