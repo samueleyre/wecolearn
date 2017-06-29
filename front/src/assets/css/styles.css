@@ -1,4 +1,7 @@
 body {
-    background: #0147A7;
-    color: #fff;
+    padding-top: 70px;
+}
+
+.open>.dropdown-menu {
+	display: block;
 }

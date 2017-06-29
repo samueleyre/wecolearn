@@ -12,6 +12,7 @@ import { MasseComponent }            	from './components/masse/component';
 import { LaunchComponent }          	from './components/launch/component';
 import { ProgrammationComponent }       from './components/programmation/component';
 import { RechercheComponent }           from './components/recherche/component';
+import { VisualizationComponent }           from './components/visualization/component';
 
 
 
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
     { path: 'launch',   component: LaunchComponent ,   canActivate: [AuthGuard] },
     { path: 'programmation',   component: ProgrammationComponent ,   canActivate: [AuthGuard] },
     { path: 'recherche',   component: RechercheComponent ,   canActivate: [AuthGuard] },
+    { path: 'visualisation',   component: VisualizationComponent ,   canActivate: [AuthGuard] },
 ];
 
 export const route = RouterModule.forChild(appRoutes);

@@ -6,3 +6,7 @@ services:
   blog.repository:
     class: Bg\BgBundle\Repository\BlogRepository
     arguments: [ '@doctrine.orm.entity_manager' ]
+
+  recherche.repository:
+    class: Bg\BgBundle\Repository\RechercheRepository
+    arguments: [ '@doctrine.orm.entity_manager' ]

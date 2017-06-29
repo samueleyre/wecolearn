@@ -2,6 +2,8 @@ import { NgModule }      	          from '@angular/core';
 import { HttpModule }               from '@angular/http';
 import { Router }                   from '@angular/router';
 
+
+
 import { LocalStorageModule }       from 'angular-2-local-storage';
 
 import {   
@@ -32,9 +34,11 @@ import { HeaderBag }               from './interceptor/header-bag'
             storageType: 'localStorage'
         }),
         MessageModule,
+        
   ],
   exports : [
-    MessageModule
+    MessageModule,
+    
   ]
   ,declarations: [ 
     				  

@@ -11,6 +11,6 @@ Bg\BgBundle\Entity\Resultat:
         page:
           groups: [ input, output ]
           type: string
-        recherche:
+        date:
           groups: [ input, output ]
-          type: Bg\BgBundle\Recherche
+          type: DateTime

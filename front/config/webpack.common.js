@@ -1,6 +1,8 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+
 var helpers = require('./helpers');
 
 module.exports = {
@@ -11,7 +13,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js' ]
   },
 
   module: {
@@ -36,10 +38,21 @@ module.exports = {
       {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
+        //loader: 'raw-loader!postcss-loader'
         loader: 'raw-loader'
+      },
+      /*
+      {
+        test: /\.css$/,
+        exclude: helpers.root('src', 'app'),
+        loader: [
+          ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: [ 'css-loader', 'postcss-loader' ] })
+            //,
+            //'to-string-loader',
+            //'css-loader'
+        ]
       }
-      
-
+      */
     ]
   },
 
@@ -53,7 +66,7 @@ module.exports = {
     ),
 
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['app', 'vendor', 'polyfills']
+      name: ['app', 'vendor', 'polyfills' ]
     }),
 
     new HtmlWebpackPlugin({

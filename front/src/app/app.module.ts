@@ -5,6 +5,12 @@ import { NgModule }        from '@angular/core';
 import { RouterModule }    from '@angular/router';
 import { NgbModule }       from '@ng-bootstrap/ng-bootstrap';
 
+import { BsDropdownModule }         from 'ngx-bootstrap';
+
+
+
+
+
 import { PopinConfirmService }     from './applicativeService/popin/confirm/service';
 import { PopinConfirmModule }     from './applicativeService/popin/confirm/module';
 import { EqualValidator }    from './applicativeService/form/validator/equalValidator';
@@ -26,12 +32,13 @@ import { BgModule }          from './bg/module';
         BrowserModule,
         FormsModule,
         HttpModule,
-        NgbModule.forRoot(),
+        //NgbModule.forRoot(),
         BgModule,
         RouterModule,
         PopinConfirmModule,
         BgModule,
         routing,
+        BsDropdownModule.forRoot(),
          
   ],
   declarations: [ 

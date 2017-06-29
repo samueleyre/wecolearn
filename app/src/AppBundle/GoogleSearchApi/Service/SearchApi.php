@@ -20,7 +20,7 @@ class SearchApi {
 
 	public function get( $q, $index = 0 ) {
 		
-		$query = sprintf( 'https://www.google.com/search?q=%s&start=%d', urlencode($q), 10 * $index );
+		$query = sprintf('https://www.google.com/search?q=%s&start=%d', urlencode($q), 10 * $index );
 
 		$ret = [];
 

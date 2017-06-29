@@ -5,6 +5,14 @@ import { RouterModule }             from '@angular/router';
 import { FormsModule }              from '@angular/forms';
 import { Http }                     from '@angular/http';
 
+import {
+    MaterialModule, 
+    MdNativeDateModule}             from '@angular/material';
+
+import { MomentModule }             from 'angular2-moment';
+
+import { ChartsModule }             from 'ng2-charts';
+
 import { PopinConfirmModule }       from './../applicativeService/popin/confirm/module';
 import { PaginationModule }         from './../applicativeService/pagination/module';
 import { UploadModule }             from './../applicativeService/upload/module';
@@ -27,6 +35,7 @@ import { MasseComponent }           from './components/masse/component';
 import { LaunchComponent }          from './components/launch/component';
 import { ProgrammationComponent }   from './components/programmation/component';
 import { RechercheComponent }       from './components/recherche/component';
+import { VisualizationComponent }       from './components/visualization/component';
 
 import { SelectLanguageComponent }  from './components/select/language/component';
 import { SelectClientComponent }    from './components/select/client/component';
@@ -48,6 +57,10 @@ import { ExceptionComponent }         from './components/exception/component';
       PopinConfirmModule,
       FormsModule,
       UploadModule,
+      MaterialModule, 
+      MdNativeDateModule,
+      ChartsModule,
+      MomentModule,
   ],
   exports : [
     RouterModule,
@@ -67,6 +80,7 @@ import { ExceptionComponent }         from './components/exception/component';
     LaunchComponent,
     ProgrammationComponent,
     RechercheComponent,
+    VisualizationComponent,
 
     SelectLanguageComponent,
     LanguageComponent,

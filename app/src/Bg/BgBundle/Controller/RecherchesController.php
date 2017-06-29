@@ -46,6 +46,16 @@ class RecherchesController extends GPPDController
         return $this->getAction();
 		
 	}
+
+    /**
+    * @Get("/recherches-resultats")
+    */
+    public function getRecherchesResultatsAction()
+    {
+        
+        return $this->get('recherche.repository')->get();
+        
+    }
     
     /**
     * @Post("/recherches")
