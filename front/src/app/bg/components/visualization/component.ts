@@ -66,20 +66,20 @@ export class VisualizationComponent implements OnInit {
     }
 
     private setGraph( idRecherche: number ) {
-        let dates:Array<Date> = [];
+        let dates:Array<number> = [];
         let ranks:Array<number> = [];
         let label:string  = '';
         this.recherches.forEach( ( recherche : any ) => {
             if( recherche.id == idRecherche ) {
                 label = recherche.name; 
-                recherche.resultats.forEach(( resultat : any ) => {
+                recherche.resultats.forEach(( resultat : any, index: number ) => {
                     let _date:Date = new Date( resultat.date );
                     let _rank:number = 100;
                     if( resultat.rank !== null && resultat.page !== null ) {
                         _rank = 10 * ( resultat.page - 1 ) + resultat.rank;
                     }
                     ranks.push( _rank );
-                    dates.push( _date);
+                    dates.push( index);
                 });
             }
         });

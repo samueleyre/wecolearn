@@ -13,11 +13,14 @@ import { MomentModule }             from 'angular2-moment';
 
 import { ChartsModule }             from 'ng2-charts';
 
+import { ApplicativeModule }        from './../applicativeService/module';
+
 import { PopinConfirmModule }       from './../applicativeService/popin/confirm/module';
 import { PaginationModule }         from './../applicativeService/pagination/module';
 import { UploadModule }             from './../applicativeService/upload/module';
+import { MessageModule }            from './../applicativeService/message/module';
 
-import { route }                    from './route';
+import { BgRoutingModule }          from './route';
 
 import { GPPDService }              from './service/gppd';
 import { GPPDFactory }              from './service/gppd.factory';
@@ -50,7 +53,7 @@ import { ExceptionComponent }         from './components/exception/component';
 
 @NgModule({
   imports:[
-  	  route,
+  	  BgRoutingModule,
       BrowserModule,
       CommonModule,
       PaginationModule,
@@ -61,10 +64,12 @@ import { ExceptionComponent }         from './components/exception/component';
       MdNativeDateModule,
       ChartsModule,
       MomentModule,
+      RouterModule,
+      ApplicativeModule,
   ],
   exports : [
-    RouterModule,
     UploadModule,
+    MessageModule,
   ],
   declarations: [ 
   	BlogComponent,

@@ -1,4 +1,5 @@
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule }             from '@angular/core';
+import { RouterModule, Routes }         from '@angular/router';
  
 import { BlogComponent } 				from './components/blog/component';
 import { ClientComponent } 				from './components/client/component';
@@ -18,7 +19,7 @@ import { VisualizationComponent }           from './components/visualization/com
 
 import { AuthGuard } 					from './../applicativeService/authguard/service';
  
-const appRoutes: Routes = [
+const bgRoutes: Routes = [
     { path: 'blog',     component: BlogComponent ,   canActivate: [AuthGuard] },
     { path: 'client',   component: ClientComponent , canActivate: [AuthGuard] },
     { path: 'ancre',    component: AncreComponent ,  canActivate: [AuthGuard] },
@@ -34,4 +35,12 @@ const appRoutes: Routes = [
     { path: 'visualisation',   component: VisualizationComponent ,   canActivate: [AuthGuard] },
 ];
 
-export const route = RouterModule.forChild(appRoutes);
+@NgModule({
+  imports: [
+    RouterModule.forChild(bgRoutes)
+  ],
+  exports: [
+    RouterModule
+  ]
+})
+export class BgRoutingModule { }

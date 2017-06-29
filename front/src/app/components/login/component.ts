@@ -24,13 +24,15 @@ export class LoginComponent implements OnInit {
         this.authenticationService.logout();
     }
 
-    login() {
+    login() {    
         this.loading = true;
         this.authenticationService.login(this.model.email, this.model.password)
             .subscribe(
                     result => {
                         if ( result === true )  {
                             // login successful
+                            console.log(result);
+                            this.loading = false;
                             this.router.navigate(['/']);
                         }
                     },

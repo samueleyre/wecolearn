@@ -34,11 +34,12 @@ import { HeaderBag }               from './interceptor/header-bag'
             storageType: 'localStorage'
         }),
         MessageModule,
+        routing,
         
   ],
   exports : [
     MessageModule,
-    
+
   ]
   ,declarations: [ 
     				  

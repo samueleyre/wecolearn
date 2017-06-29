@@ -18,8 +18,10 @@ export class AuthenticationService {
                 let token = response.json() && response.json().token;
                 if ( token ) {
                     
+                    
                     // store username and jwt token in local storage to keep user logged in between page refreshes
                     this.tokenService.set( token );
+                    
  
                     // return true to indicate successful login
                     return true;
