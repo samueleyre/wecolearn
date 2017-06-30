@@ -1,6 +1,8 @@
 #!/bin/bash
 version=$1
 
+sudo chown -R etouraille:etouraille .
+
 if [ "$1" = "" ]; then
 	version=0;
 fi
