@@ -1,0 +1,39 @@
+#!/bin/bash
+version=$1
+
+if [ "$1" = "" ]; then
+	version=0;
+fi
+
+if [ $version = 0 ]
+then
+	filename='dump.sql'
+	unzip=false
+
+elif [ $version = 1 ]
+then
+	filename='dump.sql.1';
+	unzip=false;
+else
+	filename="dump.sql.${version}.gz"
+	unzip=true
+fi
+
+down="down/"
+ 
+
+
+rm -Rf down/*
+rsync -avz ambrieu@91.121.193.33:backup/ $down
+cd down
+if [ -f "/home/etouraille/src/bh/restore/down/$filename" ];then
+	echo 'No version to restore'
+	exit
+else
+	if [ $unzip = true ];then
+		gunzip $filename
+		filename="dump.sql.${version}"
+	fi
+
+	cat "$filename" | docker exec -i docker_db_1 /usr/bin/mysql -uroot -pinReusableCodeWeTrust symfony
+fi

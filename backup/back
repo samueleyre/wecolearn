@@ -1,0 +1,5 @@
+#!/bin/bash
+docker exec docker_db_1 /usr/bin/mysqldump -uroot --password=inReusableCodeWeTrust --databases  mysql symfony > dump.sql
+rsync -avz dump.sql ambrieu@91.121.193.33:backup/dump.sql
+rm dump.sql
+
