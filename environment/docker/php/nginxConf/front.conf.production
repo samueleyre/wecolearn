@@ -3,9 +3,9 @@ server {
     server_name bg.flibusteam.io;
     error_log  /var/log/nginx/error.log;
     access_log /var/log/nginx/access.log;
-    root /src/dist;
+    root /src/front/dist;
 
     location ~* \.(js|jpg|jpeg|png|svg|gif|css|html|map|woff2|svg|ttf|eot|woff|json)$ {
-        root /src/dist;
+        root /src/front/dist;
     }
 }

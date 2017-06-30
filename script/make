@@ -119,4 +119,5 @@ sudo chown -R www-data:www-data $ROOT/$NAME
 
 colored "Restart nginx to enble new conf"
 docker stop docker_web_1
+cd ${ROOT}/${NAME}/docker
 docker-compose -f $COMPOSE up -d
