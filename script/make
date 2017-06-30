@@ -118,14 +118,11 @@ sudo chown -R www-data:www-data $ROOT/$NAME
 
 colored "CRON"
 #might be usefull to make a replace in order to have proper path in script,according to script
-cp $ROOT/$NAME/cron/crontab /etc/cron.d/$NAME
+sudo cp $ROOT/$NAME/cron/crontab /etc/cron.d/$NAME
 sudo crontab /etc/cron.d/$NAME
 
 colored "check generated cron"
 sudo crontab -l
-
-colored "logrotate"
-cp $ROOT/$NAME/backup/logrotate.conf /etc/logrotate.d/${NAME}.conf
 
 colored "Restart nginx to enble new conf"
 docker stop docker_web_1
