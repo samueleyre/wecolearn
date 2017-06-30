@@ -1,5 +1,5 @@
 #!/bin/bash
-ROOT='/home/etouraille/tmp/src'
+ROOT='/home/etouraille/src'
 CONTAINER=docker
 BRANCH='master'
 NOW=`date "+%Y-%m-%d_%H-%M-%S"`
