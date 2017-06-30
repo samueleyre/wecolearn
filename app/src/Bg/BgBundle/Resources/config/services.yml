@@ -26,4 +26,11 @@ services:
     arguments : [ '@logger', '@doctrine.orm.entity_manager', '@command_bus']
     tags: 
       - { name: console.command }
+
+  command.rank:
+    class: Bg\BgBundle\Command\Rank
+    arguments : [ '@logger', '@command_bus' ]
+    tags: 
+      - { name: console.command }
+
     
