@@ -4,7 +4,7 @@ namespace AppBundle\Env;
 
 class Manager {
 
-	protected static $allowed = [
+	public static $allowed = [
 		1 => 'dev',
 		2 => 'staging',
 		3 => 'production'
@@ -24,5 +24,13 @@ class Manager {
 
 		if ( $ret === false ) $ret = self::DEV;
 		return $ret;
+	}
+
+	public static function getEnvFile() {
+		return self::$allowed[self::getEnv()] . '.json';
+	}
+
+	public static function getEnvName() {
+		return self::$allowed[self::getEnv()];
 	}
 }

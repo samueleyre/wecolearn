@@ -32,6 +32,13 @@ services:
     tags: 
       - { name: console.command }
 
+  command.env:
+    class: AppBundle\Command\Env
+    arguments : [ '@logger' ]
+    tags: 
+      - { name: console.command }
+
+
   google_api_fetch_url_rank:
     class: AppBundle\GoogleSearchApi\Handler\FetchRankCommandHandler
     arguments: [ '@doctrine.orm.entity_manager' ]
