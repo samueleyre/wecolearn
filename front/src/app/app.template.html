@@ -3,7 +3,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav mr-auto">
         <li class="dropdown nav-item" dropdown>
-          <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>Blog / Clients</a>
+          <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>Blog / Clients / Hébergeurs</a>
           <ul  class="dropdown-menu">
             <li class="dropdown-item">
               <a [routerLink]="['/blog']">Blog</a>
@@ -11,6 +11,10 @@
             <li class="dropdown-item">
               <a [routerLink]="['/client']">Client</a>
             </li>
+            <li class="dropdown-item">
+              <a routerLink="/hebergeur">Hébergeur</a>
+            </li>
+            
           </ul>
         </li>
         <li class="dropdown nav-item" dropdown>
@@ -30,9 +34,6 @@
             </li>
             <li class="dropdown-item">
               <a routerLink="/neutre-generator">Multiples => Neutres</a>
-            </li>
-            <li class="dropdown-item">
-              <a routerLink="/masse">Programmation en Masse</a>
             </li>
           </ul>
         </li>

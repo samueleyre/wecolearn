@@ -1,3 +1,8 @@
+hebergeurs:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/HebergeursController.php'
+
 uploads:
     type:     rest
     prefix:   api
@@ -57,3 +62,4 @@ recherches:
     type:     rest
     prefix:   api
     resource: '@BgBundle/Controller/RecherchesController.php'
+

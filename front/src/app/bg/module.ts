@@ -38,7 +38,8 @@ import { MasseComponent }           from './components/masse/component';
 import { LaunchComponent }          from './components/launch/component';
 import { ProgrammationComponent }   from './components/programmation/component';
 import { RechercheComponent }       from './components/recherche/component';
-import { VisualizationComponent }       from './components/visualization/component';
+import { VisualizationComponent }   from './components/visualization/component';
+import { HebergeurComponent }       from './components/hebergeur/component';
 
 import { SelectLanguageComponent }  from './components/select/language/component';
 import { SelectClientComponent }    from './components/select/client/component';
@@ -86,6 +87,7 @@ import { ExceptionComponent }         from './components/exception/component';
     ProgrammationComponent,
     RechercheComponent,
     VisualizationComponent,
+    HebergeurComponent,
 
     SelectLanguageComponent,
     LanguageComponent,

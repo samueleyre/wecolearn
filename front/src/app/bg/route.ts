@@ -13,23 +13,25 @@ import { MasseComponent }            	from './components/masse/component';
 import { LaunchComponent }          	from './components/launch/component';
 import { ProgrammationComponent }       from './components/programmation/component';
 import { RechercheComponent }           from './components/recherche/component';
-import { VisualizationComponent }           from './components/visualization/component';
+import { VisualizationComponent }       from './components/visualization/component';
+import { HebergeurComponent }           from './components/hebergeur/component';
 
 
 
 import { AuthGuard } 					from './../applicativeService/authguard/service';
  
 const bgRoutes: Routes = [
-    { path: 'blog',     component: BlogComponent ,   canActivate: [AuthGuard] },
-    { path: 'client',   component: ClientComponent , canActivate: [AuthGuard] },
-    { path: 'ancre',    component: AncreComponent ,  canActivate: [AuthGuard] },
-    { path: 'clef',     component: ClefComponent ,   canActivate: [AuthGuard] },
-    { path: 'titre',    component: TitreComponent ,   canActivate: [AuthGuard] },
-    { path: 'neutre',   component: NeutreComponent ,   canActivate: [AuthGuard] },
+    { path: 'blog',      component: BlogComponent ,   canActivate: [AuthGuard] },
+    { path: 'client',    component: ClientComponent , canActivate: [AuthGuard] },
+    { path: 'ancre',     component: AncreComponent ,  canActivate: [AuthGuard] },
+    { path: 'clef',      component: ClefComponent ,   canActivate: [AuthGuard] },
+    { path: 'titre',     component: TitreComponent ,   canActivate: [AuthGuard] },
+    { path: 'neutre',    component: NeutreComponent ,   canActivate: [AuthGuard] },
+    { path: 'hebergeur', component: HebergeurComponent ,   canActivate: [AuthGuard] },
     { path: 'neutre-generator',   component: NeutreGeneratorComponent ,   canActivate: [AuthGuard] },
-    { path: 'upload',   component: BgUploadComponent ,   canActivate: [AuthGuard] },
-    { path: 'masse',    component: MasseComponent ,   canActivate: [AuthGuard] },
-    { path: 'launch',   component: LaunchComponent ,   canActivate: [AuthGuard] },
+    { path: 'upload',    component: BgUploadComponent ,   canActivate: [AuthGuard] },
+    { path: 'masse',     component: MasseComponent ,   canActivate: [AuthGuard] },
+    { path: 'launch',    component: LaunchComponent ,   canActivate: [AuthGuard] },
     { path: 'programmation',   component: ProgrammationComponent ,   canActivate: [AuthGuard] },
     { path: 'recherche',   component: RechercheComponent ,   canActivate: [AuthGuard] },
     { path: 'visualisation',   component: VisualizationComponent ,   canActivate: [AuthGuard] },

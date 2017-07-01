@@ -1,0 +1,26 @@
+Bg\BgBundle\Entity\Hebergeur:
+    exclusion_policy: all
+    access_order:     alphabetical
+    properties:
+        id:
+          groups: [ input, output ]
+          type: integer
+        name:
+          groups: [ input, output ]
+          type: string
+        ftpLogin:
+          serialized_name: ftpLogin
+          groups: [ input, output ]
+          type: string
+        ftpPassword:
+          serialized_name: ftpPassword
+          groups: [ input, output ]
+          type: string
+        accountLogin:
+          serialized_name: accountLogin
+          groups: [ input, output ]
+          type: string
+        accountPassword:
+          serialized_name: accountPassword
+          groups: [ input, output ]
+          type: string
