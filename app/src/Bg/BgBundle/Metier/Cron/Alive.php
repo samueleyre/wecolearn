@@ -61,7 +61,7 @@ class Alive {
 			if(  $merge ) $this->em->merge( $state );
 			if( !$merge ) $this->em->persist( $state );
 			$this->em->flush();
-			$this->em->detach( $sate);
+			$this->em->detach( $state);
 			$this->em->detach( $blog );
 		}
 		//$this->em->flush();
