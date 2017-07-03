@@ -37,13 +37,22 @@ class ClefsController extends GPPDController
     * @Pagination(
         perPage="5",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Clef"}
+        setters={"setEntityRef":"BgBundle:Clef"},
+        filters={"idClient"}
      )
     */
-    public function getClefsAction()
+    public function getClefsAction(Request $request )
     {
-        
-        return $this->getAction();
+        $idClient = $request->query->get('idClient');
+
+        $filter = [];
+
+
+        if(isset($idClient)) {
+            $filter['idClient'] = $idClient;
+        }
+
+        return $this->getAction($filter);
 		
 	}
     
@@ -52,7 +61,8 @@ class ClefsController extends GPPDController
     * @Pagination(
         perPage="5",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Clef"}
+        setters={"setEntityRef":"BgBundle:Clef"},
+        filters={"idClient"}
         )
     * @ParamConverter(
         "clef",
@@ -61,12 +71,21 @@ class ClefsController extends GPPDController
         options={"deserializationContext"={"groups"={"input"} } }
     )
     */
-    public function postClefsAction( Clef $clef )
+    public function postClefsAction( Clef $clef, Request $request )
     {
+        
+        $idClient = $request->query->get('idClient');
+
+        $filter = [];
+
+
+        if(isset($idClient)) {
+            $filter['idClient'] = $idClient;
+        }
         
         return 
             $this
-                ->postAction($clef);
+                ->postAction($clef, $filter );
         
     }
     
@@ -75,7 +94,8 @@ class ClefsController extends GPPDController
     * @Pagination(
         perPage="5",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Clef"}
+        setters={"setEntityRef":"BgBundle:Clef"},
+        filters={"idClient"}
       )
     * @ParamConverter(
             "clef", 
@@ -84,9 +104,18 @@ class ClefsController extends GPPDController
             options={"deserializationContext"={"groups"={"input"} } }
       )
 	*/
-    public function patchClefsAction( Clef $clef  )
+    public function patchClefsAction( Clef $clef , Request $request )
     {
-        return $this->patchAction( $clef );
+        $idClient = $request->query->get('idClient');
+
+        $filter = [];
+
+
+        if(isset($idClient)) {
+            $filter['idClient'] = $idClient;
+        }
+
+        return $this->patchAction( $clef , $filter );
             
     }
     
@@ -94,11 +123,21 @@ class ClefsController extends GPPDController
     * @Delete("/clefs/{id}")
     * @Pagination(
         perPage="5",service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Client"}
+        setters={"setEntityRef":"BgBundle:Clef"},
+        filters={"idClient"}
       )
     */
-    public function deleteClefsAction( $id )
+    public function deleteClefsAction( $id, Request $request )
     {
-        return $this->deleteAction( $id );
+        $idClient = $request->query->get('idClient');
+
+        $filter = [];
+
+
+        if(isset($idClient)) {
+            $filter['idClient'] = $idClient;
+        }
+
+        return $this->deleteAction( $id, $filter );
     }
 }

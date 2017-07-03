@@ -30,6 +30,10 @@
     </form>
 </div>
 <div class="col-md-9 col-md-offset-3">
+    <div class="row"><filter [(model)]="idClient" field="idClient" (reload)="load()"></filter><select-client [(idClient)]="idClient"></select-client></div>
+</div>
+
+<div class="col-md-9 col-md-offset-3">
     <h2>Liste des Phrases Clef</h2>
     <div class="table-responsive">
         <table class="table table-striped">

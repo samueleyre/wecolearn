@@ -26,6 +26,9 @@ import { TokenService }            from './token/service';
 import { UserService }             from './user/service';
 import { HeaderBag }               from './interceptor/header-bag'
 
+import { FilterComponent }          from './filter/component';
+import { FilterService }          from './filter/service';
+
 @NgModule({
   imports:[   
         HttpModule,
@@ -39,10 +42,11 @@ import { HeaderBag }               from './interceptor/header-bag'
   ],
   exports : [
     MessageModule,
+    FilterComponent    
 
   ]
   ,declarations: [ 
-    				  
+    FilterComponent,				  
   ],
   providers: [
         {
@@ -56,6 +60,7 @@ import { HeaderBag }               from './interceptor/header-bag'
         TokenService,
         UserService,
         HeaderBag,
+        FilterService,
         //XHRBackend, 
         //RequestOptions,
     ],

@@ -18,17 +18,17 @@ class GPPDController extends Controller
         
     } 
     
-    public function getAction()
+    public function getAction($filter = [])
     {
         
         return $this
             ->get('gppd.service')
             ->setEntityRef( $this->entityRef )
-            ->get();
+            ->get($filter);
 		
 	}
 
-    public function postAction( $entity )
+    public function postAction( $entity, $filter = [] )
     {
         
         return 
@@ -36,26 +36,26 @@ class GPPDController extends Controller
                 ->get('gppd.service')
                 ->setEntityRef( $this->entityRef )
                 ->post( $entity )
-                ->get();
+                ->get( $filter );
         
     }
 
-    public function patchAction( $entity )
+    public function patchAction( $entity, $filter = [] )
     {
         return 
             $this
                 ->get('gppd.service')
                 ->setEntityRef( $this->entityRef )
                 ->patch( $entity )
-                ->get();
+                ->get( $filter );
     }
     
-    public function deleteAction( $id )
+    public function deleteAction( $id, $filter = [] )
     {
         return $this
                 ->get('gppd.service')
                 ->setEntityRef( $this->entityRef )
                 ->delete( $id )
-                ->get();
+                ->get( $filter );
     }
 }

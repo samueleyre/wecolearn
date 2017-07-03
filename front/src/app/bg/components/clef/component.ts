@@ -22,6 +22,8 @@ import { PopinConfirmService }         from './../../../applicativeService/popin
 @Injectable()
 export class ClefComponent extends GPPDComponent implements OnInit {
     
+    public idClient: number;
+    
     constructor( protected service : GPPDService , protected confirm: PopinConfirmService ) {
         super(service, confirm );
     } 

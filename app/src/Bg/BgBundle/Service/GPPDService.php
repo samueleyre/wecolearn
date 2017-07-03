@@ -24,19 +24,33 @@ class GPPDService implements PaginationInterface {
 		return $this;
 	}
 
-	public function get() {
-		$query = sprintf("SELECT entity FROM %s entity", $this->entityRef );
+	public function get( $filters = []) {
+		
+		syslog(LOG_ERR, count($filters));
+		$params = [];
+		$condition = '';
+		$sep = '';
+		foreach( $filters as $field => $value ) {
+			$condition = sprintf('%s entity.%s=:%s', $sep , $field, $field);
+			$sep = " AND ";
+			$params[':'.$field] = $value; 
+		}
+		//syslog(LOG_ERR, $query);
+		$qb = $this->em->createQueryBuilder();
+		$qb->select('entity');
+		$qb->from(sprintf('%s', $this->entityRef ),'entity');
+				
+		if(count($filters) > 0 ) {
+			$qb->where( $condition );
+			$qb->setParameters( $params);
+		}
 
-		$ret = 
-			$this
-				->em
-				->createQuery( $query )
-				->setMaxResults( $this->getPaginationQuery()->size() )
-				->setFirstResult($this->getPaginationQuery()->offset())
-				->getResult()
-		;
-		return $ret;
+		$qb->setMaxResults( $this->getPaginationQuery()->size() );
+		$qb->setFirstResult($this->getPaginationQuery()->offset());
+		
 
+
+		return $qb->getQuery()->getResult();
 
 	}
 
@@ -53,11 +67,24 @@ class GPPDService implements PaginationInterface {
 		return $ret;		
 	}
 
-	public function count() {
+	public function count( $filters = []) {
 		
+		$params = [];
+		$condition = '';
+		$sep = '';
+		foreach( $filters as $field => $value ) {
+			$condition = sprintf('%s entity.%s=:%s', $sep , $field, $field);
+			$sep = " AND ";
+			$params[':'.$field] = $value; 
+		}
 		$qb = $this->em->createQueryBuilder();
 		$qb->select('count(entity.id)');
 		$qb->from(sprintf('%s', $this->entityRef ),'entity');
+		if(count($filters) > 0 ) {
+			$qb->where( $condition );
+			$qb->setParameters( $params);
+		}
+
 
 		return $qb->getQuery()->getSingleScalarResult();
 

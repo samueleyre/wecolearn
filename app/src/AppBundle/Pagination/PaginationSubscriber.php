@@ -23,6 +23,8 @@ class PaginationSubscriber implements EventSubscriberInterface
     {
         $controller = $event->getController();
 
+        $request = $event->getRequest();
+
         /*
          * $controller passed can be either a class or a Closure.
          * This is not usual in Symfony but it may happen.
@@ -46,6 +48,16 @@ class PaginationSubscriber implements EventSubscriberInterface
             $service = $this->container->get( $paginationAnnotation->service );
             if( $service ) {
                 
+                $filters = [];
+                if(isset( $paginationAnnotation->filters ) 
+                    && is_array($paginationAnnotation->filters ) ) {
+                        foreach( $paginationAnnotation->filters as $filter ) {
+                            if (null !== $request->query->get( $filter) ) {
+                                $filters[$filter] = $request->query->get( $filter);
+                            }
+                        }
+                    }
+
                 if( isset( $paginationAnnotation->setters ) 
                     && is_array($paginationAnnotation->setters) ) 
                 {
@@ -56,9 +68,9 @@ class PaginationSubscriber implements EventSubscriberInterface
                 }
                 
 
-                $count = $service->count();
+                $count = $service->count( $filters );
                 //syslog(LOG_ERR, 'count : '.$count );
-                $paginationQuery->count =  $count;
+                $paginationQuery->count =  $count;  
                 
                 if( $paginationQuery->disabled ) {
                     $paginationQuery->perPage = $paginationQuery->count;

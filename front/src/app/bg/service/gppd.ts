@@ -5,7 +5,7 @@ import { Observable } 			from 'rxjs';
 import 'rxjs/add/operator/map'
 
 import { IEntity }                  from './../entity/interface' 
-
+import { FilterService }			from './../../applicativeService/filter/service';
 
 export class GPPDService {
 
@@ -17,9 +17,24 @@ export class GPPDService {
 		this.route = route;
 	}
 
+	private getFilterParams( filter ?: any  ) {
+		let sep = '?';
+		let ret = '';
+		if( typeof filter !== 'undefined' ) {
+			for( var field in filter ) {
+				ret += sep + field + '=' + filter[field];
+				sep = '&'; 
+			}
+		}
+		return ret;
+	}
+
 	
 	get(): Observable<IEntity[]> {
-		return this.http.get(`${this.route}`).map((response: Response) => {
+		
+		let params = FilterService.getUrlParams();
+
+		return this.http.get(`${this.route}${params}`).map((response: Response) => {
 				return response.json();
 			})
 		;
@@ -28,22 +43,30 @@ export class GPPDService {
 	
 
 	patch(entity: any ): Observable<IEntity[]> {
-		console.log( 'serialiazed', entity);
-		return this.http.patch(`${this.route}`, entity).map((response: Response) => {
+		
+		let params = FilterService.getUrlParams();
+		
+		return this.http.patch(`${this.route}${params}`, entity).map((response: Response) => {
 				return response.json();
 			})
 		;
 	}
 
 	post( entity:any ): Observable<IEntity[]> {
-		return this.http.post(`${this.route}`, entity).map((response: Response) => {
+		
+		let params = FilterService.getUrlParams();
+
+		return this.http.post(`${this.route}${params}`, entity).map((response: Response) => {
 				return response.json();
 			})
 		;
 	}
 
 	delete(id: any  ): Observable<IEntity[]> {
-		return this.http.delete(`${this.route}/${id}`).map((response: Response) => {
+		
+		let params = FilterService.getUrlParams();
+
+		return this.http.delete(`${this.route}/${id}${params}`).map((response: Response) => {
 				return response.json();
 			})
 		;

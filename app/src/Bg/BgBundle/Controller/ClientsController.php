@@ -36,7 +36,7 @@ class ClientsController extends GPPDController
 	* @Get("/clients")
     * @Pagination(
         perPage="5",
-        service="gppd.service", 
+        service="gppd.service",
         setters={"setEntityRef":"BgBundle:Client"}
      )
     */

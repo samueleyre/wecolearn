@@ -25,4 +25,11 @@ final class Annotation
      */
     public $setters;
 
+    /**
+     * Service setters
+     *
+     * @var array
+     */
+    public $filters;
+
 }
