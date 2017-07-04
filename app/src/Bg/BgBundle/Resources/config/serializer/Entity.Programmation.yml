@@ -13,6 +13,10 @@ Bg\BgBundle\Entity\Programmation:
           serialized_name: anchorSentenceNumber
           groups: [ input, output ]
           type: integer
+        blogPageId:
+          serialized_name: blogPageId
+          groups: [ input, output ]
+          type: integer
         idClient:
           serialized_name: idClient
           groups: [ input, output ]

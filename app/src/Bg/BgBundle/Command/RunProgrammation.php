@@ -35,7 +35,7 @@ class RunProgrammation extends Command
             $this->run->go();
             $usage2 = memory_get_usage();
             $this->logger->info( sprintf('Memory Usage : %s Ko',($usage2 - $usage1)/1024));
-            sleep(600);
+            sleep(300);
         }
     }
 }

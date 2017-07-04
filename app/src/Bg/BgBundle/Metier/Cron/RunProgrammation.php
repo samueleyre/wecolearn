@@ -63,6 +63,7 @@ class RunProgrammation {
                     #arrayProgs can be empty. for a certain time.
                     foreach( $arrayProgs as $rowProg ) {
                             
+                            $blogPageId = null;
                             $pause = $rowProg->pause;
                             $blogRow = $blogRepository->findById($rowProg->idBlog);
                             $idBlog = $blogRow->getId();
@@ -89,11 +90,11 @@ class RunProgrammation {
                                     ;
                                     if($rowProg->isPage)
                                     {
-                                        $writter->newPage($title,$contentText);
+                                        $blogPageId = $writter->newPage($title,$contentText);
                                     }
                                     else
                                     {
-                                        $writter->newPost($title,$contentText);
+                                        $blogPageId = $writter->newPost($title,$contentText);
                                     }
 
                                     $this->log->info("Publication has been made for {$clientName} in blog with id {$idBlog}");
@@ -130,6 +131,7 @@ class RunProgrammation {
                             $rowProg->used = 1;
                             $rowProg->time = $updatedTime = new \Datetime();
                             $rowProg->idPhraseClef = $idPhraseClef;
+                            $rowProg->blogPageId = $blogPageId;
                             
                             $this->em->merge( $rowProg );
                             $this->em->flush();

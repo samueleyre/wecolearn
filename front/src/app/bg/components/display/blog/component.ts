@@ -11,7 +11,7 @@ import { PaginationService } 		from './../../../../applicativeService/pagination
 
 @Component({
 	selector: 'display-blog',
-	template : 	`<span><a href="{{ url }}" target="_blank">{{ name }}</a></span>`
+	template : 	`<span><a href="{{ url }}/?p={{ pageId }}" target="_blank">{{ name }}</a></span>`
 })
 @Injectable()
 export class DisplayBlogComponent implements OnInit {
@@ -20,6 +20,8 @@ export class DisplayBlogComponent implements OnInit {
 	public url : string = '';
 	public name : string = '';
 	private loaded : EventEmitter<Blog[]> = new EventEmitter();
+
+	@Input() public pageId : number;
 
 	constructor( protected http: Http ) {
 		

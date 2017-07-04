@@ -56,7 +56,7 @@
             <div *ngIf="f.submitted && !anchorSentenceNumber.valid" class="help-block">Le nombre de phrases ancres est obligatoire</div>
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !isBlank.valid }">
-            <label for="isBlank">isBlank</label>
+            <label for="isBlank">Afficher dans une nouvelle page</label>
             <select class="form-control" name="isBlank" [(ngModel)]="entity.isBlank" #isBlank="ngModel" required >
                 <option value="1">Oui</option>
                 <option value="0">Non</option>
@@ -64,7 +64,7 @@
             <div *ngIf="f.submitted && !isBlank.valid" class="help-block">Le isBlank est obligatoire</div>
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !pause.valid }">
-            <label for="pause">Temps de pause, en secondes, entre chaque programmation</label>
+            <label for="pause">Temps de pause, en minutes, entre chaque programmation</label>
             <input type="text" class="form-control" name="pause" [(ngModel)]="entity.pause" #pause="ngModel" required />
             <div *ngIf="f.submitted && !pause.valid" class="help-block">Le temps de pause est obligatoire</div>
         </div>

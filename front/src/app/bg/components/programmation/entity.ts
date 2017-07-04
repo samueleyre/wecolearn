@@ -12,5 +12,6 @@ export class Programmation extends Entity implements IEntity  {
 	public isBlank : number;
 	public isException : number;
 	public used : number;
+	public blogPageId : number|null;
 	
 }

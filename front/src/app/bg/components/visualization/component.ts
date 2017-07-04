@@ -1,10 +1,14 @@
 import { 
         Component, 
         OnInit,
-        Injectable 
+        Injectable,
+        ViewChild,
+        SimpleChanges,
    }                                 from '@angular/core';
 import { Http }                      from '@angular/http';
-import { Recherche }               from './../recherche/entity';
+import { Recherche }                 from './../recherche/entity';
+import { BaseChartDirective }        from 'ng2-charts/ng2-charts';
+
 
 @Component({
     templateUrl: 'template.html'
@@ -12,6 +16,9 @@ import { Recherche }               from './../recherche/entity';
 
 @Injectable()
 export class VisualizationComponent implements OnInit {
+
+    @ViewChild(BaseChartDirective) public chart: BaseChartDirective;
+    
     
     public recherches: Recherche[]= [];
     public _recherhe: any[] = [];
@@ -38,11 +45,21 @@ export class VisualizationComponent implements OnInit {
 
     constructor( protected http: Http ) {
         
+    
+
     } 
+
+    
+    
+    
     
     ngOnInit() {
         
         this.load();
+        
+        
+        
+        
         
     }
 
@@ -66,7 +83,7 @@ export class VisualizationComponent implements OnInit {
     }
 
     private setGraph( idRecherche: number ) {
-        let dates:Array<number> = [];
+        let dates:Array<any> = [];
         let ranks:Array<number> = [];
         let label:string  = '';
         this.recherches.forEach( ( recherche : any ) => {
@@ -79,14 +96,16 @@ export class VisualizationComponent implements OnInit {
                         _rank = 10 * ( resultat.page - 1 ) + resultat.rank;
                     }
                     ranks.push( _rank );
-                    dates.push( index);
+                    dates.push( '' + index);
                 });
             }
         });
 
         this.lineChartData = [
-            {data: ranks, label: label }
+            {data: ranks, label: label   }
         ];
+        this.chart.labels = dates;
         this.lineChartLabels = dates;
+
     }
-}
+}  

@@ -15,7 +15,7 @@
           <tbody>
             <tr *ngFor="let entity of entities">
               <td>{{ entity.name }}_{{ entity.id }}</td>
-              <td><display-blog [idBlog]="entity.idBlog"></display-blog></td>
+              <td><display-blog [idBlog]="entity.idBlog" [pageId]="entity.blogPageId"></display-blog></td>
               <td><display-client [idClient]="entity.idClient"></display-client></td>
               <td><display-clef [idPhraseClef]="entity.idPhraseClef"></display-clef></td>
               <td>

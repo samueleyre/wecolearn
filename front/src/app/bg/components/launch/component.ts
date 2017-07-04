@@ -22,7 +22,7 @@ export class LaunchComponent implements OnInit {
     public remaining:number = 0;
     public remainingLaunched:number = 0;
     
-    constructor(protected http:Http , private evolutionService : EvolutionService ) {
+    constructor( protected http:Http , private evolutionService : EvolutionService ) {
 
     }
 
@@ -65,10 +65,12 @@ export class LaunchComponent implements OnInit {
             masse.programmations.forEach(( programmation: any) => {
                  masses[i].remaining += programmation.pause;
                  this.remaining += programmation.pause;
-                 console.log(this.remaining);
                  if( masses[i].launched ) this.remainingLaunched += programmation.pause;
             });
         });
+        this.remaining = Math.ceil( this.remaining / 60 );
+        this.remainingLaunched = Math.ceil( this.remainingLaunched / 60 );
+        
         this.masses = masses;
     }
 }

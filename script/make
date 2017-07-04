@@ -124,6 +124,9 @@ sudo crontab /etc/cron.d/$NAME
 colored "check generated cron"
 sudo crontab -l
 
+colored "kill run script"
+sudo ${ROOT}/${NAME}/script/c-run kill
+
 colored "Restart nginx to enble new conf"
 docker stop docker_web_1
 cd ${ROOT}/${NAME}/docker

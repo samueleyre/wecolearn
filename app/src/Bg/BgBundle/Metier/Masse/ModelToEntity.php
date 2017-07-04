@@ -31,7 +31,8 @@ class ModelToEntity {
 
                             if( ( $prop = $publicPropModel->getName() ) === $publicPropProgrammation->getName() ) {
                                 syslog( LOG_ERR, $prop );
-                                $programmation->$prop = $model->$prop;
+                                $setter = 'set'.ucfirst($prop);
+                                $programmation->$setter($model->$prop);
                             }
 
                     }
