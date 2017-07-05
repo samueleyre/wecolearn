@@ -13,6 +13,9 @@ server {
         root /src/front/dist;
     }
 
+    location /.well-known {
+    	allow all;
+    }
 }
 
 server {
@@ -22,4 +25,5 @@ server {
         return 301 https://$host$uri;
 
     }
+
 }
