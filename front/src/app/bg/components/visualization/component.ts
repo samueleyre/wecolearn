@@ -96,7 +96,7 @@ export class VisualizationComponent implements OnInit {
                         _rank = 10 * ( resultat.page - 1 ) + resultat.rank;
                     }
                     ranks.push( _rank );
-                    dates.push( '' + index);
+                    dates.push(  _date.getDate() + '/' + ( 1 + _date.getMonth()));
                 });
             }
         });
@@ -106,6 +106,7 @@ export class VisualizationComponent implements OnInit {
         ];
         this.chart.labels = dates;
         this.lineChartLabels = dates;
+        this.chart.ngOnChanges({});  
 
     }
 }  
