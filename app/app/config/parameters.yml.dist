@@ -14,7 +14,7 @@ parameters:
     mailer_user: ~
     mailer_password: ~
 
-    database_host:     127.0.0.1
+    database_host:     db
     database_port:     ~
     database_name:     symfony
     database_user:     root
