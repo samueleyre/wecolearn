@@ -1,6 +1,10 @@
 server {
-    server_name api.fibusteam.io;
+    server_name api.xyzxyzxyzxyzxyzxyz.com;
     root /src/app/web;
+    listen 443 ssl http2;
+
+    ssl_certificate /etc/letsencrypt/live/api.xyzxyzxyzxyzxyzxyz.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.xyzxyzxyzxyzxyzxyz.com/privkey.pem;
 
     location / {
         # try to serve file directly, fallback to app.php
@@ -34,4 +38,11 @@ server {
 
     error_log syslog:server=unix:/dev/log;
     access_log syslog:server=unix:/dev/log,facility=user;
+
+    location / {
+        listen 80;
+        server_name api.xyzxyzxyzxyzxyzxyz.com;
+        return 301 https://$host$uri;
+
+    }
 }
