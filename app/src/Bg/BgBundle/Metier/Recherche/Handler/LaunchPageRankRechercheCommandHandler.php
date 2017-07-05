@@ -16,11 +16,11 @@ class LaunchPageRankRechercheCommandHandler {
 	}
 
 	public function handle( LaunchPageRankRecherche $command ) {
+		$date = new \Datetime();
 		foreach( $this->fetchMessages() as $recherche => $value ) {
 			$message = 	$value['message'];
 			$this->handler->handle( $message );
-			dump($message);
-			$resultat = $this->getResultatFromResponse($message->getResponse());
+			$resultat = $this->getResultatFromResponse($message->getResponse(), $date );
 			$recherche = $value['entity'];
 			$resultat->setRecherche($recherche);
 			$this->em->merge( $recherche);
@@ -66,9 +66,9 @@ class LaunchPageRankRechercheCommandHandler {
 		return $ret;
 	}
 
-	private function getResultatFromResponse( $response ) {
+	private function getResultatFromResponse( $response , $date ) {
 		$resultat = new Resultat();
-		$resultat->date = new \Datetime();
+		$resultat->date = $date;
 		$resultat->page = $response->pageRank;
 		$resultat->rank = $response->positionInPage;
 		return $resultat;

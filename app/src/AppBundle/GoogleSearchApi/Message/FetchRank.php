@@ -16,8 +16,6 @@ class FetchRank {
 	}
 
 	public function setResponse( Response $response ) {
-		dump('response setted');
-		dump($response);
 		$this->response = $response;
 	}
 
