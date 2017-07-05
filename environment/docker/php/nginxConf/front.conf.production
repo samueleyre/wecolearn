@@ -13,9 +13,12 @@ server {
         root /src/front/dist;
     }
 
+}
+
+server {
+    listen 80;
+    server_name bg.xyzxyzxyzxyzxyzxyz.com;
     location / {
-        listen 80;
-        server_name bg.xyzxyzxyzxyzxyzxyz.com;
         return 301 https://$host$uri;
 
     }
