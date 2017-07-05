@@ -6,8 +6,8 @@ server {
     root /src/front/dist;
     listen 443 ssl;
 
-    ssl_certificate /etc/letsencrypt/live/bg.xyzxyzxyzxyzxyzxyz.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/bg.xyzxyzxyzxyzxyzxyz.com/privkey.pem;
+    #ssl_certificate /etc/letsencrypt/live/bg.xyzxyzxyzxyzxyzxyz.com/fullchain.pem;
+    #ssl_certificate_key /etc/letsencrypt/live/bg.xyzxyzxyzxyzxyzxyz.com/privkey.pem;
 
     location ~* \.(js|jpg|jpeg|png|svg|gif|css|html|map|woff2|svg|ttf|eot|woff|json)$ {
         root /src/front/dist;

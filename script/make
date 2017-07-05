@@ -1,5 +1,5 @@
 #!/bin/bash
-ROOT='/home/etouraille/tmp/src'
+ROOT='/home/etouraille/src'
 CONTAINER=docker
 BRANCH='master'
 NOW=`date "+%Y-%m-%d_%H-%M-%S"`
@@ -88,29 +88,29 @@ colored 'Git rebase completed.'
 
 colored 'Restarting container...' title
 cd ${ROOT}/${NAME}/docker
-sudo --preserve-env docker-compose kill
+sudo ENV=$ENV /usr/local/bin/docker-compose kill
 #sudo docker build --network host - < ${ROOT}/stpc/docker/php/Dockerfile
 #sudo docker build --network host - < ${ROOT}/stpc/docker/node/Dockerfile
 
-sudo --preserve-env docker-compose -f $COMPOSE build
-sudo --preserve-env docker-compose -f $COMPOSE up -d
+sudo ENV=$ENV /usr/local/bin/docker-compose -f $COMPOSE build
+sudo ENV=$ENV /usr/local/bin/docker-compose -f $COMPOSE up -d
 
 cd ${ROOT}/${NAME}
 colored 'Container is up again.'
 
 colored 'Installing  php dependencies' title
-sudo -E docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;composer install;"
+sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;composer install;"
 
 colored 'Replacement and environement' title
-sudo -E docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;bin/console app:env;"
+sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;bin/console app:env;"
 
 if [[ $BUILD == true ]]; then
 	
 	colored 'Installing front dependencies' title	
-	sudo -E docker exec -"$TI" ${CONTAINER}_node_1 /bin/bash -c "npm install;"
+	sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_node_1 /bin/bash -c "npm install;"
 
 	colored 'Build frontend'
-	sudo -E docker exec -"$TI" ${CONTAINER}_node_1 /bin/bash -c "npm run build;"
+	sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_node_1 /bin/bash -c "npm run build;"
 fi
 
 sudo usermod -u 500 www-data
@@ -128,6 +128,6 @@ colored "kill run script"
 sudo ${ROOT}/${NAME}/script/c-run kill
 
 colored "Restart nginx to enble new conf"
-sudo -E docker stop docker_web_1
+sudo -E /usr/bin/docker stop docker_web_1
 cd ${ROOT}/${NAME}/docker
-sudo -E docker-compose -f $COMPOSE up -d
+sudo ENV=$ENV /usr/sbin/docker-compose -f $COMPOSE up -d
