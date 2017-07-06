@@ -83,10 +83,17 @@ export class PaginationService {
 					for( var i=1; i <= PaginationService.pagination.maxPage;i++) {
 						pages.push(i);
 					}
-					
+
 					EmitterService.get('PAGINATION_CHANGE').emit( pages );
 					
+				} else {
+					
+					//EmitterService.get('PAGINATION_CHANGE').emit([]);
+				
 				}
+			} else {
+
+				//EmitterService.get('PAGINATION_CHANGE').emit([]);
 			}
 		}
 	}
@@ -104,7 +111,7 @@ export class PaginationService {
 		if( true === PaginationService.pagination.disabled ) {
 			disabled = ' disabled=1';
 		}
-			return `page=${page} perPage=${perPage}${disabled}`;
+		return `page=${page} perPage=${perPage}${disabled}`;
 	}
 
 	static change():Observable<Array<number>> {

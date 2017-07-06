@@ -13,7 +13,7 @@ export class PaginationComponent implements OnInit{
   pages: Array<number>;
   page: number;
   maxPage:number;
-
+  
   size: number;
 
   
@@ -23,7 +23,7 @@ export class PaginationComponent implements OnInit{
     this.page = 1;
     this.maxPage = 1;
     PaginationService.change().subscribe( pages => {
-      this.maxPage = pages[pages.length-1];
+      this.maxPage = pages.length-1>0?pages[pages.length-1]:0;
       this.pages = this.displayPages( this.page, this.maxPage );
     });
   }

@@ -1,7 +1,8 @@
 import { Injectable, EventEmitter }		from '@angular/core';
 import { Http }							from '@angular/http';
 import { Evolution }					from './model';
-import { EvolutionEvent }             from './event'; 
+import { EvolutionEvent }             	from './event';
+import { PaginationService }			from './../../../applicativeService/pagination/service'; 
 
 @Injectable()
 export class EvolutionService {
@@ -33,11 +34,12 @@ export class EvolutionService {
 
 	private load() {
 		setTimeout(() => {
+			PaginationService.disable();
 			this.firstLoops ++;
 			this.http.get('/api/evolutions').map( response => {
 				return response.json();
 			}).subscribe((evolutions: Evolution[]) => {
-				console.log('Evolutions', evolutions );
+				//console.log('Evolutions', evolutions );
 				let isHot = ( this.firstLoops * this.waitFor ) >= 1000 * 610 ;
 				if( evolutions.length == 0 && isHot ) { 
 					this.reload = false;
