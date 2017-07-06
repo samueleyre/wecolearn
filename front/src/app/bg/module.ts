@@ -12,6 +12,7 @@ import {
 import { MomentModule }             from 'angular2-moment';
 
 import { ChartsModule }             from 'ng2-charts';
+import { BsDropdownModule }         from 'ngx-bootstrap';
 
 import { ApplicativeModule }        from './../applicativeService/module';
 
@@ -45,13 +46,14 @@ import { HebergeurComponent }       from './components/hebergeur/component';
 
 import { SelectLanguageComponent }  from './components/select/language/component';
 import { SelectClientComponent }    from './components/select/client/component';
-import { SelectBlogsComponent }    from './components/select/blogs/component';
+import { SelectBlogsComponent }     from './components/select/blogs/component';
 import { LanguageComponent }        from './component/language';
 import { EvolutionComponent }       from './components/evolution/component';
-import { DisplayBlogComponent }      from './components/display/blog/component';
-import { DisplayClientComponent }    from './components/display/client/component';
-import { DisplayClefComponent }       from './components/display/clef/component';
-import { ExceptionComponent }         from './components/exception/component';
+import { DisplayBlogComponent }     from './components/display/blog/component';
+import { DisplayClientComponent }   from './components/display/client/component';
+import { DisplayClefComponent }     from './components/display/clef/component';
+import { ExceptionComponent }       from './components/exception/component';
+import { HeaderComponent }          from './components/header/component';
 
 
 @NgModule({
@@ -70,10 +72,12 @@ import { ExceptionComponent }         from './components/exception/component';
       RouterModule,
       ApplicativeModule,
       CacheUrlModule,
+      BsDropdownModule
   ],
   exports : [
     UploadModule,
     MessageModule,
+    HeaderComponent,
   ],
   declarations: [ 
   	BlogComponent,
@@ -100,6 +104,7 @@ import { ExceptionComponent }         from './components/exception/component';
     DisplayClientComponent,
     DisplayClefComponent,
     ExceptionComponent,
+    HeaderComponent,
   ],
   providers : [
     {

@@ -1,0 +1,75 @@
+<nav [hidden]="!display" class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <a class="navbar-brand" routerLink="/logout">Moteur de publication</a>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="dropdown nav-item" dropdown>
+          <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>Blog / Clients / Hébergeurs</a>
+          <ul  class="dropdown-menu">
+            <li class="dropdown-item">
+              <a routerLink="/blog">Blog</a>
+            </li>
+            <li class="dropdown-item">
+              <a routerLink="/client">Client</a>
+            </li>
+            <li class="dropdown-item">
+              <a routerLink="/hebergeur">Hébergeur</a>
+            </li>
+            
+          </ul>
+        </li>
+        <li class="dropdown nav-item" dropdown>
+          <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>Phrases</a>
+          <ul  class="dropdown-menu">
+            <li class="dropdown-item">
+              <a routerLink="/ancre">Ancre</a>
+            </li>
+            <li class="dropdown-item">
+              <a routerLink="/clef">Clef</a>
+            </li>
+            <li class="dropdown-item">
+              <a routerLink="/upload">Upload => Clef</a>
+            </li>
+            <li class="dropdown-item">
+              <a routerLink="/neutre">Neutre</a>
+            </li>
+            <li class="dropdown-item">
+              <a routerLink="/neutre-generator">Multiples => Neutres</a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown nav-item" dropdown>
+          <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>Programmation en Masse</a>
+          <ul  class="dropdown-menu">
+            <li class="dropdown-item">
+              <a routerLink="/masse">Programmer</a>
+            </li>
+            <li class="dropdown-item">
+              <a routerLink="/launch">Lancer</a>
+            </li>
+            <li class="dropdown-item">
+              <a routerLink="/programmation">Programmations</a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown nav-item" dropdown>
+          <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>Recherche</a>
+          <ul  class="dropdown-menu">
+            <li class="dropdown-item">
+              <a routerLink="/recherche">Programmer</a>
+            </li>
+            <li class="dropdown-item">
+              <a routerLink="/visualisation">Suivre</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a routerLink="/user">Administration des comptes</a>
+          </li>
+        <li>
+          <a routerLink="/logout">Déconnexion</a>
+        </li>
+      </ul>
+    </div>
+</nav>

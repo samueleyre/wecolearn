@@ -7,13 +7,9 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 
 import { BsDropdownModule }         from 'ngx-bootstrap';
 
-
-
-
-
-import { PopinConfirmService }     from './applicativeService/popin/confirm/service';
-import { PopinConfirmModule }     from './applicativeService/popin/confirm/module';
-import { EqualValidator }    from './applicativeService/form/validator/equalValidator';
+import { PopinConfirmService }      from './applicativeService/popin/confirm/service';
+import { PopinConfirmModule }       from './applicativeService/popin/confirm/module';
+import { EqualValidator }           from './applicativeService/form/validator/equalValidator';
 //import { routing }          from './applicativeService/routing/app.routing';
 
 
