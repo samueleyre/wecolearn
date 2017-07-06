@@ -20,7 +20,7 @@ import { EvolutionEvent }             from './event';
 @Injectable()
 export class EvolutionComponent implements OnInit {
     
-    public progTime : number = 300;
+    public progTime : number = 2;
     public sanitizedPercent : any;
     
     @Input() public idMasse: number;

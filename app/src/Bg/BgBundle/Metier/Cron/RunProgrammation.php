@@ -67,6 +67,7 @@ class RunProgrammation {
                             $pause = $rowProg->pause;
                             $blogRow = $blogRepository->findById($rowProg->idBlog);
                             $idBlog = $blogRow->getId();
+                            $t0 = time();
                             $content = new Main(
                                 $this->em,
                                 $this->commandBus,
@@ -135,16 +136,20 @@ class RunProgrammation {
                             
                             $this->em->merge( $rowProg );
                             $this->em->flush();
+
+                            $t1 = time();
+
+                            $this->log->info('Publication duration : '. ($t1 - $t0 ));
                                         
                             #sleep time between close publication
                             $sleepTime = rand(1,1);
-                            $this->log->info("Sleep for {$sleepTime} before next publication\n");
+                            //$this->log->info("Sleep for {$sleepTime} before next publication\n");
                             //sleep($sleepTime);
-                        $this->em->detach($rowProg);
+                            $this->em->detach($rowProg);
                     }
 
                 } else {
-                    $this->log->info("No programmations available yet for client {$clientName}, you have to wait a while");
+                    //$this->log->info("No programmations available yet for client {$clientName}, you have to wait a while");
                 }
             
                 $sleepTime = rand(1,1);
@@ -158,7 +163,7 @@ class RunProgrammation {
             if( Env::getEnv() < Env::PRODUCTION ) {
                 $sleepTime = 1;
             }
-            $this->log->info("Sleep for {$sleepTime} seconds before new tic\n");
+            //$this->log->info("Sleep for {$sleepTime} seconds before new tic\n");
             sleep($sleepTime);
             $clientsProgs = $queueProvider->tic();
         }

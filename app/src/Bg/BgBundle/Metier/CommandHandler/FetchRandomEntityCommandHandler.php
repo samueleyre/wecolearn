@@ -3,6 +3,8 @@
 namespace Bg\BgBundle\Metier\CommandHandler;
 
 use Bg\BgBundle\Metier\Command\FetchRandomEntity;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+
 
 class FetchRandomEntityCommandHandler {
 
@@ -29,11 +31,12 @@ class FetchRandomEntityCommandHandler {
 
 		
 		$cond = '';
-		$sep = '';
+		$sep = 'AND';
 		foreach( $conditions as $key => $value ) {
 			$cond .= sprintf(" %s entity.%s = '%s' ", $sep , $key , $value );
-			$sep = 'AND';
+		//	$sep = 'AND';
 		}
+		/*
 		$query = sprintf(
 			"SELECT COUNT(entity) 
 			FROM %s entity 
@@ -47,12 +50,30 @@ class FetchRandomEntityCommandHandler {
 		;
 		
 		$rand = rand(1, $count );
+		*/
+		
+		
+		$rsm = new ResultSetMappingBuilder( $this->em );
+		$rsm->addRootEntityFromClassMetadata(get_class( $entity ), 'entity');
+
+		$table = $this->em->getClassMetadata(get_class($entity))->getTableName();
+
 
 		$query = sprintf(
-			"SELECT entity 
-			FROM %s entity 
-			WHERE %s", get_class( $entity), $cond );
+			"SELECT *
+  			 FROM %s entity JOIN
+       			(SELECT CEIL(RAND() *
+                     (SELECT MAX(id)
+                        FROM %s)) AS id)
+        	 AS r2
+			 WHERE entity.id >= r2.id %s
+			 ORDER BY entity.id ASC
+			 LIMIT 1
+			", $table, $table, $cond );
 
+		$query = $this->em->createNativeQuery($query, $rsm);
+
+		return $query->getSingleResult();
 		
 
 		$q = $this->em->createQuery($query);
@@ -60,12 +81,12 @@ class FetchRandomEntityCommandHandler {
 		$index = 1;
 		$ret = null;
 		while (($row = $iterableResult->next()) !== false) {
-		    if( $index == $rand ) {
+		    //if( $index == $rand ) {
 		    	$ret = $row[0];
 		    	
-		    } else {
-		    	$this->em->detach($row[0]);		
-		    }
+		    //} else {
+		    //	$this->em->detach($row[0]);		
+		    //}
 		    $index ++;
 		}
 		return $ret;

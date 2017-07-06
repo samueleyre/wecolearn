@@ -4,7 +4,7 @@ import { BrowserModule }          from '@angular/platform-browser';
 
 import { CacheUrlService }        from './service';
 import { CacheService }           from 'ng2-cache/ng2-cache';
-import { PaginationService }         from './../pagination/service';
+import { PaginationService }      from './../pagination/service';
 
 
 @NgModule({
@@ -24,5 +24,5 @@ import { PaginationService }         from './../pagination/service';
   ],
   entryComponents: [
   ]
-})
+})  
 export class CacheUrlModule { }

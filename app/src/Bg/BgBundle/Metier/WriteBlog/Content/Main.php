@@ -86,15 +86,14 @@ class Main {
             $cond['idClient'] = $idClient;
         }
             
-        $fetch = new FetchEntity( $model, $cond , $this->em );
-        
-        $this->commandHandler->handle( $fetch);
-        
-        $row = $fetch->getResponse();
+        try {
+            
+            $fetch = new FetchEntity( $model, $cond , $this->em );
+            $this->commandHandler->handle( $fetch);
+            $row = $fetch->getResponse();
         //$fetch = null;
-        
-        if(!isset($row ))
-        {
+        } catch( \Exception $e ) {
+
             $condUpdate = $cond;
             unset($condUpdate['used']);
             $updateCommand = new UpdateEntity( $model,['used'=>0],$condUpdate );

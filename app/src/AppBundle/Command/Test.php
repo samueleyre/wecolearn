@@ -38,6 +38,7 @@ class Test extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
+        /*
         $writter = new WordPress('http://flibusteam.io',
                                         'etouraille',
                                         'b1otope'
@@ -53,9 +54,12 @@ class Test extends Command
 
 
         $command = new \Bg\BgBundle\Metier\Recherche\Command\LaunchPageRankRecherche;
+        */
         
+        $command = new \Bg\BgBundle\Metier\Command\FetchRandomEntity(new \Bg\BgBundle\Entity\Clef());
+
         $this->command->handle( $command );
         
-        
+        dump( $command->getResponse() );
     }
 }
