@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Psr\Log\LoggerInterface;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 
 
 class ExceptionSubscriber implements EventSubscriberInterface
@@ -25,7 +27,19 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public function onKernelException( GetResponseForExceptionEvent $event):void
     {
 
-        $exception = $event->getException();
+            $exception = $event->getException();
+
+            $code = $exception->getCode();
+            if( $exception instanceof HttpException) {
+                
+                $code = $statusCode = $exception->getStatusCode();
+
+
+            } else {
+
+                $statusCode = 500;
+            }
+
 
         // si erreur
         //if( $code = $exception->getCode() >= 500 ) {
@@ -36,7 +50,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
             //if( 'production' !== $this->container->get('env') ) {
                 
-                $ret = ['code' => 500, 'message' => $message, 'trace' => $trace ];
+                $ret = ['code' => $code, 'message' => $message, 'trace' => $trace ];
                 
             /*
             } else {
@@ -49,7 +63,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
                 ;
             }
             */
-            $response = new JsonResponse( $ret, 500 );
+            $response = new JsonResponse( $ret, $statusCode );
             $response->headers->set( 'Access-Control-Allow-Origin', '*');
             $event->setResponse( $response );
         //}

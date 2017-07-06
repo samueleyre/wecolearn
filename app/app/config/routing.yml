@@ -7,6 +7,11 @@ users:
     prefix:   api
     resource: '@AppBundle/Controller/UsersController.php'
 
+ping:
+    type:     rest
+    prefix:   api
+    resource: '@AppBundle/Controller/PingController.php'
+
 bg:
   resource: '@BgBundle/Resources/config/routing/routes.yml'
 
