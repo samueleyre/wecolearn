@@ -7,7 +7,7 @@ import { Http } 					from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Clef }						from './../../../components/clef/entity';
-import { PaginationService } 		from './../../../../applicativeService/pagination/service';
+import { CacheUrlService } 			from './../../../../applicativeService/cache_url/service';
 
 @Component({
 	selector: 'display-clef',
@@ -21,7 +21,7 @@ export class DisplayClefComponent implements OnInit {
 	public url : string = '';
 	public loaded : EventEmitter<Clef[]> = new EventEmitter();
 	
-	constructor( protected http: Http ) {
+	constructor( protected http: Http , protected cache: CacheUrlService) {
 	
 	}
 
@@ -31,12 +31,9 @@ export class DisplayClefComponent implements OnInit {
 
 	private load() {
 		
-		PaginationService.disable();
 		let endpoint = '/api/clefs';
-		this.http.get( endpoint )
-		.map( response   => {
-			return response.json();
-		}).subscribe( ( clefs:Clef[] ) => {
+		this.cache.get( endpoint  )
+		.subscribe( ( clefs:Clef[] ) => {
 			this.clefs = clefs;
 			//console.log('CLEFs', clefs);
 			this.loaded.emit( clefs );

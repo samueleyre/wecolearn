@@ -51,8 +51,10 @@ cd ${ROOT}
 if [ $ENV = "production" ]; then 
     COMPOSE="docker-compose.yml"
     USER='etouraille'
+    SYMFONY_ENV='prod'
 else 
     COMPOSE="docker-compose.yml"
+    SYMFONY_ENV='dev'
 fi
 
 colored "Clone repository if not exists"
@@ -99,7 +101,7 @@ cd ${ROOT}/${NAME}
 colored 'Container is up again.'
 
 colored 'Installing  php dependencies' title
-sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;composer install;"
+sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;SYMFONY_ENV=${SYMFONY_ENV} composer install;"
 
 colored 'Replacement and environement' title
 sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;bin/console app:env;"

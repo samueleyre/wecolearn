@@ -19,6 +19,8 @@ import { PopinConfirmModule }       from './../applicativeService/popin/confirm/
 import { PaginationModule }         from './../applicativeService/pagination/module';
 import { UploadModule }             from './../applicativeService/upload/module';
 import { MessageModule }            from './../applicativeService/message/module';
+import { CacheUrlModule }           from './../applicativeService/cache_url/module';
+
 
 import { BgRoutingModule }          from './route';
 
@@ -67,6 +69,7 @@ import { ExceptionComponent }         from './components/exception/component';
       MomentModule,
       RouterModule,
       ApplicativeModule,
+      CacheUrlModule,
   ],
   exports : [
     UploadModule,
@@ -105,6 +108,7 @@ import { ExceptionComponent }         from './components/exception/component';
             deps: [Http ]
     },
     EvolutionService,
+    //CacheUrlService,
   ],
   entryComponents: [
     

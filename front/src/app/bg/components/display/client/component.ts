@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 
 import { Client }						from './../../../components/client/entity';
 import { PaginationService } 		from './../../../../applicativeService/pagination/service';
+import { CacheUrlService } 			from './../../../../applicativeService/cache_url/service';
 
 @Component({
 	selector: 'display-client',
@@ -20,7 +21,7 @@ export class DisplayClientComponent implements OnInit {
 	public name : string = '';
 	private loaded : EventEmitter<Client[]> = new EventEmitter();
 
-	constructor( protected http: Http ) {
+	constructor( protected http: Http , protected cache : CacheUrlService ) {
 	
 	}
 
@@ -30,12 +31,9 @@ export class DisplayClientComponent implements OnInit {
 
 	private load() {
 		
-		PaginationService.disable();
 		let endpoint = '/api/clients';
-		this.http.get(endpoint)
-		.map( response   => {
-			return response.json();
-		}).subscribe( ( clients:Client[] ) => {
+		this.cache.get(endpoint)
+		.subscribe( ( clients:Client[] ) => {
 			this.clients = clients;
 			this.loaded.emit( clients);
 		});

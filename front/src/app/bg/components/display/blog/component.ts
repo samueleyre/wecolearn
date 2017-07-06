@@ -8,6 +8,8 @@ import 'rxjs/add/operator/map';
 
 import { Blog }						from './../../../components/blog/entity';
 import { PaginationService } 		from './../../../../applicativeService/pagination/service';
+import { CacheUrlService } 			from './../../../../applicativeService/cache_url/service';
+
 
 @Component({
 	selector: 'display-blog',
@@ -23,7 +25,7 @@ export class DisplayBlogComponent implements OnInit {
 
 	@Input() public pageId : number;
 
-	constructor( protected http: Http ) {
+	constructor( protected http: Http, protected cache : CacheUrlService ) {
 		
 	}
 
@@ -33,12 +35,11 @@ export class DisplayBlogComponent implements OnInit {
 
 	private load() {
 		
-		PaginationService.disable();
 		let endpoint = '/api/blogs';
-		this.http.get(endpoint)
-		.map( response   => {
-			return response.json();
-		}).subscribe( ( blogs:Blog[] ) => {
+		this
+		.cache
+		.get(endpoint )
+		.subscribe( ( blogs:Blog[] ) => {
 			this.blogs = blogs;
 			this.loaded.emit( blogs);
 		});
