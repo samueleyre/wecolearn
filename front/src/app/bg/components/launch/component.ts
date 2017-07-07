@@ -1,6 +1,7 @@
 import { 
         Component, 
         OnInit,
+        OnDestroy,
         Injectable 
    }                                  from '@angular/core';
 import { NgForm }                     from '@angular/forms';
@@ -16,7 +17,7 @@ import { EvolutionService }            from './../evolution/service';
 })
 
 @Injectable()
-export class LaunchComponent implements OnInit {
+export class LaunchComponent implements OnInit, OnDestroy {
     
     public masses:Masse[] = [];
     public remaining:number = 0;
@@ -29,6 +30,10 @@ export class LaunchComponent implements OnInit {
     ngOnInit() {
         this.load();
         this.evolutionService.launch(true);
+    }
+
+    ngOnDestroy() {
+        this.evolutionService.kill();
     }
 
     load( event?:any ) {
@@ -67,6 +72,7 @@ export class LaunchComponent implements OnInit {
                  this.remaining += programmation.pause;
                  if( masses[i].launched ) this.remainingLaunched += programmation.pause;
             });
+            masses[i].remaining = Math.ceil(masses[i].remaining / 60 ); 
         });
         this.remaining = Math.ceil( this.remaining / 60 );
         this.remainingLaunched = Math.ceil( this.remainingLaunched / 60 );

@@ -60,13 +60,14 @@ class Evolution {
 	private function evolution( $idMasse ):Model {
 		
 		$encounteredProgrammation = 0;
-		$tics = 0;
 		$lastTic = null;
 		$firstTics = null;
 		$firstMasse = false;
 		$firstEncounteredProgrammations = null;
 		$encounteredProgrammation = 0;
-		foreach($this->currentQueuesByClient as $idClient => $queue ) {
+		foreach( $this->currentQueuesByClient as $idClient => $queue ) {
+			$tics = 0;
+			//$encounteredProgrammation = 0;
 			foreach( $queue as $value ) {
 				$tics ++;
 				foreach( $value as $programmation ) {
@@ -75,7 +76,7 @@ class Evolution {
 						if($programmation->masse->getId() === $idMasse ) {
 							$lastTic = $tics;
 							$lastEencounteredProgrammation = $encounteredProgrammation;
-							$encounteredProgrammation ++;
+							//$encounteredProgrammation ++;
 							if(!$firstMasse) {
 								$firstMasse = true;
 								$firstTics = $tics;
@@ -88,13 +89,17 @@ class Evolution {
 		}
 		$ret = new Model();
 		$ret->idMasse = $idMasse;
-		$ret->tics = $tics;
+		$ret->tics = $tics; // nombre de tics la queue du client en cours.
+							// donne un évaluation du nombre de passage qu'il reste a faire
+							// les tics restant a faire.
 		$ret->next = $firstTics;
 		$ret->nextProgrammation = $firstEncounteredProgrammations;
 		$ret->lastProgrammation = $lastEencounteredProgrammation;
-		$ret->last = $lastTic;
+		$ret->last = $lastTic; // le dernier tic pour que la programmation soit réalisée.
 		$ret->programmations = $encounteredProgrammation;
-		$ret->elapsed = $this->elapsed( $idMasse );
+		$ret->elapsed = $this->elapsed( $idMasse ); // temps écoulé.
+
+		// remaining = last  + lastProgrammation * progTime.
 
 		return $ret;
 	} 

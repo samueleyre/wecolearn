@@ -15,7 +15,7 @@
             <tr *ngFor="let masse of masses">
               <td>{{ masse.name }}</td>
               <td>
-                <span [hidden]="!masse.launched">en cours pour {{ masse.remaining }} s</span>
+                <span [hidden]="!masse.launched">en cours pour {{ masse.remaining }} min</span>
                 <span [hidden]="masse.launched">
                   <button (click)="launch(masse)" class="btn">Lancer</button></span>
               </td>

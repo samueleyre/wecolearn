@@ -17,9 +17,12 @@ export class EvolutionService {
 	constructor( private http: Http ) {
 		this.loopEmitter.subscribe( ( event:any ) => {
 			this.reload = true;
-			console.log('Subscribed');
 			this.load();
 		});
+	}
+
+	kill() {
+		this.reload = false;
 	}
 
 	getEvolutions() {
