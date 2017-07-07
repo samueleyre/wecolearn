@@ -28,15 +28,12 @@ export class MasseComponent  {
 
     submit( f:NgForm ) {
         
-        console.log( this.entity.serialize() );
-
-        
         this.http.post('/api/masses', this.entity)
         .map(response => {
             return response.json();
         }).subscribe( response => {
             MessageService.info("Programmation en masse ajoutée");
-            console.log( response );
+            //console.log( response );
         });
        
         

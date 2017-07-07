@@ -14,18 +14,16 @@ export class MessageComponent implements OnInit {
 	public message: string = '';
 
 	ngOnInit() {
-		MessageService.get().subscribe((message: Message) => {
+		MessageService.get().subscribe(( message: Message) => {
 			this.message = message.body;
 			this.hidden = false;
 			let element = document.getElementById( 'message');
             if ( element ) {
-                element.scrollIntoView();
+                element.scrollIntoView(false);	
             }
 			setTimeout(() => {
 				this.hidden = true;
 			}, message.duration);
-		})
-
+		});
 	}
-
 }

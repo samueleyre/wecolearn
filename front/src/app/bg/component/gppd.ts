@@ -1,11 +1,13 @@
-import { Injectable }             from '@angular/core';
-import { NgForm }                 from '@angular/forms';
+import { Injectable }              from '@angular/core';
+import { NgForm }                  from '@angular/forms';
 
-import { GPPDService }            from './../service/gppd';
+import { GPPDService }             from './../service/gppd';
 
 import { IEntity }                 from './../entity/interface';
 
-import { PopinConfirmService }    from './../../applicativeService/popin/confirm/service';
+import { PopinConfirmService }     from './../../applicativeService/popin/confirm/service';
+import { MessageService }          from './../../applicativeService/message/service';    
+
 
 export class GPPDComponent {
     
@@ -52,6 +54,7 @@ export class GPPDComponent {
             this.service.patch( this.entity ).subscribe( 
                     ( entities: IEntity[] ) => { 
                         this.entities = entities;
+                        MessageService.info('Un élément a été modifié');
                     }, 
                     error => { console.log(error) }
                 );
@@ -61,6 +64,7 @@ export class GPPDComponent {
            this.service.post( this.entity ).subscribe(
                ( entities: IEntity[] ) => {
                    this.entities = entities;
+                   MessageService.info('Un élément a été ajouté');
                },
                error => { console.log(error) }
            ); 
@@ -93,7 +97,8 @@ export class GPPDComponent {
                 this.service.delete( id ).subscribe(
                     ( entities: IEntity[] ) => { 
                         this.entity = this.getEntity();
-                        this.entities = entities
+                        this.entities = entities;
+                        MessageService.info('Un élément a été supprimé');
                     },
                     error => {
                         console.log('ERRORS', error );

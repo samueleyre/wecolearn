@@ -11,7 +11,6 @@ export class MessageService {
 		return MessageService.emitter;
 	}
 
-
 	static get():EventEmitter<Message> {
 		 return MessageService.getEmitter();
 	}

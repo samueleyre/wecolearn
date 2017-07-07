@@ -13,7 +13,7 @@
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !recherche.valid }">
             <label for="recherche">Mot clefs</label>
-            <textarea class="form-control" name="recherche" [(ngModel)]="entity.recherche" #url="ngModel" required ></textarea>
+            <textarea class="form-control" name="recherche" [(ngModel)]="entity.recherche" #recherche="ngModel" required ></textarea>
             <div *ngIf="f.submitted && !recherche.valid" class="help-block">Les mots clefs de la recherche sont obligatoires</div>
         </div>
         <div class="form-group">
