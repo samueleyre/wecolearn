@@ -4,4 +4,4 @@
 
 5 2 * * * root docker exec docker_web_1 /bin/bash -c "cd /src/app;bin/console bg:rank;" >> /var/log/cron.rank.log
 
-7 3 * * * root /bin/bash /home/etouraille/src/backup/back >> /var/log/cron.back.log
+7 3 * * * root /bin/bash /home/etouraille/src/bh/backup/back >> /var/log/cron.back.log
