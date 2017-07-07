@@ -1,7 +1,8 @@
-import { Injectable }       from '@angular/core';
+import { Injectable }                       from '@angular/core';
 import { Router, CanActivate }              from '@angular/router';
 import { Http }                             from '@angular/http';
-import { TokenService }        from './../token/service'
+import { TokenService }                     from './../token/service';
+import { Logged }                           from './logged';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -13,9 +14,13 @@ export class AuthGuard implements CanActivate {
             console.log('canActivte');
             if( 401 === response.status  || 403 === response.status ) {
                 this.router.navigate(['/login']);
-                return false;        
+                let logged = false;
+                Logged.set(logged);
+                return logged;        
             } else {
-                return true;
+                let logged = true;
+                Logged.set(logged);
+                return logged;
             }
         })
     }
