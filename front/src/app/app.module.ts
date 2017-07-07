@@ -35,10 +35,10 @@ const appRoutes: Routes = [
         BrowserModule,
         FormsModule,
         HttpModule,
-        RouterModule.forRoot(appRoutes),
 
           //NgbModule.forRoot(),
         BgModule,
+        RouterModule.forRoot(appRoutes),
         //route,
         PopinConfirmModule,
         //routing,

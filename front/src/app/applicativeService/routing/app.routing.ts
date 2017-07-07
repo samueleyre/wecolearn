@@ -13,7 +13,7 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     //{ path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
-    { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: '' , canActivate: [AuthGuard] }
 ];
 
 export const routing = RouterModule.forChild(appRoutes);

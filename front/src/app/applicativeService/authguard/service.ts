@@ -11,7 +11,6 @@ export class AuthGuard implements CanActivate {
  
     canActivate() {
         return this.http.get('/api/ping').map( response => {
-            console.log('canActivte');
             if( 401 === response.status  || 403 === response.status ) {
                 this.router.navigate(['/login']);
                 let logged = false;
