@@ -13,5 +13,6 @@ export class Programmation extends Entity implements IEntity  {
 	public isException : number;
 	public used : number;
 	public blogPageId : number|null;
+	public time: string|null;
 	
 }

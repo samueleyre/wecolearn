@@ -10,7 +10,10 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router, private tokenService: TokenService, private http: Http ) { }
  
     canActivate() {
-        return this.http.get('/api/ping').map( response => {
+        return this
+        .http
+        .get( '/api/ping' )
+        .map( response => {
             if( 401 === response.status  || 403 === response.status ) {
                 this.router.navigate(['/login']);
                 let logged = false;

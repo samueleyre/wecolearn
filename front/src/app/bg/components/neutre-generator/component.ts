@@ -42,7 +42,9 @@ export class NeutreGeneratorComponent  {
         let entity = new Neutre();
         entity.set( neutre );
 
-        this.http.post('/api/neutres', entity.serialize()).map(( response : any ) => {
+        console.log( entity);
+
+        this.http.post('/api/neutres', entity).map(( response : any ) => {
             return response.json();            
         })
         .subscribe( ( neutre : Neutre ) => {

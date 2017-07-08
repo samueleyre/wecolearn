@@ -10,6 +10,7 @@
               <th>Phrase Clef</th>
               <th>Autre page</th>
               <th>Etat</th>
+              <th>Dernière modification</th>
             </tr>
           </thead>
           <tbody>
@@ -24,6 +25,9 @@
               </td>
               <td>
                 <exception [isException]="entity.isException" [programmation]="entity"></exception>
+              </td>
+              <td>
+                {{ entity.time | amTimeAgo }}
               </td>
             </tr>
           </tbody>

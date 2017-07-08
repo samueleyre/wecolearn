@@ -68,21 +68,24 @@ class RunProgrammation {
                             $blogRow = $blogRepository->findById($rowProg->idBlog);
                             $idBlog = $blogRow->getId();
                             $t0 = time();
-                            $content = new Main(
-                                $this->em,
-                                $this->commandBus,
-                                $rowProg->idLanguageTitle,
-                                $rowProg->neutralSentenceNumber,
-                                $rowProg->anchorPosition,
-                                $rowProg->idClient,
-                                $rowProg->isBlank,
-                                $rowProg->titleOption
-                            );
-                            $title = $content->getTitle();
-                            $contentText = $content->getContent();
-                            $idPhraseClef = $content->getIdPhraseClef();
+                            
                             try { 
-                                    
+                            
+
+                                    $content = new Main(
+                                        $this->em,
+                                        $this->commandBus,
+                                        $rowProg->idLanguageTitle,
+                                        $rowProg->neutralSentenceNumber,
+                                        $rowProg->anchorPosition,
+                                        $rowProg->idClient,
+                                        $rowProg->isBlank,
+                                        $rowProg->titleOption
+                                    );
+                                    $title = $content->getTitle();
+                                    $contentText = $content->getContent();
+                                    $idPhraseClef = $content->getIdPhraseClef();
+                                            
                                     $writter = new WordPress(
                                         $blogRow->getUrl(),
                                         $blogRow->getLogin(),

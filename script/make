@@ -91,7 +91,7 @@ colored 'Git rebase completed.'
 colored 'Restarting container...' title
 cd ${ROOT}/${NAME}/docker
 sudo ENV=$ENV /usr/local/bin/docker-compose kill
-#sudo docker build --network host - < ${ROOT}/stpc/docker/php/Dockerfile
+#sudo docker 	build --network host - < ${ROOT}/stpc/docker/php/Dockerfile
 #sudo docker build --network host - < ${ROOT}/stpc/docker/node/Dockerfile
 
 sudo ENV=$ENV /usr/local/bin/docker-compose -f $COMPOSE build

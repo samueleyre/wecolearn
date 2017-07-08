@@ -4,7 +4,7 @@ namespace Bg\BgBundle\Metier\Masse;
 
 use Bg\BgBundle\Model\Masse as Model;
 use Bg\BgBundle\Entity\Masse;
-use Bg\BgBundle\Entity\Programmation;
+use Bg\BgBundle\Entity\Programmation;   
 
 class ModelToEntity {
 

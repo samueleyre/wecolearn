@@ -45,30 +45,16 @@ export class VisualizationComponent implements OnInit {
 
     constructor( protected http: Http ) {
         
-    
-
     } 
 
-    
-    
-    
-    
     ngOnInit() {
         
         this.load();
-        
-        
-        
-        
         
     }
 
     change( idRecherche: any ) {
         this.setGraph( idRecherche );
-    }
-
-    private initSelector() {
-
     }
 
     private load() {
