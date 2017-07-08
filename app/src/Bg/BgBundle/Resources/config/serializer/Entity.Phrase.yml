@@ -15,3 +15,6 @@ Bg\BgBundle\Entity\Phrase:
         count:
           type: integer
           groups: [ output ]
+        used:
+          groups: [ input, output ]
+          type: integer

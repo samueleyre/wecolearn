@@ -8,6 +8,7 @@ export class Clef extends Entity implements IEntity  {
 	public url: string;
 	public idClient : number;
 	public idLanguage: number;
+	public used: number|null = null;
 
 	constructor() {
 		super();

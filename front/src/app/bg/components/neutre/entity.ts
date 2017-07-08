@@ -5,6 +5,7 @@ export class Neutre extends Entity implements IEntity  {
 	public id: 		number|null;
 	public phrase : 	string;
 	public idLanguage: number;
+	public used : number;
 	
 	constructor() {
 		super();

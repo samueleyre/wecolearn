@@ -12,3 +12,6 @@ Bg\BgBundle\Entity\Ancre:
           serialized_name: 'idLanguage'
           groups: [ input, output ]
           type: integer
+        used:
+          groups: [ input, output ]
+          type: integer

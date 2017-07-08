@@ -9,3 +9,6 @@ Bg\BgBundle\Entity\Clef:
         url:
           groups: [ input, output ]
           type: string
+        used:
+          groups: [ input, output ]
+          type: integer
