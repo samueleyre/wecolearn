@@ -15,6 +15,8 @@ import { ProgrammationComponent }       from './components/programmation/compone
 import { RechercheComponent }           from './components/recherche/component';
 import { VisualizationComponent }       from './components/visualization/component';
 import { HebergeurComponent }           from './components/hebergeur/component';
+import { DownComponent }                from './components/down/component';
+
 
 
 
@@ -35,6 +37,7 @@ const bgRoutes: Routes = [
     { path: 'programmation',   component: ProgrammationComponent ,   canActivate: [AuthGuard] },
     { path: 'recherche',   component: RechercheComponent ,   canActivate: [AuthGuard] },
     { path: 'visualisation',   component: VisualizationComponent ,   canActivate: [AuthGuard] },
+    { path: 'down',   component: DownComponent ,   canActivate: [AuthGuard] },
 ];
 
 @NgModule({

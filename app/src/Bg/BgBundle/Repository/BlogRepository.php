@@ -28,14 +28,14 @@ class BlogRepository {
 		return $ret;
 	}
 
-	public function fetchAlive() {
+	public function fetchAlive( $state = 1 ) {
 		$query = sprintf("
 			SELECT blog	
 			FROM BgBundle:Blog blog
 			JOIN BgBundle:BlogState blogState
 			WITH blog.id = blogState.idBlog
-			WHERE blogState.state = 1
-		");
+			WHERE blogState.state = %d
+		", $state ? 1 : 0 );
 
 		$ret = 
 			$this

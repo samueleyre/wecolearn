@@ -3,6 +3,11 @@ hebergeurs:
     prefix:   api
     resource: '@BgBundle/Controller/HebergeursController.php'
 
+alives:
+    type:     rest
+    prefix:   api
+    resource: '@BgBundle/Controller/AlivesController.php'
+
 uploads:
     type:     rest
     prefix:   api

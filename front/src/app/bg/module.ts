@@ -43,6 +43,8 @@ import { ProgrammationComponent }   from './components/programmation/component';
 import { RechercheComponent }       from './components/recherche/component';
 import { VisualizationComponent }   from './components/visualization/component';
 import { HebergeurComponent }       from './components/hebergeur/component';
+import { DownComponent }            from './components/down/component';
+
 
 import { SelectLanguageComponent }  from './components/select/language/component';
 import { SelectClientComponent }    from './components/select/client/component';
@@ -95,6 +97,7 @@ import { HeaderComponent }          from './components/header/component';
     RechercheComponent,
     VisualizationComponent,
     HebergeurComponent,
+    DownComponent,
 
     SelectLanguageComponent,
     LanguageComponent,
