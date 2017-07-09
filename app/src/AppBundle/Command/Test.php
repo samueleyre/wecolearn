@@ -43,6 +43,15 @@ class Test extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
+        $blogs = 
+            $this
+                ->em
+                ->createQuery("SELECT entity FROM BgBundle:Blog entity")
+                ->getResult();
+
+
+        
+        /*
         $command = new FetchEntity( new Blog, ['id' =>  132 ]);
         $this->command->handle( $command);
         
@@ -75,7 +84,7 @@ class Test extends Command
         $title = $content->getTitle();
         $contentText = $content->getContent();
         $idPhraseClef = $content->getIdPhraseClef();
-        
+        */
         /*
         dump( $title );
 
