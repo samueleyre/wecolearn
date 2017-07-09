@@ -67,9 +67,15 @@ class ProgrammationsController extends GPPDController
             options={"deserializationContext"={"groups"={"input"} } }
       )
     */
-    public function patchProgrammationsAction( Programmation $programmation  )
+    public function patchProgrammationsAction( Programmation $programmation, Request $request  )
     {
-        return $this->patchAction( $programmation );
-            
+        $filter = [];
+
+        if( null !== $used = $request->query->get('used', null) ) {
+            $filter['used'] = $used;
+        }
+        
+        return $this->patchAction( $programmation , $filter );
+    
     }
 }

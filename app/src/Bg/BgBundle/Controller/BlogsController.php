@@ -41,7 +41,7 @@ class BlogsController extends GPPDController
         filters={"idHebergeur"}
      )
     */
-    public function getBlogsAction(Request $request )
+    public function getBlogsAction( Request $request )
     {
         
         if( 1 == $request->query->get('alive') ) {
@@ -73,7 +73,7 @@ class BlogsController extends GPPDController
         options={"deserializationContext"={"groups"={"input"} } }
     )
     */
-    public function postBlogsAction( Blog $blog )
+    public function postBlogsAction( Blog $blog , Request $request )
     {
         
         $filters = [];
@@ -103,7 +103,7 @@ class BlogsController extends GPPDController
             options={"deserializationContext"={"groups"={"input"} } }
       )
 	*/
-    public function patchBlogsAction( Blog $blog )
+    public function patchBlogsAction( Blog $blog, Request $request )
     {
         $filters = [];
         
@@ -125,7 +125,7 @@ class BlogsController extends GPPDController
         filters={"idHebergeur"}
       )
     */
-    public function deleteBlogsAction( $id )
+    public function deleteBlogsAction( $id , Request $request )
     {
         $filters = [];
         
