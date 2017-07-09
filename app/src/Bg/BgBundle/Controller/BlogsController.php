@@ -47,7 +47,13 @@ class BlogsController extends GPPDController
             return $this->get('blog.repository')->fetchAlive();
         }
 
-        return $this->getAction();
+        $filters = [];
+
+        if( $idHebergeur = $request->query->get('idHebergeur')) {
+            $filters = ['idHebergeur' => $idHebergeur];
+        }
+
+        return $this->getAction($filters);
 		
 	}
     
@@ -68,9 +74,15 @@ class BlogsController extends GPPDController
     public function postBlogsAction( Blog $blog )
     {
         
+        $filters = [];
+        
+        if( $idHebergeur = $request->query->get('idHebergeur')) {
+            $filters = ['idHebergeur' => $idHebergeur];
+        }
+
         return 
             $this
-                ->postAction($blog);
+                ->postAction($blog, $filters );
         
     }
     
@@ -90,7 +102,14 @@ class BlogsController extends GPPDController
 	*/
     public function patchBlogsAction( Blog $blog )
     {
-        return $this->patchAction( $blog );
+        $filters = [];
+        
+        if( $idHebergeur = $request->query->get('idHebergeur')) {
+            $filters = ['idHebergeur' => $idHebergeur];
+        }
+
+
+        return $this->patchAction( $blog, $filters );
             
     }
     
@@ -103,6 +122,13 @@ class BlogsController extends GPPDController
     */
     public function deleteBlogsAction( $id )
     {
-        return $this->deleteAction( $id );
+        $filters = [];
+        
+        if( $idHebergeur = $request->query->get('idHebergeur')) {
+            $filters = ['idHebergeur' => $idHebergeur];
+        }
+
+
+        return $this->deleteAction( $id, $filters );
     }
 }

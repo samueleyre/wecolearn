@@ -7,6 +7,7 @@ export class Blog extends Entity implements IEntity  {
 	public url: string;
 	public login: string;
 	public pass: string;
+	public idHebergeur: number;
 
 	constructor() {
 		super();

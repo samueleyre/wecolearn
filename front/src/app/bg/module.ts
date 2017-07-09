@@ -47,6 +47,7 @@ import { DownComponent }            from './components/down/component';
 
 
 import { SelectLanguageComponent }  from './components/select/language/component';
+import { SelectHebergeurComponent } from './components/select/hebergeur/component';
 import { SelectClientComponent }    from './components/select/client/component';
 import { SelectBlogsComponent }     from './components/select/blogs/component';
 import { LanguageComponent }        from './component/language';
@@ -103,6 +104,7 @@ import { HeaderComponent }          from './components/header/component';
     LanguageComponent,
     SelectClientComponent,
     SelectBlogsComponent,
+    SelectHebergeurComponent,
     DisplayBlogComponent,
     DisplayClientComponent,
     DisplayClefComponent,

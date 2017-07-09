@@ -35,7 +35,7 @@ class PaginationQuery {
 	}
 
 	public function maxPage() {
-		$ret = ceil( $this->count / $this->perPage );
+		$ret = $this->perPage>0?ceil( $this->count / $this->perPage ):0;
 		return $ret;
 	}
 }

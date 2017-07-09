@@ -12,4 +12,7 @@ Bg\BgBundle\Entity\Blog:
           groups: [ input, output ]
         pass:
           groups: [ input, output ]
-            
+        idHebergeur:
+          groups: [ input, output ]
+          type: integer
+          serialized_name: idHebergeur

@@ -37,6 +37,12 @@ class Blog
      */
     protected $pass;
 
+    /**
+     * @ORM\Column(type="integer", name="idHost")
+     */
+    protected $idHebergeur;
+
+
     public function getId() {
     	return $this->id;
     }
@@ -77,4 +83,12 @@ class Blog
     	return $this->pass;
     }
 
+    public function setIdHebergeur( $value ) {
+        $this->idHebergeur = $value;
+        return $this;
+    }
+
+    public function getIdHebergeur() {
+        return $this->idHebergeur;
+    }
 }

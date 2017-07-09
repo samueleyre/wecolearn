@@ -20,6 +20,8 @@ import { PopinConfirmService }    from './../../../applicativeService/popin/conf
 @Injectable()
 export class BlogComponent extends GPPDComponent implements OnInit {
     
+    public idHebergeur: number;
+
     constructor( protected service: GPPDService, protected confirm: PopinConfirmService ) {
         super(service, confirm );
     } 

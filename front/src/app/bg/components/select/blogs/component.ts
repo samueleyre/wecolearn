@@ -30,7 +30,6 @@ export class SelectBlogsComponent implements OnInit {
 
 	private load() {
 		
-		console.log('LOADED', true);
 		PaginationService.disable();
 		let endpoint = '/api/blogs';
 		if( this.alive ) {
