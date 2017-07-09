@@ -1,24 +1,30 @@
-import { NgModule }               from '@angular/core';
-import { BrowserModule }           from '@angular/platform-browser';
+import { NgModule }                   from '@angular/core';
+import { BrowserModule }              from '@angular/platform-browser';
+import { FormsModule }                from '@angular/forms';
 
 
-import { PaginationComponent }    from './component';
-import { PaginationService }      from './service';
-import { Pagination }             from './pagination';
+import { PaginationComponent }        from './component';
+import { PaginationService }          from './service';
+import { Pagination }                 from './pagination';
+import { SelectPaginationComponent }  from './select';
 
 
 @NgModule({
   imports:[
-    BrowserModule  	   
+    BrowserModule,
+    FormsModule
   ],
   exports : [
-    PaginationComponent
+    PaginationComponent,
+    SelectPaginationComponent,
   ],
   declarations: [ 
   	PaginationComponent,
+    SelectPaginationComponent,
   ],
   providers: [
     PaginationService,
+
   ],
   entryComponents: [
     

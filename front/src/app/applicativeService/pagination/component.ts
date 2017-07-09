@@ -60,6 +60,10 @@ export class PaginationComponent implements OnInit{
     return ret;
   }
 
+  reload() {
+    this.change.emit( this.page );
+  }
+  
   previous(): void {
     if( PaginationService.previous() ) {
       this.page --;

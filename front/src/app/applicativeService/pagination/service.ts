@@ -10,7 +10,7 @@ export class PaginationService {
 	
 	static init(): void {
 		if(!PaginationService.pagination) {
-			PaginationService.pagination = new Pagination( 1, 7, 1 , false);
+			PaginationService.pagination = new Pagination( 1, 20, 1 , false);
 		}
 	}
 
@@ -18,6 +18,11 @@ export class PaginationService {
 		PaginationService.init();
 		PaginationService.pagination.disabled = true;
 		
+	}
+
+	static perPage( perPage : number ) {
+		PaginationService.init();
+		PaginationService.pagination.perPage = perPage;
 	}
 
 	static enable() {

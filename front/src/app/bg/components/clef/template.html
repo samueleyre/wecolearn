@@ -49,7 +49,11 @@
           <tbody>
             <tr *ngFor="let entity of entities">
               <td>{{ entity.phrase }}</td>
-              <td>{{ entity.url }}</td>
+              <td>
+                <a href="{{ entity.url }}" target="_blank">
+                    {{ entity.url }}
+                </a>
+              </td>
               <td>{{ entity.used }}</td>
               <td><button (click)="edit(entity.id)" class="btn">Modifier</button></td>
               <td><button (click)="delete(entity.id)" class="btn">Supprimer</button></td>

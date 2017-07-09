@@ -6,7 +6,6 @@ export class Pagination {
 	public disabled: boolean;
 
 	constructor( page:number, perPage: number, maxPage: number, disabled : boolean ) {
-		console.log('construct', disabled);
 		this.page = page;
 		this.maxPage = maxPage;
 		this.perPage = perPage;
