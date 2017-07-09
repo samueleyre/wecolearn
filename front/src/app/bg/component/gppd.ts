@@ -69,14 +69,12 @@ export class GPPDComponent {
                error => { console.log(error) }
            ); 
         }
-        this.entity = this.getEntity();
         f.resetForm();
+        this.entity = this.getEntity();
     }
 
     edit( id : number ) {
         
-        console.log('id edition', id);
-
         for( let i in this.entities ) {
             console.log('each id', this.entities[i].id );
             if( this.entities[i].id === id ) {

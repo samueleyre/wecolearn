@@ -37,7 +37,8 @@ class BlogsController extends GPPDController
     * @Pagination(
         perPage="5",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Blog"}
+        setters={"setEntityRef":"BgBundle:Blog"},
+        filters={"idHebergeur"}
      )
     */
     public function getBlogsAction(Request $request )
@@ -62,8 +63,9 @@ class BlogsController extends GPPDController
     * @Pagination(
         perPage="5",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Blog"}
-        )
+        setters={"setEntityRef":"BgBundle:Blog"},
+        filters={"idHebergeur"}
+      )
     * @ParamConverter(
         "blog",
         class="Bg\BgBundle\Entity\Blog", 
@@ -91,7 +93,8 @@ class BlogsController extends GPPDController
     * @Pagination(
         perPage="5",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Blog"}
+        setters={"setEntityRef":"BgBundle:Blog"},
+        filters={"idHebergeur"}
       )
     * @ParamConverter(
             "blog", 
@@ -116,8 +119,10 @@ class BlogsController extends GPPDController
     /**
     * @Delete("/blogs/{id}")
     * @Pagination(
-        perPage="5",service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Blog"}
+        perPage="5",
+        service="gppd.service", 
+        setters={"setEntityRef":"BgBundle:Blog"},
+        filters={"idHebergeur"}
       )
     */
     public function deleteBlogsAction( $id )

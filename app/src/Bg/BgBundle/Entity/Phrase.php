@@ -19,18 +19,18 @@ class Phrase
     protected $phrase;
 
     /**
-     * @ORM\Column(type="integer",name="used",options={"default":"0"})
+     * @ORM\Column(type="integer",name="used")
      */
     protected $used=0;
 
     /**
-     * @ORM\Column(type="integer",name="idLanguage",options={"default":"1"})
+     * @ORM\Column(type="integer",name="idLanguage")
      */
-    protected $idLanguage;
+    protected $idLanguage=1;
 
         
     /**
-     * @ORM\Column(type="integer",name="count",options={"default":"0"})
+     * @ORM\Column(type="integer",name="count")
      */
     protected $count=0;
 

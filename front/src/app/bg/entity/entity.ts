@@ -1,5 +1,7 @@
 export class Entity {
 
+	public used : number = 0;
+
 	public serialize(): object {
 		let ret  = {};
 		this.recurse( this, ret );
