@@ -27,6 +27,8 @@ class FetchRankCommandHandler {
 		$found = false;
 		while( $index < $this->maxPage && !$found ) {
 			$urls = $this->service->get( $q, $index );
+			dump( $urls );
+			dump( $url );
 			foreach( $urls as $i => $value ) {
 				$urls[$i] = $this->replace($value);
 			}
@@ -36,7 +38,8 @@ class FetchRankCommandHandler {
 				$response->pageRank = $index + 1;
 			} else {
 				$index ++;
-				sleep( rand(1,10));
+				//sleep(1);
+				//sleep( rand(1,10));
 			}
 		}
 		$command->setResponse( $response );
