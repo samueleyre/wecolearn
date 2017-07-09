@@ -14,12 +14,14 @@ class UpdateEntityCommandHandler {
 
 	public function handle(UpdateEntity $command ) {
 
-		$this->_handle($command->getEntity(), $command->getValues(), $command->getConditions());
+		$count = $this->_handle($command->getEntity(), $command->getValues(), $command->getConditions(), $command);
+		
+		$command->setCount( $count );
+	
 	}
 
-	private function _handle( $entity , $values ,$conditions ) {
+	private function _handle( $entity , $values ,$conditions, $command ) {
 
-		$usage1 = memory_get_usage();
 		$qb = $this->em->createQueryBuilder();
 		$q = $qb->update(get_class($entity), 'e');
 		$params = [];
@@ -38,14 +40,15 @@ class UpdateEntityCommandHandler {
 			$params[$index] = $value;
 			$index ++;
 		}
-		$q
+		
+		return $q
 			->where($cond)
 			->setParameters( $params )
 			->getQuery()
 			->execute()
 		;
-		$this->em->clear();
-		$usage2 = memory_get_usage();
-		
+
+
+		//$this->em->clear();
 	}
 }

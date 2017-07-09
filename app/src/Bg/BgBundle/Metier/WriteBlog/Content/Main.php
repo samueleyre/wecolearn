@@ -85,12 +85,15 @@ class Main {
         {
             $cond['idClient'] = $idClient;
         }
+
             
         try {
             
             $fetch = new FetchEntity( $model, $cond , $this->em );
             $this->commandHandler->handle( $fetch);
             $row = $fetch->getResponse();
+            if ( $model instanceof clef ) dump( $row );
+            
         //$fetch = null;
         } catch( \Exception $e ) {
 
@@ -103,6 +106,7 @@ class Main {
             $row = $fetchCommand->getResponse();
         }
 
+
         //mise à jour du compteur
         if( isset($idClient) && $model instanceof Clef ) {
             $this->idPhraseClef = $row->getId();
@@ -113,7 +117,7 @@ class Main {
         $count = $row->getCount();
         $count++;
         
-            
+
         $updateCommande = new UpdateEntity(
                 $model, 
                 ['used'=>1,'count'=>$count], 
@@ -121,11 +125,6 @@ class Main {
             )
         ;
         $this->commandHandler->handle($updateCommande);
-        if(!isset($row)) {
-            throw new \Exception(sprintf('Unable to get random element from model %s', get_class($model) ) );
-        }
-        
-        
         
         return $row;
     }
@@ -160,9 +159,10 @@ class Main {
     }
 
     protected function getClef($idLanguage,$idClient,$isBlank){
-        $rowAncre = $this->getRandomRowAndSetUsed(new Ancre(),$idLanguage);
-        $useCache = $this->phraseClefCall>0;
-        $rowClef = $this->getRandomRowAndSetUsed(new Clef(),$idLanguage,$idClient,$useCache);
+        $rowAncre = $this->getRandomRowAndSetUsed( new Ancre(),$idLanguage);
+        $useCache = $this->phraseClefCall > 0;
+        $rowClef = $this->getRandomRowAndSetUsed( new Clef(),$idLanguage,$idClient,$useCache);
+        $this->phraseClefCall ++;
         $phrase = $rowAncre->getPhrase();
         $clef = $rowClef->getPhrase();
         $url = $rowClef->getUrl();
@@ -177,9 +177,9 @@ class Main {
     }
 
      protected function getClefTitle($idLanguage,$idClient){
-        $rowClef = $this->getRandomRowAndSetUsed(new Clef(),$idLanguage,$idClient);
-        
-        $this->phraseClefCall++;
+        $useCache = $this->phraseClefCall > 0;
+        $rowClef = $this->getRandomRowAndSetUsed(new Clef(),$idLanguage,$idClient, $useCache);
+        $this->phraseClefCall ++ ;
 
 
         $phrase = $rowClef->getPhrase();

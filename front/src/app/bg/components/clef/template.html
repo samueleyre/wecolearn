@@ -33,13 +33,14 @@
     <div class="row"><filter [(model)]="idClient" field="idClient" (reload)="load()"></filter><select-client [(idClient)]="idClient"></select-client></div>
 </div>
 
-<div class="col-md-9 col-md-offset-3">
+<div class="col-md-12 col-md-offset-3">
     <h2>Liste des Phrases Clef</h2>
     <div class="table-responsive">
         <table class="table table-striped">
           <thead>
             <tr>
               <th>Nom</th>
+              <th>Url</th>
               <th>Utilisation</th>
               <th>Modifier</th>
               <th>Supprimer</th>
@@ -48,6 +49,7 @@
           <tbody>
             <tr *ngFor="let entity of entities">
               <td>{{ entity.phrase }}</td>
+              <td>{{ entity.url }}</td>
               <td>{{ entity.used }}</td>
               <td><button (click)="edit(entity.id)" class="btn">Modifier</button></td>
               <td><button (click)="delete(entity.id)" class="btn">Supprimer</button></td>

@@ -76,6 +76,7 @@ class Test extends Command
         $contentText = $content->getContent();
         $idPhraseClef = $content->getIdPhraseClef();
         
+        /*
         dump( $title );
 
         $writter = new WordPress(
@@ -94,6 +95,7 @@ class Test extends Command
         }
 
         dump( $blogPageId);
+        */
 
     }
 }

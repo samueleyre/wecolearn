@@ -449,6 +449,8 @@ class Programmation
     public function setPause($pause)
     {
         $this->pause = 60 * $pause;
+        
+        //$this->pause = 1;
 
         return $this;
     }

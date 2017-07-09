@@ -10,6 +10,7 @@ class UpdateEntity {
 		$this->entity = $entity;
 		$this->values = $values;
 		$this->cond = $cond;
+		$this->count = null;
 	}
 
 	public function getConditions() {
@@ -22,5 +23,13 @@ class UpdateEntity {
 
 	public function getValues() {
 		return $this->values;
+	}
+
+	public function setCount( $count ) {
+		$this->count = $count;
+	}
+
+	public function getCount() {
+		return $this->count;
 	}
 }

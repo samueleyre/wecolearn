@@ -34,7 +34,14 @@ class FetchRandomEntityCommandHandler {
 		$sep = 'AND';
 		foreach( $conditions as $key => $value ) {
 			$cond .= sprintf(" %s entity.%s = '%s' ", $sep , $key , $value );
-		//	$sep = 'AND';
+			$sep = 'AND';
+		}
+
+		$condInWhere = '';
+		$sep = 'Where';
+		foreach( $conditions as $key => $value ) {
+			$condInWhere .= sprintf(" %s %s = '%s' ", $sep , $key , $value );
+			$sep = 'AND';
 		}
 		/*
 		$query = sprintf(
@@ -64,12 +71,12 @@ class FetchRandomEntityCommandHandler {
   			 FROM %s entity JOIN
        			(SELECT CEIL(RAND() *
                      (SELECT MAX(id)
-                        FROM %s)) AS id)
+                        FROM %s %s)) AS randid)
         	 AS r2
-			 WHERE entity.id >= r2.id %s
+			 WHERE entity.id >= r2.randid %s
 			 ORDER BY entity.id ASC
 			 LIMIT 1
-			", $table, $table, $cond );
+			", $table, $table, $condInWhere, $cond );
 
 		$query = $this->em->createNativeQuery($query, $rsm);
 
