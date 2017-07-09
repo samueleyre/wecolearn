@@ -9,6 +9,7 @@
               <th>Client</th>
               <th>Phrase Clef</th>
               <th>Autre page</th>
+              <th>Type</th>
               <th>Etat</th>
               <th>Dernière modification</th>
             </tr>
@@ -23,6 +24,11 @@
                 <span [hidden]="!entity.isBlank">Oui</span>
                 <span [hidden]="entity.isBlank">Non</span>
               </td>
+              <td>
+                <span [hidden]="entity.isPage">Article</span>
+                <span [hidden]="!entity.isPage">Page</span>
+              </td>
+              
               <td>
                 <exception [isException]="entity.isException" [programmation]="entity"></exception>
               </td>
