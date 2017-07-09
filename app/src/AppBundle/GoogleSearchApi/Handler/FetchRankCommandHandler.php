@@ -21,12 +21,15 @@ class FetchRankCommandHandler {
 		$response = new Response();
 
 		$q = $command->getRecherche()->getRecherche();
-		$url = $command->getRecherche()->getUrl();
+		$url = $this->replace($command->getRecherche()->getUrl());
 
 		$index = 0;
 		$found = false;
 		while( $index < $this->maxPage && !$found ) {
 			$urls = $this->service->get( $q, $index );
+			foreach( $urls as $index => $value ) {
+				$urls[$index] = $this->replace($value);
+			}
 			if( false !== $positionInPage = array_search( $url, $urls )) {
 				$found = true;
 				$response->positionInPage = $positionInPage + 1;
@@ -36,7 +39,12 @@ class FetchRankCommandHandler {
 				sleep( rand(1,10));
 			}
 		}
-		
 		$command->setResponse( $response );
 	}
+
+	private function replace( $string ) {
+		return preg_replace('/(\/)$/', '', $string );
+	}
+
+
 }

@@ -33,9 +33,10 @@ class SearchApi {
 		return $ret;
 	}
 
+	
 	protected function matchUrl( $element ) {
 		$ret = null;
-		if( preg_match('/(http(|s):\/\/([^\/]*?))\//', $element, $match) ) {
+		if( preg_match('/(http(|s):\/\/(.*?))&sa/', $element, $match) ) {
 			$ret =  $match[1];
 		}
 		return $ret;
