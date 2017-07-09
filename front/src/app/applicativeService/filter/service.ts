@@ -26,8 +26,10 @@ export class FilterService {
 		let ret = '';
 		if( FilterService.filters !== 'undefined' ) {
 			for( var field in FilterService.filters ) {
-				ret += sep + field + '=' + FilterService.filters[field];
-				sep = '&'; 
+				if( null !== FilterService.filters[field]) {
+					ret += sep + field + '=' + FilterService.filters[field];
+					sep = '&';
+				}
 			}
 		}
 		return ret;

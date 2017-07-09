@@ -21,6 +21,8 @@ import { PopinConfirmService }         from './../../../applicativeService/popin
 @Injectable()
 export class ProgrammationComponent extends GPPDComponent implements OnInit {
     
+    public used: number|null = null;
+
     constructor( protected service : GPPDService , protected confirm: PopinConfirmService ) {
         super( service, confirm );
     } 

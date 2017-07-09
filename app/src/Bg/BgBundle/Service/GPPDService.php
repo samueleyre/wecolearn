@@ -26,7 +26,7 @@ class GPPDService implements PaginationInterface {
 
 	public function get( $filters = []) {
 		
-		syslog(LOG_ERR, count($filters));
+		//ssyslog(LOG_ERR, 'filter'.count($filters));
 		$params = [];
 		$condition = '';
 		$sep = '';

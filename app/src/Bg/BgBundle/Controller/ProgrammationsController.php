@@ -37,13 +37,19 @@ class ProgrammationsController extends GPPDController
     * @Pagination(
         perPage="20",
         service="gppd.service", 
-        setters={"setEntityRef":"BgBundle:Programmation"}
+        setters={"setEntityRef":"BgBundle:Programmation"},
+        filters={"used"}
      )
     */
-    public function getProgrammationsAction()
+    public function getProgrammationsAction(Request $request )
     {
+        $filter = [];
+
+        if( null !== $used = $request->query->get('used', null) ) {
+            $filter['used'] = $used;
+        }
         
-        return $this->getAction();
+        return $this->getAction( $filter );
 		
 	}
 
@@ -66,6 +72,4 @@ class ProgrammationsController extends GPPDController
         return $this->patchAction( $programmation );
             
     }
-    
-
 }
