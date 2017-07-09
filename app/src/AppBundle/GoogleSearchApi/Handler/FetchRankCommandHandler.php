@@ -27,8 +27,8 @@ class FetchRankCommandHandler {
 		$found = false;
 		while( $index < $this->maxPage && !$found ) {
 			$urls = $this->service->get( $q, $index );
-			foreach( $urls as $index => $value ) {
-				$urls[$index] = $this->replace($value);
+			foreach( $urls as $i => $value ) {
+				$urls[$i] = $this->replace($value);
 			}
 			if( false !== $positionInPage = array_search( $url, $urls )) {
 				$found = true;
