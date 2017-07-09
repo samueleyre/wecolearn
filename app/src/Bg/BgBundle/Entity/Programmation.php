@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="programmation")
+ * @ORM\Table(name="programmation",indexes={@ORM\Index(name="join_index", columns={"idMasse"})})
  */
 class Programmation
 {
