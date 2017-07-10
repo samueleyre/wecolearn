@@ -28,7 +28,6 @@ class FetchRankCommandHandler {
 		while( $index < $this->maxPage && !$found ) {
 			$urls = $this->service->get( $q, $index );
 			dump( $urls );
-			dump( $url );
 			foreach( $urls as $i => $value ) {
 				$urls[$i] = $this->replace($value);
 			}

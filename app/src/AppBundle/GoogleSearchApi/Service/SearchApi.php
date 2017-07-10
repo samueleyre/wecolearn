@@ -10,11 +10,12 @@ class SearchApi {
 
 		$config = [
     		'proxy' => [
-        		'http' => 'xx.xx.xx.xx:8080'
+        		'http' => '195.154.93.112:80'
         	]
     	];
+    	
 		$this->client = new Client();
-		//$this->client->setClient(new \GuzzleHttp\Client($config));
+		$this->client->setClient( new \GuzzleHttp\Client($config));
 
 	}
 
