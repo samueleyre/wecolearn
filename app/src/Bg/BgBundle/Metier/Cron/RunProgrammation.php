@@ -1,6 +1,7 @@
 <?php
 namespace Bg\BgBundle\Metier\Cron;
 
+
 use Bg\BgBundle\Metier\Exception\Manager\UrlExceptionManager;
 use Bg\BgBundle\Metier\Notification\Manager as NotificationManager;
 use Bg\BgBundle\Metier\WriteBlog\Writer\WordPress;
@@ -8,12 +9,10 @@ use Bg\BgBundle\Metier\WriteBlog\Content\Main;
 use Bg\BgBundle\Metier\Queue\QueueProvider;
 use Bg\BgBundle\Repository\BlogRepository;
 
-use AppBundle\Env\Manager as Env;
-
-
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
+use AppBundle\Env\Manager as Env;
 
 class RunProgrammation {
     

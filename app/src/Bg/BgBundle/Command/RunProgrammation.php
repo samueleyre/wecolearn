@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Bg\BgBundle\Metier\Cron\RunProgrammation as CronRunProgrammation;
+use AppBundle\Env\Manager as Env;
+
 
 class RunProgrammation extends Command
 {
@@ -35,7 +37,11 @@ class RunProgrammation extends Command
             $this->run->go();
             $usage2 = memory_get_usage();
             $this->logger->info( sprintf('Memory Usage : %s Ko',($usage2 - $usage1)/1024));
-            sleep(300);
+            $sleepTime = 300;
+            if( Env::getEnv() < Env::PRODUCTION ) {
+                $sleepTime = 1;
+            }
+            sleep( $sleepTime );
         }
     }
 }

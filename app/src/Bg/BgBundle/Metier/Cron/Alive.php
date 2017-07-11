@@ -9,6 +9,7 @@ use Bg\BgBundle\Metier\WriteBlog\Writer\WordPress;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use AppBundle\Env\Manager as Env;
 
 class Alive {
 

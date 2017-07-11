@@ -14,8 +14,12 @@ class ProgrammationRepository {
 		
 		$query = sprintf("
 			SELECT programmation	
-			FROM BgBundle:Programmation programmation 
-			WHERE programmation.idClient = %s AND programmation.used = 0
+			FROM BgBundle:Programmation programmation
+			JOIN BgBundle:Masse masse
+			WITH programmation.masse = masse
+			WHERE programmation.idClient = %s 
+			AND programmation.used = 0 
+			AND masse.launched = 1
 		", $idClient);
 
 		$ret = 

@@ -85,7 +85,7 @@ class Main {
         $t = 1;
         foreach( $this->queue as $index => $array_prog ) {
             if(false === $samePauseLastIndex ) {
-                if($t == $pause) {
+                if( $t == $pause) {
                     if(is_array($this->queue[$index])) {
                         $this->queue[$index][] = $prog;
                     } else {
@@ -120,7 +120,7 @@ class Main {
         $ret = false;
         foreach($this->queue as $index => $progs) {
             foreach($progs as $prog) {
-                if( $prog->pause ==$pause) {
+                if( ($prog->pause / 60)  == $pause) {
                     $ret = $index;
                 }
             }
