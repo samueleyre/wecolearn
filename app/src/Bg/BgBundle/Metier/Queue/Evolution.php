@@ -27,6 +27,8 @@ class Evolution {
 	public function setResponse() {
 		$res = [];
 
+		syslog(LOG_ERR, 'some value');
+
 		foreach( $this->idMasse() as $idMasse ) {
 			$res[] = $this->evolution($idMasse);
 		}
@@ -38,7 +40,9 @@ class Evolution {
 		foreach( $this->currentQueuesByClient as $idClient => $queue ) {
 			foreach( $queue as $value ) {
 				foreach( $value as $programmation ) {
+					syslog(LOG_ERR, get_class( $programmation));
 					if( $programmation instanceof Cache ) {
+						syslog(LOG_ERR, 'ONE LIFE');
 						$idMasse = $programmation->fetch()->masse->getId();
 						if( false === array_search($idMasse, $ret)) {
 							$ret[] = $idMasse;
@@ -100,7 +104,6 @@ class Evolution {
 		$ret->elapsed = $this->elapsed( $idMasse ); // temps écoulé.
 
 		// remaining = last  + lastProgrammation * progTime.
-
 		return $ret;
 	} 
 }

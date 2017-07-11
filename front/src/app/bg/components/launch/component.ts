@@ -63,20 +63,26 @@ export class LaunchComponent implements OnInit, OnDestroy {
     }
 
     private set( masses : Masse[]) {
-        console.log( masses);
         this.remaining = 0;
         this.remainingLaunched = 0;
+        let oldRemainingLaunched = 0;
+        let oldRemaining = 0;
         masses.forEach(( masse: any, i : number, masses: Masse[] ) => {
+            this.remaining = 0;
+            this.remainingLaunched = 0;
             masses[i].remaining = 0;
             masse.programmations.forEach(( programmation: any) => {
-                 masses[i].remaining += programmation.pause;
-                 this.remaining += programmation.pause;
-                 if( masses[i].launched ) this.remainingLaunched += programmation.pause;
+                 masses[i].remaining += programmation.pause + 1;
+                 this.remaining += programmation.pause + 1;
+                 if( masses[i].launched ) this.remainingLaunched += programmation.pause + 1;
             });
-            masses[i].remaining = Math.ceil(masses[i].remaining / 60 ); 
+            if ( oldRemainingLaunched > this.remainingLaunched ) this.remainingLaunched = oldRemainingLaunched; 
+            if ( oldRemaining > this.remaining ) this.remaining = oldRemaining;
+            oldRemainingLaunched = this.remainingLaunched;  
+            masses[i].remaining = masses[i].remaining;
         });
-        this.remaining = Math.ceil( this.remaining / 60 );
-        this.remainingLaunched = Math.ceil( this.remainingLaunched / 60 );
+        this.remaining = this.remaining;
+        this.remainingLaunched = this.remainingLaunched;
         this.masses = masses;
     }
 }

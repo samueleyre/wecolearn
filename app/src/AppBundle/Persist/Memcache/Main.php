@@ -18,11 +18,13 @@ class Main {
 	}
 
 	public function set( $key, $value ) {
-		$this->cache->set( $key, $value, $this->getExpire() );
+		$expire = $this->getExpire();
+		$this->cache->set( $key, $value,  $expire );
 	}
 
 	public function get( $key ) {
-		return $this->cache->get( $key );
+		$ret = $this->cache->get( $key );
+		return $ret;
 	}
 
 	private function getExpire() {

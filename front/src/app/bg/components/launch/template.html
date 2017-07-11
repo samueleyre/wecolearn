@@ -1,7 +1,7 @@
 <div class="col-md-9 col-md-offset-3">
     <h2>Publication en masse en cours, ou en attente.</h2>
-    <h4>Temps restant sur les publication en cours : {{ remainingLaunched }} min.</h4>
-    <h4>Temps restant sur tout les publications : {{ remaining  }} min.</h4>
+    <h4>Durée total des programmation en cours : {{ remainingLaunched | amDuration: 'second' }}</h4>
+    <h4>Durée total des program : {{ remaining | amDuration:'second'  }}</h4>
     <div class="table-responsive">
         <table class="table table-striped">
           <thead>
@@ -15,7 +15,7 @@
             <tr *ngFor="let masse of masses">
               <td>{{ masse.name }}</td>
               <td>
-                <span [hidden]="!masse.launched">en cours pour {{ masse.remaining }} min</span>
+                <span [hidden]="!masse.launched">en cours pour {{ masse.remaining | amDuration:'second' }}</span>
                 <span [hidden]="masse.launched">
                   <button (click)="launch(masse)" class="btn">Lancer</button></span>
               </td>

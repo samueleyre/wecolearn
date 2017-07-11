@@ -22,10 +22,11 @@ export class EvolutionComponent implements OnInit {
     
     public progTime : number = 2;
     public sanitizedPercent : any;
-    public remaining : number|string = 'NC'; 
+    public remaining : Date|string = 'NC'; 
     
     @Input() public idMasse: number;
     @Output() public reload: EventEmitter<boolean> = new EventEmitter();
+    @Output() public remainsChange: EventEmitter<number> = new EventEmitter();
     
     constructor(protected http:Http, private sanitizer : DomSanitizer, private service : EvolutionService ) {
         this.sanitizedPercent = this.sanitizer.bypassSecurityTrustStyle(`1%`);
@@ -43,10 +44,12 @@ export class EvolutionComponent implements OnInit {
         evolutions.forEach( ( evolution: any ) => {
             if( evolution.idMasse == this.idMasse ) {
                 hasOneMasse = true;
-                let end = ( parseInt(evolution.lastProgrammation) * ( this.progTime ) + parseInt(evolution.last) - parseInt(evolution.lastProgrammation) );
+                let end = ( parseInt(evolution.lastProgrammation) * 60 *( this.progTime ) + parseInt(evolution.last)* 60 - parseInt(evolution.lastProgrammation) );
                 let string =  parseInt(evolution.elapsed) / end * 100  + '%'
                 this.sanitizedPercent = this.sanitizer.bypassSecurityTrustStyle(string);
-                this.remaining = Math.ceil(end / 60);
+                let _now = new Date();
+                this.remaining = new Date(_now.getTime() + 1000 * end );
+                this.remainsChange.emit( end );
             }
         });
         if( !hasOneMasse && isHot ) {

@@ -92,9 +92,7 @@ class Main {
             $fetch = new FetchEntity( $model, $cond , $this->em );
             $this->commandHandler->handle( $fetch);
             $row = $fetch->getResponse();
-            if ( $model instanceof clef ) dump( $row );
             
-        //$fetch = null;
         } catch( \Exception $e ) {
 
             $condUpdate = $cond;

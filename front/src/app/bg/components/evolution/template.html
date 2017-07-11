@@ -3,4 +3,4 @@
   aria-valuemin="0" aria-valuemax="100" [style.width]="sanitizedPercent">
   </div>
 </div>
-<span>Restant : {{ remaining }} min</span>
+<span>Fin : {{ remaining | amDateFormat: 'YYYY-MM-DD HH:mm' }}</span>

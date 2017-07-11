@@ -448,9 +448,9 @@ class Programmation
      */
     public function setPause($pause)
     {
-        //$this->pause = 60 * $pause;
+        $this->pause = 60 * $pause;
         
-        $this->pause = $pause;
+        //$this->pause = $pause;
         
         //$this->pause = 1;
 

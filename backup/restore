@@ -21,8 +21,8 @@ down="down/"
  
 
 
-#rm -Rf down/*
-#rsync -avz ambrieu@91.121.193.33:backup/ $down
+rm -Rf down/*
+rsync -avz ambrieu@91.121.193.33:backup/ $down
 cd down
 if [ -f "/home/etouraille/src/bh/restore/down/$filename" ];then
 	echo 'No version to restore'
