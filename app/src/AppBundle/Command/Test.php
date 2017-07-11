@@ -43,68 +43,7 @@ class Test extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
-        $blogs = 
-            $this
-                ->em
-                ->createQuery("SELECT entity FROM BgBundle:Blog entity")
-                ->getResult();
-
-
-        
-        /*
-        $command = new FetchEntity( new Blog, ['id' =>  132 ]);
-        $this->command->handle( $command);
-        
-        $blogRow = $command->getResponse()[0];
-
-
-        $rowProg = new \Bg\BgBundle\Entity\Programmation();
-        $rowProg->idLanguage = 1;
-        $rowProg->idLanguageAnchor = 1;
-        $rowProg->idLanguageNeutral = 1;
-        $rowProg->idLanguageTitle = 1;
-    
-        $rowProg->neutralSentenceNumber = 4;
-        $rowProg->anchorPosition = 1;
-        $rowProg->idClient  = 4;
-        $rowProg->isBlank = 1;
-        $rowProg->titleOption = 0; // 0 titre seul , 1 prase clef, 2 =  clef : titre
-        $rowProg->isPage = false;
-
-        $content = new Main(
-            $this->em,
-            $this->command,
-            $rowProg->idLanguageTitle,
-            $rowProg->neutralSentenceNumber,
-            $rowProg->anchorPosition,
-            $rowProg->idClient,
-            $rowProg->isBlank,
-            $rowProg->titleOption
-        );
-        $title = $content->getTitle();
-        $contentText = $content->getContent();
-        $idPhraseClef = $content->getIdPhraseClef();
-        */
-        /*
-        dump( $title );
-
-        $writter = new WordPress(
-            $blogRow->getUrl(),
-            $blogRow->getLogin(),
-            $blogRow->getPass()
-            )
-        ;
-        if($rowProg->isPage)
-        {
-            $blogPageId = $writter->newPage($title,$contentText);
-        }
-        else
-        {
-            $blogPageId = $writter->newPost($title,$contentText);
-        }
-
-        dump( $blogPageId);
-        */
+        new \AppBundle\Hack\ProxyProviders\ProxyFranceProvider();
 
     }
 }

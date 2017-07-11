@@ -83,6 +83,8 @@ class FetchRandomEntityCommandHandler {
 		return $query->getSingleResult();
 		
 
+		/*
+		Some code for large queries.
 		$q = $this->em->createQuery($query);
 		$iterableResult = $q->iterate();
 		$index = 1;
@@ -97,5 +99,6 @@ class FetchRandomEntityCommandHandler {
 		    $index ++;
 		}
 		return $ret;
+		*/
 	}
 }

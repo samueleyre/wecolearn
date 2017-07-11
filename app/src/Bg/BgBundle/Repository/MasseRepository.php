@@ -17,7 +17,7 @@ class MasseRepository {
 	public function count() {
 		
 		$query = "
-			SELECT COUNT(masse)	
+			SELECT COUNT(DISTINCT(masse))	
 			FROM BgBundle:Masse masse 
 			JOIN BgBundle:Programmation programmation
 			WITH programmation.masse = masse
@@ -30,6 +30,7 @@ class MasseRepository {
 				->createQuery( $query )
 				->getSingleScalarResult()
 		;
+		
 		return $ret;
 	}
 
@@ -43,14 +44,18 @@ class MasseRepository {
 			WHERE programmation.used = 0
 		";
 
+		//syslog(LOG_ERR, $this->getPaginationQuery()->size());
+		//syslog(LOG_ERR, $this->getPaginationQuery()->offset());
+
 		$ret = 
 			$this
 				->em
 				->createQuery( $query )
-				->setMaxResults( $this->getPaginationQuery()->size() )
-				->setFirstResult($this->getPaginationQuery()->offset())
+				//->setMaxResults( $this->getPaginationQuery()->size() )
+				//->setFirstResult($this->getPaginationQuery()->offset())
 				->getResult()
 		;
+		syslog(LOG_ERR,count($ret));
 		return $ret;
 	}
 }

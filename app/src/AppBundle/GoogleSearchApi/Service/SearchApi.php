@@ -10,8 +10,9 @@ class SearchApi {
 
 		$config = [
     		'proxy' => [
-        		'http' => '195.154.93.112:80'
-        	]
+        		'http' => '192.140.223.94:8080',
+        	],
+        	'connect_timeout' => 3
     	];
     	
 		$this->client = new Client();

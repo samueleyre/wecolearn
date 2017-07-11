@@ -55,10 +55,6 @@ class MassesController extends Controller
 
     /**
     * @Get("/masses")
-    * @Pagination(
-        perPage="5",
-        service="masse.repository"
-      )
     */
     public function getMassesAction( Request $request ) {
         
