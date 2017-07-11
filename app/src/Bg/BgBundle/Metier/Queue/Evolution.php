@@ -2,7 +2,7 @@
 
 namespace Bg\BgBundle\Metier\Queue;
 
-use Bg\BgBundle\Entity\Programmation;
+use Bg\BgBundle\CEntity\Cache;
 use Bg\BgBundle\Model\Evolution as Model;
 use AppBundle\Persist\Memcache\Main as Persist;
 
@@ -38,8 +38,8 @@ class Evolution {
 		foreach( $this->currentQueuesByClient as $idClient => $queue ) {
 			foreach( $queue as $value ) {
 				foreach( $value as $programmation ) {
-					if( $programmation instanceof Programmation ) {
-						$idMasse = $programmation->masse->getId();
+					if( $programmation instanceof Cache ) {
+						$idMasse = $programmation->fetch()->masse->getId();
 						if( false === array_search($idMasse, $ret)) {
 							$ret[] = $idMasse;
 						}
@@ -71,9 +71,9 @@ class Evolution {
 			foreach( $queue as $value ) {
 				$tics ++;
 				foreach( $value as $programmation ) {
-					if( $programmation instanceof Programmation ) {
+					if( $programmation instanceof Cache ) {
 						$encounteredProgrammation ++;
-						if($programmation->masse->getId() === $idMasse ) {
+						if( $programmation->fetch()->masse->getId() === $idMasse ) {
 							$lastTic = $tics;
 							$lastEencounteredProgrammation = $encounteredProgrammation;
 							//$encounteredProgrammation ++;

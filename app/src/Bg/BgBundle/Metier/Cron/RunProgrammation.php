@@ -63,6 +63,7 @@ class RunProgrammation {
                     #arrayProgs can be empty. for a certain time.
                     foreach( $arrayProgs as $rowProg ) {
                             
+                            $rowProg = $rowProg->fetch();
                             $blogPageId = null;
                             $pause = $rowProg->pause;
                             $blogRow = $blogRepository->findById($rowProg->idBlog);
@@ -152,21 +153,21 @@ class RunProgrammation {
                     }
 
                 } else {
-                    //$this->log->info("No programmations available yet for client {$clientName}, you have to wait a while");
+                    $this->log->info("No programmations available yet for client {$clientName}, you have to wait a while");
                 }
             
                 $sleepTime = rand(1,1);
                 $time = isset($updatedTime)?$updatedTime->format('Y-m-d H:i:s'):null;
-                //$this->log->info("Sleep for {$sleepTime} after publishing for {$clientName} for blog : {$idBlog} at time ${time}\n");
+                $this->log->info("Sleep for {$sleepTime} after publishing for {$clientName} for blog : {$idBlog} at time ${time}\n");
                 //sleep($sleepTime);
 
             }    
             
-            $sleepTime = 1;
+            $sleepTime = 60;
             if( Env::getEnv() < Env::PRODUCTION ) {
                 $sleepTime = 1;
             }
-            //$this->log->info("Sleep for {$sleepTime} seconds before new tic\n");
+            $this->log->info("Sleep for {$sleepTime} seconds before new tic\n");
             sleep($sleepTime);
             $clientsProgs = $queueProvider->tic();
         }

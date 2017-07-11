@@ -18,6 +18,7 @@ class Main {
             new \Bg\BgBundle\Repository\ProgrammationRepository( $em );
         $this->logger = $logger;
         $this->idClient = $idClient;
+        $this->em = $em;
         $this->init();
 
     }
@@ -56,6 +57,8 @@ class Main {
             if( false === array_search($prog->getId(),$this->unUsedProgrammation)) {
                 $ret[] = $prog->getId();
             }
+            $this->em->detach( $prog );
+
         }
         return $ret;
     }
@@ -75,7 +78,9 @@ class Main {
     protected function putProgrammationInQueue($id) {
         //echo sprintf("put programmation %d in queue \n", $id);
         $prog = $this->repository->fetchById($id);
+        $prog = new \Bg\BgBundle\CEntity\Cache( $prog, $this->em );
         $pause = $prog->pause;
+        $pause = $pause / 60;
         $samePauseLastIndex = $this->whereIsLastSameTime($pause);
         $t = 1;
         foreach( $this->queue as $index => $array_prog ) {
@@ -101,7 +106,6 @@ class Main {
                 $t++;
             }         
         }
-        
         for($i=$t;$i<=$pause;$i++) {
             $add = array();
             if($i==$pause) {

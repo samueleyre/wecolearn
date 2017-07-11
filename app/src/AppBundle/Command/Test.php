@@ -43,7 +43,13 @@ class Test extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
-        new \AppBundle\Hack\ProxyProviders\ProxyFranceProvider();
+        
 
+        $prog = $this->em->createQuery(
+            'SELECT entity FROM BgBundle:Programmation entity WHERE entity.id = 160524')->getSingleResult();
+
+        $cache = new \Bg\BgBundle\CEntity\Cache( $prog, $this->em);
+
+        dump( $cache->fetch()->masse->getId());
     }
 }
