@@ -48,6 +48,22 @@ class SearchApi {
 		return $ret;
 	}
 
+	public function test() {
+		
+		$search = sprintf('no%s des caravel%e%s de %shristo%s colo%s',
+			rand(0,1)?'ms':'ns'
+			rand(0,1)?'l':'',
+			rand(0,1)?'s':'',
+			rand(0,1)?'C':'c',
+			rand(0,1)?'f':'phe',
+			rand(0,1)?'n':'mb'
+		);
+
+		$res = $this->get( $search );
+
+		return count( $res ) > 0;
+	}
+
 	private function get( $q, $index = 0 ) {
 		
 		$query = sprintf('https://www.google.com/search?q=%s&start=%d', urlencode($q), 10 * $index );
