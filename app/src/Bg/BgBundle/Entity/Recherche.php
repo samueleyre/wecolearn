@@ -42,14 +42,26 @@ class Recherche
      */
     public $nextTime;
 
+    /**
+     * @ORM\Column(type="integer",name="useTime")
+     */
+    public $useTime;
+
+
     
     public function getId() {
     	return $this->id;
     }
 
     public function __construct() {
+        
         $this->resultats = new ArrayCollection();
         $this->nextime = time() + rand(60,300);
+        $this->useTime = time() - rand(3600, 5 * 3600 ) - 24 * 3600;
+        // le champ use Time sers à récuperer les recherche les plus ancienne
+        // lors de la création d'une recherche, on la créer un jour en arrière
+        // de facon à avoir un anteriorité et a pouvoir la lancer dans les plus bref delais
+        
     }
 
     /**
@@ -180,5 +192,29 @@ class Recherche
     public function getResultats()
     {
         return $this->resultats;
+    }
+
+    /**
+     * Set useTime
+     *
+     * @param integer $useTime
+     *
+     * @return Recherche
+     */
+    public function setUseTime($useTime)
+    {
+        $this->useTime = $useTime;
+
+        return $this;
+    }
+
+    /**
+     * Get useTime
+     *
+     * @return integer
+     */
+    public function getUseTime()
+    {
+        return $this->useTime;
     }
 }

@@ -8,9 +8,7 @@ class Main {
     // each call rewrite the queue
     protected $unUsedProgrammation = [];
     protected $freshlyAdded = [];
-
     protected $queue = [];
-
     protected $model;
 
     public function __construct( $idClient, $logger, $em ) {

@@ -2,15 +2,22 @@
 
 namespace AppBundle\GoogleSearchApi\Service;
 
+use AppBundle\GoogleSearchApi\Exception\BlackListException;
+
 use Goutte\Client;
 
 class SearchApi {
 
-	public function __construct() {
+	const GOOGLE_RESULT_PER_PAGE = 10;
+
+	public function __construct( $proxy ) {
+
+		$protocole = sprintf('http%s', $proxi->getSecure()?'s':'');
+		$host = sprintf('%s:%s', $proxy->getHost(), $proxy->getPort());
 
 		$config = [
     		'proxy' => [
-        		'http' => '192.140.223.94:8080',
+        		$protocole => $host,
         	],
         	'connect_timeout' => 3
     	];
@@ -20,7 +27,28 @@ class SearchApi {
 
 	}
 
-	public function get( $q, $index = 0 ) {
+	public function match( $url, $recherche, $maxPage = 10 ) {
+
+		$page = 0;
+		$match = false;
+		$ret = false;
+
+		while( false === $match && $page < $maxPage ) {
+			
+			$url = $this->removeLastSlash($url);
+			$urls = $this->get( $recherche, $page);
+			if( count( $urls ) === 0 ) throw new BlackListException(); 
+			$match = array_search( $url, $urls );
+			if( $match !== false ) $ret = $match + 1 + $page * sel::GOOGLE_RESULT_PER_PAGE;
+			
+			$page ++;
+		
+		}
+		
+		return $ret;
+	}
+
+	private function get( $q, $index = 0 ) {
 		
 		$query = sprintf('https://www.google.com/search?q=%s&start=%d', urlencode($q), 10 * $index );
 
@@ -30,17 +58,27 @@ class SearchApi {
 
 		$crawler->filter('h3.r a')->each(function ( $node ) use ( &$ret ) {
 			 $res = $this->matchUrl($node->getNode(0)->getAttribute('href'));
-			 $ret[] = $res;
+			 $ret[] = $this->removeLastSlash($res);
 		});
+
+		// WE SLEEP For microtime randomly entre 5 Et 17 secondes.
+		usleep(rand( 5000, 17000 ));
+		// TODO clik on a random link.
+
 		return $ret;
 	}
 
 	
-	protected function matchUrl( $element ) {
+	private function matchUrl( $element ) {
 		$ret = null;
 		if( preg_match('/(http(|s):\/\/(.*?))&sa/', $element, $match) ) {
 			$ret =  $match[1];
 		}
 		return $ret;
 	}
+
+	private function removeLastSlash( $string ) {
+		return preg_replace('/(\/)$/', '', $string );
+	}
+
 }

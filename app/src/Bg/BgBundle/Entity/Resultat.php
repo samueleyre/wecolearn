@@ -42,6 +42,22 @@ class Resultat
     	return $this->id;
     }
 
+    public function __construct() {
+        $this->date = new \DateTime();
+    }
+
+    // TODO, mal conçu, perte d'information;
+    // NOTA : interessant pour comprende le concept d'entropie.
+    public function setRank( $rank, $perPage = 10 ) {
+        if( ! $rank ) {
+            $this->rank = null;
+            $this->page = null;
+        } else {
+            $this->page = ceil( $rank / $perPage );
+            $this->rank = $rank % $perPage;
+        }
+    }
+
     public function setRecherche( Recherche $recherche ) {
         
         $recherche->resultats->add( $this );
