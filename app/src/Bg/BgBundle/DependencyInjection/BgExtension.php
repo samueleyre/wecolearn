@@ -26,5 +26,14 @@ class BgExtension extends Extension
         $loader->load('services.yml');
         $loader->load('command-handlers.yml');
         $loader->load('repositories.yml');
+
+        $metierLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Metier/Recherche/Resources/config'));
+        
+
+        $recherche = ['handler.yml','service.yml','command.yml'];
+
+        foreach( $recherche as $config ) {
+            $metierLoader->load( $config );
+        }
     }
 }

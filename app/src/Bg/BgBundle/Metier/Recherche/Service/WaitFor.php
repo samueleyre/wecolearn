@@ -16,17 +16,21 @@ class WaitFor {
 		
 		$this->command = $command;
 		$this->duration = $duration;
-		$this->store = new Store(__DIR__.'/../data/', 'wait_for');
+		$this->store = self::getStore();
 
 	}
 
 	public function wait() {
-		$this->store->put( $this->serialize($this->command ) );
+		$this->store->put( $this->serialize( $this->command ) );
 		$ret = $this->at( $this->nextTimestamp($this->waitFor) );
 	}
 
-	public function nextCommand() {
-		$serialised = $this->store->get();
+	public static function getStore() {
+		new Store(__DIR__.'/../data/', 'wait_for');
+	}
+
+	public static function nextCommand() {
+		$serialised = self::getStore()->get();
 		$unserialized = @unserialize( $serialised);
 		if(!is_array( $unserialized)) {
 			return null;

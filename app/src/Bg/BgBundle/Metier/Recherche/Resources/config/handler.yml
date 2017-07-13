@@ -1,30 +1,30 @@
 services:
   init_handler:
     class: Bg\BgBundle\Metier\Recherche\Handler\InitCommandHandler
-    arguments : ['@logger']
+    arguments : ['@search.logger']
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Recherche\Command\InitCommand }
 
   next_proxy_handler:
     class: Bg\BgBundle\Metier\Recherche\Handler\NextProxyCommandHandler
-    arguments: [ '@proxy_warehouse', '@logger' ]
+    arguments: [ '@proxy_warehouse', '@search.logger' ]
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Recherche\Command\NextProxyCommand }
 
   panic_proxy_handler:
     class: Bg\BgBundle\Metier\Recherche\Handler\PanicProxyCommandHandler
-    arguments: [ '@docrine.orm.entity_manager', '@logger' ]
+    arguments: [ '@doctrine.orm.entity_manager', '@search.logger' ]
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Recherche\Command\PanicProxyCommand }
 
   process_search_handler:
     class: Bg\BgBundle\Metier\Recherche\Handler\ProcessSearchCommandHandler
-    arguments: [ '@docrine.orm.entity_manager', '@logger' ]
+    arguments: [ '@doctrine.orm.entity_manager', '@search.logger' ]
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Recherche\Command\ProcessSearchCommand }
 
   unbalance_proxy_handler:
     class: Bg\BgBundle\Metier\Recherche\Handler\UnbalanceProxyCommandHandler
-    arguments: [ '@docrine.orm.entity_manager', '@logger' ]
+    arguments: [ '@doctrine.orm.entity_manager', '@search.logger' ]
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Recherche\Command\UnbalanceProxyCommand }

@@ -1,18 +1,20 @@
 <?php
 
-namespace Bg\BgBundle\Recherche;
+namespace Bg\BgBundle\Metier\Recherche;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Bg\BgBundle\Metier\Recherche\Command\InitCommand;
+use Bg\BgBundle\Metier\Recherche\Service\WaitFor;
+
 
 class FetchRankCommand extends Command
 {
     private $logger;
 
-    public function __construct(LoggerInterface $logger, $commandBus, $waitForService )
+    public function __construct(LoggerInterface $logger, $commandBus )
     {
         
         //$this->alive = new CronAlive( $logger, $em , $commandBus );
@@ -20,7 +22,7 @@ class FetchRankCommand extends Command
         parent::__construct();
 
         $this->command = $commandBus;
-        $this->waitFor = $waitForService;
+        
         
     }
 
@@ -34,7 +36,7 @@ class FetchRankCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
-        if( $command = $this->waitFor->nextCommand()) {
+        if( $command = waitFor::nextCommand()) {
 
         } else {
 

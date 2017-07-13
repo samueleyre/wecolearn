@@ -44,3 +44,6 @@ services:
     arguments: [ '@doctrine.orm.entity_manager' ]
     tags:
         - { name: command_handler, handles: AppBundle\GoogleSearchApi\Message\FetchRank }
+
+  logger.std.out:
+      class : AppBundle\Logger\StdOut

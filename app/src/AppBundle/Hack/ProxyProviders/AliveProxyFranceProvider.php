@@ -15,7 +15,7 @@ class AliveProxyFranceProvider implements ProxyProvider {
 
 	public function __construct() {
 
-		$this->elements = (new TableDomParser())->getElements();
+		$this->elements = ( new TableDomParser() )->getElements();
 			
 	}
 

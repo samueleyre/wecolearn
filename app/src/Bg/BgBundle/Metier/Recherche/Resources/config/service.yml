@@ -1,0 +1,14 @@
+services:
+  search.log.handler:
+    class: Monolog\Handler\StreamHandler;
+    arguments: ['/var/log/recherche.log',!php/const:\Monolog\Logger::INFO ]
+
+  search.logger:
+    parent: looger.std.out
+    calls:
+       - ['pushHandler', [ '@search.log.handler']
+    
+
+  proxy_warehouse:
+    class: Bg\BgBundle\Metier\Recherche\ProxyWareHouse
+    arguments: ['@doctrine.orm.entity_manager', '@search.logger']
