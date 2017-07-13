@@ -10,8 +10,9 @@ use Bg\BgBundle\Metier\Recherche\Command\ProcessSearchCommand;
 
 class FetchProxyCommand {
 
-	public function __construct( $proxyWahreHouse ) {
+	public function __construct( $proxyWahreHouse, $logger ) {
 		$this->warehouse = $proxyWahreHouse;
+		$this->logger = $logger;
 	}
 
 		
@@ -43,7 +44,7 @@ class FetchProxyCommand {
 		) 
 		{
 			$command->setNextCommand(new PanicProxyCommand() );
-			$command->continue = true;
+		
 		} else {
 			$nextCommand = new ProcessSearchCommand( $coolProxy );
 			$command->setNextCommand( $nextCommand );

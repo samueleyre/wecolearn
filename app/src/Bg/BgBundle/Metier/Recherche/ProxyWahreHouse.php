@@ -9,11 +9,11 @@ use AppBundle\Hack\ProxyProviders\ProxyFranceProvider;
 
 class ProxyWahereHouse extends AbstractProxyWareHouse {
 
-	public function __construct( $em, Container $container ) {
+	public function __construct( $em, $logger ) {
 		
-		parent::__construct( $em, $container->get('monolog.logger.proxy_wahrehouse'));
+		parent::__construct( $em, $logger );
 
-		$this->addProxyProvider(new ProxyFranceProvider());
+		//$this->addProxyProvider(new ProxyFranceProvider());
 
 		$this->populate();
 	

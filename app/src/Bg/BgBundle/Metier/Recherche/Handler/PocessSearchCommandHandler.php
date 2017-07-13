@@ -10,12 +10,16 @@ use Bg\BgBundle\Metier\Recherche\Exception\NoSearchException;
 use AppBundle\GoogleSearchApi\Exception\BlackListException;
 
 use Bg\BgBundle\Metier\Recherche\Service\Search;
+use Bg\BgBundle\Metier\Recherche\Service\SuccessCycle;
+
+
+class SuccessCycl
 
 class ProcessSearchCommandHandler {
 
-	public function __construct( $em ) {
+	public function __construct( $em, $logger ) {
 		$this->em = $em;
-		$this->successCycle = 0; // to persist if script fails. c'est le rasoire d'Ocam.
+		$this->successCycle = new SuccessCycle( $em ); // to persist if script fails. c'est le rasoire d'Ocam.
 		$this->proxyWareHouse = $proxyWareHouse;
 	}
 
@@ -66,9 +70,8 @@ class ProcessSearchCommandHandler {
 		$proxy->use();
 		$this->em->merge( $proxy);
 		$this->em->flush();
-		$this->successCycle++;
-		if( $this->successCycle >= $this->availableSearch() ) {
-			$this->successCycle = 0;
+		if( $this->successCycle->cycle() ) {
+			
 			$nextCommand = new UnbalanceProxyCommand();
 			$command->setNextCommand( $nexCommand );
 			$this->em->detach($proxy);

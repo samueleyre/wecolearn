@@ -8,7 +8,7 @@ use Bg\BgBundle\Metier\Recherche\Command\FetchProxyCommand;
 
 class UnbalanceProxyCommandHandler {
 
-	public function __construct( $em ) {
+	public function __construct( $em, $logger ) {
 		$this->em = $em;	
 	}
 

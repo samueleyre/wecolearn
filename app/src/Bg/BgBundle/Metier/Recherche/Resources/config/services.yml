@@ -1,4 +1,4 @@
 services:
   proxy_warehouse:
     class: Bg\BgBundle\Metier\Recherche\ProxyWareHouse;
-    arguments: ['@doctrine.orm.entity_manager', '@service_container']
+    arguments: ['@doctrine.orm.entity_manager', '@logger']

@@ -9,18 +9,20 @@ abstract class ChainCommand {
 	protected $nextCommand;
 	protected $param;
 	protected $waitFor = null;
-	public $continue = false;
+	public $continue = true;
 
 	public function __construct( $param = null ) {
 		if( isset( $param ) ) {
 			// si on lui passe un paramètre, c'est bien que l'on continue.
-			$this->continue = true;
 			$this->param = $param;
 		}
 	}
 	
 	public function continue() : boolean {
-		if(isset($this->waitFor)) sleep( (new WaitFor($this->waitFor))->second());
+		if( isset( $this->waitFor ) ) {
+			( new WaitFor($this->nextCommand, $this->waitFor ) )->wait();
+			return false;
+		}
 		return $this->continue;
 	}
 

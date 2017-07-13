@@ -30,7 +30,7 @@ class Proxy
     /**
      * @ORM\Column(type="integer")
     */
-    protected $secure;
+    protected $secure=0;
 
     /**
      * @ORM\Column(type="datetime", name="foundTime")
