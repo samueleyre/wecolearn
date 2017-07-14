@@ -13,6 +13,6 @@ class InitCommandHandler {
 	}
 
 	public function handle(InitCommand $command ) {
-
+		$this->logger->info('Initialisation de la séquence de recherche');
 	}
 }

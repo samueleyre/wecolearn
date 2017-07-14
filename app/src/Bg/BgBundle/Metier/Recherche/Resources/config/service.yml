@@ -1,12 +1,12 @@
 services:
   search.log.handler:
-    class: Monolog\Handler\StreamHandler;
-    arguments: ['/var/log/recherche.log',!php/const:\Monolog\Logger::INFO ]
+    class: Monolog\Handler\StreamHandler
+    arguments: ['/var/log/recherche.log', !php/const:Monolog\Logger::INFO ]
 
   search.logger:
-    parent: looger.std.out
+    parent: logger.std.out
     calls:
-       - ['pushHandler', [ '@search.log.handler']
+       - ['pushHandler', [ '@search.log.handler'] ]
     
 
   proxy_warehouse:

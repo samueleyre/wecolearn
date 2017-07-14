@@ -13,20 +13,21 @@ use Bg\BgBundle\Metier\Recherche\Service\Search;
 use Bg\BgBundle\Metier\Recherche\Service\SuccessCycle;
 
 
-class SuccessCycl
-
 class ProcessSearchCommandHandler {
 
 	public function __construct( $em, $logger ) {
 		$this->em = $em;
-		$this->successCycle = new SuccessCycle( $em ); // to persist if script fails. c'est le rasoire d'Ocam.
-		$this->proxyWareHouse = $proxyWareHouse;
+		$this->logger = $logger;
+		$this->successCycle = new SuccessCycle( $em );
 	}
 
 	public function handle( ProcessSearchCommand $command ) {
 
+		$this->log("Lancement d'un nouvelle recherche");
+		
 		$proxy = $command->getParam();
-		$searchService = Search( $this->em );
+		$searchService = Search( $this->em , $this->logger);
+
 
 		try {
 
@@ -84,11 +85,10 @@ class ProcessSearchCommandHandler {
 		}
 	}
 
-	// TODO, pas bon, devrait être dans un repos ... mais pas sur que ce soit utilisé ailleurs pour le moment.
-	private function availableSearch() {
-		$query = "SELECT count(search) FROM BgBundle:Recherche search";
-		return $this->em->createQuery($query)->getSingleScalarResult();
-	}
+	private function log( $message ) {
 
+		$this->logger->info( $message );
+	
+	}
 
 }
