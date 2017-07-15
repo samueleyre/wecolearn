@@ -90,16 +90,18 @@ class SearchApi {
 			 }
 		});
 
-		if(isset( $urlToClick)) {
+		if( isset( $urlToClick ) ) {
 			$this->clickOnLink( $crawler, $urlToClick );
 		}
 
+		$microInSec = 1000 * 1000; 
 		// WE SLEEP For microtime randomly entre 5 Et 17 secondes.
-		if( $sleep  && count($ret) > 0 ) {
-			$sleepTime = ( rand( 5, 17 ) + rand(5,7) * $index ) * 1000;
+		if( $sleep  && count( $ret ) > 0 ) {
+			$sleepTime = ( rand( 5, 17 ) + rand(5,7) * $index ) * $microInSec;
 			// on prends 5 à 7 secondes par index.
 			usleep( $sleepTime);
-			$this->logger->info(sprintf("Google Search : Pause d'un tout petit peu moins de % secondes", ceil($sleepTime/1000)));
+
+			$this->logger->info( sprintf( "Google Search : Pause d'un tout petit peu moins de % secondes" , ceil( $sleepTime /  $microInSec) ) );
 			// TODO clik on a random link.
 
 		}
