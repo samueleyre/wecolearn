@@ -32,6 +32,7 @@ class ProcessSearchCommandHandler {
 		$searchService = new Search( $this->em , $this->logger);
 
 
+		$success = true;
 		try {
 
 			//$recherche = $searchService->process( $proxy );
@@ -53,6 +54,7 @@ class ProcessSearchCommandHandler {
 					
 			);
 			$proxy->blacklist();
+			$success = false;
 			//$proxy->blacklist($recherche); // on pourait blacklister par rapport à une recherche.
 			// il faut veillez à ne pas reproduire les même recherche sur les même proxy
 			// ou tout du moins à faire tourner.
@@ -69,6 +71,7 @@ class ProcessSearchCommandHandler {
 			$searchNewProxyCommand = new NextProxyCommand($proxy);
 			$command->setNextCommand( $searchNewProxyCommand );
 			$proxy->disable();
+			$success;
 
 		}
 
@@ -80,7 +83,7 @@ class ProcessSearchCommandHandler {
 		$proxy->use();
 		$this->em->merge( $proxy);
 		$this->em->flush();
-		if( $isCycleOver = $this->successCycle->cycle() ) {
+		if( $success && $isCycleOver = $this->successCycle->cycle() ) {
 			
 			$this->log("Un cycle complet de recherche est terminé");
 			
