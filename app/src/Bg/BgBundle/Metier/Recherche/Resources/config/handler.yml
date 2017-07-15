@@ -19,7 +19,7 @@ services:
 
   process_search_handler:
     class: Bg\BgBundle\Metier\Recherche\Handler\ProcessSearchCommandHandler
-    arguments: [ '@doctrine.orm.entity_manager', '@search.logger' ]
+    arguments: [ '@doctrine.orm.entity_manager', '@search.logger', '@search.service' ]
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Recherche\Command\ProcessSearchCommand }
 

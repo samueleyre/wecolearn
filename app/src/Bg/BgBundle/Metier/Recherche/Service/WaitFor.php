@@ -40,9 +40,9 @@ class WaitFor {
 	}
 
 	private function at( $timestamp ) {
-		// TODO better to use symfony linux command
-		$minutes = ceil(($timestamp - time() ) / 60 );  
-		$command = sprintf('at now + %s minutes /src/app/bin/console bg:rank:fetch', $minutes ) ;
+		// TODO better to use symfony linux command which i don't know well ;)
+		$minutes = ceil( ( $timestamp - time() ) / 60 );  
+		$command = sprintf("at now + %s minutes -f /src/script/at-rank", $minutes );
 
 		return exec( $command );
 	}

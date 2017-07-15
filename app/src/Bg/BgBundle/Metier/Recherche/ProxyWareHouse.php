@@ -17,16 +17,14 @@ class ProxyWareHouse extends AbstractProxyWareHouse {
 		
 		parent::__construct( $em, $logger );
 
-		if( Env::getEnv() === Env::PRODUCTION ) {
-            $provider = new ProxyFranceProvider();
-        } else {
-        	$provider = new AliveProxyFranceProvider();
-        }
+		$providers = [
+			new ProxyFranceProvider(),
+			new AliveProxyFranceProvider(),
+		];
 
-		$this->addProxyProvider($provider);
-
+		foreach( $providers as $provider ) {
+			$this->addProxyProvider( $provider );
+		}
 		$this->populate();
-	
 	}
-
 }

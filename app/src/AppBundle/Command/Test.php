@@ -47,10 +47,10 @@ class Test extends Command
 
         //dump( $isOver = $cycle->cycle());
 
-        $provider = new \AppBundle\Hack\ProxyProviders\FreeProxyList();
+        $command = new \Bg\BgBundle\Metier\Recherche\Command\InitCommand; 
+        $command->waitFor('d');
+        $command->continue();
     
-        $provider->getProxies();
-
     }
 
 }

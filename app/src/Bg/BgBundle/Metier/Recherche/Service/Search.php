@@ -17,6 +17,8 @@ use AppBundle\GoogleSearchApi\Service\SearchApi;
 
 class Search {
 
+	private $previousSearchId = null;
+
 	public function __construct( $em, $logger ) {
 		$this->em = $em;
 		$this->logger = $logger;
@@ -24,8 +26,11 @@ class Search {
 
 	public function process(Proxy $proxy ) {
 		$search = null;
+		$isNew = false;
 		try {
 			$search = $this->getNextSearch();
+			$isNew = $this->previousSearchId == $search->getId();
+			$this->previousSearchId = $search->getId();
 		
 		} catch(\Exception $e) {
 
@@ -62,6 +67,8 @@ class Search {
 
 		$this->em->persist( $resultat );
 		$this->em->flush();
+
+		return $isNew;
 
 	}
 

@@ -11,33 +11,36 @@ use Bg\BgBundle\Metier\Recherche\Command\UnbalanceProxyCommand;
 use Bg\BgBundle\Metier\Recherche\Exception\NoSearchException;
 use AppBundle\GoogleSearchApi\Exception\BlackListException;
 
-use Bg\BgBundle\Metier\Recherche\Service\Search;
+
 use Bg\BgBundle\Metier\Recherche\Service\SuccessCycle;
 
 
 class ProcessSearchCommandHandler {
 
-	public function __construct( $em, $logger ) {
+	public function __construct( $em, $logger , $searchService ) {
 		$this->em = $em;
 		$this->logger = $logger;
 		$this->successCycle = new SuccessCycle( $em );
+		$this->searchService = $searchService;
 	}
 
 	public function handle( ProcessSearchCommand $command ) {
 
-		$this->log("Lancement d'un nouvelle recherche");
+		$this->log("Proccess des recherhe");
 		
 		$proxy = $command->fetchParam();
 		$this->log( sprintf( "Use proxy %s", $proxy->getHost() ) );
-		$searchService = new Search( $this->em , $this->logger);
-
-
+		
+		$isNewSearch = null;
 		$success = true;
 		try {
 
 			//$recherche = $searchService->process( $proxy );
-			$searchService->process( $proxy );
+			$isNewSearch = $this->searchService->process( $proxy );
 
+			if( true === $isNewSearch ) {
+				$this->log('Recherche en succès est nouvelle => A priori la précedente devait être en succès aussi');
+			}
 
 		} catch( NoSearchException $e ) {
 
@@ -71,7 +74,7 @@ class ProcessSearchCommandHandler {
 			$searchNewProxyCommand = new NextProxyCommand($proxy);
 			$command->setNextCommand( $searchNewProxyCommand );
 			$proxy->disable();
-			$success;
+			$success = false;
 
 		}
 
@@ -83,6 +86,13 @@ class ProcessSearchCommandHandler {
 		$proxy->use();
 		$this->em->merge( $proxy);
 		$this->em->flush();
+
+		if( $success ) {
+			$this->log(sprintf('Une nouvelle recherche a été réalisée avec succès'));
+		}
+
+
+
 		if( $success && $isCycleOver = $this->successCycle->cycle() ) {
 			
 			$this->log("Un cycle complet de recherche est terminé");

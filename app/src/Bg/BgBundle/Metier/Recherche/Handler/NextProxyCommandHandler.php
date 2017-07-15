@@ -41,7 +41,7 @@ class NextProxyCommandHandler {
 				
 				$this->log("Recherche d'un nouveau proxy");
 
-				$coolProxy = $this->warehouse->getNextProxy($idealCondition);
+				$coolProxy = $this->warehouse->getNextProxy($idealConditions);
 
 			} catch( \Exception $e ) {
 
