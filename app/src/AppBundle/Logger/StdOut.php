@@ -10,7 +10,7 @@ class StdOut extends \Monolog\Logger {
 		
 		parent::__construct('std.out');
 		
-		$this->pushHandler(new StreamHandler('php://stdout', Logger::INFO)); 
+		$this->pushHandler(new StreamHandler('php://stdout', \Monolog\Logger::INFO)); 
 	
 	}
 }

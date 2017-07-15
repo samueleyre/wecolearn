@@ -10,9 +10,11 @@ class SearchApi {
 
 	const GOOGLE_RESULT_PER_PAGE = 10;
 
-	public function __construct( $proxy ) {
+	public function __construct( $proxy , $logger ) {
 
-		$protocole = sprintf('http%s', $proxi->getSecure()?'s':'');
+		$this->logger = $logger;
+
+		$protocole = sprintf('http%s', $proxy->getSecure()?'s':'');
 		$host = sprintf('%s:%s', $proxy->getHost(), $proxy->getPort());
 
 		$config = [
@@ -35,11 +37,14 @@ class SearchApi {
 
 		while( false === $match && $page < $maxPage ) {
 			
+			$this->logger->info(sprintf("Recherche : % sur la page : %s", $recherche, $page +1 ));
+			
 			$url = $this->removeLastSlash($url);
-			$urls = $this->get( $recherche, $page);
+			$urls = $this->get( $recherche, $page );
+			dump( $urls );
 			if( count( $urls ) === 0 ) throw new BlackListException(); 
 			$match = array_search( $url, $urls );
-			if( $match !== false ) $ret = $match + 1 + $page * sel::GOOGLE_RESULT_PER_PAGE;
+			if( $match !== false ) $ret = $match + 1 + $page * self::GOOGLE_RESULT_PER_PAGE;
 			
 			$page ++;
 		
@@ -50,8 +55,8 @@ class SearchApi {
 
 	public function test() {
 		
-		$search = sprintf('no%s des caravel%e%s de %shristo%s colo%s',
-			rand(0,1)?'ms':'ns'
+		$search = sprintf('no%s des caravel%s%s de %shristo%s colo%s',
+			rand(0,1)?'ms':'ns',
 			rand(0,1)?'l':'',
 			rand(0,1)?'s':'',
 			rand(0,1)?'C':'c',
@@ -59,29 +64,52 @@ class SearchApi {
 			rand(0,1)?'n':'mb'
 		);
 
-		$res = $this->get( $search );
+		$res = count( $this->get( $search , 0, false ) );
 
-		return count( $res ) > 0;
+		$this->logger->info(sprintf("Recherche de test : %s : %s resultat%s sur la premiere page", $search, $res, count($res)>=2?'s':''));
+
+		return $res > 0;
 	}
 
-	private function get( $q, $index = 0 ) {
+	private function get( $q, $index = 0 , $sleep = true ) {
 		
 		$query = sprintf('https://www.google.com/search?q=%s&start=%d', urlencode($q), 10 * $index );
 
 		$ret = [];
 
+		$rankToClick = rand(0,9);
+		$urlToClick = null;
+
 		$crawler = $this->client->request('GET', $query );
 
-		$crawler->filter('h3.r a')->each(function ( $node ) use ( &$ret ) {
-			 $res = $this->matchUrl($node->getNode(0)->getAttribute('href'));
+		$crawler->filter('h3.r a')->each(function ( $node ) use ( &$ret, $rankToClick, &$urlToClick ) {
+			 $res = $this->matchUrl( $url = $node->getNode(0)->getAttribute('href') );
 			 $ret[] = $this->removeLastSlash($res);
+			 if( isset( $res) && $rankToClick == count($ret) ) {
+			 	$urlToClick = $url;
+			 }
 		});
 
+		if(isset( $urlToClick)) {
+			$this->clickOnLink( $crawler, $urlToClick );
+		}
+
 		// WE SLEEP For microtime randomly entre 5 Et 17 secondes.
-		usleep(rand( 5000, 17000 ));
-		// TODO clik on a random link.
+		if( $sleep  && count($ret) > 0 ) {
+			$sleepTime = ( rand( 5, 17 ) + rand(5,7) * $index ) * 1000;
+			// on prends 5 à 7 secondes par index.
+			usleep( $sleepTime);
+			$this->logger->info(sprintf("Google Search : Pause d'un tout petit peu moins de % secondes", ceil($sleepTime/1000)));
+			// TODO clik on a random link.
+
+		}
 
 		return $ret;
+	}
+
+	private function clickOnLink( $crawler, $url ) {
+		$link = $crawler->filter(sprintf('a[href="%s"]', $url ))->link();
+		$this->client->click( $link );
 	}
 
 	

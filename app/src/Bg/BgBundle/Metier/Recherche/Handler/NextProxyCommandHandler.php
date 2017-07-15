@@ -2,9 +2,10 @@
 
 namespace Bg\BgBundle\Metier\Recherche\Handler;
 
-use Bg\BgBundle\Metier\Recherche\Command\FetchProxyCommand;
+use Bg\BgBundle\Metier\Recherche\Command\NextProxyCommand;
 use Bg\BgBundle\Metier\Recherche\Command\CriticCommand;
 use Bg\BgBundle\Metier\Recherche\Command\ProcessSearchCommand;
+use Bg\BgBundle\Metier\Recherche\Command\PanicProxyCommand;
 
 
 
@@ -16,11 +17,13 @@ class NextProxyCommandHandler {
 	}
 
 		
-	public function handle(FetchProxyCommand $command ) {
+	public function handle(NextProxyCommand $command ) {
 
 		$coolProxy = null;
 		
-		$idealConditions = ['donw' => 0, 'gBlaklisted' => 0 ];
+		$idealConditions = [ 'down' => 0, 'googleBlacklisted' => 0 ];
+
+		$previousProxy = $command->fetchParam();
 		
 		$this->log("Recherche d'un nouveau proxy");
 		
@@ -47,10 +50,10 @@ class NextProxyCommandHandler {
 
 		}
 
-		if( !isset( $coolP ) 
+		if( !isset( $coolProxy ) 
 				|| 
 					( null !== $previousProxy 
-						&& $previousProxy->getId() === $coolP->getId() 
+						&& $previousProxy->getId() === $coolProxy->getId() 
 					) 
 		) 
 		{
@@ -58,7 +61,7 @@ class NextProxyCommandHandler {
 			$command->setNextCommand(new PanicProxyCommand() );
 		
 		} else {
-			$this->log(sprintf("Prochain proxy utilisé : %s", $coolP->getHost()));
+			$this->log(sprintf("Prochain proxy utilisé : %s", $coolProxy->getHost()));
 			$nextCommand = new ProcessSearchCommand( $coolProxy );
 			$command->setNextCommand( $nextCommand );
 		}

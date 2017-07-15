@@ -33,7 +33,7 @@ class Proxy
     protected $secure=0;
 
     /**
-     * @ORM\Column(type="datetime", name="foundTime")
+     * @ORM\Column(type="integer", name="foundTime")
     */
     protected $foundTime;
 
@@ -43,28 +43,28 @@ class Proxy
     protected $down=0;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, name="downTime")
+     * @ORM\Column(type="integer", nullable=true, name="downTime")
     */
     protected $downTime;
 
     /**
      * @ORM\Column(type="integer", name="googleBlacklisted")
     */
-    protected $gBlaklisted=0;
+    protected $gBlacklisted=0;
 
     /**
-     * @ORM\Column(type="datetime", name="googleBlacklistedTime")
+     * @ORM\Column(type="integer", name="googleBlacklistedTime", nullable=true)
     */
     protected $gBlacklistedTime;
 
     /**
-     * @ORM\Column(type="datetime", name="useTime", nullable=true)
+     * @ORM\Column(type="integer", name="useTime", nullable=true)
     */
     protected $useTime;
 
 
     public function __construct() {
-        $this->foundTime = new \Datetime();
+        $this->foundTime = time();
         
     }
 
@@ -75,7 +75,7 @@ class Proxy
     }
 
     public function blacklist() {
-        $this->gBlaklisted = 1;
+        $this->gBlacklisted = 1;
         $this->gBlacklistedTime = time();
     }
 
@@ -232,27 +232,27 @@ class Proxy
     }
 
     /**
-     * Set gBlaklisted
+     * Set gBlacklisted
      *
-     * @param integer $gBlaklisted
+     * @param integer $gBlacklisted
      *
      * @return Proxy
      */
-    public function setGBlaklisted($gBlaklisted)
+    public function setGBlacklisted( $value )
     {
-        $this->gBlaklisted = $gBlaklisted;
+        $this->gBlacklisted = $value;
 
         return $this;
     }
 
     /**
-     * Get gBlaklisted
+     * Get gBlacklisted
      *
      * @return integer
      */
-    public function getGBlaklisted()
+    public function getGBlacklisted()
     {
-        return $this->gBlaklisted;
+        return $this->gBlacklisted;
     }
 
     /**

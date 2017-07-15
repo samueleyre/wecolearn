@@ -6,7 +6,7 @@ class InitCommand extends ChainCommand {
 
 	public $continue = true;
 
-	public function nextCommand() {
-		return new FetchProxyCommand();
+	public function nextCommand() : ChainCommand {
+		return new NextProxyCommand();
 	}
 }

@@ -18,8 +18,10 @@ abstract class ChainCommand {
 		}
 	}
 	
-	public function continue() : boolean {
+	public function continue()  {
 		if( isset( $this->waitFor ) ) {
+			// si je defini pas de next command, next command vaut l'instance de waitFor.
+			// écrire un test.
 			( new WaitFor($this->nextCommand, $this->waitFor ) )->wait();
 			return false;
 		}
@@ -31,7 +33,7 @@ abstract class ChainCommand {
 		$this->waitFor = $waitFor;
 	}
 
-	public function param() {
+	public function fetchParam() {
 		return $this->param;
 	}
 

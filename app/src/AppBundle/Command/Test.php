@@ -43,6 +43,11 @@ class Test extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
-        (new \AppBundle\Hack\ProxyProviders\AliveProxyFranceProvider())->getProxies();
+        $cycle = new \Bg\BgBundle\Metier\Recherche\Service\SuccessCycle($this->em);
+
+        dump( $isOver = $cycle->cycle());
+    
+
     }
+
 }

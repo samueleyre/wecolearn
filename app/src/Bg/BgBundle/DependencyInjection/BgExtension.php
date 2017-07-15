@@ -29,11 +29,11 @@ class BgExtension extends Extension
 
         $metierLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Metier/Recherche/Resources/config'));
         
-
         $recherche = ['handler.yml','service.yml','command.yml'];
 
         foreach( $recherche as $config ) {
             $metierLoader->load( $config );
         }
+        
     }
 }

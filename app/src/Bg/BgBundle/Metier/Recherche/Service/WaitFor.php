@@ -15,7 +15,7 @@ class WaitFor {
 	public function __construct( $command , $waitFor = 'd' ) {
 		
 		$this->command = $command;
-		$this->duration = $duration;
+		$this->waitFor = $waitFor;
 		$this->store = self::getStore();
 
 	}
@@ -26,13 +26,13 @@ class WaitFor {
 	}
 
 	public static function getStore() {
-		new Store(__DIR__.'/../data/', 'wait_for');
+		return new Store(__DIR__.'/../data/', 'wait_for');
 	}
 
 	public static function nextCommand() {
 		$serialised = self::getStore()->get();
 		$unserialized = @unserialize( $serialised);
-		if(!is_array( $unserialized)) {
+		if( ! is_array( $unserialized)) {
 			return null;
 		} else {
 			return new $unserialized['class'];	
@@ -42,6 +42,8 @@ class WaitFor {
 	private function at( $timestamp ) {
 		// TODO better to use symfony linux command.
 		$command = sprintf('at %s /src/app/bin/console bg:rank:fetch', date('H:i d/m/Y', $timestamp ) ) ;
+
+		dump( $command );
 		return exec( $command );
 	}
 

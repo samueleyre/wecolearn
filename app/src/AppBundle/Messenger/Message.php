@@ -12,6 +12,10 @@ class Message {
 
 	}
 
+	public function getMessage() {
+		return $this->message;
+	}
+
 	public function setTo( Array $recipients ) {
 		$this->message->setTo( $recipients);
 	}

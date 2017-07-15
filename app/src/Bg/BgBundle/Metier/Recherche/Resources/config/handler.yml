@@ -1,7 +1,7 @@
 services:
   init_handler:
     class: Bg\BgBundle\Metier\Recherche\Handler\InitCommandHandler
-    arguments : ['@search.logger']
+    arguments : ['@doctrine.orm.entity_manager','@search.logger']
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Recherche\Command\InitCommand }
 

@@ -2,9 +2,10 @@
 
 namespace Bg\BgBundle\Metier\Recherche\Handler;
 
-use Bg\BgBundle\Metier\Recherche\Command\FetchProxyCommand;
-use Bg\BgBundle\Metier\Recherche\Command\ProcessSearchCommand;
+use Bg\BgBundle\Metier\Recherche\Command\NextProxyCommand;
 use Bg\BgBundle\Metier\Recherche\Command\EndCommand;
+
+use Bg\BgBundle\Metier\Recherche\Command\PanicProxyCommand;
 
 use AppBundle\GoogleSearchApi\Service\SearchApi;
 
@@ -15,16 +16,19 @@ class PanicProxyCommandHandler {
 
 		$this->messengerManager = new \AppBundle\Messenger\Manager();
 		$this->em = $em;
+		$this->logger = $logger;
 	
 	}
 
 	public function handle( PanicProxyCommand $command ) {
 
+		$this->log("Proxy Panic");
+
 		$success = 0;
 		$query = "
 			SELECT proxy 
 			FROM AppBundle:Proxy proxy
-			WHERE proxy.down = 0
+			WHERE proxy.down = 1
 			"
 		;
 		
@@ -37,9 +41,12 @@ class PanicProxyCommandHandler {
 
 		$down = count($proxies);
 
+		$this->log(sprintf("%s proxy down", $down));
+
 		foreach( $proxies as $proxy ) {
 
 			if( ! $this->isDown( $proxy ) ) {
+				dump(1);
 				$success++;
 			}
 		}
@@ -47,7 +54,7 @@ class PanicProxyCommandHandler {
 		$query = "
 			SELECT proxy 
 			FROM AppBundle:Proxy proxy
-			WHERE proxy.gBlaklisted = 0
+			WHERE proxy.gBlacklisted = 1
 			"
 		;
 		
@@ -60,6 +67,8 @@ class PanicProxyCommandHandler {
 
 		$blacklisted = count( $proxies );
 
+		$this->log(sprintf("%s proxy blacklisté", $blacklisted));
+
 		foreach( $proxies as $proxy ) {
 
 			if( ! $this->isBlacklisted( $proxy )) {
@@ -68,9 +77,11 @@ class PanicProxyCommandHandler {
 		}
 
 		if( $success > 0 ) {
-			$nextCommand = new ProcessSearchCommand();
+			$this->log(sprintf("%s proxy ont été rétablit", $success));
+			$nextCommand = new NextProxyCommand();
 			$command->setNextCommand( $nextCommand );
 		} else {
+			$this->log(sprintf("Aucun proxy rétablit", $success ));
 			$this->warning($down, $blacklisted );
 			$nextCommand = new EndCommand();
 			$command->setNextCommand( $nextCommand );
@@ -80,9 +91,15 @@ class PanicProxyCommandHandler {
 	private function warning( $down, $blacklisted ) {
 		
 		$message = $this->messengerManager->getMessage();
-		$message->addTo(['edouard.touraille@gmail.com'=> 'Edouard Touraille']);
-		$message->addTo(['jc.ambrieu@gmail.com'=> 'Jean-Claude Ambrieu']);
-		$message->addFrom(['bot@xyz.com', 'Blog Generator']);
+		$message->setTo([
+				'edouard.touraille@gmail.com'
+					=> 
+				'Edouard Touraille',
+				'jc.ambrieu@gmail.com'
+					=> 
+				'Jean-Claude Ambrieu'
+				]);
+		$message->setFrom(['bot@xyz.com' =>'Blog Generator']);
 		$content = sprintf(
 			"L'évolution des rank des recherche n'est plus calculable\n
 			Il n'y a plus de proxy disponible pour les recherche dans l'entrepôt\n
@@ -91,6 +108,7 @@ class PanicProxyCommandHandler {
 			", $down, $blacklisted );
 		$message->setContent( $content );
 		$message->setSubject('Proxy Panic');
+
 		$this->messengerManager->addMessage($message);
 		$this->messengerManager->flush();
 		
@@ -98,37 +116,63 @@ class PanicProxyCommandHandler {
 
 	private function isDown( $proxy ) {
 	 
-		$curl = new Curl\Curl();
+		$curl = new \Curl\Curl();
 		$curl->setOpt(CURLOPT_PROXY, TRUE);
 		$curl->get('http://www.google.fr');
 
 		if ($curl->error) {
-	    	$res = false;
+	    	$isDown = true;
 		}	else {
-	    	$res = true;
+	    	$isDown = false;
 		}
 
-		if( $res ) {
+		if(  ! $isDown ) {
 			$proxy->setDown(0);
 			$this->em->merge( $proxy );
 			$this->em->flush();
 		}
 
-		return $res;
+		return $isDown;
 	}
 
 	private function isBlacklisted ( $proxy ) {
 		
-		$search = new SearhApi($proxy);
+		$search = new SearchApi($proxy, $this->logger );
 
-		$res = $search->test();
+		try {
 
-		if( $res ) {
+			$isNotBlacklisted = $search->test();
+
+				
+		} catch(\GuzzleHttp\Exception\ConnectException $e ) {
+
+			// Le proxy ne réponds pas, dans le doute
+			// on le deblakliste.
+			// ce qui permet de 
+				// - le persister
+				// - avoir un état 1 - 0, 0 - 1, ou 0 - 0 uniquement.
+			$isNotBlacklisted = true;
+			$proxy->setDown(1);
+		}
+		
+		
+		if( $isNotBlacklisted ) {
+			
+			dump( $isNotBlacklisted );
+
 			$proxy->setGBlacklisted(0);
 			$this->em->merge( $proxy );
 			$this->em->flush();
 		}
 
-		return $res;
+		//dump( $res );
+
+		return  ! $isNotBlacklisted;
+	}
+
+	public function log( $message ) {
+
+		$this->logger->info( $message );
+	
 	}
 }

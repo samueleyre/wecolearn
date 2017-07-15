@@ -26,7 +26,7 @@ class Manager {
 
 	public function flush() {
 		foreach( $this->messages as $message ) {
-			$this->mailer->send($message);
+			$this->mailer->send($message->getMessage());
 		}
 		//$this->spool->getSpool()->flushQueue( $this->getTransport() );
 	}
