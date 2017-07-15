@@ -10,9 +10,10 @@ parameters:
     database_password: inReusableCodeWeTrust
     
     mailer_transport: smtp
-    mailer_host: 127.0.0.1
+    mailer_host: ~
     mailer_user: ~
     mailer_password: ~
+    mailer_port: ~
 
     locale:            fr
     secret:            ThisTokenIsNotSoSecretChangeItPlease

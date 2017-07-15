@@ -17,7 +17,7 @@ class TableDomParser {
 			$selector = 'table.cm tr td', 
 			$rowSize = 10 , 
 			$usefullElements = [ 0 ],
-			$ignore = 0
+			$ignore = [0]
 		) 
 	{
 
@@ -52,8 +52,24 @@ class TableDomParser {
 	}
 
 	private function addElement( $nodeElement , $row, $column ) {
-		if ( ( false !== $index = array_search($column, $this->usefullElements ) ) && $row !== $this->ignore ) {
-			$this->elements[ $row -$this->ignore ][] = $nodeElement;
+		if ( ( false !== $index = array_search($column, $this->usefullElements ) ) 
+				& ( false === array_search( $row,$this->ignore ) ) 
+			) {
+			// la taille de slplice de ignore si l'index est supérieur ou egale au dernier rencontré.
+			$this->elements[ $row -  $this->minus($row, $this->ignore)][] = $nodeElement;
 		}	
 	}
+
+	private function minus( $row, $ignore ) {
+		$firstRowSupOrEqual = false;
+		$minus = 0;
+		sort( $ignore );
+		foreach( $ignore as $index => $element ) {
+			if( $row >= $element) {
+				$minus = $index;
+				break;
+			}
+		}
+		return $minus;
+	} 
 }

@@ -43,10 +43,13 @@ class Test extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
-        $cycle = new \Bg\BgBundle\Metier\Recherche\Service\SuccessCycle($this->em);
+        //$cycle = new \Bg\BgBundle\Metier\Recherche\Service\SuccessCycle($this->em);
 
-        dump( $isOver = $cycle->cycle());
+        //dump( $isOver = $cycle->cycle());
+
+        $provider = new \AppBundle\Hack\ProxyProviders\FreeProxyList();
     
+        $provider->getProxies();
 
     }
 

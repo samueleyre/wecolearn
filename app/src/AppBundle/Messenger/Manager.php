@@ -4,16 +4,11 @@ namespace AppBundle\Messenger;
 
 class Manager {
 
-	public function __construct() {
+	public function __construct($mailer) {
 		$this->messages = [];
 		// Create the Transport
-		$this->transport = (new \Swift_SmtpTransport('localhost', 25))
-  			//->setUsername('your username')
-  			//->setPassword('your password')
-		;
+		$this->mailer = $mailer;
 
-		// Create the Mailer using your created Transport
-		$this->mailer = new \Swift_Mailer( $this->transport );
 	}
 
 	public function getMessage() {

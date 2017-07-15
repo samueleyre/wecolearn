@@ -9,14 +9,16 @@ use Bg\BgBundle\Metier\Recherche\Command\PanicProxyCommand;
 
 use AppBundle\GoogleSearchApi\Service\SearchApi;
 
+use AppBundle\Env\Manager as Env;
+
 
 class PanicProxyCommandHandler { 
 
-	public function __construct( $em , $logger ) {
+	public function __construct( $em , $logger, $messenger ) {
 
-		$this->messengerManager = new \AppBundle\Messenger\Manager();
 		$this->em = $em;
 		$this->logger = $logger;
+		$this->messengerManager = $messenger;
 	
 	}
 
@@ -91,15 +93,18 @@ class PanicProxyCommandHandler {
 	private function warning( $down, $blacklisted ) {
 		
 		$message = $this->messengerManager->getMessage();
-		$message->setTo([
-				'edouard.touraille@gmail.com'
-					=> 
-				'Edouard Touraille',
-				'jc.ambrieu@gmail.com'
-					=> 
-				'Jean-Claude Ambrieu'
-				]);
-		$message->setFrom(['bot@xyz.com' =>'Blog Generator']);
+		
+		$partner = [ 'edouard.touraille@gmail.com' => 'Edouard Touraille'];
+		if( Env::getEnv() === Env::PRODUCTION ) {
+			$boss = ['jc.ambrieu@gmail.com' => 'Jean-Claude Ambrieu'];
+		} else {
+			$boss = [];
+		}
+
+		$recipients = array_merge( $boss, $partner );
+
+		$message->setTo( $recipients );
+		$message->setFrom(['edouard.touraille@gmail.com' =>'Blog Generator']);
 		$content = sprintf(
 			"L'évolution des rank des recherche n'est plus calculable\n
 			Il n'y a plus de proxy disponible pour les recherche dans l'entrepôt\n

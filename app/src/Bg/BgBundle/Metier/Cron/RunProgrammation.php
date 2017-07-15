@@ -23,7 +23,7 @@ class RunProgrammation {
     protected $log;
     protected $em;
     
-    public function __construct( $logger, $em, $commandBus ) {
+    public function __construct( $logger, $em, $commandBus , $messenger ) {
     
         $this->sleepCurrent = $this->sleepMin;
         $this->log = $logger;
@@ -31,7 +31,7 @@ class RunProgrammation {
         $this->log->pushHandler($streamHandler); 
         $this->em = $em;
         $this->commandBus = $commandBus;
-        $this->NM = new NotificationManager( $this->log );
+        $this->NM = new NotificationManager( $this->log, $messenger );
         ini_set('memory_limit', '300M');
 
     
@@ -163,7 +163,7 @@ class RunProgrammation {
             }    
             
             $sleepTime = 60;
-            if( Env::getEnv() < Env::PRODUCTION ) {
+                if( Env::getEnv() < Env::PRODUCTION ) {
                 $sleepTime = 1;
             }
             $this->log->info("Sleep for {$sleepTime} seconds before new tic\n");

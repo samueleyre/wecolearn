@@ -10,9 +10,9 @@ class Manager {
 	const INFO_LEVEL = 0;
 	const RELAUNCH_LEVEL = 1;
 
-	public function __construct( $logger ) {
+	public function __construct( $logger, $messenger ) {
 		$this->logger = $logger;
-        $this->messenger = new Messenger();
+        $this->messenger = $messenger;
 	}
 
 	public function info($exception) {

@@ -31,7 +31,7 @@ class WaitFor {
 
 	public static function nextCommand() {
 		$serialised = self::getStore()->get();
-		$unserialized = @unserialize( $serialised);
+		$unserialized = @unserialize( $serialised );
 		if( ! is_array( $unserialized)) {
 			return null;
 		} else {
@@ -40,10 +40,10 @@ class WaitFor {
 	}
 
 	private function at( $timestamp ) {
-		// TODO better to use symfony linux command.
-		$command = sprintf('at %s /src/app/bin/console bg:rank:fetch', date('H:i d/m/Y', $timestamp ) ) ;
+		// TODO better to use symfony linux command
+		$minutes = ceil(($timestamp - time() ) / 60 );  
+		$command = sprintf('at now + %s minutes /src/app/bin/console bg:rank:fetch', $minutes ) ;
 
-		dump( $command );
 		return exec( $command );
 	}
 

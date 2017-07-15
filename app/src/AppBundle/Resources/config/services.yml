@@ -47,3 +47,7 @@ services:
 
   logger.std.out:
       class : AppBundle\Logger\StdOut
+
+  messenger.manager:
+    class: AppBundle\Messenger\Manager
+    arguments: ['@mailer']

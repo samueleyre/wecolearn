@@ -45,8 +45,8 @@ class UnbalanceProxyCommandHandler {
 		$this->em->flush();
 
 		$nextCommand = new NextProxyCommand();
+		$nextCommand->waitFor('d');
 		$command->setNextCommand( $nextCommand);
-		$command->waitFor('d');
 	}
 
 	public function log( $message ) {

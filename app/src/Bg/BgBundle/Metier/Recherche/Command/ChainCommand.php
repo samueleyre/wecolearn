@@ -22,14 +22,13 @@ abstract class ChainCommand {
 		if( isset( $this->waitFor ) ) {
 			// si je defini pas de next command, next command vaut l'instance de waitFor.
 			// écrire un test.
-			( new WaitFor($this->nextCommand, $this->waitFor ) )->wait();
+			( new WaitFor( $this, $this->waitFor ) )->wait();
 			return false;
 		}
 		return $this->continue;
 	}
 
 	public function waitFor($waitFor) {
-		$this->continue = true;
 		$this->waitFor = $waitFor;
 	}
 

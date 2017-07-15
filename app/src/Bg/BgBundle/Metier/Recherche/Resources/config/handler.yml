@@ -13,7 +13,7 @@ services:
 
   panic_proxy_handler:
     class: Bg\BgBundle\Metier\Recherche\Handler\PanicProxyCommandHandler
-    arguments: [ '@doctrine.orm.entity_manager', '@search.logger' ]
+    arguments: [ '@doctrine.orm.entity_manager', '@search.logger', '@messenger.manager' ]
     tags:
         - { name: command_handler, handles: Bg\BgBundle\Metier\Recherche\Command\PanicProxyCommand }
 
