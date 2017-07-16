@@ -41,10 +41,11 @@ class WaitFor {
 
 	private function at( $timestamp ) {
 		// TODO better to use symfony linux command which i don't know well ;)
-		$minutes = ceil( ( $timestamp - time() ) / 60 );  
-		$command = sprintf("at now + %s minutes -f /src/script/at-rank", $minutes );
+		$minutes = ceil( ( $timestamp - time() ) / 60 );
+		
+		$at = new At();
+		$at->postPone($timestampe,'/src/script/at-rank');
 
-		return exec( $command );
 	}
 
 	private function nextTimestamp( $waitFor ) {

@@ -6,8 +6,14 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
+
 use Bg\BgBundle\Metier\Recherche\Command\InitCommand;
+use Bg\BgBundle\Metier\Recherche\Command\EndCommand;
 use Bg\BgBundle\Metier\Recherche\Service\WaitFor;
+use Bg\BgBundle\Metier\Recherche\Service\At;
 
 
 class FetchRankCommand extends Command
@@ -21,6 +27,8 @@ class FetchRankCommand extends Command
 
         parent::__construct();
 
+        $this->logger = $logger;
+
         $this->command = $commandBus;
         
         
@@ -29,18 +37,43 @@ class FetchRankCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('bg:rank:fetch')
-            ->setDescription('Fetch rank command');
+            ->setName('bg:rank')
+            ->setDescription('Fetch rank command')
+            ->setDefinition(
+                new InputDefinition([
+                    new InputArgument('scheduled', InputArgument::OPTIONAL),
+                ])
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
-        if( $command = waitFor::nextCommand()) {
-
+        if( null !== $scheduled = $input->getArgument('scheduled')) {
+            
+            $this
+                ->logger
+                ->info("cette recherche est programmé");
+            
+            $command = waitFor::nextCommand();
+        
         } else {
 
-            $command = new InitCommand();
+            $at = new At();
+            if( $at->isScheduled() ) {
+
+                $this
+                    ->logger
+                    ->info("Un évènement est déjà programmé => fin du processus")
+                ;
+                $command = new EndCommand();
+            
+            } else {
+
+                $command = new InitCommand();    
+            }
+
+        
         }
         
         while( $command->continue() ) {
