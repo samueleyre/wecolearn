@@ -69,13 +69,22 @@ class ProcessSearchCommandHandler {
 			$searchNewProxyCommand = new NextProxyCommand($proxy);
 			$command->setNextCommand( $searchNewProxyCommand );
 
-		} catch( \GuzzleHttp\Exception\ConnectException $e ) { // timeout.
-			$this->log(sprintf("Exception de type : %s, le proxy ( %s) ne reponds pas ", get_class( $e), $proxy->getHost()));
-			$searchNewProxyCommand = new NextProxyCommand($proxy);
-			$command->setNextCommand( $searchNewProxyCommand );
-			$proxy->disable();
-			$success = false;
+		} catch( \Exception $e ) { // timeout.
+			
+			//\GuzzleHttp\Exception\ConnectException
 
+			if( preg_match('/\GuzzleHttp\Exception/', get_class($e))) {
+
+				$this->log(sprintf("Exception de type : %s, le proxy ( %s) ne reponds pas ",get_class( $e), $proxy->getHost()));
+				$searchNewProxyCommand = new NextProxyCommand($proxy);
+				$command->setNextCommand( $searchNewProxyCommand );
+				$proxy->disable();
+				$success = false;
+
+			} else {
+				throw $e;
+			}
+			
 		}
 
 		// il faut mesurer le nombre de proxy nécessaire pour pas que ça tombe

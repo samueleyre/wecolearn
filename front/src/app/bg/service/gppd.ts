@@ -11,7 +11,9 @@ export class GPPDService {
 
 	route: string = '/api';
 	
-	constructor( private http : Http ) {}
+	constructor( private http : Http ) {
+		
+	}
 
 	setApi(route: string ){
 		this.route = route;

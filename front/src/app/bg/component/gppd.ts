@@ -11,7 +11,7 @@ import { MessageService }          from './../../applicativeService/message/serv
 
 export class GPPDComponent {
     
-    entities: Array<IEntity> = [];
+    entities: IEntity[] = [];
     entity: IEntity;
     edition:boolean = false;
     

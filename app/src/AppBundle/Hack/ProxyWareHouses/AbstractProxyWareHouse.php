@@ -5,12 +5,14 @@ namespace AppBundle\Hack\ProxyWareHouses;
 use AppBundle\Entity\Proxy;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use AppBundle\Hack\ProxyProviders\ProxyProvider;
+use AppBundle\Hack\State\Setter as StateSetter;
 
 abstract class AbstractProxyWareHouse implements ProxyWareHouse {
 
 	private $providers = [];
 	private $em;
 	private $logger;
+	private $statteSetters = [];
 
 	public function __construct( $em, $logger ) {
 		
@@ -19,8 +21,14 @@ abstract class AbstractProxyWareHouse implements ProxyWareHouse {
 	
 	}
 
+
+
 	public function addProxyProvider( ProxyProvider $provider ) {
 		$this->providers[] = $provider;
+	}
+
+	public function addStateSetter( StateSetter $setter ) {
+		$this->stateSetters[] = $setter;
 	}
 
 	public function populate() {
@@ -28,6 +36,9 @@ abstract class AbstractProxyWareHouse implements ProxyWareHouse {
 			foreach( $proxyProvider->getProxies() as $proxy ) {
 				$this->insertUpdateProxy( $proxy );
 			}
+		}
+		foreach( $this->stateSetters as $setter ) {
+			$setter->process();
 		}
 	}
 

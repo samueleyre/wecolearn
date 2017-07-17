@@ -40,7 +40,7 @@ class Proxy
     /**
      * @ORM\Column(type="integer", nullable=true)
     */
-    protected $down=0;
+    protected $down;
 
     /**
      * @ORM\Column(type="integer", nullable=true, name="downTime")
@@ -48,9 +48,9 @@ class Proxy
     protected $downTime;
 
     /**
-     * @ORM\Column(type="integer", name="googleBlacklisted")
+     * @ORM\Column(type="integer", name="googleBlacklisted", nullable=true)
     */
-    protected $gBlacklisted=0;
+    protected $gBlacklisted;
 
     /**
      * @ORM\Column(type="integer", name="googleBlacklistedTime", nullable=true)
@@ -65,11 +65,14 @@ class Proxy
 
     public function __construct() {
         $this->foundTime = time();
+        $this->down = 1;
+        $this->downTime = time();
         
     }
 
     public function disable() {
         $this->down = 1;
+        $this->gBlacklisted = null;
         $this->downTime = time();
 
     }

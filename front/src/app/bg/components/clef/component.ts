@@ -30,6 +30,7 @@ export class ClefComponent extends GPPDComponent implements OnInit {
     
     ngOnInit() {
         this.load();
+       
         
     }
 
