@@ -48,8 +48,12 @@ class Test extends Command
         //dump( $isOver = $cycle->cycle());
 
         $command = new \Bg\BgBundle\Metier\Recherche\Command\InitCommand; 
+        $m1 = memory_get_usage();
         $command->waitFor('d');
         $command->continue();
+        $m2 =memory_get_usage();
+
+        echo (ceil(($m2-$m1)/1024)). 'ko';
     
     }
 

@@ -100,7 +100,7 @@ class SearchApi {
 			// on prends 5 à 7 secondes par index.
 			usleep( $sleepTime);
 
-			$this->logger->info( sprintf( "Google Search : Pause d'un tout petit peu moins de % secondes" , ceil( $sleepTime /  $microInSec) ) );
+			$this->logger->info( sprintf( "Google Search : Pause d'un tout petit peu moins de %s secondes" , ceil( $sleepTime /  $microInSec) ) );
 			// TODO clik on a random link.
 
 		}

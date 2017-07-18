@@ -14,6 +14,7 @@ use Bg\BgBundle\Metier\Recherche\Command\InitCommand;
 use Bg\BgBundle\Metier\Recherche\Command\EndCommand;
 use Bg\BgBundle\Metier\Recherche\Service\WaitFor;
 use Bg\BgBundle\Metier\Recherche\Service\At;
+use AppBundle\Env\Manager as Env;
 
 
 class FetchRankCommand extends Command
@@ -53,7 +54,12 @@ class FetchRankCommand extends Command
 
             if( null !== $scheduled = $input->getArgument('scheduled')) {
                 
-                $this->warning( 'Lancement', 'Rank Bot Launched from scheduled');
+                if( Env::getEnv() === ENV::PRODUCTION ) { 
+                    
+                    $this->warning( 'Lancement', 'Rank Bot Launched from scheduled');
+                
+                }
+                
                 $this
                     ->logger
                     ->info("cette recherche est programmé");
@@ -86,13 +92,18 @@ class FetchRankCommand extends Command
         
         } catch(\Exception $e ) {
 
-            $content = sprintf("exception class %, message : %s , file : %s, line %s\n
-                trace : \n
-                %s
-            ", get_class($e),$e->getMessage(), $e->getFile(), $e->getLine(),
-            $e->getTraceAsString());
+            if(Env::getEnv() === ENV::PRODUCTION ) {
+                $content = sprintf("exception class %, message : %s , file : %s, line %s\n
+                    trace : \n
+                    %s
+                ", get_class($e),$e->getMessage(), $e->getFile(), $e->getLine(),
+                $e->getTraceAsString());
 
-            $this->warning( $content, 'Rank Bot Panic !');
+                $this->warning( $content, 'Rank Bot Panic !');
+
+            } else {
+                throw $e;
+            }
 
             
         
