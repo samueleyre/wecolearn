@@ -49,8 +49,8 @@ class PanicProxyCommandHandler {
 		$rapport['upB'];
 		$rapport['upNotB'];
 
-		if($rapport['total'] !== $rapport['unavailable'] ) {
-			throw new \LogicException('Pas de proxy panix, certain proxy sont encore accessible');
+		if( $rapport['total'] !== $rapport['unavailable'] && ( $rapport['total'] !== ( $rapport['unavailable'] + 1 ) ) ) {
+			throw new \LogicException("Pas de proxy Panic : plus d'un proxy accessibles");
 		}
 
 		$success = $rapport['upNotB'] > 0;

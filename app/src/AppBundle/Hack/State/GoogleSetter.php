@@ -82,7 +82,7 @@ class GoogleSetter implements Setter {
 			}
 		}
 
-		$message = sprintf('%s proxy down, %s proxy up and blacklisted, %s proxy availables', $down, $upB, $upNotB );
+		$message = sprintf('%s proxy down, %s proxy up and blacklisted, %s proxy availables', $total, $down, $upB, $upNotB );
 
 		$this->log($message );
 		
