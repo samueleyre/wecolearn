@@ -1,6 +1,6 @@
 services:
   command.rank:
     class: Bg\BgBundle\Metier\Recherche\FetchRankCommand
-    arguments : [ '@search.logger', '@command_bus' ]
+    arguments : [ '@search.logger', '@command_bus', '@messenger.manager' ]
     tags: 
       - { name: console.command }

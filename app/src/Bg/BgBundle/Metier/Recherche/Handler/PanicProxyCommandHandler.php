@@ -64,7 +64,8 @@ class PanicProxyCommandHandler {
 	    } else {
            $this->log(sprintf("Aucun proxy rétablit", $success ));
            $this->warning( $rapport['total'],$rapport['down'],$rapport['upB'] );
-           $nextCommand = new EndCommand();
+           $nextCommand = new NextProxyCommand();
+           $nextCommand->waitFor('d');
            $command->setNextCommand( $nextCommand );
 	    }
 	}

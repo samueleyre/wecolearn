@@ -20,16 +20,16 @@ class FetchRankCommand extends Command
 {
     private $logger;
 
-    public function __construct(LoggerInterface $logger, $commandBus )
+    public function __construct(LoggerInterface $logger, $commandBus, $messenger )
     {
         
-        //$this->alive = new CronAlive( $logger, $em , $commandBus );
-
         parent::__construct();
 
         $this->logger = $logger;
 
         $this->command = $commandBus;
+
+        $this->messenger = $messenger;
         
         
     }
@@ -49,37 +49,65 @@ class FetchRankCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
-        if( null !== $scheduled = $input->getArgument('scheduled')) {
-            
-            $this
-                ->logger
-                ->info("cette recherche est programmé");
-            
-            $command = waitFor::nextCommand();
-        
-        } else {
+        try {        
 
-            $at = new At();
-            if( $at->isScheduled() ) {
-
+            if( null !== $scheduled = $input->getArgument('scheduled')) {
+                
+                $this->warning( 'Lancement', 'Rank Bot Launched from scheduled');
                 $this
                     ->logger
-                    ->info("Un évènement est déjà programmé => fin du processus")
-                ;
-                $command = new EndCommand();
+                    ->info("cette recherche est programmé");
+                
+                $command = waitFor::nextCommand();
             
             } else {
 
-                $command = new InitCommand();    
-            }
+                $at = new At();
+                if( $at->isScheduled() ) {
 
+                    $this
+                        ->logger
+                        ->info("Un évènement est déjà programmé => fin du processus")
+                    ;
+                    $command = new EndCommand();
+                
+                } else {
+
+                    $command = new InitCommand();    
+                }
+
+            
+            }
+            
+            while( $command->continue() ) {
+                $this->command->handle( $command );
+                $command = $command->nextCommand();
+            }
+        
+        } catch(\Exception $e ) {
+
+            $content = sprintf("exception class %, message : %s , file : %, line %s\n
+                trace : \n
+                %s
+            ", get_class($e),$e->getMessage(), $e->getFile(), $e->getLine(),
+            $e->getTraceAsString());
+
+            $this->warning( $content, 'Rank Bot Panic !');
+
+            
         
         }
-        
-        while( $command->continue() ) {
-            $this->command->handle( $command );
-            $command = $command->nextCommand();
-        }
+    }
+
+    private function warning( $content, $subject ) {
+        $message = $this->messenger->getMessage();
+        $message->setFrom(['edouard.touraille@gmail.com' => 'BG']);
+        $message->setSubject($subject);
+        $message->setTo(['edouard.touraille@gmail.com' => 'Édouard Touraille']);
+        $message->setContent($content);
+
+        $this->messenger->addMessage( $message );
+        $this->messenger->flush();
     }
 }
 
