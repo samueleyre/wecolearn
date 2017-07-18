@@ -12,7 +12,7 @@ abstract class AbstractProxyWareHouse implements ProxyWareHouse {
 	private $providers = [];
 	private $em;
 	private $logger;
-	private $statteSetters = [];
+	private $stateSetters = [];
 
 	public function __construct( $em, $logger ) {
 		
@@ -91,8 +91,10 @@ abstract class AbstractProxyWareHouse implements ProxyWareHouse {
 				->createQuery($query)
 				->setParameters($params)
 				->getSingleScalarResult();
+
+		if ( ( (int ) $count ) > 0 )  $this->logger->info('Le proxy existe');
 		
-		if( (int) $count === 0 ) {
+		if( ((int) $count) === 0 ) {
 			
 			$this
 				->em

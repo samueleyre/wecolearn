@@ -41,7 +41,6 @@ class SearchApi {
 			
 			$url = $this->removeLastSlash($url);
 			$urls = $this->get( $recherche, $page );
-			dump( $urls );
 			if( count( $urls ) === 0 ) throw new BlackListException(); 
 			$match = array_search( $url, $urls );
 			if( $match !== false ) $ret = $match + 1 + $page * self::GOOGLE_RESULT_PER_PAGE;

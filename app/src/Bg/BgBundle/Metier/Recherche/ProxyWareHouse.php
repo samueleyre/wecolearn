@@ -27,8 +27,8 @@ class ProxyWareHouse extends AbstractProxyWareHouse {
 			$this->addProxyProvider( $provider );
 		}
 		//setters.
-		$setter = new GoogleSetter( $em, $logger );
-		$this->addStateSetter( $setter );
+		//$setter = new GoogleSetter( $em, $logger );
+		//$this->addStateSetter( $setter );
 		$this->populate();
 	}
-}
+}	

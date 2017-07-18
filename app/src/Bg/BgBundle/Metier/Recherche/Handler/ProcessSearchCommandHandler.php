@@ -73,7 +73,7 @@ class ProcessSearchCommandHandler {
 			
 			//\GuzzleHttp\Exception\ConnectException
 
-			if( preg_match('/\GuzzleHttp\Exception/', get_class($e))) {
+			if( preg_match('/GuzzleHttp\\\Exception/', get_class($e))) {
 
 				$this->log(sprintf("Exception de type : %s, le proxy ( %s) ne reponds pas ",get_class( $e), $proxy->getHost()));
 				$searchNewProxyCommand = new NextProxyCommand($proxy);
@@ -82,6 +82,7 @@ class ProcessSearchCommandHandler {
 				$success = false;
 
 			} else {
+				dump(get_class($e));
 				throw $e;
 			}
 			

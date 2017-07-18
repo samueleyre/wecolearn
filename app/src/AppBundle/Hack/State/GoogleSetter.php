@@ -2,6 +2,9 @@
 
 namespace AppBundle\Hack\State;
 
+use AppBundle\GoogleSearchApi\Service\SearchApi;
+use AppBundle\Hack\Service\AliveProxy;
+
 class GoogleSetter implements Setter {
 
 	const down = 0; // proxy down.
@@ -61,15 +64,15 @@ class GoogleSetter implements Setter {
 			$this->em->flush();
 			
 			switch ( $state ) {
-				case self::down: 
+				case self::down : 
 					$down ++;
 				break;
 
-				case self:upB;
+				case self::upB :
 					$upB ++;
 				break;
 
-				case self:upNotB;
+				case self::upNotB :
 					$upNotB ++;
 				break;
 
@@ -114,23 +117,19 @@ class GoogleSetter implements Setter {
 
 		$state =  $up +  $up * $open;
 
+		
+		return $state;
+
 	}
 
 	private function isDown( $proxy ) {
 	 
-		$curl = new \Curl\Curl();
-		$host = sprintf('%s:%s', $proxy->getHost(), $proxy->getPort());
-		$curl->setOpt(CURLOPT_PROXY, $host);
-		$curl->setOpt(CURLOPT_TIMEOUT,2);
-		$curl->setOpt(CURLOPT_HTTPPROXYTUNNEL, 0);
-		$curl->setOpt(CURLOPT_FOLLOWLOCATION, 1);
-		//$curl->setOpt(CURLOPT_RETURNTRANSFER, 0);
-		$curl->get('https://www.google.fr');
-
-		if ( $curl->error) {
-	    	$isDown = true;
-		}	else {
-	    	$isDown = false;
+		$isDown = false;
+		try {
+			AliveProxy::test( $proxy );
+		
+		} catch( \Exception $e ) {
+			$isDown = true;
 		}
 		return $isDown;
 	}
@@ -142,6 +141,7 @@ class GoogleSetter implements Setter {
 		try {
 
 			$isB = ! $search->test();
+			$this->log('Proxy Up');
 
 				
 		} catch( \Exception $e ) {
@@ -149,7 +149,7 @@ class GoogleSetter implements Setter {
 			$isB = null;
 		
 		} 
-		return $iB;
+		return $isB;
 	}
 
 	public function log( $message ) {
