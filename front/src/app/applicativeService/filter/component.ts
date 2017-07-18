@@ -9,7 +9,7 @@ import { FilterService }			from './service';
 @Component({
 	selector : `filter`,
 	template : `<button class="btn" (click)="filter()">Filtrer</button>
-				<button class="btn" (click)="clear()">Réinitisalier</button>`
+				<button class="btn" (click)="clear()">Réinitialiser</button>`
 })
 @Injectable()
 export class FilterComponent {
