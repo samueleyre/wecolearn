@@ -18,8 +18,9 @@ class At {
 		$option = $this->channel?sprintf('-q %s', $this->channel):'';
 		$command = sprintf('at %s now + %s minutes -f %s',$option,$minutes,$file);
 		
-		$process = new Process( $command );
-		$process->run();
+		exec( $command );
+		//$process = new Process( $command );
+		//$process->run();
 
 	}
 

@@ -86,7 +86,7 @@ class FetchRankCommand extends Command
         
         } catch(\Exception $e ) {
 
-            $content = sprintf("exception class %, message : %s , file : %, line %s\n
+            $content = sprintf("exception class %, message : %s , file : %s, line %s\n
                 trace : \n
                 %s
             ", get_class($e),$e->getMessage(), $e->getFile(), $e->getLine(),
