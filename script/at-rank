@@ -1,0 +1,2 @@
+#!/bin/bash
+/src/app/bin/console bg:rank is-scheduled
