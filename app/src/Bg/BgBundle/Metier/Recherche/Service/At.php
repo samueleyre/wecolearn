@@ -40,7 +40,6 @@ class At {
 		    
 		    if ( Process::OUT === $type) {
 		        
-		        dump( $data );
 		        $has = true;
 
 		    }
@@ -50,17 +49,4 @@ class At {
 
 	}
 
-} 
-
-
-$process = new Process('ls -lsa');
-$process->run();
-
-
-
-// executes after the command finishes
-if (!$process->isSuccessful()) {
-    throw new ProcessFailedException($process);
 }
-
-

@@ -126,9 +126,6 @@ sudo crontab /etc/cron.d/$NAME
 colored "check generated cron"
 sudo crontab -l
 
-colored "Launch at daemon : atd"
-sudo docker exec -"$TI" ${CONTAINER}_web_1 atd
-
 colored "kill run script"
 sudo ${ROOT}/${NAME}/script/c-run kill
 
@@ -136,3 +133,6 @@ colored "Restart nginx to enble new conf"
 sudo -E /usr/bin/docker stop docker_web_1
 cd ${ROOT}/${NAME}/docker
 sudo ENV=$ENV /usr/local/bin/docker-compose -f $COMPOSE up -d
+
+colored "Launch at daemon : atd"
+sudo docker exec -"$TI" ${CONTAINER}_web_1 atd
