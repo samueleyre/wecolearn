@@ -141,9 +141,7 @@ class GoogleSetter implements Setter {
 		try {
 
 			$isB = ! $search->test();
-			$this->log('Proxy Up');
 
-				
 		} catch( \Exception $e ) {
 
 			$isB = null;

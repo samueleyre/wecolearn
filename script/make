@@ -127,7 +127,7 @@ colored "check generated cron"
 sudo crontab -l
 
 colored "Launch at daemon : atd"
-sudo docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "atd"
+sudo docker exec -"$TI" ${CONTAINER}_web_1 atd
 
 colored "kill run script"
 sudo ${ROOT}/${NAME}/script/c-run kill
