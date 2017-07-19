@@ -102,7 +102,7 @@ class ProcessSearchCommandHandler {
 		}
 
 
-
+		// TODO : a priory un cycle supplémentaire est fait
 		if( $success && $isCycleOver = $this->successCycle->cycle() ) {
 			
 			$this->log("Un cycle complet de recherche est terminé");

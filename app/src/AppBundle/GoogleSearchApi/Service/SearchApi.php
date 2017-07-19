@@ -56,7 +56,7 @@ class SearchApi {
 		
 		$search = sprintf('no%s des caravel%s%s de %shristo%s colo%s',
 			rand(0,1)?'ms':'ns',
-			rand(0,1)?'l':'',
+			rand(0,1)?'le':'e',
 			rand(0,1)?'s':'',
 			rand(0,1)?'C':'c',
 			rand(0,1)?'f':'phe',

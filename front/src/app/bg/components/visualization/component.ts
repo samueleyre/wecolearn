@@ -23,25 +23,25 @@ export class VisualizationComponent implements OnInit {
     public recherches: Recherche[]= [];
     public _recherhe: any[] = [];
 
-      public lineChartData:Array<any> = [
-        {data: [], label: 'Series A'},
-      ];
-      public lineChartLabels:Array<any> = [];
-      public lineChartOptions:any = {
-        responsive: true
-      };
-      public lineChartColors:Array<any> = [
-        { // grey
-          backgroundColor: 'rgba(148,159,177,0.2)',
-          borderColor: 'rgba(148,159,177,1)',
-          pointBackgroundColor: 'rgba(148,159,177,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-        }
-      ];
-      public lineChartLegend:boolean = true;
-      public lineChartType:string = 'line';
+    public lineChartData:Array<any> = [
+      {data: [], label: 'Évolution des rangs'},
+    ];
+    public lineChartLabels:Array<any> = [];
+    public lineChartOptions:any = {
+      responsive: true
+    };
+    public lineChartColors:Array<any> = [
+      { // grey
+        backgroundColor: 'rgba(148,159,177,0.2)',
+        borderColor: 'rgba(148,159,177,1)',
+        pointBackgroundColor: 'rgba(148,159,177,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      }
+    ];
+    public lineChartLegend:boolean = true;
+    public lineChartType:string = 'line';
 
     constructor( protected http: Http ) {
         
@@ -78,8 +78,8 @@ export class VisualizationComponent implements OnInit {
                 recherche.resultats.forEach(( resultat : any, index: number ) => {
                     let _date:Date = new Date( resultat.date );
                     let _rank:number = 100;
-                    if( resultat.rank !== null && resultat.page !== null ) {
-                        _rank = 10 * ( resultat.page - 1 ) + resultat.rank;
+                    if( resultat.rank !== null && resultat.page !== null ) {  
+                        _rank = 10 * ( parseInt(resultat.page) - 1 ) + parseInt(resultat.rank);
                     }
                     ranks.push( _rank );
                     dates.push(  _date.getDate() + '/' + ( 1 + _date.getMonth()));
