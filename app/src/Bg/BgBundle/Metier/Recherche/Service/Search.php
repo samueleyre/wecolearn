@@ -34,6 +34,8 @@ class Search {
 		
 		} catch(\Exception $e) {
 
+			dump($e->getMessage());
+			exit();
 			throw new NoSearchException();
 		
 		}
@@ -42,6 +44,12 @@ class Search {
 		
 		$url = $search->getUrl();
 		$recherche = $search->getRecherche();
+		$resultat = isset($search->getResultats()[0])?$search->getResultats()[0]:null;
+
+		$searchPage = 0;
+		if( $resultat instanceof Resultat ) {
+			$searchPage = null!==$resultat->getSearchPage()?$resultat->getSearchPage():0;
+		}
 
 		$this->logger->info(sprintf("Recherche [ url ] : %s , [ name ]: %s", $url,$recherche));
 
@@ -49,7 +57,28 @@ class Search {
 
 		$maxPage = Env::getEnv() === Env::PRODUCTION?10:3;
         
-        $rank = $service->match( $url, $recherche , $maxPage );
+        // trow connect or blacklist exception.
+        try {
+        	
+        	$rank = $service->match( $url, $recherche , $maxPage , $searchPage );
+
+        } catch( \Exception $e ) {
+
+        	$searchPage = $e->getRank();
+        	if ( $resultat instanceof Resultat ) {
+        		$this->logger->info('Resultat is INSTANCE');
+        		$resultat->setSearchPage( $searchPage );
+        		$this->em->merge( $resultat);
+        	} else {
+        		$this->logger->info('Resultat is CREATED');
+        		$resultat = new Resultat();
+        		$resultat->setSearchPage( $searchPage );
+        		$resultat->setRecherche($search);
+        		$this->em->persist( $resultat);
+        	}
+        	$this->em->flush();
+        	throw new $e;
+        }
 
 		$this->logger->info("La recherche est validée");
 		$search->setUseTime(time());
@@ -74,24 +103,77 @@ class Search {
 
 	private function getNextSearch(): Recherche {
 		
-		$rsm = new ResultSetMappingBuilder( $this->em );
-		$rsm->addRootEntityFromClassMetadata(get_class($entity =  new Recherche ), 'search');
+		$query = "SELECT recherche 
+			FROM BgBundle:Recherche recherche
+			LEFT JOIN BgBundle:Resultat resultat 
+			WITH recherche = resultat.recherche 
+			AND resultat.searchPage IS NOT NULL
+			ORDER BY
+			recherche.useTime ASC,
+			resultat.date ASC
+			";
 
-		$table = $this->em->getClassMetadata(get_class($entity))->getTableName();
+		$res = $this
+			->em
+			->createQuery($query)
+			->setMaxResults(1)
+			->getResult()
+			;
 
+		if(count($res) === 0 ) throw new \Exception();
+
+		return $res[0];
+
+		//$rsm = new ResultSetMappingBuilder( $this->em );
+		
+		/*
+		$rsm = new ResultSetMappingBuilder( $this->em ,ResultSetMappingBuilder::COLUMN_RENAMING_CUSTOM);
+		$rsm->addRootEntityFromClassMetadata(get_class($entity =  new Recherche ), 'recherche',['id'=>'id_recherche']);
+		$resultat = new Resultat();
+		
+		$rsm->addJoinedEntityFromClassMetadata(get_class($resultat), 'resultat', 'recherche', 'resultats', ['idRecherche' => 'id_recherche']);
+		
+		
 		// cette requête permet d'avoir la plus ancienne recheche.
 		$query = sprintf(
-			"SELECT *
-  			 FROM %s as search
-  			 ORDER BY
-  			 search.useTime ASC,
-  			 search.useTime IS NULL ASC 
-  			 LIMIT 1  
-			", $table );
+			"
+			SELECT 
+			recherche.id AS id_recherche,
+			recherche.name,
+			recherche.url,
+			recherche.recherche,
+			recherche.nextTime,
+			recherche.useTime,
+			resultat.id,
+			resultat.date,
+			resultat.rank,
+			resultat.page,
+			resultat.searchPage
+			FROM recherche
+			LEFT JOIN resultat 
+			ON resultat.idRecherche = recherche.id 
+			AND resultat.searchPage IS NOT NULL
+			ORDER BY
+			recherche.useTime ASC,
+			recherche.useTime IS NULL ASC 
+			LIMIT 1  
+			");
 
 		$query = $this->em->createNativeQuery($query, $rsm);
 
-		return $query->getSingleResult();
+		try {
+			
+			$ret = $query->getSingleResult();
+			dump( $ret );
+
+		} catch( \Exception $e ) {
+			dump( $e->getMessage());
+			dump(1);
+			exit();
+		}
+
+		return $ret;
+		*/
 	
 	} 
 

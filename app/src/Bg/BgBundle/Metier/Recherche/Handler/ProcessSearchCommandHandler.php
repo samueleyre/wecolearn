@@ -10,6 +10,7 @@ use Bg\BgBundle\Metier\Recherche\Command\UnbalanceProxyCommand;
 
 use Bg\BgBundle\Metier\Recherche\Exception\NoSearchException;
 use AppBundle\GoogleSearchApi\Exception\BlackListException;
+use AppBundle\GoogleSearchApi\Exception\NetworkException;
 
 
 use Bg\BgBundle\Metier\Recherche\Service\SuccessCycle;
@@ -46,7 +47,7 @@ class ProcessSearchCommandHandler {
 
 			$this->log("Pas de recherche en cours");
 			$newSearchCommand = new ProcessSearchCommand();
-			$newSearchCommand->waitFor('d'); // TODO implement wait for.
+			$newSearchCommand->waitFor('d'); // TODO fix d.
 			$newSearchCommand->setParam( $proxy );
 			$command->setNextCommand( $newSearchCommand );
 
@@ -69,22 +70,15 @@ class ProcessSearchCommandHandler {
 			$searchNewProxyCommand = new NextProxyCommand($proxy);
 			$command->setNextCommand( $searchNewProxyCommand );
 
-		} catch( \Exception $e ) { // timeout.
+		} catch( NetworkException $e ) { // timeout.
 			
-			//\GuzzleHttp\Exception\ConnectException
+			$this->log(sprintf("le proxy ( %s) ne reponds pas ", $proxy->getHost()));
+			$searchNewProxyCommand = new NextProxyCommand($proxy);
+			$command->setNextCommand( $searchNewProxyCommand );
+			$proxy->disable();
+			$success = false;
 
-			if( preg_match('/GuzzleHttp\\\Exception/', get_class($e))) {
-
-				$this->log(sprintf("Exception de type : %s, le proxy ( %s) ne reponds pas ",get_class( $e), $proxy->getHost()));
-				$searchNewProxyCommand = new NextProxyCommand($proxy);
-				$command->setNextCommand( $searchNewProxyCommand );
-				$proxy->disable();
-				$success = false;
-
-			} else {
-				dump(get_class($e));
-				throw $e;
-			}
+			
 			
 		}
 

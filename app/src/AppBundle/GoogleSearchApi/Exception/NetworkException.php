@@ -2,6 +2,6 @@
 
 namespace AppBundle\GoogleSearchApi\Exception;
 
-class BlackListException extends RankException {
+class NetworkException extends RankException {
 
 }

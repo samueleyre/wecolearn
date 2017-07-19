@@ -3,6 +3,8 @@
 namespace AppBundle\GoogleSearchApi\Service;
 
 use AppBundle\GoogleSearchApi\Exception\BlackListException;
+use AppBundle\GoogleSearchApi\Exception\NetworkException;
+use AppBundle\Hack\Guzzle\Provider;
 
 use Goutte\Client;
 
@@ -13,25 +15,15 @@ class SearchApi {
 	public function __construct( $proxy , $logger ) {
 
 		$this->logger = $logger;
-
-		$protocole = sprintf('http%s', $proxy->getSecure()?'s':'');
-		$host = sprintf('%s:%s', $proxy->getHost(), $proxy->getPort());
-
-		$config = [
-    		'proxy' => [
-        		$protocole => $host,
-        	],
-        	'connect_timeout' => 3
-    	];
-    	
 		$this->client = new Client();
-		$this->client->setClient( new \GuzzleHttp\Client($config));
+		$this->client->setClient( Provider::get( $proxy ) );
 
 	}
 
-	public function match( $url, $recherche, $maxPage = 10 ) {
+	public function match( $url, $recherche, $maxPage = 10 , $currentPage = 0)
+	{
 
-		$page = 0;
+		$page = $currentPage;
 		$match = false;
 		$ret = false;
 
@@ -41,7 +33,12 @@ class SearchApi {
 			
 			$url = $this->removeLastSlash($url);
 			$urls = $this->get( $recherche, $page );
-			if( count( $urls ) === 0 ) throw new BlackListException(); 
+			if( count( $urls ) === 0 ) { 
+				
+				$e = new BlackListException();
+				$e->setRank($page);
+				throw $e;
+			} 
 			$match = array_search( $url, $urls );
 			if( $match !== false ) $ret = $match + 1 + $page * self::GOOGLE_RESULT_PER_PAGE;
 			
@@ -63,7 +60,15 @@ class SearchApi {
 			rand(0,1)?'n':'mb'
 		);
 
-		$res = count( $this->get( $search , 0, false ) );
+		try {
+		
+			$res = count( $this->get( $search , 0, false ) );
+
+		} catch(\Exception $e ) {
+
+			throw new NetworkException();
+		
+		}
 
 		$this->logger->info(sprintf("Recherche de test : %s : %s resultat%s sur la premiere page", $search, $res, count($res)>=2?'s':''));
 
@@ -79,29 +84,37 @@ class SearchApi {
 		$rankToClick = rand(0,9);
 		$urlToClick = null;
 
-		$crawler = $this->client->request('GET', $query );
+		try {
+		
+			$crawler = $this->client->request('GET', $query );
 
-		$crawler->filter('h3.r a')->each(function ( $node ) use ( &$ret, $rankToClick, &$urlToClick ) {
-			 $res = $this->matchUrl( $url = $node->getNode(0)->getAttribute('href') );
-			 $ret[] = $this->removeLastSlash($res);
-			 if( isset( $res) && $rankToClick == count($ret) ) {
-			 	$urlToClick = $url;
-			 }
-		});
+			$crawler->filter('h3.r a')->each(function ( $node ) use ( &$ret, $rankToClick, &$urlToClick ) {
+				 $res = $this->matchUrl( $url = $node->getNode(0)->getAttribute('href') );
+				 $ret[] = $this->removeLastSlash($res);
+				 if( isset( $res) && $rankToClick == count($ret) ) {
+				 	$urlToClick = $url;
+				 }
+			});
 
-		if( isset( $urlToClick ) ) {
-			$this->clickOnLink( $crawler, $urlToClick );
-		}
+			if( isset( $urlToClick ) ) {
+				$this->clickOnLink( $crawler, $urlToClick );
+			}
 
-		$microInSec = 1000 * 1000; 
-		// WE SLEEP For microtime randomly entre 5 Et 17 secondes.
-		if( $sleep  && count( $ret ) > 0 ) {
-			$sleepTime = ( rand( 5, 17 ) + rand(5,7) * $index ) * $microInSec;
-			// on prends 5 à 7 secondes par index.
-			usleep( $sleepTime);
+			$microInSec = 1000 * 1000; 
+			// WE SLEEP For microtime randomly entre 5 Et 17 secondes.
+			if( $sleep  && count( $ret ) > 0 ) {
+				$sleepTime = ( rand( 5, 17 ) + rand(5,7) * $index ) * $microInSec;
+				// on prends 5 à 7 secondes par index.
+				usleep( $sleepTime);
 
-			$this->logger->info( sprintf( "Google Search : Pause d'un tout petit peu moins de %s secondes" , ceil( $sleepTime /  $microInSec) ) );
-			// TODO clik on a random link.
+				$this->logger->info( sprintf( "Google Search : Pause d'un tout petit peu moins de %s secondes" , ceil( $sleepTime /  $microInSec) ) );
+				// TODO clik on a random link.
+
+			}
+		} catch(\Exception $e ) {
+			$netE = new NetworkException();
+			$netE->setRank($index);
+			throw $netE;
 
 		}
 
