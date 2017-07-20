@@ -59,9 +59,9 @@ class GoogleSetter implements Setter {
 		foreach( $proxies as $proxy ) {
 
 			$state = $this->setConnexionState( $proxy );
-			
 			$this->em->merge( $proxy );
 			$this->em->flush();
+			$this->em->detach( $proxy );
 			
 			switch ( $state ) {
 				case self::down : 
