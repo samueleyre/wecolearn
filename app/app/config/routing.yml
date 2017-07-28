@@ -1,5 +1,5 @@
 pr:
-    resource: "@PrBundle/Resources/config/routing.yml"
+    resource: "@PrBundle/Resources/config/services.yml"
     prefix:   /
 
 app:
@@ -16,8 +16,8 @@ ping:
     prefix:   api
     resource: '@AppBundle/Controller/PingController.php'
 
-bg:
-  resource: '@BgBundle/Resources/config/routing/routes.yml'
+pr:
+  resource: '@PrBundle/Resources/config/routing/routes.yml'
 
 api_login_check:
    path: /api/login_check

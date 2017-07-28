@@ -10,7 +10,7 @@ import { BsDropdownModule }         from 'ngx-bootstrap';
 import { PopinConfirmService }      from './applicativeService/popin/confirm/service';
 import { PopinConfirmModule }       from './applicativeService/popin/confirm/module';
 import { EqualValidator }           from './applicativeService/form/validator/equalValidator';
-//import { routing }          from './applicativeService/routing/app.routing';
+import { routing }          from './applicativeService/routing/app.routing';
 
 
 import { ApplicativeModule }	from './applicativeService/module'; 
@@ -18,9 +18,9 @@ import { ApplicativeModule }	from './applicativeService/module';
 import { AppComponent }		  from './app.component'
 import { LoginComponent }	  from './components/login/component';
 import { HomeComponent }	  from './components/home/component';
-import { UserComponent }    from './components/user/component';
+import { UserComponent }      from './components/user/component';
 
-import { BgModule }          from './bg/module';
+import { PrModule }          from './pr/module';
 
 import { AuthGuard }         from './applicativeService/authguard/service';
 
@@ -37,20 +37,20 @@ const appRoutes: Routes = [
         HttpModule,
 
           //NgbModule.forRoot(),
-        BgModule,
+        PrModule,
         RouterModule.forRoot(appRoutes),
         //route,
         PopinConfirmModule,
-        //routing,
+        routing,
         BsDropdownModule.forRoot(),
          
   ],
   declarations: [ 
-  				LoginComponent,
-        	HomeComponent,
-          UserComponent,
-          EqualValidator,
-        	AppComponent,
+        LoginComponent,
+        HomeComponent,
+        UserComponent,
+        EqualValidator,
+        AppComponent,
   ],
   providers : [
     //PopinConfirmService
