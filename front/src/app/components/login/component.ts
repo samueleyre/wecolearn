@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
                         }
                     },
                     error => {
-                        //console.log('ERROR', error );
+                        console.log('ERROR', error );
                         this.error = "L'email ou le mot de passe ne sont pas valide";
                         this.loading = false;
                     
