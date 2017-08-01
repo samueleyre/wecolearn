@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use \Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 
@@ -67,11 +67,13 @@ class PaginationSubscriber implements EventSubscriberInterface
                     }
                 }
                 
-
                 $count = $service->count( $filters );
-                //syslog(LOG_ERR, 'count : '.$count );
-                $paginationQuery->count =  $count;  
-                
+                var_dump('count : '.$count);
+                syslog(LOG_ERR, 'count : '.$count );
+
+                $paginationQuery->count =  $count;
+                var_dump('count : '.$paginationQuery->count );
+
                 if( $paginationQuery->disabled ) {
                     $paginationQuery->perPage = $paginationQuery->count;
                 }

@@ -26,7 +26,6 @@ class AppKernel extends Kernel
             new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
 
             new AppBundle\AppBundle(),
-            new Bg\BgBundle\BgBundle(),
             new PrBundle\PrBundle(),
         ];
 
