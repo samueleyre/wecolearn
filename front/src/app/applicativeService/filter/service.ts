@@ -2,7 +2,7 @@ export class FilterService {
 
 	protected static filters : any;
 
-	public static addFilter( field: string, value: number ) {
+	public static addFilter( field: string, value: any ) {
 		FilterService.init();
 		FilterService.filters[field] = value;
 
