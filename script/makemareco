@@ -1,0 +1,138 @@
+#!/bin/bash
+ROOT='/home/ubuntu/app/clea/app/src'
+CONTAINER=docker
+BRANCH='master'
+NOW=`date "+%Y-%m-%d_%H-%M-%S"`
+BUILD=true
+USER='ubuntu'
+export ENV='production'
+TI='ti'
+RUNIT=false
+NAME=pr
+
+
+# COLOREDiXT
+TEXTCOLOR=$(tput setaf 0)$(tput setab 2)
+RESETCOLOR=$(tput sgr0)
+function colored(){
+    [ $# -gt 1 ] && echo -n '> ' || echo -n '  '
+    echo ${TEXTCOLOR}' '${1}' '${RESETCOLOR}
+}
+
+
+# CHECK FOR ARGUMENTS
+while [[ $# > 1 ]]
+do
+key="$1"
+case $key in
+    -br|--branch)
+    BRANCH="$2"
+    shift
+    ;;
+esac
+case $key in
+    -e|--env)
+    export ENV="$2"
+    shift
+    ;;
+esac
+case $key in
+    -bu| --build)
+    BUILD="$2"
+    shift
+    ;;
+esac
+
+shift
+done
+
+cd ${ROOT}
+
+if [ $ENV = "production" ]; then 
+    COMPOSE="docker-compose.yml"
+    USER='ubuntu'
+    SYMFONY_ENV='prod'
+else 
+    COMPOSE="docker-compose.yml"
+    SYMFONY_ENV='dev'
+fi
+
+colored "Clone repository if not exists"
+if [ -d ${ROOT}/${NAME}/.git ];then
+ 	colored "Repository exits" 
+else 
+ 	git clone --recursive git@gitlab.com:johnscodt/clea.git ${NAME}
+	cd ${ROOT}/${NAME}
+    sudo chown -R ${USER}:${USER} ${ROOT}/${NAME}
+    git checkout $BRANCH
+	git submodule update --init
+	colored "Repository cloned"
+fi
+
+sudo chown -R ${USER}:${USER} ${ROOT}/${NAME}
+
+colored 'Fetching from '${BRANCH}'...' title
+cd ${ROOT}/${NAME}
+git fetch --recurse-submodules
+currentbranch=`git symbolic-ref --short HEAD`
+if [ "$currentbranch" != "$BRANCH" ]; then
+   git checkout ${BRANCH}
+fi
+git rebase origin/${BRANCH}
+if [ $? -ne 0 ]; then
+    colored 'Fetch error. Aborting...'
+    exit
+fi
+sudo chown -R ${USER}:${USER} ${ROOT}/${NAME}
+git submodule update
+
+colored 'Git rebase completed.'
+
+colored 'Restarting container...' title
+cd ${ROOT}/${NAME}/docker
+sudo ENV=$ENV /usr/local/bin/docker-compose kill
+#sudo docker 	build --network host - < ${ROOT}/stpc/docker/php/Dockerfile
+#sudo docker build --network host - < ${ROOT}/stpc/docker/node/Dockerfile
+
+sudo ENV=$ENV /usr/local/bin/docker-compose -f $COMPOSE build
+sudo ENV=$ENV /usr/local/bin/docker-compose -f $COMPOSE up -d
+
+cd ${ROOT}/${NAME}
+colored 'Container is up again.'
+
+colored 'Installing  php dependencies' title
+sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;SYMFONY_ENV=${SYMFONY_ENV} composer install;"
+
+colored 'Replacement and environement' title
+sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;bin/console app:env;"
+
+if [[ $BUILD == true ]]; then
+	
+	colored 'Installing front dependencies' title	
+	sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_node_1 /bin/bash -c "npm install;"
+
+	colored 'Build frontend'
+	sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_node_1 /bin/bash -c "npm run build;"
+fi
+
+sudo usermod -u 500 www-data
+sudo chown -R www-data:www-data $ROOT/$NAME
+
+colored "CRON"
+#might be usefull to make a replace in order to have proper path in script,according to script
+sudo cp $ROOT/$NAME/cron/crontab /etc/cron.d/$NAME
+sudo crontab /etc/cron.d/$NAME
+
+colored "check generated cron"
+sudo crontab -l
+
+colored "kill run script"
+sudo ${ROOT}/${NAME}/script/c-run kill
+
+colored "Restart nginx to enble new conf"
+sudo -E /usr/bin/docker stop docker_web_1
+cd ${ROOT}/${NAME}/docker
+sudo ENV=$ENV /usr/local/bin/docker-compose -f $COMPOSE up -d
+
+colored "Launch at daemon : atd"
+sudo docker exec -"$TI" ${CONTAINER}_web_1 atd
