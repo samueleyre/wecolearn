@@ -2,36 +2,39 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\User;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use  FOS\RestBundle\Controller\Annotations\Post;
+use  FOS\RestBundle\Controller\Annotations\Patch;
+use  FOS\RestBundle\Controller\Annotations\Delete;
 use  FOS\RestBundle\Controller\Annotations\Get;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use AppBundle\Pagination\Annotation as Pagination;
+
+
 class PingController extends Controller
 {
-    /**
-    * @Route("/api/ping" )
-    * @Method({"OPTIONS"})
-    */
-    public function optionsPingAction()
+
+    // "options_ping" [OPTIONS] /ping
+    public function optionsAction()
     {
         return [];
     }
+
 
     /**
     * @Get("/api/ping" )
     */
-    public function getPingAction()
+    public function getAction()
     {
-//        return "fuckit";
         return [];
     }
 
-    
+
+
 }
