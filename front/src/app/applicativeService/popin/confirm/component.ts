@@ -1,5 +1,6 @@
-import { Component, Inject }  from '@angular/core';
-import { MD_DIALOG_DATA }     from '@angular/material';
+import { MdDialogRef } from '@angular/material';
+import { Component } from '@angular/core';
+
 
 @Component({
     selector: 'dialog-confirm',
@@ -15,10 +16,12 @@ import { MD_DIALOG_DATA }     from '@angular/material';
     `
 })
 export class PopinConfirmComponent {
-  
-  message : string = '';
 
-  constructor(@Inject(MD_DIALOG_DATA) public data: any) {
-      this.message = data.message;
-  }
+    public message: string;
+
+    constructor(public dialogRef: MdDialogRef<PopinConfirmComponent>) {
+    }
+
+
+
 }

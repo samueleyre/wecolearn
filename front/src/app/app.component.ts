@@ -9,4 +9,7 @@ import './../assets/css/styles.css';
 })
 export class AppComponent {
   title = 'Moteur de Publication';
+
+
 }
+

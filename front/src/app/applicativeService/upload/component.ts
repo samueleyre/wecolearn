@@ -17,7 +17,7 @@ import { HeaderBag }          from './../interceptor/header-bag';
     <button type="button" class="btn btn-success btn-s"
         (click)="uploader.uploadAll()" 
         [disabled]="!uploader.getNotUploadedItems().length">
-        <span class="glyphicon glyphicon-upload"></span>Téléverser
+        <span class="glyphicon glyphicon-upload"></span>Uploader
     </button>
   `
 })
@@ -40,7 +40,7 @@ export class UploadComponent {
     this.emitter.subscribe( (filename: string ) => {
       this.uploader = new FileUploader(
           {
-              url: environment.origin + url + '?filename='+filename,
+              url: environment.origin + url + '?employeId='+filename,
               headers : this.headerBag.get([]),
           });
 

@@ -25,7 +25,7 @@ security:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             #pattern:  ^/api/(_(profiler|wdt|doc))/
-            pattern:  ^/api/(_(wdt|doc))/
+            pattern:  ^/(api/(_(wdt|doc)))/
             security: false
 
         login:

@@ -16,14 +16,14 @@ export class PopinConfirmService {
   setMessage( message : string ):Observable<boolean> {
      
     let dialogRef = this.dialog.open( PopinConfirmComponent, {
-          height: '90%',
-          width: '90%',
+          height: '90px',
+          width: '90px',
           position : 'relative',
           data : {
             message : message
           }
     });
     
-    return dialogRef.afterClosed()
+    return dialogRef.afterClosed();
   }
 }

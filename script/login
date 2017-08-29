@@ -1,2 +1,2 @@
 #!/bin/bash
-curl -H "Content-Type: application/json" -X POST -d '{"email":"user","password":"password"}' http://localhost/app_dev.php/api/login_check
+curl -H "Content-Type: application/json" -X POST -d '{"email":"samuel.eyre@hotmail.fr","password":"password"}' http://localhost/app_dev.php/api/login_check

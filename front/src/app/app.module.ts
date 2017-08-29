@@ -4,8 +4,11 @@ import { HttpModule }               from '@angular/http';
 import { NgModule }                 from '@angular/core';
 import { RouterModule, Routes }     from '@angular/router';
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
+import { APP_BASE_HREF, Location } from '@angular/common';
+import { getBaseLocation } from './applicativeService/base_url/base_url';
 
 import { BsDropdownModule }         from 'ngx-bootstrap';
+import {UploadModule}           from './applicativeService/upload/module';
 
 import { PopinConfirmService }      from './applicativeService/popin/confirm/service';
 import { PopinConfirmModule }       from './applicativeService/popin/confirm/module';
@@ -19,10 +22,13 @@ import { AppComponent }		  from './app.component'
 import { LoginComponent }	  from './components/login/component';
 import { HomeComponent }	  from './components/home/component';
 import { UserComponent }      from './components/user/component';
+import { UploadComponent}          from './applicativeService/upload/component';
 
 import { PrModule }          from './pr/module';
 
 import { AuthGuard }         from './applicativeService/authguard/service';
+
+
 
 
 const appRoutes: Routes = [
@@ -43,7 +49,7 @@ const appRoutes: Routes = [
         PopinConfirmModule,
         routing,
         BsDropdownModule.forRoot(),
-         
+        UploadModule,
   ],
   declarations: [ 
         LoginComponent,
@@ -53,10 +59,13 @@ const appRoutes: Routes = [
         AppComponent,
   ],
   providers : [
-    //PopinConfirmService
+      {
+          provide: APP_BASE_HREF,
+          useFactory: getBaseLocation
+      },
   ],
   bootstrap:[ 
-  	AppComponent 
+  	AppComponent
   ],
 })
 export class AppModule { }
