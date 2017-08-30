@@ -22,7 +22,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-
+            new SendinBlue\SendinBlueApiBundle\SendinBlueApiBundle(),
             new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
 
             new AppBundle\AppBundle(),
