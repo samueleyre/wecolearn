@@ -4,7 +4,6 @@ import { LoginComponent } 		from './../../components/login/component';
 import { HomeComponent } 		from './../../components/home/component';
 import { UserComponent } 		from './../../components/user/component';
 
-import { BlogComponent }		from './../../bg/components/blog/component';
 
 import { AuthGuard } 			from './../authguard/service';
 
