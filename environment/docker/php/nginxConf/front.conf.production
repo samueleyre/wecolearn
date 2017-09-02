@@ -1,13 +1,13 @@
 server {
     index index.html;
-    server_name 35.158.214.245;
+    server_name ma-reco.fr;
     error_log  /var/log/nginx/error.log;
     access_log /var/log/nginx/access.log;
     root /src/front/dist;
     listen 443 ssl;
 
-    ssl_certificate /etc/letsencrypt/live/35.158.214.245/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/35.158.214.245/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/ma-reco.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ma-reco.fr/privkey.pem;
 
     location ~* \.(js|jpg|jpeg|png|svg|gif|css|html|map|woff2|svg|ttf|eot|woff|json)$ {
         root /src/front/dist;
@@ -20,7 +20,7 @@ server {
 
 server {
     listen 80;
-    server_name 35.158.214.245;
+    server_name ma-reco.fr;
     location / {
         return 301 https://$host$uri;
 
