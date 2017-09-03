@@ -1,5 +1,5 @@
-*/5 * * * *	root /bin/bash /home/ubuntu/src/bh/script/c-run >> /var/log/cron.run.log
+*/5 * * * *	root /bin/bash /home/ubuntu/src/pr/script/c-run >> /var/log/cron.run.log
 
-10 1 * * * root docker exec docker_web_1 /bin/bash -c "cd /src/app;bin/console bg:alive;" >> /var/log/cron.alive.log
+10 1 * * * root docker exec docker_web_1 /bin/bash -c "cd /src/app;bin/console pr:alive;" >> /var/log/cron.alive.log
 
-7 3 * * * root /bin/bash /home/ubuntu/src/bh/backup/back >> /var/log/cron.back.log
+7 3 * * * root /bin/bash /home/ubuntu/src/pr/backup/back >> /var/log/cron.back.log
