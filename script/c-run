@@ -1,8 +1,8 @@
 #!/bin/bash
-command=`ps aux | grep '[b]in/bash -c app/bin/console bg' | awk '{ print $2 }'`
+command=`ps aux | grep '[b]in/bash -c app/bin/console pr' | awk '{ print $2 }'`
 if [ "$command" = '' ]; then
 	echo 'down => launch'
-	sudo docker exec docker_web_1 /bin/bash -c "app/bin/console bg:run" >> /var/log/run.log 2>&1 &
+	sudo docker exec docker_web_1 /bin/bash -c "app/bin/console pr:run" >> /var/log/run.log 2>&1 &
 else
 	if [ "$1" = 'kill' ]; then
 		kill -9 $command

@@ -126,7 +126,7 @@ sudo crontab /etc/cron.d/$NAME
 colored "check generated cron"
 sudo crontab -l
 
-colored "kill run script"
+colored "kill run script ${ROOT}/${NAME}"
 sudo ${ROOT}/${NAME}/script/c-run kill
 
 colored "Restart nginx to enble new conf"

@@ -1,2 +1,2 @@
 #!/bin/bash
-/src/app/bin/console bg:rank is-scheduled
+/src/app/bin/console pr:rank is-scheduled
