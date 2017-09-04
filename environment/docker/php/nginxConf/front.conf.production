@@ -14,8 +14,8 @@ server {
         root /src/front/dist;
     }
 
-    location /login {
-        root /src/front/dist;
+    location / {
+         try_files $uri $uri/ /index.html?/$request_uri;
     }
 
     location /.well-known {
@@ -23,11 +23,11 @@ server {
     }
 }
 
-server {
-    listen 80;
-    server_name ma-reco.fr;
-    location / {
-        return 301 https://$host$uri;
-    }
-}
+# server {
+#    listen 80;
+#    server_name ma-reco.fr;
+#    location / {
+#        return 301 https://$host$uri;
+#    }
+#}
 
