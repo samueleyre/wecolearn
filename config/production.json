@@ -1,3 +1,3 @@
 {
-	"endpoint" : "https://api.ma-reco.fr"
+	"endpoint" : "http://api.ma-reco.fr/app_dev.php"
 }
