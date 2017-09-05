@@ -17,7 +17,7 @@ import { HeaderBag }          from './../interceptor/header-bag';
     <button type="button" class="btn btn-success btn-s"
         (click)="uploader.uploadAll()" 
         [disabled]="!uploader.getNotUploadedItems().length">
-        <span class="glyphicon glyphicon-upload"></span>Uploader
+        <i class="fa fa-upload" aria-hidden="true"></i> Uploader
     </button>
   `
 })
