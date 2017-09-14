@@ -28,7 +28,7 @@ import { PrModule }          from './pr/module';
 
 import { AuthGuard }         from './applicativeService/authguard/service';
 
-
+import { LoadersCssModule } from 'angular2-loaders-css';
 
 
 const appRoutes: Routes = [
@@ -50,6 +50,7 @@ const appRoutes: Routes = [
         routing,
         BsDropdownModule.forRoot(),
         UploadModule,
+      LoadersCssModule,
   ],
   declarations: [ 
         LoginComponent,

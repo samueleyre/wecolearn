@@ -1,7 +1,37 @@
 body {
-    padding-top: 70px;
+    padding-top: 54px;
+    background-color: #f5f5f5;
+}
+
+button{
+    cursor: pointer;
+}
+button:active,
+button:focus{
+    background-color: #f5f5f5;
 }
 
 .open>.dropdown-menu {
 	display: block;
 }
+
+.no-padding{
+    padding: 0;
+}
+
+.credentials{
+    text-transform: capitalize;
+}
+
+.center{
+    text-align: center;
+}
+
+/*quill*/
+
+.ql-editor{
+    background-color: white;
+    min-height: 130px;
+}
+
+

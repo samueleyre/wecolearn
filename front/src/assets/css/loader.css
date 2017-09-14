@@ -1,0 +1,27 @@
+#loader-container{
+  position: absolute;
+  left:0;
+  top:0;
+  right: 0;
+  bottom: 0;
+  background-color: #FF9C00;
+  z-index: 5000;
+  transition: 1s ease-in-out all;
+  opacity: 1;
+}
+
+.hide{
+  transition: 1s ease-in-out all;
+  opacity: 0 !important;
+}
+
+#loader-container>div{
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  margin-top: 46vh;
+}
+
+
+.loader .my-loader {
+}

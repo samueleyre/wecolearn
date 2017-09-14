@@ -1,4 +1,9 @@
-<pr-header></pr-header>
-    <main >
-            <router-outlet></router-outlet>
+    <div  id="loader-container" [class.hide]="loaded" *ngIf="!hideloader" >
+        <div>
+            <loaders-css   [loader]="'ball-scale-ripple'" [loaderClass]="'my-loader'"></loaders-css>
+        </div>
+    </div>
+    <pr-header [hidden]="!loaded"></pr-header>
+    <main [hidden]="!loaded">
+        <router-outlet></router-outlet>
     </main>
