@@ -1,3 +1,4 @@
 export const environment = {
-	origin: '#endpoint#'
+	origin: '#endpoint#',
+	publique : '#publique#'
 }
