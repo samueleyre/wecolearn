@@ -32,7 +32,7 @@ import { LoadersCssModule } from 'angular2-loaders-css';
 
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: '', component: HomeComponent},
 ];
 
 @NgModule({
@@ -42,7 +42,7 @@ const appRoutes: Routes = [
         FormsModule,
         HttpModule,
 
-          //NgbModule.forRoot(),
+        NgbModule.forRoot(),
         PrModule,
         RouterModule.forRoot(appRoutes),
         //route,
