@@ -1,4 +1,4 @@
 {
-	"endpoint" : "https://api.ma-reco.fr",
-	"publique" : "https://api.ma-reco.fr"
+	"endpoint" : "http://api.ma-reco.fr",
+	"publique" : "http://api.ma-reco.fr"
 }
