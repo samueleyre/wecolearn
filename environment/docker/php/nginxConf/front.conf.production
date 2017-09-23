@@ -6,8 +6,8 @@ server {
     root /src/front/dist;
     listen 443 ssl;
 
-    ssl_certificate /etc/letsencrypt/live/ma-reco.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ma-reco.fr/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/ma-reco.fr/ma-reco.fr.csr;
+    ssl_certificate_key /etc/letsencrypt/live/ma-reco.fr/ma-reco.fr.key;
 
     location ~* \.(js|jpg|jpeg|png|svg|gif|css|html|map|woff2|svg|ttf|eot|woff|json)$ {
         root /src/front/dist;

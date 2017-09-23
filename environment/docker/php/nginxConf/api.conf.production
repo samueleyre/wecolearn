@@ -3,8 +3,8 @@ server {
     root /src/app/web;
     listen 443 ssl;
 
-    ssl_certificate /etc/letsencrypt/live/api.ma-reco.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.ma-reco.fr/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/ma-reco.fr/ma.reco.fr.csr;
+    ssl_certificate_key /etc/letsencrypt/live/ma-reco.fr/ma-reco.fr.key;
 
     location / {
         # try to serve file directly, fallback to app.php
