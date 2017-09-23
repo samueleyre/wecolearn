@@ -6,7 +6,7 @@ export class FilterService {
 		FilterService.init();
 		FilterService.filters[field] = value;
 
-		console.log('filters', FilterService.filters );
+		// console.log('filters', FilterService.filters );
 	}
 
 	public static init() {

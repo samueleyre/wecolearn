@@ -1,7 +1,13 @@
+html{
+    background-color: #f5f5f5;
+
+}
+
 body {
-    padding-top: 54px;
+    padding-top: 60px;
     background-color: #f5f5f5;
 }
+
 
 button{
     cursor: pointer;
@@ -32,6 +38,27 @@ button:focus{
 .ql-editor{
     background-color: white;
     min-height: 130px;
+}
+
+/*form*/
+
+.ng-invalid:not(form) .ql-editor  {
+    border-left: 5px solid #a94442; /* red */
+}
+
+.ql-editor:focus  {
+    color: #464a4c;
+    background-color: #fff;
+    border: solid 1px;
+    border-color: #5cb3fd;
+    outline: 0;
+}
+
+input.ng-invalid  {
+    border-left: 5px solid #a94442; /* red */
+}
+input.ng-valid.ng-dirty, .ng-valid .ql-editor {
+    border-left: 5px solid #1ca900; /* green */
 }
 
 

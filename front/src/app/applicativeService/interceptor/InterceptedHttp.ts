@@ -36,8 +36,8 @@ export class InterceptedHttp extends Http {
                         this.router.navigate(['/login']);
                 }
                 if( 500 <= error.status ) {
-                    console.log(error.json().message);
-                    console.log(error.json().trace );
+                    // console.log(error.json().message);
+                    // console.log(error.json().trace );
                 }
                 return Observable.throw(error);
 

@@ -1,0 +1,75 @@
+@import './../../../assets/scss/variables.scss';
+
+
+
+.empty-col{
+  min-height: 100vh;
+  background-color: $homecolbg ;
+}
+
+.empty-col.left{
+  border-right: solid 1px $homeborder ;
+  //background-image:  linear-gradient(to right, $mainColor, $mainBgColor);
+  }
+.empty-col.right{
+  border-left: solid 1px $homeborder ;
+  //background-image:  linear-gradient(to left, $mainColor, $mainBgColor);
+}
+
+h1{
+  background-color: #ffc254;
+  color: white;
+  padding: 22px;
+  margin: 0;
+}
+
+#subtitle{
+  h4{
+  background-color: #f8f8f8;
+  color: #7a7976;;
+    margin: 0;
+    padding: 16px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
+
+img{
+  width: 100%;
+}
+
+$lightGrey : #f0f0f0;
+
+#intro{
+  padding: 1rem 0 0;
+  background: $lightGrey;
+}
+
+#homerecolink{
+  padding: 12px;
+  border-top: solid 12px #a8a6a6;
+  border-bottom: solid 12px #a2a2a2;
+  background-color: white;
+}
+
+#homeimagepass img{
+  max-width: 200px;
+}
+
+#passDescription{
+  //background: $lightGrey;
+  p{
+    padding-top: 2rem;
+  }
+}
+
+.btn{
+  background-color: grey;
+  color: white;
+}
+
+.btn:hover{
+  background-color: white;
+  color: $mainColor;
+  border: solid 1px lightgrey;
+}

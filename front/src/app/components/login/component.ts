@@ -7,7 +7,8 @@ import { Router }                from '@angular/router';
 import { AuthenticationService } from './../../applicativeService/authentication/service';
  
 @Component({
-    templateUrl: 'template.html'
+    templateUrl: 'template.html',
+    styleUrls : ['style.scss']
 })
  
 export class LoginComponent implements OnInit {

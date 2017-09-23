@@ -32,26 +32,39 @@ export class UploadComponent {
   @Output()
   public complete:EventEmitter<any> = new EventEmitter();
 
+  @Output()
+  public error:EventEmitter<any> = new EventEmitter();
 
-  constructor( protected headerBag : HeaderBag ) {}
-  
+
+  constructor( protected headerBag : HeaderBag ) {
+  }
+
   @Input()
   set url( url : string ) {
-    this.emitter.subscribe( (filename: string ) => {
-      this.uploader = new FileUploader(
-          {
-              url: environment.origin + url + '?employeId='+filename,
-              headers : this.headerBag.get([]),
-          });
+      this.emitter.subscribe( (filename: string ) => {
+          this.uploader = new FileUploader(
+              {
+                  url: environment.origin + url + '?employeId='+filename,
+                  headers : this.headerBag.get([]),
+              });
 
-      this.uploader.onSuccessItem = (item:any, response:any, status:any, headers:any) => {
-        console.log( response );
-        this.complete.emit( JSON.parse(response) );
-      }
+          this.uploader.onSuccessItem = (item:any, response:any, status:any, headers:any) => {
+              console.log( response );
+              this.complete.emit( {response : JSON.parse(response), status : status });
+          };
+          this.uploader.onCompleteItem = (item:any, response:any, status:number, headers:any) => {
+              // console.log( "complete", status, item, response, headers );
+              // this.error.emit( status );
+          };
 
-        //console.log( 'headers', this.uploader.options.headers);  
-    })
+          this.uploader.onErrorItem = (item:any, response:any, status:number, headers:any) => {
+              // console.log( "error", status, item, response, headers );
+              this.error.emit();
+          };
+          //console.log( 'headers', this.uploader.options.headers);
+      })
   }
+
 
   @Input() 
   set filename(name : string ){

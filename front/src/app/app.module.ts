@@ -26,10 +26,12 @@ import { UploadComponent}          from './applicativeService/upload/component';
 
 import { PrModule }          from './pr/module';
 
+
 import { AuthGuard }         from './applicativeService/authguard/service';
 
 import { LoadersCssModule } from 'angular2-loaders-css';
 
+import { LOCALE_ID } from '@angular/core';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent},
@@ -62,8 +64,9 @@ const appRoutes: Routes = [
   providers : [
       {
           provide: APP_BASE_HREF,
-          useFactory: getBaseLocation
+          useFactory: getBaseLocation,
       },
+      { provide: LOCALE_ID, useValue: "fr-FR" }, //replace "en-US" with your locale
   ],
   bootstrap:[ 
   	AppComponent

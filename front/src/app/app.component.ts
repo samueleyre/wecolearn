@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import './../assets/css/styles.css';
 import './../assets/css/loader.css';
+import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 
 @Component({
@@ -15,7 +16,6 @@ export class AppComponent {
   hideloader = false;
 
   ngAfterViewInit() {
-    console.log("loaded !!");
       setTimeout(()=>{
         this.loaded = true;
           setTimeout(()=>{
