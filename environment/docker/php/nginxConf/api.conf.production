@@ -1,11 +1,11 @@
 server {
     server_name api.ma-reco.fr;
     root /src/app/web;
-    listen 80;
-    # listen 443 ssl;
+    # listen 80;
+    listen 443 ssl;
 
-    # ssl_certificate /etc/letsencrypt/live/ma-reco.fr/ma-reco.fr.crt;
-    # ssl_certificate_key /etc/letsencrypt/live/ma-reco.fr/ma-reco.fr.key;
+    ssl_certificate /etc/letsencrypt/live/api.ma-reco.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.ma-reco.fr/privkey.pem;
 
     location / {
         # try to serve file directly, fallback to app.php
@@ -42,10 +42,10 @@ server {
 
 }
 
-# server {
-#   listen 80;
-#   server_name api.ma-reco.fr;
-#   location / {
-#        return 301 https://$host$uri;
-#    }
-#}
+server {
+   listen 80;
+   server_name api.ma-reco.fr;
+   location / {
+        return 301 https://$host$uri;
+    }
+}
