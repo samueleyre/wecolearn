@@ -62,3 +62,25 @@ input.ng-valid.ng-dirty, .ng-valid .ql-editor {
 }
 
 
+/*modal*/
+
+@media (min-width: 576px) {
+
+    .modal-dialog {
+        margin: 22vh auto 5vh;
+    }
+
+}
+
+button.close{
+    order: 2;
+}
+
+.modal-header{
+    background-color: #ffcd71;
+    border-radius: 2px 2px 0 0;
+}
+
+.modal-title{
+    color: white;
+}

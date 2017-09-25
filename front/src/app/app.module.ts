@@ -23,6 +23,7 @@ import { LoginComponent }	  from './components/login/component';
 import { HomeComponent }	  from './components/home/component';
 import { UserComponent }      from './components/user/component';
 import { UploadComponent}          from './applicativeService/upload/component';
+import { NotFoundComponent}          from './components/notFound/component';
 
 import { PrModule }          from './pr/module';
 
@@ -57,9 +58,10 @@ const appRoutes: Routes = [
   declarations: [ 
         LoginComponent,
         HomeComponent,
-        UserComponent,
+        // UserComponent,
         EqualValidator,
         AppComponent,
+        NotFoundComponent
   ],
   providers : [
       {
