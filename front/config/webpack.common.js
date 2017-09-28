@@ -40,23 +40,23 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        exclude: helpers.root('', 'app'),
+        exclude: helpers.root('src', 'app'),
         loader: extractLESS.extract({ fallbackLoader: 'style-loader', loader: 'sass-loader?sourceMap'})
       },
       {
         test: /\.css$/,
-          exclude: helpers.root('', 'app'),
+          exclude: helpers.root('src', 'app'),
         loader: extractCSS.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
       },
       {
         test: /\.scss$/,
-        include: helpers.root('', 'app'),
+        include: helpers.root('src', 'app'),
         // loader: 'raw-loader!postcss-loader'
           loader: ['raw-loader','sass-loader']
       },
       {
         test: /\.css$/,
-        include: [helpers.root('', 'app'), helpers.root('', 'node_modules')],
+        include: [helpers.root('src', 'app')],
         // loader: 'raw-loader!postcss-loader'
         loader: 'raw-loader'
       },
