@@ -9,6 +9,7 @@ const extractLESS = new ExtractTextPlugin('[name]-two.css');
 
 var helpers = require('./helpers');
 
+console.log(helpers.root('', 'app'));
 // import img from './../assets/img/favicom-pass.png'
 
 module.exports = {
@@ -21,6 +22,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js' ]
   },
+
 
   module: {
     rules: [
@@ -38,23 +40,23 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        exclude: helpers.root('src', 'app'),
+        exclude: helpers.root('', 'app'),
         loader: extractLESS.extract({ fallbackLoader: 'style-loader', loader: 'sass-loader?sourceMap'})
       },
       {
         test: /\.css$/,
-          exclude: helpers.root('src', 'app'),
+          exclude: helpers.root('', 'app'),
         loader: extractCSS.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
       },
       {
         test: /\.scss$/,
-        include: helpers.root('src', 'app'),
+        include: helpers.root('', 'app'),
         // loader: 'raw-loader!postcss-loader'
           loader: ['raw-loader','sass-loader']
       },
       {
         test: /\.css$/,
-        include: helpers.root('src', 'app'),
+        include: [helpers.root('', 'app'), helpers.root('', 'node_modules')],
         // loader: 'raw-loader!postcss-loader'
         loader: 'raw-loader'
       },

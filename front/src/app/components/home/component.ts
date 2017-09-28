@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { AuthenticationService } from './../../applicativeService/authentication/service';
 import {GPPDComponent} from "../../pr/component/gppd";
 
@@ -11,15 +11,15 @@ import {GPPDComponent} from "../../pr/component/gppd";
  
 export class HomeComponent implements OnInit {
 
-    private imagePath: string;
+    private webPath: string;
 
     constructor(
-        private authenticationService: AuthenticationService
-    ) { }
+        private authenticationService: AuthenticationService,
+    ) {}
 
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
-        this.imagePath = GPPDComponent.updateUrl('/home');
+        this.webPath = GPPDComponent.updateUrl('');
     }
 }

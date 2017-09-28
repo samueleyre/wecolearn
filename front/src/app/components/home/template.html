@@ -1,14 +1,34 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="empty-col left col-sm-1 col-md-2"></div>
-        <div class="col-12 col-sm-10 col-md-8 center no-padding">
+        <div class="col-12 center no-padding">
+            <div class="logo">
+                <img width="60px" src="{{webPath}}/logo/pass-logo-tr.png" alt="">
+            </div>
             <h1>Ma Reco</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="empty-col col-md-1 col-lg-2"></div>
+        <div class="col-12 col-md-10 col-lg-8 center no-padding">
 
             <div id="subtitle">
                 <h4>Parce qu'une recommandation vaut tous les CVs !</h4>
             </div>
 
-            <img src="{{imagePath}}/passrhonealpesimg.jpg" alt="">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-4 no-padding">
+                        <img class="metiers" src="{{webPath}}/home/industrie.jpg" alt="">
+                    </div>
+                    <div class="col-4 no-padding">
+                        <img class="metiers" src="{{webPath}}/home/restauration2.jpg" alt="">
+                    </div>
+                    <div class="col-4 no-padding">
+                        <img class="metiers" src="{{webPath}}/home/paysagiste.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+
 
             <div class="container-fluid">
                 <div id="intro" class="row center">
@@ -34,21 +54,28 @@
                     </div>
                 </div>
 
-                <div class="row center" id="passDescription">
-                    <div class="col-1"></div>
-                    <div  class="col-5 center">
-                        <p>Ce site est géré par le PASS, ONG indépendante. </p>
-                    </div>
-                    <div id="homeimagepass" class="col-5 center">
-                        <a href="http://www.mag-photos.fr/passrhonealpes/">
-                         <img src="{{imagePath}}/homeimagepass.png" alt="">
-                        </a>
-                    </div>
-                    <div class="col-1"></div>
-                </div>
             </div>
         </div>
-        <div class="empty-col right col-sm-1 col-md-2"></div>
+        <div class="empty-col col-md-1 col-lg-2"></div>
+    </div>
+    <hr>
+    <div class="row center" id="footerContainer">
+        <div class="col-1"></div>
+        <div id="passDescription" class="col-5 center">
+            <p>Ce site est géré par le PASS, ONG indépendante. </p>
+            <div id="homeimagepass" >
+                <a href="http://www.mag-photos.fr/passrhonealpes/">
+                 <img src="{{webPath}}/home/homeimagepass.png" alt="">
+                </a>
+            </div>
+        </div>
+        <div id="Ag2RDescription" class="col-5 center">
+            <p>Réalisé par Simplon Prod avec le soutien d'AG2R. </p>
+            <div id="homeimageag2r">
+                <img src="{{webPath}}/logo/ag2r.png" alt="">
+            </div>
+        </div>
+        <div class="col-1"></div>
     </div>
 </div>
 
