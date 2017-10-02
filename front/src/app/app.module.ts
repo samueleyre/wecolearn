@@ -12,12 +12,14 @@ import {UploadModule}           from './applicativeService/upload/module';
 
 import { PopinConfirmService }      from './applicativeService/popin/confirm/service';
 import { PopinConfirmModule }       from './applicativeService/popin/confirm/module';
+import { MessageModule }       from './applicativeService/message/module';
 import { EqualValidator }           from './applicativeService/form/validator/equalValidator';
 import { routing }          from './applicativeService/routing/app.routing';
 
 
-import { ApplicativeModule }	from './applicativeService/module'; 
+import { ApplicativeModule }	from './applicativeService/module';
 
+import { MessageComponent}       from './applicativeService/message/component';
 import { AppComponent }		  from './app.component'
 import { LoginComponent }	  from './components/login/component';
 import { HomeComponent }	  from './components/home/component';
@@ -32,6 +34,7 @@ import { AuthGuard }         from './applicativeService/authguard/service';
 import { LoadersCssModule } from 'angular2-loaders-css';
 
 import { LOCALE_ID } from '@angular/core';
+// import {CookieLawModule} from "angular2-cookie-law";
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent},
@@ -49,10 +52,12 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         //route,
         PopinConfirmModule,
+        MessageModule,
         routing,
         BsDropdownModule.forRoot(),
         UploadModule,
       LoadersCssModule,
+      // MessageComponent,
   ],
   declarations: [ 
         LoginComponent,

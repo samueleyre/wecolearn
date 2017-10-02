@@ -7,6 +7,7 @@ import '@angular/material/prebuilt-themes/indigo-pink.css';
 import {APP_BASE_HREF, Location} from "@angular/common";
 import {Router} from "@angular/router";
 import {log} from "util";
+// import { CookieLawModule } from 'angular2-cookie-law';
 
 
 @Component({

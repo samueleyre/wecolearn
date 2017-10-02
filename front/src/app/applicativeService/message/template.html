@@ -1,5 +1,6 @@
 <div class="row" id="message">
-	<div [hidden]="hidden" class="alert alert-info">
+	<div [hidden]="hidden" class="alert alert-info message">
 	        {{ message }}
+		<button *ngIf="type === 'cookie'" button class="btn" (click)="close()" >Fermer</button>
 	</div>
 </div>
