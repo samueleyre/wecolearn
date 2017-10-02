@@ -21,7 +21,6 @@ import { ApplicativeModule }	from './applicativeService/module';
 import { AppComponent }		  from './app.component'
 import { LoginComponent }	  from './components/login/component';
 import { HomeComponent }	  from './components/home/component';
-import { UserComponent }      from './components/user/component';
 import { UploadComponent}          from './applicativeService/upload/component';
 import { NotFoundComponent}          from './components/notFound/component';
 
