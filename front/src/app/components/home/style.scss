@@ -28,6 +28,7 @@ h1{
 h3{
   opacity: 0.7;
   color: #7a7976;
+  font-size: 1.5rem;
 }
 
 #subtitle{
@@ -88,4 +89,8 @@ $homerecobdcol : #c5c5c5;
   float: left;
   position: absolute;
   padding: 14px;
+}
+
+#exampleImage img{
+  max-width: 644px;
 }

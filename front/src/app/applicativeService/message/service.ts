@@ -1,5 +1,6 @@
 import { EventEmitter }					from '@angular/core';
 import { Message }						from './model';
+
 export class MessageService {
 
 	static emitter: EventEmitter<Message>;
@@ -27,7 +28,7 @@ export class MessageService {
 
 	static cookie() {
         let message = new Message();
-        message.body = "En naviguant sur ce site, vous accceptez que nous enregistrons des cookies. ";
+        message.body = "En naviguant sur ce site, vous acceptez l'utilisation des cookies. ";
         message.type = "cookie";
         MessageService.post(message);
 	}
