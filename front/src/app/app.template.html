@@ -3,8 +3,7 @@
             <loaders-css   [loader]="'ball-scale-ripple'" [loaderClass]="'my-loader'"></loaders-css>
         </div>
     </div>
-    <pr-header *ngIf="!hideHeader" [hidden]="!loaded"></pr-header>
-    <div *ngIf="!hideHeader" style="padding-top: 60px;"></div>
+    <wc-header [hidden]="!loaded"></wc-header>
     <main [hidden]="!loaded">
         <router-outlet></router-outlet>
     </main>

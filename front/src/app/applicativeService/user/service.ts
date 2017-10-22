@@ -8,9 +8,11 @@ import 'rxjs/add/operator/map'
 export class UserService {
     
     private endpoint: string;
+    private newUserEndpoint: string;
 
     constructor( private http: Http ) {
         this.endpoint = '/api/users';
+        this.newUserEndpoint = '/api/newuser';
     }
  
     get(): Observable<User[]> {
@@ -30,10 +32,11 @@ export class UserService {
             });
     }
 
-    post( user: User ): Observable<User[]> {
+    post( user: User ): Observable<any> {
         // clear token remove user from local storage to log user out
-        return this.http.post(`${this.endpoint}`, { id : user.id, username : user.username , email : user.email, password : user.password })
+        return this.http.post(`${this.newUserEndpoint}`, { id : user.id, username : user.username , email : user.email, password : user.password })
             .map((response: Response ) => {
+                console.log(response)
                 // login successful if there's a jwt token in the response
                 return response.json();
             });

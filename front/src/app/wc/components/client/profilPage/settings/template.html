@@ -1,0 +1,84 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 offset-md-1" style="padding-top: 20px;">
+            <form class="form-horizontal" (ngSubmit)="f.form.valid && submit(f)" #f="ngForm" novalidate>
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>Profil</legend>
+
+                <!-- Text input-->
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+                    <label class="col-md-6 control-label" for="FirstName" >Prénom</label>
+                    <div class="col-md-4">
+                        <input id="firstName" name="firstName" placeholder="" class="form-control input-md" [(ngModel)]="entity.first_name" #firstName="ngModel" type="text">
+                        <div *ngIf="f.submitted && !firstName.valid" class="help-block">Le prénom est obligatoire</div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+                    <label class="col-md-6 control-label" for="lastName">Nom</label>
+                    <div class="col-md-4">
+                        <input id="lastName" name="lastName" placeholder="" class="form-control input-md" [(ngModel)]="entity.last_name" #lastName="ngModel" type="text">
+                        <div *ngIf="f.submitted && !lastName.valid" class="help-block">Le nom est obligatoire</div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !learnTags.valid }">
+                    <label class="col-md-6 control-label" for="learnTags">Ce que je veux apprendre</label>
+                    <div class="col-md-6">
+                        <input id="learnTags" name="learnTags" placeholder="ex: Php, Ruby, Sql, Docker" [(ngModel)]="entity.learn_tags[0]" #learnTags="ngModel" class="form-control input-md" type="text">
+                        <div *ngIf="f.submitted && !lastName.valid" class="help-block">Le prénom est obligatoire</div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !knowTags.valid }">
+                    <label class="col-md-6 control-label" for="knowTags">Ce que je connais</label>
+                    <div class="col-md-6">
+                        <input id="knowTags" name="knowTags" placeholder="ex: Js..." class="form-control input-md" [(ngModel)]="entity.know_tags[0]" #knowTags="ngModel" type="text">
+                        <div *ngIf="f.submitted && !knowTags.valid" class="help-block">Ces tags sont obligatoire</div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !teachTags.valid }">
+                    <label class="col-md-6 control-label" for="teachTags">Ce que j'ai envie de transmettre</label>
+                    <div class="col-md-6">
+                        <input id="teachTags" name="teachTags" placeholder="ex: Python" class="form-control input-md" [(ngModel)]="entity.teach_tags[0]" #teachTags="ngModel" type="text">
+                        <div *ngIf="f.submitted && !teachTags.valid" class="help-block">Ces tags sont obligatoire</div>
+                    </div>
+                </div>
+
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !geolocation.valid }">
+                    <label class="col-md-6 control-label" for="teachTags">Adresse</label>
+                    <div class="col-md-6">
+                        <geolocation></geolocation>
+                        <input id="geolocation" name="geolocation" placeholder="ex: Python" class="form-control input-md" [(ngModel)]="entity.geolocation" #geolocation="ngModel" type="text">
+                    </div>
+                </div>
+
+                <!-- Textarea -->
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !biographie.valid }">
+                    <label class="col-md-6 control-label" for="biographie">Biographie</label>
+                    <div class="col-md-6">
+                        <quill-editor id="biographie" [theme]="'bubble'" [placeholder]="'Freelance cherchant à acquérir des compétences dans le code.'"   [(ngModel)]="entity.biographie" name="biographie" #biographie="ngModel" [modules]="quillConfig"></quill-editor>
+                        <div *ngIf="f.submitted && !biographie.valid" class="help-block">La biographie est obligatoire</div>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-6 control-label" for="submit"></label>
+                    <div class="col-md-6">
+                        <button id="submit" name="submit" class="btn btn-primary">Modifier</button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+       </div>
+    </div>
+</div>

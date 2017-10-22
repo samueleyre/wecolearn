@@ -1,0 +1,10 @@
+clients:
+    type:     rest
+    prefix:   api
+    resource: '@WcBundle/Controller/ClientController.php'
+
+newuser:
+    type:     rest
+    prefix:   api
+    resource: '@WcBundle/Controller/NewUserController.php'
+

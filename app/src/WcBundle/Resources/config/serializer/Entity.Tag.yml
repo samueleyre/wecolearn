@@ -1,0 +1,14 @@
+WcBundle\Entity\Tag:
+    exclusion_policy: all
+    access_order:     alphabetical
+    properties:
+        id:
+          groups: [ input, output ]
+        name:
+          groups: [ input, output ]
+        type:
+          groups: [ input, output ]
+
+
+
+

@@ -26,13 +26,15 @@ class AppKernel extends Kernel
             new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
 
             new AppBundle\AppBundle(),
-            new PrBundle\PrBundle(),
+//            new PrBundle\PrBundle(),
+            new WcBundle\WcBundle(),
         ];
 
         if ( in_array( $this->getEnvironment(), ['dev', 'test'], true ) ) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
 
         return $bundles;

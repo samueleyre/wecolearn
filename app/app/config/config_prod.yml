@@ -25,6 +25,6 @@ monolog:
             level: error
 
 sendin_blue_api:
-    api_key: fGdLcUNb16OYX98K
+    api_key: KLcH3mUfMrgPbvxy
     # Our library supports a timeout value, which is an optional parameter, default is 30,000 MS ( 30 secs )
     timeout: 5000

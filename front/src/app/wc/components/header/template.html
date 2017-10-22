@@ -1,0 +1,19 @@
+<nav class="navbar navbar-toggleable-sm navbar-inverse fixed-top">
+    <a class="navbar-brand" routerLink="/">
+        <img width="37px" src="{{logoPath}}" alt="">
+    </a>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav mr-auto" style="padding-top: 0.4rem;">
+        <li *ngIf="connected" >
+          <a routerLink="/">Déconnexion</a>
+        </li>
+        <li *ngIf="!connected" >
+          <a routerLink="/subscribe">Connexion</a>
+        </li>
+      </ul>
+        <span *ngIf="connected && bo" class="navbar-text">
+          Administration
+        </span>
+    </div>
+</nav>
+<message></message>

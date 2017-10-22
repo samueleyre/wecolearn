@@ -10,8 +10,6 @@ import { getBaseLocation } from './applicativeService/base_url/base_url';
 import { BsDropdownModule }         from 'ngx-bootstrap';
 import {UploadModule}           from './applicativeService/upload/module';
 
-import { PopinConfirmService }      from './applicativeService/popin/confirm/service';
-import { PopinConfirmModule }       from './applicativeService/popin/confirm/module';
 import { MessageModule }       from './applicativeService/message/module';
 import { EqualValidator }           from './applicativeService/form/validator/equalValidator';
 import { routing }          from './applicativeService/routing/app.routing';
@@ -22,11 +20,11 @@ import { ApplicativeModule }	from './applicativeService/module';
 import { MessageComponent}       from './applicativeService/message/component';
 import { AppComponent }		  from './app.component'
 import { LoginComponent }	  from './components/login/component';
-import { HomeComponent }	  from './components/home/component';
+import { HomeComponent }	  from './wc/components/client/home/component';
 import { UploadComponent}          from './applicativeService/upload/component';
 import { NotFoundComponent}          from './components/notFound/component';
 
-import { PrModule }          from './pr/module';
+import { WcModule }          from './wc/module';
 
 
 import { AuthGuard }         from './applicativeService/authguard/service';
@@ -48,10 +46,9 @@ const appRoutes: Routes = [
         HttpModule,
 
         NgbModule.forRoot(),
-        PrModule,
+        WcModule,
         RouterModule.forRoot(appRoutes),
         //route,
-        PopinConfirmModule,
         MessageModule,
         routing,
         BsDropdownModule.forRoot(),

@@ -1,0 +1,5 @@
+services:
+  employe.repository:
+    class: WcBundle\Repository\ClientRepository
+    arguments: [ '@doctrine.orm.entity_manager' ]
+

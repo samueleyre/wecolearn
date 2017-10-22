@@ -16,7 +16,6 @@ import {log} from "util";
   // styleUrls : ['./../assets/css/loader.css']
 })
 export class AppComponent  implements OnInit {
-    private title = 'mareco';
     private loaded = false;
     private hideloader = false;
     private location: Location;
@@ -48,7 +47,6 @@ export class AppComponent  implements OnInit {
 
     load() {
         let path = this.location.path();
-        console.log("path", path)
         if (path === "") {
           this.hideHeader = true;
         } else {

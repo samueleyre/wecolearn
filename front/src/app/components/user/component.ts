@@ -9,7 +9,7 @@ import { NgForm }                 from '@angular/forms';
 import { Router }                 from '@angular/router';
 import { UserService }            from './../../applicativeService/user/service';
 import { User }            from './../../applicativeService/user/model';
-import { PopinConfirmService }    from './../../applicativeService/popin/confirm/service';
+import { Modal, bootstrap4Mode } from 'ngx-modialog/plugins/bootstrap';
 
 
 
@@ -27,7 +27,7 @@ export class UserComponent implements OnInit {
     constructor(
         private router: Router,
         private userService : UserService,
-        private confirm : PopinConfirmService
+        public modal: Modal
     ) {
         this.users = [];
         this.user = new User( null,'','','');
@@ -77,20 +77,29 @@ export class UserComponent implements OnInit {
 
     delete( id : number ) {
 
-        this
-        .confirm
-        .setMessage( 'Vous allez supprimer un utilisateur, êtes vous sûr ?')
-        .subscribe( confirm => {
-            if( true == confirm ) {
-                this.userService.delete( id ).subscribe(
-                    users => this.users = users,
-                    error => {
-                        console.log('ERRORS', error );
+        return this.modal.confirm()
+            .size('sm')
+            .showClose(true)
+            .title('Confirmation')
+            .body(`
+            <h4>Vous allez supprimer un utilisateur, êtes vous sûr ?</h4>`)
+            .open()
+            .then( dialogRef => {
+                dialogRef.result.then( result => {
+                        if( true == result ) {
+                            this.userService.delete( id ).subscribe(
+                                users => this.users = users,
+                                error => {
+                                    console.log('ERRORS', error );
+                                }
+                            )
+                        } else {
+                            console.log('CONFIRMATION', confirm );
+                        }
                     }
-                )
-            } else {
-                console.log('CONFIRMATION', confirm );
-            }
-        });
+                );
+            }).catch(() => {});
+
+
     }
 }

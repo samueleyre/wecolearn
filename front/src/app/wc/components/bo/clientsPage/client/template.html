@@ -1,0 +1,100 @@
+<div class="container-fluid">
+    <div class="row">
+
+
+<div class="col-md-10 offset-md-1" style="padding-top: 20px;">
+    <span *ngIf="!edition">Ajouter</span> <span *ngIf="edition">Modification d'</span> un demandeur d'emploi
+    <button *ngIf="!edition" class="btn" (click)="editionForm = !editionForm">
+        <i [hidden]="editionForm" class="fa fa-plus" aria-hidden="true"></i>
+        <i [hidden]="!editionForm" class="fa fa-minus" aria-hidden="true"></i>
+    </button>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form [hidden]="!(editionForm||edition)" id="employeForm" name="form" (ngSubmit)="f.form.valid && submit(f)" #f="ngForm" novalidate>
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+                        <label for="lastname">Nom</label>
+                        <input id="lastname" type="text" maxlength="255" class="form-control" name="lastname" [(ngModel)]="entity.lastname" #name="ngModel" required />
+                        <div *ngIf="f.submitted && !name.valid" class="help-block">Le nom est obligatoire</div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !url.valid }">
+                        <label for="firstname">Prenom</label>
+                        <input id="firstname" type="text" maxlength="255" class="form-control" name="firstname" [(ngModel)]="entity.firstname" #url="ngModel" required />
+                        <div *ngIf="f.submitted && !url.valid" class="help-block">Le prénom est obligatoire</div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                        <label for="email">Email</label>
+                        <input  email
+                                name="email"
+                                #email="ngModel" id="email" class="form-control" [(ngModel)]="entity.email" required />
+                        <div *ngIf="f.submitted && !email.valid" class="help-block">L'email est obligatoire</div>
+                    </div>
+
+                    <div class="form-group">
+                        <button *ngIf="!edition" type="submit" [disabled]="loading" class="btn btn-primary">Ajouter</button>
+                        <button *ngIf="edition"  type="submit" [disabled]="loading" class="btn btn-primary">Modifier</button>
+                        <button *ngIf="edition"  type="submit" [disabled]="loading" class="btn btn-secondary">Annuler</button>
+                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    </div>
+                    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+</div>
+
+<hr>
+
+<div class="col-md-12">
+    <h2 class="center">Liste des demandeurs d'emploi</h2>
+    <div id="table" class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Nom</th>
+              <th>Prenom</th>
+              <th>Email</th>
+              <th>Photo</th>
+              <th>Profil</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entity of entities">
+              <td>
+                  <a scrollTo href="#employeForm" (click)="edit(entity.id)" class="btn">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </a>
+              </td>
+              <td>{{ entity.lastname }}</td>
+              <td>{{ entity.firstname }}</td>
+              <td>{{ entity.email }}</td>
+              <td>
+                <div *ngIf="entity.photoid">
+                    <div [hidden]="modify && modify[entity.id]">
+                      <img width="50px" *ngIf="entity.photoid" src="{{imagePath}}{{entity.photoname}}" alt="">
+                      <button (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <upload *ngIf="modify && modify[entity.id]"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
+                </div>
+                <upload *ngIf="!entity.photoid"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
+                <div *ngIf="uploadError[entity.id]" class="alert alert-danger">{{uploadError[entity.id]}}</div>
+              </td>
+              <td><a target="_blank" href="{{base_url}}/profil/{{ entity.urlprofil }}">{{base_url}}/profil/{{ entity.urlprofil }}</a><copy [data]="base_url+'/profil/'+entity.urlprofil"></copy></td>
+              <td id="delete"><confirm [text]="'ce demandeur d\'emploi'" (ret)="delete(entity.id, $event)" ></confirm><div id="rightWindow"></div></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>
+<a id="arrow-right" *ngIf="right" (click)="scrollFarRight()" class="arrow-container animated fadeInDown">
+    <div class="arrow-2">
+        <i class="fa fa-angle-right"></i>
+    </div>
+    <div class="arrow-1 animated hinge zoomIn"></div>
+</a>

@@ -1,0 +1,25 @@
+WcBundle\Entity\Client:
+    exclusion_policy: all
+    access_order:     alphabetical
+    properties:
+        id:
+          groups: [ input, output ]
+        firstName:
+          groups: [ input, output ]
+        lastName:
+          groups: [ input, output ]
+        profilUrl:
+          groups: [ input, output ]
+        biographie:
+          groups: [ input, output ]
+        latitude:
+          groups: [ input, output ]
+        longitude:
+          groups: [ input, output ]
+        tags:
+          groups: [ input, output ]
+        user:
+          groups: [ input, output ]
+
+
+

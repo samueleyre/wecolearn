@@ -1,0 +1,96 @@
+@import './../../../../../assets/scss/variables.scss';
+
+
+
+.empty-col{
+  //min-height: 100vh;
+  //background-color: $homecolbg ;
+  background-color: #f5f5f5 ;
+}
+
+.empty-col.left{
+  border-right: solid 1px $homeborder ;
+  //background-image:  linear-gradient(to right, $mainColor, $mainBgColor);
+  }
+.empty-col.right{
+  border-left: solid 1px $homeborder ;
+  //background-image:  linear-gradient(to left, $mainColor, $mainBgColor);
+}
+
+h1{
+  //background-color: $titleBgColor;
+  background-color: #e6e6e6;
+  color: $titleBgColor;
+  padding: 22px;
+  margin: 0;
+}
+
+h3{
+  opacity: 0.7;
+  color: #7a7976;
+  font-size: 1.5rem;
+}
+
+#subtitle{
+  h4{
+  //background-color: #f8f8f8;
+  color: #7a7976;;
+    margin: 0;
+    padding: 16px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
+
+.metiers{
+  width: 100%;
+  border: solid #e2e2e2 1px;
+}
+
+$lightGrey : #f0f0f0;
+
+#intro{
+  padding: 1rem 0 0;
+  //background: $lightGrey;
+}
+
+$homerecobdcol : #c5c5c5;
+
+#homerecolink{
+  padding: 12px;
+  border-top: solid 12px $homerecobdcol;
+  border-bottom: solid 12px $homerecobdcol;
+  background-color: #f1f1f1;
+}
+
+#homeimagepass img{
+  max-width: 200px;
+}
+
+#footerContainer{
+  //background: $lightGrey;
+  p{
+    padding-top: 15px;;
+  }
+}
+
+.btn{
+  background-color: grey;
+  color: white;
+}
+
+.btn:hover{
+  border: solid 1px lightgrey;
+  background-color: #eaeaea;
+  color: #5d503d;
+}
+
+.logo{
+  float: left;
+  position: absolute;
+  padding: 14px;
+}
+
+#exampleImage img{
+  max-width: 644px;
+}

@@ -1,5 +1,5 @@
 pr:
-    resource: '@PrBundle/Resources/config/routing/routes.yml'
+    resource: '@WcBundle/Resources/config/routing/routes.yml'
     prefix:   /
 
 app:

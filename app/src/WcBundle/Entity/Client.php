@@ -1,0 +1,449 @@
+<?php
+
+namespace WcBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="client")
+ */
+class Client
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    public $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="id")
+     */
+    public $user;
+
+    /**
+     * @ORM\Column(type="string", name="firstName", nullable=true)
+     */
+    public $firstName;
+
+    /**
+     * @ORM\Column(type="string", name="lastName", nullable=true)
+     */
+    public $lastName;
+
+    /**
+     * @ORM\Column(type="string", name="profilUrl")
+     */
+    public $profilUrl;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated", type="datetime", nullable=true)
+     */
+    private $updated;
+
+    /**
+     * @ORM\Column(type="string", name="biographie", nullable=true)
+     */
+    public $biographie;
+
+    /**
+     * @ORM\Column(type="string", name="latitude", nullable=true)
+     */
+    public $latitude;
+
+    /**
+     * @ORM\Column(type="string", name="longitude", nullable=true)
+     */
+    public $longitude;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Image", inversedBy="client")
+     * @ORM\JoinColumn(name="imageId", referencedColumnName="id")
+     */
+    public $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="clients")
+     * @ORM\JoinColumn(name="tagsIds", referencedColumnName="id", nullable=true)
+     */
+    public $tags;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Selection", inversedBy="client")
+     * @ORM\JoinColumn(name="selectionId", referencedColumnName="id", nullable=true)
+     */
+    public $selection;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Selection", inversedBy="clients")
+     * @ORM\JoinColumn(name="selectedIds", referencedColumnName="id", nullable=true)
+     */
+    public $selected;
+
+
+
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     *
+     * @return Client
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return Client
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set profilUrl
+     *
+     * @param string $profilUrl
+     *
+     * @return Client
+     */
+    public function setProfilUrl($profilUrl)
+    {
+        $this->profilUrl = $profilUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get profilUrl
+     *
+     * @return string
+     */
+    public function getProfilUrl()
+    {
+        return $this->profilUrl;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Client
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return Client
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set biographie
+     *
+     * @param string $biographie
+     *
+     * @return Client
+     */
+    public function setBiographie($biographie)
+    {
+        $this->biographie = $biographie;
+
+        return $this;
+    }
+
+    /**
+     * Get biographie
+     *
+     * @return string
+     */
+    public function getBiographie()
+    {
+        return $this->biographie;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param string $latitude
+     *
+     * @return Client
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return string
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param string $longitude
+     *
+     * @return Client
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return string
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Client
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \WcBundle\Entity\Image $image
+     *
+     * @return Client
+     */
+    public function setImage(\WcBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \WcBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \WcBundle\Entity\Tag $tag
+     *
+     * @return Client
+     */
+    public function addTag(\WcBundle\Entity\Tag $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \WcBundle\Entity\Tag $tag
+     */
+    public function removeTag(\WcBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+  
+
+    /**
+     * Set selection
+     *
+     * @param \WcBundle\Entity\Selection $selection
+     *
+     * @return Client
+     */
+    public function setSelection(\WcBundle\Entity\Selection $selection = null)
+    {
+        $this->selection = $selection;
+
+        return $this;
+    }
+
+    /**
+     * Get selection
+     *
+     * @return \WcBundle\Entity\Selection
+     */
+    public function getSelection()
+    {
+        return $this->selection;
+    }
+
+    /**
+     * Add selected
+     *
+     * @param \WcBundle\Entity\Selection $selected
+     *
+     * @return Client
+     */
+    public function addSelected(\WcBundle\Entity\Selection $selected)
+    {
+        $this->selected[] = $selected;
+
+        return $this;
+    }
+
+    /**
+     * Remove selected
+     *
+     * @param \WcBundle\Entity\Selection $selected
+     */
+    public function removeSelected(\WcBundle\Entity\Selection $selected)
+    {
+        $this->selected->removeElement($selected);
+    }
+
+    /**
+     * Get selected
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSelected()
+    {
+        return $this->selected;
+    }
+}

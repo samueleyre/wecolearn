@@ -25,7 +25,6 @@
         "curl/curl": "^1.6",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
-        "doctrine/doctrine-fixtures-bundle": "2.3.0",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "doctrine/orm": "^2.5",
         "fabpot/goutte": "^3.2",
@@ -48,6 +47,7 @@
         "sendinblue/sendinblue-api-bundle": "2.0.*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^2.4",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
     },

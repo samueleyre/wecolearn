@@ -1,0 +1,14 @@
+services:
+  client.service:
+    class: WcBundle\Service\ClientService
+    arguments: ['@doctrine.orm.entity_manager']
+  token.service:
+    class: WcBundle\Service\TokenService
+    arguments: ['@doctrine.orm.entity_manager']
+  gppd.service:
+    class: WcBundle\Service\GPPDService
+    arguments: ['@doctrine.orm.entity_manager']
+  email.service:
+    class: WcBundle\Service\EmailService
+    arguments: ['@doctrine.orm.entity_manager', 'sendinblue_api']
+

@@ -4,7 +4,6 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: "@PrBundle/Resources/config/services.yml" }
 
 parameters:
     locale: fr
@@ -84,9 +83,9 @@ jms_serializer:
             FOSUserBundle:
                 namespace_prefix: "FOS\\UserBundle"
                 path:             "@AppBundle/Resources/config/serializer/fos"
-            PrBundle:
-                namespace_prefix: PrBundle
-                path:             "@PrBundle/Resources/config/serializer"
+            WcBundle:
+                namespace_prefix: WcBundle
+                path:             "@WcBundle/Resources/config/serializer"
 
 
 # FOS Rest

@@ -7,6 +7,7 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
@@ -22,10 +23,6 @@ security:
                     anonymous:  { password: anonymous700root+, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
-
-        img:
-            pattern: ^/img/(_(profiler|wdt)|css|images|icons|fonts|js)/
-            security: false
 
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -62,6 +59,11 @@ security:
             stateless: true
             anonymous: true
 
+        newuser:
+            pattern:   ^/api/newuser
+            stateless: true
+            anonymous: true
+
         api:
             pattern:   ^/api
             stateless: true
@@ -76,9 +78,9 @@ security:
 
 
     access_control:
-        - { path: ^/img, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/employer, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/profil, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/email, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/newuser, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
