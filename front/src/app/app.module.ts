@@ -40,7 +40,6 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports:[   
-  			//ApplicativeModule,
         BrowserModule,
         FormsModule,
         HttpModule,
@@ -48,13 +47,11 @@ const appRoutes: Routes = [
         NgbModule.forRoot(),
         WcModule,
         RouterModule.forRoot(appRoutes),
-        //route,
         MessageModule,
         routing,
         BsDropdownModule.forRoot(),
         UploadModule,
       LoadersCssModule,
-      // MessageComponent,
   ],
   declarations: [ 
         LoginComponent,

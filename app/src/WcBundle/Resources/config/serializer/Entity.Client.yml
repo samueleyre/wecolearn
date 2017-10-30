@@ -4,6 +4,8 @@ WcBundle\Entity\Client:
     properties:
         id:
           groups: [ input, output ]
+        created:
+          groups: [ input, output ]
         firstName:
           groups: [ input, output ]
         lastName:
@@ -11,6 +13,10 @@ WcBundle\Entity\Client:
         profilUrl:
           groups: [ input, output ]
         biographie:
+          groups: [ input, output ]
+        intensity:
+          groups: [ input, output ]
+        atmosphere:
           groups: [ input, output ]
         latitude:
           groups: [ input, output ]

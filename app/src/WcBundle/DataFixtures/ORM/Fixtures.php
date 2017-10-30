@@ -27,17 +27,26 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $clients = [];
         $tags = [];
 
+        for ($i = 0; $i < count($usernames); $i++) {
+            $rand = random_int(0, 30);
+            $usernames[$i] = $usernames[$i].$rand;
+            $names[$i] = $names[$i].$rand;
+        }
+
         $types = [0,1,2];
+
 
         $userManager = $this->container->get('fos_user.user_manager');
 
 
         for ($i = 0; $i < count($tagNames)-1; $i++) {
             $rand = random_int(0, 2);
+            $randIteration = random_int(0, 20);
             $tag = new Tag();
             $tag->setName($tagNames[$i]);
             $tag->setCreated($date);
             $tag->setType($types[$rand]);
+            $tag->setIteration($randIteration);
             $manager->persist($tag);
             $tags[] = $tag;
         }
@@ -50,7 +59,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
             $user->addRole('ROLE_USER');
             $user->setPassword(null);
             $user->setUsername($usernames[$i]);
-            $user->setEmail($usernames[$i]."@hotmail.fr");
+            $user->setEmail($usernames[$i].$names[$i]."@hotmail.fr");
             $user->setPlainPassword("test");
             $user->setEnabled(true);
 
@@ -64,8 +73,13 @@ class Fixtures extends Fixture implements ContainerAwareInterface
             $client->setLastName($names[$i]);
             $client->setProfilUrl($user->getUsername());
             $client->setBiographie("test");
-            $client->setLatitude("10.55");
-            $client->setLongitude("45.24");
+            $rand = random_int(0, 5);
+            $client->setIntensity($rand);
+            $rand = random_int(0, 3);
+            $client->setAtmosphere($rand);
+            $rand = random_int(0, 100) / 100;
+            $client->setLatitude((10.55 + $rand));
+            $client->setLongitude((45.24 + $rand));
             if (count($clients) > 0) {
                 $rand = random_int(0, count($clients)-1);
                 $selection = new Selection();
@@ -82,9 +96,14 @@ class Fixtures extends Fixture implements ContainerAwareInterface
             }
             $client->setCreated($date);
 
-            $rand = random_int(0, count($tags)-1);
-
-            $client->addTag($tags[$rand]);
+            $randChosen = [];
+            for($j=0; $j< 4; $j++) {
+                $rand = random_int(0, count($tags)-1);
+                if (!array_search($rand, $randChosen) && array_search($rand, $randChosen) !== 0) {
+                    $client->addTag($tags[$rand]);
+                }
+                $randChosen[] = $rand;
+            }
             $manager->persist($client);
             $manager->persist($tags[$rand]);
             $clients[] = $client;

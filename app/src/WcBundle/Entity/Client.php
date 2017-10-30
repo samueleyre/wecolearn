@@ -5,7 +5,7 @@ namespace WcBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="WcBundle\Repository\ClientRepository")
  * @ORM\Table(name="client")
  */
 class Client
@@ -58,12 +58,22 @@ class Client
     public $biographie;
 
     /**
-     * @ORM\Column(type="string", name="latitude", nullable=true)
+     * @ORM\Column(type="integer", name="intensity", nullable=true)
+     */
+    public $intensity;
+
+    /**
+     * @ORM\Column(type="integer", name="atmosphere", nullable=true)
+     */
+    public $atmosphere;
+
+    /**
+     * @ORM\Column(type="float", name="latitude", nullable=true)
      */
     public $latitude;
 
     /**
-     * @ORM\Column(type="string", name="longitude", nullable=true)
+     * @ORM\Column(type="float", name="longitude", nullable=true)
      */
     public $longitude;
 
@@ -74,7 +84,7 @@ class Client
     public $image;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="clients")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="clients", cascade={"persist", "merge"})
      * @ORM\JoinColumn(name="tagsIds", referencedColumnName="id", nullable=true)
      */
     public $tags;
@@ -260,7 +270,7 @@ class Client
     /**
      * Set latitude
      *
-     * @param string $latitude
+     * @param float $latitude
      *
      * @return Client
      */
@@ -274,7 +284,7 @@ class Client
     /**
      * Get latitude
      *
-     * @return string
+     * @return float
      */
     public function getLatitude()
     {
@@ -284,7 +294,7 @@ class Client
     /**
      * Set longitude
      *
-     * @param string $longitude
+     * @param float $longitude
      *
      * @return Client
      */
@@ -298,11 +308,60 @@ class Client
     /**
      * Get longitude
      *
-     * @return string
+     * @return float
      */
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * Set intensity
+     *
+     * @param integer $intensity
+     *
+     * @return Client
+     */
+    public function setIntensity($intensity)
+    {
+        $this->intensity = $intensity;
+
+        return $this;
+    }
+
+    /**
+     * Get intensity
+     *
+     * @return integer
+     */
+    public function getIntensity()
+    {
+        return $this->intensity;
+    }
+
+
+    /**
+     * Set atmosphere
+     *
+     * @param integer $atmosphere
+     *
+     * @return Client
+     */
+    public function setAtmosphere($atmosphere)
+    {
+        $this->atmosphere = $atmosphere;
+
+        return $this;
+    }
+
+    /**
+     * Get atmosphere
+     *
+     * @return integer
+     */
+    public function getAtmosphere()
+    {
+        return $this->atmosphere;
     }
 
     /**
@@ -385,6 +444,16 @@ class Client
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param \Doctrine\Common\Collections\Collection
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
     }
 
   

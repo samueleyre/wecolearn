@@ -50,7 +50,14 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
+#        auto_mapping: true
+        entity_managers:
+            default:
+                auto_mapping: true #from orm to here or custom mapping
+                dql:
+                    numeric_functions:
+                      pow: Oro\ORM\Query\AST\Functions\Numeric\Pow
+                      cos: DoctrineExtensions\Query\Mysql\Cos
 
 # Swiftmailer Configuration
 swiftmailer:

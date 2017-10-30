@@ -1,0 +1,15 @@
+<div id="possibleMatchesContainer" class="container-fluid">
+    <div *ngIf="cards"  class="row">
+
+            <div *ngFor="let card of cards" class="card col-12 col-md-3 col-sm-6 col-lg-2">
+                <!--test {{key}}-->
+                    <p class="text-center">{{card[0].first_name}} {{card[0].last_name}}</p>
+
+                    <p *ngIf="card[0].tags">
+                        <span *ngFor="let tag of card[0].tags">{{tag.name}} </span>
+                    </p>
+
+            </div>
+
+    </div>
+</div>

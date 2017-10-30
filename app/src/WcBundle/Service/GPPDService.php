@@ -121,4 +121,12 @@ class GPPDService  implements PaginationInterface{
 		$this->em->flush();
 		return $this;
 	}
+
+	public function postOne($entity) {
+
+        $this->em->persist( $entity );
+        $this->em->flush();
+        return $entity;
+
+    }
 }

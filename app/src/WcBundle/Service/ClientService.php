@@ -3,6 +3,8 @@
 namespace WcBundle\Service;
 
 use WcBundle\Entity\Client;
+use WcBundle\Entity\Tag;
+use AppBundle\Entity\User;
 
 use Doctrine\ORM\EntityManager;
 
@@ -99,6 +101,8 @@ class ClientService extends GPPDService {
 
     }
 
+
+
     private function setClientPhotoname(&$clients)
     {
 
@@ -110,6 +114,81 @@ class ClientService extends GPPDService {
             }
             $clients[$i] = $client[0];
         }
+
+
+    }
+
+    public function patch($client)
+    {
+
+
+//        return $this->insertNewTags($client->getTags());
+
+        $client->setTags($this->insertNewTags($client->getTags()));
+
+        $client->setUser(
+            $this->em
+                ->getRepository(User::class)
+                ->find($client->getUser()->getId())
+        );
+
+        $this->em->merge( $client );
+
+        $this->em->flush();
+
+        return $client;
+
+    }
+
+    public function matches($client)
+    {
+
+        return $this->em
+            ->getRepository(Client::class)
+            ->findMatches($client);
+
+
+
+
+    }
+
+    private function insertNewTags($tags)
+    {
+        for( $i = 0; $i < count($tags); $i++ ) {
+
+            $oldTag = $this->em
+                ->getRepository(Tag::class)
+                ->findOneBy(["name"=>$tags[$i]->getName(), "type"=>$tags[$i]->getType()]);
+
+            if ($oldTag) {
+
+                $this->addIterationTag($oldTag);
+
+                $tags[$i] = $oldTag;
+
+            } else {
+                $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+
+                $tags[$i]->setCreated($date);
+                $tags[$i]->setIteration(1);
+
+                $tags[$i] = $this->postOne( $tags[$i] );
+            }
+
+
+        }
+
+        return $tags;
+
+    }
+
+    private function addIterationTag( &$tag)
+    {
+        $tag->setIteration($tag->getIteration() + 1);
+
+        $this->em->merge( $tag);
+
+        $this->em->flush();
 
 
     }

@@ -5,8 +5,9 @@ namespace WcBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="WcBundle\Repository\TagRepository")
  * @ORM\Table(name="tag")
+ *
  */
 class Tag
 {
@@ -28,11 +29,16 @@ class Tag
     public $type;
 
     /**
+     * @ORM\Column(type="integer",name="iteration")
+     */
+    public $iteration;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime")
      */
-    private $created;
+    public $created;
 
 
     /**
@@ -58,6 +64,20 @@ class Tag
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer
+     *
+     * @return Tag
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -107,6 +127,32 @@ class Tag
     {
         return $this->type;
     }
+
+
+    /**
+     * Set iteration
+     *
+     * @param integer $iteration
+     *
+     * @return Tag
+     */
+    public function setIteration($iteration)
+    {
+        $this->iteration = $iteration;
+
+        return $this;
+    }
+
+    /**
+     * Get iteration
+     *
+     * @return integer
+     */
+    public function getIteration()
+    {
+        return $this->iteration;
+    }
+
 
     /**
      * Set created

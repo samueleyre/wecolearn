@@ -3,6 +3,7 @@ import { RouterModule, Routes }         from '@angular/router';
  
 import { ClientComponent } 				from './components/bo/clientsPage/client/component';
 import { ProfilComponent } 				from './components/client/profilPage/profil/component';
+import { SearchComponent } 				from './components/client/searchPage/search/component';
 import { ProfilSettingsComponent } 				from './components/client/profilPage/settings/component';
 import { MentionsComponent } 				from './components/client/mentionslegales/component';
 
@@ -23,6 +24,7 @@ const prRoutes: Routes = [
             }
         ]
     },
+    { path: 'search',      component: SearchComponent ,   canActivate: [AuthGuard] },
     { path: 'settings', component: ProfilSettingsComponent, canActivate: [AuthGuard] },
     { path : 'mentionslegales', component: MentionsComponent},
     { path : 'subscribe', component: SubscribeComponent},

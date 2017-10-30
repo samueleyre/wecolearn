@@ -4,6 +4,12 @@ import {
     Injectable
 }                             from '@angular/core';
 
+import {Observable} from 'rxjs/Observable';
+
+import { Http, Response }		from '@angular/http';
+
+
+import { FormControl } from '@angular/forms';
 
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
@@ -11,6 +17,7 @@ import { NgForm }             from '@angular/forms';
 
 import { IEntity }                from './../../../../entity/interface';
 import { Client }                from './../../../../entities/client/entity';
+import { Tag }                from './../../../../entities/tag/entity';
 
 import { GPPDService }            from './../../../../service/gppd';
 import { GPPDComponent }          from './../../../../component/gppd';
@@ -29,10 +36,14 @@ import {log} from "util";
 export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
 
+    private tags:any = null;
+    private tagTypes = ["learn_tags", "know_tags", "teach_tags"];
 
-    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute ) {
+
+    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute,  protected http : Http ) {
         super(service);
     }
+
 
     ngOnInit() {
 
@@ -44,33 +55,79 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         this.service.get().subscribe( ( client: IEntity[] ) => {
             console.log("client", client);
             this.entity = this.setTags(client[0]);
-            console.log("client", this.entity);
+            console.log("latin databse", this.entity['latitude'])
+            if (!this.entity['latitude']) {
+                this.setDefaultLatLong();
+            }
+
+
         });
 
     }
 
     setTags(client = this.entity) {
-        client['learn_tags'] = [''];
-        client['know_tags'] = [''];
-        client['teach_tags'] = [''];
+        client['learn_tags'] = [];
+        client['know_tags'] = [];
+        client['teach_tags'] = [];
         if (client['tags'].length > 0) {
             for(let i=0; i< client['tags'].length ; i++) {
                 console.log("types", client['tags'][i]['type'])
-                switch (client['tags'][i]['type']) {
-                    case "0":
-                        client['learn_tags'][0] = client['tags'][i]['name'];
+                switch (Number(client['tags'][i]['type'])) {
+                    case 0:
+                        client['learn_tags'].push(client['tags'][i]['name']);
                         break;
-                    case "1":
-                        client['know_tags'][0] = client['tags'][i]['name'];
+                    case 1:
+                        client['know_tags'].push(client['tags'][i]['name']);
                         break;
-                    case "2":
-                        client['teach_tags'][0] = client['tags'][i]['name'];
+                    case 2:
+                        client['teach_tags'].push(client['tags'][i]['name']);
                         break;
                 }
             }
         }
+        console.log(client);
         return client;
     }
+
+    submit(f:NgForm ) {
+        this.joinTags();
+        this.service.setApi(this.getApi());
+        this.service.patch( this.entity ).subscribe(
+            ( entities: IEntity[] ) => {
+                this.entity = this.setTags(entities[0]);
+                if (!this.entity['latitude']) {
+                    this.setDefaultLatLong();
+                }
+
+                MessageService.info('Modification prise en compte !');
+            },
+            error => { console.log(error) }
+        );
+    }
+
+    joinTags() {
+        console.log("jointags")
+        this.entity['tags'] = [];
+        for(let i=0; i < this.tagTypes.length; i++) {
+            if (this.entity[this.tagTypes[i]].length > 0) {
+                for(let j=0; j < this.entity[this.tagTypes[i]].length; j++) {
+                    let newValue = this.entity[this.tagTypes[i]][j];
+                    if (newValue.hasOwnProperty("value")) {
+                        newValue = newValue["value"];
+                    }
+                    this.entity['tags'].push(new Tag(null, newValue, i))
+                }
+            }
+        }
+        console.log("jointags", this.entity)
+    }
+
+    setDefaultLatLong() {
+        this.entity['latitude'] = 45.764043;
+        this.entity['longitude'] = 4.835659;
+    }
+
+
 
     getApi() {
         return '/api/client';
@@ -78,11 +135,53 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
     getEntity() {
         let client = new Client();
-        client.teach_tags = [''];
-        client.learn_tags = [''];
-        client.know_tags = [''];
+        client.learn_tags = null;
+        client.teach_tags = null;
+        client.know_tags = null;
         return client;
     }
+
+    // tags ------------
+
+    private notAlphaNumeric(control: FormControl) {
+
+        let regex = /^[a-z0-9]+$/i;
+        if (regex.exec(control.value) === null) {
+            return {
+                'notAlphaNumeric': true
+            };
+        }
+
+        return null;
+    }
+
+
+    public validators = [this.notAlphaNumeric];
+
+    public errorMessages = {
+        'notAlphaNumeric': 'Le tag doit être alphanumerique.',
+    };
+
+    public requestAutocompleteItems = (text: string): Observable<Response> => {
+
+        return this.http.get(`/api/findTag?tagLetters=`+text).map((response: Response) => {
+            // console.log(response);
+            this.tags = response.json();
+            let tags = this.tags.map(function(obj:any) {
+                return obj.name;
+            });
+            // console.log(tags)
+            return tags;
+        })
+        ;
+    };
+
+    // var tableauOrig = [{clé:1, valeur:10}, {clé:2, valeur:20}, {clé:3, valeur: 30}];
+    // var tableauFormaté = tableauOrig.map(function(obj){
+    //     var rObj = {};
+    //     rObj[obj.clé] = obj.valeur;
+    //     return rObj;
+    // });
 
 
 }

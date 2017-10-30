@@ -8,6 +8,8 @@ WcBundle\Entity\Tag:
           groups: [ input, output ]
         type:
           groups: [ input, output ]
+        created:
+          groups: [ output ]
 
 
 

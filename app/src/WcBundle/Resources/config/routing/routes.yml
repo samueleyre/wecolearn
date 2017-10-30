@@ -8,3 +8,8 @@ newuser:
     prefix:   api
     resource: '@WcBundle/Controller/NewUserController.php'
 
+findTag:
+    type:     rest
+    prefix:   api
+    resource: '@WcBundle/Controller/TagController.php'
+

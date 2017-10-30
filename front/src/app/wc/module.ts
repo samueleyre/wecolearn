@@ -2,8 +2,14 @@ import { BrowserModule }            from '@angular/platform-browser';
 import { CommonModule }             from '@angular/common';
 import { NgModule  }                from '@angular/core';
 import { RouterModule }             from '@angular/router';
-import { FormsModule }              from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Http }                     from '@angular/http';
+
+import { TagInputModule } from 'ngx-chips';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+
+
 
 import {
     // MaterialModule,
@@ -32,6 +38,7 @@ import { GPPDFactory }              from './service/gppd.factory';
 import { PeriodService }            from './service/period';
 
 import { ClientComponent }            from './components/bo/clientsPage/client/component';
+import { SearchComponent }            from './components/client/searchPage/search/component';
 import { ProfilComponent}            from './components/client/profilPage/profil/component';
 import { ProfilSettingsComponent}            from './components/client/profilPage/settings/component';
 import { GeolocationComponent}            from './components/client/profilPage/geolocation/component';
@@ -46,6 +53,8 @@ import { CopyComponent }	  from './../applicativeService/copy/component';
 import { HeaderComponent }          from './components/header/component';
 import { SubscribeComponent }          from './components/client/subscribe/component';
 import { UserComponent }	  from './../components/user/component';
+
+import { AgmCoreModule } from '@agm/core';
 
 
 
@@ -64,6 +73,7 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
     CommonModule,
     // PaginationModule,
     FormsModule,
+      ReactiveFormsModule,
     UploadModule,
     // MaterialModule,
     MatNativeDateModule,
@@ -79,6 +89,12 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
     NgxMyDatePickerModule.forRoot(),
       ScrollToModule,
       Ng2ImgMaxModule,
+      AgmCoreModule.forRoot({
+          apiKey: "AIzaSyA9v3Cne0PPDnAal2Gt1jAbeGmxSym5Ltg",
+          libraries: ["places"]
+      }),
+      TagInputModule,
+      BrowserAnimationsModule,
   ],
   exports : [
     UploadModule,
@@ -97,10 +113,11 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
     ProfilComponent,
     ProfilSettingsComponent,
     ConfirmModaleComponent,
-      ReadMoreComponent,
-      MentionsComponent,
-      CopyComponent,
-      GeolocationComponent,
+    ReadMoreComponent,
+    MentionsComponent,
+    CopyComponent,
+    GeolocationComponent,
+    SearchComponent,
   ],
   providers : [
     {
@@ -114,6 +131,8 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
   ],
   bootstrap:[
     ConfirmModaleComponent,
+    GeolocationComponent,
+
   ],
   entryComponents: [
     

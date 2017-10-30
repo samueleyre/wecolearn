@@ -3,6 +3,7 @@
 namespace WcBundle\Controller;
 
 use WcBundle\Entity\Client;
+use WcBundle\Entity\Tag;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -48,6 +49,26 @@ class ClientController extends GPPDController
 
 
 	}
+
+    /**
+     * @Get("client/matchs")
+     */
+    public function getClientMatchsAction( )
+    {
+
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $client = $this->getDoctrine()
+            ->getRepository(Client::class)
+            ->findOneBy(["user"=>$user]);
+
+        return $this
+            ->get('client.service')
+            ->matches($client);
+
+
+    }
     
 
     
@@ -63,9 +84,9 @@ class ClientController extends GPPDController
     public function patchClientAction( Client $client, Request $request )
     {
 
-        $this->patchAction( $client );
-
-        return $this->getClientAction();
+        return $this
+            ->get('client.service')
+            ->patch($client);
             
     }
     

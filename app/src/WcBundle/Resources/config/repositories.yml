@@ -1,5 +1,8 @@
 services:
-  employe.repository:
+  client.repository:
     class: WcBundle\Repository\ClientRepository
+    arguments: [ '@doctrine.orm.entity_manager' ]
+  tag.repository:
+    class: WcBundle\Repository\TagRepository
     arguments: [ '@doctrine.orm.entity_manager' ]
 
