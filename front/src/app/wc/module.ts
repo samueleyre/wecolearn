@@ -66,6 +66,17 @@ import {ScrollToModule} from 'ng2-scroll-to';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 
+import { ClientService } from './service/client';
+import { ThreadsService } from './service/threads.service';
+import { MessagesService } from './service/messages';
+
+import { ChatMessageComponent } from './components/client/chat/chat-message/chat-message.component';
+import { ChatThreadComponent } from './components/client/chat/chat-thread/chat-thread.component';
+import { ChatThreadsComponent } from './components/client/chat/chat-threads/chat-threads.component';
+import { ChatWindowComponent } from './components/client/chat/chat-window/chat-window.component';
+import { FromNowPipe } from './service/from-now.pipe';
+
+
 @NgModule({
   imports:[
     PrRoutingModule,
@@ -87,14 +98,15 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
     ModalModule.forRoot(),
     BootstrapModalModule,
     NgxMyDatePickerModule.forRoot(),
-      ScrollToModule,
-      Ng2ImgMaxModule,
-      AgmCoreModule.forRoot({
-          apiKey: "AIzaSyA9v3Cne0PPDnAal2Gt1jAbeGmxSym5Ltg",
-          libraries: ["places"]
-      }),
-      TagInputModule,
-      BrowserAnimationsModule,
+    ScrollToModule,
+    Ng2ImgMaxModule,
+    AgmCoreModule.forRoot({
+        apiKey: "AIzaSyA9v3Cne0PPDnAal2Gt1jAbeGmxSym5Ltg",
+        libraries: ["places"]
+    }),
+    TagInputModule,
+    BrowserAnimationsModule,
+
   ],
   exports : [
     UploadModule,
@@ -118,6 +130,12 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
     CopyComponent,
     GeolocationComponent,
     SearchComponent,
+    ChatMessageComponent,
+    ChatThreadComponent,
+    ChatThreadsComponent,
+    ChatWindowComponent,
+    FromNowPipe
+
   ],
   providers : [
     {
@@ -125,7 +143,10 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
         useFactory: GPPDFactory,
         deps: [Http ]
     },
-    PeriodService
+    ClientService,
+    MessagesService,
+    PeriodService,
+    ThreadsService,
     // EvolutionService,
     //CacheUrlService,
   ],
