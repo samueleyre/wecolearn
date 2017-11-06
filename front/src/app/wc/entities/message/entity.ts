@@ -10,19 +10,21 @@ export class Message extends Entity implements IEntity  {
 
 
     id: number;
-    sentAt: Date;
+    createdAt: Date;
     isRead: boolean;
-    author: Client;
-    text: string;
+    sender: Client;
+    name: string;
+    receiver : Client;
     thread: Thread;
 
     constructor(obj?: any) {
         super();
         this.id              = obj && obj.id              || null;
         this.isRead          = obj && obj.isRead          || false;
-        this.sentAt          = obj && obj.sentAt          || new Date();
-        this.author          = obj && obj.author          || null;
-        this.text            = obj && obj.text            || null;
+        this.createdAt       = obj && obj.sentAt          || new Date();
+        this.sender          = obj && obj.sender          || null;
+        this.name            = obj && obj.name            || null;
+        this.receiver        = obj && obj.receiver        || null;
         this.thread          = obj && obj.thread          || null;
     }
 

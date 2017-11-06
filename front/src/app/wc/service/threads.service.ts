@@ -35,7 +35,7 @@ export class ThreadsService {
           // Cache the most recent message for each thread
           const messagesThread: Thread = threads[message.thread.id];
           if (!messagesThread.lastMessage ||
-              messagesThread.lastMessage.sentAt < message.sentAt) {
+              messagesThread.lastMessage.createdAt < message.createdAt) {
             messagesThread.lastMessage = message;
           }
         });
@@ -45,7 +45,7 @@ export class ThreadsService {
     this.orderedThreads = this.threads
       .map((threadGroups: { [key: string]: Thread }) => {
         const threads: Thread[] = _.values(threadGroups);
-        return _.sortBy(threads, (t: Thread) => t.lastMessage.sentAt).reverse();
+        return _.sortBy(threads, (t: Thread) => t.lastMessage.createdAt).reverse();
       });
 
     this.currentThreadMessages = this.currentThread

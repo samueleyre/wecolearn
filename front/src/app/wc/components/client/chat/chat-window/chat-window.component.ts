@@ -15,11 +15,13 @@ import { Thread } from '../../../../entities/thread/entity';
 import { Message } from '../../../../entities/message/entity';
 
 
+import { ChatExampleData } from './../../chat/data/chat-example-data';
+
 @Component({
   selector: 'chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
@@ -27,7 +29,7 @@ export class ChatWindowComponent implements OnInit {
   messages: Observable<any>;
   currentThread: Thread;
   draftMessage: Message;
-  currentUser: Client;
+  currentUser: Client = null;
 
   constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
@@ -67,7 +69,7 @@ export class ChatWindowComponent implements OnInit {
 
   sendMessage(): void {
     const m: Message = this.draftMessage;
-    m.author = this.currentUser;
+    m.sender = this.currentUser;
     m.thread = this.currentThread;
     m.isRead = true;
     this.messagesService.addMessage(m);

@@ -7,6 +7,11 @@
         <li *ngIf="connected" >
           <a routerLink="/">Déconnexion</a>
         </li>
+        <li *ngIf="connected">
+          <button class="btn btn-primary" type="button">
+              Messages <span class="badge">{{ unreadMessagesCount }}</span>
+          </button>
+        </li>
         <li *ngIf="!connected" >
           <a routerLink="/subscribe">Connexion</a>
         </li>

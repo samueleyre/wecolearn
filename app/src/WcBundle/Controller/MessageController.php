@@ -49,6 +49,7 @@ class MessageController extends GPPDController
             ->getRepository(Client::class)
             ->findOneBy(["user"=>$user]);
 
+
         $friend = $this->getDoctrine()
             ->getRepository(Client::class)
             ->findOneBy(["id"=>$id]);

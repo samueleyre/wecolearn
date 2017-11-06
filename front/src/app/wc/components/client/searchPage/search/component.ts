@@ -19,13 +19,6 @@ import { MessageService }         from './../../../../../applicativeService/mess
 import {FilterService}            from "../../../../../applicativeService/filter/service";
 import {log} from "util";
 
-import { ChatExampleData } from './../../chat/data/chat-example-data';
-
-import { ClientService } from './../../../../service/client';
-import { ThreadsService } from './../../../../service/threads.service';
-import { MessagesService } from './../../../../service/messages';
-
-
 
 @Component({
     templateUrl: 'template.html',
@@ -38,11 +31,11 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     private cards: any = null;
 
-    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute, public messagesService: MessagesService,
-                 public threadsService: ThreadsService,
-                 public ClientService: ClientService ) {
+    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute ) {
         super(service);
-        ChatExampleData.init(messagesService, threadsService, ClientService);
+
+
+
     }
 
     ngOnInit() {

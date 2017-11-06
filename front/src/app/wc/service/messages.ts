@@ -3,6 +3,7 @@ import { Subject, Observable } from 'rxjs';
 import { Client } from './../entities/client/entity';
 import { Message } from './../entities/message/entity';
 import { Thread } from './../entities/thread/entity';
+import {ClientService} from "./client";
 
 
 const initialMessages: Message[] = [];
@@ -24,11 +25,15 @@ export class MessagesService {
   // stored in `messages`)
   updates: Subject<any> = new Subject<any>();
 
-  // action streams
+  private sentMessages: Array<Message>;
+  private receivedMessages: Array<Message>;
+
+
+    // action streams
   create: Subject<Message> = new Subject<Message>();
   markThreadAsRead: Subject<any> = new Subject<any>();
 
-  constructor() {
+  constructor(public ClientService: ClientService) {
     this.messages = this.updates
       // watch the updates and accumulate operations on the messages
       .scan((messages: Message[],
@@ -98,9 +103,58 @@ export class MessagesService {
                // belongs to this thread
         return (message.thread.id === thread.id) &&
                // and isn't authored by this user
-               (message.author.id !== user.id);
+               (message.sender.id !== user.id);
       });
   }
+
+
+  public init() : void {
+
+      this.ClientService.get()
+          .subscribe(
+              (user: Client) => {
+                  this.sentMessages = user.sentMessages;
+                  this.receivedMessages = user.receivedMessages;
+                  this.joinMessages();
+                  this.generateThreads();
+              });
+
+  }
+
+  private joinMessages() {
+
+      this.sentMessages.map( (message: Message) => this.addMessage(message) )
+      this.receivedMessages.map( (message: Message) => this.addMessage(message) )
+
+
+  }
+
+  private generateThreads() {
+
+      this.sentMessages.map( (message: Message) => {
+
+
+          if( )
+
+         }
+
+      )
+      this.receivedMessages.map( (message: Message) => {
+
+
+          if( )
+
+        }
+
+      )
+
+  }
+
+
+
+
+
+
 }
 
 export const messagesServiceInjectables: Array<any> = [

@@ -5,6 +5,7 @@ namespace WcBundle\DataFixtures\ORM;
 
 use WcBundle\Entity\Client;
 use WcBundle\Entity\Selection;
+use WcBundle\Entity\Message;
 use WcBundle\Entity\Tag;
 use AppBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -22,14 +23,21 @@ class Fixtures extends Fixture implements ContainerAwareInterface
 
         $usernames = ["Stanford", "Marcelino", "Chana", "Annelle", "Staci", "Zackary", "Asia", "Catherina", "Lisandra", "Doris", "Shena", "Priscilla", "Arturo", "Florene", "Yevette", "Alvina", "Shaunte", "Deanne", "Melia", "Allie"];
         $names = ["Sanjuanita","Parthenia","Phillip","Ute","Evangeline","Alleen","Codi","Mayra","Florence","Velvet","Evita","Kandra","Alfreda","Teodoro","Madge","Sima","Cinthia","Owen","Herta","Hwa"];
-        $tagNames = ["php", "html" ,"js", "git", "docker", "symfony", "bashrc", "security", "sql", "reactJS"];
+        $tagNames = ["Php", "Html" ,"Js", "Git", "Docker", "Symfony", "Bashrc","LignesDeCommandes", "CyberSecurity", "Sql", "reactJS", "AngularJs" ];
+
+
+        $texts = ["How are you  ?", "What's you fb ?", "Give me you phoneNumber", "What do you do for a living ? "];
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+
         $clients = [];
         $tags = [];
+        $messages = [];
+
 
         for ($i = 0; $i < count($usernames); $i++) {
             $rand = random_int(0, 30);
             $usernames[$i] = $usernames[$i].$rand;
+            $rand = random_int(0, 30);
             $names[$i] = $names[$i].$rand;
         }
 
@@ -110,8 +118,22 @@ class Fixtures extends Fixture implements ContainerAwareInterface
 
         }
 
+        for ($i = 0; $i < count($texts)-1; $i++) {
+            shuffle($clients);
+            $message = new Message();
+            $message->setMessage($texts[$i]);
+            $message->setCreated($date);
+            $message->setReceiver($clients[0]);
+            $message->setSender($clients[1]);
+            $message->setCreated($date);
+            $manager->persist($message);
+//            $manager->persist($clients[$r1]);
+//            $manager->persist($clients[$r2]);
+        }
+
 
         $manager->flush();
 
     }
+
 }

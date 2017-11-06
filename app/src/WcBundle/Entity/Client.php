@@ -3,6 +3,7 @@
 namespace WcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="WcBundle\Repository\ClientRepository")
@@ -90,7 +91,7 @@ class Client
     public $tags;
 
     /**
-     * @ORM\OneToOne(targetEntity="Selection", inversedBy="client")
+     * @ORM\OneToOne(targetEntity="Selection", inversedBy="client", cascade={"persist", "merge"})
      * @ORM\JoinColumn(name="selectionId", referencedColumnName="id", nullable=true)
      */
     public $selection;
@@ -100,6 +101,20 @@ class Client
      * @ORM\JoinColumn(name="selectedIds", referencedColumnName="id", nullable=true)
      */
     public $selected;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="sender", cascade={"persist", "merge"})
+     * @ORM\JoinColumn(name="sentMessageIds", referencedColumnName="id", nullable=true)
+     * @MaxDepth(1)
+     */
+    public $sentMessages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="receiver", cascade={"persist", "merge"})
+     * @ORM\JoinColumn(name="receivedMessageIds", referencedColumnName="id", nullable=true)
+     */
+    public $receivedMessages;
 
 
 
@@ -514,5 +529,74 @@ class Client
     public function getSelected()
     {
         return $this->selected;
+    }
+
+
+    /**
+     * Add sentMessage
+     *
+     * @param \WcBundle\Entity\Message $sentMessage
+     *
+     * @return Client
+     */
+    public function addSentMessage(\WcBundle\Entity\Message $sentMessage)
+    {
+        $this->sentMessages[] = $sentMessage;
+
+        return $this;
+    }
+
+    /**
+     * Remove sentMessage
+     *
+     * @param \WcBundle\Entity\Message $sentMessage
+     */
+    public function removeSentMessage(\WcBundle\Entity\Message $sentMessage)
+    {
+        $this->sentMessages->removeElement($sentMessage);
+    }
+
+    /**
+     * Add receivedMessage
+     *
+     * @param \WcBundle\Entity\Message $receivedMessage
+     *
+     * @return Client
+     */
+    public function addReceivedMessage(\WcBundle\Entity\Message $receivedMessage)
+    {
+        $this->receivedMessages[] = $receivedMessage;
+
+        return $this;
+    }
+
+    /**
+     * Remove receivedMessage
+     *
+     * @param \WcBundle\Entity\Message $receivedMessage
+     */
+    public function removeReceivedMessage(\WcBundle\Entity\Message $receivedMessage)
+    {
+        $this->receivedMessages->removeElement($receivedMessage);
+    }
+
+    /**
+     * Get sentMessages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSentMessages()
+    {
+        return $this->sentMessages;
+    }
+
+    /**
+     * Get receivedMessages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReceivedMessages()
+    {
+        return $this->receivedMessages;
     }
 }

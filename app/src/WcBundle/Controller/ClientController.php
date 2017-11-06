@@ -13,30 +13,38 @@ use  FOS\RestBundle\Controller\Annotations\Post;
 use  FOS\RestBundle\Controller\Annotations\Patch;
 use  FOS\RestBundle\Controller\Annotations\Delete;
 use  FOS\RestBundle\Controller\Annotations\Get;
+use  FOS\RestBundle\Controller\Annotations\View;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Pagination\Annotation as Pagination;
 
+use JMS\Serializer\Annotation as Serializer;
+
+use JMS\Serializer\SerializationContext;
+
+
+//TODO : usefull :     * @View(serializerGroups={"test"})
 
 
 
 class ClientController extends GPPDController
 {
-    
+
     protected $entityRef = 'WcBundle:Client';
 
     // "options_client" [OPTIONS] /client
     public function optionClientAction()
     {
         return $this->optionAction();
-        
-    } 
-    
+
+    }
+
     /**
 	* @Get("client")
-    */
+    * @View(serializerEnableMaxDepthChecks=true)
+     */
     public function getClientAction( )
     {
 

@@ -1,0 +1,17 @@
+WcBundle\Entity\Message:
+    exclusion_policy: all
+    access_order:     alphabetical
+    properties:
+        id:
+          groups: [ input, output ]
+        message:
+          groups: [ input, output ]
+        created:
+          groups: [ output ]
+        receiver:
+          groups: [ input, output ]
+        sender:
+          groups: [ input, output ]
+
+
+
