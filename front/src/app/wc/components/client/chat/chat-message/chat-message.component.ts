@@ -21,22 +21,40 @@ import {GPPDComponent} from "../../../../component/gppd";
   styleUrls: ['./chat-message.component.scss']
 })
 export class ChatMessageComponent implements OnInit {
+
   @Input() message: Message;
-  incoming: boolean;
+  incoming: boolean = false;
   private avatarSrcBase : string;
+  private msgContainerClass: string;
 
   @Input() clientId : Number = null;
 
-
-  constructor(
-      public ClientService: ClientService
-  ) {
+  constructor( public ClientService: ClientService ) {
   }
-
 
   ngOnInit(): void {
 
     this.avatarSrcBase =  GPPDComponent.updateUrl('/home/');
 
+    if (this.message.sender) {
+      if (this.message.sender.id == this.clientId) {
+         this.msgContainerClass = 'base-sent';
+      } else {
+         this.msgContainerClass = 'base-receive';
+      }
+    }
+
+    if (this.message.receiver) {
+        if (this.message.receiver.id == this.clientId) {
+            this.msgContainerClass = 'base-receive';
+        } else {
+            this.msgContainerClass = 'base-sent';
+        }
+    }
+
+    (this['msgContainerClass '] === "base-receive") ? this.incoming = true : this.incoming = false;
+
+
   }
+
 }

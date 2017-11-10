@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { ThreadsService } from './../../../../service/threads.service';
 import { Thread } from '../../../../entities/thread/entity';
+import {GPPDComponent} from "../../../../component/gppd";
 
 @Component({
   selector: 'chat-thread',
@@ -17,11 +18,15 @@ import { Thread } from '../../../../entities/thread/entity';
 export class ChatThreadComponent implements OnInit {
   @Input() thread: Thread;
   selected = false;
+  private avatarSrcBase : string;
+
 
   constructor(public threadsService: ThreadsService) {
   }
 
   ngOnInit(): void {
+
+    this.avatarSrcBase =  GPPDComponent.updateUrl('/home/');
     this.threadsService.currentThread
       .subscribe( (currentThread: Thread) => {
         this.selected = currentThread &&

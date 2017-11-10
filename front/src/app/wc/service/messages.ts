@@ -4,6 +4,7 @@ import { Client } from './../entities/client/entity';
 import { Message } from './../entities/message/entity';
 import { Thread } from './../entities/thread/entity';
 import {ClientService} from "./client";
+import {Http, Response} from "@angular/http";
 
 
 const initialMessages: Message[] = [];
@@ -14,6 +15,9 @@ interface IMessagesOperation extends Function {
 
 @Injectable()
 export class MessagesService {
+
+  route: string = '/api';
+
   // a stream that publishes new messages only once
   newMessages: Subject<Message> = new Subject<Message>();
 
@@ -33,7 +37,7 @@ export class MessagesService {
   create: Subject<Message> = new Subject<Message>();
   markThreadAsRead: Subject<any> = new Subject<any>();
 
-  constructor(public ClientService: ClientService) {
+  constructor(public ClientService: ClientService, protected http : Http) {
     this.messages = this.updates
       // watch the updates and accumulate operations on the messages
       .scan((messages: Message[],
@@ -97,14 +101,31 @@ export class MessagesService {
     this.newMessages.next(message);
   }
 
+  sendMessage(message: Message): Observable<string> {
+
+      console.log("WTF !!!", message)
+      // message.sender = this.clientService.currentService
+      return this.http.post(`/api/message`, message).map((response: Response) => {
+          // console.log(response)
+          return "OK";
+          // this.newMessages.next(message);
+      });
+
+
+  }
+
   messagesForThreadUser(thread: Thread, user: Client): Observable<Message> {
     return this.newMessages
       .filter((message: Message) => {
+
                // belongs to this thread
         return (message.thread.id === thread.id) &&
                // and isn't authored by this user
-               (message.sender.id !== user.id);
-      });
+            (message.sender && (message.sender.id !== user.id)) ;
+
+            // || (message.receiver && (message.receiver.id !== user.id));
+
+    });
   }
 
 
@@ -113,40 +134,75 @@ export class MessagesService {
       this.ClientService.get()
           .subscribe(
               (user: Client) => {
-                  this.sentMessages = user.sentMessages;
-                  this.receivedMessages = user.receivedMessages;
-                  this.joinMessages();
-                  this.generateThreads();
+                  console.log("client Service", user)
+                  this.sentMessages = user.sent_messages;
+                  this.receivedMessages = user.received_messages;
+                  this.generateMessages();
               });
 
   }
 
-  private joinMessages() {
 
-      this.sentMessages.map( (message: Message) => this.addMessage(message) )
-      this.receivedMessages.map( (message: Message) => this.addMessage(message) )
+  private generateThreadAndAddMessage(senderOrReceiver: string) {
 
+        let threads : Object = {};
+        let typeOfMessage : string;
 
-  }
-
-  private generateThreads() {
-
-      this.sentMessages.map( (message: Message) => {
-
-
-          if( )
-
-         }
-
-      )
-      this.receivedMessages.map( (message: Message) => {
-
-
-          if( )
-
+        if (senderOrReceiver === "sender") {
+            typeOfMessage = "receivedMessages";
+        } else {
+            typeOfMessage = "sentMessages";
         }
 
-      )
+
+        this[typeOfMessage].map( (message: Message) => {
+
+                    // console.log("FOO", message, Object.keys(threads).length, senderOrReceiver)
+                    // console.log("message[senderOrReceiver].id", message[senderOrReceiver].id)
+
+                if(  Object.keys(threads).length === 0 || (Object.keys(threads).indexOf(message[senderOrReceiver].id) === -1)) {
+
+                        // console.log("1 - messagethreading", message)
+
+                    let thread = new Thread(message[senderOrReceiver].id, message[senderOrReceiver].first_name, message[senderOrReceiver].avatarSrc);
+
+                    threads[message[senderOrReceiver].id] = thread;
+
+                    message.thread = thread;
+
+                } else {
+
+                        // console.log("2 - messagethreading", message)
+                    message.thread = threads[message[senderOrReceiver].id];
+
+                }
+
+
+            // console.log("message added", message)
+            this.addMessage(message)
+
+
+        });
+  }
+
+
+  private generateMessages() {
+
+
+      if (this.sentMessages) {
+
+          console.log("arrived here")
+          this.generateThreadAndAddMessage("receiver");
+
+      }
+
+      if (this.receivedMessages) {
+
+          this.generateThreadAndAddMessage("sender");
+
+      }
+
+
 
   }
 

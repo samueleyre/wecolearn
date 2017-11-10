@@ -20,40 +20,40 @@ const echo: Client    = new Client();
 const rev: Client     = new Client();
 const wait: Client    = new Client();
 
-const tLadycap: Thread = new Thread(0, ladycap.first_name, ladycap.avatarSrc);
-const tEcho: Thread    = new Thread(1, echo.first_name, echo.avatarSrc);
-const tRev: Thread     = new Thread(2, rev.first_name, rev.avatarSrc);
-const tWait: Thread    = new Thread(3, wait.first_name, wait.avatarSrc);
+const tLadycap: Thread = new Thread(45, ladycap.first_name, ladycap.avatarSrc);
+const tEcho: Thread    = new Thread(46, echo.first_name, echo.avatarSrc);
+const tRev: Thread     = new Thread(47, rev.first_name, rev.avatarSrc);
+const tWait: Thread    = new Thread(48, wait.first_name, wait.avatarSrc);
 
 const initialMessages: Array<Message> = [
   new Message({
     sender: me,
     createdAt: moment().subtract(45, 'minutes').toDate(),
-    name: 'Yet let me weep for such a feeling loss.',
+    message: 'Yet let me weep for such a feeling loss.',
     thread: tLadycap
   }),
   new Message({
     sender: ladycap,
     createdAt: moment().subtract(20, 'minutes').toDate(),
-    name: 'So shall you feel the loss, but not the friend which you weep for.',
+    message: 'So shall you feel the loss, but not the friend which you weep for.',
     thread: tLadycap
   }),
   new Message({
     sender: echo,
     createdAt: moment().subtract(1, 'minutes').toDate(),
-    name: `I\'ll echo whatever you send me`,
+    message: `I\'ll echo whatever you send me`,
     thread: tEcho
   }),
   new Message({
     sender: rev,
     createdAt: moment().subtract(3, 'minutes').toDate(),
-    name: `I\'ll reverse whatever you send me`,
+    message: `I\'ll reverse whatever you send me`,
     thread: tRev
   }),
   new Message({
     sender: wait,
     createdAt: moment().subtract(4, 'minutes').toDate(),
-    name: `I\'ll wait however many seconds you send to me before responding. Try sending '3'`,
+    message: `I\'ll wait however many seconds you send to me before responding. Try sending '3'`,
     thread: tWait
   }),
 ];
@@ -81,7 +81,7 @@ export class ChatExampleData {
         messagesService.addMessage(
           new Message({
             sender: echo,
-            name: message.name,
+            message: message.message,
             thread: tEcho
           })
         );
@@ -95,7 +95,7 @@ export class ChatExampleData {
         messagesService.addMessage(
           new Message({
             sender: rev,
-            name: message.name.split('').reverse().join(''),
+            message: message.message.split('').reverse().join(''),
             thread: tRev
           })
         );
@@ -106,12 +106,12 @@ export class ChatExampleData {
     messagesService.messagesForThreadUser(tWait, wait)
       .forEach( (message: Message): void => {
 
-        let waitTime: number = parseInt(message.name, 10);
+        let waitTime: number = parseInt(message.message, 10);
         let reply: string;
 
         if (isNaN(waitTime)) {
           waitTime = 0;
-          reply = `I didn\'t understand ${message.name}. Try sending me a number`;
+          reply = `I didn\'t understand ${message.message}. Try sending me a number`;
         } else {
           reply = `I waited ${waitTime} seconds to send you this.`;
         }
@@ -121,7 +121,7 @@ export class ChatExampleData {
             messagesService.addMessage(
               new Message({
                 sender: wait,
-                name: reply,
+                message: reply,
                 thread: tWait
               })
             );

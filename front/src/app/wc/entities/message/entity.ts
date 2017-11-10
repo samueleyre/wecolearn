@@ -13,7 +13,7 @@ export class Message extends Entity implements IEntity  {
     createdAt: Date;
     isRead: boolean;
     sender: Client;
-    name: string;
+    message: string;
     receiver : Client;
     thread: Thread;
 
@@ -21,9 +21,9 @@ export class Message extends Entity implements IEntity  {
         super();
         this.id              = obj && obj.id              || null;
         this.isRead          = obj && obj.isRead          || false;
-        this.createdAt       = obj && obj.sentAt          || new Date();
+        this.createdAt       = obj && obj.createdAt          || new Date();
         this.sender          = obj && obj.sender          || null;
-        this.name            = obj && obj.name            || null;
+        this.message          = obj && obj.message            || null;
         this.receiver        = obj && obj.receiver        || null;
         this.thread          = obj && obj.thread          || null;
     }

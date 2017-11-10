@@ -33,12 +33,12 @@ export class ClientService {
             });
     }
 
-    loadMessages(): void{
-
-        joinedMessages.map( (message: Message) => messagesService.addMessage(message) )
-
-
-    }
+    // loadMessages(): void{
+    //
+    //     joinedMessages.map( (message: Message) => messagesService.addMessage(message) )
+    //
+    //
+    // }
 
 
 

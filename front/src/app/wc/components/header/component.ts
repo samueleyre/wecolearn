@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit {
 	) {
         this.location = location;
         this.baseUrl = r;
-        ChatExampleData.init(messagesService, threadsService, ClientService);
+        // ChatExampleData.init(messagesService, threadsService, ClientService);
         // router.events.subscribe(event => TODO : make this work better, called severaltimes at the moment
 		// this.load());
 	}
@@ -61,8 +61,8 @@ export class HeaderComponent implements OnInit {
 
         Logged.get().subscribe( (logged:boolean) => {
         	this.connected = logged;
-			this.loadMessages();
 			this.loadClient();
+			this.loadMessages();
         });
 		if ( !localStorage.getItem('cookieseen')) {
         	MessageService.cookie();

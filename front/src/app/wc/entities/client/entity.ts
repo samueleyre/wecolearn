@@ -24,8 +24,8 @@ export class Client extends Entity implements IEntity  {
 	public teach_tags: [string];
 	public tags: Array<Tag>;
 	public messages: Array<Message>;
-	public sentMessages: Array<Message>;
-	public receivedMessages: Array<Message>;
+	public sent_messages: Array<Message>;
+	public received_messages: Array<Message>;
 	public avatarSrc : string;
 
 
@@ -49,8 +49,8 @@ export class Client extends Entity implements IEntity  {
 		this.teach_tags = null;
 		this.tags = [];
 		this.messages = [];
-    	this.sentMessages = null;
-    	this.receivedMessages = null;
+    	this.sent_messages = null;
+    	this.received_messages = null;
         this.latitude = null;
         this.longitude = null;
         this.avatarSrc = "lesbricodeurs-200px.png";

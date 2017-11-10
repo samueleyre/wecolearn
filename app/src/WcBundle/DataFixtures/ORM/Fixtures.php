@@ -26,7 +26,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $tagNames = ["Php", "Html" ,"Js", "Git", "Docker", "Symfony", "Bashrc","LignesDeCommandes", "CyberSecurity", "Sql", "reactJS", "AngularJs" ];
 
 
-        $texts = ["How are you  ?", "What's you fb ?", "Give me you phoneNumber", "What do you do for a living ? "];
+        $texts = ["How are you  ?", "What's you fb ?", "Give me you phoneNumber", "What do you do for a living ? ", "Do you play chess ? ", "Do you won't to make money out of it ? ", "How far is that ?", "What is the name of your meetup group ?"];
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
 
         $clients = [];
@@ -125,6 +125,8 @@ class Fixtures extends Fixture implements ContainerAwareInterface
             $message->setCreated($date);
             $message->setReceiver($clients[0]);
             $message->setSender($clients[1]);
+            $rand = random_int(0, 30);
+            $date = new \DateTime("now + ".$rand." minutes", new \DateTimeZone('Europe/Paris'));
             $message->setCreated($date);
             $manager->persist($message);
 //            $manager->persist($clients[$r1]);

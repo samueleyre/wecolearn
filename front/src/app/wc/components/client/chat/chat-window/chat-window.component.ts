@@ -72,6 +72,10 @@ export class ChatWindowComponent implements OnInit {
     m.sender = this.currentUser;
     m.thread = this.currentThread;
     m.isRead = true;
+    // this.messagesService.sendMessage(m)
+    //     .subscribe(answer => {
+    //       console.log("answer", answer)
+    //     });
     this.messagesService.addMessage(m);
     this.draftMessage = new Message();
   }

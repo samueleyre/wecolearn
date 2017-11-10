@@ -1,20 +1,16 @@
 <div class="msg-container" *ngIf="clientId"
-     [ngClass]="{'base-sent': (message.sender.id == clientId), 'base-receive': (message.sender.id != clientId)}">
-
-  <div class="avatar"
-       *ngIf="!incoming">
-    <img src="{{avatarSrcBase}}{{message.sender.avatarSrc}}">
-  </div>
-
-  <div class="messages"
-    [ngClass]="{'msg-sent': (message.sender.id == clientId), 'msg-receive': (message.sender.id != clientId)}">
-    <p>{{message.name}}</p>
-    <p class="time">{{message.sender.name}} • {{message.createdAt | fromNow}}</p>
-  </div>
+     [ngClass]="msgContainerClass">
 
   <div class="avatar"
        *ngIf="incoming">
     <img src="{{avatarSrcBase}}{{message.sender.avatarSrc}}">
   </div>
+
+  <div class="messages"
+    [ngClass]="msgContainerClass">
+    <p>{{message.message}}</p>
+    <p class="time">{{message.createdAt | fromNow}}</p>
+  </div>
+
 
 </div>

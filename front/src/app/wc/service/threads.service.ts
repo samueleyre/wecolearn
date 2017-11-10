@@ -53,9 +53,11 @@ export class ThreadsService {
                      (currentThread: Thread, messages: Message[]) => {
         if (currentThread && messages.length > 0) {
           return _.chain(messages)
-            .filter((message: Message) =>
-                    (message.thread.id === currentThread.id))
+            .filter((message: Message) => {
+              return (message.thread.id === currentThread.id)
+            })
             .map((message: Message) => {
+              console.log("currentThreadMessages ", message, this.currentThread)
               message.isRead = true;
               return message; })
             .value();
