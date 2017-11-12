@@ -103,6 +103,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
 
             }
             $client->setCreated($date);
+            $client->setClientUpdated($date);
 
             $randChosen = [];
             for($j=0; $j< 4; $j++) {

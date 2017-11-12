@@ -23,12 +23,13 @@ export class ClientService {
 
     }
 
+
     load(): Observable<string>  {
         console.log('Clientservice called')
         return this.http.get(`${this.endpoint}`)
             .map((response: Response) => {
                 console.log("client response", response)
-                this.currentClient.next(response.json()[0]);
+                this.currentClient.next(response.json()[0]);// TODO :  should not be an array
                 return 'loaded';
             });
     }

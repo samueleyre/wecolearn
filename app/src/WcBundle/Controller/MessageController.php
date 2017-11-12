@@ -61,6 +61,36 @@ class MessageController extends GPPDController
 
     }
 
+    /**
+     * @Get("checknewmessage")
+     */
+    public function getNewMessagesAction()
+    {
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+
+        $client = $this->getDoctrine()
+            ->getRepository(Client::class)
+            ->findOneBy(["user"=>$user]);
+
+        if ($lastMessageUpdate = $this->getDoctrine()
+            ->getRepository(Message::class)
+            ->getLastMessageUpdate($client)) {
+
+            $client->setClientUpdated(new \DateTime($lastMessageUpdate));
+
+            $this->get("client.service")->patch($client, false, false);
+
+
+            return $client;
+        } else {
+            return null;
+        }
+
+    }
+
+
 
     /**
      * @Post("/message")
@@ -87,13 +117,14 @@ class MessageController extends GPPDController
 
         $message->setReceiver($friend);
         $message->setSender($client);
+        $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+        $message->setCreated($date);
 
         $this->get('message.service')->postMessage($message);
 
 
-        return $this->getDoctrine()
-        ->getRepository(Message::class)
-        ->findMessages($client, $friend );
+        return $message;
+
 
 
 

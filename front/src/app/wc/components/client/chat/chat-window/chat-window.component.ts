@@ -68,16 +68,16 @@ export class ChatWindowComponent implements OnInit {
   }
 
   sendMessage(): void {
-    const m: Message = this.draftMessage;
-    m.sender = this.currentUser;
-    m.thread = this.currentThread;
-    m.isRead = true;
-    // this.messagesService.sendMessage(m)
-    //     .subscribe(answer => {
-    //       console.log("answer", answer)
-    //     });
-    this.messagesService.addMessage(m);
-    this.draftMessage = new Message();
+    this.draftMessage.receiver = new Client();
+    this.draftMessage.receiver.id = this.currentThread.id;
+    this.draftMessage.isRead = false;
+    this.messagesService.sendMessage(this.draftMessage)
+        .subscribe(answer => {
+          this.draftMessage.sender = this.currentUser;
+          this.draftMessage.thread = this.currentThread;
+          this.messagesService.addMessage(this.draftMessage);
+          this.draftMessage = new Message();
+        });
   }
 
   scrollToBottom(): void {
@@ -85,4 +85,9 @@ export class ChatWindowComponent implements OnInit {
       .nativeElement.querySelector('.msg-container-base');
     scrollPane.scrollTop = scrollPane.scrollHeight;
   }
+
+
+    draftMessageChange(event: any) {
+      // console.log("change", event, this.draftMessage)
+    }
 }

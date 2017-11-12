@@ -35,8 +35,9 @@ class MessageRepository extends EntityRepository
         orWhere( 'entity.receiver = :client AND entity.sender = :friend')->setParameters(['client'=>$client, 'friend'=>$friend] )->
         orderBy('entity.created', 'ASC')->
         getQuery()->
-        getResult();
+        getSingleScalarResult();
 
+        // and isRead = true
     }
 
     public function getFirstMessage(Client $client, Client $friend) {
@@ -49,7 +50,22 @@ class MessageRepository extends EntityRepository
         orderBy('entity.created', 'ASC')->
         setMaxResults(1)->
         getQuery()->
-        getResult();
+        getResult()[0];
+
+    }
+
+    public function getLastMessageUpdate(Client $client) {
+
+        return $this->getEntityManager()->createQueryBuilder()->
+        select('entity.created')->
+        from(sprintf('%s', 'WcBundle:Message' ),'entity')->
+        where( 'entity.sender = :client or entity.receiver = :client')->setParameter('client',$client )->
+//        andWhere( 'entity.created > :update')->setParameter('update', $client->getClientUpdated())->
+        orderBy('entity.created', 'DESC')->
+        setMaxResults(1)->
+        getQuery()->
+        getSingleScalarResult();
+
     }
 
 

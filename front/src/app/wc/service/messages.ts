@@ -5,6 +5,11 @@ import { Message } from './../entities/message/entity';
 import { Thread } from './../entities/thread/entity';
 import {ClientService} from "./client";
 import {Http, Response} from "@angular/http";
+import { IntervalObservable } from "rxjs/observable/IntervalObservable";
+import { TimerObservable } from "rxjs/observable/TimerObservable";
+
+
+import * as _ from 'lodash';
 
 
 const initialMessages: Message[] = [];
@@ -15,6 +20,9 @@ interface IMessagesOperation extends Function {
 
 @Injectable()
 export class MessagesService {
+
+    private alive: boolean; // used to unsubscribe from the IntervalObservable
+    // when OnDestroy is called.
 
   route: string = '/api';
 
@@ -38,6 +46,7 @@ export class MessagesService {
   markThreadAsRead: Subject<any> = new Subject<any>();
 
   constructor(public ClientService: ClientService, protected http : Http) {
+    this.alive = true;
     this.messages = this.updates
       // watch the updates and accumulate operations on the messages
       .scan((messages: Message[],
@@ -101,14 +110,10 @@ export class MessagesService {
     this.newMessages.next(message);
   }
 
-  sendMessage(message: Message): Observable<string> {
+  sendMessage(message: Message): Observable<Message> {
 
-      console.log("WTF !!!", message)
-      // message.sender = this.clientService.currentService
       return this.http.post(`/api/message`, message).map((response: Response) => {
-          // console.log(response)
-          return "OK";
-          // this.newMessages.next(message);
+          return response.json();
       });
 
 
@@ -128,9 +133,35 @@ export class MessagesService {
     });
   }
 
-
   public init() : void {
 
+      this.getMessages();
+
+      let period = 10000;
+
+      TimerObservable.create(10000, period)
+          .takeWhile(() => this.alive) // only fires when component is alive
+          .subscribe(() => {
+              this.checkNewMessages().subscribe();
+          });
+
+  }
+
+  private checkNewMessages() : Observable<void> {
+
+      return this.http.get('/api/checknewmessage')
+          .map((response: Response) => {
+              if (response) {
+              console.log("client response", response.json())
+                  this.sentMessages = response.json().sent_messages;
+                  this.receivedMessages = response.json().received_messages;
+                  this.generateMessages();
+              }
+          });
+
+  }
+
+  private getMessages() :void {
       this.ClientService.get()
           .subscribe(
               (user: Client) => {
@@ -139,9 +170,7 @@ export class MessagesService {
                   this.receivedMessages = user.received_messages;
                   this.generateMessages();
               });
-
   }
-
 
   private generateThreadAndAddMessage(senderOrReceiver: string) {
 
@@ -157,59 +186,42 @@ export class MessagesService {
 
         this[typeOfMessage].map( (message: Message) => {
 
-                    // console.log("FOO", message, Object.keys(threads).length, senderOrReceiver)
-                    // console.log("message[senderOrReceiver].id", message[senderOrReceiver].id)
-
                 if(  Object.keys(threads).length === 0 || (Object.keys(threads).indexOf(message[senderOrReceiver].id) === -1)) {
-
-                        // console.log("1 - messagethreading", message)
-
                     let thread = new Thread(message[senderOrReceiver].id, message[senderOrReceiver].first_name, message[senderOrReceiver].avatarSrc);
-
                     threads[message[senderOrReceiver].id] = thread;
-
                     message.thread = thread;
-
                 } else {
-
-                        // console.log("2 - messagethreading", message)
                     message.thread = threads[message[senderOrReceiver].id];
-
                 }
 
-
-            // console.log("message added", message)
-            this.addMessage(message)
-
-
         });
-  }
 
+
+  }
 
   private generateMessages() {
 
+    let messagestoBeAdded: Array<Message> = [];
 
       if (this.sentMessages) {
-
-          console.log("arrived here")
           this.generateThreadAndAddMessage("receiver");
-
       }
 
       if (this.receivedMessages) {
-
           this.generateThreadAndAddMessage("sender");
-
       }
 
+      messagestoBeAdded = this.sentMessages.concat(this.receivedMessages);
 
+      // let sorted =
+          _.sortBy(messagestoBeAdded, (m: Message) => m.id)
+          .map((message: Message) => {
+          this.addMessage(message)
+      });
 
+          console.log("what is wrong with the time ?", new Date())
+      // console.log("these should be ordered", sorted)
   }
-
-
-
-
-
 
 }
 

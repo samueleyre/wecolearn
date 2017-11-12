@@ -26,8 +26,7 @@ class MessageService extends GPPDService {
 
    public function regulateMessageStorage(Message $message) {
 
-
-       $count = $this->em
+        $count = $this->em
            ->getRepository(Message::class)
            ->countMessages($message->getSender(), $message->getReceiver() );
 

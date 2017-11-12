@@ -54,6 +54,13 @@ class Client
     private $updated;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="clientUpdated", type="datetime", nullable=true)
+     */
+    private $clientUpdated;
+
+    /**
      * @ORM\Column(type="string", name="biographie", nullable=true)
      */
     public $biographie;
@@ -256,6 +263,30 @@ class Client
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Set clientUpdated
+     *
+     * @param \DateTime $clientUpdated
+     *
+     * @return Client
+     */
+    public function setClientUpdated($clientUpdated)
+    {
+        $this->clientUpdated = $clientUpdated;
+
+        return $this;
+    }
+
+    /**
+     * Get clientUpdated
+     *
+     * @return \DateTime
+     */
+    public function getClientUpdated()
+    {
+        return $this->clientUpdated;
     }
 
     /**
