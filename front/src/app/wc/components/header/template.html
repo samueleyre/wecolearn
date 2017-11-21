@@ -9,7 +9,7 @@
         </li>
         <li *ngIf="connected">
           <button class="btn btn-primary" type="button">
-              Messages <span class="badge">{{ unreadMessagesCount }}</span>
+              <i class="fa fa-bell"></i> <span class="badge">{{ unreadMessagesCount }}</span>
           </button>
         </li>
         <li *ngIf="!connected" >

@@ -29,18 +29,16 @@ import {log} from "util";
 export class SearchComponent extends GPPDComponent implements OnInit {
 
 
+    private avatarSrcBase : string;
     private cards: any = null;
 
     constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute ) {
         super(service);
-
-
-
     }
 
     ngOnInit() {
-
-        this.load();
+      this.avatarSrcBase =  GPPDComponent.updateUrl('/img/');
+      this.load();
     }
 
     load() : void {

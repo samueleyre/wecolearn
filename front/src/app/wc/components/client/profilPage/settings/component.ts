@@ -1,7 +1,8 @@
 import {
     Component,
     OnInit,
-    Injectable
+    Injectable,
+    Inject
 }                             from '@angular/core';
 
 import {Observable} from 'rxjs/Observable';
@@ -25,6 +26,8 @@ import { GPPDComponent }          from './../../../../component/gppd';
 import { MessageService }         from './../../../../../applicativeService/message/service';
 import {FilterService}            from "../../../../../applicativeService/filter/service";
 import {log} from "util";
+import { APP_BASE_HREF, Location } from '@angular/common';
+
 
 
 @Component({
@@ -36,17 +39,26 @@ import {log} from "util";
 export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
 
+    base_url : string;
+    private modify = false;
+    private imagePath : string;
+    private uploadError : object = {};
+
+
+
+
     private tags:any = null;
     private tagTypes = ["learn_tags", "know_tags", "teach_tags"];
 
 
-    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute,  protected http : Http ) {
+    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, ) {
         super(service);
+        this.base_url = r;
     }
 
 
     ngOnInit() {
-
+        this.imagePath = GPPDComponent.updateUrl('/img/');
         this.load();
     }
 
@@ -140,6 +152,32 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         client.know_tags = null;
         return client;
     }
+
+    // images ----------
+
+      onComplete(id:string, response:any )
+      {
+        console.log("uploaded", response)
+        this.entity = response.response;
+        this.modify = false;
+        this.uploadError[id] = false;
+      }
+
+      onError(id:string, status:number)
+      {
+        console.log("error upload", status)
+        this.uploadError[id] = "L'image est trop grande.";
+        // if (response.status === 413) {
+        // }
+
+      }
+
+
+      changePhoto(id : number) {
+        // console.log(id)
+        this.modify = true;
+        // console.log(this.modify);
+      }
 
     // tags ------------
 

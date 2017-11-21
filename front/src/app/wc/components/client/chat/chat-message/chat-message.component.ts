@@ -34,7 +34,7 @@ export class ChatMessageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.avatarSrcBase =  GPPDComponent.updateUrl('/home/');
+    this.avatarSrcBase =  GPPDComponent.updateUrl('/img/');
 
     if (this.message.sender) {
       if (this.message.sender.id == this.clientId) {
@@ -52,7 +52,7 @@ export class ChatMessageComponent implements OnInit {
         }
     }
 
-    (this['msgContainerClass '] === "base-receive") ? this.incoming = true : this.incoming = false;
+    (this['msgContainerClass'] === "base-receive") ? this.incoming = true : this.incoming = false;
 
 
   }

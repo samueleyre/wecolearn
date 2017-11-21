@@ -18,3 +18,8 @@ findTag:
     prefix:   api
     resource: '@WcBundle/Controller/TagController.php'
 
+upload:
+    type:     rest
+    prefix:   api
+    resource: '@WcBundle/Controller/UploadController.php'
+

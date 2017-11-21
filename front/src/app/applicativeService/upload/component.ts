@@ -44,7 +44,7 @@ export class UploadComponent {
       this.emitter.subscribe( (filename: string ) => {
           this.uploader = new FileUploader(
               {
-                  url: environment.origin + url + '?employeId='+filename,
+                  url: environment.origin + url,
                   headers : this.headerBag.get([]),
               });
 

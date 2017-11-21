@@ -9,37 +9,35 @@ import {Message} from "../entities/message/entity";
 @Injectable()
 export class ClientService {
 
-    private currentClient = new Subject<Client>();
-    private endpoint: string;
+  private currentClient = new Subject<Client>();
+  private endpoint: string;
 
 
-    constructor(private http: Http) {
-        this.endpoint = '/api/client';
-    }
+  constructor(private http: Http) {
+      this.endpoint = '/api/client';
+  }
 
-    get(api : boolean = false): Observable<Client> {
+  get(api : boolean = false): Observable<Client> {
 
-        return this.currentClient.asObservable();
+      return this.currentClient.asObservable();
 
-    }
+  }
+
+  pull(): Observable<Array<Message>>  { // TODO : probably check for any kind of update, if other
+  return this.http.get('/api/checknewmessage')
+    .map((response: Response) => {
+      return response.json();
+    });
+  }
 
 
-    load(): Observable<string>  {
-        console.log('Clientservice called')
-        return this.http.get(`${this.endpoint}`)
-            .map((response: Response) => {
-                console.log("client response", response)
-                this.currentClient.next(response.json()[0]);// TODO :  should not be an array
-                return 'loaded';
-            });
-    }
-
-    // loadMessages(): void{
-    //
-    //     joinedMessages.map( (message: Message) => messagesService.addMessage(message) )
-    //
-    //
-    // }
+  load(): Observable<string>  {
+      return this.http.get(`${this.endpoint}`)
+          .map((response: Response) => {
+              this.currentClient.next(response.json()[0]);// TODO :  should not be an array
+              return 'loaded';
+          });
+  }
 
 
 

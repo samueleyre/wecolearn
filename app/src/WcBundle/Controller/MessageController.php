@@ -74,19 +74,36 @@ class MessageController extends GPPDController
             ->getRepository(Client::class)
             ->findOneBy(["user"=>$user]);
 
-        if ($lastMessageUpdate = $this->getDoctrine()
-            ->getRepository(Message::class)
-            ->getLastMessageUpdate($client)) {
 
-            $client->setClientUpdated(new \DateTime($lastMessageUpdate));
+        try {
 
-            $this->get("client.service")->patch($client, false, false);
+            if ($lastMessages = $this->getDoctrine()
+                ->getRepository(Message::class)
+                ->getLastMessages($client)) {
 
 
-            return $client;
-        } else {
+                $newDate = $lastMessages[count($lastMessages)-1]->getCreated();
+
+
+//                $newDate = new \DateTime($lastMessages[count($lastMessages)-1]->getCreated());
+                $client->setClientUpdated($newDate);
+
+                $this->get("client.service")->patch($client, false, false);
+
+                return $lastMessages;
+
+//                return $client;
+            } else {
+                return null;
+            }
+
+        } catch (\Exception $e) {
             return null;
         }
+
+
+
+
 
     }
 
@@ -120,6 +137,7 @@ class MessageController extends GPPDController
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
         $message->setCreated($date);
 
+
         $this->get('message.service')->postMessage($message);
 
 
@@ -132,23 +150,35 @@ class MessageController extends GPPDController
     }
 
     
-//    /**
-//    * @Patch("/message")
-//    * @ParamConverter(
-//            "message",
-//            class="WcBundle\Entity\Message",
-//            converter="fos_rest.request_body",
-//            options={"deserializationContext"={"groups"={"input"} } }
-//      )
-//	*/
-//    public function patchMessageAction( Message $message, Request $request )
-//    {
-//
-//        return $this
-//            ->get('message.service')
-//            ->patch($message);
-//
-//    }
+    /**
+    * @Patch("/messages")
+    * @ParamConverter(
+            "messages",
+            class="array<WcBundle\Entity\Message>",
+            converter="fos_rest.request_body",
+            options={"deserializationContext"={"groups"={"input"} } }
+      )
+	*/
+    public function patchMessagesAction( array $messages)
+    {
+
+        foreach ($messages as $message) {
+
+            $oldMessage = $this->getDoctrine()
+                ->getRepository(Message::class)
+                ->findOneBy(["id"=>$message->getId()]);
+
+            $oldMessage->setMessage($message->getMessage());
+            $oldMessage->setIsRead($message->getIsRead());
+            $oldMessage->setUpdated($date = new \DateTime("now", new \DateTimeZone('Europe/Paris')));
+
+            $this
+                ->get('message.service')
+                ->patch($oldMessage);
+
+        }
+
+    }
 //
 //    /**
 //    * @Delete("/message/{id}")

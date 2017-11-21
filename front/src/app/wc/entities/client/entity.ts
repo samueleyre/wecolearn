@@ -2,6 +2,7 @@ import { IEntity } from './../../entity/interface';
 import { Entity } from './../../entity/entity';
 import { Tag } from './../../entities/tag/entity';
 import { Message } from './../../entities/message/entity';
+import { Image } from './../../entities/image/entity';
 
 export class Client extends Entity implements IEntity  {
 
@@ -27,12 +28,13 @@ export class Client extends Entity implements IEntity  {
 	public sent_messages: Array<Message>;
 	public received_messages: Array<Message>;
 	public avatarSrc : string;
+	public image : Image;
 
 
 
-	constructor() {
+	constructor(id?: number) {
 		super();
-		this.id = null;
+		this.id = id || null;
 		this.user = {
             username: '',
             email: ''
@@ -49,10 +51,11 @@ export class Client extends Entity implements IEntity  {
 		this.teach_tags = null;
 		this.tags = [];
 		this.messages = [];
-    	this.sent_messages = null;
-    	this.received_messages = null;
-        this.latitude = null;
-        this.longitude = null;
-        this.avatarSrc = "lesbricodeurs-200px.png";
+		this.sent_messages = null;
+		this.received_messages = null;
+		this.latitude = null;
+		this.longitude = null;
+		this.avatarSrc = "lesbricodeurs-200px.png";
+		this.image = null;
     }
 }

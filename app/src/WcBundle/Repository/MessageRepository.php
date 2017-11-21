@@ -59,14 +59,28 @@ class MessageRepository extends EntityRepository
         return $this->getEntityManager()->createQueryBuilder()->
         select('entity.created')->
         from(sprintf('%s', 'WcBundle:Message' ),'entity')->
-        where( 'entity.sender = :client or entity.receiver = :client')->setParameter('client',$client )->
-//        andWhere( 'entity.created > :update')->setParameter('update', $client->getClientUpdated())->
+        where( 'entity.receiver = :client')->setParameter('client',$client )->
+        andWhere( 'entity.created > :update')->setParameter('update', $client->getClientUpdated())->
         orderBy('entity.created', 'DESC')->
         setMaxResults(1)->
         getQuery()->
         getSingleScalarResult();
 
     }
+
+     public function getLastMessages (Client $client) {
+
+            return $this->getEntityManager()->createQueryBuilder()->
+            select('entity')->
+            from(sprintf('%s', 'WcBundle:Message' ),'entity')->
+            where( 'entity.receiver = :client')->setParameter('client',$client )->
+            andWhere( 'entity.created > :update')->setParameter('update', $client->getClientUpdated())->
+            orderBy('entity.created', 'DESC')->
+            setMaxResults(10)->
+            getQuery()->
+            getResult();
+
+        }
 
 
 }

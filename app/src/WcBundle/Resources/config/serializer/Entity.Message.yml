@@ -12,6 +12,8 @@ WcBundle\Entity\Message:
           groups: [ input, output ]
         sender:
           groups: [ input, output ]
+        isRead:
+          groups: [ input, output ]
 
 
 

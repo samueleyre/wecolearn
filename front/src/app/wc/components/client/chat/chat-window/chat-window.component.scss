@@ -130,6 +130,9 @@
       @extend .col-xs-10;
     }
     .panel-buttons-container {
+      span{
+        float: right;
+      }
       @extend .col-md-2;
       @extend .col-xs-2;
     }

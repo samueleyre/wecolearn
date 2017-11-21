@@ -28,6 +28,19 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <div *ngIf="entity.image">
+                        <div [hidden]="modify">
+                            <img width="100px" src="{{imagePath}}{{entity.image.filename}}" alt="">
+                            <button (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <upload *ngIf="modify"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
+                    </div>
+                    <upload *ngIf="!entity.image"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
+                    <div *ngIf="uploadError[entity.id]" class="alert alert-danger">{{uploadError[entity.id]}}</div>
+                </div>
+
                 <!-- Text input-->
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !learnTags.valid }">
                     <label class="col-md-6 control-label" for="learnTags">Ce que je veux apprendre</label>

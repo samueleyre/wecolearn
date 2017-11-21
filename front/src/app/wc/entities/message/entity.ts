@@ -11,7 +11,7 @@ export class Message extends Entity implements IEntity  {
 
     id: number;
     created: Date;
-    isRead: boolean;
+    is_read: boolean;
     sender: Client;
     message: string;
     receiver : Client;
@@ -20,7 +20,7 @@ export class Message extends Entity implements IEntity  {
     constructor(obj?: any) {
         super();
         this.id              = obj && obj.id              || null;
-        this.isRead          = obj && obj.isRead          || false;
+        this.is_read          = obj && obj.is_read          || false;
         this.created       = obj && obj.created          || new Date();
         this.sender          = obj && obj.sender          || null;
         this.message          = obj && obj.message            || null;

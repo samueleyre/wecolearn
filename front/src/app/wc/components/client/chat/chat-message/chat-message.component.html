@@ -3,7 +3,7 @@
 
   <div class="avatar"
        *ngIf="incoming">
-    <img src="{{avatarSrcBase}}{{message.sender.avatarSrc}}">
+    <img width="40px" height="40px" src="{{avatarSrcBase}}{{message.sender.image.filename}}">
   </div>
 
   <div class="messages"

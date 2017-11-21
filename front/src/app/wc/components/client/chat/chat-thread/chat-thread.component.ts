@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { ThreadsService } from './../../../../service/threads.service';
 import { Thread } from '../../../../entities/thread/entity';
 import {GPPDComponent} from "../../../../component/gppd";
+import {MessagesService} from "../../../../service/messages";
 
 @Component({
   selector: 'chat-thread',
@@ -19,14 +20,15 @@ export class ChatThreadComponent implements OnInit {
   @Input() thread: Thread;
   selected = false;
   private avatarSrcBase : string;
+  private baseImageName : string = "lesbricodeurs-200px.png";
 
 
-  constructor(public threadsService: ThreadsService) {
+  constructor(public threadsService: ThreadsService, private messagesService: MessagesService ) {
   }
 
   ngOnInit(): void {
 
-    this.avatarSrcBase =  GPPDComponent.updateUrl('/home/');
+    this.avatarSrcBase =  GPPDComponent.updateUrl('/img/');
     this.threadsService.currentThread
       .subscribe( (currentThread: Thread) => {
         this.selected = currentThread &&
@@ -36,7 +38,8 @@ export class ChatThreadComponent implements OnInit {
   }
 
   clicked(event: any): void {
-    this.threadsService.setCurrentThread(this.thread);
     event.preventDefault();
+    this.threadsService.setCurrentThread(this.thread);
+    this.messagesService.pushUpdatedMessages().subscribe();
   }
 }

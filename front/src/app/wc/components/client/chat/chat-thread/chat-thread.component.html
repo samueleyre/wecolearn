@@ -1,7 +1,9 @@
 <div class="media conversation">
   <div class="pull-left">
-    <img class="media-object avatar"
+    <img *ngIf="thread.avatarSrc" class="media-object avatar"
          src="{{avatarSrcBase}}{{thread.avatarSrc}}">
+    <img *ngIf="!thread.avatarSrc" class="media-object avatar"
+         src="{{avatarSrcBase}}{{baseImageName}}">
   </div>
   <div class="media-body">
     <h5 class="media-heading contact-name">{{thread.name}}

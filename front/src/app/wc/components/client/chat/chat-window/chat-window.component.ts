@@ -43,7 +43,7 @@ export class ChatWindowComponent implements OnInit {
     this.draftMessage = new Message();
 
     this.threadsService.currentThread.subscribe(
-      (thread: Thread) => {
+      (thread: Thread) => {        console.log("chosen !!", thread)
         this.currentThread = thread;
       });
 
@@ -57,10 +57,16 @@ export class ChatWindowComponent implements OnInit {
       .subscribe(
         (messages: Array<Message>) => {
           setTimeout(() => {
-            this.scrollToBottom();
+            if( this.currentThread.id ) {
+              this.scrollToBottom();
+            }
           });
         });
+
+    this.messagesService.initTimer();
+
   }
+
 
   onEnter(event: any): void {
     this.sendMessage();
@@ -68,16 +74,15 @@ export class ChatWindowComponent implements OnInit {
   }
 
   sendMessage(): void {
-    this.draftMessage.receiver = new Client();
-    this.draftMessage.receiver.id = this.currentThread.id;
-    this.draftMessage.isRead = false;
+    this.draftMessage.receiver= new Client(this.currentThread.id);
+    this.draftMessage.is_read = false;
     this.messagesService.sendMessage(this.draftMessage)
-        .subscribe(answer => {
-          this.draftMessage.sender = this.currentUser;
-          this.draftMessage.thread = this.currentThread;
-          this.messagesService.addMessage(this.draftMessage);
-          this.draftMessage = new Message();
-        });
+      .subscribe(answer => {
+        this.draftMessage.sender = new Client(this.currentUser.id);
+        this.draftMessage.thread = new Thread(this.currentThread.id, this.currentThread.name, this.currentThread.avatarSrc);
+        this.messagesService.addMessage(this.draftMessage);
+        this.draftMessage = new Message();
+      });
   }
 
   scrollToBottom(): void {
@@ -87,7 +92,23 @@ export class ChatWindowComponent implements OnInit {
   }
 
 
-    draftMessageChange(event: any) {
-      // console.log("change", event, this.draftMessage)
-    }
+  draftMessageChange(event: any) {
+    // console.log("change", event, this.draftMessage)
+  }
+
+  ngOnExit(): void {
+
+    this.stopStream();
+  }
+
+  closeChat() : void {
+
+    this.currentThread = new Thread;
+
+  }
+
+  stopStream() :void {
+
+    this.messagesService.stopNewMessageLoop();
+  }
 }

@@ -7,7 +7,7 @@ import {ClientService} from "./client";
 import {Http, Response} from "@angular/http";
 import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import { TimerObservable } from "rxjs/observable/TimerObservable";
-
+import {EmptyObservable} from 'rxjs/observable/EmptyObservable';
 
 import * as _ from 'lodash';
 
@@ -39,6 +39,8 @@ export class MessagesService {
 
   private sentMessages: Array<Message>;
   private receivedMessages: Array<Message>;
+
+  messagesToUpdate: Array<Message> = [];
 
 
     // action streams
@@ -94,8 +96,9 @@ export class MessagesService {
             // note that we're manipulating `message` directly here. Mutability
             // can be confusing and there are lots of reasons why you might want
             // to, say, copy the Message object or some other 'immutable' here
-            if (message.thread.id === thread.id) {
-              message.isRead = true;
+            if (message.thread.id === thread.id && message.is_read === false) {
+              message.is_read = true;
+              this.addMessageToUpdate(message);
             }
             return message;
           });
@@ -107,7 +110,32 @@ export class MessagesService {
 
   // an imperative function call to this action stream
   addMessage(message: Message): void {
+    // console.log("adding message", message)
     this.newMessages.next(message);
+  }
+
+  addMessageToUpdate(message: Message): void {
+    console.log("add to be updated", message)
+    this.messagesToUpdate.push(message);
+  }
+
+  pushUpdatedMessages(): Observable<void> {
+
+    console.log("going to be sent", this['messagesToUpdate'])
+    if (this.messagesToUpdate.length > 0) {
+      return this.http.patch(`/api/messages`, this.messagesToUpdate).map((response: Response) => {
+        console.log(response.json());
+        this.messagesToUpdate = [];
+      });
+
+
+    } else {
+
+      return Observable.of(null);
+
+    }
+
+
   }
 
   sendMessage(message: Message): Observable<Message> {
@@ -118,6 +146,16 @@ export class MessagesService {
 
 
   }
+
+  updateMessage(message: Message): Observable<void> { // todo : can be used to edit old message also
+
+    return this.http.patch(`/api/message`, message).map((response: Response) => {
+        console.log(response.json());
+    });
+
+
+  }
+
 
   messagesForThreadUser(thread: Thread, user: Client): Observable<Message> {
     return this.newMessages
@@ -137,40 +175,45 @@ export class MessagesService {
 
       this.getMessages();
 
-      let period = 10000;
-
-      TimerObservable.create(10000, period)
-          .takeWhile(() => this.alive) // only fires when component is alive
-          .subscribe(() => {
-              this.checkNewMessages().subscribe();
-          });
-
   }
 
-  private checkNewMessages() : Observable<void> {
+  public initTimer() : void {
+    let period = 10000;
 
-      return this.http.get('/api/checknewmessage')
-          .map((response: Response) => {
-              if (response) {
-              console.log("client response", response.json())
-                  this.sentMessages = response.json().sent_messages;
-                  this.receivedMessages = response.json().received_messages;
-                  this.generateMessages();
-              }
-          });
+    TimerObservable.create(10000, period)
+      .takeWhile(() => this.alive) // only fires when component is alive
+      .subscribe(() => {
+        this.checkNewMessages();
+      });
+  }
 
+  private checkNewMessages() : void {
+
+    this.ClientService.pull()
+      .subscribe(
+        (messages: Array<Message>) => {
+          _.sortBy(messages, (m: Message) => m.created)
+            .map((message: Message) => {
+              message.thread = new Thread(message.sender.id, message.sender.first_name, (message.sender.image) ? message.sender.image.filename : null);
+              this.addMessage(message);
+            });
+        });
   }
 
   private getMessages() :void {
       this.ClientService.get()
           .subscribe(
-              (user: Client) => {
-                  console.log("client Service", user)
-                  this.sentMessages = user.sent_messages;
-                  this.receivedMessages = user.received_messages;
-                  this.generateMessages();
-              });
+            (user: Client) => {
+              // console.log("client Service", user)
+              if (user) {
+                this.sentMessages = user.sent_messages;
+                this.receivedMessages = user.received_messages;
+                this.generateMessages();
+              }
+            });
+
   }
+
 
   private generateThreadAndAddMessage(senderOrReceiver: string) {
 
@@ -187,7 +230,7 @@ export class MessagesService {
         this[typeOfMessage].map( (message: Message) => {
 
                 if(  Object.keys(threads).length === 0 || (Object.keys(threads).indexOf(message[senderOrReceiver].id) === -1)) {
-                    let thread = new Thread(message[senderOrReceiver].id, message[senderOrReceiver].first_name, message[senderOrReceiver].avatarSrc);
+                    let thread = new Thread(message[senderOrReceiver].id, message[senderOrReceiver].first_name, (message[senderOrReceiver].image) ? message[senderOrReceiver].image.filename : null);
                     threads[message[senderOrReceiver].id] = thread;
                     message.thread = thread;
                 } else {
@@ -200,6 +243,9 @@ export class MessagesService {
   }
 
   private generateMessages() {
+
+    this.messages = new EmptyObservable();
+    // console.log("messages", this['messages'])
 
     let messagestoBeAdded: Array<Message> = [];
 
@@ -214,13 +260,17 @@ export class MessagesService {
       messagestoBeAdded = this.sentMessages.concat(this.receivedMessages);
 
       // let sorted =
-          _.sortBy(messagestoBeAdded, (m: Message) => m.id)
+          _.sortBy(messagestoBeAdded, (m: Message) => m.created)
           .map((message: Message) => {
           this.addMessage(message)
       });
 
           console.log("what is wrong with the time ?", new Date())
-      // console.log("these should be ordered", sorted)
+      // console.log("these should be ordered", messagestoBeAdded)
+  }
+
+  public stopNewMessageLoop() {
+    this.alive = false;
   }
 
 }

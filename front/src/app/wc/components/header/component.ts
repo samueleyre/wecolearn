@@ -81,6 +81,7 @@ export class HeaderComponent implements OnInit {
                     [currentThread, messages] )
 
             .subscribe(([currentThread, messages]: [Thread, Message[]]) => {
+            		let oldValue = this['unreadMessagesCount'];
                 this.unreadMessagesCount =
                     _.reduce(
                         messages,
@@ -91,12 +92,14 @@ export class HeaderComponent implements OnInit {
                             // note: in a "real" app you should also exclude
                             // messages that were authored by the current user b/c they've
                             // already been "read"
-                            if (m && !m.isRead && !messageIsInCurrentThread) {
+                            if (m && !m.is_read && !messageIsInCurrentThread) {
                                 sum = sum + 1;
                             }
                             return sum;
                         },
                         0);
+                console.log("diff", oldValue, this['unreadMessagesCount'])
+
             });
 
 

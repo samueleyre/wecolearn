@@ -59,7 +59,11 @@ export class ThreadsService {
               // .sortBy(messages, (m: Message) => m.created).reverse()
             .map((message: Message) => {
               // console.log("currentThreadMessages ", message, this.currentThread)
-              message.isRead = true; // TODO : should be on server side !
+              if (message.is_read === false && message.thread.id !== message.receiver.id) {
+                console.log("FUU")
+                message.is_read = true;
+                this.messagesService.addMessageToUpdate(message);
+              }
               return message; })
             .value();
         } else {
