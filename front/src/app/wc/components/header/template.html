@@ -1,24 +1,63 @@
-<nav class="navbar navbar-toggleable-sm navbar-inverse fixed-top">
-    <a class="navbar-brand" routerLink="/">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a *ngIf="connected" class="navbar-brand" routerLink="/search">
         <img width="37px" src="{{logoPath}}" alt="">
     </a>
-    <div class="collapse navbar-collapse" id="navbar">
-      <ul class="navbar-nav mr-auto" style="padding-top: 0.4rem;">
-        <li *ngIf="connected" >
-          <a routerLink="/">Déconnexion</a>
-        </li>
-        <li *ngIf="connected">
-          <button class="btn btn-primary" type="button">
-              <i class="fa fa-bell"></i> <span class="badge">{{ unreadMessagesCount }}</span>
-          </button>
-        </li>
-        <li *ngIf="!connected" >
-          <a routerLink="/subscribe">Connexion</a>
-        </li>
-      </ul>
-        <span *ngIf="connected && bo" class="navbar-text">
-          Administration
-        </span>
+    <a *ngIf="!connected" class="navbar-brand" routerLink="/">
+        <img width="37px" src="{{logoPath}}" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul  *ngIf="connected" class="navbar-nav mr-auto">
+            <li class="nav-item" >
+                <form class="form-inline my-2 my-lg-0">
+                    <searchBar></searchBar>
+                </form>
+            </li>
+            <li class="nav-item" style="margin-left: 1rem;" >
+                <a id="filter-tag" data-selected="true" class="btn rounded-left" (click)="chooseSearchBarType('tag')" ><i class="fa fa-book" aria-hidden="true"></i></a>
+            </li>
+            <li class="nav-item" >
+                <label class="switch">
+                    <input id="searchBarTypeCheckbox" type="checkbox"  [(ngModel)]="searchBarTypeChecked" (click)="chooseSearchBarType((searchBarType==='tag')?'map':'tag')">
+                    <span class="slider round"></span>
+                </label>
+            </li>
+            <li class="nav-item" >
+                <a id="filter-map" class="btn rounded-right" (click)="chooseSearchBarType('map')"><i class="fa fa-map-o" aria-hidden="true"></i></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li *ngIf="connected" ngbDropdown  id="notifications" class="nav-item d-inline-block">
+                <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>
+                   <i class="fa fa-bell"></i> <span class="badge">{{ unreadMessagesCount }}</span>
+                </a>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                </div>
+            </li>
+            <li *ngIf="connected" ngbDropdown  id="parameters" class="nav-item d-inline-block">
+                <a class="nav-link dropdown-toggle" id="dropdownParameters" ngbDropdownToggle>
+                </a>
+                <div ngbDropdownMenu aria-labelledby="dropdownParameters">
+                    <a class="nav-link dropdown-item" routerLink="/settings">Paramètres</a>
+                    <a class="nav-link dropdown-item" routerLink="/login">Déconnexion</a>
+                </div>
+            </li>
+            <li *ngIf="!connected" ngbDropdown  class="nav-item d-inline-block">
+                <a class="nav-link dropdown-toggle" id="dropDownSignIn" ngbDropdownToggle>
+                    <span>Connexion / Inscription</span>
+                </a>
+                <div ngbDropdownMenu aria-labelledby="dropDownSignIn">
+                    <a class="dropdown-item" routerLink="/subscribe">Inscription</a>
+                    <a class="dropdown-item" routerLink="/login">Connexion</a>
+                </div>
+            </li>
+            <li *ngIf="connected && bo"  class="nav-item">
+                <a class="nav-link disabled" href="#">Administration</a>
+            </li>
+        </ul>
     </div>
 </nav>
 <message></message>

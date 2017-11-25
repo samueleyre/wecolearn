@@ -60,7 +60,6 @@ export class ThreadsService {
             .map((message: Message) => {
               // console.log("currentThreadMessages ", message, this.currentThread)
               if (message.is_read === false && message.thread.id !== message.receiver.id) {
-                console.log("FUU")
                 message.is_read = true;
                 this.messagesService.addMessageToUpdate(message);
               }

@@ -73,7 +73,7 @@ export class SubscribeComponent implements OnInit {
                         // login successful
                         // console.log(result);
                         this.loading = false;
-                        this.router.navigate(['/profil/search']);
+                        this.router.navigate(['/settings']);
                     }
                 },
                 error => {

@@ -18,12 +18,14 @@ import { ThreadsService } from './../../service/threads.service';
 import { Thread } from '../../entities/thread/entity';
 import { Message } from '../../entities/message/entity';
 import {ChatExampleData} from "../client/chat/data/chat-example-data";
+import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
 	selector : 'wc-header',
 	templateUrl : 'template.html',
-	styleUrls : ['style.scss']
+	styleUrls : ['style.scss'],
+	providers : [NgbDropdownConfig]
 })
 
 @Injectable()
@@ -31,19 +33,24 @@ export class HeaderComponent implements OnInit {
 
     private location: Location;
     private logoPath: string;
-	private baseUrl: string;
-	private connected: boolean;
+		private baseUrl: string;
+		private connected: boolean;
     unreadMessagesCount: number;
+    private searchBarType: string = "tag";
+	  private searchBarTypeChecked : any = false;
 
 
-    constructor( private http : Http,
+  constructor( private http : Http,
 				 private router: Router,
 				 location: Location,
 				 @Inject(APP_BASE_HREF) r:string,
                  public messagesService: MessagesService,
                  public threadsService: ThreadsService,
-                 public ClientService: ClientService
+                 public ClientService: ClientService ,
+                 private config: NgbDropdownConfig
 	) {
+
+        config.placement = 'bottom-right';
         this.location = location;
         this.baseUrl = r;
         // ChatExampleData.init(messagesService, threadsService, ClientService);
@@ -54,6 +61,25 @@ export class HeaderComponent implements OnInit {
 	ngOnInit() {
 		this.load();
 	}
+
+	chooseSearchBarType(choice: string) {
+
+
+				if (this['searchBarType'] !== choice) {
+					document.getElementById("filter-"+choice).setAttribute("data-selected", "true");
+					let otherChoice:string = choice === "tag" ? "map" : "tag";
+					document.getElementById("filter-"+otherChoice).setAttribute("data-selected", "false");
+          this.searchBarTypeChecked = choice === "map";
+					this.searchBarType = choice;
+				}
+
+	}
+
+  // toggleSearchBarType() {
+	// 		let otherChoice:string = this['searchBarType'] === "tag" ? "map" : "tag";
+  	//
+	// }
+
 
 	load() {
 
@@ -105,8 +131,12 @@ export class HeaderComponent implements OnInit {
 
 	}
 
-    loadClient() {
+	loadClient() {
         this.ClientService.load().subscribe();
+	}
+
+	preventDefault(e:any) {
+    	e.preventDefault();
 	}
 
 

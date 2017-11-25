@@ -33,7 +33,7 @@ class Selection
     /**
      * @ORM\Column(type="boolean",name="selected")
      */
-    public $selected = false;
+    public $selected = false; // false means banned from view, true means saved for later
 
 
     /**

@@ -12,13 +12,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 
 import {
-    // MaterialModule,
     MatNativeDateModule}             from '@angular/material';
 
 import { MomentModule }             from 'angular2-moment';
 
 import { ChartsModule }             from 'ng2-charts';
-import { BsDropdownModule }         from 'ngx-bootstrap';
+// import { BsDropdownModule }         from 'ngx-bootstrap';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 
 import { ApplicativeModule }        from './../applicativeService/module';
@@ -64,6 +63,7 @@ import { BootstrapModalModule, Modal, bootstrap4Mode } from 'ngx-modialog/plugin
 
 import {ScrollToModule} from 'ng2-scroll-to';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 
 
 import { ClientService } from './service/client';
@@ -76,9 +76,13 @@ import { ChatThreadsComponent } from './components/client/chat/chat-threads/chat
 import { ChatWindowComponent } from './components/client/chat/chat-window/chat-window.component';
 import { FromNowPipe } from './service/from-now.pipe';
 
+import { SearchBarComponent} from './components/client/searchBar/component';
+
+import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports:[
+    NgbModule,
     PrRoutingModule,
     BrowserModule,
     CommonModule,
@@ -93,7 +97,7 @@ import { FromNowPipe } from './service/from-now.pipe';
     RouterModule,
     ApplicativeModule,
     CacheUrlModule,
-    BsDropdownModule,
+    // BsDropdownModule,
     QuillModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
@@ -106,6 +110,7 @@ import { FromNowPipe } from './service/from-now.pipe';
     }),
     TagInputModule,
     BrowserAnimationsModule,
+    NguiAutoCompleteModule,
 
   ],
   exports : [
@@ -116,6 +121,7 @@ import { FromNowPipe } from './service/from-now.pipe';
       MentionsComponent,
       CopyComponent,
       GeolocationComponent,
+    SearchBarComponent
   ],
   declarations: [
     HeaderComponent,
@@ -134,7 +140,8 @@ import { FromNowPipe } from './service/from-now.pipe';
     ChatThreadComponent,
     ChatThreadsComponent,
     ChatWindowComponent,
-    FromNowPipe
+    FromNowPipe,
+    SearchBarComponent
 
   ],
   providers : [

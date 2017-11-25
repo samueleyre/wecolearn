@@ -57,7 +57,7 @@ button:focus{
 input.ng-invalid  {
     border-left: 5px solid #a94442; /* red */
 }
-input.ng-valid.ng-dirty, .ng-valid .ql-editor {
+form input.ng-valid.ng-dirty, .ng-valid .ql-editor {
     border-left: 5px solid #1ca900; /* green */
 }
 

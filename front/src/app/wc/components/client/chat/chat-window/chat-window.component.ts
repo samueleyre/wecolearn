@@ -43,7 +43,7 @@ export class ChatWindowComponent implements OnInit {
     this.draftMessage = new Message();
 
     this.threadsService.currentThread.subscribe(
-      (thread: Thread) => {        console.log("chosen !!", thread)
+      (thread: Thread) => {
         this.currentThread = thread;
       });
 

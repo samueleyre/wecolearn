@@ -3,11 +3,13 @@ import { FormsModule }              from '@angular/forms';
 import { HttpModule }               from '@angular/http';
 import { NgModule }                 from '@angular/core';
 import { RouterModule, Routes }     from '@angular/router';
+
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
+
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { getBaseLocation } from './applicativeService/base_url/base_url';
 
-import { BsDropdownModule }         from 'ngx-bootstrap';
+// import { BsDropdownModule }         from 'ngx-bootstrap';
 import {UploadModule}           from './applicativeService/upload/module';
 
 import { MessageModule }       from './applicativeService/message/module';
@@ -49,7 +51,7 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         MessageModule,
         routing,
-        BsDropdownModule.forRoot(),
+        // BsDropdownModule.forRoot(),
         UploadModule,
       LoadersCssModule,
   ],

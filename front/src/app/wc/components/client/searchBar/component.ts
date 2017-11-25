@@ -21,21 +21,24 @@ import {log} from "util";
 
 
 @Component({
+    selector : 'searchBar',
     templateUrl: 'template.html',
     styleUrls : ['style.scss']
 })
 
 @Injectable()
-export class SearchComponent extends GPPDComponent implements OnInit {
+export class SearchBarComponent extends GPPDComponent implements OnInit {
 
 
-
+    private searchInput : string;
+    private searchAutoComplete : Array<Tag>;
 
     constructor( protected service: GPPDService) {
         super(service);
     }
 
     ngOnInit() {
+      this.searchAutoComplete = [new Tag(1, "test", 2), new Tag(2, "test2", 2)]
     }
 
 
@@ -48,7 +51,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     }
 
     onEnter() {
-        
+
     }
 
 

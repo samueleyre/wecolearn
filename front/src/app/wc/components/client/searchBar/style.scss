@@ -1,17 +1,9 @@
-@import './../../../../../../assets/scss/variables.scss';
+@import './../../../../../assets/scss/variables.scss';
 
-#possibleMatchesContainer{
-  .row{
-    //display: flex;
-    //align-content: space-around;
-    //flex-flow: row wrap;
-    .card{
-      padding: 1rem;
-      //margin-right: auto;
-    }
-  }
-
-
-
-
+#searchBar{
+  width: 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
 }
+

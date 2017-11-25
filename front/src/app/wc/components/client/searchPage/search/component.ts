@@ -11,6 +11,7 @@ import { NgForm }             from '@angular/forms';
 
 import { IEntity }                from './../../../../entity/interface';
 import { Client }                from './../../../../entities/client/entity';
+import { Thread }                from './../../../../entities/thread/entity';
 
 import { GPPDService }            from './../../../../service/gppd';
 import { GPPDComponent }          from './../../../../component/gppd';
@@ -18,6 +19,7 @@ import { GPPDComponent }          from './../../../../component/gppd';
 import { MessageService }         from './../../../../../applicativeService/message/service';
 import {FilterService}            from "../../../../../applicativeService/filter/service";
 import {log} from "util";
+import {ThreadsService} from "../../../../service/threads.service";
 
 
 @Component({
@@ -32,7 +34,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     private avatarSrcBase : string;
     private cards: any = null;
 
-    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute ) {
+    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute, public threadsService: ThreadsService, ) {
         super(service);
     }
 
@@ -57,6 +59,17 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     getEntity() {
         return new Client();
+    }
+
+    openThread(card : Client) {
+
+      if (false) { //thread exists
+
+      } else {
+          let thread = new Thread(card.id, card.first_name, card.image.filename)
+          this.threadsService.setCurrentThread(thread);
+
+      }
     }
 
 
