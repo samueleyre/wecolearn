@@ -23,3 +23,8 @@ upload:
     prefix:   api
     resource: '@WcBundle/Controller/UploadController.php'
 
+search:
+    type:     rest
+    prefix:   api
+    resource: '@WcBundle/Controller/SearchController.php'
+

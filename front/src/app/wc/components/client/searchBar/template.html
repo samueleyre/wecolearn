@@ -1,5 +1,5 @@
 <div class="input-group">
-    <input id="searchBar" class="form-control" auto-complete [(ngModel)]="searchInput" [source]="searchAutoComplete" />
-    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+    <input id="searchBar" autocomplete="off" class="form-control" auto-complete [(ngModel)]="searchInput" [source]="searchAutoComplete" (keyup.enter)="search()" />
+    <a class="input-group-addon" (click)="search()"><i class="fa fa-search"></i></a>
 </div>
 

@@ -11,23 +11,33 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul  *ngIf="connected" class="navbar-nav mr-auto">
-            <li class="nav-item" >
+            <li class="nav-item" > <!-- PUT ALL THIS IN A COMPONENT -->
                 <form class="form-inline my-2 my-lg-0">
                     <searchBar></searchBar>
                 </form>
             </li>
-            <li class="nav-item" style="margin-left: 1rem;" >
-                <a id="filter-tag" data-selected="true" class="btn rounded-left" (click)="chooseSearchBarType('tag')" ><i class="fa fa-book" aria-hidden="true"></i></a>
-            </li>
             <li class="nav-item" >
-                <label class="switch">
-                    <input id="searchBarTypeCheckbox" type="checkbox"  [(ngModel)]="searchBarTypeChecked" (click)="chooseSearchBarType((searchBarType==='tag')?'map':'tag')">
-                    <span class="slider round"></span>
-                </label>
+                <form class="form-inline my-2 my-lg-0">
+                    <cityBar></cityBar>
+                </form>
             </li>
-            <li class="nav-item" >
-                <a id="filter-map" class="btn rounded-right" (click)="chooseSearchBarType('map')"><i class="fa fa-map-o" aria-hidden="true"></i></a>
+            <li class="nav-item" style="width: 29%;" >
+                <a class="btn nav-link">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                </a>
             </li>
+            <!--<li class="nav-item" style="margin-left: 1rem;" >-->
+                <!--<a id="filter-tag" data-selected="true" class="btn rounded-left" (click)="chooseSearchBarType('tag')" ><i class="fa fa-book" aria-hidden="true"></i></a>-->
+            <!--</li>-->
+            <!--<li class="nav-item" >-->
+                <!--<label class="switch">-->
+                    <!--<input id="searchBarTypeCheckbox" type="checkbox"  [(ngModel)]="searchBarTypeChecked" (click)="chooseSearchBarType((searchBarType==='tag')?'map':'tag')">-->
+                    <!--<span class="slider round"></span>-->
+                <!--</label>-->
+            <!--</li>-->
+            <!--<li class="nav-item" >-->
+                <!--<a id="filter-map" class="btn rounded-right" (click)="chooseSearchBarType('map')"><i class="fa fa-map-o" aria-hidden="true"></i></a>-->
+            <!--</li>-->
         </ul>
         <ul class="navbar-nav ml-auto">
             <li *ngIf="connected" ngbDropdown  id="notifications" class="nav-item d-inline-block">

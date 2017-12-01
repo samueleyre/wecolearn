@@ -16,8 +16,10 @@ import { GPPDService }            from './../../../service/gppd';
 import { GPPDComponent }          from './../../../component/gppd';
 
 import { MessageService }         from './../../../../applicativeService/message/service';
+import { SearchService }         from './../../../service/search';
 import {FilterService}            from "../../../../applicativeService/filter/service";
 import {log} from "util";
+import {SafeHtml} from "@angular/platform-browser";
 
 
 @Component({
@@ -31,14 +33,14 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
 
 
     private searchInput : string;
-    private searchAutoComplete : Array<Tag>;
+    private searchAutoComplete : Array<String>;
 
-    constructor( protected service: GPPDService) {
+    constructor( protected service: GPPDService, private searchService: SearchService) {
         super(service);
     }
 
     ngOnInit() {
-      this.searchAutoComplete = [new Tag(1, "test", 2), new Tag(2, "test2", 2)]
+      this.searchAutoComplete = ["php", "js"]
     }
 
 
@@ -50,8 +52,11 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
         return new Tag();
     }
 
-    onEnter() {
-
+    search() {
+        FilterService.addFilter("tag", this.searchInput);
+        this.searchService.search().subscribe(
+          () =>FilterService.clear()
+        );
     }
 
 

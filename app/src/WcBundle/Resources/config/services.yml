@@ -14,4 +14,7 @@ services:
   message.service:
     class: WcBundle\Service\MessageService
     arguments: ['@doctrine.orm.entity_manager']
+  search.service:
+    class: WcBundle\Service\SearchService
+    arguments: ['@doctrine.orm.entity_manager']
 

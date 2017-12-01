@@ -35,6 +35,7 @@ import { GPPDService }              from './service/gppd';
 import { GPPDFactory }              from './service/gppd.factory';
 
 import { PeriodService }            from './service/period';
+import { SearchService }            from './service/search';
 
 import { ClientComponent }            from './components/bo/clientsPage/client/component';
 import { SearchComponent }            from './components/client/searchPage/search/component';
@@ -77,6 +78,7 @@ import { ChatWindowComponent } from './components/client/chat/chat-window/chat-w
 import { FromNowPipe } from './service/from-now.pipe';
 
 import { SearchBarComponent} from './components/client/searchBar/component';
+import { CityBarComponent} from './components/client/cityBar/component';
 
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 
@@ -121,7 +123,8 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
       MentionsComponent,
       CopyComponent,
       GeolocationComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    CityBarComponent
   ],
   declarations: [
     HeaderComponent,
@@ -141,7 +144,8 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
     ChatThreadsComponent,
     ChatWindowComponent,
     FromNowPipe,
-    SearchBarComponent
+    SearchBarComponent,
+    CityBarComponent
 
   ],
   providers : [
@@ -154,6 +158,7 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
     MessagesService,
     PeriodService,
     ThreadsService,
+    SearchService
     // EvolutionService,
     //CacheUrlService,
   ],
