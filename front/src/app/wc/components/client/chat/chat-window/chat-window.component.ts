@@ -102,8 +102,8 @@ export class ChatWindowComponent implements OnInit {
   }
 
   closeChat() : void {
-
-    this.currentThread = new Thread;
+    console.log("close chat !")
+    this.currentThread = new Thread();
 
   }
 

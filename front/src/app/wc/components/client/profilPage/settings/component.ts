@@ -200,15 +200,15 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         'notAlphaNumeric': 'Le tag doit être alphanumerique.',
     };
 
-    public requestAutocompleteItems = (text: string): Observable<Response> => {
+    public requestAutocompleteItems = (text: string): Observable<Array<String>> => {
 
         return this.http.get(`/api/findTag?tagLetters=`+text).map((response: Response) => {
-            // console.log(response);
+            console.log(response);
             this.tags = response.json();
             let tags = this.tags.map(function(obj:any) {
                 return obj.name;
             });
-            // console.log(tags)
+            console.log(tags)
             return tags;
         })
         ;

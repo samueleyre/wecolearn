@@ -17,6 +17,7 @@ import { MessagesService } from './../../service/messages';
 import { ThreadsService } from './../../service/threads.service';
 import { Thread } from '../../entities/thread/entity';
 import { Message } from '../../entities/message/entity';
+import { Client } from '../../entities/client/entity';
 import {ChatExampleData} from "../client/chat/data/chat-example-data";
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 
@@ -38,16 +39,17 @@ export class HeaderComponent implements OnInit {
     unreadMessagesCount: number;
     private searchBarType: string = "tag";
 	  private searchBarTypeChecked : any = false;
-
+	  private notifications: Array<Message>;
+		private currentClient : Client;
 
   constructor( private http : Http,
 				 private router: Router,
 				 location: Location,
 				 @Inject(APP_BASE_HREF) r:string,
-                 public messagesService: MessagesService,
-                 public threadsService: ThreadsService,
-                 public ClientService: ClientService ,
-                 private config: NgbDropdownConfig
+				 public messagesService: MessagesService,
+				 public threadsService: ThreadsService,
+				 public ClientService: ClientService ,
+				 private config: NgbDropdownConfig
 	) {
 
         config.placement = 'bottom-right';
@@ -59,6 +61,10 @@ export class HeaderComponent implements OnInit {
 	}
 
 	ngOnInit() {
+  	this.ClientService.get().subscribe((client: Client )=> {
+  		console.log("got client", client)
+  		this.currentClient = client;
+		});
 		this.load();
 	}
 
@@ -74,11 +80,6 @@ export class HeaderComponent implements OnInit {
 				}
 
 	}
-
-  // toggleSearchBarType() {
-	// 		let otherChoice:string = this['searchBarType'] === "tag" ? "map" : "tag";
-  	//
-	// }
 
 
 	load() {
@@ -108,6 +109,7 @@ export class HeaderComponent implements OnInit {
 
             .subscribe(([currentThread, messages]: [Thread, Message[]]) => {
             		let oldValue = this['unreadMessagesCount'];
+            		this.notifications = [];
                 this.unreadMessagesCount =
                     _.reduce(
                         messages,
@@ -115,21 +117,25 @@ export class HeaderComponent implements OnInit {
                             const messageIsInCurrentThread: boolean = m.thread &&
                                 currentThread &&
                                 (currentThread.id === m.thread.id);
-                            // note: in a "real" app you should also exclude
-                            // messages that were authored by the current user b/c they've
-                            // already been "read"
-                            if (m && !m.is_read && !messageIsInCurrentThread) {
-                                sum = sum + 1;
+
+                            const messageIsFromUser: boolean = m.sender &&
+                                this.currentClient &&
+															  (m.sender.id === this.currentClient.id);
+
+                            if (m && !m.is_read && !messageIsInCurrentThread && !messageIsFromUser && m.sender) {
+                              this.notifications.push(m);
+                            	sum = sum + 1;
                             }
                             return sum;
                         },
                         0);
-                console.log("diff", oldValue, this['unreadMessagesCount'])
+                // console.log("diff", oldValue, this['unreadMessagesCount'])
 
             });
 
-
 	}
+
+
 
 	loadClient() {
         this.ClientService.load().subscribe();
@@ -138,6 +144,11 @@ export class HeaderComponent implements OnInit {
 	preventDefault(e:any) {
     	e.preventDefault();
 	}
+
+  activateNotification(thread: Thread): void {
+    this.threadsService.setCurrentThread(thread);
+    this.messagesService.pushUpdatedMessages().subscribe();
+  }
 
 
 

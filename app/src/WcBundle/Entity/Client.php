@@ -91,6 +91,8 @@ class Client
      */
     public $image;
 
+//todo :    , onDelete={} pour que le cascading delete fonctionne dans le cas des fixtures load notamment
+
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="clients", cascade={"persist", "merge"})
      * @ORM\JoinColumn(name="tagsIds", referencedColumnName="id", nullable=true)

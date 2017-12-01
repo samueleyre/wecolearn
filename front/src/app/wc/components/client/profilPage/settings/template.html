@@ -48,6 +48,7 @@
                         <tag-input id="learnTags" [modelAsStrings]="true" [(ngModel)]='entity.learn_tags' name="learnTags" #learnTags="ngModel"  [errorMessages]="errorMessages"
                                    [validators]="validators">
                             <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
+                            <!--<tag-input-dropdown [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']"></tag-input-dropdown>-->
                         </tag-input>
                     </div>
                 </div>

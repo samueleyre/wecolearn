@@ -36,7 +36,7 @@ class ClientRepository extends EntityRepository
                 }
                 $qb->andWhere( $condition );
             }
-            $qb->having('distance < 5');
+            $qb->having('distance < 1000');
             $qb->orderBy('distance', 'ASC');
             $qb->setMaxResults( 20 );
             $qb->groupBy('entity.id');

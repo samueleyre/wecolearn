@@ -37,6 +37,7 @@ export class MessagesService {
   // stored in `messages`)
   updates: Subject<any> = new Subject<any>();
 
+  private currentClient: Client;
   private sentMessages: Array<Message>;
   private receivedMessages: Array<Message>;
 
@@ -96,7 +97,7 @@ export class MessagesService {
             // note that we're manipulating `message` directly here. Mutability
             // can be confusing and there are lots of reasons why you might want
             // to, say, copy the Message object or some other 'immutable' here
-            if (message.thread.id === thread.id && message.is_read === false) {
+            if (message.thread.id === thread.id && message.is_read === false && message.sender && message.sender.id !== this.currentClient.id) {
               message.is_read = true;
               this.addMessageToUpdate(message);
             }
@@ -121,11 +122,11 @@ export class MessagesService {
 
   pushUpdatedMessages(): Observable<void> {
 
-    console.log("going to be sent", this['messagesToUpdate'])
     if (this.messagesToUpdate.length > 0) {
+    console.log("going to be sent", this['messagesToUpdate'])
       return this.http.patch(`/api/messages`, this.messagesToUpdate).map((response: Response) => {
         console.log(response.json());
-        this.messagesToUpdate = [];
+        // this.messagesToUpdate = [];
       });
 
 
@@ -206,6 +207,7 @@ export class MessagesService {
             (user: Client) => {
               // console.log("client Service", user)
               if (user) {
+                this.currentClient = user;
                 this.sentMessages = user.sent_messages;
                 this.receivedMessages = user.received_messages;
                 this.generateMessages();

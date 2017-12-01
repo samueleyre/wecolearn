@@ -75,6 +75,7 @@
   position: fixed;
   float: right;
   margin-left: 10px;
+  z-index: 100;
 
   .panel-container {
     @extend .col-xs-12;
