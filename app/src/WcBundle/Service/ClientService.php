@@ -122,19 +122,20 @@ class ClientService extends GPPDService {
     {
 
 
-//        return $this->insertNewTags($client->getTags());
+				//return $this->insertNewTags($client->getTags());
 
-        if ($addTags) {
+        if ( $addTags ) {
             $client->setTags($this->insertNewTags($client->getTags()));
         }
 
-        if($addUser) {
+				/*
+				if( $addUser ) {
             $client->setUser(
                 $this->em
                     ->getRepository(User::class)
                     ->find($client->getUser()->getId())
             );
-        }
+        }*/
 
 
         $this->em->merge( $client );
