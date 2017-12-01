@@ -118,7 +118,7 @@ class ClientService extends GPPDService {
 
     }
 
-    public function patch($client, $addTags = true, $addUser = true)
+    public function patch($client, $user = null, $addTags = true, $addUser = true)
     {
 
 
@@ -128,14 +128,15 @@ class ClientService extends GPPDService {
             $client->setTags($this->insertNewTags($client->getTags()));
         }
 
-				/*
 				if( $addUser ) {
             $client->setUser(
-                $this->em
-                    ->getRepository(User::class)
-                    ->find($client->getUser()->getId())
+                $user
             );
-        }*/
+        }
+
+				if( null === $client->getCreated()) {
+					$client->setCreated(new \Datetime());
+				}
 
 
         $this->em->merge( $client );

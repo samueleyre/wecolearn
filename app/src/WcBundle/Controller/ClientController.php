@@ -77,9 +77,9 @@ class ClientController extends GPPDController
 
 
     }
-    
 
-    
+
+
     /**
     * @Patch("/client")
     * @ParamConverter(
@@ -92,12 +92,14 @@ class ClientController extends GPPDController
     public function patchClientAction( Client $client, Request $request )
     {
 
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
         return $this
             ->get('client.service')
-            ->patch($client);
-            
+            ->patch($client,$user);
+
     }
-    
+
     /**
     * @Delete("/client/{id}")
     */
