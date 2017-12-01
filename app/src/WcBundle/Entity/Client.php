@@ -19,7 +19,7 @@ class Client
     public $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", cascade={"persist", "merge"})
      * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     public $user;
@@ -504,7 +504,7 @@ class Client
         $this->tags = $tags;
     }
 
-  
+
 
     /**
      * Set selection

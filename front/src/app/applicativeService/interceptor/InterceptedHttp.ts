@@ -1,12 +1,12 @@
 import { Injectable      }        from "@angular/core";
 import { Router }                 from '@angular/router';
-import { ConnectionBackend, 
-    RequestOptions, 
-    Request, 
-    RequestOptionsArgs, 
-    Response, 
-    ResponseOptions, 
-    Http, 
+import { ConnectionBackend,
+    RequestOptions,
+    Request,
+    RequestOptionsArgs,
+    Response,
+    ResponseOptions,
+    Http,
     Headers }                     from "@angular/http";
 import { Observable }             from "rxjs/Rx";
 import 'rxjs/add/operator/do'
@@ -19,15 +19,15 @@ import { HeaderBag }              from './header-bag';
 
 @Injectable()
 export class InterceptedHttp extends Http {
-    
-    constructor( backend: ConnectionBackend,defaultOptions: RequestOptions,public tokenService : TokenService, public router : Router , private headerBag : HeaderBag ) 
+
+    constructor( backend: ConnectionBackend,defaultOptions: RequestOptions,public tokenService : TokenService, public router : Router , private headerBag : HeaderBag )
     {
         super(backend, defaultOptions);
 
     }
 
     request( url: string | Request, options?: RequestOptionsArgs ): Observable<Response> {
-        
+
         return super
             .request( url, options )
             .catch( ( error: Response ) => {
@@ -48,7 +48,7 @@ export class InterceptedHttp extends Http {
             })
             .do((response: Response) => {
                 PaginationService.fromHeader( response.headers.get('X-Pagination') );
-                
+
             })
         ;
     }
@@ -89,10 +89,10 @@ export class InterceptedHttp extends Http {
         if (options.headers == null) {
             options.headers = new Headers();
         }
-        let headers = this.headerBag.get([]);    
+        let headers = this.headerBag.get([]);
         for( let i in headers ) {
                 options.headers.append( headers[i].name, headers[i].value);
-            
+
         }
 
         return options;
