@@ -18,13 +18,17 @@ class SearchService extends GPPDService {
 	}
 
 
-   public function search(Client $client, $filter) {
+   public function search(Client $client, $filter = null ) {
 
 	    $tag = null;
-        $latitude = null;
-        $longitude = null;
-	    if ($filter !== []) {
-	        if (array_key_exists ("tag", $filter) ){
+      $latitude = null;
+      $longitude = null;
+			$first = 0;
+			$max = 10;
+
+
+			if ( is_array( $filter) ) {
+	        	if (array_key_exists ("tag", $filter) ){
 	            $tagName = $filter["tag"];
 	            $tag = $this->em->getRepository(Tag::class)
                     ->findOneBy(["name"=>$tagName]);
@@ -33,20 +37,24 @@ class SearchService extends GPPDService {
 	            $latitude = $filter["latitude"];
 	            $longitude = $filter["longitude"];
             }
+
+						if( array_key_exists('first', $filter ) && array_key_exists('max', $filter )) {
+							$first = $filter['first'];
+							$max = $filter['max'];
+
+						}
         }
 
 
         if ($tag === null) {
             return $this->em
                 ->getRepository(Client::class)
-                ->findMatches($client, $latitude, $longitude);
+                ->findMatches($client, $first, $max, $latitude, $longitude);
         } else {
 
            return $this->em
                ->getRepository(Client::class)
-               ->search($tag, $client, $latitude, $longitude);
+               ->search($tag, $firts, $max, $client, $latitude, $longitude);
         }
-
-
-   }
+		}
 }

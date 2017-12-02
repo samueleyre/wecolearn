@@ -23,22 +23,21 @@ use AppBundle\Pagination\Annotation as Pagination;
 
 class TagController extends GPPDController
 {
-    
+
     protected $entityRef = 'WcBundle:Tag';
 
     // "options_tag" [OPTIONS] /tag
     public function optionTagAction()
     {
         return $this->optionAction();
-        
-    } 
-    
+
+    }
+
     /**
 	* @Get("findTag")
     */
     public function getTagAction( Request $request )
     {
-
 
         if ($tagLetters = $request->get("tagLetters")) {
             return $this->getDoctrine()
@@ -47,14 +46,5 @@ class TagController extends GPPDController
         } else {
             return "nothing";
         }
-
-
-
-
-	}
-    
-
-
-
-
+    }
 }

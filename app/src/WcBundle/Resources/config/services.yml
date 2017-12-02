@@ -18,3 +18,9 @@ services:
     class: WcBundle\Service\SearchService
     arguments: ['@doctrine.orm.entity_manager']
 
+#commands
+  client.tag.command:
+    class: WcBundle\Command\ClientTag
+    arguments: ['@doctrine.orm.entity_manager']
+    tags:
+      - { name: console.command }

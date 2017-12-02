@@ -8,10 +8,10 @@ class PaginationQuery {
 	public $perPage;
 	public $disabled;
 	public $count;
-	
+
 	public function __construct( $page, $perPage, $disabled = false ) {
 
-		syslog(LOG_ERR, $perPage);
+		//syslog(LOG_ERR, $perPage);
 
 		$this->page = $page;
 		$this->perPage = $perPage;

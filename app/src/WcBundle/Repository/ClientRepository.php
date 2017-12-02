@@ -10,10 +10,10 @@ use Doctrine\ORM\EntityRepository;
 
 class ClientRepository extends EntityRepository
 {
-    public function findMatches(Client $client, $startLatitude = null, $startLongitude = null)
+    public function findMatches( Client $client, $first = 0, $max = 10, $startLatitude = null, $startLongitude = null)
     {
 
-            if (!$startLatitude || !$startLongitude) {
+            if (! $startLatitude || ! $startLongitude ) {
                 $startLatitude = $client->getLatitude();
                 $startLongitude = $client->getLongitude();
             }
@@ -25,7 +25,7 @@ class ClientRepository extends EntityRepository
             $qb->addSelect(sprintf(' pow(69.1 * (entity.latitude - %s), 2) +
                 pow(69.1 * (%s - entity.longitude) * cos(entity.latitude / 57.3), 2) AS distance', $startLatitude, $startLongitude));
 
-            $qb->from(sprintf('%s', 'WcBundle:Client' ),'entity');
+            $qb->from( sprintf('%s', 'WcBundle:Client' ),'entity');
             $qb->innerJoin('entity.tags', 't');
             $qb->where( 'entity.id != :clientId')->setParameter('clientId', $client->getId() );
             $qb->andWhere( 't.type = :number'  )->setParameter('number', 0);
@@ -38,7 +38,8 @@ class ClientRepository extends EntityRepository
             }
             $qb->having('distance < 1000');
             $qb->orderBy('distance', 'ASC');
-            $qb->setMaxResults( 20 );
+            $qb->setFirstResult( $first );
+            $qb->setMaxResults( $max );
             $qb->groupBy('entity.id');
 
             $ret = $qb->getQuery()->getResult();
@@ -46,7 +47,7 @@ class ClientRepository extends EntityRepository
             return $ret;
     }
 
-    public function search(Tag $tag, Client $client = null, $startLatitude = null, $startLongitude = null)
+    public function search(Tag $tag, $first = 0, $max = 10, Client $client = null, $startLatitude = null, $startLongitude = null)
     {
 
         if (!$startLatitude || !$startLongitude) {
@@ -68,7 +69,8 @@ class ClientRepository extends EntityRepository
         }
         $qb->having('distance < 20');
         $qb->orderBy('distance', 'ASC');
-        $qb->setMaxResults( 20 );
+        $qb->setFirstResult( $first );
+        $qb->setMaxResults( $max );
         $qb->groupBy('entity.id');
 
         $ret = $qb->getQuery()->getResult();

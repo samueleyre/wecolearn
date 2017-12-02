@@ -65,7 +65,7 @@ import { BootstrapModalModule, Modal, bootstrap4Mode } from 'ngx-modialog/plugin
 import {ScrollToModule} from 'ng2-scroll-to';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
-
+import { InfiniteScrollModule }   from 'ngx-infinite-scroll';
 
 import { ClientService } from './service/client';
 import { ThreadsService } from './service/threads.service';
@@ -113,6 +113,7 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
     TagInputModule,
     BrowserAnimationsModule,
     NguiAutoCompleteModule,
+    InfiniteScrollModule,
 
   ],
   exports : [
@@ -168,8 +169,7 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 
   ],
   entryComponents: [
-    
+
   ]
 })
 export class WcModule { }
-

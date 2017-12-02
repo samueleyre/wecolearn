@@ -42,9 +42,9 @@ class ClientController extends GPPDController
     }
 
     /**
-	* @Get("client")
-    * @View(serializerEnableMaxDepthChecks=true)
-     */
+	   * @Get("client")
+     * @View(serializerEnableMaxDepthChecks=true)
+     **/
     public function getClientAction( )
     {
 
@@ -61,9 +61,13 @@ class ClientController extends GPPDController
     /**
      * @Get("client/matchs")
      */
-    public function getClientMatchsAction( )
+    public function getClientMatchsAction(Request $request )
     {
 
+        $first = $request->query->get( 'first', 0 );
+        $max = $request->query->get( 'max', 6 );
+
+        $filter = ['first' => $first,'max' => $max ];
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -73,8 +77,7 @@ class ClientController extends GPPDController
 
         return $this
             ->get('client.service')
-            ->matches($client);
-
+            ->matches($client, $filter );
 
     }
 

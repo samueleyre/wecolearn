@@ -43,11 +43,12 @@ class SearchController extends GPPDController
 
 
     /**
-     * @Get("search")
+     * @Get("/search")
      */
     public function getSearchAction( Request $request )
     {
         $filter = [];
+
 
         if ($request->get("tag")) {
             $filter["tag"] = $request->get("tag");
@@ -57,22 +58,26 @@ class SearchController extends GPPDController
             $filter["latitude"] = $request->get("latitude");
         }
 
-        if ($request->get("longitude")) {
+        if ( $request->get('longitude')) {
             $filter["longitude"] = $request->get("longitude");
         }
 
+        if( null !== $request->query->get('first') ) {
+          $filter['first'] = $request->get('first');
+        }
+
+        if( null !== $request->get('max') ) {
+          $filter['max'] = $request->get('max');
+        }
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $client = $this->getDoctrine()
-            ->getRepository(Client::class)
-            ->findOneBy(["user"=>$user]);
+            ->getRepository( Client::class )
+            ->findOneBy(['user' => $user ]);
 
         return $this
             ->get('search.service')
             ->search($client, $filter);
-
     }
-
-
 }

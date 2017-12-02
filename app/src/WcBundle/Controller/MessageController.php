@@ -25,15 +25,15 @@ use AppBundle\Pagination\Annotation as Pagination;
 
 class MessageController extends GPPDController
 {
-    
+
     protected $entityRef = 'WcBundle:Message';
 
     // "options_message" [OPTIONS] /message
     public function optionMessageAction()
     {
         return $this->optionAction();
-        
-    } 
+
+    }
 
 
     /**
@@ -69,6 +69,7 @@ class MessageController extends GPPDController
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
+        syslog(LOG_ERR,'check new message 20');
 
         $client = $this->getDoctrine()
             ->getRepository(Client::class)
@@ -149,7 +150,7 @@ class MessageController extends GPPDController
 
     }
 
-    
+
     /**
     * @Patch("/messages")
     * @ParamConverter(
