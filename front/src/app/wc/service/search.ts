@@ -49,8 +49,5 @@ export class SearchService {
         this.currentFoundClients = response.json();
         return response.json();
       });
-
   }
-
-
 }

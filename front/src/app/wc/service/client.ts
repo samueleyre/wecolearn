@@ -24,10 +24,10 @@ export class ClientService {
   }
 
   pull(): Observable<Array<Message>>  { // TODO : probably check for any kind of update, if other
-  return this.http.get('/api/checknewmessage')
-    .map((response: Response) => {
-      return response.json();
-    });
+    return this.http.get('/api/checknewmessage')
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
 
@@ -38,7 +38,4 @@ export class ClientService {
               return 'loaded';
           });
   }
-
-
-
 }

@@ -65,7 +65,7 @@ class ClientController extends GPPDController
     {
 
         $first = $request->query->get( 'first', 0 );
-        $max = $request->query->get( 'max', 10 );
+        $max = $request->query->get( 'max', 6 );
 
         $filter = ['first' => $first,'max' => $max ];
 

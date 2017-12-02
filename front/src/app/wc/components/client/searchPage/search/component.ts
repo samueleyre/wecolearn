@@ -19,8 +19,8 @@ import { GPPDComponent }          from './../../../../component/gppd';
 import { MessageService }         from './../../../../../applicativeService/message/service';
 import {FilterService}            from "../../../../../applicativeService/filter/service";
 import {log} from "util";
-import {ThreadsService} from "../../../../service/threads.service";
-import {SearchService} from "../../../../service/search";
+import {ThreadsService}           from "../../../../service/threads.service";
+import {SearchService}            from "../../../../service/search";
 
 
 @Component({
@@ -34,7 +34,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     private avatarSrcBase : string;
     private cards: any = null;
-    private max: number = 10;
+    public max: number = 4;
 
     constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute, public threadsService: ThreadsService, private searchService: SearchService) {
         super(service);
@@ -74,11 +74,12 @@ export class SearchComponent extends GPPDComponent implements OnInit {
         this.entities = clients;
         this.cards = clients;
       });
-      console.log('scrolled down');
+
+      //console.log('scrolled down');
     }
 
     onScrollUp(){
-      console.log('scrolled up');
+      //console.log('scrolled up');
     }
 
 

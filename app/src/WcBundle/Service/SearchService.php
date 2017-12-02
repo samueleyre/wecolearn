@@ -26,6 +26,7 @@ class SearchService extends GPPDService {
 			$first = 0;
 			$max = 10;
 
+
 			if ( is_array( $filter) ) {
 	        	if (array_key_exists ("tag", $filter) ){
 	            $tagName = $filter["tag"];
@@ -37,10 +38,10 @@ class SearchService extends GPPDService {
 	            $longitude = $filter["longitude"];
             }
 
-						if( array_key_exists('first', $filter ) && array_key_exists('max', $filter ) ) {
+						if( array_key_exists('first', $filter ) && array_key_exists('max', $filter )) {
 							$first = $filter['first'];
 							$max = $filter['max'];
-							dump( $max );
+
 						}
         }
 
@@ -55,7 +56,5 @@ class SearchService extends GPPDService {
                ->getRepository(Client::class)
                ->search($tag, $firts, $max, $client, $latitude, $longitude);
         }
-
-
-   }
+		}
 }

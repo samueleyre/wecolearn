@@ -49,6 +49,7 @@ class SearchController extends GPPDController
     {
         $filter = [];
 
+
         if ($request->get("tag")) {
             $filter["tag"] = $request->get("tag");
         }
@@ -61,15 +62,13 @@ class SearchController extends GPPDController
             $filter["longitude"] = $request->get("longitude");
         }
 
-        if( $request->get('first') ) {
+        if( null !== $request->query->get('first') ) {
           $filter['first'] = $request->get('first');
         }
 
-        if( $request->get('max') ) {
+        if( null !== $request->get('max') ) {
           $filter['max'] = $request->get('max');
         }
-
-        syslog(LOG_ERR, $request->get('max'));
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
