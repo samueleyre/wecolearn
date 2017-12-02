@@ -10,21 +10,16 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul  *ngIf="connected" class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item" > <!-- PUT ALL THIS IN A COMPONENT -->
                 <form class="form-inline my-2 my-lg-0">
                     <searchBar></searchBar>
                 </form>
             </li>
-            <li class="nav-item" >
+            <li  *ngIf="!connected" class="nav-item" >
                 <form class="form-inline my-2 my-lg-0">
                     <cityBar></cityBar>
                 </form>
-            </li>
-            <li class="nav-item" style="width: 29%;" >
-                <a class="btn nav-link">
-                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                </a>
             </li>
             <!--<li class="nav-item" style="margin-left: 1rem;" >-->
                 <!--<a id="filter-tag" data-selected="true" class="btn rounded-left" (click)="chooseSearchBarType('tag')" ><i class="fa fa-book" aria-hidden="true"></i></a>-->
@@ -50,9 +45,10 @@
             </li>
             <li *ngIf="connected" ngbDropdown  id="parameters" class="nav-item d-inline-block">
                 <a class="nav-link dropdown-toggle" id="dropdownParameters" ngbDropdownToggle>
+                    <img *ngIf="currentClient" width="50px" src="{{imagePath}}{{currentClient.image.filename}}" alt="">
                 </a>
                 <div ngbDropdownMenu aria-labelledby="dropdownParameters">
-                    <a class="nav-link dropdown-item" routerLink="/settings">Paramètres</a>
+                    <a class="nav-link dropdown-item" routerLink="/settings">Profil</a>
                     <a class="nav-link dropdown-item" routerLink="/login">Déconnexion</a>
                 </div>
             </li>
