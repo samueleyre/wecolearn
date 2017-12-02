@@ -150,7 +150,9 @@ export class HeaderComponent implements OnInit {
 
   activateNotification(thread: Thread): void {
     this.threadsService.setCurrentThread(thread);
-    this.messagesService.pushUpdatedMessages().subscribe();
+    this.messagesService.pushUpdatedMessages().subscribe(() => {
+      this.router.navigate(['/search']);
+		});
   }
 
 

@@ -34,7 +34,7 @@ export class ClientService {
   load(): Observable<string>  {
       return this.http.get(`${this.endpoint}`)
           .map((response: Response) => {
-              this.currentClient.next(response.json()[0]);// TODO :  should not be an array
+              this.currentClient.next(response.json());
               return 'loaded';
           });
   }

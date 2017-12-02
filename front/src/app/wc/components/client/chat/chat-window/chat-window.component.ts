@@ -98,7 +98,7 @@ export class ChatWindowComponent implements OnInit {
 
   ngOnExit(): void {
 
-    this.stopStream();
+    // this.stopStream();
   }
 
   closeChat() : void {
