@@ -67,9 +67,9 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     load() : void {
         this.service.setApi(this.getApi());
         this.service.get().subscribe( ( client: IEntity[] ) => {
-            console.log("client", client);
+            //console.log("client", client);
             this.entity = this.setTags(client[0]);
-            console.log("latin databse", this.entity['latitude'])
+            //console.log("latin databse", this.entity['latitude'])
             if (!this.entity['latitude']) {
                 this.setDefaultLatLong();
             }

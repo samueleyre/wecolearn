@@ -70,7 +70,7 @@ class UploadController extends GPPDController
         return
             $this
                 ->get('client.service')
-                ->patch($client, false, false);
+                ->patch($client, $user, false, false);
 
 
     }

@@ -31,7 +31,9 @@
                 <div class="form-group">
                     <div *ngIf="entity.image">
                         <div [hidden]="modify">
-                            <img width="100px" src="{{imagePath}}{{entity.image.filename}}" alt="">
+                            <img *ngIf="entity.image" width="100px" src="{{imagePath}}{{entity.image.filename}}" alt="">
+                            <img *ngIf="!entity.image" width="100px" src="{{imagePath}}gribouille.png" alt="">
+                            
                             <button (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
                             </button>
                         </div>

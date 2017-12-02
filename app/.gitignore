@@ -15,4 +15,5 @@
 /vendor/
 /web/bundles/
 /web/img/
+!/web/img/gribouille.png
 /app/var

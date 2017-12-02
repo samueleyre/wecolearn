@@ -128,15 +128,13 @@ class ClientService extends GPPDService {
             $client->setTags($this->insertNewTags($client->getTags()));
         }
 
-				if( $addUser ) {
-            $client->setUser(
-                $user
-            );
+		if( $addUser ) {
+            $client->setUser($user);
         }
 
-				if( null === $client->getCreated()) {
-					$client->setCreated(new \Datetime());
-				}
+		if( null === $client->getCreated()) {
+			$client->setCreated(new \Datetime());
+		}
 
 
         $this->em->merge( $client );

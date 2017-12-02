@@ -36,15 +36,15 @@ export class HeaderComponent implements OnInit {
     private location: Location;
     private logoPath: string;
     private imagePath: string;
-		private baseUrl: string;
-		private connected: boolean;
-    unreadMessagesCount: number;
+	private baseUrl: string;
+	private connected: boolean;
+    public unreadMessagesCount: number;
     private searchBarType: string = "tag";
-	  private searchBarTypeChecked : any = false;
-	  private notifications: Array<Message>;
-		private currentClient : Client;
+	private searchBarTypeChecked : any = false;
+	private notifications: Array<Message>;
+	private currentClient : Client = new Client;
 
-  constructor( private http : Http,
+      constructor( private http : Http,
 				 private router: Router,
 				 location: Location,
 				 @Inject(APP_BASE_HREF) r:string,
@@ -63,8 +63,8 @@ export class HeaderComponent implements OnInit {
 	}
 
 	ngOnInit() {
-    this.imagePath = GPPDComponent.updateUrl('/img/');
-  	this.ClientService.get().subscribe((client: Client )=> {
+      this.imagePath = GPPDComponent.updateUrl('/img/');
+  	  this.ClientService.get().subscribe((client: Client )=> {
   		console.log("got client", client)
   		this.currentClient = client;
 		});
@@ -111,8 +111,8 @@ export class HeaderComponent implements OnInit {
                     [currentThread, messages] )
 
             .subscribe(([currentThread, messages]: [Thread, Message[]]) => {
-            		let oldValue = this['unreadMessagesCount'];
-            		this.notifications = [];
+            	let oldValue = this['unreadMessagesCount'];
+            	this.notifications = [];
                 this.unreadMessagesCount =
                     _.reduce(
                         messages,
