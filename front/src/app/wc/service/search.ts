@@ -34,6 +34,10 @@ export class SearchService {
       max = 10;
     }
 
+    /*
+    api de recherche utilisée dans l'infinite scroll
+    de la barre de recherche.
+    */
     return this.http.get(`/api/search${params}?first=${first}&max=${max}`)
       .map((response: Response) => {
         this.currentFoundClients = response.json();
@@ -44,6 +48,9 @@ export class SearchService {
 
   autoLoad(): Observable<Array<Client>> {
 
+    /*
+    api utilisée pour le match en fonction du profil lors du chargement.
+    */
     return this.http.get('/api/client/matchs')
       .map((response: Response) => {
         this.currentFoundClients = response.json();
