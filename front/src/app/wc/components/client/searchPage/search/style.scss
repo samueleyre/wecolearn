@@ -13,6 +13,13 @@
 
 }
 
+@media (min-width: 992px){
+  #conversationColumn{
+    position: fixed;
+    right: 0;
+  }
+}
+
+
 chat-threads{
-  position: fixed;
 }
