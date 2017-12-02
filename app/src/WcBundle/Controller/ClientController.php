@@ -51,12 +51,20 @@ class ClientController extends GPPDController
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        return $this->getDoctrine()
+        $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+
+        $client = $this->getDoctrine()
             ->getRepository(Client::class)
-            ->findBy(["user"=>$user]);
+            ->findOneBy(["user"=>$user]);
+
+        $client->setClientUpdated($date);
+
+        $this->get("client.service")->patch($client, null, false, false);
+
+        return $client;
 
 
-	}
+    }
 
     /**
      * @Get("client/matchs")

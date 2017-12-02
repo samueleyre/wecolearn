@@ -89,7 +89,7 @@ class MessageController extends GPPDController
 //                $newDate = new \DateTime($lastMessages[count($lastMessages)-1]->getCreated());
                 $client->setClientUpdated($newDate);
 
-                $this->get("client.service")->patch($client, false, false);
+                $this->get("client.service")->patch($client, null, false, false);
 
                 return $lastMessages;
 

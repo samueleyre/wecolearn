@@ -21,6 +21,7 @@ import { Client }                from './../../../../entities/client/entity';
 import { Tag }                from './../../../../entities/tag/entity';
 
 import { GPPDService }            from './../../../../service/gppd';
+import { ClientService }            from './../../../../service/client';
 import { TagService }            from './../../../../service/tag';
 import { GPPDComponent }          from './../../../../component/gppd';
 
@@ -52,10 +53,11 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     private tagTypes = ["learn_tags", "know_tags", "teach_tags"];
 
 
-    constructor( protected service: GPPDService, protected tagService : TagService,  private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, ) {
+    constructor( protected service: GPPDService, protected clientService : ClientService,  protected tagService : TagService,  private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, ) {
         super(service);
         this.base_url = r;
         this.tagService = tagService;
+        this.clientService= clientService;
     }
 
 
@@ -159,16 +161,16 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
     onComplete(id:string, response:any )
     {
-    console.log("uploaded", response)
-    this.entity = response.response;
-    this.modify = false;
-    this.uploadError[id] = false;
+        console.log("uploaded", response)
+        this.entity = response.response;
+        this.modify = false;
+        this.uploadError[id] = false;
     }
 
     onError(id:string, status:number)
     {
-    console.log("error upload", status)
-    this.uploadError[id] = "L'image est trop grande.";
+        console.log("error upload", status)
+        this.uploadError[id] = "L'image est trop grande.";
     // if (response.status === 413) {
     // }
 

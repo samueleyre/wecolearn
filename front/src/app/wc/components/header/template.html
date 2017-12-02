@@ -39,7 +39,7 @@
                 <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>
                    <i class="fa fa-bell"></i> <span class="badge">{{ unreadMessagesCount }}</span>
                 </a>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="notifications">
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="notifications && (notifications.length > 0)">
                     <a *ngFor="let notification of notifications" class="nav-link dropdown-item" (click)="activateNotification(notification.thread)" style="border-bottom: solid 1px #f5f1f1">{{notification.sender.first_name}} : <span style="text-overflow: ellipsis">{{notification.message}}</span></a>
                 </div>
             </li>
