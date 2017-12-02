@@ -9,10 +9,7 @@ import { TagInputModule } from 'ngx-chips';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 
-
-
-import {
-    MatNativeDateModule}             from '@angular/material';
+import {MatNativeDateModule}             from '@angular/material';
 
 import { MomentModule }             from 'angular2-moment';
 
@@ -36,6 +33,7 @@ import { GPPDFactory }              from './service/gppd.factory';
 
 import { PeriodService }            from './service/period';
 import { SearchService }            from './service/search';
+import { TagService }            from './service/tag';
 
 import { ClientComponent }            from './components/bo/clientsPage/client/component';
 import { SearchComponent }            from './components/client/searchPage/search/component';
@@ -159,7 +157,8 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
     MessagesService,
     PeriodService,
     ThreadsService,
-    SearchService
+    SearchService,
+    TagService
     // EvolutionService,
     //CacheUrlService,
   ],

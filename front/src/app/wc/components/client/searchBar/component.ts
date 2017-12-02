@@ -4,6 +4,8 @@ import {
     Injectable
 }                             from '@angular/core';
 
+import {Observable} from 'rxjs/Observable';
+
 
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
@@ -20,6 +22,7 @@ import { SearchService }         from './../../../service/search';
 import {FilterService}            from "../../../../applicativeService/filter/service";
 import {log} from "util";
 import {SafeHtml} from "@angular/platform-browser";
+import {TagService} from "../../../service/tag";
 
 
 @Component({
@@ -33,14 +36,17 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
 
 
     private searchInput : string;
-    private searchAutoComplete : Array<String>;
 
-    constructor( protected service: GPPDService, private searchService: SearchService) {
+    constructor( protected service: GPPDService,
+                 protected tagService : TagService,
+                 private searchService: SearchService,
+                 private router: Router
+) {
         super(service);
+        this.tagService = tagService;
     }
 
     ngOnInit() {
-      this.searchAutoComplete = ["php", "js"]
     }
 
 
@@ -52,11 +58,21 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
         return new Tag();
     }
 
-    search() {
-        FilterService.addFilter("tag", this.searchInput);
-        this.searchService.search().subscribe(
-          () =>FilterService.clear()
-        );
+    search(text:string = null) {
+      if (!text) {
+        text = this.searchInput;
+      }
+      FilterService.addFilter("tag", text);
+      this.searchService.search().subscribe(
+        () =>{
+          FilterService.clear();
+          this.router.navigate(['/search']);
+        }
+      );
+    }
+
+    observableSource(text: string) {
+        return this.tagService.findTags(text);
     }
 
 

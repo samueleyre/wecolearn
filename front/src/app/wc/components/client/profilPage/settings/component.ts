@@ -21,6 +21,7 @@ import { Client }                from './../../../../entities/client/entity';
 import { Tag }                from './../../../../entities/tag/entity';
 
 import { GPPDService }            from './../../../../service/gppd';
+import { TagService }            from './../../../../service/tag';
 import { GPPDComponent }          from './../../../../component/gppd';
 
 import { MessageService }         from './../../../../../applicativeService/message/service';
@@ -51,9 +52,10 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     private tagTypes = ["learn_tags", "know_tags", "teach_tags"];
 
 
-    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, ) {
+    constructor( protected service: GPPDService, protected tagService : TagService,  private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, ) {
         super(service);
         this.base_url = r;
+        this.tagService = tagService;
     }
 
 
@@ -155,29 +157,29 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
     // images ----------
 
-      onComplete(id:string, response:any )
-      {
-        console.log("uploaded", response)
-        this.entity = response.response;
-        this.modify = false;
-        this.uploadError[id] = false;
-      }
+    onComplete(id:string, response:any )
+    {
+    console.log("uploaded", response)
+    this.entity = response.response;
+    this.modify = false;
+    this.uploadError[id] = false;
+    }
 
-      onError(id:string, status:number)
-      {
-        console.log("error upload", status)
-        this.uploadError[id] = "L'image est trop grande.";
-        // if (response.status === 413) {
-        // }
+    onError(id:string, status:number)
+    {
+    console.log("error upload", status)
+    this.uploadError[id] = "L'image est trop grande.";
+    // if (response.status === 413) {
+    // }
 
-      }
+    }
 
 
-      changePhoto(id : number) {
-        // console.log(id)
-        this.modify = true;
-        // console.log(this.modify);
-      }
+    changePhoto(id : number) {
+    // console.log(id)
+    this.modify = true;
+    // console.log(this.modify);
+    }
 
     // tags ------------
 
@@ -201,25 +203,10 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     };
 
     public requestAutocompleteItems = (text: string): Observable<Array<String>> => {
-
-        return this.http.get(`/api/findTag?tagLetters=`+text).map((response: Response) => {
-            console.log(response);
-            this.tags = response.json();
-            let tags = this.tags.map(function(obj:any) {
-                return obj.name;
-            });
-            console.log(tags)
-            return tags;
-        })
-        ;
+        return this.tagService.findTags(text);
     };
 
-    // var tableauOrig = [{clé:1, valeur:10}, {clé:2, valeur:20}, {clé:3, valeur: 30}];
-    // var tableauFormaté = tableauOrig.map(function(obj){
-    //     var rObj = {};
-    //     rObj[obj.clé] = obj.valeur;
-    //     return rObj;
-    // });
+
 
 
 }
