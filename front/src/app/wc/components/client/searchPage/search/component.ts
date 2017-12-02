@@ -5,7 +5,7 @@ import {
 }                             from '@angular/core';
 
 
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute, Params} from '@angular/router';
 
 import { NgForm }             from '@angular/forms';
 
@@ -34,6 +34,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     private avatarSrcBase : string;
     private cards: any = null;
+    private max: number = 10;
 
     constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute, public threadsService: ThreadsService, private searchService: SearchService) {
         super(service);
@@ -48,7 +49,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
       this.searchService.autoLoad().subscribe( ( clients: IEntity[] ) => {
         this.entities = clients;
         this.cards = clients;
-        console.log("cards", this.cards);
+        //console.log("cards", this.cards);
       });
     }
 
@@ -61,10 +62,23 @@ export class SearchComponent extends GPPDComponent implements OnInit {
       if (false) { //thread exists
 
       } else {
-          let thread = new Thread(card.id, card.first_name, card.image.filename)
+          let thread = new Thread( card.id, card.first_name, card.image.filename)
           this.threadsService.setCurrentThread(thread);
 
       }
+    }
+
+    onScroll() {
+      this.max += 2;
+      this.searchService.search( 0, this.max ).subscribe( ( clients: IEntity[] ) => {
+        this.entities = clients;
+        this.cards = clients;
+      });
+      console.log('scrolled down');
+    }
+
+    onScrollUp(){
+      console.log('scrolled up');
     }
 
 

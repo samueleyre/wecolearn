@@ -17,18 +17,27 @@ export class SearchService {
 
   currentFoundClients: Observable<Message[]>;
 
+
   constructor(public ClientService: ClientService, protected http: Http) {
 
   }
 
-  search(): Observable<void> {
+  search( first?: number, max?: number ): Observable<Array<Client>> {
 
     let params = FilterService.getUrlParams();
 
-    return this.http.get(`/api/search${params}`)
+    if( typeof first == 'undefined') {
+      first = 0;
+    }
+
+    if( typeof max == 'undefined') {
+      max = 10;
+    }
+
+    return this.http.get(`/api/search${params}?first=${first}&max=${max}`)
       .map((response: Response) => {
         this.currentFoundClients = response.json();
-        return;
+        return response.json();
       });
 
   }
