@@ -45,7 +45,7 @@
             </li>
             <li *ngIf="connected" ngbDropdown  id="parameters" class="nav-item d-inline-block">
                 <a class="nav-link dropdown-toggle" id="dropdownParameters" ngbDropdownToggle>
-                    <img *ngIf="currentClient" width="50px" src="{{imagePath}}{{currentClient.image.filename}}" alt="">
+                    <img *ngIf="currentClient" height="30px" src="{{imagePath}}{{currentClient.image.filename}}" alt="">
                 </a>
                 <div ngbDropdownMenu aria-labelledby="dropdownParameters">
                     <a class="nav-link dropdown-item" routerLink="/settings">Profil</a>
