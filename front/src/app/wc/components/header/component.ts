@@ -20,6 +20,7 @@ import { Message } from '../../entities/message/entity';
 import { Client } from '../../entities/client/entity';
 import {ChatExampleData} from "../client/chat/data/chat-example-data";
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+// import { GPPDComponent }          from './../../component/gppd';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class HeaderComponent implements OnInit {
 
     private location: Location;
     private logoPath: string;
+    private imagePath: string;
 		private baseUrl: string;
 		private connected: boolean;
     unreadMessagesCount: number;
@@ -61,6 +63,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	ngOnInit() {
+    this.imagePath = GPPDComponent.updateUrl('/img/');
   	this.ClientService.get().subscribe((client: Client )=> {
   		console.log("got client", client)
   		this.currentClient = client;
