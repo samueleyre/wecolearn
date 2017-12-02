@@ -24,29 +24,29 @@ export class MessagesService {
     private alive: boolean; // used to unsubscribe from the IntervalObservable
     // when OnDestroy is called.
 
-  route: string = '/api';
+    public route: string = '/api';
 
-  // a stream that publishes new messages only once
-  newMessages: Subject<Message> = new Subject<Message>();
+    // a stream that publishes new messages only once
+    public newMessages: Subject<Message> = new Subject<Message>();
 
-  // `messages` is a stream that emits an array of the most up to date messages
-  messages: Observable<Message[]>;
+    // `messages` is a stream that emits an array of the most up to date messages
+    public messages: Observable<Message[]>;
 
-  // `updates` receives _operations_ to be applied to our `messages`
-  // it's a way we can perform changes on *all* messages (that are currently
-  // stored in `messages`)
-  updates: Subject<any> = new Subject<any>();
+    // `updates` receives _operations_ to be applied to our `messages`
+    // it's a way we can perform changes on *all* messages (that are currently
+    // stored in `messages`)
+    public updates: Subject<any> = new Subject<any>();
 
-  private currentClient: Client;
-  private sentMessages: Array<Message>;
-  private receivedMessages: Array<Message>;
+    private currentClient: Client;
+    private sentMessages: Array<Message>;
+    private receivedMessages: Array<Message>;
 
-  messagesToUpdate: Array<Message> = [];
+    public messagesToUpdate: Array<Message> = [];
 
 
     // action streams
-  create: Subject<Message> = new Subject<Message>();
-  markThreadAsRead: Subject<any> = new Subject<any>();
+    create: Subject<Message> = new Subject<Message>();
+    markThreadAsRead: Subject<any> = new Subject<any>();
 
   constructor(public ClientService: ClientService, protected http : Http) {
     this.alive = true;
