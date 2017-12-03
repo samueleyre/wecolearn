@@ -1,11 +1,33 @@
 <div class="container-fluid">
-    <hr>
     <div class="row center">
-        <a class="" routerLink="/mentionslegales" style="margin: auto;">
-            Mentions Légales
-        <br>
-        <br>
-        </a>
+        <div id="homeBgImageContainer" class="col-12 no-padding">
+            <div id="homeBgImage" [ngStyle]="homeBgImageStyle" >
+                <h1>Apprenez ce que <b>vous</b> voulez !</h1>
+                <br><br>
+                <a class="btn btn-primary btn-lg" routerLink="/subscribe">Inscription</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!--<div class="col-12">-->
+            <div class="col-12" id="tagLinksContainer">
+                <div *ngFor="let tagLink of tagLinks" class="tagLink">
+                    <a class="btn btn-secondary" (click)="search(tagLink.tagName)">{{tagLink.tagName}}</a>
+                </div>
+            </div>
+        <!--</div>-->
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr>
+
+            <a class="" routerLink="/mentionslegales" style="margin: auto;">
+                Mentions Légales
+            <br>
+            <br>
+            </a>
+
+        </div>
     </div>
 
 </div>

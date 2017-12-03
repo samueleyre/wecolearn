@@ -59,6 +59,7 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
     }
 
     search(text:string = null) {
+
       if (!text) {
         text = this.searchInput;
       }

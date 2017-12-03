@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
                 let status = 500;
                 if ( error.status === 401 || error.status === 403 ) { // unauthorized or forbidden //
                     status = error.status
-                    this.router.navigate(['/login']);
+                    this.router.navigate(['/']);
                     let logged = false;
                     Logged.set(logged);
                 
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
         })
         .map( response => {
             if( 401 === response.status  || 403 === response.status ) {
-                this.router.navigate(['/login']);
+                this.router.navigate(['/']);
                 let logged = false;
                 Logged.set(logged);
                 return logged;        
