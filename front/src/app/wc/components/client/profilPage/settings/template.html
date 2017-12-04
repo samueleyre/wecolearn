@@ -1,165 +1,175 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-10 col-lg-8 offset-md-1 offset-lg-2" style="padding-top: 20px;">
-            <form class="form-horizontal" (ngSubmit)="f.form.valid && submit(f)" #f="ngForm" novalidate>
-            <fieldset>
-
-                <!-- Form Name -->
-                <legend class="center">Profil</legend>
-
-                <!-- Text input-->
-                <div class="form-group row" >
-                    <div class="col-md-6">
-                        <label class="col-md-12 control-label" for="FirstName" >Prénom</label>
-                        <div class="input-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
-                            <input id="firstName" name="firstName" placeholder="" class="form-control input-md" [(ngModel)]="entity.first_name" #firstName="ngModel" type="text">
-                            <div *ngIf="f.submitted && !firstName.valid" class="help-block">Le prénom est obligatoire</div>
-                        </div>
+        <div class="col-md-10 col-lg-8 offset-md-1 offset-lg-2">
+            <div class="bloc-container">
+                <div class="bloc">
+                    <div class="bloc-title">
+                        <h2 class="center">Profil</h2>
                     </div>
+                    <div class="bloc-content">
+                        <form class="form-horizontal" (ngSubmit)="f.form.valid && submit(f)" #f="ngForm" novalidate>
+                        <fieldset>
 
-                    <div class="col-md-6">
-                        <label class="col-md-12 control-label" for="lastName">Nom</label>
-                        <div class="input-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
-                            <!--<div class="col-md-12">-->
-                                <input id="lastName" name="lastName" placeholder="" class="form-control input-md" [(ngModel)]="entity.last_name" #lastName="ngModel" type="text">
-                                <div *ngIf="f.submitted && !lastName.valid" class="help-block">Le nom est obligatoire</div>
-                            <!--</div>-->
-                        </div>
+                            <!-- Text input-->
+                            <div class="form-group row" >
+                                <div class="col-md-6">
+                                    <label class="col-md-12 control-label" for="FirstName" >Prénom</label>
+                                    <div class="input-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+                                        <input id="firstName" name="firstName" placeholder="" class="form-control input-md" [(ngModel)]="entity.first_name" #firstName="ngModel" type="text">
+                                        <div *ngIf="f.submitted && !firstName.valid" class="help-block">Le prénom est obligatoire</div>
+                                    </div>
+                                    <label class="col-md-12 control-label" for="lastName">Nom</label>
+                                    <div class="input-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+                                        <!--<div class="col-md-12">-->
+                                        <input id="lastName" name="lastName" placeholder="" class="form-control input-md" [(ngModel)]="entity.last_name" #lastName="ngModel" type="text">
+                                        <div *ngIf="f.submitted && !lastName.valid" class="help-block">Le nom est obligatoire</div>
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="col-md-12 control-label" >Photo de profil</label>
+                                    <div class="input-group">
+                                        <div *ngIf="entity.image">
+                                            <div [hidden]="modify">
+                                                <img *ngIf="entity.image" width="100px" src="{{imagePath}}{{entity.image.filename}}" alt="">
+                                                <img *ngIf="!entity.image" width="100px" src="{{imagePath}}gribouille.png" alt="">
+
+                                                <button (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                            <upload *ngIf="modify"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
+                                        </div>
+                                        <upload *ngIf="!entity.image"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
+                                        <div *ngIf="uploadError[entity.id]" class="alert alert-danger">{{uploadError[entity.id]}}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- Text input-->
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !learnTags.valid }">
+                                <label class="col-md-6 control-label" for="learnTags">Ce que je veux apprendre</label>
+                                <div class="col-md-12">
+                                    <tag-input id="learnTags" [modelAsStrings]="true" [(ngModel)]='entity.learn_tags' name="learnTags" #learnTags="ngModel"  [errorMessages]="errorMessages"
+                                               [validators]="validators">
+                                        <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
+                                        <!--<tag-input-dropdown [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']"></tag-input-dropdown>-->
+                                    </tag-input>
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !knowTags.valid }">
+                                <label class="col-md-6 control-label" for="knowTags">Ce que je connais</label>
+                                <div class="col-md-12">
+                                    <tag-input id="knowTags" [modelAsStrings]="true" [(ngModel)]='entity.know_tags' name="knowTags"  #knowTags="ngModel"></tag-input>
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !teachTags.valid }">
+                                <label class="col-md-6 control-label" for="teachTags">Ce que j'ai envie de transmettre</label>
+                                <div class="col-md-12">
+                                    <tag-input id="teachTags" [modelAsStrings]="true" [(ngModel)]='entity.teach_tags' name="teachTags"  #teachTags="ngModel"></tag-input>
+                                </div>
+                            </div>
+
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-6 control-label" for="intensity">Intensité (h/semaine)</label>
+                                <div class="col-md-12">
+                                    <div class="table">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>0</td>
+                                                    <td>1h</td>
+                                                    <td>2h</td>
+                                                    <td>3h</td>
+                                                    <td>4h</td>
+                                                    <td>5h</td>
+                                                    <td>6h</td>
+                                                    <td>7h</td>
+                                                    <td>8h</td>
+                                                    <td>9h</td>
+                                                    <td>10h</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <input class="form-control" id="intensity" type="range" [(ngModel)]='entity.intensity' min="0" max="10" name="intensity"  >
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-6 control-label" >Ambiance</label>
+                                <div class="col-md-12">
+                                    <div class="imageContainer">
+                                        <label>
+                                            <span>Coworking</span>
+                                            <input type="radio" [value]="1"  [(ngModel)]="entity.atmosphere" name="atmosphere" id="coworking">
+                                             <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
+                                        </label>
+                                        <label>
+                                            <span>Maison</span>
+                                            <input type="radio"  [value]="2"  [(ngModel)]="entity.atmosphere" name="atmosphere" id="Maison">
+                                            <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
+                                        </label>
+                                        <label>
+                                            <span>Bureau</span>
+                                            <input type="radio" name="atmosphere" id="Bureau">
+                                            <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
+                                        </label>
+                                        <label>
+                                            <span>Nature</span>
+                                            <input type="radio" name="atmosphere" id="Nature">
+                                            <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
+                                        </label>
+                                    </div>
+                                    <!--<input class="form-control" id="atmosphere" type="range" [(ngModel)]='atmosphere' min="0" max="10" name="atmosphere" >-->
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                                <label class="col-md-6 control-label" for="teachTags">Ma position</label>
+                                <div class="col-md-12">
+                                    <geolocation [(latitude)]="entity.latitude" [(longitude)]="entity.longitude"></geolocation>
+                                </div>
+                            </div>
+
+
+                            <!-- Textarea -->
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !biographie.valid }">
+                                <label class="col-md-12 control-label" for="biographie">Pourquoi voulez-vous apprendre ceci, quels sont vos motivations et vos projets ? </label>
+                                <div class="col-md-12">
+                                    <quill-editor id="biographie" [theme]="'bubble'" [placeholder]="'Freelance cherchant à acquérir des compétences dans le code.'"   [(ngModel)]="entity.biographie" name="biographie" #biographie="ngModel" [modules]="quillConfig"></quill-editor>
+                                    <div *ngIf="f.submitted && !biographie.valid" class="help-block">La biographie est obligatoire</div>
+                                </div>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="form-group">
+                                <div class="col-md-10 center">
+                                    <button id="submit" name="submit" class="btn btn-primary">Modifier</button>
+                                </div>
+                            </div>
+
+
+                        </fieldset>
+                    </form>
+
+
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div *ngIf="entity.image">
-                        <div [hidden]="modify">
-                            <img *ngIf="entity.image" width="100px" src="{{imagePath}}{{entity.image.filename}}" alt="">
-                            <img *ngIf="!entity.image" width="100px" src="{{imagePath}}gribouille.png" alt="">
-                            
-                            <button (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <upload *ngIf="modify"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
-                    </div>
-                    <upload *ngIf="!entity.image"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
-                    <div *ngIf="uploadError[entity.id]" class="alert alert-danger">{{uploadError[entity.id]}}</div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !learnTags.valid }">
-                    <label class="col-md-6 control-label" for="learnTags">Ce que je veux apprendre</label>
-                    <div class="col-md-12">
-                        <tag-input id="learnTags" [modelAsStrings]="true" [(ngModel)]='entity.learn_tags' name="learnTags" #learnTags="ngModel"  [errorMessages]="errorMessages"
-                                   [validators]="validators">
-                            <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
-                            <!--<tag-input-dropdown [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']"></tag-input-dropdown>-->
-                        </tag-input>
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !knowTags.valid }">
-                    <label class="col-md-6 control-label" for="knowTags">Ce que je connais</label>
-                    <div class="col-md-12">
-                        <tag-input id="knowTags" [modelAsStrings]="true" [(ngModel)]='entity.know_tags' name="knowTags"  #knowTags="ngModel"></tag-input>
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !teachTags.valid }">
-                    <label class="col-md-6 control-label" for="teachTags">Ce que j'ai envie de transmettre</label>
-                    <div class="col-md-12">
-                        <tag-input id="teachTags" [modelAsStrings]="true" [(ngModel)]='entity.teach_tags' name="teachTags"  #teachTags="ngModel"></tag-input>
-                    </div>
-                </div>
-
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-6 control-label" for="intensity">Intensité (h/semaine)</label>
-                    <div class="col-md-12">
-                        <div class="table">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>0</td>
-                                        <td>1h</td>
-                                        <td>2h</td>
-                                        <td>3h</td>
-                                        <td>4h</td>
-                                        <td>5h</td>
-                                        <td>6h</td>
-                                        <td>7h</td>
-                                        <td>8h</td>
-                                        <td>9h</td>
-                                        <td>10h</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <input class="form-control" id="intensity" type="range" [(ngModel)]='entity.intensity' min="0" max="10" name="intensity"  >
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-6 control-label" >Ambiance</label>
-                    <div class="col-md-12">
-                        <div class="imageContainer">
-                            <label>
-                                <span>Coworking</span>
-                                <input type="radio" [value]="1"  [(ngModel)]="entity.atmosphere" name="atmosphere" id="coworking">
-                                 <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
-                            </label>
-                            <label>
-                                <span>Maison</span>
-                                <input type="radio"  [value]="2"  [(ngModel)]="entity.atmosphere" name="atmosphere" id="Maison">
-                                <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
-                            </label>
-                            <label>
-                                <span>Bureau</span>
-                                <input type="radio" name="atmosphere" id="Bureau">
-                                <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
-                            </label>
-                            <label>
-                                <span>Nature</span>
-                                <input type="radio" name="atmosphere" id="Nature">
-                                <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
-                            </label>
-                        </div>
-                        <!--<input class="form-control" id="atmosphere" type="range" [(ngModel)]='atmosphere' min="0" max="10" name="atmosphere" >-->
-                    </div>
-                </div>
-
-
-
-
-                <div class="form-group">
-                    <label class="col-md-6 control-label" for="teachTags">Ma position</label>
-                    <div class="col-md-12">
-                        <geolocation [(latitude)]="entity.latitude" [(longitude)]="entity.longitude"></geolocation>
-                    </div>
-                </div>
-
-
-                <!-- Textarea -->
-                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !biographie.valid }">
-                    <label class="col-md-12 control-label" for="biographie">Pourquoi voulez-vous apprendre ceci, quels sont vos motivations et vos projets ? </label>
-                    <div class="col-md-12">
-                        <quill-editor id="biographie" [theme]="'bubble'" [placeholder]="'Freelance cherchant à acquérir des compétences dans le code.'"   [(ngModel)]="entity.biographie" name="biographie" #biographie="ngModel" [modules]="quillConfig"></quill-editor>
-                        <div *ngIf="f.submitted && !biographie.valid" class="help-block">La biographie est obligatoire</div>
-                    </div>
-                </div>
-
-                <!-- Button -->
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <button id="submit" style="float:right" name="submit" class="btn btn-primary">Modifier</button>
-                    </div>
-                </div>
-
-
-            </fieldset>
-        </form>
-
+            </div>
         </div>
     </div>
 </div>
