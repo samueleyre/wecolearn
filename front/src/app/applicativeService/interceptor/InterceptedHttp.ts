@@ -36,12 +36,16 @@ export class InterceptedHttp extends Http {
                         this.router.navigate(['/login']);
                 }
                 if (error.status === 404) {
-                    this.tokenService.clear();
+                    //this.tokenService.clear();
                     this.router.navigate(['/404']);
                 }
                 if( 500 <= error.status ) {
                     // console.log(error.json().message);
                     // console.log(error.json().trace );
+                }
+                if( 500 == error.status ) {
+                    console.log(error.json().message);
+                    console.log(error.json().trace );   
                 }
                 return Observable.throw(error);
 

@@ -122,7 +122,6 @@ class ClientService extends GPPDService {
     {
 
 
-
         if ( $addTags ) {
             $client->setTags($this->insertNewTags($client->getTags()));
         }

@@ -58,6 +58,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         this.base_url = r;
         this.tagService = tagService;
         this.clientService= clientService;
+
     }
 
 
@@ -68,20 +69,19 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
     load() : void {
         this.service.setApi(this.getApi());
-        this.service.get().subscribe( ( client: IEntity[] ) => {
+
+        
+        this.service.getOne().subscribe( ( client: IEntity) => {
             //console.log("client", client);
-            this.entity = this.setTags(client[0]);
-            //console.log("latin databse", this.entity['latitude'])
+            this.entity = this.setTags(client);
+            //console.log("entity on loaded", client);
             if (!this.entity['latitude']) {
                 this.setDefaultLatLong();
             }
-
-
         });
-
     }
 
-    setTags(client = this.entity) {
+    setTags(client: IEntity) {
         client['learn_tags'] = [];
         client['know_tags'] = [];
         client['teach_tags'] = [];
@@ -101,16 +101,17 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
                 }
             }
         }
-        console.log(client);
+        console.log('client', client);
         return client;
     }
 
     submit(f:NgForm ) {
         this.joinTags();
         this.service.setApi(this.getApi());
-        this.service.patch( this.entity ).subscribe(
-            ( entities: IEntity[] ) => {
-                this.entity = this.setTags(entities[0]);
+        this.service.patchOne( this.entity ).subscribe(
+            ( entitie: IEntity ) => {
+                console.log( 'entitie', entitie);
+                this.entity = this.setTags(entitie);
                 if (!this.entity['latitude']) {
                     this.setDefaultLatLong();
                 }

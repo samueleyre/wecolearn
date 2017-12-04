@@ -32,12 +32,33 @@ export class GPPDService {
 		;
 	}
 
+	getOne(): Observable<IEntity> {
+		
+		let params = FilterService.getUrlParams();
+
+		return this.http.get(`${this.route}${params}`).map((response: Response) => {
+				// console.log(response);
+				return response.json();
+			})
+		;
+	}
+
 	
 
 	patch(entity: any ): Observable<IEntity[]> {
 		
 		let params = FilterService.getUrlParams();
+
+		return this.http.patch(`${this.route}${params}`, entity).map((response: Response) => {
+				return response.json();
+			})
+		;
+	}
+
+	patchOne(entity: any ): Observable<IEntity> {
 		
+		let params = FilterService.getUrlParams();
+
 		return this.http.patch(`${this.route}${params}`, entity).map((response: Response) => {
 				return response.json();
 			})

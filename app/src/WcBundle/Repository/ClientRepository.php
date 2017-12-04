@@ -14,17 +14,23 @@ class ClientRepository extends EntityRepository
     {
 
             if (! $startLatitude || ! $startLongitude ) {
-                $startLatitude = $client->getLatitude();
-                $startLongitude = $client->getLongitude();
+                $startLatitude = (null === $client->getLatitude())?$client->getLatitude():45.75;
+                $startLongitude = (null === $client->getLongitude())?$client->getLongitude():4.85;
             }
 
             $tags = $client->getTags();
 
+            syslog(LOG_ERR, $startLongitude);
+
             $qb = $this->getEntityManager( )->createQueryBuilder();
             $qb->select('entity');
-            $qb->addSelect(sprintf(' pow(69.1 * (entity.latitude - %s), 2) +
-                pow(69.1 * (%s - entity.longitude) * cos(entity.latitude / 57.3), 2) AS distance', $startLatitude, $startLongitude));
 
+            $qb->addSelect(sprintf(' 
+                pow(69.1 * (entity.latitude - %s), 2) +
+                pow(69.1 
+                    * (%s - entity.longitude) 
+                    * cos(entity.latitude / 57.3), 2) AS distance', $startLatitude, $startLongitude));
+            
             $qb->from( sprintf('%s', 'WcBundle:Client' ),'entity');
             $qb->innerJoin('entity.tags', 't');
             $qb->where( 'entity.id != :clientId')->setParameter('clientId', $client->getId() );
@@ -41,6 +47,8 @@ class ClientRepository extends EntityRepository
             $qb->setFirstResult( $first );
             $qb->setMaxResults( $max );
             $qb->groupBy('entity.id');
+
+            syslog(LOG_ERR,$qb->getQuery()->getSQL());
 
             $ret = $qb->getQuery()->getResult();
 
