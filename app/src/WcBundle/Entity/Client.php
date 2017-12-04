@@ -20,7 +20,7 @@ class Client
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", cascade={"persist", "merge"})
-     * @ORM\JoinColumn(name="userId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="id", onDelete="NO ACTION")
      */
     public $user;
 
@@ -91,27 +91,13 @@ class Client
      */
     public $image;
 
-//todo :    , onDelete={} pour que le cascading delete fonctionne dans le cas des fixtures load notamment
-
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="clients", cascade={"persist", "merge"})
      * @ORM\JoinColumn(name="tagsIds", referencedColumnName="id", nullable=true)
      */
     public $tags;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Selection", inversedBy="client", cascade={"persist", "merge"})
-     * @ORM\JoinColumn(name="selectionId", referencedColumnName="id", nullable=true)
-     */
-    public $selection;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Selection", inversedBy="clients")
-     * @ORM\JoinColumn(name="selectedIds", referencedColumnName="id", nullable=true)
-     */
-    public $selected;
-
-
+    
     /**
      * @ORM\OneToMany(targetEntity="Message", mappedBy="sender", cascade={"persist", "merge"})
      * @ORM\JoinColumn(name="sentMessageIds", referencedColumnName="id", nullable=true)
@@ -504,31 +490,6 @@ class Client
         $this->tags = $tags;
     }
 
-
-
-    /**
-     * Set selection
-     *
-     * @param \WcBundle\Entity\Selection $selection
-     *
-     * @return Client
-     */
-    public function setSelection(\WcBundle\Entity\Selection $selection = null)
-    {
-        $this->selection = $selection;
-
-        return $this;
-    }
-
-    /**
-     * Get selection
-     *
-     * @return \WcBundle\Entity\Selection
-     */
-    public function getSelection()
-    {
-        return $this->selection;
-    }
 
     /**
      * Add selected

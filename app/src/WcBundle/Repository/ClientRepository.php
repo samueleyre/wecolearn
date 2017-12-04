@@ -14,13 +14,15 @@ class ClientRepository extends EntityRepository
     {
 
             if (! $startLatitude || ! $startLongitude ) {
-                $startLatitude = (null === $client->getLatitude())?$client->getLatitude():45.75;
-                $startLongitude = (null === $client->getLongitude())?$client->getLongitude():4.85;
+                $startLatitude = (null !== $client->getLatitude())?$client->getLatitude():45.75;
+                $startLongitude = (null !== $client->getLongitude())?$client->getLongitude():4.85;
             }
 
             $tags = $client->getTags();
 
-            syslog(LOG_ERR, $startLongitude);
+            //syslog(LOG_ERR, $client->getLatitude());
+            //syslog(LOG_ERR, $startLatitude);
+
 
             $qb = $this->getEntityManager( )->createQueryBuilder();
             $qb->select('entity');
@@ -31,24 +33,27 @@ class ClientRepository extends EntityRepository
                     * (%s - entity.longitude) 
                     * cos(entity.latitude / 57.3), 2) AS distance', $startLatitude, $startLongitude));
             
-            $qb->from( sprintf('%s', 'WcBundle:Client' ),'entity');
+            $qb->from('WcBundle:Client','entity');
+            
             $qb->innerJoin('entity.tags', 't');
+            
             $qb->where( 'entity.id != :clientId')->setParameter('clientId', $client->getId() );
-            $qb->andWhere( 't.type = :number'  )->setParameter('number', 0);
-            if(count($tags) > 0 ) {
+            $qb->andWhere( 't.type = :number' )->setParameter('number', 0);
+            if( count($tags) > 0 ) {
                 $condition = sprintf('t.id=%s',  $tags[0]->getId());
                 for ($i = 1; $i < count($tags); $i++) {
                     $condition .= sprintf(' OR t.id=%s',  $tags[$i]->getId());
                 }
                 $qb->andWhere( $condition );
             }
+            
             $qb->having('distance < 1000');
             $qb->orderBy('distance', 'ASC');
             $qb->setFirstResult( $first );
             $qb->setMaxResults( $max );
             $qb->groupBy('entity.id');
 
-            syslog(LOG_ERR,$qb->getQuery()->getSQL());
+            //syslog(LOG_ERR,$qb->getQuery()->getSQL());
 
             $ret = $qb->getQuery()->getResult();
 

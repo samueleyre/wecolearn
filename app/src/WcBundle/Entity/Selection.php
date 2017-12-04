@@ -17,19 +17,7 @@ class Selection
      */
     public $id;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Client", mappedBy="selected")
-     * @ORM\JoinColumn(name="clientIds", referencedColumnName="id")
-     */
-    public $clients;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Client", mappedBy="selection")
-     * @ORM\JoinColumn(name="clientId", referencedColumnName="id")
-     */
-    public $client;
-
-
+    
     /**
      * @ORM\Column(type="boolean",name="selected")
      */
@@ -112,61 +100,4 @@ class Selection
         return $this->updated;
     }
 
-    /**
-     * Add client
-     *
-     * @param \WcBundle\Entity\Client $client
-     *
-     * @return Selection
-     */
-    public function addClient(\WcBundle\Entity\Client $client)
-    {
-        $this->clients[] = $client;
-
-        return $this;
-    }
-
-    /**
-     * Remove client
-     *
-     * @param \WcBundle\Entity\Client $client
-     */
-    public function removeClient(\WcBundle\Entity\Client $client)
-    {
-        $this->clients->removeElement($client);
-    }
-
-    /**
-     * Get clients
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getClients()
-    {
-        return $this->clients;
-    }
-
-    /**
-     * Set client
-     *
-     * @param \WcBundle\Entity\Client $client
-     *
-     * @return Selection
-     */
-    public function setClient(\WcBundle\Entity\Client $client = null)
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * Get client
-     *
-     * @return \WcBundle\Entity\Client
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
 }

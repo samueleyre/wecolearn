@@ -25,7 +25,7 @@ class Image
 
     /**
      * @ORM\OneToOne(targetEntity="Client", mappedBy="image")
-     * @ORM\JoinColumn(name="clientId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="clientId", referencedColumnName="id", onDelete="NO ACTION")
      */
     public $client;
 

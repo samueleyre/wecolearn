@@ -33,6 +33,8 @@ class Fixtures extends Fixture implements ContainerAwareInterface
         $tags = [];
         $messages = [];
 
+        $phpTag = null;
+
 
         for ($i = 0; $i < count($usernames); $i++) {
             $rand = random_int(0, 30);
@@ -56,6 +58,10 @@ class Fixtures extends Fixture implements ContainerAwareInterface
             $tag->setType($types[$rand]);
             $tag->setIteration($randIteration);
             $manager->persist($tag);
+
+            if( $tagNames[$i] == 'Php') {
+                $phpTag = $tag;
+            }
             $tags[] = $tag;
         }
 
@@ -90,15 +96,15 @@ class Fixtures extends Fixture implements ContainerAwareInterface
             $client->setLongitude((45.24 + $rand));
             if (count($clients) > 0) {
                 $rand = random_int(0, count($clients)-1);
-                $selection = new Selection();
-                $selection->addClient($clients[$rand]);
-                $selection->setClient($client);
-                $manager->persist($selection);
+                //$selection = new Selection();
+                //$selection->addClient($clients[$rand]);
+                //$selection->setClient($client);
+                //$manager->persist($selection);
 
-                $client->setSelection($selection);
-                $clients[$rand]->addSelected($selection);
+                //$client->setSelection($selection);
+                //$clients[$rand]->addSelected($selection);
 
-                $manager->persist($selection);
+                //$manager->persist($selection);
                 $manager->persist($clients[$rand]);
 
             }
@@ -108,8 +114,9 @@ class Fixtures extends Fixture implements ContainerAwareInterface
             $randChosen = [];
             for($j=0; $j< 4; $j++) {
                 $rand = random_int(0, count($tags)-1);
-                if (!array_search($rand, $randChosen) && array_search($rand, $randChosen) !== 0) {
+                if (! array_search($rand, $randChosen) && array_search($rand, $randChosen) !== 0) {
                     $client->addTag($tags[$rand]);
+                    //$client->addTag($phpTag);
                 }
                 $randChosen[] = $rand;
             }
