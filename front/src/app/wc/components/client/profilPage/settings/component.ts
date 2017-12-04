@@ -41,7 +41,7 @@ import { APP_BASE_HREF, Location } from '@angular/common';
 export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
 
-    base_url : string;
+    public  base_url : string;
     private modify = false;
     private imagePath : string;
     private uploadError : object = {};
@@ -87,7 +87,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         client['teach_tags'] = [];
         if (client['tags'].length > 0) {
             for(let i=0; i< client['tags'].length ; i++) {
-                console.log("types", client['tags'][i]['type'])
+                //console.log("types", client['tags'][i]['type'])
                 switch (Number(client['tags'][i]['type'])) {
                     case 0:
                         client['learn_tags'].push(client['tags'][i]['name']);
@@ -101,7 +101,6 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
                 }
             }
         }
-        console.log('client', client);
         return client;
     }
 
@@ -110,7 +109,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         this.service.setApi(this.getApi());
         this.service.patchOne( this.entity ).subscribe(
             ( entitie: IEntity ) => {
-                console.log( 'entitie', entitie);
+                //console.log( 'entitie', entitie);
                 this.entity = this.setTags(entitie);
                 if (!this.entity['latitude']) {
                     this.setDefaultLatLong();
