@@ -4,23 +4,30 @@
 #homeBgImageContainer{
   background-color: #aab2b0;
   #homeBgImage{
-    height: 376px;
+    height: 456px;
+    width: 100%;
+    background-position: center -108px;
+    @media (min-width: 1000px) {
+      height: 376px;
+      width: 100%;
+      background-position: center -240px;
+    }
     h1{
       color: #fb6532;
       padding-top: 89px;
       font-weight: 800;
       margin-bottom: 0;
     }
-    width: 100%;
-    max-width: 1000px;
     margin: auto;
-    background-position: center -108px;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
   }
 }
 
 #tagLinksContainer{
   display: flex;
-  padding: 12px 14vw;
+  padding: 12px 0;
   text-align: center;
   .tagLink{
     flex-grow: 1;

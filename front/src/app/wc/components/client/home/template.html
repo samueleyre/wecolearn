@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <!--<div class="col-12">-->
-            <div class="col-12" id="tagLinksContainer">
+            <div class="col-10 offset-1" id="tagLinksContainer">
                 <div *ngFor="let tagLink of tagLinks" class="tagLink">
                     <a class="btn btn-secondary" (click)="search(tagLink.tagName)">{{tagLink.tagName}}</a>
                 </div>
