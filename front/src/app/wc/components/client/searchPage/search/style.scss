@@ -2,15 +2,29 @@
 
 #possibleMatchesContainer{
   .row{
-    //display: flex;
-    //align-content: space-around;
-    //flex-flow: row wrap;
-    .card{
+    .card-container{
       padding: 1rem;
-      //margin-right: auto;
+      .card{
+        padding: 2rem;
+        .tagContainer{
+          display: flex;
+          flex-wrap: wrap;
+          .tag{
+            padding: 2px 6px;
+            background-color: #d8d8d8;
+            border-radius: 3px;
+            margin: 2px 0px;
+            margin-right: 6px;
+          }
+        }
+      }
     }
   }
 
+}
+
+.bioContainer{
+  padding: 1rem 2rem 0.5rem;
 }
 
 @media (min-width: 992px){
@@ -20,6 +34,6 @@
   }
 }
 
-
-chat-threads{
+.imageContainer{
+  border-radius: 2px;
 }

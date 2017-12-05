@@ -13,33 +13,35 @@
 		                  (scrolled)="onScroll()"
                       (scrolledUp)="onScrollUp()" >
 
-                        <div *ngFor="let card of cards" class="card col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div *ngFor="let card of cards" class="card-container col-12 col-sm-12 col-md-6 col-lg-6">
 
+                            <div class="card">
                                 <div class="titleContainer container-fluid">
 
                                     <div class="row">
-                                        <div class="col-4 imageContainer" *ngIf="card[0].image">
-                                            <img width="100" src="{{avatarSrcBase}}{{card[0].image.filename}}" alt="">
+                                        <div class="col-4 no-padding imageContainer" *ngIf="card[0].image">
+                                            <img width="100%" src="{{avatarSrcBase}}{{card[0].image.filename}}" alt="">
                                         </div>
                                         <div class="col-8">
-                                            <p class="">{{card[0].first_name}}</p>
-                                            <p class="">{{card[0].last_name}}</p>
+                                            <h5 class="">{{card[0].first_name}} {{card[0].last_name}}</h5>
+                                            <div class="tagContainer" *ngIf="card[0].tags">
+                                                <div class="tag" *ngFor="let tag of card[0].tags"><span>{{tag.name}}</span></div>
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
-
-                                <p class="text-center">{{card[0].biographie}}</p>
-
-                                <p *ngIf="card[0].tags">
-                                    <span *ngFor="let tag of card[0].tags">{{tag.name}} </span>
-                                </p>
+                                <div class="bioContainer">
+                                    <p class="">{{card[0].biographie}}</p>
+                                </div>
 
                                 <div>
                                     <button class="btn" (click)="openThread(card[0])">
                                        <i class="fa fa-comment"></i> Message
                                     </button>
                                 </div>
+
+                            </div>
 
 
                         </div>
