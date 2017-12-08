@@ -107,6 +107,23 @@ export class GPPDComponent {
 
     }
 
+    static getScreenSize() {
+        let w = window,
+          d = document,
+          e = d.documentElement,
+          g = d.getElementsByTagName('body')[0],
+          x = w.innerWidth || e.clientWidth || g.clientWidth;
+
+        console.log("screen size ! " ,x)
+
+        if (x < 768) {
+          return false;
+        } else {
+          return true;
+        }
+
+      }
+
     static updateUrl(req: string) {
         return  environment.publique + req;
     }

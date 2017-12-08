@@ -1,72 +1,52 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a *ngIf="connected" class="navbar-brand" routerLink="/search">
+    <a *ngIf="connected && screen" class="navbar-brand" routerLink="/search">
         <img width="37px" src="{{logoPath}}" alt="">
     </a>
-    <a *ngIf="!connected" class="navbar-brand" routerLink="/">
+    <a *ngIf="!connected && screen" class="navbar-brand" routerLink="/">
         <img width="37px" src="{{logoPath}}" alt="">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item" > <!-- PUT ALL THIS IN A COMPONENT -->
-                <form class="form-inline my-2 my-lg-0">
-                    <searchBar></searchBar>
-                </form>
-            </li>
-            <li  *ngIf="!connected" class="nav-item" >
-                <form class="form-inline my-2 my-lg-0">
-                    <cityBar></cityBar>
-                </form>
-            </li>
-            <!--<li class="nav-item" style="margin-left: 1rem;" >-->
-                <!--<a id="filter-tag" data-selected="true" class="btn rounded-left" (click)="chooseSearchBarType('tag')" ><i class="fa fa-book" aria-hidden="true"></i></a>-->
-            <!--</li>-->
-            <!--<li class="nav-item" >-->
-                <!--<label class="switch">-->
-                    <!--<input id="searchBarTypeCheckbox" type="checkbox"  [(ngModel)]="searchBarTypeChecked" (click)="chooseSearchBarType((searchBarType==='tag')?'map':'tag')">-->
-                    <!--<span class="slider round"></span>-->
-                <!--</label>-->
-            <!--</li>-->
-            <!--<li class="nav-item" >-->
-                <!--<a id="filter-map" class="btn rounded-right" (click)="chooseSearchBarType('map')"><i class="fa fa-map-o" aria-hidden="true"></i></a>-->
-            <!--</li>-->
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li *ngIf="connected" ngbDropdown  id="notifications" class="nav-item d-inline-block">
-                <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>
-                   <i class="fa fa-bell"></i> <span class="badge">{{ unreadMessagesCount }}</span>
-                </a>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="notifications && (notifications.length > 0)">
-                    <a *ngFor="let notification of notifications" class="nav-link dropdown-item" (click)="activateNotification(notification.thread)" style="border-bottom: solid 1px #f5f1f1">{{notification.sender.first_name}} : <span style="text-overflow: ellipsis">{{notification.message}}</span></a>
-                </div>
-            </li>
-            <li *ngIf="connected" ngbDropdown  id="parameters" class="nav-item d-inline-block">
-                <a class="nav-link dropdown-toggle" id="dropdownParameters" ngbDropdownToggle>
-                    <img *ngIf="currentClient.image" height="30px" src="{{imagePath}}{{currentClient.image.filename}}" alt="">
-                    <img *ngIf="!currentClient.image" height="30px" src="{{imagePath}}gribouille.png" alt="">
-                </a>
-                <div ngbDropdownMenu aria-labelledby="dropdownParameters">
-                    <a class="nav-link dropdown-item" routerLink="/settings">Profil</a>
-                    <a class="nav-link dropdown-item" routerLink="/">Déconnexion</a>
-                </div>
-            </li>
-            <li *ngIf="!connected" class="nav-item" >
-                <a class="nav-link" routerLink="/login">Connexion</a>
-            </li>
-            <li *ngIf="!connected" class="nav-item" >
-                <a class="nav-link" routerLink="/subscribe">Inscription</a>
-            </li>
-            <li *ngIf="!connected" ngbDropdown  class="nav-item d-inline-block">
-                <div ngbDropdownMenu aria-labelledby="dropDownSignIn">
-                </div>
-            </li>
-            <li *ngIf="connected && bo"  class="nav-item">
-                <a class="nav-link disabled" href="#">Administration</a>
-            </li>
-        </ul>
-    </div>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item" > <!-- PUT ALL THIS IN A COMPONENT -->
+            <form class="form-inline my-2 my-lg-0">
+                <searchBar></searchBar>
+            </form>
+        </li>
+        <li  *ngIf="!connected" class="nav-item" >
+            <form class="form-inline my-2 my-lg-0">
+                <cityBar></cityBar>
+            </form>
+        </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+        <li *ngIf="connected" ngbDropdown  id="notifications" class="nav-item d-inline-block">
+            <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>
+               <i class="fa fa-bell"></i> <span class="badge">{{ unreadMessagesCount }}</span>
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="notifications && (notifications.length > 0)">
+                <a *ngFor="let notification of notifications" class="nav-link dropdown-item" (click)="activateNotification(notification.thread)" style="border-bottom: solid 1px #f5f1f1">{{notification.sender.first_name}} : <span style="text-overflow: ellipsis">{{notification.message}}</span></a>
+            </div>
+        </li>
+        <li *ngIf="connected" ngbDropdown  id="parameters" class="nav-item d-inline-block">
+            <a class="nav-link dropdown-toggle" id="dropdownParameters" ngbDropdownToggle>
+                <img *ngIf="currentClient.image" height="30px" src="{{imagePath}}{{currentClient.image.filename}}" alt="">
+                <img *ngIf="!currentClient.image" height="30px" src="{{imagePath}}gribouille.png" alt="">
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownParameters">
+                <a class="nav-link dropdown-item" routerLink="/settings">Profil</a>
+                <a class="nav-link dropdown-item" routerLink="/">Déconnexion</a>
+            </div>
+        </li>
+        <li *ngIf="!connected && screen" class="nav-item" >
+            <a class="nav-link" routerLink="/login">Connexion</a>
+        </li>
+        <li *ngIf="!connected && screen" class="nav-item" >
+            <a class="nav-link" routerLink="/subscribe">Inscription</a>
+        </li>
+
+        <li *ngIf="connected && bo"  class="nav-item">
+            <a class="nav-link disabled" href="#">Administration</a>
+        </li>
+    </ul>
 </nav>
 <message></message>

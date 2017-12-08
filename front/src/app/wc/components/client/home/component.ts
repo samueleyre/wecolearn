@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 export class HomeComponent implements OnInit {
 
     private homeBgImageStyle: any;
+    public screen: boolean =  false;
     private webPath: string;
     private tagLinks = [
       {
@@ -39,10 +40,12 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
-        this.webPath = GPPDComponent.updateUrl('/home/');
+        this.webPath = GPPDComponent.updateUrl('/');
         this.homeBgImageStyle = {
-          backgroundImage: "url('"+this.webPath+"P3.jpg')"
+          backgroundImage: "url('"+this.webPath+"home/P3.jpg')"
         };
+        this.screen =  GPPDComponent.getScreenSize();
+
     }
 
     search(text:string = null) {

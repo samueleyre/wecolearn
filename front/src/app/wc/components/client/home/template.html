@@ -2,9 +2,17 @@
     <div class="row center">
         <div id="homeBgImageContainer" class="col-12 no-padding">
             <div id="homeBgImage" [ngStyle]="homeBgImageStyle" >
-                <h1>Apprenez ce que <b>vous</b> voulez !</h1>
+                <div *ngIf="!screen" class="imageContainer">
+                    <img width="65px" src="{{webPath}}logo/wecolearn.png" alt="">
+                </div>
+                <h3>Apprenez ce que <b>vous</b> voulez !</h3>
                 <br><br>
                 <a class="btn btn-primary btn-lg" routerLink="/subscribe">Inscription</a>
+                <div *ngIf="!screen" style="color: white; font-weight: 700;">
+                    <br>
+                    <br>
+                    Déjà membre ? <a class="" routerLink="/login">Je me connecte</a>
+                </div>
             </div>
         </div>
     </div>

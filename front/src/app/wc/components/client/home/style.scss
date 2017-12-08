@@ -12,8 +12,16 @@
       width: 100%;
       background-position: center -240px;
     }
-    h1{
-      color: #fb6532;
+    @media (max-width: 768px) {
+      background-position: center 0px;
+      height: 596px;
+      padding-top: 65px;
+    }
+    h3{
+      @media (max-width: 768px) {
+        padding-top: 65px;
+      }
+      color: $mainOrange;
       padding-top: 89px;
       font-weight: 800;
       margin-bottom: 0;
@@ -29,7 +37,19 @@
   display: flex;
   padding: 12px 0;
   text-align: center;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
   .tagLink{
+    @media (max-width: 768px) {
+      margin: 5px 1px;
+    }
     flex-grow: 1;
   }
+}
+
+.btn-primary{
+  color: $mainOrange;
+  background-color: #ffffff;
+  border-color: #ffffff;
 }

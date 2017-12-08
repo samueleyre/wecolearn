@@ -35,6 +35,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     private avatarSrcBase : string;
     private cards: any = null;
     public max: number = 4;
+    public screen: boolean =  false;
 
     constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute, public threadsService: ThreadsService, private searchService: SearchService) {
         super(service);
@@ -43,7 +44,10 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     ngOnInit() {
       this.avatarSrcBase =  GPPDComponent.updateUrl('/img/');
       this.load();
+      this.screen =  GPPDComponent.getScreenSize();
     }
+
+
 
     load() : void {
       this.searchService.autoLoad().subscribe( ( clients: IEntity[] ) => {

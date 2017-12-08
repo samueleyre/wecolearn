@@ -36,13 +36,14 @@ export class HeaderComponent implements OnInit {
     private location: Location;
     private logoPath: string;
     private imagePath: string;
-	private baseUrl: string;
-	private connected: boolean;
+		private baseUrl: string;
+		private connected: boolean;
     public unreadMessagesCount: number;
     private searchBarType: string = "tag";
-	private searchBarTypeChecked : any = false;
-	private notifications: Array<Message>;
-	private currentClient : Client = new Client;
+		private searchBarTypeChecked : any = false;
+		private notifications: Array<Message>;
+		private currentClient : Client = new Client;
+		private collapseClass: string = "collapse";
 
       constructor( private http : Http,
 				 private router: Router,
@@ -154,6 +155,11 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/search']);
 		});
   }
+
+  collapse() {
+		(this.collapseClass === "collapse") ? this.collapseClass = null: this.collapseClass = "collapse";
+
+	}
 
 
 
