@@ -9,6 +9,7 @@ import {Http, Response} from "@angular/http";
 
 import * as _ from 'lodash';
 import {FilterService} from "../../applicativeService/filter/service";
+import {IEntity} from "../entity/interface";
 
 
 
@@ -16,15 +17,24 @@ import {FilterService} from "../../applicativeService/filter/service";
 export class SearchService {
 
   currentFoundClients: Observable<Message[]>;
+  currentSearch: Object;
 
 
   constructor(public ClientService: ClientService, protected http: Http) {
 
+    this.currentSearch = {};
   }
 
   search( first?: number, max?: number ): Observable<Array<Client>> {
 
-    let params = FilterService.getUrlParams();
+
+
+    console.log("current Search", this['currentSearch'], this.currentSearch.hasOwnProperty("city"));
+    if (this.currentSearch.hasOwnProperty("city")) {
+      FilterService.addFilter("latitude" , this.currentSearch["city"].latitude);
+      FilterService.addFilter("longitude" ,this.currentSearch["city"].longitude);
+    }
+
 
     if( typeof first == 'undefined') {
       first = 0;
@@ -34,11 +44,14 @@ export class SearchService {
       max = 10;
     }
 
+    FilterService.addFilter("first" ,first);
+    FilterService.addFilter("max" ,max);
+    let params = FilterService.getUrlParams();
     /*
     api de recherche utilisée dans l'infinite scroll
     de la barre de recherche.
     */
-    return this.http.get(`/api/search${params}?first=${first}&max=${max}`)
+    return this.http.get(`/api/search${params}`)
       .map((response: Response) => {
         this.currentFoundClients = response.json();
         return response.json();
@@ -56,5 +69,15 @@ export class SearchService {
         this.currentFoundClients = response.json();
         return response.json();
       });
+  }
+
+  addSearchParameter(key:string, value: any) {
+
+    // console.log("addSearchParameter", key, value)
+    this.currentSearch[key] = value;
+    // console.log("current Search", this['currentSearch']);
+
+
+
   }
 }

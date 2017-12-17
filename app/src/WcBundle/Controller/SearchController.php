@@ -72,9 +72,12 @@ class SearchController extends GPPDController
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $client = $this->getDoctrine()
-            ->getRepository( Client::class )
-            ->findOneBy(['user' => $user ]);
+        $client = null;
+        if ($user) {
+            $client = $this->getDoctrine()
+                ->getRepository( Client::class )
+                ->findOneBy(['user' => $user ]);
+        }
 
         return $this
             ->get('search.service')

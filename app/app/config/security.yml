@@ -44,18 +44,14 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-        employer:
-            pattern:   ^/api/employer
+
+        search:
+            pattern:   ^/api/search
             stateless: true
             anonymous: true
 
-        profil:
-            pattern:   ^/api/profil
-            stateless: true
-            anonymous: true
-
-        email:
-            pattern:   ^/api/email
+        findTag:
+            pattern:   ^/api/findTag
             stateless: true
             anonymous: true
 
@@ -79,8 +75,7 @@ security:
 
     access_control:
         - { path: ^/api/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/employer, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/profil, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/email, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/findTag, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/newuser, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

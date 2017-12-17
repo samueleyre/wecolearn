@@ -81,6 +81,16 @@ nav.navbar{
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .dropdown-menu{
+    max-width: 100px;
+    overflow: hidden;
+    .dropdown-item {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.8rem;
+    }
+  }
 }
 
 .navbar-nav{
