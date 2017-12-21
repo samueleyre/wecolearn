@@ -63,8 +63,6 @@ export class ChatWindowComponent implements OnInit {
           });
         });
 
-    this.messagesService.initTimer();
-
   }
 
 

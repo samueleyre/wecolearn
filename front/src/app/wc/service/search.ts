@@ -16,16 +16,17 @@ import {IEntity} from "../entity/interface";
 @Injectable()
 export class SearchService {
 
-  currentFoundClients: Observable<Message[]>;
+  currentFoundClients: Subject<Client[]> = new Subject<Client[]>();
   currentSearch: Object;
 
 
   constructor(public ClientService: ClientService, protected http: Http) {
 
     this.currentSearch = {};
+    // this.currentFoundClients = Observable.empty<Client[]>();
   }
 
-  search( first?: number, max?: number ): Observable<Array<Client>> {
+  search( first?: number, max?: number ): Observable<void> {
 
 
 
@@ -53,21 +54,23 @@ export class SearchService {
     */
     return this.http.get(`/api/search${params}`)
       .map((response: Response) => {
-        this.currentFoundClients = response.json();
-        return response.json();
+        this.currentFoundClients.next(response.json());
+        return;
+        // return response.json();
       });
 
   }
 
-  autoLoad(): Observable<Array<Client>> {
+  autoLoad(): Observable<void> {
 
     /*
     api utilisée pour le match en fonction du profil lors du chargement.
     */
     return this.http.get('/api/client/matchs')
       .map((response: Response) => {
-        this.currentFoundClients = response.json();
-        return response.json();
+        this.currentFoundClients.next(response.json());
+        return;
+        // return response.json();
       });
   }
 

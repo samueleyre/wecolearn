@@ -16,15 +16,16 @@ import { SubscribeComponent }          from './components/client/subscribe/compo
 
 const prRoutes: Routes = [
     { path: 'bo',      component: ClientComponent ,   canActivate: [AuthGuard] },
-    { path: 'profil',
-        children: [
-            {
-                path: ':url',
-                component: ProfilComponent,
-            }
-        ]
-    },
-    { path: 'search',      component: SearchComponent ,   canActivate: [AuthGuard] },
+    // { path: 'profil',
+    //     children: [
+    //         {
+    //             path: ':url',
+    //             component: ProfilComponent,
+    //             canActivate: [AuthGuard]
+    //         }
+    //     ]
+    // },
+    { path: 'search',      component: SearchComponent },
     { path: 'settings', component: ProfilSettingsComponent, canActivate: [AuthGuard] },
     { path : 'mentionslegales', component: MentionsComponent},
     { path : 'subscribe', component: SubscribeComponent},

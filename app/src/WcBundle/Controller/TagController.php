@@ -39,12 +39,13 @@ class TagController extends GPPDController
     public function getTagAction( Request $request )
     {
 
-        if ($tagLetters = $request->get("tagLetters")) {
-            return $this->getDoctrine()
-                ->getRepository(Tag::class)
-                ->findAllOrderedByIteration($tagLetters);
-        } else {
-            return "nothing";
+        $tagLetters = null;
+        if ($request->get("tagLetters")) {
+            $tagLetters = $request->get("tagLetters");
         }
+
+        return $this->getDoctrine()
+            ->getRepository(Tag::class)
+            ->findAllOrderedByIteration($tagLetters);
     }
 }

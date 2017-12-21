@@ -48,16 +48,9 @@ class SearchService extends GPPDService {
         }
 
 
-        if ($tag === null) { // todo: add case when not connected and search for no tags
-            return $this->em
-                ->getRepository(Client::class)
-                ->findMatches($client, $first, $max, $latitude, $longitude);
-        } else {
+        return $this->em
+            ->getRepository(Client::class)
+            ->search($client, $tag, $first, $max, $latitude, $longitude);
 
-            return $this->em
-               ->getRepository(Client::class)
-               ->search($tag, $first, $max, $client, $latitude, $longitude);
-
-        }
    }
 }

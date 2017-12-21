@@ -148,7 +148,7 @@ class ClientService extends GPPDService {
 
         return $this->em
             ->getRepository(Client::class)
-            ->findMatches($client, $filter['first'], $filter['max'] );
+            ->search($client, null, $filter['first'], $filter['max'] );
 
 
 

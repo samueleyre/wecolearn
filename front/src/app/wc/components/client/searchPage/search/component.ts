@@ -21,6 +21,7 @@ import {FilterService}            from "../../../../../applicativeService/filter
 import {log} from "util";
 import {ThreadsService}           from "../../../../service/threads.service";
 import {SearchService}            from "../../../../service/search";
+import {Logged} from "../../../../../applicativeService/authguard/logged";
 
 
 @Component({
@@ -36,8 +37,13 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     private cards: any = null;
     public max: number = 4;
     public screen: boolean =  false;
+    private logged = false;
 
-    constructor( protected service: GPPDService, private activatedRoute: ActivatedRoute, public threadsService: ThreadsService, private searchService: SearchService) {
+    constructor( protected service: GPPDService,
+                 private activatedRoute: ActivatedRoute,
+                 public threadsService: ThreadsService,
+                 private router: Router,
+                 private searchService: SearchService) {
         super(service);
     }
 
@@ -50,11 +56,25 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
 
     load() : void {
-      this.searchService.autoLoad().subscribe( ( clients: IEntity[] ) => {
+
+      Logged.get().subscribe( (logged:boolean) => {
+
+        if (logged) {
+          this.logged = true;
+          this.searchService.autoLoad().subscribe();
+
+        }
+
+
+        // this.connected = logged;
+      });
+
+      this.searchService.currentFoundClients.subscribe( ( clients: IEntity[] ) => {
         this.entities = clients;
         this.cards = clients;
-        //console.log("cards", this.cards);
-      });
+        console.log("cards", this.cards);
+      })
+
     }
 
     getEntity() {
@@ -63,21 +83,23 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     openThread(card : Client) {
 
-      if (false) { //thread exists
+      if (this.logged) {
+        if (false) { // todo: see if thread exists
 
+        } else {
+            let thread = new Thread( card.id, card.first_name, card.image.filename)
+            this.threadsService.setCurrentThread(thread);
+
+        }
       } else {
-          let thread = new Thread( card.id, card.first_name, card.image.filename)
-          this.threadsService.setCurrentThread(thread);
-
+        this.router.navigate(['/login']);
       }
+
     }
 
     onScroll() {
       this.max += 2;
-      this.searchService.search( 0, this.max ).subscribe( ( clients: IEntity[] ) => {
-        this.entities = clients;
-        this.cards = clients;
-      });
+      this.searchService.search( 0, this.max ).subscribe();
 
       //console.log('scrolled down');
     }

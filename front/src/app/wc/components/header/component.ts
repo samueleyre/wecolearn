@@ -70,10 +70,10 @@ export class HeaderComponent implements OnInit {
       this.imagePath = GPPDComponent.updateUrl('/img/');
       this.screen = GPPDComponent.getScreenSize();
   	  this.ClientService.get().subscribe((client: Client )=> {
-  		console.log("got client", client)
-  		this.currentClient = client;
-		});
-		this.load();
+				console.log("got client", client)
+				this.currentClient = client;
+			});
+			this.load();
 	}
 
 	chooseSearchBarType(choice: string) {
@@ -96,8 +96,10 @@ export class HeaderComponent implements OnInit {
 
         Logged.get().subscribe( (logged:boolean) => {
         	this.connected = logged;
-			this.loadClient();
-			this.loadMessages();
+        	if (logged) {
+						this.loadClient();
+						this.loadMessages();
+					}
         });
 		if ( !localStorage.getItem('cookieseen')) {
         	MessageService.cookie();
@@ -107,67 +109,33 @@ export class HeaderComponent implements OnInit {
 
 	loadMessages() {
 
-    	this.messagesService.init();
+		this.messagesService.init();
 
-        // this.messagesService.messages
-        //     .combineLatest(
-        //         this.threadsService.currentThread,
-        //         (messages: Message[], currentThread: Thread) =>
-        //             [currentThread, messages] )
-        //
-        //     .subscribe(([currentThread, messages]: [Thread, Message[]]) => {
-        //     	let oldValue = this['unreadMessagesCount'];
-        //     	this.notifications = [];
-        //         this.unreadMessagesCount =
-        //             _.reduce(
-        //                 messages,
-        //                 (sum: number, m: Message) => {
-        //                     const messageIsInCurrentThread: boolean = m.thread &&
-        //                         currentThread &&
-        //                         (currentThread.id === m.thread.id);
-        //
-        //                     const messageIsFromUser: boolean = m.sender &&
-        //                         this.currentClient &&
-					// 										  (m.sender.id === this.currentClient.id);
-        //
-        //                     if (m && !m.is_read && !messageIsInCurrentThread && !messageIsFromUser && m.sender) {
-        //                       this.notifications.push(m);
-        //                     	sum = sum + 1;
-        //                     }
-        //                     return sum;
-        //                 },
-        //                 0);
-        //         // console.log("diff", oldValue, this['unreadMessagesCount'])
-        //
-        //     });
+		this.threadsService.orderedThreads.subscribe( (currentThreads: Array<Thread>) => {
 
-        // Why check messages and not threads ?
+			this.notifications = [];
 
-        this.threadsService.orderedThreads.subscribe( (currentThreads: Array<Thread>) => {
+			_.map(currentThreads, (currentThread: Thread) => {
 
-          this.notifications = [];
+				const messageIsFromUser: boolean = currentThread.lastMessage.sender &&
+																	this.currentClient &&
+																(currentThread.lastMessage.sender.id === this.currentClient.id);
+					if (!currentThread.lastMessage.is_read && !messageIsFromUser && currentThread.lastMessage.sender) {
+					console.log("THREADS", currentThread)
+						this.notifications.push(currentThread)
+					}
 
-          _.map(currentThreads, (currentThread: Thread) => {
+			});
 
-            const messageIsFromUser: boolean = currentThread.lastMessage.sender &&
-                                      this.currentClient &&
-              										  (currentThread.lastMessage.sender.id === this.currentClient.id);
-              if (!currentThread.lastMessage.is_read && !messageIsFromUser && currentThread.lastMessage.sender) {
-              console.log("THREADS", currentThread)
-                this.notifications.push(currentThread)
-              }
+			if (this.notifications.length > 0) {
+				this.unreadMessagesCount = this.notifications.length;
+			} else {
+				this.unreadMessagesCount = null;
+			}
 
-          });
+		});
 
-          if (this.notifications.length > 0) {
-            this.unreadMessagesCount = this.notifications.length;
-          } else {
-            this.unreadMessagesCount = null;
-          }
-
-        } );
-
-
+		this.messagesService.initTimer();
 
 	}
 
