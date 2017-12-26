@@ -61,7 +61,7 @@ class Client
     private $clientUpdated;
 
     /**
-     * @ORM\Column(type="string", name="biographie", nullable=true)
+     * @ORM\Column(type="string", name="biographie", nullable=true, length=5000)
      */
     public $biographie;
 

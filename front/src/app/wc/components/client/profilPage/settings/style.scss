@@ -13,6 +13,18 @@ td{
   width: 10%;
 }
 
+@media (max-width: $smScreen) {
+  .table{
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    td {
+      padding: 0rem;
+    }
+  }
+
+
+}
+
 .imageContainer{
   display: flex;
   align-content: space-around ;

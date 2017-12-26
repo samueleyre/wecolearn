@@ -121,6 +121,9 @@ class ClientService extends GPPDService {
     public function patch($client, $user = null, $addTags = true, $addUser = true)
     {
 
+//        $oldClient = $this->em
+//            ->getRepository(Client::class)
+//            ->find($client->getId());
 
         if ( $addTags ) {
             $client->setTags($this->insertNewTags($client->getTags()));
