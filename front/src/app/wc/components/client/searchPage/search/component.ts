@@ -12,6 +12,7 @@ import { NgForm }             from '@angular/forms';
 import { IEntity }                from './../../../../entity/interface';
 import { Client }                from './../../../../entities/client/entity';
 import { Thread }                from './../../../../entities/thread/entity';
+import { Image }                from './../../../../entities/image/entity';
 
 import { GPPDService }            from './../../../../service/gppd';
 import { GPPDComponent }          from './../../../../component/gppd';
@@ -22,6 +23,7 @@ import {log} from "util";
 import {ThreadsService}           from "../../../../service/threads.service";
 import {SearchService}            from "../../../../service/search";
 import {Logged} from "../../../../../applicativeService/authguard/logged";
+import {LoggedService} from "../../../../service/logged";
 
 
 @Component({
@@ -43,7 +45,8 @@ export class SearchComponent extends GPPDComponent implements OnInit {
                  private activatedRoute: ActivatedRoute,
                  public threadsService: ThreadsService,
                  private router: Router,
-                 private searchService: SearchService) {
+                 private searchService: SearchService,
+                 private LoggedService: LoggedService) {
         super(service);
     }
 
@@ -57,22 +60,35 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     load() : void {
 
-      Logged.get().subscribe( (logged:boolean) => {
 
-        if (logged) {
-          this.logged = true;
-          this.searchService.autoLoad().subscribe();
+      let logged = this.LoggedService.get();
 
-        }
+      if (logged) {
+        this.logged = true;
+        this.searchService.search().subscribe();
+
+      } else {
+      // todo: if tag and lat/long are in url, get them
 
 
-        // this.connected = logged;
-      });
+      }
+
+      //
+      // Logged.get().subscribe( (logged:boolean) => {
+      //
+      //   console.log(" logged", logged)
+      //   if (logged) {
+      //     this.logged = true;
+      //     this.searchService.autoLoad().subscribe();
+      //
+      //   }
+      //
+      // });
 
       this.searchService.currentFoundClients.subscribe( ( clients: IEntity[] ) => {
         this.entities = clients;
         this.cards = clients;
-        console.log("cards", this.cards);
+        // console.log("cards", this.cards);
       })
 
     }
@@ -83,23 +99,33 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     openThread(card : Client) {
 
+      // console.log("is it logged", this.logged)
       if (this.logged) {
+
         if (false) { // todo: see if thread exists
 
         } else {
+            if (!card.image) {
+              card.image = new Image(null, "gribouille.png");
+            }
             let thread = new Thread( card.id, card.first_name, card.image.filename)
             this.threadsService.setCurrentThread(thread);
-
         }
+
       } else {
+
         this.router.navigate(['/login']);
+
       }
 
     }
 
     onScroll() {
-      this.max += 2;
-      this.searchService.search( 0, this.max ).subscribe();
+      //todo: only when arrives at bottom
+      this.max += 1;
+      if (this.max % 4 === 0) {
+        this.searchService.search( 0, this.max ).subscribe();
+      }
 
       //console.log('scrolled down');
     }

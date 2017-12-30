@@ -68,6 +68,7 @@ import { InfiniteScrollModule }   from 'ngx-infinite-scroll';
 import { ClientService } from './service/client';
 import { ThreadsService } from './service/threads.service';
 import { MessagesService } from './service/messages';
+import { LoggedService } from './service/logged';
 
 import { ChatMessageComponent } from './components/client/chat/chat-message/chat-message.component';
 import { ChatThreadComponent } from './components/client/chat/chat-thread/chat-thread.component';
@@ -158,7 +159,8 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
     PeriodService,
     ThreadsService,
     SearchService,
-    TagService
+    TagService,
+    LoggedService
     // EvolutionService,
     //CacheUrlService,
   ],

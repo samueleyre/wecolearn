@@ -54,6 +54,8 @@ class Tag
     public function __construct()
     {
         $this->clients = new \Doctrine\Common\Collections\ArrayCollection();
+//        $this->iteration = 0;
+//        $this->created = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
     }
 
     /**

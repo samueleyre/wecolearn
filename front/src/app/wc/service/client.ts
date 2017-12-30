@@ -11,10 +11,22 @@ export class ClientService {
 
   private currentClient = new Subject<Client>();
   private endpoint: string;
+  private cClientOb: Observable<Client>;
+  private cClientNu: Client = null;
 
 
   constructor(private http: Http) {
       this.endpoint = '/api/client';
+  }
+
+  getOb(): any {
+
+    return this.cClientOb;
+
+  }
+
+  getCli() : any {
+    return this.cClientNu;
   }
 
   get(api : boolean = false): Observable<Client> {
@@ -35,6 +47,8 @@ export class ClientService {
       return this.http.get(`${this.endpoint}`)
           .map((response: Response) => {
               this.currentClient.next(response.json());
+              this.cClientNu = response.json();
+              console.log("loaded", response.json())
               return 'loaded';
           });
   }

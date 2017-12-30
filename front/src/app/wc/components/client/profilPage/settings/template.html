@@ -32,8 +32,8 @@
                                     <div class="input-group">
                                         <div *ngIf="entity.image">
                                             <div [hidden]="modify">
-                                                <img *ngIf="entity.image" width="100px" src="{{imagePath}}{{entity.image.filename}}" alt="">
-                                                <img *ngIf="!entity.image" width="100px" src="{{imagePath}}gribouille.png" alt="">
+                                                <img *ngIf="entity.image" width="100px" src="{{webPath}}img/{{entity.image.filename}}" alt="">
+                                                <img *ngIf="!entity.image" width="100px" src="{{webPath}}img/gribouille.png" alt="">
 
                                                 <button (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </button>
@@ -113,22 +113,22 @@
                                         <label>
                                             <span>Coworking</span>
                                             <input type="radio" [value]="1"  [(ngModel)]="entity.atmosphere" name="atmosphere" id="coworking">
-                                             <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
+                                             <img src="{{webPath}}settings/coworking.jpg">
                                         </label>
                                         <label>
                                             <span>Maison</span>
                                             <input type="radio"  [value]="2"  [(ngModel)]="entity.atmosphere" name="atmosphere" id="Maison">
-                                            <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
+                                            <img src="{{webPath}}settings/home.jpeg">
                                         </label>
                                         <label>
                                             <span>Bureau</span>
                                             <input type="radio" name="atmosphere" id="Bureau">
-                                            <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
+                                            <img src="{{webPath}}settings/office.jpeg">
                                         </label>
                                         <label>
                                             <span>Nature</span>
                                             <input type="radio" name="atmosphere" id="Nature">
-                                            <img src="https://lh4.googleusercontent.com/jSXsRHGYN5LsXCYKuRL5ev40zxm3RzEbVihLZ6AXgvmk6ovfay6dJ3i8E1QanEH4FqWpyb8SdA=w260">
+                                            <img src="{{webPath}}settings/nature.jpg">
                                         </label>
                                     </div>
                                     <!--<input class="form-control" id="atmosphere" type="range" [(ngModel)]='atmosphere' min="0" max="10" name="atmosphere" >-->

@@ -77,6 +77,10 @@ class ClientController extends GPPDController
 
         $filter = ['first' => $first,'max' => $max ];
 
+        if ($request->get("tag")) {
+            $filter["tag"] = $request->get("tag");
+        }
+
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $client = $this->getDoctrine()
@@ -84,8 +88,8 @@ class ClientController extends GPPDController
             ->findOneBy(["user"=>$user]);
 
         return $this
-            ->get('client.service')
-            ->matches($client, $filter );
+            ->get('search.service')
+            ->search($client, $filter );
 
     }
 

@@ -7,10 +7,10 @@ export class Image extends Entity implements IEntity  {
 
 
 
-    constructor() {
+    constructor(id?: number , filename?:string ) {
         super();
         this.id = null;
-        this.filename = '';
+        this.filename = filename || '';
 
     }
 }

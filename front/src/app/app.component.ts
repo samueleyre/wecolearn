@@ -10,6 +10,8 @@ import {log} from "util";
 // import { CookieLawModule } from 'angular2-cookie-law';
 
 
+
+
 @Component({
   selector: 'my-app',
   templateUrl	: 'app.template.html',
@@ -26,8 +28,11 @@ export class AppComponent  implements OnInit {
                  location: Location,
     ) {
         this.location = location;
-        router.events.subscribe(event =>
-            this.load());
+        router.events.subscribe(event => {
+            console.log("route changed")
+            this.load()
+            }
+        );
     }
 
 

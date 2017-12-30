@@ -4,6 +4,8 @@ import {GPPDComponent} from "../../../../wc/component/gppd";
 import {FilterService} from "../../../../applicativeService/filter/service";
 import { SearchService }         from './../../../service/search';
 import {Router} from "@angular/router";
+import {Logged} from "../../../../applicativeService/authguard/logged";
+import {LoggedService} from "../../../service/logged";
 
 
 @Component({
@@ -33,18 +35,29 @@ export class HomeComponent implements OnInit {
     constructor(
         private authenticationService: AuthenticationService,
         private searchService: SearchService,
-        private router: Router
+        private router: Router,
+        private LoggedService: LoggedService,
+
 
     ) {}
 
     ngOnInit() {
         // reset login status
-        this.authenticationService.logout();
         this.webPath = GPPDComponent.updateUrl('/');
         this.homeBgImageStyle = {
           backgroundImage: "url('"+this.webPath+"home/P3.jpg')"
         };
         this.screen =  GPPDComponent.getScreenSize();
+
+        if (this.LoggedService.get()) {
+          this.router.navigate(['/search']);
+        }
+
+        Logged.get().subscribe( (logged:boolean) => {
+          if (logged) {
+            this.router.navigate(['/search']);
+          }
+        });
 
     }
 

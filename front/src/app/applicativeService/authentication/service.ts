@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { TokenService } from './../token/service';
+
+import {Logged} from './../authguard/logged';
+
 import 'rxjs/add/operator/map'
  
 @Injectable()
@@ -35,6 +38,7 @@ export class AuthenticationService {
     logout(): void {
         // clear token remove user from local storage to log user out
         this.tokenService.clear();
-        
+        Logged.set(false);
+
     }
 }

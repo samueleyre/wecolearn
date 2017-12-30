@@ -10,6 +10,7 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import {EmptyObservable} from 'rxjs/observable/EmptyObservable';
 
 import * as _ from 'lodash';
+import {ISubscription} from "rxjs/Subscription";
 
 
 const initialMessages: Message[] = [];
@@ -18,11 +19,18 @@ interface IMessagesOperation extends Function {
   (messages: Message[]): Message[];
 }
 
+
 @Injectable()
 export class MessagesService {
 
+    static initialPeriod = 120000;
+
     private alive: boolean; // used to unsubscribe from the IntervalObservable
     // when OnDestroy is called.
+    private timer : Observable<number>;
+
+    private timerSubscription : ISubscription;
+
 
     public route: string = '/api';
 
@@ -179,13 +187,22 @@ export class MessagesService {
   }
 
   public initTimer() : void {
-    let period = 10000;
 
-    TimerObservable.create(10000, period)
-      .takeWhile(() => this.alive) // only fires when component is alive
-      .subscribe(() => {
-        this.checkNewMessages();
-      });
+    this.newTimer();
+
+  }
+
+  private newTimer(period:number = MessagesService.initialPeriod) : void {
+
+
+    this.timer = TimerObservable.create(10000, period)
+      .takeWhile(() => this.alive);
+
+    // only fires when component is alive
+    this.timerSubscription = this.timer.subscribe(() => {
+      this.checkNewMessages();
+    });
+
   }
 
   private checkNewMessages() : void {
@@ -202,44 +219,46 @@ export class MessagesService {
   }
 
   private getMessages() :void {
-      this.ClientService.get()
-          .subscribe(
-            (user: Client) => {
-              // console.log("client Service", user)
-              if (user) {
-                this.currentClient = user;
-                this.sentMessages = user.sent_messages;
-                this.receivedMessages = user.received_messages;
-                this.generateMessages();
-              }
-            });
+    this.ClientService.get()
+      .subscribe(
+        (user: Client) => {
+          // console.log("client Service", user)
+          if (user) {
+            this.currentClient = user;
+            this.sentMessages = user.sent_messages;
+            this.receivedMessages = user.received_messages;
+            this.generateMessages();
+          }
+        });
+
+
 
   }
 
 
   private generateThreadAndAddMessage(senderOrReceiver: string) {
 
-        let threads : Object = {};
-        let typeOfMessage : string;
+    let threads : Object = {};
+    let typeOfMessage : string;
 
-        if (senderOrReceiver === "sender") {
-            typeOfMessage = "receivedMessages";
-        } else {
-            typeOfMessage = "sentMessages";
-        }
+    if (senderOrReceiver === "sender") {
+        typeOfMessage = "receivedMessages";
+    } else {
+        typeOfMessage = "sentMessages";
+    }
 
 
-        this[typeOfMessage].map( (message: Message) => {
+    this[typeOfMessage].map( (message: Message) => {
 
-                if(  Object.keys(threads).length === 0 || (Object.keys(threads).indexOf(message[senderOrReceiver].id) === -1)) {
-                    let thread = new Thread(message[senderOrReceiver].id, message[senderOrReceiver].first_name, (message[senderOrReceiver].image) ? message[senderOrReceiver].image.filename : null);
-                    threads[message[senderOrReceiver].id] = thread;
-                    message.thread = thread;
-                } else {
-                    message.thread = threads[message[senderOrReceiver].id];
-                }
+      if(  Object.keys(threads).length === 0 || (Object.keys(threads).indexOf(message[senderOrReceiver].id) === -1)) {
+          let thread = new Thread(message[senderOrReceiver].id, message[senderOrReceiver].first_name, (message[senderOrReceiver].image) ? message[senderOrReceiver].image.filename : null);
+          threads[message[senderOrReceiver].id] = thread;
+          message.thread = thread;
+      } else {
+          message.thread = threads[message[senderOrReceiver].id];
+      }
 
-        });
+    });
 
 
   }
@@ -273,6 +292,16 @@ export class MessagesService {
 
   public stopNewMessageLoop() {
     this.alive = false;
+  }
+
+  public changePeriod(newPeriod: number) {
+
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+    this.newTimer(newPeriod);
+
+
   }
 
 }

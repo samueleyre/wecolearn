@@ -34,7 +34,7 @@
             </a>
             <div ngbDropdownMenu aria-labelledby="dropdownParameters">
                 <a class="nav-link dropdown-item" routerLink="/settings">Profil</a>
-                <a class="nav-link dropdown-item" routerLink="/">Déconnexion</a>
+                <a class="nav-link dropdown-item" (click)="logOut()">Déconnexion</a>
             </div>
         </li>
         <li *ngIf="!connected && screen" class="nav-item" >

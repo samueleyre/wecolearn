@@ -42,26 +42,26 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports:[   
-        BrowserModule,
-        FormsModule,
-        HttpModule,
+    BrowserModule,
+    FormsModule,
+    HttpModule,
 
-        NgbModule.forRoot(),
-        WcModule,
-        RouterModule.forRoot(appRoutes),
-        MessageModule,
-        routing,
-        // BsDropdownModule.forRoot(),
-        UploadModule,
-      LoadersCssModule,
+    NgbModule.forRoot(),
+    WcModule,
+    RouterModule.forRoot(appRoutes),
+    MessageModule,
+    routing,
+    // BsDropdownModule.forRoot(),
+    UploadModule,
+    LoadersCssModule,
   ],
   declarations: [ 
-        LoginComponent,
-        HomeComponent,
-        // UserComponent,
-        EqualValidator,
-        AppComponent,
-        NotFoundComponent
+    LoginComponent,
+    HomeComponent,
+    // UserComponent,
+    EqualValidator,
+    AppComponent,
+    NotFoundComponent
   ],
   providers : [
       {

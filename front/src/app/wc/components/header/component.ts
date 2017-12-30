@@ -23,6 +23,9 @@ import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from "rxjs/Rx";
 // import { GPPDComponent }          from './../../component/gppd';
 
+import { LoggedService } from './../../service/logged';
+
+
 
 @Component({
 	selector : 'wc-header',
@@ -55,13 +58,14 @@ export class HeaderComponent implements OnInit {
 				 public messagesService: MessagesService,
 				 public threadsService: ThreadsService,
 				 public ClientService: ClientService ,
-				 private config: NgbDropdownConfig
-	) {
+				 private config: NgbDropdownConfig,
+				 private LoggedService: LoggedService,
+			  private authenticationService: AuthenticationService,
+) {
 
         config.placement = 'bottom-right';
         this.location = location;
         this.baseUrl = r;
-        // ChatExampleData.init(messagesService, threadsService, ClientService);
         // router.events.subscribe(event => TODO : make this work better, called severaltimes at the moment
 		// this.load());
 	}
@@ -73,7 +77,14 @@ export class HeaderComponent implements OnInit {
 				console.log("got client", client)
 				this.currentClient = client;
 			});
+			this.logoPath = GPPDComponent.updateUrl('/logo/wecolearn.png');
+			this.connected = this.LoggedService.get();
+			Logged.get().subscribe( (logged:boolean) => {
+				this.connected = logged;
+				this.load();
+			});
 			this.load();
+
 	}
 
 	chooseSearchBarType(choice: string) {
@@ -92,20 +103,22 @@ export class HeaderComponent implements OnInit {
 
 	load() {
 
-		this.logoPath = GPPDComponent.updateUrl('/logo/wecolearn.png');
 
-        Logged.get().subscribe( (logged:boolean) => {
-        	this.connected = logged;
-        	if (logged) {
-						this.loadClient();
-						this.loadMessages();
-					}
-        });
-		if ( !localStorage.getItem('cookieseen')) {
-        	MessageService.cookie();
+		console.log("header, is it logged ? ", this.connected);
+
+		if (this.connected) {
+			this.loadClient();
+			this.loadMessages();
 		}
 
+    //
+		// if ( !localStorage.getItem('cookieseen')) {
+     //    	MessageService.cookie();
+		// }
+
 	}
+
+
 
 	loadMessages() {
 
@@ -158,6 +171,15 @@ export class HeaderComponent implements OnInit {
 
   collapse() {
 		(this.collapseClass === "collapse") ? this.collapseClass = null: this.collapseClass = "collapse";
+
+	}
+
+	logOut() {
+
+    this.authenticationService.logout();
+		this.messagesService.stopNewMessageLoop();
+    this.router.navigate(['/']);
+
 
 	}
 

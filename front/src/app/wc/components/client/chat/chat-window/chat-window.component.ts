@@ -44,14 +44,37 @@ export class ChatWindowComponent implements OnInit {
 
     this.threadsService.currentThread.subscribe(
       (thread: Thread) => {
+        console.log("currentthread", thread)
+        if (thread.id) {
+          this.messagesService.changePeriod(15000);
+        }
         this.currentThread = thread;
       });
+
+
+    // console.log("client - message iwndow", this.ClientService.getCli());
+
+    let currentUser = this.ClientService.getCli()
+
+    if (currentUser) {
+
+          this.currentUser = currentUser;
+    }
 
     this.ClientService.get()
         .subscribe(
             (user: Client) => {
+              // console.log("got client - message window", user)
                 this.currentUser = user;
         });
+
+    // this.ClientService.getOb().subscribe(
+    //   (user: Client) => {
+    //       console.log("yoyo", user)
+    //
+    //   }
+    // );
+
 
     this.messages
       .subscribe(
@@ -84,9 +107,12 @@ export class ChatWindowComponent implements OnInit {
   }
 
   scrollToBottom(): void {
-    const scrollPane: any = this.el
+    let scrollPane: any = this.el
       .nativeElement.querySelector('.msg-container-base');
-    scrollPane.scrollTop = scrollPane.scrollHeight;
+    // console.log("what's happening here ? ", scrollPane)
+    if (scrollPane) {
+      scrollPane.scrollTop = scrollPane.scrollHeight;
+    }
   }
 
 
@@ -100,9 +126,10 @@ export class ChatWindowComponent implements OnInit {
   }
 
   closeChat() : void {
-    console.log("close chat !")
+    // console.log("close chat !")
     this.currentThread = new Thread();
     this.threadsService.setCurrentThread(this.currentThread);
+    this.messagesService.changePeriod(120000);
 
   }
 

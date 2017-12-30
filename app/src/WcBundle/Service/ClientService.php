@@ -5,15 +5,15 @@ namespace WcBundle\Service;
 use WcBundle\Entity\Client;
 use WcBundle\Entity\Tag;
 use AppBundle\Entity\User;
+use \Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\EntityManager;
 
-class ClientService extends GPPDService {
+class ClientService {
 
 	private $em;
 
 	public function __construct( EntityManager $em ) {
-        parent::__construct( $em);
 		$this->em = $em;
 	}
 
@@ -118,83 +118,115 @@ class ClientService extends GPPDService {
 
     }
 
-    public function patch($client, $user = null, $addTags = true, $addUser = true)
+    public function patch(Client $client, $user = null, $addTags = true, $addUser = true)
     {
 
-//        $oldClient = $this->em
-//            ->getRepository(Client::class)
-//            ->find($client->getId());
+        $oldClient = $this->em
+            ->getRepository(Client::class)
+            ->find($client->getId());
 
-        if ( $addTags ) {
-            $client->setTags($this->insertNewTags($client->getTags()));
+        $parameters = [ "firstName", "lastName", "profilUrl", "biographie", "intensity", "atmosphere", "latitude", "longitude", "tags" ];
+
+        for ($i=0; $i< count($parameters); $i++) {
+
+            $getMethod = "get".ucfirst($parameters[$i]);
+            $setMethod = "set".ucfirst($parameters[$i]);
+            if ($client->$getMethod()) {
+                $oldClient->$setMethod($client->$getMethod());
+            }
+
         }
 
-		if( $addUser ) {
-            $client->setUser($user);
-        }
 
-		if( null === $client->getCreated()) {
-			$client->setCreated(new \Datetime());
-		}
+//        return $oldClient->getTags();
+        return $this->patchTags($oldClient->getTags(), $client->getTags());
+        $oldClient->setTags($this->patchTags($oldClient->getTags(), $client->getTags()));
+
+//		if( $addUser ) { // FOR CHANGE OF PASSWORD / EMAIL ADRESS / USERNAME
+//            $oldClient->setUser($user);
+//        }
+
+//		if( null === $client->getCreated()) { // SHOULD BE USELESS
+//			$oldClient->setCreated(new \Datetime());
+//		}
 
 
-        $this->em->merge( $client );
+//        return $oldClient;
+
+        $this->em->merge( $oldClient );
 
         $this->em->flush();
 
-        return $client;
+        return $oldClient;
 
     }
 
-    public function matches($client, $filter = null )
+
+    private function patchTags(Collection $oldClientTags, $tags)
     {
 
-        return $this->em
-            ->getRepository(Client::class)
-            ->search($client, null, $filter['first'], $filter['max'] );
-
-
-
-
-    }
-
-    private function insertNewTags($tags)
-    {
+//        return $oldClientTags;
         for( $i = 0; $i < count($tags); $i++ ) {
 
             $oldTag = $this->em
                 ->getRepository(Tag::class)
                 ->findOneBy(["name"=>$tags[$i]->getName(), "type"=>$tags[$i]->getType()]);
+//            return $oldTag;
 
-            if ($oldTag) {
 
-                $this->addIterationTag($oldTag);
+                if ($oldTag ) {
 
-                $tags[$i] = $oldTag;
+                    return $oldTag;
+                    if (!$oldClientTags->contains($oldTag)) {
+                        $this->addIterationTag($oldTag);
+                    }
+//                    return $oldTag;
+                    $tags[$i] = $oldTag;
 
-            } else {
-                $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
 
-                $tags[$i]->setCreated($date);
-                $tags[$i]->setIteration(1);
+                } else {
 
-                $tags[$i] = $this->postOne( $tags[$i] );
-            }
+                    $this->insertNewTag($tags[$i]);
+    //                $this->em->persist( $tags[$i] );
+    //                $this->em->flush();
+
+                }
+
+                if (!$oldClientTags->contains($tags[$i])) {
+                    $oldClientTags->add($tags[$i]);
+
+                }
 
 
         }
 
-        return $tags;
+        return $oldClientTags;
 
     }
 
-    private function addIterationTag( &$tag)
+    private function insertNewTag(Tag &$tag) {
+
+        $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+        $tag->setIteration(1);
+
+        $tag->setCreated($date);
+
+//        $this->em->persist( $tag );
+//        $this->em->flush();
+
+    }
+
+    private function addIterationTag(Tag &$tag)
     {
         $tag->setIteration($tag->getIteration() + 1);
 
-        $this->em->merge( $tag);
+//        return $tag->getIteration();
 
-        $this->em->flush();
+//        $this->em->merge( $tag);
+//
+//        $this->em->flush();
+
+//        return $tag;
 
 
     }

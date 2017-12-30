@@ -5,6 +5,7 @@ import { Message } from './../entities/message/entity';
 import { Thread } from './../entities/thread/entity';
 import {ClientService} from "./client";
 import {Http, Response} from "@angular/http";
+import {LoggedService} from "./logged"
 
 
 import * as _ from 'lodash';
@@ -20,15 +21,15 @@ export class SearchService {
   currentSearch: Object;
 
 
-  constructor(public ClientService: ClientService, protected http: Http) {
+  constructor(public ClientService: ClientService,
+              protected http: Http,
+              private LoggedService: LoggedService) {
 
     this.currentSearch = {};
     // this.currentFoundClients = Observable.empty<Client[]>();
   }
 
   search( first?: number, max?: number ): Observable<void> {
-
-
 
     console.log("current Search", this['currentSearch'], this.currentSearch.hasOwnProperty("city"));
     if (this.currentSearch.hasOwnProperty("city")) {
@@ -52,27 +53,25 @@ export class SearchService {
     api de recherche utilisée dans l'infinite scroll
     de la barre de recherche.
     */
-    return this.http.get(`/api/search${params}`)
+
+    let logged = this.LoggedService.get();
+
+    let route = "/api/search";
+
+    if (logged) {
+      route = "/api/client/matchs";
+    }
+
+    return this.http.get(`${route}${params}`)
       .map((response: Response) => {
         this.currentFoundClients.next(response.json());
         return;
         // return response.json();
       });
 
+
   }
 
-  autoLoad(): Observable<void> {
-
-    /*
-    api utilisée pour le match en fonction du profil lors du chargement.
-    */
-    return this.http.get('/api/client/matchs')
-      .map((response: Response) => {
-        this.currentFoundClients.next(response.json());
-        return;
-        // return response.json();
-      });
-  }
 
   addSearchParameter(key:string, value: any) {
 

@@ -43,7 +43,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
     public  base_url : string;
     private modify = false;
-    private imagePath : string;
+    private webPath : string;
     private uploadError : object = {};
 
 
@@ -63,7 +63,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
 
     ngOnInit() {
-        this.imagePath = GPPDComponent.updateUrl('/img/');
+        this.webPath = GPPDComponent.updateUrl('/');
         this.load();
     }
 

@@ -10,6 +10,8 @@ WcBundle\Entity\Tag:
           groups: [ input, output ]
         created:
           groups: [ output ]
+        iteration:
+          groups: [ input, output ]
 
 
 
