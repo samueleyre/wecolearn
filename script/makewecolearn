@@ -1,7 +1,7 @@
 #!/bin/bash
 ROOT='/home/samuel_eyre73'
 CONTAINER=docker
-BRANCH='sam-master'
+BRANCH='master'
 NOW=`date "+%Y-%m-%d_%H-%M-%S"`
 BUILD=true
 USER='samuel_eyre73'
