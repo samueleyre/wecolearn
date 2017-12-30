@@ -1,4 +1,4 @@
 {
-	"endpoint" : "https://api.wecolearn.com",
-	"publique" : "https://api.wecolearn.com"
+	"endpoint" : "http://api.wecolearn.com",
+	"publique" : "http://api.wecolearn.com"
 }
