@@ -1,11 +1,11 @@
 server {
     server_name api.wecolearn.com;
     root /src/app/web;
-    listen 80;
-    # listen 443 ssl;
+    # listen 80;
+    listen 443 ssl;
 
-    # ssl_certificate /etc/letsencrypt/live/api.wecolearn.com/fullchain.pem;
-    # ssl_certificate_key /etc/letsencrypt/live/api.wecolearn.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/api.wecolearn.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.wecolearn.com/privkey.pem;
 
     location / {
         # try to serve file directly, fallback to app.php
@@ -42,10 +42,10 @@ server {
 
 }
 
-# server {
-#   listen 80;
-#   server_name api.wecolearn.com;
-#   location / {
-#        return 301 https://$host$uri;
-#    }
-#}
+server {
+  listen 80;
+  server_name api.wecolearn.com;
+  location / {
+       return 301 https://$host$uri;
+   }
+}
