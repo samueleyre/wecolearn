@@ -139,7 +139,7 @@ class ClientService {
 
 
 //        return $oldClient->getTags();
-        return $this->patchTags($oldClient->getTags(), $client->getTags());
+//        return $this->patchTags($oldClient->getTags(), $client->getTags());
         $oldClient->setTags($this->patchTags($oldClient->getTags(), $client->getTags()));
 
 //		if( $addUser ) { // FOR CHANGE OF PASSWORD / EMAIL ADRESS / USERNAME
@@ -176,7 +176,7 @@ class ClientService {
 
                 if ($oldTag ) {
 
-                    return $oldTag;
+//                    return $oldTag;
                     if (!$oldClientTags->contains($oldTag)) {
                         $this->addIterationTag($oldTag);
                     }
