@@ -72,6 +72,6 @@ class SearchController extends GPPDController
 
         return $this
             ->get('search.service')
-            ->search($client, $filter);
+            ->search(null, $filter);
     }
 }

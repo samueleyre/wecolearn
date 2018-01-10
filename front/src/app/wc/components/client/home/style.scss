@@ -22,7 +22,7 @@
         padding-top: 65px;
       }
       color: $mainOrange;
-      padding-top: 89px;
+      padding-top: 69px;
       font-weight: 800;
       margin-bottom: 0;
     }
@@ -53,3 +53,23 @@
   background-color: #ffffff;
   border-color: #ffffff;
 }
+
+.social-icons {
+  margin: 1em 0 1em;
+  a{
+    padding: 4px 8px;
+  }
+}
+
+.presentation-row{
+  background-color: #ececec;
+  padding: 30px 0;
+  li{
+    font-size: 1.1em;
+  }
+}
+.social-icons-row {
+  background-color: #d6d6d6;
+}
+
+

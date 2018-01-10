@@ -17,6 +17,11 @@
                 <cityBar></cityBar>
             </form>
         </li>
+        <li *ngIf="screen">
+            <span class="nav-link">
+                Projet en cours de développement ! N'hésitez pas à me faire des retours ! :)
+            </span>
+        </li>
     </ul>
     <ul class="navbar-nav ml-auto">
         <li *ngIf="connected" ngbDropdown  id="notifications" class="nav-item d-inline-block">

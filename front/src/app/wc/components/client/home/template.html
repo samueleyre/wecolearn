@@ -5,7 +5,7 @@
                 <div *ngIf="!screen" class="imageContainer">
                     <img width="65px" src="{{webPath}}logo/wecolearn.png" alt="">
                 </div>
-                <h3>Apprenez ce que <b>vous</b> voulez, <br> avec qui voulez !</h3>
+                <h3>Apprenez <br> ce que <b>vous</b> voulez, <br> avec qui voulez !</h3>
                 <br><br>
                 <a class="btn btn-primary btn-lg" routerLink="/subscribe">Inscription</a>
                 <div *ngIf="!screen" style="color: white; font-weight: 700;">
@@ -16,19 +16,62 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <!--<div class="col-12">-->
-            <div class="col-10 offset-1" id="tagLinksContainer">
-                <div *ngFor="let tagLink of tagLinks" class="tagLink">
-                    <a class="btn btn-secondary" (click)="search(tagLink.tagName)">{{tagLink.tagName}}</a>
-                </div>
-            </div>
+    <!--<div class="row">-->
+        <!--&lt;!&ndash;<div class="col-12">&ndash;&gt;-->
+            <!--<div class="col-10 offset-1" id="tagLinksContainer">-->
+                <!--<div *ngFor="let tagLink of tagLinks" class="tagLink">-->
+                    <!--<a class="btn btn-secondary" (click)="search(tagLink.tagName)">{{tagLink.tagName}}</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div class="row">-->
+        <!--<div class="col-10 offset-1">-->
+            <!--<p>-->
+                <!---->
+            <!--</p>-->
+
         <!--</div>-->
+    <!--</div>-->
+    <div class="row presentation-row">
+        <div class="col-12 col-sm-6 offset-sm-3 col-md-4 offset-md-4">
+            <ol>
+                <li>
+                    <p>
+                    Recherchez des membres qui souhaitent apprendre des choses similaires
+                    </p>
+                </li>
+                <li>
+                    <p>
+                    Echangez avec eux
+                    </p>
+                </li>
+                <li>
+                    <p>
+                    Partagez vos contacts (Téléphone, Profils réseaux sociaux... )
+                    </p>
+                </li>
+                <li>
+                    <p>
+                    Rencontrez-vous en vrai !
+                    </p>
+                </li>
+            </ol>
+        </div>
     </div>
+
+    <div class="row social-icons-row">
+        <div class="col-10 offset-1 center">
+            <div class="social-icons">
+                <a href="https://twitter.com/WeColearn" title="WeColearn on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
+                <a href="https://facebook.com/WeColearn" title="Wecolearn on Facebook" target="_blank"><i class="fa fa-facebook-square fa-2x"></i></a>
+                <!--<a href="https://github.com/wecolearn" title="Wecolearn on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>-->
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12">
-            <hr>
-
             <a class="" routerLink="/mentionslegales" style="margin: auto;">
                 Mentions Légales
             <br>
