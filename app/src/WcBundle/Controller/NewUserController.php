@@ -58,12 +58,11 @@ class NewUserController extends GPPDController
 
 
         $user->setRoles(['ROLE_USER']);
-//        $user->addRole('ROLE_ADMIN');
-        // password.
-        $user->setPlainPassword( $user->getPassword() );
-        $user->setPassword(null);
 
-        //should be in configuration.
+        $user->setPlainPassword( $user->getPassword() );
+        $user->setPassword(null); // WHAT IS THE DIFFERENCE ?
+
+        $user->setConfirmationToken(bin2hex(random_bytes(16))); // todo : should be in toolkit class to update secure token generation
         $user->setEnabled(true);
 
         try {
@@ -100,6 +99,16 @@ class NewUserController extends GPPDController
             $this
                 ->get('client.service')
                 ->generateUrl($client);
+
+
+            $data = $this
+                ->get('email.service')
+                ->getData(3, ["TOKEN"=>$user->getConfirmationToken()], $user->getEmail());
+
+
+            return $this
+                ->get('sendinblue_api')
+                ->send_transactional_template($data);
 
 
             $this

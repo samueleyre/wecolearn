@@ -27,3 +27,7 @@ parameters:
 
     user:               user
     password:           password
+
+sendin_blue_api:
+    api_key:            ~
+    timeout:            5000
