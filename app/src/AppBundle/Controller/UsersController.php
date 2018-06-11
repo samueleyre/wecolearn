@@ -63,7 +63,6 @@ class UsersController extends Controller
         return $userManager->findUsers();
     }
 
-    // nota annotation should'nt be necessary because type is rest, contribute
     /**
     * @Route("/api/users" )
     * @Method({"PATCH"})

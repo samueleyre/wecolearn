@@ -17,8 +17,47 @@ class User extends BaseUser
      */
     protected $id;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Token", mappedBy="User", cascade={"persist", "merge"})
+     * @ORM\JoinColumn(name="tokenId", referencedColumnName="id")
+     */
+    public $token;
+
+
+    /**
+     * @ORM\Column (type="boolean", name="tokenConfirmed")
+     */
+    public $tokenConfirmed = false;
+
+
+
     public function getId() {
     	return $this->id;
     }
 
+
+    /**
+     * Set tokenConfirmed
+     *
+     * @param boolean $tokenConfirmed
+     *
+     * @return User
+     */
+    public function setTokenConfirmed($tokenConfirmed)
+    {
+        $this->token_confirmed = $tokenConfirmed;
+
+        return $this;
+    }
+
+    /**
+     * Get tokenConfirmed
+     *
+     * @return boolean
+     */
+    public function getTokenConfirmed()
+    {
+        return $this->token_confirmed;
+    }
 }

@@ -15,15 +15,6 @@ class TokenService {
 	}
 
 
-    public function post( $entity ) {
-
-	    $entity->setToken(random_int(1, 10000000000000000));
-        $this->em->persist( $entity );
-        $this->em->flush();
-        return $this;
-
-    }
-
     public function get( $filters = []) {
 
         syslog(LOG_ERR, 'filter'.count($filters));

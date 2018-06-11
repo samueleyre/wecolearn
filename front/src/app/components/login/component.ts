@@ -32,19 +32,27 @@ export class LoginComponent implements OnInit {
                     result => {
                         if ( result === true ) {
                             this.loading = false;
-                            // if( result === "firstTime") {
                             this.router.navigate(['/settings']);
-                            // } else {
-                            // this.router.navigate(['/']);
-                            // }
                         }
                     },
                     error => {
-                        // console.log('ERROR', error );
-                        this.error = "L'email ou le mot de passe ne sont pas valide";
+                        this.error = "L'email et/ou le mot de passe ne sont pas valide";
                         this.loading = false;
                     
                 }
             );
     }
+
+    checkEmailFormat(email:any) {
+      let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+
+      if ((email.length <= 5 || !EMAIL_REGEXP.test(email))) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+
+
 }

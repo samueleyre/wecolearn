@@ -18,7 +18,7 @@ parameters:
     locale:            fr
     secret:            ThisTokenIsNotSoSecretChangeItPlease
 
-    dev.delivery_address: email@dev.tld
+    delivery_address: samuel.eyre@hotmail.fr
 
     private_key_path:   %kernel.root_dir%/../var/jwt/private.pem
     public_key_path:    %kernel.root_dir%/../var/jwt/public.pem

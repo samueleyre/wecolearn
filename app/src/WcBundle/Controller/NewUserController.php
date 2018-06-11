@@ -2,6 +2,7 @@
 
 namespace WcBundle\Controller;
 
+
 use AppBundle\Entity\User;
 use WcBundle\Entity\Client;
 
@@ -32,26 +33,27 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class NewUserController extends GPPDController
 {
-    
+
     protected $entityRef = 'AppBundle:User';
+
 
     // "options_newuser" [OPTIONS] /newuser
     public function optionNewUserAction()
     {
         return $this->optionAction();
-        
-    } 
+
+    }
 
     /**
-    * @Post("newuser")
-    * @ParamConverter(
-        "user",
-        class="AppBundle\Entity\User",
-        converter="fos_rest.request_body",
-        options={"deserializationContext"={"groups"={"input"} } }
+     * @Post("newuser")
+     * @ParamConverter(
+    "user",
+    class="AppBundle\Entity\User",
+    converter="fos_rest.request_body",
+    options={"deserializationContext"={"groups"={"input"} } }
     )
-    */
-    public function postNewUserAction( User $user, Request $request )
+     */
+    public function postNewUserAction(User $user, Request $request)
     {
 
         $userManager = $this->get('fos_user.user_manager');
@@ -59,25 +61,22 @@ class NewUserController extends GPPDController
 
         $user->setRoles(['ROLE_USER']);
 
-        $user->setPlainPassword( $user->getPassword() );
+        $user->setPlainPassword($user->getPassword());
         $user->setPassword(null); // WHAT IS THE DIFFERENCE ?
 
         $user->setConfirmationToken(bin2hex(random_bytes(16))); // todo : should be in toolkit class to update secure token generation
         $user->setEnabled(true);
 
         try {
-            $userManager->updateUser( $user );
+            $userManager->updateUser($user);
 
-        }
-        catch (NotNullConstraintViolationException $e) {
+        } catch (NotNullConstraintViolationException $e) {
             // Found the name of missed field
             return "notnull";
-        }
-        catch (UniqueConstraintViolationException $e) {
+        } catch (UniqueConstraintViolationException $e) {
             // Found the name of duplicate field
             return "duplicate";
-        }
-        catch ( \Exception $e ) {
+        } catch (\Exception $e) {
 
             //for debugging you can do like this
             return "error";
@@ -89,42 +88,66 @@ class NewUserController extends GPPDController
 
         if (in_array("ROLE_USER", $roles)) {
 
-            $client = new Client();
-            $client->setUser($user);
+          $client = new Client();
+          $client->setUser($user);
 
-            $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
-            $client->setCreated($date);
-
-
-            $this
-                ->get('client.service')
-                ->generateUrl($client);
+          $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+          $client->setCreated($date);
 
 
-            $data = $this
-                ->get('email.service')
-                ->getData(3, ["TOKEN"=>$user->getConfirmationToken()], $user->getEmail());
+          $this
+              ->get('client.service')
+              ->generateUrl($client);
+
+          $emailSender = $this->getParameter("delivery_address");
+          $host = $this->getParameter("host");
+
+          $data = $this
+              ->get('email.service')
+              ->getData(3, ["TOKEN" => $user->getConfirmationToken(), "HOST"=>$host], $user->getEmail(), $emailSender);
 
 
-            return $this
-                ->get('sendinblue_api')
-                ->send_transactional_template($data);
+          $ret = [];
 
+          $retEmail = $this
+              ->get('sendinblue_api')
+              ->send_transactional_template($data);
 
-            $this
-                ->postAction( $client);
+          if (isset($retEmail['code'])) {
+            $ret["email"] = $retEmail['code'];
+          }
+
+          $ret['insertUser'] = $this
+            ->postAction($client);
+
+          return $ret;
 
         }
-
-        return true;
-
 
     }
 
 
+    /**
+     * @Get("confirmEmail/{token}")
+     */
+    public function confirmEmailAction ( $token)
+    {
 
-    
+        $user =  $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneBy(["confirmation_token"=>$token]);
 
+        if ($user) {
 
+            if ($user->getEnabled() === false) {
+                $user->setEnabled(true);
+            }
+
+            return $this
+                ->patchAction($user);
+
+        }
+
+    }
 
 }

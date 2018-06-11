@@ -10,7 +10,9 @@ services:
     arguments: ['@doctrine.orm.entity_manager']
   email.service:
     class: WcBundle\Service\EmailService
-    arguments: ['@doctrine.orm.entity_manager', 'sendinblue_api']
+    arguments: ['@doctrine.orm.entity_manager', '@logger']
+    tags:
+      - { name: monolog.logger}
   message.service:
     class: WcBundle\Service\MessageService
     arguments: ['@doctrine.orm.entity_manager']

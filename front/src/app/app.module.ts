@@ -22,6 +22,8 @@ import { ApplicativeModule }	from './applicativeService/module';
 import { MessageComponent}       from './applicativeService/message/component';
 import { AppComponent }		  from './app.component'
 import { LoginComponent }	  from './components/login/component';
+import { ConfirmEmailComponent}	  from './components/confirmEmail/component';
+
 import { HomeComponent }	  from './wc/components/client/home/component';
 import { UploadComponent}          from './applicativeService/upload/component';
 import { NotFoundComponent}          from './components/notFound/component';
@@ -57,6 +59,7 @@ const appRoutes: Routes = [
   ],
   declarations: [ 
     LoginComponent,
+    ConfirmEmailComponent,
     HomeComponent,
     // UserComponent,
     EqualValidator,
