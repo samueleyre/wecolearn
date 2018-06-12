@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Image
 {
 
-    const SERVER_PATH_TO_IMAGE_FOLDER = __DIR__ .'/../../../web/img';
 
     private $file;
 
@@ -69,12 +68,25 @@ class Image
         return $this->file;
     }
 
+    /**
+     * Set update
+     *
+     * @param \DateTime $update
+     *
+     * @return Image
+     */
     public function setUpdated( $update = null)
     {
         $this->updated= $update;
+
+        return $this;
     }
 
-
+    /**
+     * Get update
+     *
+     * @return \DateTime
+     */
     public function getUpdated()
     {
         return $this->updated;
@@ -107,9 +119,10 @@ class Image
 
         // move takes the target directory and target filename as params
         $filename = md5(uniqid()).$this->getFile()->getClientOriginalName();
+        $server_path_image_folder = __DIR__ .'/../../../web/img';
 
         $this->getFile()->move(
-            self::SERVER_PATH_TO_IMAGE_FOLDER,
+            $server_path_image_folder,
             $filename
         );
 

@@ -122,7 +122,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     }
 
     joinTags() {
-        console.log("jointags")
+        console.log("jointags", this.tagTypes)
         this.entity['tags'] = [];
         for(let i=0; i < this.tagTypes.length; i++) {
             if (this.entity[this.tagTypes[i]].length > 0) {
@@ -162,7 +162,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     onComplete(id:string, response:any )
     {
         console.log("uploaded", response)
-        this.entity = response.response;
+        this.entity['avatarSrc'] = response.response['avatarSrc'];
         this.modify = false;
         this.uploadError[id] = false;
     }

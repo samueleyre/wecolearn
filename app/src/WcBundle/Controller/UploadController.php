@@ -49,20 +49,29 @@ class UploadController extends GPPDController
             ->getRepository(Client::class)
             ->findOneBy(["user"=>$user]);
 
+      $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
 
-        $image = new Image;
+      if (null !== $client->getImage()) {
+        $image = $client->getImage();
+        $image->setUpdated($date);
         $image->setFile($request->files->get('file'));
         $image->upload();
-
-        $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
-
+        $uploaded = $this
+          ->get('gppd.service')
+          ->setEntityRef( $this->entityRef )
+          ->patch( $image );
+      } else {
+        $image = new Image;
         $image->setCreated($date);
         $image->setClient($client);
-
+        $image->setFile($request->files->get('file'));
+        $image->upload();
         $uploaded = $this
-            ->get('gppd.service')
-            ->setEntityRef( $this->entityRef )
-            ->post( $image );
+          ->get('gppd.service')
+          ->setEntityRef( $this->entityRef )
+          ->post( $image );
+      }
+
 
         $client->setImage($image);
 

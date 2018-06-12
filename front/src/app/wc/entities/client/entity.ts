@@ -20,9 +20,9 @@ export class Client extends Entity implements IEntity  {
 	public atmosphere: number;
 	public latitude: number;
 	public longitude: number;
-	public learn_tags: [string];
-	public know_tags: [string];
-	public teach_tags: [string];
+	public learn_tags: Array<string>;
+	public know_tags: Array<string>;
+	public teach_tags: Array<string>;
 	public tags: Array<Tag>;
 	public messages: Array<Message>;
 	public sent_messages: Array<Message>;
@@ -46,9 +46,9 @@ export class Client extends Entity implements IEntity  {
 		this.biographie = '';
 		this.intensity = null;
 		this.atmosphere = null;
-		this.learn_tags = null;
-		this.know_tags = null;
-		this.teach_tags = null;
+		this.learn_tags = [];
+		this.know_tags = [];
+		this.teach_tags = [];
 		this.tags = [];
 		this.messages = [];
 		this.sent_messages = null;

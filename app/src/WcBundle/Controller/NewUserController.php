@@ -86,7 +86,7 @@ class NewUserController extends GPPDController
 
         $roles = $user->getRoles();
 
-        if (in_array("ROLE_USER", $roles)) {
+        if (in_array("ROLE_USER", $roles)) { // not useful at this point as it is always the case.
 
           $client = new Client();
           $client->setUser($user);
