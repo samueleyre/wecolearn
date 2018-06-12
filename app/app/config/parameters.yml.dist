@@ -19,6 +19,7 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeItPlease
 
     delivery_address: samuel.eyre@hotmail.fr
+    host: "https://wecolearn.com"
 
     private_key_path:   %kernel.root_dir%/../var/jwt/private.pem
     public_key_path:    %kernel.root_dir%/../var/jwt/public.pem
