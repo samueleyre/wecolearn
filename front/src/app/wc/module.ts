@@ -80,6 +80,7 @@ import { SearchBarComponent} from './components/client/searchBar/component';
 import { CityBarComponent} from './components/client/cityBar/component';
 
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
+import {PasswordStrengthBarComponent} from "../applicativeService/form/password/component";
 
 @NgModule({
   imports:[
@@ -124,7 +125,8 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
       CopyComponent,
       GeolocationComponent,
     SearchBarComponent,
-    CityBarComponent
+    CityBarComponent,
+      PasswordStrengthBarComponent
   ],
   declarations: [
     HeaderComponent,
@@ -145,7 +147,8 @@ import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
     ChatWindowComponent,
     FromNowPipe,
     SearchBarComponent,
-    CityBarComponent
+    CityBarComponent,
+      PasswordStrengthBarComponent
 
   ],
   providers : [

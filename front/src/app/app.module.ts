@@ -28,6 +28,9 @@ import { HomeComponent }	  from './wc/components/client/home/component';
 import { UploadComponent}          from './applicativeService/upload/component';
 import { NotFoundComponent}          from './components/notFound/component';
 
+import {PasswordStrengthBarComponent} from './applicativeService/form/password/component';
+
+
 import { WcModule }          from './wc/module';
 
 
@@ -63,6 +66,7 @@ const appRoutes: Routes = [
     HomeComponent,
     // UserComponent,
     EqualValidator,
+    // PasswordStrengthBarComponent,
     AppComponent,
     NotFoundComponent
   ],

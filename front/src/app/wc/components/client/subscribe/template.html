@@ -13,20 +13,27 @@
                     </div>
                     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
                         <label for="email">Email</label>
-                        <input id="email" type="email" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required />
+                        <input id="email" type="email" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"/>
                         <div *ngIf="f.submitted && !email.valid" class="help-block">L'email est obligatoire</div>
                     </div>
                     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
                         <label for="password">Mot de passe</label>
-                        <input id="password" type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required validateEqual="confirmPassword" reverse="true"/>
+                        <input id="password" type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required validateequal="confirmPassword" reverse="true"/>
                         <div *ngIf="f.submitted && password.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
+                        <password-strength-bar [passwordToCheck]="user.password" [barLabel]="barLabel"></password-strength-bar>
                     </div>
-                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !confirmPassword.valid }">
+
+                  <!--todo : make password validation work ! -->
+<!--
+                  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !confirmPassword.valid }">
                         <label for="confirmPassword">Confirmer le mot de passe</label>
-                        <input id="confirmPassword" type="password" class="form-control" name="confirmPassword" [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" required validateEqual="password" />
+                        <input id="confirmPassword" type="password" class="form-control" name="confirmPassword" [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" required validateequal="password" />
                         <div *ngIf="f.submitted && confirmPassword.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
-                        <div *ngIf="( confirmPassword.hasError('validateEqual') || password.hasError('validateEqual') )" class="help-block">Les mots de passe ne correspondent pas</div>
+                        <div *ngIf="( confirmPassword.errors?.validateEqual || confirmPassword.hasError('validateEqual') || password.hasError('validateEqual') )" class="help-block two">Les mots de passe ne correspondent pas</div>
                     </div>
+-->
+                  <br>
+                  <br>
                     <div class="form-group">
                         <button *ngIf="!edition" type="submit" [disabled]="loading" class="btn btn-primary">Continuer</button>
                         <button *ngIf="edition" type="submit" [disabled]="loading" class="btn btn-primary">Modifier</button>
@@ -34,13 +41,13 @@
                     </div>
                     <div *ngIf="error" class="alert alert-danger">{{error}}</div>
                 </form>
-            </div>
-            <div>
+              <br>
                 <p>
-                    En cliquant sur "Continuer", vous acceptez nos <a href="">Conditions générales de service</a>, notre
-                    <a href="">Politique de respect de la vie privée</a> et notre <a href="">Politique d'utilisation des cookies</a>.
+                  En cliquant sur "Continuer", vous acceptez nos <a href="">Conditions générales de service</a>, notre
+                  <a href="">Politique de respect de la vie privée</a> et notre <a href="">Politique d'utilisation des cookies</a>.
                 </p>
             </div>
+
         </div>
     </div>
 </div>

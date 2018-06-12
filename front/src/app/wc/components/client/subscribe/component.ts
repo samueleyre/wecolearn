@@ -27,6 +27,8 @@ export class SubscribeComponent implements OnInit {
     users: User[];
     edition: boolean = false;
     loading = false;
+    public barLabel: string = "Difficulté du mot de passe : ";
+
 
     constructor(
         private router: Router,
@@ -35,7 +37,7 @@ export class SubscribeComponent implements OnInit {
         private authenticationService: AuthenticationService,
     ) {
         this.users = [];
-        this.user = new User( null,'test','test','test', 'test');
+        this.user = new User();
     }
  
     ngOnInit() {
