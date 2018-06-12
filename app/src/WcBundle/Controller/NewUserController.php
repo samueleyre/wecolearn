@@ -79,7 +79,7 @@ class NewUserController extends GPPDController
         } catch (\Exception $e) {
 
             //for debugging you can do like this
-            return "error";
+            return "error".$e;
 
         }
 
