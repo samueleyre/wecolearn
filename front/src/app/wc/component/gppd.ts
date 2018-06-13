@@ -114,13 +114,18 @@ export class GPPDComponent {
           g = d.getElementsByTagName('body')[0],
           x = w.innerWidth || e.clientWidth || g.clientWidth;
 
-        console.log("screen size ! " ,x)
+        // console.log("screen size ! " ,x)
 
+
+        return x >= 768;
+
+/*
         if (x < 768) {
           return false;
         } else {
           return true;
         }
+*/
 
       }
 
