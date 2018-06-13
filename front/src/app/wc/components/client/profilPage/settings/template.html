@@ -35,7 +35,7 @@
                                                 <img *ngIf="entity.image" width="100px" src="{{webPath}}img/{{entity.image.filename}}" alt="">
                                                 <img *ngIf="!entity.image" width="100px" src="{{webPath}}img/gribouille.png" alt="">
 
-                                                <button (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
+                                                <button type="button" (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </button>
                                             </div>
                                             <upload *ngIf="modify"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>

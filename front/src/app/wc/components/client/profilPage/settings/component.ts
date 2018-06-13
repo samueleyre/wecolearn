@@ -73,12 +73,18 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         
         this.service.getOne().subscribe( ( client: IEntity) => {
             //console.log("client", client);
-            this.entity = this.setTags(client);
+            this.setEntity(client);
             //console.log("entity on loaded", client);
             if (!this.entity['latitude']) {
                 this.setDefaultLatLong();
             }
         });
+    }
+
+    setEntity(client: IEntity) {
+
+        this.entity = this.setTags(client);
+
     }
 
     setTags(client: IEntity) {
@@ -162,6 +168,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     onComplete(id:string, response:any )
     {
         console.log("uploaded", response)
+        this.entity['image'] = response.response['image'];
         this.entity['avatarSrc'] = response.response['avatarSrc'];
         this.modify = false;
         this.uploadError[id] = false;
