@@ -7,6 +7,7 @@ import '@angular/material/prebuilt-themes/indigo-pink.css';
 import {APP_BASE_HREF, Location} from "@angular/common";
 import {Router} from "@angular/router";
 import {log} from "util";
+import {LoggerService} from "./applicativeService/logger/service";
 // import { CookieLawModule } from 'angular2-cookie-law';
 
 
@@ -26,10 +27,11 @@ export class AppComponent  implements OnInit {
     constructor(
                  private router: Router,
                  location: Location,
+                 private loggerService: LoggerService
     ) {
         this.location = location;
         router.events.subscribe(event => {
-            console.log("route changed")
+            this.loggerService.log("route changed")
             this.load()
             }
         );

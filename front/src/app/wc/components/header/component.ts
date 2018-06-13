@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { GPPDComponent }             from './../../component/gppd';
 
 import {AuthenticationService}        from './../../../applicativeService/authentication/service';
+import {LoggerService}        from './../../../applicativeService/logger/service';
 import {MessageService} from "../../../applicativeService/message/service";
 
 // messages ----
@@ -52,15 +53,16 @@ export class HeaderComponent implements OnInit {
     private threads: Observable<any>;
 
       constructor( private http : Http,
-				 private router: Router,
-				 location: Location,
-				 @Inject(APP_BASE_HREF) r:string,
-				 public messagesService: MessagesService,
-				 public threadsService: ThreadsService,
-				 public ClientService: ClientService ,
-				 private config: NgbDropdownConfig,
-				 private LoggedService: LoggedService,
-			  private authenticationService: AuthenticationService,
+             private router: Router,
+             location: Location,
+             @Inject(APP_BASE_HREF) r:string,
+             public messagesService: MessagesService,
+             public threadsService: ThreadsService,
+             public ClientService: ClientService ,
+             private config: NgbDropdownConfig,
+             private LoggedService: LoggedService,
+             private authenticationService: AuthenticationService,
+             private loggerService: LoggerService
 ) {
 
         config.placement = 'bottom-right';
@@ -74,7 +76,7 @@ export class HeaderComponent implements OnInit {
       this.imagePath = GPPDComponent.updateUrl('/img/');
       this.screen = GPPDComponent.getScreenSize();
   	  this.ClientService.get().subscribe((client: Client )=> {
-				console.log("got client", client)
+          this.loggerService.log("got client", client)
 				this.currentClient = client;
 			});
 			this.logoPath = GPPDComponent.updateUrl('/logo/wecolearn.png');
@@ -103,10 +105,10 @@ export class HeaderComponent implements OnInit {
 
 	load() {
 
+		// this.loggerService.log("header, is it logged ? ", this.connected);
+        this.loggerService.log("logger services working");
 
-		console.log("header, is it logged ? ", this.connected);
-
-		if (this.connected) {
+        if (this.connected) {
 			this.loadClient();
 			this.loadMessages();
 		}
@@ -134,8 +136,9 @@ export class HeaderComponent implements OnInit {
 																	this.currentClient &&
 																(currentThread.lastMessage.sender.id === this.currentClient.id);
 					if (!currentThread.lastMessage.is_read && !messageIsFromUser && currentThread.lastMessage.sender) {
-					console.log("THREADS", currentThread)
-						this.notifications.push(currentThread)
+                        this.loggerService.log("THREADS", currentThread);
+
+                        this.notifications.push(currentThread)
 					}
 
 			});

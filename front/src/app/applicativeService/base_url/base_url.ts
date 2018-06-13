@@ -1,7 +1,7 @@
 
 
 export function getBaseLocation() {
-    console.log(location);
+    this.loggerService.log(location);
     let path: string = location.origin;
     return path;
 }

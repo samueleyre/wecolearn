@@ -8,6 +8,7 @@ import { AuthenticationService } from './../../applicativeService/authentication
 import {Http, Response} from "@angular/http";
 import {ActivatedRoute, Params} from '@angular/router';
 import {FilterService}            from "../../applicativeService/filter/service";
+import {LoggerService} from "../../applicativeService/logger/service";
 
  
 @Component({
@@ -26,7 +27,9 @@ export class ConfirmEmailComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         private activatedRoute: ActivatedRoute,
-        private http: Http) { }
+        private http: Http,
+        private loggerService: LoggerService
+) { }
 
     ngOnInit() {
         // reset login status
@@ -34,12 +37,12 @@ export class ConfirmEmailComponent implements OnInit {
 
         this.activatedRoute.queryParams.subscribe((params: Params) => {
           let token = params['token'];
-          console.log("token", token)
+            this.loggerService.log("token", token)
           if (token) {
-          console.log("send ?")
+              this.loggerService.log("send ?")
             this.http.get('/api/confirmEmail?token='+token)
               .map((response: Response) => {
-          console.log("sent ?")
+                  this.loggerService.log("sent ?")
                 let result = response.json();
                 this.loading = false;
                 if (result.success) {

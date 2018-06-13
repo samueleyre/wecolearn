@@ -4,6 +4,7 @@ import { Client } from './../entities/client/entity';
 import {Http, Response} from "@angular/http";
 import {IEntity} from "../entity/interface";
 import {Message} from "../entities/message/entity";
+import {LoggerService} from "../../applicativeService/logger/service";
 
 
 @Injectable()
@@ -15,7 +16,7 @@ export class ClientService {
   private cClientNu: Client = null;
 
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private loggerService: LoggerService) {
       this.endpoint = '/api/client';
   }
 
@@ -48,7 +49,7 @@ export class ClientService {
           .map((response: Response) => {
               this.currentClient.next(response.json());
               this.cClientNu = response.json();
-              console.log("loaded", response.json())
+              this.loggerService.log("loaded", response.json())
               return 'loaded';
           });
   }

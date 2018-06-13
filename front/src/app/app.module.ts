@@ -41,6 +41,11 @@ import { LoadersCssModule } from 'angular2-loaders-css';
 import { LOCALE_ID } from '@angular/core';
 // import {CookieLawModule} from "angular2-cookie-law";
 
+
+//SERVICES -------------
+import { LoggerService }       from './applicativeService/logger/service';
+
+
 const appRoutes: Routes = [
     { path: '', component: HomeComponent},
 ];
@@ -57,7 +62,7 @@ const appRoutes: Routes = [
     MessageModule,
     routing,
     // BsDropdownModule.forRoot(),
-    UploadModule,
+    UploadModule,  // is this used ?
     LoadersCssModule,
   ],
   declarations: [ 
@@ -65,10 +70,11 @@ const appRoutes: Routes = [
     ConfirmEmailComponent,
     HomeComponent,
     // UserComponent,
-    EqualValidator,
+    EqualValidator, // not working
     // PasswordStrengthBarComponent,
     AppComponent,
     NotFoundComponent
+
   ],
   providers : [
       {
@@ -76,6 +82,7 @@ const appRoutes: Routes = [
           useFactory: getBaseLocation,
       },
       { provide: LOCALE_ID, useValue: "fr-FR" }, //replace "en-US" with your locale
+      LoggerService,
   ],
   bootstrap:[ 
   	AppComponent

@@ -11,6 +11,7 @@ import {EmptyObservable} from 'rxjs/observable/EmptyObservable';
 
 import * as _ from 'lodash';
 import {ISubscription} from "rxjs/Subscription";
+import {LoggerService} from "../../applicativeService/logger/service";
 
 
 const initialMessages: Message[] = [];
@@ -56,7 +57,7 @@ export class MessagesService {
     create: Subject<Message> = new Subject<Message>();
     markThreadAsRead: Subject<any> = new Subject<any>();
 
-  constructor(public ClientService: ClientService, protected http : Http) {
+  constructor(public ClientService: ClientService, protected http : Http, private loggerService: LoggerService) {
     this.alive = true;
     this.messages = this.updates
       // watch the updates and accumulate operations on the messages
@@ -124,16 +125,16 @@ export class MessagesService {
   }
 
   addMessageToUpdate(message: Message): void {
-    console.log("add to be updated", message)
+      this.loggerService.log("add to be updated", message)
     this.messagesToUpdate.push(message);
   }
 
   pushUpdatedMessages(): Observable<void> {
 
     if (this.messagesToUpdate.length > 0) {
-    console.log("going to be sent", this['messagesToUpdate'])
+        this.loggerService.log("going to be sent", this['messagesToUpdate'])
       return this.http.patch(`/api/messages`, this.messagesToUpdate).map((response: Response) => {
-        console.log(response.json());
+          this.loggerService.log(response.json());
         // this.messagesToUpdate = [];
       });
 
@@ -159,7 +160,7 @@ export class MessagesService {
   updateMessage(message: Message): Observable<void> { // todo : can be used to edit old message also
 
     return this.http.patch(`/api/message`, message).map((response: Response) => {
-        console.log(response.json());
+        this.loggerService.log(response.json());
     });
 
 
@@ -286,8 +287,8 @@ export class MessagesService {
           this.addMessage(message)
       });
 
-          console.log("what is wrong with the time ?", new Date())
-      // console.log("these should be ordered", messagestoBeAdded)
+      this.loggerService.log("what is wrong with the time ?", new Date())
+      // this.loggerService.log("these should be ordered", messagestoBeAdded)
   }
 
   public stopNewMessageLoop() {
