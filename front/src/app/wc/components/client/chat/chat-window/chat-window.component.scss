@@ -133,6 +133,7 @@
     .panel-buttons-container {
       span{
         float: right;
+        cursor: pointer;
       }
       @extend .col-md-2;
       @extend .col-xs-2;

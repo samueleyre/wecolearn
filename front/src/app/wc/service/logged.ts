@@ -13,6 +13,7 @@ export class LoggedService {
     Logged.get().subscribe( (logged:boolean) => {
     this.loggerService.log(" logged", logged)
       if (logged) {
+
         this.logged = true;
       } else {
         this.logged = false;
@@ -27,6 +28,7 @@ export class LoggedService {
     return this.logged;
 
   }
+
 
 
 }

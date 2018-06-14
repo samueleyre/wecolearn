@@ -11,6 +11,7 @@ import {LoggedService} from "./logged"
 import * as _ from 'lodash';
 import {FilterService} from "../../applicativeService/filter/service";
 import {IEntity} from "../entity/interface";
+import {LoggerService} from "../../applicativeService/logger/service";
 
 
 
@@ -23,7 +24,9 @@ export class SearchService {
 
   constructor(public ClientService: ClientService,
               protected http: Http,
-              private LoggedService: LoggedService) {
+              private LoggedService: LoggedService,
+              private loggerService: LoggerService
+  ) {
 
     this.currentSearch = {};
     // this.currentFoundClients = Observable.empty<Client[]>();
@@ -31,7 +34,7 @@ export class SearchService {
 
   search( first?: number, max?: number ): Observable<void> {
 
-    console.log("current Search", this['currentSearch'], this.currentSearch.hasOwnProperty("city"));
+    this.loggerService.log("current Search", this['currentSearch'], this.currentSearch.hasOwnProperty("city"));
     if (this.currentSearch.hasOwnProperty("city")) {
       FilterService.addFilter("latitude" , this.currentSearch["city"].latitude);
       FilterService.addFilter("longitude" ,this.currentSearch["city"].longitude);

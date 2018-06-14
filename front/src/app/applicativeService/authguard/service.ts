@@ -4,39 +4,28 @@ import { Http }                             from '@angular/http';
 import { TokenService }                     from './../token/service';
 import { Logged }                           from './logged';
 import { Observable }                       from "rxjs/Rx";
-
+import { PingService }                             from  './../ping/service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
  
-    constructor(private router: Router, private tokenService: TokenService, private http: Http ) { }
- 
+    constructor(private router: Router, private tokenService: TokenService, private http: Http, private pingService: PingService ) { }
+
     canActivate() {
-        return this
-        .http
-        .get( '/api/ping' )
-        .catch( ( error: Response ) => {
-                let status = 500;
-                if ( error.status === 401 || error.status === 403 ) { // unauthorized or forbidden //
-                    status = error.status
-                    this.router.navigate(['/']);
-                    let logged = false;
-                    Logged.set(logged);
-                
-                }
-                return Observable.of({ status : status });
-        })
-        .map( response => {
-            if( 401 === response.status  || 403 === response.status ) {
-                this.router.navigate(['/']);
-                let logged = false;
-                Logged.set(logged);
-                return logged;        
-            } else {    
-                let logged = true;
-                Logged.set(logged);
-                return logged;
-            }
-        });
+      return this.pingService.ping("/");
     }
+
+}
+
+
+@Injectable()
+export class AuthGuardSearch implements CanActivate {
+
+  constructor(private router: Router, private tokenService: TokenService, private http: Http, private pingService: PingService ) { }
+
+  canActivate() {
+    return this.pingService.ping();
+  }
+
+
 }

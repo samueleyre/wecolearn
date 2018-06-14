@@ -9,7 +9,7 @@ import { MentionsComponent } 			from './components/client/mentionslegales/compon
 
 
 
-import { AuthGuard } 					from './../applicativeService/authguard/service';
+import {AuthGuard, AuthGuardSearch} from './../applicativeService/authguard/service';
 import {HomeComponent}                  from   "./components/client/home/component";
 import { SubscribeComponent }          from './components/client/subscribe/component';
 
@@ -25,7 +25,7 @@ const prRoutes: Routes = [
     //         }
     //     ]
     // },
-    { path: 'search',      component: SearchComponent },
+    { path: 'search',      component: SearchComponent, canActivate: [AuthGuardSearch] },
     { path: 'settings', component: ProfilSettingsComponent, canActivate: [AuthGuard] },
     { path : 'mentionslegales', component: MentionsComponent},
     { path : 'subscribe', component: SubscribeComponent},

@@ -16,6 +16,7 @@ import { Message } from '../../../../entities/message/entity';
 
 
 import { ChatExampleData } from './../../chat/data/chat-example-data';
+import {LoggerService} from "../../../../../applicativeService/logger/service";
 
 @Component({
   selector: 'chat-window',
@@ -34,7 +35,9 @@ export class ChatWindowComponent implements OnInit {
   constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
               public ClientService: ClientService,
-              public el: ElementRef) {
+              public el: ElementRef,
+              private loggerService: LoggerService
+  ) {
   }
 
   ngOnInit(): void {
@@ -44,7 +47,7 @@ export class ChatWindowComponent implements OnInit {
 
     this.threadsService.currentThread.subscribe(
       (thread: Thread) => {
-        console.log("currentthread", thread)
+          this.loggerService.log("currentthread", thread)
         if (thread.id) {
           this.messagesService.changePeriod(15000);
         }

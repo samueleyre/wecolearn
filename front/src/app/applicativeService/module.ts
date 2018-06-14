@@ -18,6 +18,7 @@ import { MessageModule }           from './message/module';
   
 import { AuthenticationService}    from './authentication/service';
 import { AuthGuard }               from './authguard/service';
+import { AuthGuardSearch }               from './authguard/service';
 import { environment  }            from './config/environment';
 import { InterceptedHttp }         from './interceptor/InterceptedHttp';
 import { httpFactory }             from './interceptor/httpFactory';
@@ -28,6 +29,7 @@ import { HeaderBag }               from './interceptor/header-bag'
 
 import { FilterComponent }          from './filter/component';
 import { FilterService }          from './filter/service';
+import { PingService }                             from  './ping/service';
 
 @NgModule({
   imports:[   
@@ -56,11 +58,13 @@ import { FilterService }          from './filter/service';
         },
         AuthenticationService,
         AuthGuard,
+        AuthGuardSearch,
         InterceptedHttp,
         TokenService,
         UserService,
         HeaderBag,
         FilterService,
+        PingService
         //XHRBackend, 
         //RequestOptions,
     ],

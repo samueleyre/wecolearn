@@ -24,6 +24,8 @@ import {ThreadsService}           from "../../../../service/threads.service";
 import {SearchService}            from "../../../../service/search";
 import {Logged} from "../../../../../applicativeService/authguard/logged";
 import {LoggedService} from "../../../../service/logged";
+import {image} from "../../../../../applicativeService/config/image";
+import {LoggerService} from "../../../../../applicativeService/logger/service";
 
 
 @Component({
@@ -46,7 +48,9 @@ export class SearchComponent extends GPPDComponent implements OnInit {
                  public threadsService: ThreadsService,
                  private router: Router,
                  private searchService: SearchService,
-                 private LoggedService: LoggedService) {
+                 private LoggedService: LoggedService,
+                 private loggerService: LoggerService
+    ) {
         super(service);
     }
 
@@ -57,11 +61,10 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     }
 
 
-
     load() : void {
 
-
       let logged = this.LoggedService.get();
+      this.loggerService.log("is it logged", this.logged)
 
       if (logged) {
         this.logged = true;
@@ -99,14 +102,14 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     openThread(card : Client) {
 
-      // console.log("is it logged", this.logged)
+      this.loggerService.log("openThread", this.logged)
       if (this.logged) {
 
         if (false) { // todo: see if thread exists
 
         } else {
             if (!card.image) {
-              card.image = new Image(null, "gribouille.png");
+              card.image = new Image(null, image.default_small);
             }
             let thread = new Thread( card.id, card.first_name, card.image.filename)
             this.threadsService.setCurrentThread(thread);

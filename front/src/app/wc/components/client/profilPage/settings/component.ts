@@ -29,6 +29,7 @@ import { MessageService }         from './../../../../../applicativeService/mess
 import {FilterService}            from "../../../../../applicativeService/filter/service";
 import {log} from "util";
 import { APP_BASE_HREF, Location } from '@angular/common';
+import {image} from "../../../../../applicativeService/config/image";
 
 
 
@@ -45,10 +46,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     private modify = false;
     private webPath : string;
     private uploadError : object = {};
-
-
-
-
+    private baseImageName : string = image.default_small;
     private tags:any = null;
     private tagTypes = ["learn_tags", "know_tags", "teach_tags"];
 
