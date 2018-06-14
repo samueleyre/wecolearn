@@ -18,14 +18,9 @@ class User extends BaseUser
     protected $id;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="Token", mappedBy="User", cascade={"persist", "merge"})
-     * @ORM\JoinColumn(name="tokenId", referencedColumnName="id")
-     */
-    public $token;
 
 
-    /**
+  /**
      * @ORM\Column (type="boolean", name="tokenConfirmed")
      */
     public $tokenConfirmed = false;
@@ -46,7 +41,7 @@ class User extends BaseUser
      */
     public function setTokenConfirmed($tokenConfirmed)
     {
-        $this->token_confirmed = $tokenConfirmed;
+        $this->tokenConfirmed = $tokenConfirmed;
 
         return $this;
     }
@@ -58,6 +53,21 @@ class User extends BaseUser
      */
     public function getTokenConfirmed()
     {
-        return $this->token_confirmed;
+        return $this->tokenConfirmed;
     }
 }
+
+
+
+//    /**
+//     * @ORM\OneToMany(targetEntity="Token", mappedBy="User", cascade={"persist", "merge"})
+//     * @ORM\JoinColumn(name="tokenId", referencedColumnName="id")
+//     */
+//public $token;
+
+//
+///**
+// * @ORM\Column (type="varchar(180)", name="confirmation_token", nullable=true)
+// */
+//public $confirmationToken = null;
+

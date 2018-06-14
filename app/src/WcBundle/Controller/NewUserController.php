@@ -135,19 +135,27 @@ class NewUserController extends GPPDController
 
         $user =  $this->getDoctrine()
             ->getRepository(User::class)
-            ->findOneBy(["confirmation_token"=>$token]);
+              ->findOneBy(["confirmationToken"=>$token, "tokenConfirmed"=>0]);
+//            ->findUserByToken($token);
+
+        $ret = [];
 
         if ($user) {
 
-            if ($user->getEnabled() === false) {
-                $user->setEnabled(true);
+            if ($user->getTokenConfirmed() === false) {
+                $user->setTokenConfirmed(true);
+                $ret["success"] = $this
+                  ->patchAction($user);
+            } else {
+              $ret["error"] = "token_already_confirmed";
             }
 
-            return $this
-                ->patchAction($user);
 
+        } else {
+          $ret["error"] = "confirmation_token_not_found";
         }
 
+        return $ret;
     }
 
 }

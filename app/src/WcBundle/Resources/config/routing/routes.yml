@@ -13,6 +13,11 @@ newuser:
     prefix:   api
     resource: '@WcBundle/Controller/NewUserController.php'
 
+confirmEmail:
+    type:     rest
+    prefix:   api
+    resource: '@WcBundle/Controller/NewUserController.php'
+
 findTag:
     type:     rest
     prefix:   api

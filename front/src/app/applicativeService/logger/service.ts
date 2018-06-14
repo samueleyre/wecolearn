@@ -8,7 +8,8 @@ export class LoggerService {
 
     log(one: any, two: any = null){
         if (process.env.ENV !== "production") {
-            console.log(one, two)
+            if (null !== two) console.log(one, two)
+            else console.log(one)
         }
     }
 

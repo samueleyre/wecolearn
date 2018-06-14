@@ -6,3 +6,5 @@ services:
     class: WcBundle\Repository\TagRepository
     arguments: [ '@doctrine.orm.entity_manager' ]
 
+
+#todo : IS THIS USED ??
