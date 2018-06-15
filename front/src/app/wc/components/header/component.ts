@@ -106,7 +106,6 @@ export class HeaderComponent implements OnInit {
 	load() {
 
 		// this.loggerService.log("header, is it logged ? ", this.connected);
-        this.loggerService.log("logger services working");
 
         if (this.connected) {
 			this.loadClient();
@@ -168,6 +167,7 @@ export class HeaderComponent implements OnInit {
   activateNotification(thread: Thread): void {
     this.threadsService.setCurrentThread(thread);
     this.messagesService.pushUpdatedMessages().subscribe(() => {
+      this.loggerService.log("header --> search")
       this.router.navigate(['/search']);
 		});
   }

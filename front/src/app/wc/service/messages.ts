@@ -12,6 +12,7 @@ import {EmptyObservable} from 'rxjs/observable/EmptyObservable';
 import * as _ from 'lodash';
 import {ISubscription} from "rxjs/Subscription";
 import {LoggerService} from "../../applicativeService/logger/service";
+import {Router} from "@angular/router";
 
 
 const initialMessages: Message[] = [];
@@ -57,7 +58,8 @@ export class MessagesService {
     create: Subject<Message> = new Subject<Message>();
     markThreadAsRead: Subject<any> = new Subject<any>();
 
-  constructor(public ClientService: ClientService, protected http : Http, private loggerService: LoggerService) {
+  constructor(public ClientService: ClientService, protected http : Http, private loggerService: LoggerService, private router: Router,
+  ) {
     this.alive = true;
     this.messages = this.updates
       // watch the updates and accumulate operations on the messages
@@ -120,7 +122,7 @@ export class MessagesService {
 
   // an imperative function call to this action stream
   addMessage(message: Message): void {
-    // console.log("adding message", message)
+    this.loggerService.log("adding message", message)
     this.newMessages.next(message);
   }
 
@@ -220,17 +222,22 @@ export class MessagesService {
   }
 
   private getMessages() :void {
-    this.ClientService.get()
+
+    let getClientSubscribe = this.ClientService.get()
       .subscribe(
         (user: Client) => {
-          // console.log("client Service", user)
-          if (user) {
+          console.log("client Service called in messages service", this.currentClient)
+          if (user && this.router.url === "/search" && undefined === this.currentClient) {
             this.currentClient = user;
             this.sentMessages = user.sent_messages;
             this.receivedMessages = user.received_messages;
             this.generateMessages();
+            this.loggerService.log("shoud unsubscribe")
+            getClientSubscribe.unsubscribe(); // this doens't work ?
+
           }
         });
+
 
 
 
@@ -287,7 +294,7 @@ export class MessagesService {
           this.addMessage(message)
       });
 
-      this.loggerService.log("what is wrong with the time ?", new Date())
+      // this.loggerService.log("what is wrong with the time ?", new Date())
       // this.loggerService.log("these should be ordered", messagestoBeAdded)
   }
 

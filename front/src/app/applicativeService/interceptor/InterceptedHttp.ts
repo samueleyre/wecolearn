@@ -33,8 +33,9 @@ export class InterceptedHttp extends Http {
             .catch( ( error: Response ) => {
                 if ( error.status === 401 || error.status === 403 ) { // unauthorized or forbidden //
                         this.tokenService.clear();
-                        let openRoutes = ["/login"]; // todo: would probably be better in accessible config file
+                        let openRoutes = ["/login", "/search", "/"]; // todo: would probably be better in accessible config file
                         if (openRoutes.indexOf(this.router.url) === -1) {
+                            console.log("pinged")
                             this.router.navigate(['/']);
                         }
                 }

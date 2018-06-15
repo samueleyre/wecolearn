@@ -9,12 +9,12 @@ import { MentionsComponent } 			from './components/client/mentionslegales/compon
 
 
 
-import {AuthGuard, AuthGuardSearch} from './../applicativeService/authguard/service';
+import {AuthGuard} from './../applicativeService/authguard/service';
 import {HomeComponent}                  from   "./components/client/home/component";
 import { SubscribeComponent }          from './components/client/subscribe/component';
 
 
-const prRoutes: Routes = [
+const wcRoutes: Routes = [
     { path: 'bo',      component: ClientComponent ,   canActivate: [AuthGuard] },
     // { path: 'profil',
     //     children: [
@@ -25,7 +25,7 @@ const prRoutes: Routes = [
     //         }
     //     ]
     // },
-    { path: 'search',      component: SearchComponent, canActivate: [AuthGuardSearch] },
+    { path: 'search',      component: SearchComponent, canActivate: [AuthGuard] },
     { path: 'settings', component: ProfilSettingsComponent, canActivate: [AuthGuard] },
     { path : 'mentionslegales', component: MentionsComponent},
     { path : 'subscribe', component: SubscribeComponent},
@@ -36,10 +36,10 @@ const prRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forChild(prRoutes)
+    RouterModule.forChild(wcRoutes)
   ],
   exports: [
     RouterModule
   ]
 })
-export class PrRoutingModule { }
+export class WcRoutingModule { }

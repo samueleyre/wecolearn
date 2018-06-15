@@ -22,10 +22,10 @@ export class MessageComponent implements OnInit {
 			this.hidden = false;
 			this.type = message.type;
 			let element = document.getElementById( 'message');
-            if ( element ) {
-                element.scrollIntoView(false);	
-            }
-            if (message.type === "cookie") {
+      if ( element ) {
+          element.scrollIntoView(false);
+      }
+      if (message.type === "cookie") {
 
 			} else {
 				setTimeout(() => {

@@ -4,6 +4,7 @@ import { Thread } from './../entities/thread/entity';
 import { Message } from './../entities/message/entity';
 import { MessagesService } from './messages';
 import * as _ from 'lodash';
+import {LoggerService} from "../../applicativeService/logger/service";
 
 @Injectable()
 export class ThreadsService {
@@ -22,7 +23,7 @@ export class ThreadsService {
   // selected thread
   currentThreadMessages: Observable<Message[]>;
 
-  constructor(public messagesService: MessagesService) {
+  constructor(public messagesService: MessagesService, private loggerService: LoggerService) {
 
     this.threads = messagesService.messages
       .map( (messages: Message[]) => {
@@ -58,6 +59,7 @@ export class ThreadsService {
             })
               // .sortBy(messages, (m: Message) => m.created).reverse()
             .map((message: Message) => {
+              this.loggerService.log("set message", message)
               // console.log("currentThreadMessages ", message, this.currentThread)
               if (message.is_read === false && message.thread.id !== message.receiver.id) {
                 message.is_read = true;

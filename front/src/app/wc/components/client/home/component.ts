@@ -6,6 +6,7 @@ import { SearchService }         from './../../../service/search';
 import {Router} from "@angular/router";
 import {Logged} from "../../../../applicativeService/authguard/logged";
 import {LoggedService} from "../../../service/logged";
+import {LoggerService} from "../../../../applicativeService/logger/service";
 
 
 @Component({
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit {
         private searchService: SearchService,
         private router: Router,
         private LoggedService: LoggedService,
+        private loggerService: LoggerService
 
 
     ) {}
@@ -50,14 +52,16 @@ export class HomeComponent implements OnInit {
         this.screen =  GPPDComponent.getScreenSize();
 
         if (this.LoggedService.get()) {
+          this.loggerService.log("home --> search")
           this.router.navigate(['/search']);
         }
 
-        Logged.get().subscribe( (logged:boolean) => {
+        /*Logged.get().subscribe( (logged:boolean) => { // when this is uncommented it makes a loop on login
           if (logged) {
+            this.loggerService.log("hom2e --> search")
             this.router.navigate(['/search']);
           }
-        });
+        });*/
 
     }
 
@@ -68,6 +72,7 @@ export class HomeComponent implements OnInit {
       this.searchService.search().subscribe(
         () =>{
           FilterService.clear();
+          this.loggerService.log("home --> should navigate to search")
           this.router.navigate(['/search']);
         }
       );

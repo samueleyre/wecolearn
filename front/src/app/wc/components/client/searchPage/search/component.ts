@@ -64,7 +64,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     load() : void {
 
       let logged = this.LoggedService.get();
-      this.loggerService.log("is it logged", this.logged)
+      this.loggerService.log("loading seach component")
 
       if (logged) {
         this.logged = true;

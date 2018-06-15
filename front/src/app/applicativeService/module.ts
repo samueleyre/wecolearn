@@ -18,7 +18,7 @@ import { MessageModule }           from './message/module';
   
 import { AuthenticationService}    from './authentication/service';
 import { AuthGuard }               from './authguard/service';
-import { AuthGuardSearch }               from './authguard/service';
+// import { AuthGuardSearch }               from './authguard/service';
 import { environment  }            from './config/environment';
 import { InterceptedHttp }         from './interceptor/InterceptedHttp';
 import { httpFactory }             from './interceptor/httpFactory';
@@ -58,7 +58,7 @@ import { PingService }                             from  './ping/service';
         },
         AuthenticationService,
         AuthGuard,
-        AuthGuardSearch,
+        // AuthGuardSearch,
         InterceptedHttp,
         TokenService,
         UserService,

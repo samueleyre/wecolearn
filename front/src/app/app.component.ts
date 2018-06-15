@@ -11,6 +11,7 @@ import {LoggerService} from "./applicativeService/logger/service";
 // import { CookieLawModule } from 'angular2-cookie-law';
 
 
+import { NavigationEnd } from '@angular/router';
 
 
 @Component({
@@ -31,10 +32,12 @@ export class AppComponent  implements OnInit {
     ) {
         this.location = location;
         router.events.subscribe(event => {
-            this.loggerService.log("route changed")
+          if (event instanceof NavigationEnd) {
+            console.log('NavigationEnd:', event);
+            this.loggerService.log("route changed", event)
             this.load()
-            }
-        );
+          }
+        });
     }
 
 

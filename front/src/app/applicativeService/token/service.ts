@@ -11,7 +11,6 @@ export class TokenService {
  
     public set( token: string ): void {
         this.localStorage.set('token', token );
-        
     }
  
     public get(): any {

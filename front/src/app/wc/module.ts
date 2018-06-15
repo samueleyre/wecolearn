@@ -26,7 +26,7 @@ import { CacheUrlModule }           from './../applicativeService/cache_url/modu
 
 
 import { QuillModule }              from 'ngx-quill'
-import {PrRoutingModule} from './route';
+import {WcRoutingModule} from './route';
 
 import { GPPDService }              from './service/gppd';
 import { GPPDFactory }              from './service/gppd.factory';
@@ -85,7 +85,7 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
 @NgModule({
   imports:[
     NgbModule,
-    PrRoutingModule,
+    WcRoutingModule,
     BrowserModule,
     CommonModule,
     // PaginationModule,
