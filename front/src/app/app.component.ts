@@ -21,46 +21,54 @@ import { NavigationEnd } from '@angular/router';
 })
 export class AppComponent  implements OnInit {
     private loaded = false;
-    private hideloader = true;
-    private hideHeader = false;
-    private location: Location;
+    private hideLoader = false;
+    private hideHeader = true;
+    private smallLoader = true;
+    private location: string;
+    private refreshed = false;
 
     constructor(
        private router: Router,
        location: Location,
        private loggerService: LoggerService
     ) {
-        this.location = location;
-        router.events.subscribe(event => {
+      this.loggerService.log("location ", this.router.url)
+      this.location = this.router.url;
+      router.events.subscribe(event => {
+          this.loggerService.log("route changed", event)
+
           if (event instanceof NavigationEnd) {
-            this.loggerService.log("route changed", event)
-            this.initLoader();
-            this.load()
+            this.loggerService.log("route changed", event, this.location)
+            if (this.refreshed)
+              this.initLoader();
+            this.hideLoaderFunction();
           }
         });
     }
 
-    initLoader() {
+    initLoader(size:string = null) {
       this.loaded = false;
-      this.hideloader = false;
+      this.hideLoader = false;
+      if (this.refreshed)
+        this.smallLoader = true;
     }
 
     ngOnInit() {
+        this.hideLoaderFunction();
     }
 
-    load() {
-       this.hideLoader();
-    }
-
-    hideLoader() {
-      if (false === this.loaded)
-        setTimeout(()=>{
-          this.loaded = true;
-          this.hideHeader = false;
+  hideLoaderFunction() {
+      if (false === this.loaded) {
           setTimeout(()=>{
-            this.hideloader = true;
-          }, 1000);
-        },1000);
+            this.loaded = true;
+            this.hideHeader = false;
+            setTimeout(()=>{
+              this.hideLoader = true;
+              this.refreshed = true;
+            }, 1000);
+          },1000);
+
+      }
     }
 
 

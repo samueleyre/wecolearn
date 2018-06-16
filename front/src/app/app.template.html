@@ -1,4 +1,4 @@
-    <div id="loader-container" [class.hide]="loaded" *ngIf="!hideloader" >
+    <div id="loader-container" [class.hide]="loaded" [style.z-index]="smallLoader? '1029': 'inherit'" *ngIf="!hideLoader" >
         <div>
             <loaders-css   [loader]="'ball-scale-ripple'" [loaderClass]="'my-loader'"></loaders-css>
         </div>
