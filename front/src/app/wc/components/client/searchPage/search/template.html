@@ -12,9 +12,7 @@
 		                  [infiniteScrollThrottle]="50"
 		                  (scrolled)="onScroll()"
                       (scrolledUp)="onScrollUp()" >
-
                         <div *ngFor="let card of cards" class="card-container col-12 col-sm-12 col-md-6 col-lg-6">
-
                             <div class="card">
                                 <div class="titleContainer container-fluid">
 
@@ -36,8 +34,8 @@
                                 </div>
 
                                 <div>
-                                    <button class="btn" (click)="openThread(card[0])">
-                                       <i class="fa fa-comment"></i> Message
+                                    <button *ngIf="openChat" class="btn" (click)="openThread(card[0])">
+                                       <i class="fa fa-comment"></i> {{openChat}}
                                     </button>
                                 </div>
 

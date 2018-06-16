@@ -10,7 +10,7 @@ import { ThreadsService } from './../../../../service/threads.service';
 import { Thread } from '../../../../entities/thread/entity';
 import {GPPDComponent} from "../../../../component/gppd";
 import {MessagesService} from "../../../../service/messages";
-import { image }            from "./../../../../../applicativeService/config/image";
+import { image }            from "../../../../../applicativeService/constants/image";
 
 
 @Component({
@@ -22,7 +22,7 @@ export class ChatThreadComponent implements OnInit {
   @Input() thread: Thread;
   selected = false;
   private avatarSrcBase : string;
-  private baseImageName : string = image.default_small;
+  private baseImageName : string = image.default_200px;
 
 
   constructor(public threadsService: ThreadsService, private messagesService: MessagesService ) {

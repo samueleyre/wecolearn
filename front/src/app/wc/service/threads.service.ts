@@ -5,6 +5,7 @@ import { Message } from './../entities/message/entity';
 import { MessagesService } from './messages';
 import * as _ from 'lodash';
 import {LoggerService} from "../../applicativeService/logger/service";
+import {EmptyObservable} from "rxjs/observable/EmptyObservable";
 
 @Injectable()
 export class ThreadsService {
@@ -77,6 +78,10 @@ export class ThreadsService {
 
   setCurrentThread(newThread: Thread): void {
     this.currentThread.next(newThread);
+  }
+
+  resetThreads(): void {
+    this.orderedThreads = new EmptyObservable();
   }
 
 }

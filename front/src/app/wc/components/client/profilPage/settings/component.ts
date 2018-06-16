@@ -29,7 +29,7 @@ import { MessageService }         from './../../../../../applicativeService/mess
 import {FilterService}            from "../../../../../applicativeService/filter/service";
 import {log} from "util";
 import { APP_BASE_HREF, Location } from '@angular/common';
-import {image} from "../../../../../applicativeService/config/image";
+import {image} from "../../../../../applicativeService/constants/image";
 
 
 
@@ -46,7 +46,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     private modify = false;
     private webPath : string;
     private uploadError : object = {};
-    private baseImageName : string = image.default_small;
+    private baseImageName : string = image.default_200px;
     private tags:any = null;
     private tagTypes = ["learn_tags", "know_tags", "teach_tags"];
 
@@ -126,7 +126,6 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     }
 
     joinTags() {
-        console.log("jointags", this.tagTypes)
         this.entity['tags'] = [];
         for(let i=0; i < this.tagTypes.length; i++) {
             if (this.entity[this.tagTypes[i]].length > 0) {
@@ -165,7 +164,6 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
     onComplete(id:string, response:any )
     {
-        console.log("uploaded", response)
         this.entity['image'] = response.response['image'];
         this.entity['avatarSrc'] = response.response['avatarSrc'];
         this.modify = false;

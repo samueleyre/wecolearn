@@ -16,6 +16,14 @@ export class ChatThreadsComponent {
   threads: Observable<any>;
 
   constructor(public threadsService: ThreadsService) {
+    threadsService.resetThreads();
     this.threads = threadsService.orderedThreads;
   }
+
+  ngOnExit(): void {
+    this.threadsService.resetThreads();
+  }
+
+
+
 }

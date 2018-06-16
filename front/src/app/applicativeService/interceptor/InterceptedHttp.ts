@@ -35,7 +35,6 @@ export class InterceptedHttp extends Http {
                         this.tokenService.clear();
                         let openRoutes = ["/login", "/search", "/"]; // todo: would probably be better in accessible config file
                         if (openRoutes.indexOf(this.router.url) === -1) {
-                            console.log("pinged")
                             this.router.navigate(['/']);
                         }
                 }

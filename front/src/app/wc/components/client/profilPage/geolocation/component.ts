@@ -82,7 +82,6 @@ export class GeolocationComponent implements OnInit {
                     //get the place result
                     let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-                    console.log(place);
                     //verify result
                     if (place.geometry === undefined || place.geometry === null) {
                         return;

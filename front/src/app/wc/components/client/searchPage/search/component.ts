@@ -24,7 +24,7 @@ import {ThreadsService}           from "../../../../service/threads.service";
 import {SearchService}            from "../../../../service/search";
 import {Logged} from "../../../../../applicativeService/authguard/logged";
 import {LoggedService} from "../../../../service/logged";
-import {image} from "../../../../../applicativeService/config/image";
+import {image} from "../../../../../applicativeService/constants/image";
 import {LoggerService} from "../../../../../applicativeService/logger/service";
 
 
@@ -38,10 +38,11 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
 
     private avatarSrcBase : string;
-    private cards: any = null;
+    public cards: any[] = null;
     public max: number = 4;
     public screen: boolean =  false;
     private logged = false;
+    private openChat: string;
 
     constructor( protected service: GPPDService,
                  private activatedRoute: ActivatedRoute,
@@ -63,35 +64,20 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     load() : void {
 
+
       let logged = this.LoggedService.get();
-      this.loggerService.log("loading seach component")
 
       if (logged) {
         this.logged = true;
         this.searchService.search().subscribe();
-
+        this.openChat = "Discuter";
       } else {
-      // todo: if tag and lat/long are in url, get them
-
-
+        this.openChat = "Connectez-vous pour discuter !";
+        // todo: if tag and lat/long are in url, get them
       }
 
-      //
-      // Logged.get().subscribe( (logged:boolean) => {
-      //
-      //   console.log(" logged", logged)
-      //   if (logged) {
-      //     this.logged = true;
-      //     this.searchService.autoLoad().subscribe();
-      //
-      //   }
-      //
-      // });
-
-      this.searchService.currentFoundClients.subscribe( ( clients: IEntity[] ) => {
-        this.entities = clients;
+      this.searchService.getCurrentFoundClients().subscribe( ( clients:any[] ) => {
         this.cards = clients;
-        // console.log("cards", this.cards);
       })
 
     }
@@ -109,7 +95,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
         } else {
             if (!card.image) {
-              card.image = new Image(null, image.default_small);
+              card.image = new Image(null, image.default_200px);
             }
             let thread = new Thread( card.id, card.first_name, card.image.filename)
             this.threadsService.setCurrentThread(thread);
@@ -125,6 +111,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     onScroll() {
       //todo: only when arrives at bottom
+      //todo: add loader when loading
       this.max += 1;
       if (this.max % 4 === 0) {
         this.searchService.search( 0, this.max ).subscribe();

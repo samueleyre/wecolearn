@@ -3,7 +3,7 @@
             <loaders-css   [loader]="'ball-scale-ripple'" [loaderClass]="'my-loader'"></loaders-css>
         </div>
     </div>
-    <wc-header [hidden]="!loaded"></wc-header>
+    <wc-header [hidden]="hideHeader"></wc-header>
     <main [hidden]="!loaded">
         <router-outlet></router-outlet>
     </main>

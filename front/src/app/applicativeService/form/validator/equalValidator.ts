@@ -21,7 +21,6 @@ export class EqualValidator implements Validator {
     validate(c: AbstractControl): { [key: string]: any } {
         // self value
         let v = c.value;
-        console.log("called")
 
         // control vlaue
         let e = c.root.get(this.validateEqual);

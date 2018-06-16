@@ -23,7 +23,6 @@ export class TagService {
 
     return this.http.get(`/api/findTag?tagLetters=`+text).map((response: Response) => {
 
-      console.log(response);
       let tags = response.json();
 
       return tags.map(function(obj:any) {

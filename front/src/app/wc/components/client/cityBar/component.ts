@@ -42,7 +42,6 @@ export class CityBarComponent implements OnInit {
 
     onChange() {
         // if value is changed -> channel city
-      console.log(this.searchInput);
       this.searchService.addSearchParameter("city", this.searchInput);
       this.userUpdated.emit(this.searchInput);
 

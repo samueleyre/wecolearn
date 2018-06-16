@@ -7,7 +7,7 @@ import {
 import {Observable} from 'rxjs/Observable';
 
 
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 
 import { NgForm }             from '@angular/forms';
 
@@ -46,7 +46,15 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
         this.tagService = tagService;
     }
 
+
     ngOnInit() {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          if (this.router.url === "/search") {
+            this.search();
+          }
+        }
+      });
     }
 
 

@@ -35,10 +35,11 @@ export class AuthenticationService {
             });
     }
  
-    logout(): void {
+    logout() {
         // clear token remove user from local storage to log user out
         this.tokenService.clear();
         Logged.set(false);
+        return this;
 
     }
 }

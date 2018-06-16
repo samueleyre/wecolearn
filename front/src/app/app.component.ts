@@ -21,48 +21,46 @@ import { NavigationEnd } from '@angular/router';
 })
 export class AppComponent  implements OnInit {
     private loaded = false;
-    private hideloader = false;
+    private hideloader = true;
+    private hideHeader = false;
     private location: Location;
-    private hideHeader = true;
 
     constructor(
-                 private router: Router,
-                 location: Location,
-                 private loggerService: LoggerService
+       private router: Router,
+       location: Location,
+       private loggerService: LoggerService
     ) {
         this.location = location;
         router.events.subscribe(event => {
           if (event instanceof NavigationEnd) {
-            console.log('NavigationEnd:', event);
             this.loggerService.log("route changed", event)
+            this.initLoader();
             this.load()
           }
         });
     }
 
-
-
-    ngAfterViewInit() {
-      setTimeout(()=>{
-        this.loaded = true;
-          setTimeout(()=>{
-            this.hideloader = true;
-          }, 1000);
-      },1000);
+    initLoader() {
+      this.loaded = false;
+      this.hideloader = false;
     }
 
     ngOnInit() {
-      this.load();
     }
 
     load() {
-        let path = this.location.path();
-        if (path === "") {
-          this.hideHeader = true;
-        } else {
-          this.hideHeader = false;
-        }
+       this.hideLoader();
+    }
 
+    hideLoader() {
+      if (false === this.loaded)
+        setTimeout(()=>{
+          this.loaded = true;
+          this.hideHeader = false;
+          setTimeout(()=>{
+            this.hideloader = true;
+          }, 1000);
+        },1000);
     }
 
 

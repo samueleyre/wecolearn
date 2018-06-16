@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import {Subject, Observable, BehaviorSubject} from 'rxjs';
 import { Client } from './../entities/client/entity';
 import { Message } from './../entities/message/entity';
 import { Thread } from './../entities/thread/entity';
@@ -14,22 +14,23 @@ import {IEntity} from "../entity/interface";
 import {LoggerService} from "../../applicativeService/logger/service";
 
 
-
 @Injectable()
 export class SearchService {
 
-  currentFoundClients: Subject<Client[]> = new Subject<Client[]>();
+  currentFoundClients: Subject<any[]>;
   currentSearch: Object;
 
 
   constructor(public ClientService: ClientService,
               protected http: Http,
               private LoggedService: LoggedService,
-              private loggerService: LoggerService
+              private loggerService: LoggerService,
+
   ) {
 
+    this.currentFoundClients = new BehaviorSubject<any[]>(null);
     this.currentSearch = {};
-    // this.currentFoundClients = Observable.empty<Client[]>();
+
   }
 
   search( first?: number, max?: number ): Observable<void> {
@@ -73,6 +74,11 @@ export class SearchService {
       });
 
 
+  }
+
+
+  getCurrentFoundClients(): Observable<any[]> {
+    return this.currentFoundClients.asObservable();
   }
 
 

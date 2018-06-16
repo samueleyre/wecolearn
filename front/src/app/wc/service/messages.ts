@@ -226,7 +226,7 @@ export class MessagesService {
     let getClientSubscribe = this.ClientService.get()
       .subscribe(
         (user: Client) => {
-          console.log("client Service called in messages service", this.currentClient)
+          this.loggerService.log("client Service called in messages service", this.currentClient)
           if (user && this.router.url === "/search" && undefined === this.currentClient) {
             this.currentClient = user;
             this.sentMessages = user.sent_messages;

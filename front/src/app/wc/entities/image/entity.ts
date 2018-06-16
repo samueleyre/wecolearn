@@ -1,6 +1,6 @@
 import { IEntity } from './../../entity/interface';
 import { Entity } from './../../entity/entity';
-import {image} from "../../../applicativeService/config/image";
+import {image} from "../../../applicativeService/constants/image";
 export class Image extends Entity implements IEntity  {
 
     public id: 		number|null;
@@ -9,7 +9,7 @@ export class Image extends Entity implements IEntity  {
     constructor(id?: number , filename?:string ) {
         super();
         this.id = null;
-        this.filename = filename || image.default_small;
+        this.filename = filename || image.default_200px;
 
     }
 }

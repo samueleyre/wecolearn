@@ -33,7 +33,7 @@
                                         <div *ngIf="entity.image">
                                             <div [hidden]="modify">
                                                 <img *ngIf="entity.image && entity.image.filename" width="100px" src="{{webPath}}img/{{entity.image.filename}}" alt="">
-                                                <img *ngIf="!entity.image" width="100px" src="{{webPath}}img/{{baseImageName}}" alt="">
+                                                <img *ngIf="!entity.image" width="100px" src="{{webPath}}app_img/{{baseImageName}}" alt="">
 
                                                 <button type="button" (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </button>

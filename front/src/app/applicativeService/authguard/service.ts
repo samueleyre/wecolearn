@@ -12,7 +12,6 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router, private tokenService: TokenService, private http: Http, private pingService: PingService ) { }
 
     canActivate() {
-      console.log("canactivate")
       return this.pingService.ping();
     }
 
