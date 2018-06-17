@@ -25,7 +25,11 @@
                                         <div class="col-8">
                                             <h5 class="">{{card[0].first_name}} {{card[0].last_name}}</h5>
                                             <div class="tagContainer" *ngIf="card[0].tags">
-                                                <div class="tag" *ngFor="let tag of card[0].tags"><span>{{tag.name}}</span></div>
+                                                <div *ngFor="let tag of card[0].tags">
+                                                  <div class="tag" *ngIf="tag.type === '0'">
+                                                    <span>{{tag.name}}</span>
+                                                  </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
