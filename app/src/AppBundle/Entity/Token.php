@@ -30,12 +30,6 @@ class Token
     private $created;
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="token")
-     * @ORM\JoinColumn(name="userId", referencedColumnName="id", onDelete="NO ACTION")
-     */
-    public $user = null;
-
 
     /**
      * Get id
@@ -47,29 +41,36 @@ class Token
         return $this->id;
     }
 
-    /**
-     * Set token
-     *
-     * @param string $token
-     *
-     * @return Token
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get token
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
+//    /**
+//     * Set token
+//     *
+//     * @param string $token
+//     *
+//     * @return Token
+//     */
+//    public function setToken($token)
+//    {
+//        $this->token = $token;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get token
+//     *
+//     * @return string
+//     */
+//    public function getToken()
+//    {
+//        return $this->token;
+//    }
 
 
 }
+//
+///**
+// * @ORM\ManyToOne(targetEntity="User", inversedBy="token")
+// * @ORM\JoinColumn(name="userId", referencedColumnName="id", onDelete="NO ACTION")
+// */
+//public $user = null;
+

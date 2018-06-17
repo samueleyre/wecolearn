@@ -35,6 +35,8 @@ WcBundle\Entity\Client:
           groups: [ input ]
         image:
           groups: [ input, output ]
+        showProfil:
+          groups: [ input, output ]
 
 
 

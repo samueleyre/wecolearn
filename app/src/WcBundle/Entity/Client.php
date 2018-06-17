@@ -112,6 +112,11 @@ class Client
     public $receivedMessages;
 
 
+     /**
+      * @ORM\Column(type="boolean", name="showProfil")
+      */
+      public $showProfil = false;
+
 
 
 
@@ -371,6 +376,30 @@ class Client
     public function getIntensity()
     {
         return $this->intensity;
+    }
+
+    /**
+     * Set showProfil
+     *
+     * @param boolean $showProfil
+     *
+     * @return Client
+     */
+    public function setShowProfil($showProfil)
+    {
+      $this->showProfil = $showProfil;
+
+      return $this;
+    }
+
+    /**
+     * Get showProfil
+     *
+     * @return boolean
+     */
+    public function getShowProfil()
+    {
+      return $this->showProfil;
     }
 
 

@@ -125,7 +125,7 @@ class ClientService {
             ->getRepository(Client::class)
             ->find($client->getId());
 
-        $parameters = [ "firstName", "lastName", "profilUrl", "biographie", "intensity", "atmosphere", "latitude", "longitude", "tags" ];
+        $parameters = [ "firstName", "lastName", "profilUrl", "biographie", "intensity", "atmosphere", "latitude", "longitude", "tags", "showProfil" ];
 
         for ($i=0; $i< count($parameters); $i++) {
 

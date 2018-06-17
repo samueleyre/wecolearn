@@ -46,8 +46,9 @@ class ClientRepository extends EntityRepository
         $qb->innerJoin('entity.tags', 't');
 
         $qb->where( 't.type = :number' )->setParameter('number', 0);
+        $qb->andWhere( 'entity.showProfil = :showProfil')->setParameter('showProfil', true );
         if ($client) {
-            $qb->andWhere( 'entity.id != :clientId')->setParameter('clientId', $client->getId() );
+          $qb->andWhere( 'entity.id != :clientId')->setParameter('clientId', $client->getId() );
         }
         if( count($tags) > 0 ) {
             $condition = sprintf('t.id=%s',  $tags[0]->getId());

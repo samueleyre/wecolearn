@@ -29,6 +29,7 @@ export class Client extends Entity implements IEntity  {
 	public received_messages: Array<Message>;
 	public avatarSrc : string;
 	public image : Image;
+	public show_profil: boolean;
 
 
 
@@ -57,5 +58,6 @@ export class Client extends Entity implements IEntity  {
 		this.longitude = null;
 		this.avatarSrc = "default_avatar_200px.png";
 		this.image = new Image();
+		this.show_profil = false;
     }
 }
