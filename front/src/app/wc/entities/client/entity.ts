@@ -55,7 +55,7 @@ export class Client extends Entity implements IEntity  {
 		this.received_messages = null;
 		this.latitude = null;
 		this.longitude = null;
-		this.avatarSrc = "lesbricodeurs-200px.png";
+		this.avatarSrc = "default_avatar_200px.png";
 		this.image = new Image();
     }
 }
