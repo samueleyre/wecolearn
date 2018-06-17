@@ -3,13 +3,14 @@
 
   <div class="avatar"
        *ngIf="incoming">
-    <img width="40px" height="40px" src="{{avatarSrcBase}}{{message.sender.image.filename}}">
+    <img *ngIf="message.sender.image" width="40px" height="40px" src="{{avatarSrcBase}}{{message.sender.image.filename}}">
+    <img *ngIf="!message.sender.image"width="40px" height="40px" src="{{avatarSrcBase}}{{baseImageName}}">
   </div>
 
   <div class="messages"
     [ngClass]="msgContainerClass">
     <p>{{message.message}}</p>
-    <p class="time">{{message.created | fromNow}}</p>
+    <!--<p class="time">{{message.created | fromNow}}</p> todo: time not received correctly from api-->
   </div>
 
 

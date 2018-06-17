@@ -215,7 +215,8 @@ export class MessagesService {
         (messages: Array<Message>) => {
           _.sortBy(messages, (m: Message) => m.created)
             .map((message: Message) => {
-              message.thread = new Thread(message.sender.id, message.sender.first_name, (message.sender.image) ? message.sender.image.filename : null);
+              console.log(message.sender.first_name, message.sender.user.username)
+              message.thread = new Thread(message.sender.id, (null !== message.sender.first_name && ''!== message.sender.first_name) ? message.sender.first_name:message.sender.user.username, (message.sender.image) ? message.sender.image.filename : null);
               this.addMessage(message);
             });
         });

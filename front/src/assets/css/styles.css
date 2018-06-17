@@ -58,6 +58,12 @@ button:focus{
 .ql-editor{
     background-color: white;
     min-height: 130px;
+
+}
+
+.ql-editor p{
+  font-size: 1rem;
+  color: #fe5e38;
 }
 
 /*form*/
@@ -119,10 +125,15 @@ button.close{
     margin-right: auto;
 }
 
+@media( max-width: 767px) {
+  .bloc-container{
+    padding-top: 32px;
+  }
+}
 @media( min-width: 767px) {
-    .bloc-container{
-    padding: 32px 32px 16px;
-    }
+  .bloc-container{
+  padding: 32px 32px 16px;
+  }
 }
 
 .bloc{
@@ -145,12 +156,37 @@ button.close{
 .bloc-title{
     border-bottom: 1px solid rgba(0,0,0,.12) !important;
     padding: 16px 16px 0;
+    background-color: #fecd06;
+    color: #4d4d4d;
 }
 
 .bloc-content{
     padding: 16px 16px 0;
 }
 
+/*SEARCH BAR*/
+
+.ngui-auto-complete > ul li{
+  cursor: default;
+}
 
 
 
+/* Bootstrap default */
+
+.btn-primary-wc {
+  color: #fff;
+  background-color: #fe5e38;
+  border-color: #fe5e38;
+}
+
+
+.btn-primary-wc:hover, btn-primary-wc:focus {
+  color: #fff;
+  background-color: #f99178;
+  border-color: #f99178;
+}
+
+.dropdown-item:active {
+  background-color: #f99178 !important;
+}

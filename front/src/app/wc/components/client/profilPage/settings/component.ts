@@ -49,9 +49,12 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     private baseImageName : string = image.default_200px;
     private tags:any = null;
     private tagTypes = ["learn_tags", "know_tags", "teach_tags"];
+    private quillConfig : {
+      "toolbar" : false
+    }
 
 
-    constructor( protected service: GPPDService, protected clientService : ClientService,  protected tagService : TagService,  private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, ) {
+  constructor( protected service: GPPDService, protected clientService : ClientService,  protected tagService : TagService,  private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, ) {
         super(service);
         this.base_url = r;
         this.tagService = tagService;

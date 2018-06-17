@@ -36,8 +36,11 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
 
 
     private searchInput : string;
+  private loading: Observable<boolean>;
+  private currentlySearching: boolean = false;
 
-    constructor( protected service: GPPDService,
+
+  constructor( protected service: GPPDService,
                  protected tagService : TagService,
                  private searchService: SearchService,
                  private router: Router
@@ -55,6 +58,12 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
           }
         }
       });
+
+      this.loading = this.searchService.getLoading();
+      this.loading.subscribe((loading)=> {
+            this.currentlySearching = loading;
+          }
+      )
     }
 
 
@@ -68,10 +77,16 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
 
     search(text:string = null) {
 
+      if (this.currentlySearching) {
+        return;
+      }
+
       if (!text) {
         text = this.searchInput;
       }
-      FilterService.addFilter("tag", text);
+
+      this.searchService.addSearchParameter("tag", text);
+
       this.searchService.search().subscribe(
         () =>{
           FilterService.clear();

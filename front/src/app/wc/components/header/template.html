@@ -6,8 +6,8 @@
         <img width="37px" src="{{logoPath}}" alt="">
     </a>
 
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item" > <!-- PUT ALL THIS IN A COMPONENT -->
+    <ul class="navbar-nav mr-auto" style="max-width: 80vw;">
+        <li class="nav-item" >
             <form class="form-inline my-2 my-lg-0">
                 <searchBar></searchBar>
             </form>
@@ -21,10 +21,10 @@
     </ul>
     <ul class="navbar-nav ml-auto">
         <li *ngIf="connected" ngbDropdown  id="notifications" class="nav-item d-inline-block">
-            <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>
+            <a class="nav-link dropdown-toggle" id="headerBell" ngbDropdownToggle>
                <i class="fa fa-bell"></i> <span class="badge">{{ unreadMessagesCount }}</span>
             </a>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="notifications && (notifications.length > 0)">
+            <div ngbDropdownMenu aria-labelledby="headerBell" *ngIf="notifications && (notifications.length > 0)">
                 <a *ngFor="let notification of notifications" class="nav-link dropdown-item" (click)="activateNotification(notification)" style="border-bottom: solid 1px #f5f1f1">{{notification.name}} : <span style="text-overflow: ellipsis">{{notification.lastMessage.message}}</span></a>
             </div>
         </li>

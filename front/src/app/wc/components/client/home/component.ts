@@ -71,7 +71,6 @@ export class HomeComponent implements OnInit {
 
       this.searchService.search().subscribe(
         () =>{
-          FilterService.clear();
           this.loggerService.log("home --> should navigate to search")
           this.router.navigate(['/search']);
         }

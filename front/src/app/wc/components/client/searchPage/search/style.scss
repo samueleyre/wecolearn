@@ -11,7 +11,7 @@
           flex-wrap: wrap;
           .tag{
             padding: 2px 6px;
-            background-color: #d8d8d8;
+            background-color: #fecd06;
             border-radius: 3px;
             margin: 2px 0px;
             margin-right: 6px;
@@ -40,4 +40,22 @@
 
 .imageContainer{
   border-radius: 2px;
+}
+
+.card {
+  .btn{
+    transition: color .05s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  .btn:focus,.btn:hover {
+    background-color: #fecd06;
+    color: #FF5722;
+  }
+}
+
+#searchLoader {
+  padding-top: 10px;
+  svg{
+    margin: auto;
+
+  }
 }

@@ -60,9 +60,9 @@ export class ThreadsService {
             })
               // .sortBy(messages, (m: Message) => m.created).reverse()
             .map((message: Message) => {
-              this.loggerService.log("set message", message)
+              // this.loggerService.log("set message", message)
               // console.log("currentThreadMessages ", message, this.currentThread)
-              if (message.is_read === false && message.thread.id !== message.receiver.id) {
+              if (message.is_read === false && message.thread.id !== message.receiver.id) { // error here sometimes, saying id is not defined
                 message.is_read = true;
                 this.messagesService.addMessageToUpdate(message);
               }

@@ -13,6 +13,7 @@ import { Message } from './../../../../entities/message/entity';
 import { Thread } from './../../../../entities/thread/entity';
 import { Client } from './../../../../entities/client/entity';
 import {GPPDComponent} from "../../../../component/gppd";
+import {image} from "../../../../../applicativeService/constants/image";
 
 
 @Component({
@@ -26,6 +27,8 @@ export class ChatMessageComponent implements OnInit {
   incoming: boolean = false;
   private avatarSrcBase : string;
   private msgContainerClass: string;
+  private baseImageName : string = image.default_200px;
+
 
   @Input() clientId : Number = null;
 

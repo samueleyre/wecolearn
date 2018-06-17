@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
     private logoPath: string;
     private imagePath: string;
 		private baseUrl: string;
-		private connected: boolean;
+		private connected: boolean = false;
 		private screen : boolean = false;
     public unreadMessagesCount: number;
     private searchBarType: string = "tag";
@@ -80,12 +80,13 @@ export class HeaderComponent implements OnInit {
 				this.currentClient = client;
 			});
 			this.logoPath = GPPDComponent.updateUrl('/logo/wecolearn.png');
-			this.connected = this.LoggedService.get();
-			Logged.get().subscribe( (logged:boolean) => {
-				this.connected = logged;
-				this.load();
+      Logged.get().subscribe( (logged:boolean) => {
+        this.connected = logged;
+        if (logged) {
+          this.loadClient();
+          this.loadMessages();
+        }
 			});
-			this.load();
 
 	}
 
@@ -103,14 +104,12 @@ export class HeaderComponent implements OnInit {
 	}
 
 
+/*
 	load() {
 
 		// this.loggerService.log("header, is it logged ? ", this.connected);
 
-        if (this.connected) {
-			this.loadClient();
-			this.loadMessages();
-		}
+
 
     //
 		// if ( !localStorage.getItem('cookieseen')) {
@@ -119,6 +118,7 @@ export class HeaderComponent implements OnInit {
 
 	}
 
+*/
 
 
 	loadMessages() {

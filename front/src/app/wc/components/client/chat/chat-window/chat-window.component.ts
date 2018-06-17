@@ -31,6 +31,7 @@ export class ChatWindowComponent implements OnInit {
   currentThread: Thread;
   draftMessage: Message;
   currentUser: Client = null;
+  private disabled = false;
 
   constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
@@ -98,15 +99,19 @@ export class ChatWindowComponent implements OnInit {
   }
 
   sendMessage(): void {
-    this.draftMessage.receiver= new Client(this.currentThread.id);
-    this.draftMessage.is_read = false;
-    this.messagesService.sendMessage(this.draftMessage)
-      .subscribe(answer => {
-        this.draftMessage.sender = new Client(this.currentUser.id);
-        this.draftMessage.thread = new Thread(this.currentThread.id, this.currentThread.name, this.currentThread.avatarSrc);
-        this.messagesService.addMessage(this.draftMessage);
-        this.draftMessage = new Message();
-      });
+    this.disabled = true;
+    if (this.draftMessage.message !== null && this.draftMessage.message  !== '') {
+      this.draftMessage.receiver= new Client(this.currentThread.id);
+      this.draftMessage.is_read = false;
+      this.messagesService.sendMessage(this.draftMessage)
+          .subscribe(answer => {
+            this.disabled = false;
+            this.draftMessage.sender = new Client(this.currentUser.id);
+            this.draftMessage.thread = new Thread(this.currentThread.id, this.currentThread.name, this.currentThread.avatarSrc);
+            this.messagesService.addMessage(this.draftMessage);
+            this.draftMessage = new Message();
+          });
+    }
   }
 
   scrollToBottom(): void {

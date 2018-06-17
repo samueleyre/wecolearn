@@ -1,4 +1,4 @@
-<div class="media conversation">
+<div class="media conversation" [class.selected]="selected"  >
   <div class="pull-left">
     <img *ngIf="thread.avatarSrc" class="media-object avatar"
          src="{{avatarSrcBase}}{{thread.avatarSrc}}">
@@ -7,7 +7,6 @@
   </div>
   <div class="media-body">
     <span class="media-heading contact-name">{{thread.name}}
-      <span *ngIf="selected">&bull;</span>
     </span>
     <div class="messageContainer">
       <small class="message-preview">{{thread.lastMessage.message}}</small>

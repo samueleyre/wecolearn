@@ -5,8 +5,8 @@
 
         <div class="panel-heading top-bar">
           <div class="panel-title-container">
-              <i class="fa fa-comment"></i>
-              Chat - {{currentThread.name}}
+              <!--<i class="fa fa-comment"></i>-->
+              {{currentThread.name}}
           </div>
           <div class="panel-buttons-container">
             <span (click)="closeChat()">
@@ -33,6 +33,7 @@
           (keydown.enter)="onEnter($event)"
           [(ngModel)]="draftMessage.message"
          (ngModelChange)="draftMessageChange($event)"
+           [disabled]="disabled"
           />
           <span class="input-group-btn">
             <button class="btn-chat"

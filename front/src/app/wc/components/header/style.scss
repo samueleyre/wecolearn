@@ -2,6 +2,10 @@
 
 nav.navbar{
 
+  .navbar-nav .dropdown-menu {
+    position: absolute !important;
+  }
+
   //background-color: $mainBgColor;
   //border-bottom: solid 1px $basicBorderColor;
   background-color: #d6d6d6;
@@ -11,8 +15,17 @@ nav.navbar{
     padding-right: 5px;
   }
 
+  #dropdownParameters{
+    img{
+      border-radius: 2px;
+    }
+  }
 
   #notifications{
+    #headerBell{
+      padding-top: 12px;
+      padding-right: 12px;
+    }
     .dropdown-toggle::after{
       display: none;
     }

@@ -20,8 +20,11 @@ import { MapsAPILoader } from '@agm/core';
     selector: 'geolocation',
     template: `
       <div class="form-group center">
-        <input style="width: 80%; display: inline-block;" placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
-        <button class="btn" type="button" (click)="setCurrentPosition()"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+        <div class="input-group">
+          <span class="input-group-addon">Changer d'adresse</span>
+          <input style="width: 80%; display: inline-block;" placeholder="Rechercher une adresse" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+          <button class="btn" type="button" (click)="setCurrentPosition()"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+        </div>
       </div>
       <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
         <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>

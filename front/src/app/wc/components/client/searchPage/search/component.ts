@@ -26,6 +26,7 @@ import {Logged} from "../../../../../applicativeService/authguard/logged";
 import {LoggedService} from "../../../../service/logged";
 import {image} from "../../../../../applicativeService/constants/image";
 import {LoggerService} from "../../../../../applicativeService/logger/service";
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -43,8 +44,12 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     public screen: boolean =  false;
     private logged = false;
     private openChat: string;
+    private loading: Observable<boolean>;
+    private currentlySearching: boolean = false;
+    private baseImageName : string = image.default_200px;
 
-    constructor( protected service: GPPDService,
+
+  constructor( protected service: GPPDService,
                  private activatedRoute: ActivatedRoute,
                  public threadsService: ThreadsService,
                  private router: Router,
@@ -69,7 +74,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
       if (logged) {
         this.logged = true;
-        this.searchService.search().subscribe();
+        // this.searchService.search().subscribe();
         this.openChat = "Discuter";
       } else {
         this.openChat = "Connectez-vous pour discuter !";
@@ -78,7 +83,14 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
       this.searchService.getCurrentFoundClients().subscribe( ( clients:any[] ) => {
         this.cards = clients;
-      })
+      });
+
+      this.loading = this.searchService.getLoading();
+
+      this.loading.subscribe((loading)=> {
+          this.currentlySearching = loading;
+        }
+      )
 
     }
 
@@ -113,8 +125,9 @@ export class SearchComponent extends GPPDComponent implements OnInit {
       //todo: only when arrives at bottom
       //todo: add loader when loading
       this.max += 1;
-      if (this.max % 4 === 0) {
-        this.searchService.search( 0, this.max ).subscribe();
+      if (this.max % 4 === 0 && false === this.currentlySearching ) {
+        this.searchService.search( 0, this.max ).subscribe(() =>{
+        });
       }
 
       //console.log('scrolled down');

@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import {FilterService} from "../../applicativeService/filter/service";
 import {IEntity} from "../entity/interface";
 import {LoggerService} from "../../applicativeService/logger/service";
+import 'rxjs/add/observable/empty'
 
 
 @Injectable()
@@ -19,6 +20,9 @@ export class SearchService {
 
   currentFoundClients: Subject<any[]>;
   currentSearch: Object;
+  public loading: Subject<boolean>;
+  private currentlySearching: boolean = false;
+
 
 
   constructor(public ClientService: ClientService,
@@ -29,16 +33,28 @@ export class SearchService {
   ) {
 
     this.currentFoundClients = new BehaviorSubject<any[]>(null);
+    this.loading = new BehaviorSubject<boolean>(false);
     this.currentSearch = {};
 
   }
 
   search( first?: number, max?: number ): Observable<void> {
 
-    this.loggerService.log("current Search", this['currentSearch'], this.currentSearch.hasOwnProperty("city"));
+    /*if (this.currentlySearching) {
+      return Observable.empty<void>();
+    } else {
+      this.currentlySearching = true;
+    }*/
+
+    this.loading.next(true);
+    // this.loggerService.log("current Search", this['currentSearch'], this.currentSearch.hasOwnProperty("city"));
     if (this.currentSearch.hasOwnProperty("city")) {
       FilterService.addFilter("latitude" , this.currentSearch["city"].latitude);
       FilterService.addFilter("longitude" ,this.currentSearch["city"].longitude);
+    }
+
+    if (this.currentSearch.hasOwnProperty("tag") && null !== this.currentSearch['tag'] && "" !== this.currentSearch['tag'] && undefined !== this.currentSearch['tag']) {
+      FilterService.addFilter("tag", this.currentSearch['tag']);
     }
 
 
@@ -68,9 +84,10 @@ export class SearchService {
 
     return this.http.get(`${route}${params}`)
       .map((response: Response) => {
+        FilterService.clear();
         this.currentFoundClients.next(response.json());
-        return;
-        // return response.json();
+        this.loading.next(false);
+        this.currentlySearching = false;
       });
 
 
@@ -81,14 +98,16 @@ export class SearchService {
     return this.currentFoundClients.asObservable();
   }
 
+  getLoading(): Observable<boolean>{
+    return this.loading.asObservable();
+  }
+
 
   addSearchParameter(key:string, value: any) {
 
     // console.log("addSearchParameter", key, value)
     this.currentSearch[key] = value;
     // console.log("current Search", this['currentSearch']);
-
-
 
   }
 }

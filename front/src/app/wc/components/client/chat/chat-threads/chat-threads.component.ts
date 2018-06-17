@@ -16,7 +16,7 @@ export class ChatThreadsComponent {
   threads: Observable<any>;
 
   constructor(public threadsService: ThreadsService) {
-    threadsService.resetThreads();
+    // threadsService.resetThreads();
     this.threads = threadsService.orderedThreads;
   }
 
