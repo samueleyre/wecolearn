@@ -69,7 +69,7 @@ class MessageController extends GPPDController
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        syslog(LOG_ERR,'check new message 20');
+//        syslog(LOG_ERR,'check new message 20');
 
         $client = $this->getDoctrine()
             ->getRepository(Client::class)

@@ -90,6 +90,7 @@ class NewUserController extends GPPDController
 
           $client = new Client();
           $client->setUser($user);
+          $client->setFirstName($user->getUsername());
 
           $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
           $client->setCreated($date);
