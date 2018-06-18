@@ -12,6 +12,7 @@ import {EmptyObservable} from 'rxjs/observable/EmptyObservable';
 import * as _ from 'lodash';
 import {ISubscription} from "rxjs/Subscription";
 import {LoggerService} from "../../applicativeService/logger/service";
+import {LoggedService} from "./logged";
 import {Router} from "@angular/router";
 
 
@@ -58,7 +59,8 @@ export class MessagesService {
     create: Subject<Message> = new Subject<Message>();
     markThreadAsRead: Subject<any> = new Subject<any>();
 
-  constructor(public ClientService: ClientService, protected http : Http, private loggerService: LoggerService, private router: Router,
+
+  constructor(public ClientService: ClientService, protected http : Http, private loggerService: LoggerService, private router: Router, private loggedService: LoggedService
   ) {
     this.alive = true;
     this.messages = this.updates
@@ -107,9 +109,8 @@ export class MessagesService {
           return messages.map( (message: Message) => {
             // note that we're manipulating `message` directly here. Mutability
             // can be confusing and there are lots of reasons why you might want
-            // to, say, copy the Message object or some other 'immutable' here
-            console.log("here")
             if (message.thread.id === thread.id && message.is_read === false && message.sender && message.sender.id !== this.currentClient.id) {
+              // to, say, copy the Message object or some other 'immutable' here
               message.is_read = true;
               this.addMessageToUpdate(message);
             }
@@ -194,7 +195,10 @@ export class MessagesService {
 
   public initTimer() : void {
 
-    this.newTimer();
+    if ( this.loggedService.get()) {
+      this.newTimer();
+    }
+
 
   }
 
@@ -207,6 +211,7 @@ export class MessagesService {
 
     // only fires when component is alive
     this.timerSubscription = this.timer.subscribe(() => {
+      console.log("timer called", period)
       this.checkNewMessages();
     });
 
