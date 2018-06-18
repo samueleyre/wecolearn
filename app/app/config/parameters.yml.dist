@@ -28,6 +28,8 @@ parameters:
 
     user:               user
     password:           password
+    limit_until_destroy: 50
+
 
 sendin_blue_api:
     api_key:            ~
