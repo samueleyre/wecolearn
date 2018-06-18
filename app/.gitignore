@@ -16,4 +16,5 @@
 /web/bundles/
 /web/img/
 !/web/img/gribouille.png
+!/web/img/default_avatar_200px.png
 /app/var
