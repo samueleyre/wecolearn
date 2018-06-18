@@ -50,7 +50,7 @@ export class ChatWindowComponent implements OnInit {
       (thread: Thread) => {
           this.loggerService.log("currentthread", thread)
         if (thread.id) {
-          this.messagesService.changePeriod(15000);
+          this.messagesService.changePeriod(4000);
         }
         this.currentThread = thread;
       });
@@ -134,7 +134,7 @@ export class ChatWindowComponent implements OnInit {
   }
 
   closeChat() : void {
-    // console.log("close chat !")
+    console.log("close chat !")
     this.currentThread = new Thread();
     this.threadsService.setCurrentThread(this.currentThread);
     this.messagesService.changePeriod(120000);

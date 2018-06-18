@@ -10,10 +10,12 @@ use Doctrine\ORM\EntityManager;
 class MessageService extends GPPDService {
 
     private $em;
+    private $limit;
 
-    public function __construct( EntityManager $em ) {
+    public function __construct( EntityManager $em , $limitUntilDestroy) {
         parent::__construct( $em);
         $this->em = $em;
+        $this->limit = $limitUntilDestroy;
     }
 
 
@@ -31,8 +33,7 @@ class MessageService extends GPPDService {
            ->countMessages($message->getSender(), $message->getReceiver() );
 
 
-
-       if ($count > 10 ) {
+       if ($count > $this->limit) {
 
            $firstMessage = $this->em
                ->getRepository(Message::class)

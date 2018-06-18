@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {log} from "util";
 import {LoggerService} from "./applicativeService/logger/service";
 // import { CookieLawModule } from 'angular2-cookie-law';
+import { MessagesService } from './wc/service/messages';
 
 
 import { NavigationEnd } from '@angular/router';
@@ -30,15 +31,21 @@ export class AppComponent  implements OnInit {
     constructor(
        private router: Router,
        location: Location,
-       private loggerService: LoggerService
+       private loggerService: LoggerService,
+       public messagesService: MessagesService,
     ) {
       this.loggerService.log("location ", this.router.url)
       this.location = this.router.url;
       router.events.subscribe(event => {
-          this.loggerService.log("route changed", event)
+          // this.loggerService.log("route changed", event)
 
           if (event instanceof NavigationEnd) {
-            this.loggerService.log("route changed", event, this.location)
+            // this.loggerService.log("route changed", event, event.urlAfterRedirects)
+            if (event.urlAfterRedirects === "/search") {
+              this.messagesService.changePeriod(15000);
+            } else {
+              this.messagesService.changePeriod(120000);
+            }
             if (this.refreshed)
               this.initLoader();
             this.hideLoaderFunction();
@@ -57,7 +64,7 @@ export class AppComponent  implements OnInit {
         this.hideLoaderFunction();
     }
 
-  hideLoaderFunction() {
+    hideLoaderFunction() {
       if (false === this.loaded) {
           setTimeout(()=>{
             this.loaded = true;
@@ -72,8 +79,5 @@ export class AppComponent  implements OnInit {
     }
 
 
-
-
-
-    }
+}
 

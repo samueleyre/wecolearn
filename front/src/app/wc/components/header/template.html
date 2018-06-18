@@ -25,13 +25,15 @@
                <i class="fa fa-bell"></i> <span class="badge">{{ unreadMessagesCount }}</span>
             </a>
             <div ngbDropdownMenu aria-labelledby="headerBell" *ngIf="notifications && (notifications.length > 0)">
-                <a *ngFor="let notification of notifications" class="nav-link dropdown-item" (click)="activateNotification(notification)" style="border-bottom: solid 1px #f5f1f1">{{notification.name}} : <span style="text-overflow: ellipsis">{{notification.lastMessage.message}}</span></a>
+              <div  *ngFor="let notification of notifications">
+                <a class="nav-link dropdown-item" (click)="activateNotification(notification)" style="border-bottom: solid 1px #f5f1f1">{{notification.name}} : <span style="text-overflow: ellipsis">{{notification.lastMessage.message}}</span></a>
+              </div>
             </div>
         </li>
         <li *ngIf="connected" ngbDropdown  id="parameters" class="nav-item d-inline-block">
             <a class="nav-link dropdown-toggle" id="dropdownParameters" ngbDropdownToggle>
                 <img *ngIf="currentClient.image" height="30px" src="{{imagePath}}{{currentClient.image.filename}}" alt="">
-                <img *ngIf="!currentClient.image" height="30px" src="{{imagePath}}gribouille.png" alt="">
+                <img *ngIf="!currentClient.image" height="30px" src="{{imagePath}}{{baseImageName}}" alt="">
             </a>
             <div ngbDropdownMenu aria-labelledby="dropdownParameters">
                 <a class="nav-link dropdown-item" routerLink="/settings">Profil</a>

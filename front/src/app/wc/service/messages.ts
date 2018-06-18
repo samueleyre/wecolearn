@@ -108,6 +108,7 @@ export class MessagesService {
             // note that we're manipulating `message` directly here. Mutability
             // can be confusing and there are lots of reasons why you might want
             // to, say, copy the Message object or some other 'immutable' here
+            console.log("here")
             if (message.thread.id === thread.id && message.is_read === false && message.sender && message.sender.id !== this.currentClient.id) {
               message.is_read = true;
               this.addMessageToUpdate(message);
@@ -122,7 +123,7 @@ export class MessagesService {
 
   // an imperative function call to this action stream
   addMessage(message: Message): void {
-    this.loggerService.log("adding message", message)
+    // this.loggerService.log("adding message", message)
     this.newMessages.next(message);
   }
 
@@ -133,6 +134,7 @@ export class MessagesService {
 
   pushUpdatedMessages(): Observable<void> {
 
+    console.log("pushUpdatedMessages")
     if (this.messagesToUpdate.length > 0) {
         this.loggerService.log("going to be sent", this['messagesToUpdate'])
       return this.http.patch(`/api/messages`, this.messagesToUpdate).map((response: Response) => {
@@ -186,6 +188,7 @@ export class MessagesService {
   public init() : void {
 
       this.getMessages();
+      this.initTimer();
 
   }
 
@@ -197,6 +200,7 @@ export class MessagesService {
 
   private newTimer(period:number = MessagesService.initialPeriod) : void {
 
+    console.log("period change", period)
 
     this.timer = TimerObservable.create(10000, period)
       .takeWhile(() => this.alive);
@@ -215,8 +219,7 @@ export class MessagesService {
         (messages: Array<Message>) => {
           _.sortBy(messages, (m: Message) => m.created)
             .map((message: Message) => {
-              console.log(message.sender.first_name, message.sender.user.username)
-              message.thread = new Thread(message.sender.id, (null !== message.sender.first_name && ''!== message.sender.first_name) ? message.sender.first_name:message.sender.user.username, (message.sender.image) ? message.sender.image.filename : null);
+              message.thread = new Thread(message.sender.id,  message.sender.first_name, (message.sender.image) ? message.sender.image.filename : null);
               this.addMessage(message);
             });
         });

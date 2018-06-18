@@ -179,6 +179,8 @@ class MessageController extends GPPDController
 
         }
 
+        return "ok";
+
     }
 //
 //    /**

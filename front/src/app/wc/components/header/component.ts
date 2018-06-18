@@ -25,6 +25,7 @@ import {Observable} from "rxjs/Rx";
 // import { GPPDComponent }          from './../../component/gppd';
 
 import { LoggedService } from './../../service/logged';
+import {image} from "../../../applicativeService/constants/image";
 
 
 
@@ -51,8 +52,10 @@ export class HeaderComponent implements OnInit {
 		private currentClient : Client = new Client;
 		private collapseClass: string = "collapse";
     private threads: Observable<any>;
+    private baseImageName : string = image.default_200px;
 
-      constructor( private http : Http,
+
+  constructor( private http : Http,
              private router: Router,
              location: Location,
              @Inject(APP_BASE_HREF) r:string,
@@ -62,12 +65,14 @@ export class HeaderComponent implements OnInit {
              private config: NgbDropdownConfig,
              private LoggedService: LoggedService,
              private authenticationService: AuthenticationService,
-             private loggerService: LoggerService
+             private loggerService: LoggerService,
+
 ) {
 
         config.placement = 'bottom-right';
         this.location = location;
         this.baseUrl = r;
+        this.router = router;
         // router.events.subscribe(event => TODO : make this work better, called severaltimes at the moment
 		// this.load());
 	}
@@ -87,8 +92,15 @@ export class HeaderComponent implements OnInit {
           this.loadMessages();
         }
 			});
+      if ( !localStorage.getItem('cookieseen')) {
+        	MessageService.cookie();
+     }
+     this.router.events.subscribe(event => {
 
-	}
+      })
+  }
+
+
 
 	chooseSearchBarType(choice: string) {
 
@@ -104,22 +116,6 @@ export class HeaderComponent implements OnInit {
 	}
 
 
-/*
-	load() {
-
-		// this.loggerService.log("header, is it logged ? ", this.connected);
-
-
-
-    //
-		// if ( !localStorage.getItem('cookieseen')) {
-     //    	MessageService.cookie();
-		// }
-
-	}
-
-*/
-
 
 	loadMessages() {
 
@@ -131,9 +127,10 @@ export class HeaderComponent implements OnInit {
 
 			_.map(currentThreads, (currentThread: Thread) => {
 
-				const messageIsFromUser: boolean = currentThread.lastMessage.sender &&
+				let messageIsFromUser: boolean = currentThread.lastMessage.sender &&
 																	this.currentClient &&
 																(currentThread.lastMessage.sender.id === this.currentClient.id);
+
 					if (!currentThread.lastMessage.is_read && !messageIsFromUser && currentThread.lastMessage.sender) {
                         this.loggerService.log("THREADS", currentThread);
 
@@ -150,7 +147,7 @@ export class HeaderComponent implements OnInit {
 
 		});
 
-		this.messagesService.initTimer();
+		// this.messagesService.initTimer();
 
 	}
 
@@ -166,6 +163,7 @@ export class HeaderComponent implements OnInit {
 
   activateNotification(thread: Thread): void {
     this.threadsService.setCurrentThread(thread);
+    // todo : instead of this, focus on
     this.messagesService.pushUpdatedMessages().subscribe(() => {
       this.loggerService.log("header --> search")
       this.router.navigate(['/search']);

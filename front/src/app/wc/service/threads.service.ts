@@ -26,6 +26,7 @@ export class ThreadsService {
 
   constructor(public messagesService: MessagesService, private loggerService: LoggerService) {
 
+    // `threads` is a observable that contains the most up to date list of threads
     this.threads = messagesService.messages
       .map( (messages: Message[]) => {
         const threads: {[key: string]: Thread} = {};
@@ -44,12 +45,14 @@ export class ThreadsService {
         return threads;
       });
 
+    // `orderedThreads` Observable that contains a newest-first chronological list of threads
     this.orderedThreads = this.threads
       .map((threadGroups: { [key: string]: Thread }) => {
         const threads: Thread[] = _.values(threadGroups);
         return _.sortBy(threads, (t: Thread) => t.lastMessage.created).reverse();
       });
 
+    // `currentThreadMessages` Observable that contains the set of messages for the currently selected thread
     this.currentThreadMessages = this.currentThread
       .combineLatest(messagesService.messages,
                      (currentThread: Thread, messages: Message[]) => {
@@ -73,6 +76,7 @@ export class ThreadsService {
         }
       });
 
+    // when currently selected front is selected, mark all the messages that it contains as read
     this.currentThread.subscribe(this.messagesService.markThreadAsRead);
   }
 
