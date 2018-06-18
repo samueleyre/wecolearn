@@ -15,7 +15,7 @@ services:
       - { name: monolog.logger}
   message.service:
     class: WcBundle\Service\MessageService
-    arguments: ['@doctrine.orm.entity_manager', '%limitUntilDestroy%']
+    arguments: ['@doctrine.orm.entity_manager', '%limit_until_destroy%']
   search.service:
     class: WcBundle\Service\SearchService
     arguments: ['@doctrine.orm.entity_manager']
