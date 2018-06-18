@@ -73,8 +73,6 @@ export class HeaderComponent implements OnInit {
         this.location = location;
         this.baseUrl = r;
         this.router = router;
-        // router.events.subscribe(event => TODO : make this work better, called severaltimes at the moment
-		// this.load());
 	}
 
 	ngOnInit() {
@@ -163,7 +161,6 @@ export class HeaderComponent implements OnInit {
 
   activateNotification(thread: Thread): void {
     this.threadsService.setCurrentThread(thread);
-    // todo : instead of this, focus on
     this.messagesService.pushUpdatedMessages().subscribe(() => {
       this.loggerService.log("header --> search")
       this.router.navigate(['/search']);

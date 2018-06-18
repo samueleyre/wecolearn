@@ -203,7 +203,7 @@ export class MessagesService {
   private newTimer(period:number = MessagesService.initialPeriod) : void {
 
     // console.log("period change", period)
-    if ( this.loggedService.get()) {
+    if ( false === this.loggedService.get() ) {
       return;
     }
 

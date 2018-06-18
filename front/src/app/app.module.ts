@@ -44,6 +44,7 @@ import { LOCALE_ID } from '@angular/core';
 
 //SERVICES -------------
 import { LoggerService }       from './applicativeService/logger/service';
+import {AutofocusDirective} from "./applicativeService/form/input/directive";
 
 
 const appRoutes: Routes = [
@@ -71,6 +72,7 @@ const appRoutes: Routes = [
     HomeComponent,
     // UserComponent,
     EqualValidator, // not working
+    AutofocusDirective,
     // PasswordStrengthBarComponent,
     AppComponent,
     NotFoundComponent
