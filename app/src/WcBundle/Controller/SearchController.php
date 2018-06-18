@@ -32,46 +32,46 @@ use JMS\Serializer\SerializationContext;
 class SearchController extends GPPDController
 {
 
-    protected $entityRef = 'WcBundle:Client';
+  protected $entityRef = 'WcBundle:Client';
 
-    // "options_client" [OPTIONS] /client
-    public function optionClientAction()
-    {
-        return $this->optionAction();
+  // "options_client" [OPTIONS] /client
+  public function optionClientAction()
+  {
+    return $this->optionAction();
 
+  }
+
+
+  /**
+   * @Get("/search")
+   */
+  public function getSearchAction( Request $request )
+  {
+
+    $filter = [];
+
+    if ($request->get("tag")) {
+        $filter["tag"] = $request->get("tag");
     }
 
-
-    /**
-     * @Get("/search")
-     */
-    public function getSearchAction( Request $request )
-    {
-        $filter = [];
-
-
-        if ($request->get("tag")) {
-            $filter["tag"] = $request->get("tag");
-        }
-
-        if ($request->get("latitude")) {
-            $filter["latitude"] = $request->get("latitude");
-        }
-
-        if ( $request->get('longitude')) {
-            $filter["longitude"] = $request->get("longitude");
-        }
-
-        if( null !== $request->query->get('first') ) {
-          $filter['first'] = $request->get('first');
-        }
-
-        if( null !== $request->get('max') ) {
-          $filter['max'] = $request->get('max');
-        }
-
-        return $this
-            ->get('search.service')
-            ->search(null, $filter);
+    if ($request->get("latitude")) {
+        $filter["latitude"] = $request->get("latitude");
     }
+
+    if ( $request->get('longitude')) {
+        $filter["longitude"] = $request->get("longitude");
+    }
+
+    if( null !== $request->query->get('first') ) {
+      $filter['first'] = $request->get('first');
+    }
+
+    if( null !== $request->get('max') ) {
+      $filter['max'] = $request->get('max');
+    }
+
+    return $this
+        ->get('search.service')
+        ->search(null, $filter);
+  }
 }

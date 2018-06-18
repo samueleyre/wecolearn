@@ -20,37 +20,37 @@ class SearchService extends GPPDService {
 
    public function search(Client $client = null, $filter = null ) {
 
-        $tag = null;
-        $latitude = null;
-        $longitude = null;
-        $first = 0;
-        $max = 10;
+      $tag = null;
+      $latitude = null;
+      $longitude = null;
+      $first = 0;
+      $max = 10;
 
 
 
-        if ( is_array( $filter) ) {
-            if (array_key_exists ("tag", $filter) ){
-                $tagName = $filter["tag"];
-                $tag = $this->em->getRepository(Tag::class)
-                    ->findOneBy(["name"=>$tagName]);
+      if ( is_array( $filter) ) {
+        if (array_key_exists ("tag", $filter) ){
+            $tagName = $filter["tag"];
+            $tag = $this->em->getRepository(Tag::class)
+                ->findOneBy(["name"=>$tagName]);
 
-            }
-            if (array_key_exists ("latitude", $filter) && array_key_exists ("longitude", $filter) ){
-                $latitude = $filter["latitude"];
-                $longitude = $filter["longitude"];
-            }
-
-            if( array_key_exists('first', $filter ) && array_key_exists('max', $filter )) {
-                $first = $filter['first'];
-                $max = $filter['max'];
-
-            }
+        }
+        if (array_key_exists ("latitude", $filter) && array_key_exists ("longitude", $filter) ){
+            $latitude = $filter["latitude"];
+            $longitude = $filter["longitude"];
         }
 
+        if( array_key_exists('first', $filter ) && array_key_exists('max', $filter )) {
+            $first = $filter['first'];
+            $max = $filter['max'];
 
-        return $this->em
-            ->getRepository(Client::class)
-            ->search($client, $tag, $first, $max, $latitude, $longitude);
+        }
+      }
+
+
+      return $this->em
+        ->getRepository(Client::class)
+        ->search($client, $tag, $first, $max, $latitude, $longitude);
 
    }
 }
