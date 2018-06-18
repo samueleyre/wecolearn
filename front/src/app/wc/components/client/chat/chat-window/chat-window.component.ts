@@ -134,7 +134,6 @@ export class ChatWindowComponent implements OnInit {
   }
 
   closeChat() : void {
-    console.log("close chat !")
     this.currentThread = new Thread();
     this.threadsService.setCurrentThread(this.currentThread);
     this.messagesService.changePeriod(120000);

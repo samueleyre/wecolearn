@@ -93,7 +93,7 @@ export class GeolocationComponent implements OnInit {
                     //set latitude, longitude and zoom
                     this.latitude = place.geometry.location.lat();
                     this.longitude = place.geometry.location.lng();
-                    console.log("setted again", this.latitude)
+                    // console.log("setted again", this.latitude)
                     this.update();
                     this.zoom = 12;
                 });

@@ -141,7 +141,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
                 }
             }
         }
-        console.log("jointags", this.entity)
+        // console.log("jointags", this.entity)
     }
 
     setDefaultLatLong() {

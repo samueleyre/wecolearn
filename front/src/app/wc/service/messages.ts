@@ -135,7 +135,7 @@ export class MessagesService {
 
   pushUpdatedMessages(): Observable<void> {
 
-    console.log("pushUpdatedMessages")
+    // console.log("pushUpdatedMessages")
     if (this.messagesToUpdate.length > 0) {
         this.loggerService.log("going to be sent", this['messagesToUpdate'])
       return this.http.patch(`/api/messages`, this.messagesToUpdate).map((response: Response) => {
@@ -195,23 +195,24 @@ export class MessagesService {
 
   public initTimer() : void {
 
-    if ( this.loggedService.get()) {
-      this.newTimer();
-    }
+    this.newTimer();
 
 
   }
 
   private newTimer(period:number = MessagesService.initialPeriod) : void {
 
-    console.log("period change", period)
+    // console.log("period change", period)
+    if ( this.loggedService.get()) {
+      return;
+    }
 
     this.timer = TimerObservable.create(10000, period)
       .takeWhile(() => this.alive);
 
     // only fires when component is alive
     this.timerSubscription = this.timer.subscribe(() => {
-      console.log("timer called", period)
+      // console.log("timer called", period)
       this.checkNewMessages();
     });
 

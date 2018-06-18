@@ -17,7 +17,7 @@ export class MessageComponent implements OnInit {
 
 	ngOnInit() {
 		MessageService.get().subscribe(( message: Message) => {
-			console.log(this.message)
+			// console.log(this.message)
 			this.message = message.body;
 			this.hidden = false;
 			this.type = message.type;
