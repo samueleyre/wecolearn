@@ -19,19 +19,6 @@ export class HomeComponent implements OnInit {
     private homeBgImageStyle: any;
     public screen: boolean =  false;
     private webPath: string;
-    private tagLinks = [
-      {
-        tagName: "php"
-      },{
-        tagName: "javascript"
-      },{
-        tagName: "ruby"
-      },{
-        tagName: "angularJs"
-      },{
-        tagName: "symfony"
-      }
-      ];
 
     constructor(
         private authenticationService: AuthenticationService,

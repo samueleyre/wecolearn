@@ -20,7 +20,11 @@
       }
     }
   }
+}
 
+
+.emptyCardsMessage{
+  padding: 30px;
 }
 
 .bioContainer{
@@ -44,7 +48,7 @@
 
 .card {
   .btn{
-    transition: color .05s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .10s ease-in-out, background-color .10s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }
   .btn:focus,.btn:hover {
     background-color: #fecd06;

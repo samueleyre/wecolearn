@@ -6,12 +6,18 @@
 
                 <div class="offset-sm-1 col-sm-10 col-12">
 
+
                     <div *ngIf="cards"  class="row"
                        infiniteScroll
 		                  [infiniteScrollDistance]="4"
 		                  [infiniteScrollThrottle]="50"
 		                  (scrolled)="onScroll()"
                       (scrolledUp)="onScrollUp()" >
+
+                      <div *ngIf="!cards[0]"  class="emptyCardsMessage col-12">
+                        <p>Mince, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de recherche, n'hésitez pas à ajouter des tags dans votre profil !  </p>
+                      </div>
+
                         <div *ngFor="let card of cards" class="card-container col-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="card">
                                 <div class="titleContainer container-fluid">
@@ -19,9 +25,12 @@
                                     <div class="row">
                                         <div class="col-4 no-padding imageContainer" *ngIf="card[0].image">
                                             <img width="100%" *ngIf="card[0].image.filename" src="{{avatarSrcBase}}{{card[0].image.filename}}" alt="">
-                                            <img width="100%" *ngIf="!card[0].image.filename" src="{{avatarSrcBase}}{{baseImageName}}" alt="">
-                                            <!--<img width="100%" src="{{avatarSrcBase}}{{card[0].image.filename}}" alt="">-->
                                         </div>
+                                        <div class="col-4 no-padding imageContainer" *ngIf="!card[0].image">
+                                          <img width="100%" src="{{avatarSrcBase}}{{baseImageName}}" alt="">
+                                          <!--<img width="100%" src="{{avatarSrcBase}}{{card[0].image.filename}}" alt="">-->
+                                        </div>
+
                                         <div class="col-8">
                                             <h5 class="">{{card[0].first_name}} {{card[0].last_name}}</h5>
                                             <div class="tagContainer" *ngIf="card[0].tags">
@@ -51,6 +60,9 @@
                         </div>
 
                     </div>
+
+
+
 
                 </div>
 

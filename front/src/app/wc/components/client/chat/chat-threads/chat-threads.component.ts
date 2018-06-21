@@ -6,6 +6,7 @@ import {
 import { Observable } from 'rxjs';
 import { ThreadsService } from './../../../../service/threads.service';
 import { Thread } from '../../../../entities/thread/entity';
+import {Logged} from "../../../../../applicativeService/authguard/logged";
 
 @Component({
   selector: 'chat-threads',
@@ -20,7 +21,18 @@ export class ChatThreadsComponent {
     this.threads = threadsService.orderedThreads;
   }
 
-  ngOnExit(): void {
+  ngOnInit():void{
+    Logged.get().subscribe( (logged:boolean) => {
+
+      if (!logged) {
+        this.threadsService.resetThreads();
+      }
+
+    });
+
+  }
+
+  ngOnExit(): void { // does this work ?
     this.threadsService.resetThreads();
   }
 

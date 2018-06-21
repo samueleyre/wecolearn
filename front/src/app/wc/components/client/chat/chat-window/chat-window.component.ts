@@ -17,6 +17,8 @@ import { Message } from '../../../../entities/message/entity';
 
 import { ChatExampleData } from './../../chat/data/chat-example-data';
 import {LoggerService} from "../../../../../applicativeService/logger/service";
+import {Router} from "@angular/router";
+import {Logged} from "../../../../../applicativeService/authguard/logged";
 
 @Component({
   selector: 'chat-window',
@@ -37,7 +39,8 @@ export class ChatWindowComponent implements OnInit {
               public threadsService: ThreadsService,
               public ClientService: ClientService,
               public el: ElementRef,
-              private loggerService: LoggerService
+              private loggerService: LoggerService,
+              private router: Router,
   ) {
   }
 
@@ -90,6 +93,13 @@ export class ChatWindowComponent implements OnInit {
           });
         });
 
+    Logged.get().subscribe( (logged:boolean) => {
+
+      if (!logged) {
+        this.closeChat();
+      }
+
+    });
   }
 
 
@@ -128,10 +138,6 @@ export class ChatWindowComponent implements OnInit {
     // console.log("change", event, this.draftMessage)
   }
 
-  ngOnExit(): void {
-
-    // this.stopStream();
-  }
 
   closeChat() : void {
     this.currentThread = new Thread();
