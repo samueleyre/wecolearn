@@ -145,7 +145,7 @@ class Image
      */
     public function refreshUpdated()
     {
-        $this->setUpdated(new \DateTime());
+        $this->setUpdated(new \DateTime("now", new \DateTimeZone('Europe/Paris')));
     }
 
 

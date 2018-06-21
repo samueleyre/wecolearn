@@ -10,7 +10,7 @@ services:
     arguments: ['@doctrine.orm.entity_manager']
   email.service:
     class: WcBundle\Service\EmailService
-    arguments: ['@doctrine.orm.entity_manager', '@logger']
+    arguments: ['@doctrine.orm.entity_manager', '%delivery_address%', '@sendinblue_api',  '@logger',]
     tags:
       - { name: monolog.logger}
   message.service:
@@ -24,5 +24,10 @@ services:
   client.tag.command:
     class: WcBundle\Command\ClientTag
     arguments: ['@doctrine.orm.entity_manager']
+    tags:
+      - { name: console.command }
+  client.reminder.command:
+    class: WcBundle\Command\SendReminder
+    arguments: ['@doctrine.orm.entity_manager' ,'@email.service']
     tags:
       - { name: console.command }

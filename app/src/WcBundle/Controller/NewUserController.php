@@ -84,9 +84,9 @@ class NewUserController extends GPPDController
         }
 
 
-        $roles = $user->getRoles();
+//        $roles = $user->getRoles();
 
-        if (in_array("ROLE_USER", $roles)) { // not useful at this point as it is always the case.
+//        if (in_array("ROLE_USER", $roles)) { // not useful at this point as it is always the case.
 
           $client = new Client();
           $client->setUser($user);
@@ -105,7 +105,7 @@ class NewUserController extends GPPDController
 
           $data = $this
               ->get('email.service')
-              ->getData(3, ["TOKEN" => $user->getConfirmationToken(), "HOST"=>$host], $user->getEmail(), $emailSender);
+              ->getData(3, ["TOKEN" => $user->getConfirmationToken(), "HOST"=>$host, "USERNAME"=>$user->getUsername()], $user->getEmail(), $emailSender);
 
 
           $ret = [];
@@ -123,7 +123,7 @@ class NewUserController extends GPPDController
 
           return $ret;
 
-        }
+//        }
 
     }
 

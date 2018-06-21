@@ -4,6 +4,7 @@
 namespace WcBundle\Repository;
 
 use WcBundle\Entity\Client;
+use WcBundle\Entity\Message;
 use Doctrine\ORM\EntityRepository;
 
 class MessageRepository extends EntityRepository
@@ -81,6 +82,47 @@ class MessageRepository extends EntityRepository
         getResult();
 
     }
+
+    public function findUnReadMessages ( ) {
+
+      $date = new \DateTime("- 1 Days", new \DateTimeZone('Europe/Paris'));
+
+      return $this->getEntityManager()->createQueryBuilder()->
+      select('entity')->
+      from(sprintf('%s', 'WcBundle:Message' ),'entity')->
+      where( 'entity.isRead = :isRead')->setParameter('isRead',0 )->
+      andWhere( 'entity.created < :date')->setParameter('date', $date)->
+      orderBy('entity.created', 'ASC')->
+      getQuery()->
+      getResult();
+
+    }
+
+    public function getUnReadMessagesByUser() {
+
+      $messages = $this->findUnReadMessages();
+
+      $ret = [];
+
+      foreach ($messages as $message) {
+
+        $sender = $message->getReceiver();
+        $senderId = $sender->getId();
+        if (isset($ret[$senderId])) {
+          $ret[$senderId]["messages"][] = $message;
+        } else {
+          $ret[$senderId]["senderId"] = $senderId;
+          $ret[$senderId]["messages"] = [$message];
+          $ret[$senderId]["email"] = $sender->getUser()->getEmail();
+          $ret[$senderId]["firstname"] = $sender->getFirstname();
+        }
+
+      }
+
+      return $ret;
+
+    }
+
 
 
 }
