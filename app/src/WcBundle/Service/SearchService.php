@@ -25,14 +25,14 @@ class SearchService extends GPPDService {
       $longitude = null;
       $first = 0;
       $max = 10;
-
+      $tagType = 0;
 
 
       if ( is_array( $filter) ) {
         if (array_key_exists ("tag", $filter) ){
             $tagName = $filter["tag"];
             $tag = $this->em->getRepository(Tag::class)
-                ->findOneBy(["name"=>$tagName]);
+                ->findOneBy(["name"=>$tagName, "type"=>$tagType]);
 
         }
         if (array_key_exists ("latitude", $filter) && array_key_exists ("longitude", $filter) ){

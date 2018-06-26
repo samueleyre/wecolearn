@@ -47,7 +47,7 @@ class SendReminder extends Command
         while ($i <= 2 && isset($client["messages"][$i])):
           $MESSAGE = $client["messages"][$i]->getMessage();
           $FIRSTNAME = $client["messages"][$i]->getSender()->getFirstname();
-          $TIME = $client["messages"][$i]->getCreated()->format('h:i');
+          $TIME = $client["messages"][$i]->getCreated()->format('H:i');
           $DATE = $client["messages"][$i]->getCreated()->format('d-m-Y');
 
           $messages.= '<p><b>'.$FIRSTNAME.'</b> : "'.$MESSAGE.'", le '.$DATE.' à '.$TIME.'</p><br><br>';

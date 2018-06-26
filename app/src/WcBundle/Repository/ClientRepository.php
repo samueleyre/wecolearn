@@ -25,7 +25,7 @@ class ClientRepository extends EntityRepository
     }
 
     if ($tag) {
-      $tags = [$tag];
+      $tags[] = $tag;
     }
 
     //syslog(LOG_ERR, $client->getLatitude());
