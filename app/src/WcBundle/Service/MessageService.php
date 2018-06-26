@@ -3,7 +3,7 @@
 namespace WcBundle\Service;
 
 use WcBundle\Entity\Message;
-use AppBundle\Entity\User;
+use WcBundle\Entity\Client;
 
 use Doctrine\ORM\EntityManager;
 
@@ -43,6 +43,45 @@ class MessageService extends GPPDService {
            $this->em->flush();
 
        }
+
+
+   }
+
+   public function setReminderDate( $clientId ) {
+
+      if (null === $clientId || '' == $clientId) {
+        return;
+      }
+
+
+     $client = $this->em->getRepository(Client::class)->find($clientId);
+
+     $lastReminder = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+
+     $receivedMessages = $client->getReceivedMessages();
+
+     foreach ($receivedMessages as $receivedMessage) {
+
+       $receivedMessage->setLastReminder($lastReminder );
+       $this->em->merge($receivedMessage);
+       $this->em->flush();
+
+
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
    }

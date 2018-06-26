@@ -15,12 +15,14 @@ class SendReminder extends Command
 
   private $em;
   private $emailService;
+  private $messageService ;
 
-  public function __construct(EntityManager $em, $emailService )
+  public function __construct(EntityManager $em, $emailService, $messageService )
   {
 
     $this->em = $em;
     $this->emailService = $emailService;
+    $this->messageService  = $messageService ;
     parent::__construct();
 
   }
@@ -40,7 +42,7 @@ class SendReminder extends Command
         ->getUnReadMessagesByUser();
 
       $messages = "";
-      foreach ($MessagesSortedClients as $client) {
+      foreach ($MessagesSortedClients as $clientId => $client) {
         $i = 0;
         while ($i <= 2 && isset($client["messages"][$i])):
           $MESSAGE = $client["messages"][$i]->getMessage();
@@ -55,22 +57,24 @@ class SendReminder extends Command
 
         endwhile;
 
+        $this->messageService->setReminderDate($clientId);
+
 
         $data = $this->emailService->getData(5,
           [
             "MESSAGES" => $messages,
-            "FIRSTNAME"=> $client["firstname"]
+            "FIRSTNAME"=> $client["firstname"],
+            "USERNAME"=> $client["firstname"],
           ],
           $client["email"]
         );
 
-        $output->writeln( $client["senderId"]);
-        $output->writeln( $client["firstname"]);
-        $output->writeln( $client["email"]);
-        $output->writeln( json_encode($messages));
+//        $output->writeln( $client["email"]);
+//        $output->writeln( json_encode($messages));
+//        $output->writeln( $client["firstname"]);
         $return = $this->emailService->sendEmail($data);
-        $output->writeln( json_encode($return));
-        $output->writeln( "-------------------");
+//        $output->writeln( json_encode($return));
+//        $output->writeln( "-------------------");
 
 
       }

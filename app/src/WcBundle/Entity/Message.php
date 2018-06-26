@@ -53,6 +53,14 @@ class Message
      */
     private $updated;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="lastReminder", type="datetime", nullable=true)
+     */
+    private $lastReminder = null;
+
+
 
 
 
@@ -136,6 +144,31 @@ class Message
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+
+    /**
+     * Set lastReminder
+     *
+     * @param \DateTime $lastReminder
+     *
+     * @return Message
+     */
+    public function setLastReminder($lastReminder)
+    {
+        $this->lastReminder = $lastReminder;
+
+        return $this;
+    }
+
+    /**
+     * Get lastReminder
+     *
+     * @return \DateTime
+     */
+    public function getLastReminder()
+    {
+        return $this->lastReminder;
     }
 
 

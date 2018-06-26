@@ -83,7 +83,12 @@ class MessageRepository extends EntityRepository
 
     }
 
-    public function findUnReadMessages ( ) {
+    public function findUnReadMessages ( $lastReminder = null ) {
+
+      if (null === $lastReminder) { // used if second reminder is sent
+        $lastReminder = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+      }
+
 
       $date = new \DateTime("- 1 Days", new \DateTimeZone('Europe/Paris'));
 
@@ -91,6 +96,7 @@ class MessageRepository extends EntityRepository
       select('entity')->
       from(sprintf('%s', 'WcBundle:Message' ),'entity')->
       where( 'entity.isRead = :isRead')->setParameter('isRead',0 )->
+      andWhere('entity.lastReminder IS NULL')->
       andWhere( 'entity.created < :date')->setParameter('date', $date)->
       orderBy('entity.created', 'ASC')->
       getQuery()->
@@ -111,7 +117,7 @@ class MessageRepository extends EntityRepository
         if (isset($ret[$senderId])) {
           $ret[$senderId]["messages"][] = $message;
         } else {
-          $ret[$senderId]["senderId"] = $senderId;
+//          $ret[$senderId]["senderId"] = $senderId;
           $ret[$senderId]["messages"] = [$message];
           $ret[$senderId]["email"] = $sender->getUser()->getEmail();
           $ret[$senderId]["firstname"] = $sender->getFirstname();

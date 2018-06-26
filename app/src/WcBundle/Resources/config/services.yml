@@ -28,6 +28,6 @@ services:
       - { name: console.command }
   client.reminder.command:
     class: WcBundle\Command\SendReminder
-    arguments: ['@doctrine.orm.entity_manager' ,'@email.service']
+    arguments: ['@doctrine.orm.entity_manager' ,'@email.service', '@message.service']
     tags:
       - { name: console.command }

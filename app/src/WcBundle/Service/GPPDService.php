@@ -13,8 +13,7 @@ class GPPDService  implements PaginationInterface{
     use PaginationTrait;
 
 	private $em;
-//	private $entityRef;
-	
+
 	public function __construct( EntityManager $em ) {
 		$this->em = $em;
 	
@@ -27,7 +26,6 @@ class GPPDService  implements PaginationInterface{
 
     public function get( $filters = []) {
 
-        syslog(LOG_ERR, 'filter'.count($filters));
         $params = [];
         $condition = '';
         $sep = '';
@@ -36,7 +34,6 @@ class GPPDService  implements PaginationInterface{
         $qb->from(sprintf('%s', $this->entityRef ),'entity');
 
 
-//        return count($filters);
         if(count($filters) > 0 ) {
             foreach( $filters as $field => $value ) {
                 $condition = sprintf('%s entity.%s=:%s', $sep , $field, $field);
@@ -46,9 +43,6 @@ class GPPDService  implements PaginationInterface{
             $qb->where( $condition );
             $qb->setParameters( $params);
         }
-
-//        $qb->setMaxResults( 5 );
-//        $qb->setFirstResult( 0 );
 
         $ret = $qb->getQuery()->getResult();
 
