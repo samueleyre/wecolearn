@@ -28,7 +28,7 @@
       <div class="panel-footer">
         <div class="input-group">
           <input type="text"
-          class="chat-input"
+          class="chat-input" #chatInput id="chatInput"
           placeholder="Ecrivez votre message ici !"
           (keydown.enter)="onEnter($event)"
           [(ngModel)]="draftMessage.message"

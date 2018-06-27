@@ -3,7 +3,8 @@ import {
   Inject,
   ElementRef,
   OnInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+    ViewChild,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -34,6 +35,10 @@ export class ChatWindowComponent implements OnInit {
   draftMessage: Message;
   currentUser: Client = null;
   private disabled = false;
+  // private element: ElementRef;
+  @ViewChild('chatInput') inputEl:ElementRef;
+
+
 
   constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
@@ -41,6 +46,7 @@ export class ChatWindowComponent implements OnInit {
               public el: ElementRef,
               private loggerService: LoggerService,
               private router: Router,
+
   ) {
   }
 
@@ -120,6 +126,9 @@ export class ChatWindowComponent implements OnInit {
             this.draftMessage.thread = new Thread(this.currentThread.id, this.currentThread.name, this.currentThread.avatarSrc);
             this.messagesService.addMessage(this.draftMessage);
             this.draftMessage = new Message();
+            setTimeout(() =>
+                this.inputEl.nativeElement.focus()
+            ,  0 )
           });
     }
   }
