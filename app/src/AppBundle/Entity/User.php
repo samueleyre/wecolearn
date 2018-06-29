@@ -10,51 +10,57 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+  /**
+   * @ORM\Id
+   * @ORM\Column(type="integer")
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
+  protected $id;
 
-
+  /**
+   * @ORM\Column (type="boolean", name="tokenConfirmed")
+   */
+  public $tokenConfirmed = false;
 
 
   /**
-     * @ORM\Column (type="boolean", name="tokenConfirmed")
-     */
-    public $tokenConfirmed = false;
+   * @ORM\ManyToOne(targetEntity="App\Entity\Token", cascade={"persist", "merge"})
+   * @ORM\JoinColumn(name="tokenId", referencedColumnName="id", nullable=true)
+   */
+  public $emailToken;
 
+  
 
-
-    public function getId() {
+  public function getId() {
     	return $this->id;
-    }
+  }
 
 
-    /**
-     * Set tokenConfirmed
-     *
-     * @param boolean $tokenConfirmed
-     *
-     * @return User
-     */
-    public function setTokenConfirmed($tokenConfirmed)
-    {
-        $this->tokenConfirmed = $tokenConfirmed;
+  /**
+   * Set tokenConfirmed
+   *
+   * @param boolean $tokenConfirmed
+   *
+   * @return User
+   */
+  public function setTokenConfirmed($tokenConfirmed)
+  {
+      $this->tokenConfirmed = $tokenConfirmed;
 
-        return $this;
-    }
+      return $this;
+  }
 
-    /**
-     * Get tokenConfirmed
-     *
-     * @return boolean
-     */
-    public function getTokenConfirmed()
-    {
-        return $this->tokenConfirmed;
-    }
+  /**
+   * Get tokenConfirmed
+   *
+   * @return boolean
+   */
+  public function getTokenConfirmed()
+  {
+      return $this->tokenConfirmed;
+  }
+
+
 }
 
 

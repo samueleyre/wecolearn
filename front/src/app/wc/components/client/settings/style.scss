@@ -1,0 +1,64 @@
+@import '../../../../../assets/scss/variables';
+
+.table{
+  padding: 0 .3rem;
+  margin-bottom: 0;
+}
+
+.marginAuto{
+  margin: 0 auto;
+}
+
+td{
+  width: 10%;
+}
+
+@media (max-width: $smScreen) {
+  .table{
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    td {
+      padding: 0rem;
+    }
+  }
+
+
+}
+
+#showProfilContainer{
+  background-color: #fecd06;
+  padding: 10px 10px 1px 10px;
+}
+
+.imageContainer{
+  display: flex;
+  align-content: space-around ;
+  flex-flow: row wrap;
+  label{
+    padding: 1rem;
+    margin-right: auto;
+    input{
+      visibility: hidden;
+    }
+    //input:checked + div > div {
+    //  border: solid 1px #861301;
+    //}
+    input:checked + img {
+      box-shadow: 0px 0px 0px 2px #fe5e38;
+    }
+  }
+  img{
+    display: block;
+    width: 130px;
+    cursor: pointer;
+  }
+}
+
+.gm-style > div > a > div > img{
+  display: none;
+}
+
+input[type=radio]{
+  //display: none;
+}
+

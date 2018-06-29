@@ -16,7 +16,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import { NgForm }             from '@angular/forms';
 
-import { IEntity }                from './../../../../entity/interface';
+import { IEntity }                from '../../../../../applicativeService/entity/interface';
 import { Client }                from './../../../../entities/client/entity';
 import { Tag }                from './../../../../entities/tag/entity';
 

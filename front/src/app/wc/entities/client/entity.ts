@@ -1,5 +1,5 @@
-import { IEntity } from './../../entity/interface';
-import { Entity } from './../../entity/entity';
+import { IEntity } from '../../../applicativeService/entity/interface';
+import { Entity } from '../../../applicativeService/entity/entity';
 import { Tag } from './../../entities/tag/entity';
 import { Message } from './../../entities/message/entity';
 import { Image } from './../../entities/image/entity';

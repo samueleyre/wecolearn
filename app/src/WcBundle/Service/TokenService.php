@@ -4,7 +4,7 @@ namespace WcBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 
-use WcBundle\Entity\Token;
+use AppBundle\Entity\Token;
 
 class TokenService {
 
@@ -15,15 +15,14 @@ class TokenService {
 	}
 
 
-    public function get( $filters = []) {
+    public function get( $filters = []) { // not used
 
-        syslog(LOG_ERR, 'filter'.count($filters));
         $params = [];
         $condition = '';
         $sep = '';
         $qb = $this->em->createQueryBuilder();
         $qb->select('entity');
-        $qb->from(sprintf('%s', 'WcBundle:Token' ),'entity');
+        $qb->from(sprintf('%s', 'AppBundle:Token' ),'entity');
 
 
 //        return count($filters);
@@ -45,6 +44,16 @@ class TokenService {
         return $ret;
 
     }
+
+    public function post(Token $token ) {
+
+      $this->em->merge( $token );
+      $this->em->flush();
+      return $this;
+
+    }
+
+
 
 
 }

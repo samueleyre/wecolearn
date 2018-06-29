@@ -3,7 +3,9 @@
 namespace WcBundle\Controller;
 
 use WcBundle\Entity\Client;
+use AppBundle\Entity\User;
 use WcBundle\Entity\Tag;
+use AppBundle\Entity\Token;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -93,6 +95,67 @@ class ClientController extends GPPDController
 
     }
 
+    /**
+     * @Post("/client/changesettings")
+     * @ParamConverter(
+      "message",
+      class="AppBundle\Entity\User",
+      converter="fos_rest.request_body",
+      options={"deserializationContext"={"groups"={"input"} } }
+      )
+     */
+    public function changeSettingsAction( Request $request )
+    {
+
+      $user = $this->get('security.token_storage')->getToken()->getUser();
+      $ret = [];
+
+
+      if ($email = $request->get("email")) {
+
+        $email = strtolower($email);
+        $searchEmail = $this->getDoctrine()->getRepository(User::class)->findOneBy(["emailCanonical" => $email ]);
+
+        if ($user->getEmailCanonical() === $email) {
+          $ret['noChange'] = true;
+        } else if ( $searchEmail ) {
+          $ret["duplicate"] = true;
+        } else {
+
+          $user->setEmail($email);
+
+          $token = new Token();
+          $token->setToken(bin2hex(random_bytes(16)));
+          $this->get('token.service')->post($token);
+
+          $data = $this
+            ->get('email.service')
+            ->setData(4, ["TOKEN" => $token->getToken(), "USERNAME"=>$user->getUsername()], $user->getEmail())
+            ->send_transactional_template();
+
+          $ret["emailChange"] = $data["code"];
+        }
+
+
+      } else if ( $password = $request->get("password")) {
+
+          $user->setPlainPassword($password);
+
+          $this
+            ->get('user.service')
+            ->patch($user);
+
+          $ret['changed'] = true;
+      }
+
+
+      return $ret;
+
+
+
+
+
+    }
 
 
 

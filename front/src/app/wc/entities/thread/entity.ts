@@ -1,6 +1,6 @@
 import { Message } from '../message/entity';
-import {IEntity} from "../../entity/interface";
-import {Entity} from "../../entity/entity";
+import {IEntity} from "../../../applicativeService/entity/interface";
+import {Entity} from "../../../applicativeService/entity/entity";
 
 /**
  * Thread represents a group of Users exchanging Messages

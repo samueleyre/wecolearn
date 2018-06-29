@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class UsersController extends Controller
+class UsersController extends Controller // todo: is this usefull ?
 {
     // "options_users" [OPTIONS] /users
     public function optionsUsersAction()

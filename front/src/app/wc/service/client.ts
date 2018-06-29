@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { Client } from './../entities/client/entity';
 import {Http, Response} from "@angular/http";
-import {IEntity} from "../entity/interface";
+import {IEntity} from "../../applicativeService/entity/interface";
 import {Message} from "../entities/message/entity";
 import {LoggerService} from "../../applicativeService/logger/service";
 
@@ -41,6 +41,13 @@ export class ClientService {
       .map((response: Response) => {
         return response.json();
       });
+  }
+
+  changeParameter(data: object): Observable<any> {
+    return this.http.post('/api/client/changesettings', data)
+      .map((response: Response ) => {
+        return response.json();
+    });
   }
 
 

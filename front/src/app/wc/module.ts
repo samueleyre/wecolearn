@@ -38,16 +38,12 @@ import { TagService }            from './service/tag';
 import { ClientComponent }            from './components/bo/clientsPage/client/component';
 import { SearchComponent }            from './components/client/searchPage/search/component';
 import { ProfilComponent}            from './components/client/profilPage/profil/component';
-import { ProfilSettingsComponent}            from './components/client/profilPage/settings/component';
+import { ProfilSettingsComponent}            from './components/client/profilPage/profilSettings/component';
+import { SettingsComponent}            from './components/client/settings/component';
 import { GeolocationComponent}            from './components/client/profilPage/geolocation/component';
 import { ReadMoreComponent}            from '././../applicativeService/readMore/component';
 import { MentionsComponent }	  from './components/client/mentionslegales/component';
 import { CopyComponent }	  from './../applicativeService/copy/component';
-
-
-
-
-
 import { HeaderComponent }          from './components/header/component';
 import { SubscribeComponent }          from './components/client/subscribe/component';
 import { UserComponent }	  from './../components/user/component';
@@ -120,13 +116,13 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
     UploadModule,
     MessageModule,
     HeaderComponent,
-      ReadMoreComponent,
-      MentionsComponent,
-      CopyComponent,
-      GeolocationComponent,
+    ReadMoreComponent,
+    MentionsComponent,
+    CopyComponent,
+    GeolocationComponent,
     SearchBarComponent,
     CityBarComponent,
-      PasswordStrengthBarComponent
+    PasswordStrengthBarComponent
   ],
   declarations: [
     HeaderComponent,
@@ -135,6 +131,7 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
   	ClientComponent,
     ProfilComponent,
     ProfilSettingsComponent,
+    SettingsComponent,
     ConfirmModaleComponent,
     ReadMoreComponent,
     MentionsComponent,
@@ -148,7 +145,7 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
     FromNowPipe,
     SearchBarComponent,
     CityBarComponent,
-      PasswordStrengthBarComponent
+    PasswordStrengthBarComponent
 
   ],
   providers : [

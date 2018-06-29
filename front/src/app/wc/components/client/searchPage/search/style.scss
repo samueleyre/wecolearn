@@ -50,9 +50,15 @@
   .btn{
     transition: color .10s ease-in-out, background-color .10s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }
+  @media (max-width: 992px){
+    .btn {
+      font-size: 0.7rem;
+    }
+  }
   .btn:focus,.btn:hover {
-    background-color: #fecd06;
-    color: #FF5722;
+    //background-color: #fecd06;
+    background-color: #FF5722;
+    color: #ffffff;
   }
 }
 

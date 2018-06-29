@@ -36,7 +36,8 @@
                 <img *ngIf="!currentClient.image" height="30px" src="{{imagePath}}{{baseImageName}}" alt="">
             </a>
             <div ngbDropdownMenu aria-labelledby="dropdownParameters">
-                <a class="nav-link dropdown-item" routerLink="/settings">Profil</a>
+                <a class="nav-link dropdown-item" routerLink="/profilsettings">Profil</a>
+                <a class="nav-link dropdown-item" routerLink="/settings">Paramètres</a>
                 <a class="nav-link dropdown-item" (click)="logOut()">Déconnexion</a>
             </div>
         </li>

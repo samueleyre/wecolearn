@@ -23,7 +23,7 @@ export class UserService {
             });    
     }
  
-    patch( user: User ): Observable<User[]> {
+    patch( user: User ): Observable<any> {
         // clear token remove user from local storage to log user out
         return this.http.patch(`${this.endpoint}`, { id : user.id, username : user.username , email : user.email, password : user.password })
             .map( (response: Response ) => {

@@ -4,7 +4,7 @@ import { Http, Response }		from '@angular/http';
 import { Observable } 			from 'rxjs';
 import 'rxjs/add/operator/map'
 
-import { IEntity }                  from './../entity/interface' 
+import { IEntity }                  from '../../applicativeService/entity/interface'
 import { FilterService }			from './../../applicativeService/filter/service';
 import {log} from "util";
 

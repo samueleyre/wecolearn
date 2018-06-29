@@ -10,7 +10,7 @@ import {LoggedService} from "./logged"
 
 import * as _ from 'lodash';
 import {FilterService} from "../../applicativeService/filter/service";
-import {IEntity} from "../entity/interface";
+import {IEntity} from "../../applicativeService/entity/interface";
 import {LoggerService} from "../../applicativeService/logger/service";
 import 'rxjs/add/observable/empty'
 

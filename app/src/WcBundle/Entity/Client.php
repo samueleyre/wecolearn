@@ -112,10 +112,10 @@ class Client
     public $receivedMessages;
 
 
-     /**
-      * @ORM\Column(type="boolean", name="showProfil")
-      */
-      public $showProfil = false;
+   /**
+    * @ORM\Column(type="boolean", name="showProfil")
+    */
+    public $showProfil = false;
 
 
 
@@ -126,6 +126,7 @@ class Client
     public function __construct()
     {
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->created = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
     }
 
     /**

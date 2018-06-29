@@ -11,6 +11,11 @@ users:
     prefix:   api
     resource: '@AppBundle/Controller/UsersController.php'
 
+user:
+    type:     rest
+    prefix:   api
+    resource: '@AppBundle/Controller/UserController.php'
+
 ping:
     type:     rest
     prefix:   api

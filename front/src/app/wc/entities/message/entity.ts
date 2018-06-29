@@ -1,7 +1,7 @@
 import { Client } from '../client/entity';
 import { Thread } from '../thread/entity';
-import {IEntity} from "../../entity/interface";
-import {Entity} from "../../entity/entity";
+import {IEntity} from "../../../applicativeService/entity/interface";
+import {Entity} from "../../../applicativeService/entity/entity";
 
 /**
  * Message represents one message being sent in a Thread

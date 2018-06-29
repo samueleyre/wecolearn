@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-lg-8 offset-md-1 offset-lg-2">
+            <div class="bloc-container">
+                <div class="bloc">
+                  <div class="bloc-title">
+                    <h2 class="center">Paramètres</h2>
+                  </div>
+                  <div class="bloc-content">
+
+                    <form class="form-horizontal" (ngSubmit)="f.form.valid && submitChangeEmail(f)" #f="ngForm" novalidate>
+                    <fieldset>
+
+                       <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                         <label for="email">Email</label>
+                         <input id="email" type="email" class="form-control showvalidity" name="email" [(ngModel)]="newemail" #email="ngModel" required pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"/>
+                         <div *ngIf="f.submitted && !email.valid" class="help-block">L'adresse email n'est pas valide</div>
+                         <div *ngIf="message.email" class="help-block">{{message.email}}</div>
+                       </div>
+
+                       <!-- Button -->
+                       <div class="form-group">
+                         <div class="col-md-12 center">
+                           <button id="submitEmail" name="submit" class="btn btn-primary-wc">Changer l'email</button>
+                         </div>
+                       </div>
+
+
+                     </fieldset>
+                   </form>
+                    <form class="form-horizontal" (ngSubmit)="f.form.valid && submitNewPassword(f)" #f="ngForm" novalidate>
+                      <fieldset>
+
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                          <label for="password">Nouveau mot de passe</label>
+                          <input id="password" type="password" class="form-control showvalidity" name="password" [(ngModel)]="newpassword" #password="ngModel" required/>
+                          <div *ngIf="f.submitted && password.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
+                          <password-strength-bar [passwordToCheck]="newpassword" [barLabel]="barLabel"></password-strength-bar>
+                          <div *ngIf="message.password" class="help-block">{{message.password}}</div>
+                        </div>
+
+                        <div class="form-group">
+                          <div class="col-md-12 center">
+                            <button id="submitPassword" name="submit" class="btn btn-primary-wc">Changer mot de passe</button>
+                          </div>
+                        </div>
+
+
+
+
+                      </fieldset>
+                    </form>
+
+                  </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

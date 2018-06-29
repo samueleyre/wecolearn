@@ -11,7 +11,7 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 
 import { NgForm }             from '@angular/forms';
 
-import { IEntity }                from './../../../entity/interface';
+import { IEntity }                from '../../../../applicativeService/entity/interface';
 import { Tag }                from './../../../entities/tag/entity';
 
 import { GPPDService }            from './../../../service/gppd';

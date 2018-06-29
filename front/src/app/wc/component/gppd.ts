@@ -3,7 +3,7 @@ import { NgForm }                  from '@angular/forms';
 
 import { GPPDService }             from './../service/gppd';
 
-import { IEntity }                 from './../entity/interface';
+import { IEntity }                 from '../../applicativeService/entity/interface';
 
 import { MessageService }          from './../../applicativeService/message/service';
 

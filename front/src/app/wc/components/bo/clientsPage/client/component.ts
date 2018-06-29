@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 
 import { Client }                    from './../../../../entities/client/entity';
 
-import { IEntity }                 from './../../../../entity/interface';
+import { IEntity }                 from '../../../../../applicativeService/entity/interface';
 
 import { GPPDService }             from './../../../../service/gppd';
 import { GPPDComponent }             from './../../../../component/gppd';

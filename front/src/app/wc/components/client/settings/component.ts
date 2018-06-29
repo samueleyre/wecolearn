@@ -1,0 +1,151 @@
+import {
+    Component,
+    OnInit,
+    Injectable,
+    Inject
+}                             from '@angular/core';
+
+import {Observable} from 'rxjs/Observable';
+
+import { Http, Response }		from '@angular/http';
+
+
+import { FormControl } from '@angular/forms';
+
+import {Router, ActivatedRoute, Params} from '@angular/router';
+
+import { NgForm }             from '@angular/forms';
+
+import { IEntity }                from '../../../../applicativeService/entity/interface';
+import { Client }                from '../../../entities/client/entity';
+import { Tag }                from '../../../entities/tag/entity';
+import { User }                from '../../../../applicativeService/user/model';
+
+import { GPPDService }            from '../../../service/gppd';
+import { ClientService }            from '../../../service/client';
+import { TagService }            from '../../../service/tag';
+import { GPPDComponent }          from '../../../component/gppd';
+
+import { MessageService }         from '../../../../applicativeService/message/service';
+import {FilterService}            from "../../../../applicativeService/filter/service";
+import {log} from "util";
+import { APP_BASE_HREF, Location } from '@angular/common';
+import {image} from "../../../../applicativeService/constants/image";
+import {UserService} from "../../../../applicativeService/user/service";
+
+
+
+@Component({
+    templateUrl: 'template.html',
+    styleUrls : ['style.scss']
+})
+
+@Injectable()
+export class SettingsComponent extends GPPDComponent implements OnInit {
+
+  private message:object;
+  private user: User;
+  private newemail : string;
+  private newpassword : string;
+
+  constructor( protected service: GPPDService, protected clientService : ClientService, private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, private userService : UserService,
+  ) {
+        super(service);
+        this.clientService= clientService;
+        this.user = new User();
+        this.message = {
+          email: null,
+          password: null
+        }
+
+    }
+
+
+    ngOnInit() {
+        this.load();
+    }
+
+    load() : void {
+        this.service.setApi(this.getApi());
+
+        
+        this.service.getOne().subscribe( ( User: User) => {
+            //console.log("client", client);
+            this.setEntity(User);
+            //console.log("entity on loaded", client);
+        });
+    }
+
+    setEntity(user: User) {
+      this.user = user;
+    }
+
+  submitChangeEmail(f:NgForm) {
+
+    this.callApi({email: this.newemail});
+
+  }
+
+  verifyCurrentPassword() {
+
+
+
+
+
+
+  }
+
+  submitNewPassword(f:NgForm) {
+
+    this.callApi({password: this.newpassword });
+
+  }
+
+  callApi(data:object) {
+
+    this.service.setApi(this.getApi());
+    var type = Object.keys(data)[0];
+
+    this.clientService.changeParameter(data).subscribe(
+        response => {
+          if (response["duplicate"]) {
+            MessageService.info("Cette adresse email est déjà utilisée.")
+          } else if (response["noChange"]) {
+            // MessageService.info("L'adresse email ")
+          } else if (response["changed"]) {
+            // this.message['password'] = "Le mot de passe a été modifié";
+            MessageService.info("Le mot de passe a été modifié")
+
+          } else {
+            if (type === 'email') {
+              MessageService.info("Un email vous a été envoyé pour confirmer votre nouvel email")
+            // this.message['email'] = "Un email vous a été envoyé pour confirmer votre nouvel email";
+            } else {
+              // this.message['password'] = "Un mot de passe vous a été envoyé pour confirmer votre nouvel email";
+            }
+          }
+      },
+      error => { console.log(error)
+      }
+    );
+
+    // this.user = new User();
+    // f.resetForm();
+
+
+  }
+
+
+  getApi() {
+      return '/api/user';
+  }
+
+  getEntity() {
+     return new User();
+  }
+
+
+
+
+
+}

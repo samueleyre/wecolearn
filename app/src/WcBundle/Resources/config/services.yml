@@ -19,6 +19,9 @@ services:
   search.service:
     class: WcBundle\Service\SearchService
     arguments: ['@doctrine.orm.entity_manager']
+  user.service:
+    class: WcBundle\Service\UserService
+    arguments: ['@doctrine.orm.entity_manager']
 
 #commands
   client.tag.command:

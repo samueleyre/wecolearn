@@ -1,5 +1,5 @@
-import { IEntity } from './../../entity/interface';
-import { Entity } from './../../entity/entity';
+import { IEntity } from '../../../applicativeService/entity/interface';
+import { Entity } from '../../../applicativeService/entity/entity';
 export class Tag extends Entity implements IEntity  {
 
     public id: 		number|null;
