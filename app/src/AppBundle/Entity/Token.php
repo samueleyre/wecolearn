@@ -10,24 +10,30 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Token
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    public $id;
+  /**
+   * @ORM\Id
+   * @ORM\Column(type="integer")
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
+  public $id;
 
-    /**
-     * @ORM\Column(type="string",name="token")
-     */
-    public $token;
+  /**
+   * @ORM\Column(type="string",name="token")
+   */
+  public $token;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created", type="datetime")
-     */
-    private $created;
+  /**
+   * @ORM\OneToOne(targetEntity="AppBundle\Entity\User",inversedBy="emailToken", cascade={"persist", "merge"})
+   * @ORM\JoinColumn(name="userId", referencedColumnName="id", nullable=true, onDelete="NO ACTION")
+   */
+  public $user;
+
+  /**
+   * @var \DateTime
+   *
+   * @ORM\Column(name="created", type="datetime")
+   */
+  private $created;
 
 
   /**
@@ -101,4 +107,28 @@ class Token
 
 
 
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Token
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

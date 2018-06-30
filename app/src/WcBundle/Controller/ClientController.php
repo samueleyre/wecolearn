@@ -106,7 +106,7 @@ class ClientController extends GPPDController
      */
     public function changeSettingsAction( Request $request )
     {
-
+      $userManager = $this->get('fos_user.user_manager');
       $user = $this->get('security.token_storage')->getToken()->getUser();
       $ret = [];
 
@@ -117,23 +117,39 @@ class ClientController extends GPPDController
         $searchEmail = $this->getDoctrine()->getRepository(User::class)->findOneBy(["emailCanonical" => $email ]);
 
         if ($user->getEmailCanonical() === $email) {
+
           $ret['noChange'] = true;
+
         } else if ( $searchEmail ) {
+
           $ret["duplicate"] = true;
+
         } else {
 
           $user->setEmail($email);
+          $user->setEmailConfirmed(false);
 
           $token = new Token();
           $token->setToken(bin2hex(random_bytes(16)));
+
+          $token->setUser($user);
+          $user->setEmailToken($token);
+
           $this->get('token.service')->post($token);
+
+
 
           $data = $this
             ->get('email.service')
-            ->setData(4, ["TOKEN" => $token->getToken(), "USERNAME"=>$user->getUsername()], $user->getEmail())
-            ->send_transactional_template();
+            ->setData(6, ["HOST"=>$this->getParameter("host"), "TOKEN" => $token->getToken(), "USERNAME"=>$user->getUsername()], $user->getEmail())
+            ->sendEmail();
+
+          $this
+            ->get('user.service')
+            ->patch($user);
 
           $ret["emailChange"] = $data["code"];
+
         }
 
 
@@ -141,11 +157,24 @@ class ClientController extends GPPDController
 
           $user->setPlainPassword($password);
 
-          $this
-            ->get('user.service')
-            ->patch($user);
-
+        try {
+          $userManager->updateUser($user);
           $ret['changed'] = true;
+
+        } catch (NotNullConstraintViolationException $e) {
+          // Found the name of missed field
+          $ret["notnull"] = true;
+        } catch (UniqueConstraintViolationException $e) {
+          // Found the name of duplicate field
+          $ret["duplicate"] = true;
+        } catch (\Exception $e) {
+
+          //for debugging you can do like this
+          $ret["error"] = "error".$e;
+
+        }
+
+
       }
 
 
@@ -167,7 +196,7 @@ class ClientController extends GPPDController
             converter="fos_rest.request_body",
             options={"deserializationContext"={"groups"={"input"} } }
       )
-	*/
+	  */
     public function patchClientAction( Client $client, Request $request )
     {
 
@@ -179,16 +208,47 @@ class ClientController extends GPPDController
 
     }
 
+
     /**
-    * @Delete("/client/{id}")
-    */
-    public function deleteClientAction( $id , Request $request )
+     * @Get("confirmEmail/{token}")
+     */
+    public function confirmEmailAction ( $token)
     {
 
-        $this->deleteAction( $id );
+      $token =  $this->getDoctrine()
+        ->getRepository(Token::class)
+        ->findOneBy(["token"=>$token]);
 
-        return $this->getClientAction();
+      $ret = [];
+
+      if ($token && $user = $token->getUser() ) {
+
+        if ($user->getEmailConfirmed() === false) {
+          $user->setEmailConfirmed(true);
+          $ret["success"] = $this->patchAction($user);
+        } else {
+          $ret["error"] = "token_already_confirmed";
+        }
+
+
+      } else {
+        $ret["user"] = $token->getUser();
+        $ret["error"] = "confirmation_token_not_found";
+      }
+
+      return $ret;
     }
+//
+//    /**
+//    * @Delete("/client/{id}")
+//    */
+//    public function deleteClientAction( $id , Request $request )
+//    {
+//
+//        $this->deleteAction( $id );
+//
+//        return $this->getClientAction();
+//    }
 
 
 }

@@ -128,35 +128,5 @@ class NewUserController extends GPPDController
     }
 
 
-    /**
-     * @Get("confirmEmail/{token}")
-     */
-    public function confirmEmailAction ( $token)
-    {
-
-        $user =  $this->getDoctrine()
-            ->getRepository(User::class)
-              ->findOneBy(["confirmationToken"=>$token, "tokenConfirmed"=>0]);
-//            ->findUserByToken($token);
-
-        $ret = [];
-
-        if ($user) {
-
-            if ($user->getTokenConfirmed() === false) {
-                $user->setTokenConfirmed(true);
-                $ret["success"] = $this
-                  ->patchAction($user);
-            } else {
-              $ret["error"] = "token_already_confirmed";
-            }
-
-
-        } else {
-          $ret["error"] = "confirmation_token_not_found";
-        }
-
-        return $ret;
-    }
 
 }

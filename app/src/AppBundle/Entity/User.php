@@ -18,18 +18,18 @@ class User extends BaseUser
   protected $id;
 
   /**
-   * @ORM\Column (type="boolean", name="tokenConfirmed")
+   * @ORM\Column (type="boolean", name="emailConfirmed")
    */
-  public $tokenConfirmed = false;
+  public $emailConfirmed = false;
 
 
   /**
-   * @ORM\ManyToOne(targetEntity="App\Entity\Token", cascade={"persist", "merge"})
-   * @ORM\JoinColumn(name="tokenId", referencedColumnName="id", nullable=true)
+   * @ORM\OneToOne(targetEntity="AppBundle\Entity\Token",mappedBy="user", cascade={"persist", "merge"})
+//   * @ORM\JoinColumn(name="emailTokenId", referencedColumnName="id", nullable=true, onDelete="NO ACTION")
    */
   public $emailToken;
 
-  
+
 
   public function getId() {
     	return $this->id;
@@ -37,43 +37,52 @@ class User extends BaseUser
 
 
   /**
-   * Set tokenConfirmed
+   * Set emailConfirmed
    *
-   * @param boolean $tokenConfirmed
+   * @param boolean $emailConfirmed
    *
    * @return User
    */
-  public function setTokenConfirmed($tokenConfirmed)
+  public function setEmailConfirmed($emailConfirmed)
   {
-      $this->tokenConfirmed = $tokenConfirmed;
+      $this->emailConfirmed = $emailConfirmed;
 
       return $this;
   }
 
   /**
-   * Get tokenConfirmed
+   * Get emailConfirmed
    *
    * @return boolean
    */
-  public function getTokenConfirmed()
+  public function getEmailConfirmed()
   {
-      return $this->tokenConfirmed;
+      return $this->emailConfirmed;
   }
 
 
+
+    /**
+     * Set emailToken
+     *
+     * @param \AppBundle\Entity\Token $emailToken
+     *
+     * @return User
+     */
+    public function setEmailToken(\AppBundle\Entity\Token $emailToken = null)
+    {
+        $this->emailToken = $emailToken;
+
+        return $this;
+    }
+
+    /**
+     * Get emailToken
+     *
+     * @return \AppBundle\Entity\Token
+     */
+    public function getEmailToken()
+    {
+        return $this->emailToken;
+    }
 }
-
-
-
-//    /**
-//     * @ORM\OneToMany(targetEntity="Token", mappedBy="User", cascade={"persist", "merge"})
-//     * @ORM\JoinColumn(name="tokenId", referencedColumnName="id")
-//     */
-//public $token;
-
-//
-///**
-// * @ORM\Column (type="varchar(180)", name="confirmation_token", nullable=true)
-// */
-//public $confirmationToken = null;
-
