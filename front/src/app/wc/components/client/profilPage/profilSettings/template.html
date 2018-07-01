@@ -53,7 +53,7 @@
                             <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !learnTags.valid }">
                                 <label class="col-md-6 control-label" for="learnTags">Ce que je veux apprendre</label>
                                 <div class="col-md-12">
-                                    <tag-input id="learnTags" [modelAsStrings]="true" [(ngModel)]='entity.learn_tags' name="learnTags" #learnTags="ngModel"  [errorMessages]="errorMessages"
+                                    <tag-input id="learnTags" [modelAsStrings]="true"  [theme]="'foundation-theme'" [(ngModel)]='entity.learn_tags' name="learnTags" #learnTags="ngModel"  [errorMessages]="errorMessages"
                                                [validators]="validators">
                                         <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
                                         <!--<tag-input-dropdown [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']"></tag-input-dropdown>-->

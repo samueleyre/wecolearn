@@ -1,4 +1,6 @@
 @import './../../../../../../assets/scss/variables.scss';
+@import "./../../../../../../../node_modules/ngx-chips/dist/modules/core/styles/core/_core.scss";
+
 
 .table{
   padding: 0 .3rem;
@@ -61,4 +63,32 @@ td{
 input[type=radio]{
   //display: none;
 }
+
+textarea{
+
+  background-color: #f9f9f9b5;
+
+}
+
+// tags --------------------------
+
+$foundation-theme: (
+        container-border-bottom: 1px solid #fecd06
+);
+
+$foundation-tag-theme: (
+        background-color: #fecd06,
+        background: #fecd06
+);
+
+// apply theme to the container
+:ng-deep .ng2-tag-input.foundation-theme {
+  @include tag-input-theme($foundation-theme);
+}
+
+// apply theme to the tags
+::ng-deep .ng2-tag-input.foundation-theme tag {
+  @include tag-theme($foundation-tag-theme);
+}
+
 
