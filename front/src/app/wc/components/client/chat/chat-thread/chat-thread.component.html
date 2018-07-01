@@ -9,7 +9,8 @@
     <span class="media-heading contact-name">{{thread.name}}
     </span>
     <div class="messageContainer">
-      <small class="message-preview">{{thread.lastMessage.message}}</small>
+      <small *ngIf="thread.lastMessage.receiver && thread.id !== thread.lastMessage.receiver.id" class="message-preview">{{thread.id}}{{thread.lastMessage.receiver.id}}{{thread.lastMessage.message}}</small>
+      <small *ngIf="!thread.lastMessage.receiver || !(thread.id !== thread.lastMessage.receiver.id)" class="message-preview"></small>
     </div>
   </div>
   <a (click)="clicked($event)" class="div-link">Select</a>

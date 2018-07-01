@@ -19,13 +19,13 @@ export class Message extends Entity implements IEntity  {
 
     constructor(obj?: any) {
         super();
-        this.id              = obj && obj.id              || null;
-        this.is_read          = obj && obj.is_read          || false;
-        this.created       = obj && obj.created          || new Date();
-        this.sender          = obj && obj.sender          || null;
-        this.message          = obj && obj.message            || null;
-        this.receiver        = obj && obj.receiver        || null;
-        this.thread          = obj && obj.thread          || null;
+      this.id              = obj && obj.id              || null;
+      this.is_read          = obj && obj.is_read          || false;
+      this.created       = obj && obj.created             || new Date();
+      this.sender          = obj && obj.sender          || null;
+      this.message          = obj && obj.message            || null;
+      this.receiver        = obj && obj.receiver        || null;
+      this.thread          = obj && obj.thread          || null;
     }
 
 

@@ -37,8 +37,10 @@ export class ThreadsService {
 
           // Cache the most recent message for each thread
           const messagesThread: Thread = threads[message.thread.id];
-          if (!messagesThread.lastMessage ||
-              messagesThread.lastMessage.created < message.created) {
+          if (
+              (!messagesThread.lastMessage
+              || messagesThread.lastMessage.created < message.created)
+          ) {
             messagesThread.lastMessage = message;
           }
         });

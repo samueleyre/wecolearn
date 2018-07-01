@@ -93,13 +93,12 @@
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-6 control-label" for="intensity">Intensité (h/semaine)</label>
+                                <label class="col-md-6 control-label" for="intensity">Le nombre d'heures par semaine que je souhaiterais passer à apprendre</label>
                                 <div class="col-md-12">
                                     <div class="table">
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td>0</td>
                                                     <td>1h</td>
                                                     <td>2h</td>
                                                     <td>3h</td>
@@ -110,11 +109,12 @@
                                                     <td>8h</td>
                                                     <td>9h</td>
                                                     <td>10h</td>
+                                                    <td>+10h</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <input class="form-control" id="intensity" type="range" [(ngModel)]='entity.intensity' min="0" max="10" name="intensity"  >
+                                    <input class="form-control" id="intensity" type="range" [(ngModel)]='entity.intensity' min="1" max="11" name="intensity"  >
 
                                 </div>
                             </div>
