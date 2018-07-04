@@ -41,7 +41,7 @@ class ClientService {
 
     public function get( $filters = []) {
 
-        syslog(LOG_ERR, 'filter'.count($filters));
+//        syslog(LOG_ERR, 'filter'.count($filters));
         $params = [];
         $condition = '';
         $sep = '';
@@ -70,7 +70,7 @@ class ClientService {
 
     public function find( $filters = []) {
 
-        syslog(LOG_ERR, 'filter'.count($filters));
+//        syslog(LOG_ERR, 'filter'.count($filters));
         $params = [];
         $condition = '';
         $sep = '';

@@ -41,8 +41,8 @@ class SendReminder extends Command
         ->getRepository(Message::class)
         ->getUnReadMessagesByUser();
 
-      $messages = "";
       foreach ($MessagesSortedClients as $clientId => $client) {
+        $messages = "";
         $i = 0;
         while ($i <= 2 && isset($client["messages"][$i])):
           $MESSAGE = $client["messages"][$i]->getMessage();
@@ -50,7 +50,7 @@ class SendReminder extends Command
           $TIME = $client["messages"][$i]->getCreated()->format('H:i');
           $DATE = $client["messages"][$i]->getCreated()->format('d-m-Y');
 
-          $messages.= '<p><b>'.$FIRSTNAME.'</b> : "'.$MESSAGE.'", le '.$DATE.' à '.$TIME.'</p><br><br>';
+          $messages.= '<p><b>'.$FIRSTNAME.'</b> : "'.$MESSAGE.'", le '.$DATE.' à '.$TIME.'</p><br>';
 
           $i++;
 
@@ -59,20 +59,19 @@ class SendReminder extends Command
 
         $this->messageService->setReminderDate($clientId);
 
-
-        $data = $this->emailService->getData(5,
-          [
-            "MESSAGES" => $messages,
-            "FIRSTNAME"=> $client["firstname"],
-            "USERNAME"=> $client["firstname"],
-          ],
-          $client["email"]
-        );
-
 //        $output->writeln( $client["email"]);
 //        $output->writeln( json_encode($messages));
 //        $output->writeln( $client["firstname"]);
-        $return = $this->emailService->sendEmail($data);
+        $return = $this->emailService
+          ->setData(5,
+            [
+              "MESSAGES" => $messages,
+              "FIRSTNAME"=> $client["firstname"],
+              "USERNAME"=> $client["firstname"],
+            ],
+            $client["email"]
+          )
+          ->sendEmail();
 //        $output->writeln( json_encode($return));
 //        $output->writeln( "-------------------");
 
