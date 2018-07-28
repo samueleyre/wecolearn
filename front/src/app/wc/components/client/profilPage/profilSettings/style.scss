@@ -1,5 +1,7 @@
 @import './../../../../../../assets/scss/variables.scss';
-@import "./../../../../../../../node_modules/ngx-chips/dist/modules/core/styles/core/_core.scss";
+@import "./../../../../../../../node_modules/ngx-chips/core/styles/core/_core.scss"; // not working on prod :(
+
+
 
 
 .table{
