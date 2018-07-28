@@ -16,7 +16,7 @@ newuser:
 confirmEmail:
     type:     rest
     prefix:   api
-    resource: '@WcBundle/Controller/NewUserController.php'
+    resource: '@WcBundle/Controller/ClientController.php'
 
 findTag:
     type:     rest
