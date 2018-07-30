@@ -232,7 +232,6 @@ class ClientController extends GPPDController
 
 
       } else {
-        $ret["user"] = $token->getUser();
         $ret["error"] = "confirmation_token_not_found";
       }
 
