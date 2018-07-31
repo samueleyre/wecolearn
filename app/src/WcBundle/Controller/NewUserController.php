@@ -5,6 +5,9 @@ namespace WcBundle\Controller;
 
 use AppBundle\Entity\User;
 use WcBundle\Entity\Client;
+use AppBundle\Entity\Token;
+use AppBundle\Constant\TokenConstant;
+
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -63,9 +66,20 @@ class NewUserController extends GPPDController
 
         $user->setPlainPassword($user->getPassword());
         $user->setPassword(null); // WHAT IS THE DIFFERENCE ?
-
-        $user->setConfirmationToken(bin2hex(random_bytes(16))); // todo : should be in toolkit class to update secure token generation
         $user->setEnabled(true);
+
+
+        $token = new Token();
+        $token->setToken(bin2hex(random_bytes(16)));
+        $token->setUser($user);
+        $token->setType(TokenConstant::$types["CONFIRMEMAIL"]);
+
+        $this
+        ->get('token.service')
+        ->post($token);
+
+//        $user->setConfirmationToken(bin2hex(random_bytes(16))); // todo : should be in toolkit class to update secure token generation
+
 
         try {
             $userManager->updateUser($user);
@@ -105,7 +119,7 @@ class NewUserController extends GPPDController
 
           $data = $this
               ->get('email.service')
-              ->getData(3, ["TOKEN" => $user->getConfirmationToken(), "HOST"=>$host, "USERNAME"=>$user->getUsername()], $user->getEmail(), $emailSender);
+              ->getData(3, ["TOKEN" => $token->getToken(), "HOST"=>$host, "USERNAME"=>$user->getUsername()], $user->getEmail(), $emailSender);
 
 
           $ret = [];

@@ -29,6 +29,11 @@ class Token
   public $user;
 
   /**
+   * @ORM\Column(type="integer",name="type")
+   */
+  public $type;
+
+  /**
    * @var \DateTime
    *
    * @ORM\Column(name="created", type="datetime")
@@ -78,6 +83,30 @@ class Token
   public function getToken()
   {
       return $this->token;
+  }
+
+  /**
+   * Set type
+   *
+   * @param integer $type
+   *
+   * @return Token
+   */
+  public function setType($type)
+  {
+    $this->type = $type;
+
+    return $this;
+  }
+
+  /**
+   * Get type
+   *
+   * @return integer
+   */
+  public function getType()
+  {
+    return $this->type;
   }
 
 

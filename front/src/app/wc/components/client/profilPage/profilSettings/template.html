@@ -66,7 +66,7 @@
                           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !biographie.valid }">
                             <label class="col-md-12 control-label" for="biographie">Pourquoi voulez-vous apprendre ceci, quels sont vos motivations et vos projets ? </label>
                             <div class="col-md-12">
-                              <textarea placeholder="'Freelance cherchant à acquérir des compétences dans le code.'" id="biographie" class="form-control" rows="5" [(ngModel)]="entity.biographie" name="biographie" #biographie="ngModel"></textarea>
+                              <textarea placeholder="Je cherche à acquérir des compétences en ...'" id="biographie" class="form-control" rows="5" [(ngModel)]="entity.biographie" name="biographie" #biographie="ngModel"></textarea>
                               <!--<quill-editor id="biographie" [theme]="'bubble'" [placeholder]="'Freelance cherchant à acquérir des compétences dans le code.'"   [(ngModel)]="entity.biographie" name="biographie" #biographie="ngModel" [modules]="quillConfig"></quill-editor>-->
                               <div *ngIf="f.submitted && !biographie.valid" class="help-block">La biographie est obligatoire</div>
                             </div>

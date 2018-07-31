@@ -7,6 +7,9 @@ use AppBundle\Entity\User;
 use WcBundle\Entity\Tag;
 use AppBundle\Entity\Token;
 
+use AppBundle\Constant\TokenConstant;
+
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -131,6 +134,7 @@ class ClientController extends GPPDController
 
           $token = new Token();
           $token->setToken(bin2hex(random_bytes(16)));
+          $token->setType(TokenConstant::$types["CONFIRMEMAIL"]);
 
           $token->setUser($user);
           $user->setEmailToken($token);
@@ -217,7 +221,7 @@ class ClientController extends GPPDController
 
       $token =  $this->getDoctrine()
         ->getRepository(Token::class)
-        ->findOneBy(["token"=>$token]);
+        ->findOneBy(["token"=>$token, "type"=> TokenConstant::$types["CONFIRMEMAIL"]]);
 
       $ret = [];
 

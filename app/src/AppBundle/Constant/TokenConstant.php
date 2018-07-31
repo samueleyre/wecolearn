@@ -7,13 +7,15 @@
  */
 
 
-class tokenConstant {
+namespace AppBundle\Constant;
 
 
-  public static types = [
+class TokenConstant {
+
+
+  public static $types = [
     "CONFIRMEMAIL" => 0,
-
-  ]
+  ];
 
 
 }
