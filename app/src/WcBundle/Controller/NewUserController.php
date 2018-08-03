@@ -68,34 +68,33 @@ class NewUserController extends GPPDController
         $user->setPassword(null); // WHAT IS THE DIFFERENCE ?
         $user->setEnabled(true);
 
+        try {
+          $userManager->updateUser($user);
+
+        } catch (NotNullConstraintViolationException $e) {
+          // Found the name of missed field
+          return "notnull";
+        } catch (UniqueConstraintViolationException $e) {
+          // Found the name of duplicate field
+          return "duplicate";
+        } catch (\Exception $e) {
+
+          //for debugging you can do like this
+          return "error".$e;
+
+        }
 
         $token = new Token();
         $token->setToken(bin2hex(random_bytes(16)));
         $token->setUser($user);
         $token->setType(TokenConstant::$types["CONFIRMEMAIL"]);
 
-        $this
-        ->get('token.service')
-        ->post($token);
-
 //        $user->setConfirmationToken(bin2hex(random_bytes(16))); // todo : should be in toolkit class to update secure token generation
 
 
-        try {
-            $userManager->updateUser($user);
-
-        } catch (NotNullConstraintViolationException $e) {
-            // Found the name of missed field
-            return "notnull";
-        } catch (UniqueConstraintViolationException $e) {
-            // Found the name of duplicate field
-            return "duplicate";
-        } catch (\Exception $e) {
-
-            //for debugging you can do like this
-            return "error".$e;
-
-        }
+        $this
+          ->get('token.service')
+          ->post($token);
 
 
 //        $roles = $user->getRoles();

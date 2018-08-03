@@ -112,15 +112,20 @@ class MessageRepository extends EntityRepository
 
       foreach ($messages as $message) {
 
-        $sender = $message->getReceiver();
-        $senderId = $sender->getId();
-        if (isset($ret[$senderId])) {
-          $ret[$senderId]["messages"][] = $message;
+        $receiver = $message->getReceiver();
+
+        if ($receiver->getEmailNotifications()) { // check if user accepted to receive notifications
+          continue;
+        }
+
+        $receiverId = $receiver->getId();
+        if (isset($ret[$receiverId]) ) {
+          $ret[$receiverId]["messages"][] = $message;
         } else {
-//          $ret[$senderId]["senderId"] = $senderId;
-          $ret[$senderId]["messages"] = [$message];
-          $ret[$senderId]["email"] = $sender->getUser()->getEmail();
-          $ret[$senderId]["firstname"] = $sender->getFirstname();
+//          $ret[$receiverId]["receiverId"] = $receiverId;
+          $ret[$receiverId]["messages"] = [$message];
+          $ret[$receiverId]["email"] = $receiver->getUser()->getEmail();
+          $ret[$receiverId]["firstname"] = $receiver->getFirstname();
         }
 
       }

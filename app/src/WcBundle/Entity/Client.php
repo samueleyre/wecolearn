@@ -118,9 +118,15 @@ class Client
     public $showProfil = false;
 
 
-
-
     /**
+     * @ORM\Column(type="boolean", name="emailNotifications")
+     */
+    public $emailNotifications = true;
+
+
+
+
+  /**
      * Constructor
      */
     public function __construct()
@@ -401,6 +407,31 @@ class Client
     public function getShowProfil()
     {
       return $this->showProfil;
+    }
+
+
+  /**
+     * Set emailNotifications
+     *
+     * @param boolean $emailNotifications
+     *
+     * @return Client
+     */
+    public function setEmailNotifications($emailNotifications)
+    {
+      $this->emailNotifications = $emailNotifications;
+
+      return $this;
+    }
+
+    /**
+     * Get emailNotifications
+     *
+     * @return boolean
+     */
+    public function getEmailNotifications()
+    {
+      return $this->emailNotifications;
     }
 
 

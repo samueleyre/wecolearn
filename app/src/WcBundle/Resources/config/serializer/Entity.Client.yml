@@ -37,6 +37,8 @@ WcBundle\Entity\Client:
           groups: [ input, output ]
         showProfil:
           groups: [ input, output ]
+        emailNotifications:
+          groups: [ input, output ]
 
 
 

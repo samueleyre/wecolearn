@@ -69,7 +69,7 @@ class MessageController extends GPPDController
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-//        syslog(LOG_ERR,'check new message 20');
+        syslog(LOG_ERR,'check new message, getting user '.$user);
 
         $client = $this->getDoctrine()
             ->getRepository(Client::class)
@@ -80,7 +80,7 @@ class MessageController extends GPPDController
 
             if ($lastMessages = $this->getDoctrine()
                 ->getRepository(Message::class)
-                ->getLastMessages($client)) {
+                ->getLastMessages($client) !== []) {
 
 
                 $newDate = $lastMessages[count($lastMessages)-1]->getCreated();

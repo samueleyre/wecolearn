@@ -73,6 +73,7 @@ import { ChatWindowComponent } from './components/client/chat/chat-window/chat-w
 import { FromNowPipe } from './service/from-now.pipe';
 
 import { SearchBarComponent} from './components/client/searchBar/component';
+import { EmailNotificationSettingsComponent} from './components/client/settings/notifications/component';
 import { CityBarComponent} from './components/client/cityBar/component';
 
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
@@ -121,6 +122,7 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
     CopyComponent,
     GeolocationComponent,
     SearchBarComponent,
+    EmailNotificationSettingsComponent,
     CityBarComponent,
     PasswordStrengthBarComponent
   ],
@@ -144,6 +146,7 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
     ChatWindowComponent,
     FromNowPipe,
     SearchBarComponent,
+    EmailNotificationSettingsComponent,
     CityBarComponent,
     PasswordStrengthBarComponent
 
