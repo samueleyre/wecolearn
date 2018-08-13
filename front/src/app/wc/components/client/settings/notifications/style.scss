@@ -1,14 +1,30 @@
 @import '../../../../../../assets/scss/variables';
 
 
+#notificationSettings{
+  display: flex;
+  & > span{
+    align-self: center;
+    padding-top: 5px;
+    padding-right: 7px;
+  }
+
+
+
+}
 //toggle switch
-$TgWidth: 40px;
-$TgHeigt: (34/60)*$TgWidth;
+$TgWidth: 70px;
+$TgHeight: 0.5*$TgWidth;
+$TgLeft: 0.1*$TgHeight;
+$TgButtDimameter: 0.8*$TgHeight;
+$TgTransform: $TgWidth - 2*$TgLeft - $TgButtDimameter;
+
+
 .switch {
   position: relative;
   display: inline-block;
   width: $TgWidth;
-  height: $TgHeigt;
+  height: $TgHeight;
   margin-bottom: 0;
   margin-top: 0.5rem;
 }
@@ -27,38 +43,52 @@ $TgHeigt: (34/60)*$TgWidth;
   transition: .4s;
 }
 
+
 .slider:before {
   position: absolute;
   content: "";
-  height: (26/60)*$TgWidth;
-  width: (26/60)*$TgWidth;
-  left: (4/60)*$TgWidth;
-  bottom: (4/60)*$TgWidth;
-  background-color: white;
+  height: $TgButtDimameter;
+  width: $TgButtDimameter;
+  left: $TgLeft;
+  bottom: 0.1*$TgHeight;
+  background-color: #cdcdcd;
   -webkit-transition: .4s;
   transition: .4s;
 }
 
-input:checked + .slider {
-  //background-color: #2196F3;
+input:checked {
+  & + .slider:before {
+    -webkit-transform: translateX($TgTransform);
+    -ms-transform: translateX($TgTransform);
+    transform: translateX($TgTransform);
+  }
+
+  & + .slider > span {
+    padding-left: 0.15*$TgWidth;
+  }
+
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX((26/60)*$TgWidth);
-  -ms-transform: translateX((26/60)*$TgWidth);
-  transform: translateX((26/60)*$TgWidth);
-}
+
 
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;
+  line-height: $TgHeight;
+  & > span{
+    padding-left: 0.5*$TgWidth;
+    color: #ffffff;
+    font-size: 0.9em;
+    font-weight: bold;
+  }
 }
 
 .slider.round:before {
   border-radius: 50%;
 }
+
 

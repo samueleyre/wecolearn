@@ -1,10 +1,10 @@
 <hr>
-<div class="form-group">
-    <span>        Recevoir des notifications par email :
+<div class="form-group" id="notificationSettings">
+    <span>        Recevoir des notifications par email
     </span>
     <label class="switch">
         <input id="searchBarTypeCheckbox" type="checkbox"  [(ngModel)]="entity.email_notifications" name="email_notifications" (click)="submitNotification()">
-        <span class="slider round" [style.background-color]="entity.email_notifications ? 'green' : 'red'"></span>
+        <span class="slider round" [style.background-color]="entity.email_notifications ? 'green' : 'red'"><span>{{entity.email_notifications ? 'OUI' : 'NON'}}</span></span>
     </label>
-    <span>{{entity.email_notifications ? 'OUI' : 'NON'}}</span>
+    <!--<span>{{entity.email_notifications ? 'OUI' : 'NON'}}</span>-->
 </div>
