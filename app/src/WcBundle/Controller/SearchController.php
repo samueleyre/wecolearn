@@ -44,6 +44,8 @@ class SearchController extends GPPDController
 
   /**
    * @Get("/search")
+   * @View( serializerGroups={"search"}
+  )
    */
   public function getSearchAction( Request $request )
   {
