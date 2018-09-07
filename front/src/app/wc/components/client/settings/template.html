@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-10 col-lg-8 offset-md-1 offset-lg-2">
+        <div class="col-12 col-md-8 col-lg-6 offset-md-2 offset-lg-3">
             <div class="bloc-container">
                 <div class="bloc">
                   <div class="bloc-title">
@@ -28,6 +28,7 @@
 
                      </fieldset>
                    </form>
+                    <hr>
                     <form class="form-horizontal" (ngSubmit)="f.form.valid && submitNewPassword(f)" #f="ngForm" novalidate>
                       <fieldset>
 
@@ -35,7 +36,7 @@
                           <label for="password">Nouveau mot de passe</label>
                           <input id="password" type="password" class="form-control showvalidity" name="password" [(ngModel)]="newpassword" #password="ngModel" required/>
                           <div *ngIf="f.submitted && password.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
-                          <password-strength-bar [passwordToCheck]="newpassword" [barLabel]="barLabel"></password-strength-bar>
+                          <password-strength-bar style="text-align: center" [style.textAlign] = "center" [passwordToCheck]="newpassword" [barLabel]="barLabel"></password-strength-bar>
                           <div *ngIf="message.password" class="help-block">{{message.password}}</div>
                         </div>
 

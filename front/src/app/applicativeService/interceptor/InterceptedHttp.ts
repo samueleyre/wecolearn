@@ -65,7 +65,7 @@ export class InterceptedHttp extends Http {
         if (url.substring(0,4) !== 'http' ) {
           url = this.updateUrl(url);
           apiRequest = true;
-        } 
+        }
         return super.get(url, this.getRequestOptionArgs(options, apiRequest));
     }
 

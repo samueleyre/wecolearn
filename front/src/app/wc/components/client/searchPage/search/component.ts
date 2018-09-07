@@ -85,7 +85,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
         this.cards = clients;
       });
 
-      this.loading = this.searchService.getLoading();
+      this.loading = this.searchService.getLoading('tag');
 
       this.loading.subscribe((loading)=> {
           this.currentlySearching = loading;

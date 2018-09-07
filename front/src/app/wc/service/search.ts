@@ -19,9 +19,15 @@ import 'rxjs/add/observable/empty'
 export class SearchService {
 
   currentFoundClients: Subject<any[]>;
+  currentFoundAddress: any[];
   currentSearch: Object;
   public loading: Subject<boolean>;
+  public loadingOsm: Subject<boolean>;
   private currentlySearching: boolean = false;
+
+  private setNameForOsm = function(elmnt:any) {
+    return elmnt['value'] = elmnt['name'];
+  };
 
 
 
@@ -33,7 +39,10 @@ export class SearchService {
   ) {
 
     this.currentFoundClients = new BehaviorSubject<any[]>(null);
+    // this.currentFoundAddress= new BehaviorSubject<any[]>(null);
+    this.currentFoundAddress = [];
     this.loading = new BehaviorSubject<boolean>(false);
+    this.loadingOsm = new BehaviorSubject<boolean>(false);
     this.currentSearch = {};
 
   }
@@ -93,13 +102,47 @@ export class SearchService {
 
   }
 
+  searchOsmNames(name: string) : Observable<Array<any>> {
+
+    // let Key = "TeFzkpW0MZgyiMhEn5zx"; // todo: In Config File
+    let Key = "RjgOREa32n5zWJ7fvEw2"; // todo: In Config File
+
+    let route = "https://geocoder.tilehosting.com/fr/q/";
+
+    name = encodeURI(name);
+
+    let endRoute = ".js?key="+Key;
+
+    return this.http.get(`${route}${name}${endRoute}`).map((response)=>{
+      console.log(response)
+      this.currentFoundAddress = response.json();
+
+      let citys = response.json().results;
+      console.log(citys)
+      citys.map(this.setNameForOsm);
+
+      return citys;
+
+    });
+
+  }
 
   getCurrentFoundClients(): Observable<any[]> {
     return this.currentFoundClients.asObservable();
   }
 
-  getLoading(): Observable<boolean>{
-    return this.loading.asObservable();
+  getCurrentFoundAddress(): any[] {
+    return this.currentFoundAddress;
+  }
+
+
+  getLoading(type:string): Observable<boolean>{
+    switch (type) {
+      case 'tag':
+        return this.loading.asObservable();
+
+
+    }
   }
 
 
