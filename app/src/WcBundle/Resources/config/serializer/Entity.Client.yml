@@ -4,17 +4,17 @@ WcBundle\Entity\Client:
     enable_max_depth: true
     properties:
         id:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         created:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         firstName:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         lastName:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         profilUrl:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         biographie:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         intensity:
           groups: [ input, output ]
         atmosphere:
@@ -24,7 +24,7 @@ WcBundle\Entity\Client:
         longitude:
           groups: [ input, output ]
         tags:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         sentMessages:
           groups: [ input, output ]
           max_depth: 4
@@ -34,7 +34,7 @@ WcBundle\Entity\Client:
         user:
           groups: [ input ]
         image:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         showProfil:
           groups: [ input, output ]
         emailNotifications:

@@ -5,9 +5,9 @@ WcBundle\Entity\Tag:
         id:
           groups: [ input, output ]
         name:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         type:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         created:
           groups: [ output ]
         iteration:

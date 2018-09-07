@@ -5,7 +5,7 @@ WcBundle\Entity\Image:
         id:
           groups: [ input, output ]
         filename:
-          groups: [ output ]
+          groups: [ output, search ]
         created:
           groups: [ output ]
 
