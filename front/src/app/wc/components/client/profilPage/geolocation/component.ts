@@ -15,10 +15,10 @@ import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 
 
-
 @Component({
     selector: 'geolocation',
     template: `
+      <!--<searchOsm (latitude)="latitude" (longitude)="longitude"></searchOsm> // This does not work to search specific address, only cities -->
       <div class="form-group center">
         <div class="input-group">
           <span class="input-group-addon">Changer d'adresse</span>
@@ -31,8 +31,11 @@ import { MapsAPILoader } from '@agm/core';
       </agm-map>
         
   `,
-    styleUrls : ['style.scss']
+    styleUrls : ['style.scss'],
+
 })
+
+
 
 @Injectable()
 export class GeolocationComponent implements OnInit {
@@ -45,6 +48,7 @@ export class GeolocationComponent implements OnInit {
     @Output() longitudeChange = new EventEmitter<number>();
 
     public searchControl: FormControl;
+    public searchControlOsm: FormControl;
     public zoom: number;
 
     @ViewChild("search")
@@ -61,6 +65,7 @@ export class GeolocationComponent implements OnInit {
 
         //create search FormControl
         this.searchControl = new FormControl();
+        this.searchControlOsm = new FormControl();
 
         //set current position
         if (!this.latitude) {
@@ -74,6 +79,8 @@ export class GeolocationComponent implements OnInit {
     }
 
     private load() {
+
+
         this.mapsAPILoader.load().then(() => {
             let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
                 types: ["address"]
