@@ -61,8 +61,12 @@ export class InterceptedHttp extends Http {
     }
 
     get( url: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.get(url, this.getRequestOptionArgs(options));
+        let apiRequest = false;
+        if (url.substring(0,4) !== 'http' ) {
+          url = this.updateUrl(url);
+          apiRequest = true;
+        } 
+        return super.get(url, this.getRequestOptionArgs(options, apiRequest));
     }
 
     post( url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
@@ -89,17 +93,18 @@ export class InterceptedHttp extends Http {
         return  environment.origin + req;
     }
 
-    private getRequestOptionArgs(options?: RequestOptionsArgs) : RequestOptionsArgs {
+    private getRequestOptionArgs(options?: RequestOptionsArgs, apiRequest: boolean = true) : RequestOptionsArgs {
         if (options == null) {
             options = new RequestOptions();
         }
         if (options.headers == null) {
             options.headers = new Headers();
         }
-        let headers = this.headerBag.get([]);
-        for( let i in headers ) {
-                options.headers.append( headers[i].name, headers[i].value);
-
+        if (apiRequest) {
+          let headers = this.headerBag.get([]);
+          for( let i in headers ) {
+            options.headers.append( headers[i].name, headers[i].value);
+          }
         }
 
         return options;
