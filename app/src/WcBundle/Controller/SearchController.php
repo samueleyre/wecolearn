@@ -25,7 +25,6 @@ use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\SerializationContext;
 
 
-//TODO : usefull :     * @View(serializerGroups={"test"})
 
 
 
