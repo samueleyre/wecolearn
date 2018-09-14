@@ -38,6 +38,9 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
     private searchInput : string;
   private loading: Observable<boolean>;
   private currentlySearching: boolean = false;
+  private loaderPath: string;
+  private searchBarStyle : object;
+
 
 
   constructor( protected service: GPPDService,
@@ -51,6 +54,8 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
 
 
     ngOnInit() {
+      this.loaderPath = GPPDComponent.updateUrl('/home/')+"loader.gif";
+
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
           if (this.router.url === "/search") {
@@ -61,7 +66,12 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
 
       this.loading = this.searchService.getLoading('tag');
       this.loading.subscribe((loading)=> {
+        console.log("changed currently searching", this.currentlySearching)
             this.currentlySearching = loading;
+            if (!loading) {
+              this.searchBarStyle = {
+              };
+            }
           }
       )
     }
@@ -80,6 +90,10 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
       if (this.currentlySearching) {
         return;
       }
+
+      this.searchBarStyle = {
+        backgroundImage: "url("+this.loaderPath+")"
+      };
 
       if (!text) {
         text = this.searchInput;
