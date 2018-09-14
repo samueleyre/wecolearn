@@ -40,6 +40,8 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
   private currentlySearching: boolean = false;
   private loaderPath: string;
   private searchBarStyle : object;
+  private loadingTemplate: string;
+
 
 
 
@@ -55,6 +57,7 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
 
     ngOnInit() {
       this.loaderPath = GPPDComponent.updateUrl('/home/')+"loader.gif";
+      this.loadingTemplate = '<span class="input-loading" style="background-image: url('+this.loaderPath+');">Recherche en cours</span>';
 
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {

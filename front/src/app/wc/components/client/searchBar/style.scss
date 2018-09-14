@@ -9,10 +9,16 @@
 
 
 
-.loading {
+.loading, .input-loading {
   background-color: #ffffff;
   background-size: 25px 25px;
   background-position:right center;
   background-repeat: no-repeat;
   background-position-x: 95%;
+}
+
+.input-loading {
+  background-color: #5cff5a;
+  color: #cbcbcb;
+  font-style: italic;
 }
