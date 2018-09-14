@@ -4,7 +4,10 @@
             <div class="bloc-container">
                 <div class="bloc">
                     <div class="bloc-title">
-                        <h2 class="center">Profil</h2>
+                        <h2 class="center">
+                          <span *ngIf="!firstTime">Profil</span>
+                          <span *ngIf="firstTime">Création du profil</span>
+                        </h2>
                     </div>
                     <div class="bloc-content">
                         <form class="form-horizontal" (ngSubmit)="f.form.valid && submit(f)" #f="ngForm" novalidate>
@@ -13,138 +16,193 @@
                             <!-- Text input-->
                             <div class="form-group row" >
                                 <div class="col-md-6">
-                                    <label class="col-md-12 control-label" for="FirstName" >Prénom</label>
-                                    <div class="input-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
-                                        <input id="firstName" name="firstName" placeholder="" class="form-control input-md" [(ngModel)]="entity.first_name" #firstName="ngModel" type="text">
-                                        <div *ngIf="f.submitted && !firstName.valid" class="help-block">Le prénom est obligatoire</div>
+                                  <div class="col-md-12 ">
+                                    <label class="control-label label-form" for="FirstName" >Prénom</label>
+                                    <br>
+                                    <span class="value-span" *ngIf="!editing.firstName">{{entity.first_name}}</span>
+                                    <div *ngIf="editing.firstName" class="input-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+                                      <input id="firstName" name="firstName" placeholder="" class="form-control input-md" [(ngModel)]="entity.first_name" #firstName="ngModel" type="text">
+                                      <div *ngIf="f.submitted && !firstName.valid" class="help-block">Le prénom est obligatoire</div>
                                     </div>
-                                    <label class="col-md-12 control-label" for="lastName">Nom</label>
-                                    <div class="input-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+                                    <button *ngIf="!editing.firstName" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('firstName')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    <div *ngIf="editing.firstName && !firstTime" class="btn-container">
+                                    <button name="submit" class="btn btn-sm  btn-primary-wc">Enregistrer</button>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12 ">
+                                   <label class="control-label label-form" for="lastName">Nom</label>
+                                    <br>
+                                    <span class="value-span" *ngIf="!editing.lastName">{{entity.last_name}}</span>
+                                    <div *ngIf="editing.lastName" class="input-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
                                         <!--<div class="col-md-12">-->
                                         <input id="lastName" name="lastName" placeholder="" class="form-control input-md" [(ngModel)]="entity.last_name" #lastName="ngModel" type="text">
                                         <div *ngIf="f.submitted && !lastName.valid" class="help-block">Le nom est obligatoire</div>
                                         <!--</div>-->
                                     </div>
+                                    <button *ngIf="!editing.lastName" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('lastName')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    <div *ngIf="editing.lastName && !firstTime" class="btn-container">
+                                      <button  name="submit" class="btn btn-sm  btn-primary-wc">Enregistrer</button>
+                                    </div>
+                                  </div>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="col-md-12 control-label" >Photo de profil</label>
+                                    <label class="col-md-12 label-form control-label" >Photo de profil</label>
                                     <div class="input-group" style="padding-left: 10%;">
-                                        <div *ngIf="entity.image">
-                                            <div [hidden]="modify">
-                                                <img *ngIf="entity.image && entity.image.filename" width="100px" src="{{webPath}}img/{{entity.image.filename}}" alt="">
-                                                <img *ngIf="!entity.image" width="100px" src="{{webPath}}app_img/{{baseImageName}}" alt="">
+                                        <div *ngIf="entity.image && !editing.image">
+                                            <img *ngIf="entity.image && entity.image.filename" width="100px" src="{{webPath}}img/{{entity.image.filename}}" alt="">
+                                            <img *ngIf="!entity.image" width="100px" src="{{webPath}}app_img/{{baseImageName}}" alt="">
 
-                                                <button type="button" (click)="changePhoto(entity.id)" class="btn"><i class="fa fa-pencil" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <upload *ngIf="modify"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
+                                            <button type="button" (click)="makeEditable('image')" class="btn btn-sm btn-edit"><i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </button>
                                         </div>
-                                        <upload *ngIf="!entity.image"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
+                                        <upload *ngIf="!entity.image || editing.image"  [url]="'/api/uploads'" [filename]="entity.id" (complete)="onComplete(entity.id, $event)" (error)="onError(entity.id, $event)"></upload>
                                         <div *ngIf="uploadError[entity.id]" class="alert alert-danger">{{uploadError[entity.id]}}</div>
                                     </div>
-
                                 </div>
                             </div>
 
 
 
                             <!-- Text input-->
-                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !learnTags.valid }">
-                                <label class="col-md-6 control-label" for="learnTags">Ce que je veux apprendre</label>
-                                <div class="col-md-12">
+                            <div class="form-group" >
+                            <!--<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !learnTags.valid }">-->
+                                <label class="col-md-6 control-label label-form" for="learnTags">Ce que je veux apprendre</label>
+                                <div *ngIf="!editing.learnTags" class="col-md-12">
+                                  <span class="value-span"><span *ngFor="let tag of entity.learn_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== entity.learn_tags.length - 1">,</span></span></span>
+                                  <label for="editLearnTags">
+                                    <span class="help-input" *ngIf="entity.learn_tags && entity.learn_tags.length === 0">Ajouter votre premier mot-clef ici !</span>
+                                    <button id="editLearnTags" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('learnTags')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                  </label>
+                                </div>
+                                <div *ngIf="editing.learnTags" class="col-md-12">
                                     <tag-input id="learnTags" [modelAsStrings]="true"  [theme]="'foundation-theme'" [(ngModel)]='entity.learn_tags' name="learnTags" #learnTags="ngModel"  [errorMessages]="errorMessages"
                                                [validators]="validators">
                                         <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
-                                        <!--<tag-input-dropdown [autocompleteItems]="[{display: 'Item1', value: 0}, 'item2', 'item3']"></tag-input-dropdown>-->
                                     </tag-input>
+                                  <div *ngIf="!firstTime" class="btn-container">
+                                    <button name="submit" class="btn btn-sm  btn-primary-wc">Enregistrer</button>
+                                  </div>
                                 </div>
                             </div>
 
 
                           <!-- Textarea -->
-                          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !biographie.valid }">
-                            <label class="col-md-12 control-label" for="biographie">Pourquoi voulez-vous apprendre ceci, quels sont vos motivations et vos projets ? </label>
-                            <div class="col-md-12">
+                          <div class="form-group">
+                          <!--<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !biographie.valid }">-->
+                            <label class="col-md-12 control-label label-form" for="biographie">Pourquoi voulez-vous apprendre ceci, quels sont vos motivations et vos projets ? </label>
+                            <div class="col-md-12" *ngIf="!editing.biographie">
+                              <span class="value-span">{{entity.biographie}}</span>
+                              <label for="editBiographie">
+                                <span class="help-input" *ngIf="!entity.biographie">Ajouter votre biographie ici !</span>
+                                <button  id="editBiographie" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('biographie')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                              </label>
+                            </div>
+                            <div *ngIf="editing.biographie" class="col-md-12">
                               <textarea placeholder="Je cherche à acquérir des compétences en ...'" id="biographie" class="form-control" rows="5" [(ngModel)]="entity.biographie" name="biographie" #biographie="ngModel"></textarea>
                               <!--<quill-editor id="biographie" [theme]="'bubble'" [placeholder]="'Freelance cherchant à acquérir des compétences dans le code.'"   [(ngModel)]="entity.biographie" name="biographie" #biographie="ngModel" [modules]="quillConfig"></quill-editor>-->
                               <div *ngIf="f.submitted && !biographie.valid" class="help-block">La biographie est obligatoire</div>
+                              <div *ngIf="!firstTime" class="btn-container">
+                                <button  name="submit" class="btn btn-sm btn-primary-wc">Enregistrer</button>
+                              </div>
                             </div>
                           </div>
 
 
 
                           <!-- Text input-->
-                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !knowTags.valid }">
-                                <label class="col-md-6 control-label" for="knowTags">Ce que je connais</label>
-                                <div class="col-md-12">
-                                    <tag-input id="knowTags" [modelAsStrings]="true" [(ngModel)]='entity.know_tags' name="knowTags"  #knowTags="ngModel"></tag-input>
+                            <div class="form-group">
+                              <label class="col-md-6 control-label label-form" for="knowTags">Ce que je connais</label>
+                              <div *ngIf="!editing.knowTags" class="col-md-12">
+                                <span class="value-span"><span *ngFor="let tag of entity.know_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== entity.know_tags.length - 1">,</span></span></span>
+
+                                <label for="editKnowTags">
+                                  <span class="help-input" *ngIf="entity.know_tags && entity.know_tags.length === 0">Ajouter votre premier mot-clef ici !</span>
+                                  <button id="editKnowTags" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('knowTags')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </label>
+                              </div>
+                              <div *ngIf="editing.knowTags" class="col-md-12">
+                                <tag-input id="knowTags" [modelAsStrings]="true"  [theme]="'foundation-theme'" [(ngModel)]='entity.know_tags' name="knowTags" #knowTags="ngModel"  [errorMessages]="errorMessages"
+                                           [validators]="validators">
+                                  <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
+                                </tag-input>
+                                <div *ngIf="!firstTime" class="btn-container">
+                                  <button name="submit" class="btn btn-sm  btn-primary-wc">Enregistrer</button>
                                 </div>
+                              </div>
                             </div>
+                          <!--<div class="col-md-12">-->
+                            <!--<tag-input id="knowTags" [modelAsStrings]="true" [(ngModel)]='entity.know_tags' name="knowTags"  #knowTags="ngModel"></tag-input>-->
+                          <!--</div>-->
 
                             <!-- Text input-->
-                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !teachTags.valid }">
-                                <label class="col-md-6 control-label" for="teachTags">Ce que j'ai envie de transmettre</label>
-                                <div class="col-md-12">
-                                    <tag-input id="teachTags" [modelAsStrings]="true" [(ngModel)]='entity.teach_tags' name="teachTags"  #teachTags="ngModel"></tag-input>
+                            <div class="form-group">
+                              <label class="col-md-6 control-label label-form" for="teachTags">Ce que j'ai envie de transmettre</label>
+                              <div *ngIf="!editing.teachTags" class="col-md-12">
+                                <span class="value-span"><span *ngFor="let tag of entity.teach_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== entity.teach_tags.length - 1">,</span></span></span>
+                                <label for="editTeachTags">
+                                  <span class="help-input" *ngIf="entity.teach_tags && entity.teach_tags.length === 0">Ajouter votre premier mot-clef ici !</span>
+                                  <button id="editTeachTags" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('teachTags')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </label>
+                              </div>
+                              <div *ngIf="editing.teachTags" class="col-md-12">
+                                <tag-input id="teachTags" [modelAsStrings]="true"  [theme]="'foundation-theme'" [(ngModel)]='entity.teach_tags' name="teachTags" #teachTags="ngModel"  [errorMessages]="errorMessages"
+                                           [validators]="validators">
+                                  <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
+                                </tag-input>
+                                <div *ngIf="!firstTime" class="btn-container">
+                                  <button name="submit" class="btn btn-sm  btn-primary-wc">Enregistrer</button>
                                 </div>
+                              </div>
                             </div>
+
 
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-6 control-label" for="intensity">Le nombre d'heures par semaine que je souhaiterais passer à apprendre</label>
-                                <div class="col-md-12">
-                                    <div class="table">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1h</td>
-                                                    <td>2h</td>
-                                                    <td>3h</td>
-                                                    <td>4h</td>
-                                                    <td>5h</td>
-                                                    <td>6h</td>
-                                                    <td>7h</td>
-                                                    <td>8h</td>
-                                                    <td>9h</td>
-                                                    <td>10h</td>
-                                                    <td>+10h</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <input class="form-control" id="intensity" type="range" [(ngModel)]='entity.intensity' min="1" max="11" name="intensity"  >
-
+                              <label class="col-md-12 control-label label-form" for="intensity">L'intensité à laquelle je souhaiterais apprendre</label>
+                              <div class="col-md-12" *ngIf="!editing.intensity">
+                                <span *ngIf="entity.intensity" class="value-span">{{entity.intensity}} heures par semaine</span>
+                                <label for="editIntensity">
+                                  <span class="help-input" *ngIf="!entity.intensity">Choisissez ici l'intensité à laquelle vous souhaitez apprendre</span>
+                                  <button id="editIntensity" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('intensity')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </label>
+                              </div>
+                              <div  *ngIf="editing.intensity" class="col-md-12">
+                                <div class="rangeInput">
+                                  <div class="table">
+                                    <table>
+                                      <tbody>
+                                      <tr>
+                                        <td *ngFor="let range of ranges" [ngClass]="{ 'selected-range': entity.intensity === range.value }">{{range.text}}</td>
+                                      </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <input class="form-control" id="intensity" type="range" [(ngModel)]='entity.intensity' min="1" max="11" name="intensity"  >
                                 </div>
+                                <div *ngIf="!firstTime" class="btn-container">
+                                  <button name="submit" class="btn btn-sm  btn-primary-wc">Enregistrer</button>
+                                </div>
+                              </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-6 control-label" >Ambiance</label>
+                                <label class="col-md-6 control-label label-form" >Ambiance</label>
                                 <div class="col-md-12">
                                     <div class="imageContainer">
-                                        <label>
-                                            <span>Coworking</span>
-                                            <input type="radio" [value]="1"  [(ngModel)]="entity.atmosphere" name="atmosphere" id="coworking">
-                                             <img src="{{webPath}}settings/coworking.jpg">
-                                        </label>
-                                        <label>
-                                            <span>Maison</span>
-                                            <input type="radio"  [value]="2"  [(ngModel)]="entity.atmosphere" name="atmosphere" id="Maison">
-                                            <img src="{{webPath}}settings/home.jpeg">
-                                        </label>
-                                        <label>
-                                            <span>Bureau</span>
-                                            <input type="radio" name="atmosphere" id="Bureau">
-                                            <img src="{{webPath}}settings/office.jpeg">
-                                        </label>
-                                        <label>
-                                            <span>Nature</span>
-                                            <input type="radio" name="atmosphere" id="Nature">
-                                            <img src="{{webPath}}settings/nature.jpg">
+                                        <label *ngFor="let atmosphere of atmospheres" [ngClass]="{'editing-image': editing.atmosphere}">
+                                          <div *ngIf="editing.atmosphere || (!editing.atmosphere && entity.atmosphere === atmosphere.value)">
+                                            <span>{{atmosphere.text}}</span>
+                                            <button *ngIf="!editing.atmosphere && entity.atmosphere === atmosphere.value" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('atmosphere')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                            <input type="radio" [value]="atmosphere.value"  [(ngModel)]="entity.atmosphere" name="atmosphere" id="atmosphere.image">
+                                            <img *ngIf="editing.atmosphere" src="{{webPath}}settings/{{atmosphere.image}}">
+                                          </div>
                                         </label>
                                     </div>
-                                    <!--<input class="form-control" id="atmosphere" type="range" [(ngModel)]='atmosphere' min="0" max="10" name="atmosphere" >-->
+                                    <div *ngIf="!firstTime" class="btn-container">
+                                      <button *ngIf="editing.atmosphere" name="submit" class="btn btn-sm btn-primary-wc">Enregistrer</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -152,9 +210,12 @@
 
 
                             <div class="form-group">
-                                <label class="col-md-6 control-label" for="teachTags">Ma position</label>
+                                <label class="col-md-6 control-label label-form" >
+                                  <span>Ma position </span>
+                                  <button *ngIf="!editing.geolocation" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('geolocation')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </label>
                                 <div class="col-md-12">
-                                    <geolocation [(latitude)]="entity.latitude" [(longitude)]="entity.longitude"></geolocation>
+                                    <geolocation [firstTime]="firstTime" [editing]="editing.geolocation" [(latitude)]="entity.latitude" [(longitude)]="entity.longitude"></geolocation>
                                 </div>
                             </div>
 
@@ -165,14 +226,19 @@
                               <p *ngIf="( !entity.first_name || !entity.biographie || !entity.learn_tags[0])">Pour rendre accessible votre profil il faut remplir votre description de profil et donner au moins une chose que vous souhaitez apprendre.</p>
                               <div class="form-check">
                                 <input name="showProfil"  [disabled]="!( entity.first_name && entity.biographie && entity.learn_tags[0])" class="form-check-input"type="checkbox" [(ngModel)]="entity.show_profil" id="showProfil">
-                                <label class="form-check-label" for="showProfil">Afficher le profil ?</label>
+                                <label class="form-check-label label-form" for="showProfil">Afficher le profil ?</label>
                               </div>
                             </div>
+                          </div>
+                          <div class="col-md-12">
+                            <p class="help-input">
+                              Votre profil appaîtra dans les résultats de recherche de WeColearn pour les utilisateurs connectés et non connectés, seul les utilisateurs connectés pourront communiquer avec vous.
+                            </p>
                           </div>
 
 
                             <!-- Button -->
-                            <div class="form-group">
+                            <div class="form-group" *ngIf="firstTime">
                                 <div class="col-md-12 center">
                                     <button id="submit" name="submit" class="btn btn-primary-wc">Enregistrer</button>
                                 </div>

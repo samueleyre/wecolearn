@@ -32,7 +32,8 @@
     }
 
     &.ng2-tag-input--loading {
-        border: none;
+        //border: none;
+        border-bottom-color: map-get($theme, 'container-border-bottom-loading');;
     }
 
     &.ng2-tag-input--disabled {

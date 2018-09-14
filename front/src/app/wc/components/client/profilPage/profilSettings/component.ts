@@ -19,6 +19,7 @@ import { NgForm }             from '@angular/forms';
 import { IEntity }                from '../../../../../applicativeService/entity/interface';
 import { Client }                from './../../../../entities/client/entity';
 import { Tag }                from './../../../../entities/tag/entity';
+import { Image }                from './../../../../entities/image/entity';
 
 import { GPPDService }            from './../../../../service/gppd';
 import { ClientService }            from './../../../../service/client';
@@ -52,6 +53,76 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     private quillConfig : {
       "toolbar" : false
     }
+    private editing: object = {};
+    private ranges = [
+      {
+        value: 1,
+        text: "1h"
+      },
+      {
+        value: 2,
+        text: "2h"
+      },
+      {
+        value: 3,
+        text: "3h"
+      },
+      {
+        value: 4,
+        text: "4h"
+      },
+      {
+        value: 5,
+        text: "5h"
+      },
+      {
+        value: 6,
+        text: "6h"
+      },
+      {
+        value: 7,
+        text: "7h"
+      },
+      {
+        value: 8,
+        text: "8h"
+      },
+      {
+        value: 9,
+        text: "9h"
+      },
+      {
+        value: 10,
+        text: "10h"
+      },
+      {
+        value: 11,
+        text: "+10h"
+      },
+    ];
+    private atmospheres = [
+      {
+        value: 1,
+        image: "coworking.jpg",
+        text: "Coworking",
+      },
+      {
+        value: 3,
+        image: "office.jpeg",
+        text: "Bureau"
+      },
+      {
+        value: 2,
+        image: "home.jpeg",
+        text: "Maison"
+      },
+      {
+        value: 4,
+        image: "nature.jpg",
+        text: "Nature",
+      },
+    ];
+    private firstTime = false;
 
 
   constructor( protected service: GPPDService, protected clientService : ClientService,  protected tagService : TagService,  private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, ) {
@@ -59,6 +130,8 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         this.base_url = r;
         this.tagService = tagService;
         this.clientService= clientService;
+        this.initEditable();
+
 
     }
 
@@ -73,12 +146,19 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
         
         this.service.getOne().subscribe( ( client: IEntity) => {
-            //console.log("client", client);
             this.setEntity(client);
-            //console.log("entity on loaded", client);
             if (!this.entity['latitude']) {
                 this.setDefaultLatLong();
             }
+            if (!this.entity['image']) {
+              this.entity['image'] = new Image();
+            }
+            // if (!this.entity['biographie']) {
+            //   this.firstTime = true;
+            //   this.initEditable(true);
+            // }
+
+            // console.log(client)
         });
     }
 
@@ -111,7 +191,8 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         return client;
     }
 
-    submit(f:NgForm ) {
+    submit() {
+        this.initEditable();
         this.joinTags();
         this.service.setApi(this.getApi());
         this.service.patchOne( this.entity ).subscribe(
@@ -121,8 +202,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
                 if (!this.entity['latitude']) {
                     this.setDefaultLatLong();
                 }
-
-                MessageService.info('Modification prise en compte !');
+                // MessageService.info('Modification prise en compte !');
             },
             error => { console.log(error) }
         );
@@ -169,8 +249,8 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     {
         this.entity['image'] = response.response['image'];
         this.entity['avatarSrc'] = response.response['avatarSrc'];
-        this.modify = false;
         this.uploadError[id] = false;
+        this.submit();
     }
 
     onError(id:string, status:number)
@@ -183,10 +263,27 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     }
 
 
-    changePhoto(id : number) {
-    // console.log(id)
-    this.modify = true;
-    // console.log(this.modify);
+    makeEditable(idName:string) {
+      this.initEditable();
+      this.editing[idName] = true;
+    }
+
+    initEditable(value: boolean = false) {
+
+      this.editing= {
+        firstName : value,
+        lastName : value,
+        learnTags : value,
+        knowTags : value,
+        teachTags : value,
+        biographie: value,
+        intensity: value,
+        geolocation: value,
+      };
+
+      // if (this.entity['first_name'] === '') this.editing['first_name'] = true; // the intention was to make editing mode apear when value in DB was null
+      // if (this.entity['last_name'] === '') this.editing['last_name'] = true;
+
     }
 
     // tags ------------

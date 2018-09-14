@@ -85,6 +85,8 @@ form input.showvalidity.ng-valid.ng-dirty, .ng-valid .ql-editor {
 }
 
 
+
+
 /*modal*/
 
 @media (min-width: 576px) {
@@ -199,6 +201,24 @@ button.close{
   border-color: #f99178;
 }
 
+.btn-edit {
+  border: transparent;
+  background-color: transparent;
+  color: #868e96;
+}
+
+.btn-edit:hover, .btn-edit:focus{
+  color: #3e3e3e;
+  border: transparent;
+  background-color: transparent;
+}
+
 .dropdown-item:active {
   background-color: #f99178 !important;
+}
+
+/*UPLOAD INPUT*/
+
+upload{
+  max-width: 100%;
 }
