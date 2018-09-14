@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
                   if ( result === true ) {
                       this.loading = false;
                     this.loggerService.log("login --> settings")
-                    this.router.navigate(['/profilsettings']);
+                    this.router.navigate(['/search']);
                   }
               },
               error => {

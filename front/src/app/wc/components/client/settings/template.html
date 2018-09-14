@@ -11,16 +11,23 @@
                     <form class="form-horizontal" (ngSubmit)="f1.form.valid && submitChangeEmail(f1)" #f1="ngForm" novalidate>
                     <fieldset>
 
-                       <div class="form-group" [ngClass]="{ 'has-error': f1.submitted && !email.valid }">
+                       <div class="form-group" >
                          <label for="email">Email</label>
-                         <input id="email" type="email" class="form-control showvalidity" name="email" [(ngModel)]="newemail" #email="ngModel" required pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"/>
-                         <div *ngIf="f1.submitted && !email.valid" class="help-block">L'adresse email n'est pas valide</div>
-                         <div *ngIf="message.email" class="help-block">{{message.email}}</div>
+                         <div *ngIf="!editing.newemail">
+                           <span class="value-span">{{user.email}}</span>
+                           <button type="button" class="btn btn-sm btn-edit" (click)="makeEditable('newemail')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                         </div>
+                         <div *ngIf="editing.newemail" [ngClass]="{ 'has-error': f1.submitted && !email.valid }">
+                           <input id="email" type="email" class="form-control showvalidity" name="email" [(ngModel)]="newemail" #email="ngModel" required pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"/>
+                           <div *ngIf="f1.submitted && !email.valid" class="help-block">L'adresse email n'est pas valide</div>
+                           <div *ngIf="message.email" class="help-block">{{message.email}}</div>
+                         </div>
                        </div>
 
                        <!-- Button -->
-                       <div class="form-group">
+                       <div *ngIf="editing.newemail" class="form-group">
                          <div class="col-md-12 center">
+                           <button id="cancelEmail" type="button" (click)="initEditable()" class="btn btn-secondary">Annuler</button>
                            <button id="submitEmail" name="submit" class="btn btn-primary-wc">Changer l'email</button>
                          </div>
                        </div>
@@ -32,16 +39,31 @@
                     <form class="form-horizontal" (ngSubmit)="f2.form.valid && submitNewPassword(f)" #f2="ngForm" novalidate>
                       <fieldset>
 
-                        <div class="form-group" [ngClass]="{ 'has-error': f2.submitted && !password.valid }">
-                          <label for="password">Nouveau mot de passe</label>
-                          <input id="password" type="password" class="form-control showvalidity" name="password" [(ngModel)]="newpassword" #password="ngModel" required/>
-                          <div *ngIf="f2.submitted && password.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
-                          <password-strength-bar style="text-align: center" [style.textAlign] = "center" [passwordToCheck]="newpassword" [barLabel]="barLabel"></password-strength-bar>
-                          <div *ngIf="message.password" class="help-block">{{message.password}}</div>
+                        <div class="form-group" >
+                          <label for="password">Mot de passe</label>
+                          <div *ngIf="!editing.newpassword">
+                            <span class="value-span">********</span>
+                            <button type="button" class="btn btn-sm btn-edit" (click)="makeEditable('newpassword')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                          </div>
+                          <div *ngIf="editing.newpassword" [ngClass]="{ 'has-error': f2.submitted && !password.valid }">
+                            <input id="password" type="password" class="form-control showvalidity" name="password" [(ngModel)]="newpassword" #password="ngModel" required/>
+                            <div *ngIf="f2.submitted && password.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
+                            <div style="display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                margin-top: 10px;">
+                              <span style="float: left; ">
+                                Difficulté
+                              </span>
+                                <password-strength-bar style="text-align: center" [style.textAlign] = "center" [passwordToCheck]="newpassword" [barLabel]="barLabel"></password-strength-bar>
+                            </div>
+                            <div *ngIf="message.password" class="help-block">{{message.password}}</div>
+                          </div>
                         </div>
 
-                        <div class="form-group">
+                        <div *ngIf="editing.newpassword" class="form-group">
                           <div class="col-md-12 center">
+                            <button id="cancelPassword" type="button" (click)="initEditable()" class="btn btn-secondary">Annuler</button>
                             <button id="submitPassword" name="submit" class="btn btn-primary-wc">Changer mot de passe</button>
                           </div>
                         </div>

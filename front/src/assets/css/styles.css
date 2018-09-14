@@ -224,3 +224,9 @@ button.close{
 upload{
   max-width: 100%;
 }
+
+/*pwd strength bar*/
+
+password-strength-bar{
+  text-align: center;
+}

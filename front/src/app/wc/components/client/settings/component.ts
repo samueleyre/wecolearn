@@ -47,6 +47,8 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
   private user: User;
   private newemail : string;
   private newpassword : string;
+  private editing: object = {};
+
 
   constructor( protected service: GPPDService, protected clientService : ClientService, private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, private userService : UserService,
   ) {
@@ -57,8 +59,10 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
           email: null,
           password: null
         }
+         this.initEditable();
 
-    }
+
+  }
 
 
     ngOnInit() {
@@ -83,6 +87,7 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
   submitChangeEmail(f:NgForm) {
 
     this.callApi({email: this.newemail});
+    this.initEditable();
 
   }
 
@@ -98,6 +103,8 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
   submitNewPassword(f:NgForm) {
 
     this.callApi({password: this.newpassword });
+    this.initEditable();
+
 
   }
 
@@ -144,7 +151,22 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
      return new User();
   }
 
+  initEditable(value: boolean = false) {
 
+    this.editing= {
+      newemail : value,
+      newpassword: value,
+    };
+
+    // if (this.entity['first_name'] === '') this.editing['first_name'] = true; // the intention was to make editing mode apear when value in DB was null
+    // if (this.entity['last_name'] === '') this.editing['last_name'] = true;
+
+  }
+
+  makeEditable(idName:string) {
+    this.initEditable();
+    this.editing[idName] = true;
+  }
 
 
 
