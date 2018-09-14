@@ -8,13 +8,13 @@
                   </div>
                   <div class="bloc-content">
 
-                    <form class="form-horizontal" (ngSubmit)="f.form.valid && submitChangeEmail(f)" #f="ngForm" novalidate>
+                    <form class="form-horizontal" (ngSubmit)="f1.form.valid && submitChangeEmail(f1)" #f1="ngForm" novalidate>
                     <fieldset>
 
-                       <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                       <div class="form-group" [ngClass]="{ 'has-error': f1.submitted && !email.valid }">
                          <label for="email">Email</label>
                          <input id="email" type="email" class="form-control showvalidity" name="email" [(ngModel)]="newemail" #email="ngModel" required pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"/>
-                         <div *ngIf="f.submitted && !email.valid" class="help-block">L'adresse email n'est pas valide</div>
+                         <div *ngIf="f1.submitted && !email.valid" class="help-block">L'adresse email n'est pas valide</div>
                          <div *ngIf="message.email" class="help-block">{{message.email}}</div>
                        </div>
 
@@ -29,13 +29,13 @@
                      </fieldset>
                    </form>
                     <hr>
-                    <form class="form-horizontal" (ngSubmit)="f.form.valid && submitNewPassword(f)" #f="ngForm" novalidate>
+                    <form class="form-horizontal" (ngSubmit)="f2.form.valid && submitNewPassword(f)" #f2="ngForm" novalidate>
                       <fieldset>
 
-                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                        <div class="form-group" [ngClass]="{ 'has-error': f2.submitted && !password.valid }">
                           <label for="password">Nouveau mot de passe</label>
                           <input id="password" type="password" class="form-control showvalidity" name="password" [(ngModel)]="newpassword" #password="ngModel" required/>
-                          <div *ngIf="f.submitted && password.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
+                          <div *ngIf="f2.submitted && password.errors?.required" class="help-block">Le mot de passe est obligatoire</div>
                           <password-strength-bar style="text-align: center" [style.textAlign] = "center" [passwordToCheck]="newpassword" [barLabel]="barLabel"></password-strength-bar>
                           <div *ngIf="message.password" class="help-block">{{message.password}}</div>
                         </div>
