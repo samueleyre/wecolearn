@@ -25,7 +25,7 @@ class User extends BaseUser
 
   /**
    * @ORM\OneToOne(targetEntity="AppBundle\Entity\Token",mappedBy="user", cascade={"persist", "merge"})
-//   * @ORM\JoinColumn(name="emailTokenId", referencedColumnName="id", nullable=true, onDelete="NO ACTION")
+   * @ORM\JoinColumn(name="emailTokenId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
    */
   public $emailToken;
 

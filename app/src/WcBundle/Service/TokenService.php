@@ -53,6 +53,13 @@ class TokenService {
 
     }
 
+    public function remove(Token $token ) {
+      $this->em->remove($token);
+      $this->em->flush();
+      return $this;
+
+    }
+
 
 
 

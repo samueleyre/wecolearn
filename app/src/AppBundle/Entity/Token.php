@@ -24,7 +24,7 @@ class Token
 
   /**
    * @ORM\OneToOne(targetEntity="AppBundle\Entity\User",inversedBy="emailToken", cascade={"persist", "merge"})
-   * @ORM\JoinColumn(name="userId", referencedColumnName="id", nullable=true, onDelete="NO ACTION")
+   * @ORM\JoinColumn(name="userId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
    */
   public $user;
 

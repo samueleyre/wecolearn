@@ -132,6 +132,14 @@ class ClientController extends GPPDController
           $user->setEmail($email);
           $user->setEmailConfirmed(false);
 
+          $oldToken = $user->getEmailToken();
+
+          if ($oldToken) {
+            $this
+            ->get('token.service')
+            ->remove($oldToken);
+          }
+
           $token = new Token();
           $token->setToken(bin2hex(random_bytes(16)));
           $token->setType(TokenConstant::$types["CONFIRMEMAIL"]);
@@ -152,7 +160,7 @@ class ClientController extends GPPDController
             ->get('user.service')
             ->patch($user);
 
-          $ret["emailChange"] = $data["code"];
+//          $ret["emailChange"] = $data["code"];
 
         }
 
@@ -234,6 +242,9 @@ class ClientController extends GPPDController
           $ret["error"] = "token_already_confirmed";
         }
 
+        $this
+          ->get('token.service')
+          ->remove($token);
 
       } else {
         $ret["error"] = "confirmation_token_not_found";
