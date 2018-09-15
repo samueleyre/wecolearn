@@ -127,6 +127,8 @@ class ClientService {
 
         $parameters = [ "firstName", "lastName", "profilUrl", "biographie", "intensity", "atmosphere", "latitude", "longitude", "tags", "showProfil", "emailNotifications" ];
 
+//        $oldClient->setEmailNotifications(0);
+
         for ($i=0; $i< count($parameters); $i++) {
 
             $getMethod = "get".ucfirst($parameters[$i]);
@@ -136,6 +138,10 @@ class ClientService {
             }
 
         }
+
+        $oldClient->setEmailNotifications(($client->getEmailNotifications()) ? 1 : 0);
+        $oldClient->setShowProfil(($client->getShowProfil()) ? 1 : 0);
+
 
 
 //        return $oldClient->getTags();

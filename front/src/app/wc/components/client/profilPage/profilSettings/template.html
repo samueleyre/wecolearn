@@ -225,7 +225,7 @@
                             <div class="col-md-12 center">
                               <p *ngIf="( !entity.first_name || !entity.biographie || !entity.learn_tags[0])">Pour rendre accessible votre profil il faut remplir votre description de profil et donner au moins une chose que vous souhaitez apprendre.</p>
                               <div class="form-check">
-                                <input name="showProfil"  [disabled]="!( entity.first_name && entity.biographie && entity.learn_tags[0])" class="form-check-input"type="checkbox" [(ngModel)]="entity.show_profil" id="showProfil">
+                                <input name="showProfil"  [disabled]="!( entity.first_name && entity.biographie && entity.learn_tags[0])" class="form-check-input"type="checkbox" (click)="submitWithTimeOut()" [(ngModel)]="entity.show_profil" id="showProfil">
                                 <label class="form-check-label label-form" for="showProfil">Afficher le profil ?</label>
                               </div>
                             </div>

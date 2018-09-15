@@ -208,6 +208,16 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         );
     }
 
+    submitWithTimeOut() {
+
+      setTimeout(()=> {
+        this.submit();
+        console.log("show", this.entity['show_profil'])
+      }, 500);
+
+
+      }
+
     joinTags() {
         this.entity['tags'] = [];
         for(let i=0; i < this.tagTypes.length; i++) {

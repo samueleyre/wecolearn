@@ -43,7 +43,7 @@ export class EmailNotificationSettingsComponent extends GPPDComponent implements
   load() : void {
     this.service.setApi(this.getApi());
     this.service.getOne().subscribe( ( client: IEntity) => {
-      console.log("notification received ", client['email_notifications'])
+      // console.log("notification received ", client['email_notifications'])
 
       this.setEntity(client);
     });
@@ -58,9 +58,10 @@ export class EmailNotificationSettingsComponent extends GPPDComponent implements
   submitNotification() {
 
     // console.log("notification change ", this.entity['email_notifications'])
-
     setTimeout(()=> {
      // console.log("notification change ", this.entity['email_notifications'])
+     //  this.entity['email_notifications'] = 0;
+      // this.entity['email_notifications'] = false;
       this.service.patchOne( this.entity ).subscribe(
         ( entity: IEntity ) => {
           MessageService.info('Modification prise en compte !');
