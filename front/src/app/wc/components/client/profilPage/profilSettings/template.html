@@ -69,7 +69,7 @@
                             <!--<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !learnTags.valid }">-->
                                 <label class="col-md-6 control-label label-form" for="learnTags">Ce que je veux apprendre</label>
                                 <div *ngIf="!editing.learnTags" class="col-md-12">
-                                  <span class="value-span"><span *ngFor="let tag of entity.learn_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== entity.learn_tags.length - 1">,</span></span></span>
+                                  <span class="value-span"><span *ngFor="let tag of entity.learn_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== entity.learn_tags.length - 1">, </span></span></span>
                                   <label for="editLearnTags">
                                     <span class="help-input" *ngIf="entity.learn_tags && entity.learn_tags.length === 0">Ajouter votre premier mot-clef ici !</span>
                                     <button id="editLearnTags" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('learnTags')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
@@ -114,7 +114,7 @@
                             <div class="form-group">
                               <label class="col-md-6 control-label label-form" for="knowTags">Ce que je connais</label>
                               <div *ngIf="!editing.knowTags" class="col-md-12">
-                                <span class="value-span"><span *ngFor="let tag of entity.know_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== entity.know_tags.length - 1">,</span></span></span>
+                                <span class="value-span"><span *ngFor="let tag of entity.know_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== entity.know_tags.length - 1">, </span></span></span>
 
                                 <label for="editKnowTags">
                                   <span class="help-input" *ngIf="entity.know_tags && entity.know_tags.length === 0">Ajouter votre premier mot-clef ici !</span>
@@ -139,7 +139,7 @@
                             <div class="form-group">
                               <label class="col-md-6 control-label label-form" for="teachTags">Ce que j'ai envie de transmettre</label>
                               <div *ngIf="!editing.teachTags" class="col-md-12">
-                                <span class="value-span"><span *ngFor="let tag of entity.teach_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== entity.teach_tags.length - 1">,</span></span></span>
+                                <span class="value-span"><span *ngFor="let tag of entity.teach_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== entity.teach_tags.length - 1">, </span></span></span>
                                 <label for="editTeachTags">
                                   <span class="help-input" *ngIf="entity.teach_tags && entity.teach_tags.length === 0">Ajouter votre premier mot-clef ici !</span>
                                   <button id="editTeachTags" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('teachTags')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
