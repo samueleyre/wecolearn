@@ -31,7 +31,7 @@ const wcRoutes: Routes = [
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     { path : 'mentionslegales', component: MentionsComponent},
     { path : 'subscribe', component: SubscribeComponent},
-    { path : '', component: HomeComponent}
+    { path : '', component: HomeComponent, canActivate: [AuthGuard]}
 
 
 ];

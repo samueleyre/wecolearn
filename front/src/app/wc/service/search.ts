@@ -102,7 +102,7 @@ export class SearchService {
 
   }
 
-  searchOsmNames(name: string) : Observable<Array<any>> {
+  searchOsmNames(name: string) : Observable<Array<any>> { // not used at the moment
 
     // let Key = "TeFzkpW0MZgyiMhEn5zx"; // todo: In Config File
     let Key = "RjgOREa32n5zWJ7fvEw2"; // todo: In Config File

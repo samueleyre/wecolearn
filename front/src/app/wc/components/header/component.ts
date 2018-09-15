@@ -84,6 +84,7 @@ export class HeaderComponent implements OnInit {
 			});
 			this.logoPath = GPPDComponent.updateUrl('/logo/wecolearn.png');
       Logged.get().subscribe( (logged:boolean) => {
+        this.loggerService.log("logged ??? ", logged)
         this.connected = logged;
         if (logged) {
           this.loadClient();

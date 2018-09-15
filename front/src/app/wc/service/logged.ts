@@ -11,7 +11,7 @@ export class LoggedService {
 
   constructor(private loggerService: LoggerService) {
     Logged.get().subscribe( (logged:boolean) => {
-    this.loggerService.log(" logged", logged)
+      this.loggerService.log(" logged", logged)
       if (logged) {
         this.logged = true;
       } else {

@@ -1,12 +1,6 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-const extractCSS = new ExtractTextPlugin('[name]-one.css');
-const extractLESS = new ExtractTextPlugin('[name]-two.css');
-
-
-
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var helpers = require('./helpers');
 
 console.log(helpers.root('', 'app'));
@@ -41,12 +35,19 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: helpers.root('src', 'app'),
-        loader: extractLESS.extract({ fallbackLoader: 'style-loader', loader: 'sass-loader?sourceMap'})
+        loader: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader?sourceMap'
+        ]
       },
       {
         test: /\.css$/,
           exclude: helpers.root('src', 'app'),
-        loader: extractCSS.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
+        loader: [
+          MiniCssExtractPlugin.loader,
+          'css-loader?sourceMap'
+        ]
       },
       {
         test: /\.scss$/,
@@ -59,20 +60,15 @@ module.exports = {
         include: [helpers.root('src', 'app')],
         // loader: 'raw-loader!postcss-loader'
         loader: 'raw-loader'
-      },
-      /*
-      {
-        test: /\.css$/,
-        exclude: helpers.root('src', 'app'),
-        loader: [
-          ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: [ 'css-loader', 'postcss-loader' ] })
-            //,
-            //'to-string-loader',
-            //'css-loader'
-        ]
       }
-      */
+
     ]
+  },
+
+  optimization: {
+    splitChunks: {
+      chunks: "all"
+    }
   },
 
   plugins: [
@@ -84,8 +80,8 @@ module.exports = {
       {} // a map of your routes
     ),
 
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['app', 'vendor', 'polyfills' ]
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
     }),
 
     new HtmlWebpackPlugin({

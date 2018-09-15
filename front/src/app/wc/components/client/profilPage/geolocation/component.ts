@@ -11,7 +11,7 @@ import {
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import { FormControl } from '@angular/forms';
-import { } from 'googlemaps';
+// import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 
 

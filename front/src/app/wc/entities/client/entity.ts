@@ -11,6 +11,7 @@ export class Client extends Entity implements IEntity  {
 		username: string,
 		email: string
 	};
+	// test
 	public created : any;
 	public first_name : 	string;
 	public last_name : 	string;
