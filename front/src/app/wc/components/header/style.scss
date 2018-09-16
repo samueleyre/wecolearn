@@ -6,6 +6,12 @@ nav.navbar{
     position: absolute !important;
   }
 
+  .navbar-brand{
+    @media(max-width: $smScreen) {
+      display: none;
+    }
+  }
+
   //background-color: $mainBgColor;
   //border-bottom: solid 1px $basicBorderColor;
   background-color: #d6d6d6;
@@ -25,6 +31,14 @@ nav.navbar{
     #headerBell{
       padding-top: 12px;
       padding-right: 12px;
+      .badge{
+        border: solid 1px grey;
+        background-color: white;
+        color: $mainOrange;
+      }
+    }
+    .client-name{
+      color: $mainOrange;
     }
     .dropdown-toggle::after{
       display: none;

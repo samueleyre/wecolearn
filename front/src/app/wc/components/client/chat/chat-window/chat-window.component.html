@@ -18,23 +18,23 @@
         <div class="panel-body msg-container-base" >
           <div *ngIf="currentUser">
             <chat-message
-            *ngFor="let message of messages | async"
+            *ngFor="let message of messages | async; let i = index"
             [clientId]="currentUser.id"
-            [message]="message">
+            [message]="message" [previousMessageDate]="( currentMessages && (i) > 0) ? currentMessages[(i - 1)]['created'] : message['created']">
           </chat-message>
           </div>
       </div>
 
       <div class="panel-footer">
         <div class="input-group">
-          <input type="text"
+          <textarea
           class="chat-input" #chatInput id="chatInput"
           placeholder="Ecrivez votre message ici !"
           (keydown.enter)="onEnter($event)"
           [(ngModel)]="draftMessage.message"
          (ngModelChange)="draftMessageChange($event)"
            [disabled]="disabled"
-          />
+          ></textarea>
           <span class="input-group-btn">
             <button class="btn-chat"
             (click)="onEnter($event)"

@@ -31,6 +31,7 @@ import {Logged} from "../../../../../applicativeService/authguard/logged";
 
 export class ChatWindowComponent implements OnInit {
   messages: Observable<any>;
+  currentMessages: Array<Message>;
   currentThread: Thread;
   draftMessage: Message;
   currentUser: Client = null;
@@ -92,6 +93,8 @@ export class ChatWindowComponent implements OnInit {
     this.messages
       .subscribe(
         (messages: Array<Message>) => {
+          (messages.length > 0) ? this.currentMessages = messages : null;
+          // console.log("messages" ,this.messages)
           setTimeout(() => {
             if( this.currentThread.id ) {
               this.scrollToBottom();

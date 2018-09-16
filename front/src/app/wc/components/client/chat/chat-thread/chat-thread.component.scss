@@ -1,3 +1,4 @@
+@import './../../../../../../assets/scss/variables.scss';
 
 
 
@@ -7,7 +8,12 @@
 .conversation {
   position: relative;
   display: block;
-  padding:5px;
+  @media(min-width: $smScreen){
+    padding:5px;
+  }
+  @media(max-width: $smScreen){
+    padding:1px;
+  }
   border-bottom:1px solid #ddd;
   margin:0;
 
@@ -97,6 +103,12 @@
   /* float: right; */
   display: flex;
   text-overflow: ellipsis;
+}
+
+@media(max-width: $smScreen) {
+  .contact-name, .messageContainer  {
+    visibility: hidden;
+  }
 }
 
 .messageContainer{

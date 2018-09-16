@@ -28,9 +28,9 @@ export class ChatMessageComponent implements OnInit {
   private avatarSrcBase : string;
   private msgContainerClass: string;
   private baseImageName : string = image.default_200px;
-
-
+  @Input() private previousMessageDate : Date;
   @Input() clientId : Number = null;
+  private different: Number = 0;
 
   constructor( public ClientService: ClientService ) {
   }
@@ -38,6 +38,10 @@ export class ChatMessageComponent implements OnInit {
   ngOnInit(): void {
 
     this.avatarSrcBase =  GPPDComponent.updateUrl('/img/');
+
+    let different = (new Date(this.message['created']).valueOf() - new Date(this.previousMessageDate).valueOf()) / (24*60*60*1000);
+    this.different = ( different === 0 || different > 1) ? 1 : 0;
+
 
     if (this.message.sender) {
       if (this.message.sender.id == this.clientId) {

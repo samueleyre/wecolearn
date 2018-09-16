@@ -48,7 +48,7 @@
 
                                 <div class="col-md-6">
                                     <label class="col-md-12 label-form control-label" >Photo de profil</label>
-                                    <div class="input-group" style="padding-left: 10%;">
+                                    <div class="col-md-12 input-group value-span">
                                         <div *ngIf="entity.image && !editing.image">
                                             <img *ngIf="entity.image && entity.image.filename" width="100px" src="{{webPath}}img/{{entity.image.filename}}" alt="">
                                             <img *ngIf="!entity.image" width="100px" src="{{webPath}}app_img/{{baseImageName}}" alt="">

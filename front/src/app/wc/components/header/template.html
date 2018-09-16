@@ -1,19 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a *ngIf="connected && screen" class="navbar-brand" routerLink="/search">
+    <a *ngIf="connected" class="navbar-brand" routerLink="/search">
         <img width="37px" src="{{logoPath}}" alt="">
     </a>
-    <a *ngIf="!connected && screen" class="navbar-brand" routerLink="/">
+    <a *ngIf="!connected" class="navbar-brand" routerLink="/">
         <img width="37px" src="{{logoPath}}" alt="">
     </a>
 
     <ul class="navbar-nav mr-auto" >
         <li class="nav-item" style="max-width: 64vw;">
-            <form class="form-inline my-2 my-lg-0">
+            <form class="form-inline">
                 <searchBar></searchBar>
             </form>
         </li>
         <li  *ngIf="!connected" class="nav-item" >
-            <form class="form-inline my-2 my-lg-0">
+            <form class="form-inline">
                 <cityBar></cityBar>
             </form>
         </li>
@@ -25,8 +25,8 @@
                <i class="fa fa-bell"></i> <span class="badge">{{ unreadMessagesCount }}</span>
             </a>
             <div ngbDropdownMenu aria-labelledby="headerBell" *ngIf="notifications && (notifications.length > 0)">
-              <div  *ngFor="let notification of notifications">
-                <a class="nav-link dropdown-item" (click)="activateNotification(notification)" style="border-bottom: solid 1px #f5f1f1">{{notification.name}} : <span style="text-overflow: ellipsis">{{notification.lastMessage.message}}</span></a>
+              <div  *ngFor="let notification of notifications; let i = index" >
+                <a class="nav-link dropdown-item" (click)="activateNotification(notification)" [ngStyle]="{'border-bottom': (i !== 0) ? 'solid 1px #f5f1f1' : ''}"><span class="client-name">{{notification.name}}</span><br><span style="text-overflow: ellipsis">{{notification.lastMessage.message}}</span></a>
               </div>
             </div>
         </li>
