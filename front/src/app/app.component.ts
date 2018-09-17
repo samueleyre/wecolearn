@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 
 import './../assets/css/styles.css';
-import './../assets/css/loader.css';
 import './../../node_modules/loaders.css/loaders.min.css';
 import '@angular/material/prebuilt-themes/indigo-pink.css';
 import {APP_BASE_HREF, Location} from "@angular/common";
@@ -19,7 +18,7 @@ import { NavigationEnd } from '@angular/router';
 @Component({
   selector: 'my-app',
   templateUrl	: 'app.template.html',
-  // styleUrls : ['./../assets/css/loader.css']
+  styleUrls : ['./app.scss']
 })
 export class AppComponent  implements OnInit {
     private loaded = false;

@@ -20,7 +20,7 @@
             <chat-message
             *ngFor="let message of messages | async; let i = index"
             [clientId]="currentUser.id"
-            [message]="message" [previousMessageDate]="( currentMessages && (i) > 0) ? currentMessages[(i - 1)]['created'] : message['created']">
+            [message]="message" [previousMessageDate]="( currentMessages && (i) > 0) ? currentMessages[(i - 1)]['created'] : message['created']" [previousMessageIncoming]="( currentMessages && (i) > 0 && currentMessages[(i - 1)]['sender']) ? true : false">
           </chat-message>
           </div>
       </div>

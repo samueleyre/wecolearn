@@ -1,13 +1,16 @@
+@import 'variables';
+
 #loader-container{
   position: absolute;
   left:0;
   top:0;
   right: 0;
   bottom: 0;
-  background-color: #FF9C00;
+  background-color: $mainOrange;
   z-index: 5000;
   transition: 1s ease-in-out all;
   opacity: 1;
+  text-align: justify; //testing
 }
 
 .hide{
