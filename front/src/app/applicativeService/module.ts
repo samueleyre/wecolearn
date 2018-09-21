@@ -7,11 +7,8 @@ import { Router }                   from '@angular/router';
 import { LocalStorageModule }       from 'angular-2-local-storage';
 
 import {   
-      //HttpModule, 
-      Http, 
-      XHRBackend, 
-      RequestOptions
-    }                              from '@angular/http';
+      HttpClient
+    }                              from '@angular/common/http';
 
 import { MessageModule }           from './message/module';
 
@@ -20,8 +17,9 @@ import { AuthenticationService}    from './authentication/service';
 import { AuthGuard }               from './authguard/service';
 // import { AuthGuardSearch }               from './authguard/service';
 import { environment  }            from './config/environment';
-import { InterceptedHttp }         from './interceptor/InterceptedHttp';
-import { httpFactory }             from './interceptor/httpFactory';
+import { ApplicationHttpClient }         from './interceptor/InterceptedHttp';
+import { httpClientFactory }             from './interceptor/httpClientFactory';
+import {HttpErrorInterceptor, HttpErrorInterceptorProvider} from './interceptor/HttpErrorInterceptor';
 import { routing }                 from './routing/app.routing';
 import { TokenService }            from './token/service';
 import { UserService }             from './user/service';
@@ -40,7 +38,8 @@ import { PingService }                             from  './ping/service';
         }),
         MessageModule,
         routing,
-        
+        // HttpErrorInterceptor,
+        // ApplicationHttpClient
   ],
   exports : [
     MessageModule,
@@ -51,22 +50,19 @@ import { PingService }                             from  './ping/service';
     FilterComponent,				  
   ],
   providers: [
-        {
-            provide: Http,
-            useFactory:   httpFactory,
-            deps: [XHRBackend, RequestOptions, TokenService, Router, HeaderBag ]
-        },
+        // {
+        //   provide: ApplicationHttpClient,
+        //   useFactory: httpClientFactory,
+        //   deps: [HttpClient]
+        // },
+        // HttpErrorInterceptorProvider,
         AuthenticationService,
         AuthGuard,
-        // AuthGuardSearch,
-        InterceptedHttp,
         TokenService,
         UserService,
         HeaderBag,
         FilterService,
         PingService
-        //XHRBackend, 
-        //RequestOptions,
     ],
 })
 export class ApplicativeModule { }

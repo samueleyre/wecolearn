@@ -3,8 +3,9 @@ import { CommonModule }             from '@angular/common';
 import { NgModule  }                from '@angular/core';
 import { RouterModule }             from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { Http }                     from '@angular/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {HttpClient} from "@angular/common/http";
+
+// import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { TagInputModule } from 'ngx-chips';
@@ -82,7 +83,6 @@ import { CityBarComponent} from './components/client/cityBar/component';
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 import {PasswordStrengthBarComponent} from "../applicativeService/form/password/component";
 
-import { AuthenticationInterceptor} from './../applicativeService/interceptor/auth-interceptor';
 
 
 @NgModule({
@@ -163,7 +163,7 @@ import { AuthenticationInterceptor} from './../applicativeService/interceptor/au
     {
         provide: GPPDService,
         useFactory: GPPDFactory,
-        deps: [Http ]
+        deps: [HttpClient ]
     },
     // {
     //     provide: HTTP_INTERCEPTORS,

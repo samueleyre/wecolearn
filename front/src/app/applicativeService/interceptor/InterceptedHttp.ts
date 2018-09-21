@@ -1,142 +1,103 @@
-import { Injectable  , NgZone    }        from "@angular/core";
-import { Router }                 from '@angular/router';
-import { ConnectionBackend,
-    RequestOptions,
-    Request,
-    RequestOptionsArgs,
-    Response,
-    ResponseOptions,
-    Http,
-    // HttpRequest,
-    Headers }                     from "@angular/http";
-import  { HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse }                     from "@angular/common/http";
-import { Observable }             from "rxjs/Rx";
-import 'rxjs/add/operator/do'
-import { Subject }                from 'rxjs/Subject';
-import { BehaviorSubject }        from 'rxjs/BehaviorSubject';
-import { environment }            from "./../config/environment";
-import { TokenService }           from './../token/service';
-import { PaginationService}       from './../pagination/service';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {environment} from "../config/environment";
+import {Headers, RequestOptions, RequestOptionsArgs} from "@angular/http";
 import { HeaderBag }              from './header-bag';
-import {Logged} from "../authguard/logged";
-import {LoggerService} from "../logger/service";
+
+export interface IRequestOptions {
+  headers?: HttpHeaders;
+  observe?: 'body';
+  params?: HttpParams;
+  reportProgress?: boolean;
+  responseType?: 'json';
+  withCredentials?: boolean;
+  body?: any;
+}
+
 
 
 @Injectable()
-export class InterceptedHttp extends Http {
+export class ApplicationHttpClient {
 
-    private zone: NgZone;
+  private api = environment.origin;
 
-    constructor( backend: ConnectionBackend,defaultOptions: RequestOptions,public tokenService : TokenService, public router : Router , private headerBag : HeaderBag, private loggerService: LoggerService )
-    {
-        super(backend, defaultOptions);
 
+
+  // Extending the HttpClient through the Angular DI.
+  public constructor(public http: HttpClient, private headerBag : HeaderBag) {
+    // If you don't want to use the extended versions in some cases you can access the public property and use the original one.
+    // for ex. this.httpClient.http.get(...)
+  }
+
+  /**
+   * GET request
+   * @param {string} endPoint it doesn't need / in front of the end point
+   * @param {IRequestOptions} options options of the request like headers, body, etc.
+   * @returns {Observable<T>}
+   */
+  public Get<T>(endPoint: string, options?: IRequestOptions): Observable<T> {
+    return this.http.get<T>(this.api + endPoint, this.getRequestOptionArgs(options));
+  }
+
+  /**
+   * POST request
+   * @param {string} endPoint end point of the api
+   * @param {Object} params body of the request.
+   * @param {IRequestOptions} options options of the request like headers, body, etc.
+   * @returns {Observable<T>}
+   */
+  public Post<T>(endPoint: string, params: Object, options?: IRequestOptions): Observable<T> {
+    return this.http.post<T>(this.api + endPoint, params, this.getRequestOptionArgs(options));
+  }
+
+  /**
+   * PATCH request
+   * @param {string} endPoint end point of the api
+   * @param {Object} params body of the request.
+   * @param {IRequestOptions} options options of the request like headers, body, etc.
+   * @returns {Observable<T>}
+   */
+  public Patch<T>(endPoint: string, params: Object, options?: IRequestOptions): Observable<T> {
+    return this.http.patch<T>(this.api + endPoint, params, this.getRequestOptionArgs(options));
+  }
+
+
+  /**
+   * PUT request
+   * @param {string} endPoint end point of the api
+   * @param {Object} params body of the request.
+   * @param {IRequestOptions} options options of the request like headers, body, etc.
+   * @returns {Observable<T>}
+   */
+  public Put<T>(endPoint: string, params: Object, options?: IRequestOptions): Observable<T> {
+    return this.http.put<T>(this.api + endPoint, params, this.getRequestOptionArgs(options));
+  }
+
+  /**
+   * DELETE request
+   * @param {string} endPoint end point of the api
+   * @param {IRequestOptions} options options of the request like headers, body, etc.
+   * @returns {Observable<T>}
+   */
+  public Delete<T>(endPoint: string, options?: IRequestOptions): Observable<T> {
+    return this.http.delete<T>(this.api + endPoint, this.getRequestOptionArgs(options));
+  }
+
+  private getRequestOptionArgs(options?: IRequestOptions, apiRequest: boolean = true) : IRequestOptions {
+
+    if (apiRequest) {
+
+      let httpHeaders = {};
+      let headers = this.headerBag.get([]);
+
+      for (let i in headers) {
+        httpHeaders[headers[i].name] = headers[i].value;
+      }
+
+      options.headers = new HttpHeaders(httpHeaders);
     }
 
-    // intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    //   return next.handle(req).catch(
-    //       (err: HttpErrorResponse) => {
-    //         if (err.status === 401) {
-    //           this.tokenService.clear();
-    //           let openRoutes = ["/login", "/search", "/"]; // todo: would probably be better in accessible config file
-    //           if (openRoutes.indexOf(this.router.url) === -1) {
-    //             console.log("intercepted")
-    //             this.router.navigate(['/']);
-    //           }
-    //         }
-    //         return Observable.throw(err);
-    //       }
-    //   );
-    // }
-
-
-    request( url: string | Request, options?: RequestOptionsArgs ): Observable<Response> {
-
-        return super
-            .request( url, options )
-            .catch( ( error: Response ) => {
-                if ( error.status === 401 || error.status === 403 ) { // unauthorized or forbidden //
-                        this.tokenService.clear();
-                        // console.log("current url", this.router.url)
-                        let openRoutes = ["/login", "/search", "/"]; // todo: would probably be better in accessible config file
-                        if (openRoutes.indexOf(this.router.url) === -1) {
-                        // console.log("should redirect")
-                        //   this.router.navigate(['/']);
-                        //   this.zone.run(() => this.router.navigate(['/']));
-                          // let logged = false;
-                          // this.loggerService.log("Logge set false")
-                          // Logged.set(logged);
-                        }
-                }
-                if (error.status === 404) {
-                    //this.tokenService.clear();
-                    this.router.navigate(['/404']);
-                }
-                if( 500 <= error.status ) {
-                    // console.log(error.json().message);
-                    // console.log(error.json().trace );
-                }
-                if( 500 == error.status ) {
-                    console.log(error.json().message);
-                    console.log(error.json().trace );   
-                }
-                return Observable.throw(error);
-
-            })
-            .do((response: Response) => {
-                PaginationService.fromHeader( response.headers.get('X-Pagination') );
-
-            })
-        ;
-    }
-
-    get( url: string, options?: RequestOptionsArgs): Observable<Response> {
-        let apiRequest = false;
-        if (url.substring(0,4) !== 'http' ) {
-          url = this.updateUrl(url);
-          apiRequest = true;
-        }
-        return super.get(url, this.getRequestOptionArgs(options, apiRequest));
-    }
-
-    post( url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.post(url, body, this.getRequestOptionArgs(options));
-    }
-
-    put( url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.put(url, body, this.getRequestOptionArgs(options));
-    }
-
-    patch( url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.patch(url, body, this.getRequestOptionArgs(options));
-    }
-
-    delete( url: string, options?: RequestOptionsArgs): Observable<Response> {
-        url = this.updateUrl(url);
-        return super.delete(url, this.getRequestOptionArgs(options));
-    }
-
-    private updateUrl(req: string) {
-        return  environment.origin + req;
-    }
-
-    private getRequestOptionArgs(options?: RequestOptionsArgs, apiRequest: boolean = true) : RequestOptionsArgs {
-        if (options == null) {
-            options = new RequestOptions();
-        }
-        if (options.headers == null) {
-            options.headers = new Headers();
-        }
-        if (apiRequest) {
-          let headers = this.headerBag.get([]);
-          for( let i in headers ) {
-            options.headers.append( headers[i].name, headers[i].value);
-          }
-        }
-
-        return options;
-    }
+    return options;
+  }
 }

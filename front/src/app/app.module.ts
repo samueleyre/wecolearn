@@ -17,24 +17,24 @@ import { EqualValidator }           from './applicativeService/form/validator/eq
 import { routing }          from './applicativeService/routing/app.routing';
 
 
-import { ApplicativeModule }	from './applicativeService/module';
+// import { ApplicativeModule }	from './applicativeService/module';
 
-import { MessageComponent}       from './applicativeService/message/component';
+// import { MessageComponent}       from './applicativeService/message/component';
 import { AppComponent }		  from './app.component'
 import { LoginComponent }	  from './components/login/component';
 import { ConfirmEmailComponent}	  from './components/confirmEmail/component';
 
 import { HomeComponent }	  from './wc/components/client/home/component';
-import { UploadComponent}          from './applicativeService/upload/component';
+// import { UploadComponent}          from './applicativeService/upload/component';
 import { NotFoundComponent}          from './components/notFound/component';
 
-import {PasswordStrengthBarComponent} from './applicativeService/form/password/component';
+// import {PasswordStrengthBarComponent} from './applicativeService/form/password/component';
 
 
 import { WcModule }          from './wc/module';
 
 
-import { AuthGuard }         from './applicativeService/authguard/service';
+// import { AuthGuard }         from './applicativeService/authguard/service';
 
 import { LoadersCssModule } from 'angular2-loaders-css';
 
@@ -46,8 +46,6 @@ import { LOCALE_ID } from '@angular/core';
 import { LoggerService }       from './applicativeService/logger/service';
 import {AutofocusDirective} from "./applicativeService/form/input/directive";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AuthenticationInterceptor} from "./applicativeService/interceptor/auth-interceptor";
-import {httpFactory} from "./applicativeService/interceptor/httpFactory";
 import {TokenService} from "./applicativeService/token/service";
 import {HeaderBag} from "./applicativeService/interceptor/header-bag";
 
@@ -90,11 +88,6 @@ const appRoutes: Routes = [
           provide: APP_BASE_HREF,
           useFactory: getBaseLocation,
       },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthenticationInterceptor,
-    //   multi: true
-    // },
       { provide: LOCALE_ID, useValue: "fr-FR" }, //replace "en-US" with your locale
       LoggerService,
   ],

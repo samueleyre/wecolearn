@@ -9,12 +9,12 @@ export class HeaderBag {
 	}
 
 	get(params : any|undefined ):any[] {
-		let ret = [ 
+		return [
 		  //{ 'Content-Type' : 'application/json'},
           { name : 'Authorization' ,  value : 'Bearer ' + this.tokenService.get() },
-          { name : 'X-Pagination' , value :   PaginationService.toHeader() }
+          // { name : 'X-Pagination' , value :   PaginationService.toHeader() }
          ];
 
-         return ret;
 	}
 }
+
