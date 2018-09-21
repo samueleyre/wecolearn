@@ -1,8 +1,8 @@
 import { BrowserModule }            from '@angular/platform-browser';
 import { FormsModule }              from '@angular/forms';
-import { HttpModule }               from '@angular/http';
+import {Http, HttpModule, RequestOptions, XHRBackend} from '@angular/http';
 import { NgModule }                 from '@angular/core';
-import { RouterModule, Routes }     from '@angular/router';
+import {Router, RouterModule, Routes} from '@angular/router';
 
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 
@@ -45,6 +45,11 @@ import { LOCALE_ID } from '@angular/core';
 //SERVICES -------------
 import { LoggerService }       from './applicativeService/logger/service';
 import {AutofocusDirective} from "./applicativeService/form/input/directive";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthenticationInterceptor} from "./applicativeService/interceptor/auth-interceptor";
+import {httpFactory} from "./applicativeService/interceptor/httpFactory";
+import {TokenService} from "./applicativeService/token/service";
+import {HeaderBag} from "./applicativeService/interceptor/header-bag";
 
 
 const appRoutes: Routes = [
@@ -65,6 +70,8 @@ const appRoutes: Routes = [
     // BsDropdownModule.forRoot(),
     UploadModule,  // is this used ?
     LoadersCssModule,
+    HttpClientModule,
+
   ],
   declarations: [ 
     LoginComponent,
@@ -83,6 +90,11 @@ const appRoutes: Routes = [
           provide: APP_BASE_HREF,
           useFactory: getBaseLocation,
       },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthenticationInterceptor,
+    //   multi: true
+    // },
       { provide: LOCALE_ID, useValue: "fr-FR" }, //replace "en-US" with your locale
       LoggerService,
   ],

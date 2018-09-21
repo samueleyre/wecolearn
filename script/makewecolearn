@@ -128,7 +128,7 @@ sudo crontab -l
 colored "kill run script ${ROOT}/${NAME}"
 sudo ${ROOT}/${NAME}/script/c-run kill
 
-colored "Restart nginx to enble new conf"
+colored "Restart nginx to enble new conf"/
 sudo -E /usr/bin/docker stop docker_web_1
 cd ${ROOT}/${NAME}/docker
 sudo ENV=$ENV /usr/local/bin/docker-compose -f $COMPOSE up -d

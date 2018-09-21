@@ -14,7 +14,6 @@ import { MessagesService } from './wc/service/messages';
 import { NavigationEnd } from '@angular/router';
 
 
-
 @Component({
   selector: 'my-app',
   templateUrl	: 'app.template.html',

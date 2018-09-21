@@ -1,4 +1,4 @@
-import { Injectable      }        from "@angular/core";
+import { Injectable  , NgZone    }        from "@angular/core";
 import { Router }                 from '@angular/router';
 import { ConnectionBackend,
     RequestOptions,
@@ -7,7 +7,9 @@ import { ConnectionBackend,
     Response,
     ResponseOptions,
     Http,
+    // HttpRequest,
     Headers }                     from "@angular/http";
+import  { HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse }                     from "@angular/common/http";
 import { Observable }             from "rxjs/Rx";
 import 'rxjs/add/operator/do'
 import { Subject }                from 'rxjs/Subject';
@@ -16,15 +18,37 @@ import { environment }            from "./../config/environment";
 import { TokenService }           from './../token/service';
 import { PaginationService}       from './../pagination/service';
 import { HeaderBag }              from './header-bag';
+import {Logged} from "../authguard/logged";
+import {LoggerService} from "../logger/service";
+
 
 @Injectable()
 export class InterceptedHttp extends Http {
 
-    constructor( backend: ConnectionBackend,defaultOptions: RequestOptions,public tokenService : TokenService, public router : Router , private headerBag : HeaderBag )
+    private zone: NgZone;
+
+    constructor( backend: ConnectionBackend,defaultOptions: RequestOptions,public tokenService : TokenService, public router : Router , private headerBag : HeaderBag, private loggerService: LoggerService )
     {
         super(backend, defaultOptions);
 
     }
+
+    // intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    //   return next.handle(req).catch(
+    //       (err: HttpErrorResponse) => {
+    //         if (err.status === 401) {
+    //           this.tokenService.clear();
+    //           let openRoutes = ["/login", "/search", "/"]; // todo: would probably be better in accessible config file
+    //           if (openRoutes.indexOf(this.router.url) === -1) {
+    //             console.log("intercepted")
+    //             this.router.navigate(['/']);
+    //           }
+    //         }
+    //         return Observable.throw(err);
+    //       }
+    //   );
+    // }
+
 
     request( url: string | Request, options?: RequestOptionsArgs ): Observable<Response> {
 
@@ -33,9 +57,15 @@ export class InterceptedHttp extends Http {
             .catch( ( error: Response ) => {
                 if ( error.status === 401 || error.status === 403 ) { // unauthorized or forbidden //
                         this.tokenService.clear();
+                        // console.log("current url", this.router.url)
                         let openRoutes = ["/login", "/search", "/"]; // todo: would probably be better in accessible config file
                         if (openRoutes.indexOf(this.router.url) === -1) {
-                            this.router.navigate(['/']);
+                        // console.log("should redirect")
+                        //   this.router.navigate(['/']);
+                        //   this.zone.run(() => this.router.navigate(['/']));
+                          // let logged = false;
+                          // this.loggerService.log("Logge set false")
+                          // Logged.set(logged);
                         }
                 }
                 if (error.status === 404) {

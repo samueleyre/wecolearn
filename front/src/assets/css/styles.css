@@ -205,14 +205,16 @@ button.close{
 }
 
 .btn-edit {
-  border: transparent;
+  /*border: transparent;*/
   background-color: transparent;
   color: #868e96;
+  border: none;
 }
 
 .btn-edit:hover, .btn-edit:focus{
   color: #3e3e3e;
-  border: transparent;
+  /*border: transparent;*/
+  border: none;
   background-color: transparent;
 }
 
