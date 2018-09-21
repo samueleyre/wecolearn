@@ -46,7 +46,7 @@ export class SearchOsmComponent implements OnInit {
 
     setAddress(selectedAddress:any = null) {
 
-    console.log("set address", selectedAddress)
+    // console.log("set address", selectedAddress)
     this.latitudeChange.emit(selectedAddress.lat);
     this.longitudeChange.emit(selectedAddress.lon);
 

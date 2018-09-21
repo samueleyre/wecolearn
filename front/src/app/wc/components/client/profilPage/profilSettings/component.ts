@@ -212,7 +212,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
       setTimeout(()=> {
         this.submit();
-        console.log("show", this.entity['show_profil'])
+        // console.log("show", this.entity['show_profil'])
       }, 500);
 
 

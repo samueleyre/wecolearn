@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
 import {Logged} from "../../../../applicativeService/authguard/logged";
 import {LoggedService} from "../../../service/logged";
 import {LoggerService} from "../../../../applicativeService/logger/service";
-
+import {PingService} from "./../../../../applicativeService/ping/service"
 
 @Component({
     templateUrl: 'template.html',
@@ -25,8 +25,8 @@ export class HomeComponent implements OnInit {
         private searchService: SearchService,
         private router: Router,
         private LoggedService: LoggedService,
-        private loggerService: LoggerService
-
+        private loggerService: LoggerService,
+        private pingService: PingService
 
     ) {}
 
@@ -38,7 +38,10 @@ export class HomeComponent implements OnInit {
         };
         this.screen =  GPPDComponent.getScreenSize();
 
-        if (this.LoggedService.get()) {
+      // this.pingService.pingHome();
+
+
+      if (this.LoggedService.get()) {
           this.loggerService.log("home --> search")
           this.router.navigate(['/search']);
         }

@@ -69,7 +69,7 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
 
       this.loading = this.searchService.getLoading('tag');
       this.loading.subscribe((loading)=> {
-        console.log("changed currently searching", this.currentlySearching)
+        // console.log("changed currently searching", this.currentlySearching)
             this.currentlySearching = loading;
             if (!loading) {
               this.searchBarStyle = {

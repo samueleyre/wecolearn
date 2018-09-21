@@ -12,7 +12,7 @@ import { NgForm }             from '@angular/forms';
 import { IEntity }                from '../../../../../applicativeService/entity/interface';
 import { Client }                from './../../../../entities/client/entity';
 import { Thread }                from './../../../../entities/thread/entity';
-import { Image }                from './../../../../entities/image/entity';
+import { Image }                 from './../../../../entities/image/entity';
 
 import { GPPDService }            from './../../../../service/gppd';
 import { GPPDComponent }          from './../../../../component/gppd';
