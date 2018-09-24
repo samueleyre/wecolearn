@@ -3,7 +3,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var helpers = require('./helpers');
 
-console.log(helpers.root('', 'app'));
+// console.log(helpers.root('', 'app'));
 // import img from './../assets/img/favicom-pass.png'
 
 module.exports = {
