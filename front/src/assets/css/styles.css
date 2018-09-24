@@ -210,13 +210,14 @@ button.close{
   /*border: transparent;*/
   background-color: transparent;
   color: #868e96;
-  border: none;
+  border: none !important;
+
 }
 
 .btn-edit:hover, .btn-edit:focus{
   color: #3e3e3e;
   /*border: transparent;*/
-  border: none;
+  border: none !important;
   background-color: transparent;
 }
 
