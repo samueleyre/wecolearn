@@ -21,7 +21,7 @@ export class CacheUrlService {
 			this
 			.http
 			.get( url ).map(response => {
-				return response.json();
+				return response;
 			}).subscribe((response: any) => {
 				//console.log(response);
 				this.cacheService.set(url, response, { maxAge : 60 });

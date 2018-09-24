@@ -45,13 +45,11 @@ import { LOCALE_ID } from '@angular/core';
 //SERVICES -------------
 import { LoggerService }       from './applicativeService/logger/service';
 import {AutofocusDirective} from "./applicativeService/form/input/directive";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {TokenService} from "./applicativeService/token/service";
-import {HeaderBag} from "./applicativeService/interceptor/header-bag";
+// import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+// import {TokenService} from "./applicativeService/token/service";
 
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent},
 ];
 
 @NgModule({
@@ -68,7 +66,6 @@ const appRoutes: Routes = [
     // BsDropdownModule.forRoot(),
     UploadModule,  // is this used ?
     LoadersCssModule,
-    HttpClientModule,
 
   ],
   declarations: [ 

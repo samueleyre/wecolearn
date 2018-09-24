@@ -118,8 +118,9 @@ export class ChatWindowComponent implements OnInit {
   }
 
   sendMessage(): void {
-    this.disabled = true;
     if (this.draftMessage.message !== null && this.draftMessage.message  !== '') {
+      this.disabled = true;
+      console.log("message being sent", this.draftMessage.message)
       this.draftMessage.receiver= new Client(this.currentThread.id);
       this.draftMessage.is_read = false;
       this.messagesService.sendMessage(this.draftMessage)

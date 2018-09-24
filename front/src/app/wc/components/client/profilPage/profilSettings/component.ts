@@ -5,9 +5,10 @@ import {
     Inject
 }                             from '@angular/core';
 
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import { Http, Response }		from '@angular/http';
+import { HttpClient }		from '@angular/common/http';
 
 
 import { FormControl } from '@angular/forms';
@@ -125,7 +126,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     private firstTime = false;
 
 
-  constructor( protected service: GPPDService, protected clientService : ClientService,  protected tagService : TagService,  private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, ) {
+  constructor( protected service: GPPDService, protected clientService : ClientService,  protected tagService : TagService,  private activatedRoute: ActivatedRoute,  protected http : HttpClient, @Inject(APP_BASE_HREF) r:string, ) {
         super(service);
         this.base_url = r;
         this.tagService = tagService;

@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { Client } from './../entities/client/entity';
@@ -18,7 +20,7 @@ export class ClientService {
   private cClientNu: Client = null;
 
 
-  constructor(private http: Http, private loggerService: LoggerService) {
+  constructor(protected http : HttpClient, private loggerService: LoggerService) {
       this.endpoint = '/api/client';
   }
 
@@ -39,28 +41,28 @@ export class ClientService {
   }
 
   pull(): Observable<Array<Message>>  { // TODO : probably check for any kind of update, if other
-    return this.http.get('/api/checknewmessage')
-      .map((response: Response) => {
-        return response.json();
-      });
+    return this.http.get('/api/checknewmessage').pipe(
+      map((response: Array<Message>) => {
+        return response;
+      }));
   }
 
   changeParameter(data: object): Observable<any> {
-    return this.http.post('/api/client/changesettings', data)
-      .map((response: Response ) => {
-        return response.json();
-    });
+    return this.http.post('/api/client/changesettings', data).pipe(
+      map((response: Response ) => {
+        return response;
+    }));
   }
 
 
   load(): Observable<string>  {
-      return this.http.get(`${this.endpoint}`)
-          .map((response: Response) => {
-              this.currentClient.next(response.json());
-              this.cClientNu = response.json();
-              this.loggerService.log("loaded", response.json())
+      return this.http.get(`${this.endpoint}`).pipe(
+          map((response: Client) => {
+              this.currentClient.next(response);
+              this.cClientNu = response;
+              this.loggerService.log("loaded", response)
               return 'loaded';
-          });
+          }));
   }
 
 }

@@ -71,17 +71,14 @@ export class SubscribeComponent implements OnInit {
         this.authenticationService.login(this.user.email, this.user.password)
             .subscribe(
                 result => {
-                    if ( result === true )  {
+                  this.loading = false;
+                  if ( result === true )  {
                         // login successful
-                        // console.log(result);
-                        this.loading = false;
                         this.router.navigate(['/profilsettings']);
                     }
                 },
                 error => {
-                    // console.log('ERROR', error );
                     this.loading = false;
-
                 }
             );
     }

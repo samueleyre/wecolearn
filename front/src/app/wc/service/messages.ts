@@ -1,5 +1,8 @@
+
+import {publishReplay, refCount, takeWhile, filter,  scan , map} from 'rxjs/operators';
+
+import {of as observableOf,  Subject, Observable , SubscriptionLike as ISubscription} from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
 import { Client } from './../entities/client/entity';
 import { Message } from './../entities/message/entity';
 import { Thread } from './../entities/thread/entity';
@@ -11,10 +14,10 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import {EmptyObservable} from 'rxjs/observable/EmptyObservable';
 
 import * as _ from 'lodash';
-import {ISubscription} from "rxjs/Subscription";
 import {LoggerService} from "../../applicativeService/logger/service";
 import {LoggedService} from "./logged";
 import {Router} from "@angular/router";
+
 
 
 const initialMessages: Message[] = [];
@@ -61,21 +64,21 @@ export class MessagesService {
     markThreadAsRead: Subject<any> = new Subject<any>();
 
 
-  constructor(public ClientService: ClientService, protected http : Http, private loggerService: LoggerService, private router: Router, private loggedService: LoggedService
+  constructor(public ClientService: ClientService, protected http : HttpClient, private loggerService: LoggerService, private router: Router, private loggedService: LoggedService
   ) {
     this.alive = true;
-    this.messages = this.updates
+    this.messages = this.updates.pipe(
       // watch the updates and accumulate operations on the messages
-      .scan((messages: Message[],
+      scan((messages: Message[],
              operation: IMessagesOperation) => {
                return operation(messages);
              },
-            initialMessages)
+            initialMessages),
       // make sure we can share the most recent list of messages across anyone
       // who's interested in subscribing and cache the last known list of
       // messages
-      .publishReplay(1)
-      .refCount();
+      publishReplay(1),
+      refCount(),);
 
     // `create` takes a Message and then puts an operation (the inner function)
     // on the `updates` stream to add the Message to the list of messages.
@@ -91,12 +94,12 @@ export class MessagesService {
     // the update stream directly and get rid of this extra action stream
     // entirely. The pros are that it is potentially clearer. The cons are that
     // the stream is no longer composable.
-    this.create
-      .map( function(message: Message): IMessagesOperation {
+    this.create.pipe(
+      map( function(message: Message): IMessagesOperation {
         return (messages: Message[]) => {
           return messages.concat(message);
         };
-      })
+      }))
       .subscribe(this.updates);
 
     this.newMessages
@@ -104,8 +107,8 @@ export class MessagesService {
 
     // similarly, `markThreadAsRead` takes a Thread and then puts an operation
     // on the `updates` stream to mark the Messages as read
-    this.markThreadAsRead
-      .map( (thread: Thread) => {
+    this.markThreadAsRead.pipe(
+      map( (thread: Thread) => {
         return (messages: Message[]) => {
           return messages.map( (message: Message) => {
             // note that we're manipulating `message` directly here. Mutability
@@ -118,7 +121,7 @@ export class MessagesService {
             return message;
           });
         };
-      })
+      }))
       .subscribe(this.updates);
 
   }
@@ -139,43 +142,41 @@ export class MessagesService {
     // console.log("pushUpdatedMessages")
     if (this.messagesToUpdate.length > 0) {
         this.loggerService.log("going to be sent", this['messagesToUpdate'])
-      return this.http.patch(`/api/messages`, this.messagesToUpdate).map((response: Response) => {
-          this.loggerService.log(response.json());
+      return this.http.patch(`/api/messages`, this.messagesToUpdate).pipe(map((response: Response) => {
+          this.loggerService.log(response);
         // this.messagesToUpdate = [];
-      });
+      }));
 
 
     } else {
 
-      return Observable.of(null);
+      return observableOf(null);
 
     }
 
 
   }
 
-  sendMessage(message: Message): Observable<Message> {
+  sendMessage(message: Message): Observable<Object> {
 
-      return this.http.post(`/api/message`, message).map((response: Response) => {
-          return response.json();
-      });
+      return this.http.post(`/api/message`, message);
 
 
   }
 
   updateMessage(message: Message): Observable<void> { // todo : can be used to edit old message also
 
-    return this.http.patch(`/api/message`, message).map((response: Response) => {
-        this.loggerService.log(response.json());
-    });
+    return this.http.patch(`/api/message`, message).pipe(map((response: Response) => {
+        this.loggerService.log(response);
+    }));
 
 
   }
 
 
   messagesForThreadUser(thread: Thread, user: Client): Observable<Message> {
-    return this.newMessages
-      .filter((message: Message) => {
+    return this.newMessages.pipe(
+      filter((message: Message) => {
 
                // belongs to this thread
         return (message.thread.id === thread.id) &&
@@ -184,7 +185,7 @@ export class MessagesService {
 
             // || (message.receiver && (message.receiver.id !== user.id));
 
-    });
+    }));
   }
 
   public init() : void {
@@ -208,8 +209,8 @@ export class MessagesService {
       return;
     }
 
-    this.timer = TimerObservable.create(10000, period)
-      .takeWhile(() => this.alive);
+    this.timer = TimerObservable.create(10000, period).pipe(
+      takeWhile(() => this.alive));
 
     // only fires when component is alive
     this.timerSubscription = this.timer.subscribe(() => {

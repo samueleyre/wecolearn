@@ -6,6 +6,9 @@ import { Router }                from '@angular/router';
  
 import { AuthenticationService } from './../../applicativeService/authentication/service';
 import {LoggerService} from "../../applicativeService/logger/service";
+import {Response} from "@angular/http";
+import { TokenService } from './../../applicativeService/token/service';
+
  
 @Component({
     templateUrl: 'template.html',
@@ -20,7 +23,8 @@ export class LoginComponent implements OnInit {
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
-        private loggerService: LoggerService
+        private loggerService: LoggerService,
+        private tokenService : TokenService
     ) { }
  
     ngOnInit() {
@@ -33,16 +37,14 @@ export class LoginComponent implements OnInit {
       this.authenticationService.login(this.model.email, this.model.password)
         .subscribe(
                 result => {
+                  this.loading = false;
                   if ( result === true ) {
-                      this.loading = false;
-                    this.loggerService.log("login --> settings")
                     this.router.navigate(['/search']);
                   }
               },
               error => {
                   this.error = "L'email et/ou le mot de passe ne sont pas valide";
                   this.loading = false;
-
             }
         );
     }

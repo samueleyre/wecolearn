@@ -5,7 +5,7 @@ import {
     Inject
 }                             from '@angular/core';
 
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import { Http, Response }		from '@angular/http';
 

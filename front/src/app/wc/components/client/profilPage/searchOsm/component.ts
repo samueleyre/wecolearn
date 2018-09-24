@@ -4,7 +4,7 @@ import {
   Injectable, Output, EventEmitter, Input
 } from '@angular/core';
 
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';

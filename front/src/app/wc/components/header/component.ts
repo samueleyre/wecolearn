@@ -1,5 +1,6 @@
 import { Component , Injectable, Inject, OnInit }		from '@angular/core';
 import {Http, Response} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import { Logged }								from './../../../applicativeService/authguard/logged';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { Router } from '@angular/router';
@@ -55,7 +56,7 @@ export class HeaderComponent implements OnInit {
     private baseImageName : string = image.default_200px;
 
 
-  constructor( private http : Http,
+  constructor( private http : HttpClient,
              private router: Router,
              location: Location,
              @Inject(APP_BASE_HREF) r:string,
@@ -175,9 +176,8 @@ export class HeaderComponent implements OnInit {
 
 	logOut() {
 
-    this.authenticationService.logout();
+    this.authenticationService.logout(true);
 		this.messagesService.stopNewMessageLoop();
-    this.router.navigate(['/']);
 
 
 	}

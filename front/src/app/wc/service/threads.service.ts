@@ -1,3 +1,5 @@
+
+import {combineLatest, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { Thread } from './../entities/thread/entity';
@@ -27,8 +29,8 @@ export class ThreadsService {
   constructor(public messagesService: MessagesService, private loggerService: LoggerService) {
 
     // `threads` is a observable that contains the most up to date list of threads
-    this.threads = messagesService.messages
-      .map( (messages: Message[]) => {
+    this.threads = messagesService.messages.pipe(
+      map( (messages: Message[]) => {
         const threads: {[key: string]: Thread} = {};
         // Store the message's thread in our accumulator `threads`
         messages.map((message: Message) => {
@@ -45,18 +47,18 @@ export class ThreadsService {
           }
         });
         return threads;
-      });
+      }));
 
     // `orderedThreads` Observable that contains a newest-first chronological list of threads
-    this.orderedThreads = this.threads
-      .map((threadGroups: { [key: string]: Thread }) => {
+    this.orderedThreads = this.threads.pipe(
+      map((threadGroups: { [key: string]: Thread }) => {
         const threads: Thread[] = _.values(threadGroups);
         return _.sortBy(threads, (t: Thread) => t.lastMessage.created).reverse();
-      });
+      }));
 
     // `currentThreadMessages` Observable that contains the set of messages for the currently selected thread
-    this.currentThreadMessages = this.currentThread
-      .combineLatest(messagesService.messages,
+    this.currentThreadMessages = this.currentThread.pipe(
+      combineLatest(messagesService.messages,
                      (currentThread: Thread, messages: Message[]) => {
         if (currentThread && messages.length > 0) {
           return _.chain(messages)
@@ -76,7 +78,7 @@ export class ThreadsService {
         } else {
           return [];
         }
-      });
+      }));
 
     // when currently selected front is selected, mark all the messages that it contains as read
     this.currentThread.subscribe(this.messagesService.markThreadAsRead);

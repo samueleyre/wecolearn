@@ -48,7 +48,7 @@ export class PaginationComponent implements OnInit{
       to = maxPage;
       from = maxPage - ( 2 * size );
       if( from < 1 ) from = 1;
-      console.log('from', from );
+      // console.log('from', from );
     } else if ( (page - size) >= 1 && ( page + size ) <= maxPage ) {
       from = page - size;
       to = page + size;

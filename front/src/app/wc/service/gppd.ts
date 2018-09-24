@@ -14,7 +14,7 @@ export class GPPDService {
 
 	route: string = '/api';
 	
-	constructor( protected http : Http ) {
+	constructor( protected http : HttpClient ) {
 		
 	}
 
@@ -27,9 +27,9 @@ export class GPPDService {
 		
 		let params = FilterService.getUrlParams();
 
-		return this.http.get(`${this.route}${params}`).map((response: Response) => {
+		return this.http.get(`${this.route}${params}`).map((response: any) => {
 				// console.log(response);
-				return response.json();
+				return response;
 			})
 		;
 	}
@@ -38,9 +38,9 @@ export class GPPDService {
 		
 		let params = FilterService.getUrlParams();
 
-		return this.http.get(`${this.route}${params}`).map((response: Response) => {
+		return this.http.get(`${this.route}${params}`).map((response: any) => {
 				// console.log(response);
-				return response.json();
+				return response;
 			})
 		;
 	}
@@ -51,8 +51,8 @@ export class GPPDService {
 		
 		let params = FilterService.getUrlParams();
 
-		return this.http.patch(`${this.route}${params}`, entity).map((response: Response) => {
-				return response.json();
+		return this.http.patch(`${this.route}${params}`, entity).map((response: any) => {
+				return response;
 			})
 		;
 	}
@@ -61,8 +61,8 @@ export class GPPDService {
 		
 		let params = FilterService.getUrlParams();
 
-		return this.http.patch(`${this.route}${params}`, entity).map((response: Response) => {
-				return response.json();
+		return this.http.patch(`${this.route}${params}`, entity).map((response: any) => {
+				return response;
 			})
 		;
 	}
@@ -71,8 +71,8 @@ export class GPPDService {
 		
 		let params = FilterService.getUrlParams();
 
-		return this.http.post(`${this.route}${params}`, entity).map((response: Response) => {
-				return response.json();
+		return this.http.post(`${this.route}${params}`, entity).map((response: any) => {
+				return response;
 			})
 		;
 	}
@@ -81,8 +81,8 @@ export class GPPDService {
 		
 		let params = FilterService.getUrlParams();
 
-		return this.http.delete(`${this.route}/${id}${params}`).map((response: Response) => {
-				return response.json();
+		return this.http.delete(`${this.route}/${id}${params}`).map((response: any) => {
+				return response;
 			})
 		;
 	}

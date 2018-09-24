@@ -3,7 +3,7 @@ import { CommonModule }             from '@angular/common';
 import { NgModule  }                from '@angular/core';
 import { RouterModule }             from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 // import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -59,7 +59,7 @@ import { ConfirmModaleComponent }      from './../applicativeService/popin/confi
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule, Modal, bootstrap4Mode } from 'ngx-modialog/plugins/bootstrap';
 
-import {ScrollToModule} from 'ng2-scroll-to';
+import {NgxPageScrollModule} from 'ngx-page-scroll';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { InfiniteScrollModule }   from 'ngx-infinite-scroll';
@@ -82,12 +82,16 @@ import { CityBarComponent} from './components/client/cityBar/component';
 
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 import {PasswordStrengthBarComponent} from "../applicativeService/form/password/component";
+// import {InterceptorHttpClient} from "../applicativeService/interceptor/interceptorHttpClient";
+// import {httpClientFactory} from "../applicativeService/interceptor/httpClientFactory";
 
 
 
 @NgModule({
   imports:[
     NgbModule,
+    // HttpClientModule,
+
     WcRoutingModule,
     BrowserModule,
     CommonModule,
@@ -107,7 +111,7 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
     ModalModule.forRoot(),
     BootstrapModalModule,
     NgxMyDatePickerModule.forRoot(),
-    ScrollToModule,
+    NgxPageScrollModule,
     Ng2ImgMaxModule,
     AgmCoreModule.forRoot({
         apiKey: "AIzaSyA9v3Cne0PPDnAal2Gt1jAbeGmxSym5Ltg",
@@ -165,11 +169,6 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
         useFactory: GPPDFactory,
         deps: [HttpClient ]
     },
-    // {
-    //     provide: HTTP_INTERCEPTORS,
-    //     useClass: AuthenticationInterceptor,
-    //     multi: true
-    // },
     ClientService,
     MessagesService,
     PeriodService,

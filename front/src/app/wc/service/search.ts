@@ -1,10 +1,13 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {Subject, Observable, BehaviorSubject} from 'rxjs';
 import { Client } from './../entities/client/entity';
 import { Message } from './../entities/message/entity';
 import { Thread } from './../entities/thread/entity';
 import {ClientService} from "./client";
-import {Http, Response} from "@angular/http";
+import { Response} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import {LoggedService} from "./logged"
 
 
@@ -12,7 +15,7 @@ import * as _ from 'lodash';
 import {FilterService} from "../../applicativeService/filter/service";
 import {IEntity} from "../../applicativeService/entity/interface";
 import {LoggerService} from "../../applicativeService/logger/service";
-import 'rxjs/add/observable/empty'
+
 
 
 @Injectable()
@@ -32,7 +35,7 @@ export class SearchService {
 
 
   constructor(public ClientService: ClientService,
-              protected http: Http,
+              protected http: HttpClient,
               private LoggedService: LoggedService,
               private loggerService: LoggerService,
 
@@ -91,13 +94,13 @@ export class SearchService {
       route = "/api/client/matchs";
     }
 
-    return this.http.get(`${route}${params}`)
-      .map((response: Response) => {
+    return this.http.get(`${route}${params}`).pipe(
+      map((response: any[]) => {
         FilterService.clear();
-        this.currentFoundClients.next(response.json());
+        this.currentFoundClients.next(response);
         this.loading.next(false);
         this.currentlySearching = false;
-      });
+      }));
 
 
   }
@@ -113,17 +116,17 @@ export class SearchService {
 
     let endRoute = ".js?key="+Key;
 
-    return this.http.get(`${route}${name}${endRoute}`).map((response)=>{
-      console.log(response)
-      this.currentFoundAddress = response.json();
+    return this.http.get(`${route}${name}${endRoute}`).pipe(map((response:any[])=>{
+      // console.log(response)
+      this.currentFoundAddress = response;
 
-      let citys = response.json().results;
-      console.log(citys)
+      let citys = response['results'];
+      // console.log(citys)
       citys.map(this.setNameForOsm);
 
       return citys;
 
-    });
+    }));
 
   }
 

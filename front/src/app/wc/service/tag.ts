@@ -1,7 +1,10 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { Tag } from './../entities/tag/entity';
 
-import {Http, Response} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 
 
 import * as _ from 'lodash';
@@ -13,7 +16,7 @@ import {FilterService} from "../../applicativeService/filter/service";
 export class TagService {
 
 
-  constructor(protected http: Http) {
+  constructor(protected http: HttpClient) {
 
   }
 
@@ -21,15 +24,16 @@ export class TagService {
   public findTags(text:string): Observable<Array<String>> {
 
 
-    return this.http.get(`/api/findTag?tagLetters=`+text).map((response: Response) => {
+    return this.http.get(`/api/findTag?tagLetters=`+text).pipe(map((response: any) => {
 
-      let tags = response.json();
+      // console.log(response)
+      let tags = response;
 
       return tags.map(function(obj:any) {
         return obj.name;
       });
 
-    });
+    }));
 
   }
 
