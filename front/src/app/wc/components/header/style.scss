@@ -1,6 +1,10 @@
 @import './../../../../assets/scss/variables.scss';
 
 nav.navbar{
+  background-color: #d6d6d6;
+  border-bottom: solid 1px #b3b3b3;
+  min-height: 60px;
+
 
   .navbar-nav .dropdown-menu {
     position: absolute !important;
@@ -11,11 +15,6 @@ nav.navbar{
       display: none;
     }
   }
-
-  //background-color: $mainBgColor;
-  //border-bottom: solid 1px $basicBorderColor;
-  background-color: #d6d6d6;
-  border-bottom: solid 1px #b3b3b3;
 
   .navbar-nav .nav-link{
     padding-right: 5px;
