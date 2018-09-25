@@ -1,16 +1,16 @@
-<div class="media conversation" [class.selected]="selected"  >
+<div *ngIf="_thread.id" class="media conversation" [class.selected]="selected"  >
   <div class="pull-left">
-    <img *ngIf="thread.avatarSrc" class="media-object avatar"
-         src="{{avatarSrcBase}}{{thread.avatarSrc}}">
-    <img *ngIf="!thread.avatarSrc" class="media-object avatar"
+    <img *ngIf="_thread.avatarSrc" class="media-object avatar"
+         src="{{avatarSrcBase}}{{_thread.avatarSrc}}">
+    <img *ngIf="!_thread.avatarSrc" class="media-object avatar"
          src="{{avatarSrcBase}}{{baseImageName}}">
   </div>
   <div class="media-body">
-    <span class="media-heading contact-name">{{thread.name}}
+    <span class="media-heading contact-name">{{_thread.name}}
     </span>
     <div class="messageContainer">
-      <small *ngIf="thread.lastMessage.sender && thread.id === thread.lastMessage.sender.id" class="message-preview">{{thread.lastMessage.message}}</small>
-      <small *ngIf="!thread.lastMessage.sender || !(thread.id === thread.lastMessage.sender.id)" class="message-preview"></small>
+      <small *ngIf="_thread.lastMessage.sender && _thread.id === _thread.lastMessage.sender.id" class="message-preview">{{_thread.lastMessage.message}}</small>
+      <small *ngIf="!_thread.lastMessage.sender || !(_thread.id === _thread.lastMessage.sender.id)" class="message-preview"></small>
     </div>
   </div>
   <a (click)="clicked($event)" class="div-link">Select</a>

@@ -123,6 +123,7 @@ export class HeaderComponent implements OnInit {
 
 		this.threadsService.orderedThreads.subscribe( (currentThreads: Array<Thread>) => {
 
+		  console.log("header bug")
 			this.notifications = [];
 
 			_.map(currentThreads, (currentThread: Thread) => {

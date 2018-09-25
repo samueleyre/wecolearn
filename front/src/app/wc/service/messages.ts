@@ -52,7 +52,7 @@ export class MessagesService {
     // stored in `messages`)
     public updates: Subject<any> = new Subject<any>();
 
-    private currentClient: Client;
+    public currentClient: Client = new Client();
     private sentMessages: Array<Message>;
     private receivedMessages: Array<Message>;
 
@@ -238,13 +238,11 @@ export class MessagesService {
     let getClientSubscribe = this.ClientService.get()
       .subscribe(
         (user: Client) => {
-          this.loggerService.log("client Service called in messages service", this.currentClient)
-          if (user && this.router.url === "/search" && undefined === this.currentClient) {
+          if (user && this.router.url === "/search" && null === this.currentClient.id) {
             this.currentClient = user;
             this.sentMessages = user.sent_messages;
             this.receivedMessages = user.received_messages;
             this.generateMessages();
-            this.loggerService.log("shoud unsubscribe")
             getClientSubscribe.unsubscribe(); // this doens't work ?
 
           }

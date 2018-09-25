@@ -19,10 +19,15 @@ import { image }            from "../../../../../applicativeService/constants/im
   styleUrls: ['./chat-thread.component.scss']
 })
 export class ChatThreadComponent implements OnInit {
-  @Input() thread: Thread;
   selected = false;
   private avatarSrcBase : string;
   private baseImageName : string = image.default_200px;
+  private _thread: Thread;
+
+  @Input('thread')
+  set thread(value: Thread) {
+    this._thread = value;
+  }
 
 
   constructor(public threadsService: ThreadsService, private messagesService: MessagesService ) {
@@ -31,17 +36,28 @@ export class ChatThreadComponent implements OnInit {
   ngOnInit(): void {
 
     this.avatarSrcBase =  GPPDComponent.updateUrl('/img/');
+    if (this._thread.id) {
+      this.load();
+    }
+
+  }
+
+  load():void {
+
     this.threadsService.currentThread
-      .subscribe( (currentThread: Thread) => {
-        this.selected = currentThread &&
-          this.thread &&
-          (currentThread.id === this.thread.id);
-      });
+        .subscribe( (currentThread: Thread) => {
+          this.selected = currentThread &&
+              this._thread &&
+              (currentThread.id === this._thread.id);
+        });
+
+
+
   }
 
   clicked(event: any): void {
     event.preventDefault();
-    this.threadsService.setCurrentThread(this.thread);
+    this.threadsService.setCurrentThread(this._thread);
     this.messagesService.pushUpdatedMessages().subscribe();
   }
 }

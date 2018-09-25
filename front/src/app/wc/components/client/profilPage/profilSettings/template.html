@@ -188,8 +188,12 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-6 control-label label-form" >Ambiance</label>
-                                <div class="col-md-12">
+                                <label class="col-md-6 control-label label-form" >
+                                  <span>Ambiance</span>
+                                  <button *ngIf="!entity.atmosphere" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('atmosphere')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </label>
+
+                              <div class="col-md-12">
                                     <div class="imageContainer">
                                         <label *ngFor="let atmosphere of atmospheres" [ngClass]="{'editing-image': editing.atmosphere}">
                                           <div *ngIf="editing.atmosphere || (!editing.atmosphere && entity.atmosphere === atmosphere.value)">
@@ -199,6 +203,7 @@
                                             <img *ngIf="editing.atmosphere" src="{{webPath}}settings/{{atmosphere.image}}">
                                           </div>
                                         </label>
+
                                     </div>
                                     <div *ngIf="!firstTime" class="btn-container">
                                       <button *ngIf="editing.atmosphere" name="submit" class="btn btn-sm btn-primary-wc">Enregistrer</button>

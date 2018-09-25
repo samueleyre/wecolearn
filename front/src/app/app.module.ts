@@ -45,6 +45,9 @@ import { LOCALE_ID } from '@angular/core';
 //SERVICES -------------
 import { LoggerService }       from './applicativeService/logger/service';
 import {AutofocusDirective} from "./applicativeService/form/input/directive";
+import {ThreadsService} from "./wc/service/threads.service";
+import {MessagesService} from "./wc/service/messages";
+import {ClientService} from "./wc/service/client";
 // import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 // import {TokenService} from "./applicativeService/token/service";
 
@@ -87,6 +90,11 @@ const appRoutes: Routes = [
       },
       { provide: LOCALE_ID, useValue: "fr-FR" }, //replace "en-US" with your locale
       LoggerService,
+      ThreadsService,
+      MessagesService,
+      ClientService,
+
+
   ],
   bootstrap:[ 
   	AppComponent

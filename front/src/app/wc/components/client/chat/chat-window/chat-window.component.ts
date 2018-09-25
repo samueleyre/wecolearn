@@ -58,7 +58,6 @@ export class ChatWindowComponent implements OnInit {
 
     this.threadsService.currentThread.subscribe(
       (thread: Thread) => {
-          this.loggerService.log("currentthread", thread)
         if (thread.id) {
           this.messagesService.changePeriod(4000);
         }

@@ -169,10 +169,7 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
         useFactory: GPPDFactory,
         deps: [HttpClient ]
     },
-    ClientService,
-    MessagesService,
     PeriodService,
-    ThreadsService,
     SearchService,
     TagService,
     LoggedService

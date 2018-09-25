@@ -60,7 +60,7 @@ export class ClientService {
           map((response: Client) => {
               this.currentClient.next(response);
               this.cClientNu = response;
-              this.loggerService.log("loaded", response)
+              // this.loggerService.log("loaded", response)
               return 'loaded';
           }));
   }

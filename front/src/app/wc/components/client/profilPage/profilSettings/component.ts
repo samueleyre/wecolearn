@@ -148,24 +148,18 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         
         this.service.getOne().subscribe( ( client: IEntity) => {
             this.setEntity(client);
-            if (!this.entity['latitude']) {
-                this.setDefaultLatLong();
-            }
-            if (!this.entity['image']) {
-              this.entity['image'] = new Image();
-            }
-            // if (!this.entity['biographie']) {
-            //   this.firstTime = true;
-            //   this.initEditable(true);
-            // }
-
-            // console.log(client)
         });
     }
 
     setEntity(client: IEntity) {
 
         this.entity = this.setTags(client);
+        if (!this.entity['latitude']) {
+          this.setDefaultLatLong();
+        }
+        if (!this.entity['image']) {
+          this.entity['image'] = new Image();
+        }
 
     }
 
@@ -197,13 +191,8 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         this.joinTags();
         this.service.setApi(this.getApi());
         this.service.patchOne( this.entity ).subscribe(
-            ( entitie: IEntity ) => {
-                //console.log( 'entitie', entitie);
-                this.entity = this.setTags(entitie);
-                if (!this.entity['latitude']) {
-                    this.setDefaultLatLong();
-                }
-                // MessageService.info('Modification prise en compte !');
+            ( client: IEntity ) => {
+              this.setEntity(client);
             },
             error => { console.log(error) }
         );

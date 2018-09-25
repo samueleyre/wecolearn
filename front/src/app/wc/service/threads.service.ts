@@ -8,6 +8,8 @@ import { MessagesService } from './messages';
 import * as _ from 'lodash';
 import {LoggerService} from "../../applicativeService/logger/service";
 import {EmptyObservable} from "rxjs/observable/EmptyObservable";
+import { Client } from './../entities/client/entity';
+
 
 @Injectable()
 export class ThreadsService {
@@ -16,7 +18,7 @@ export class ThreadsService {
   threads: Observable<{ [key: string]: Thread }>;
 
   // `orderedThreads` contains a newest-first chronological list of threads
-  orderedThreads: Observable<Thread[]>;
+  public orderedThreads: Observable<Thread[]> = new EmptyObservable();
 
   // `currentThread` contains the currently selected thread
   currentThread: Subject<Thread> =
@@ -32,6 +34,7 @@ export class ThreadsService {
     this.threads = messagesService.messages.pipe(
       map( (messages: Message[]) => {
         const threads: {[key: string]: Thread} = {};
+        // console.log("messages to be threaded", messages)
         // Store the message's thread in our accumulator `threads`
         messages.map((message: Message) => {
           threads[message.thread.id] = threads[message.thread.id] ||
@@ -90,6 +93,8 @@ export class ThreadsService {
 
   resetThreads(): void {
     this.orderedThreads = new EmptyObservable();
+    this.messagesService.currentClient = new Client();
+
   }
 
 }
