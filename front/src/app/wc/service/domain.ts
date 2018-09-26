@@ -28,7 +28,7 @@ export class DomainService {
     if (process.env.NODE_ENV === 'production') {
       var regex = /(?:http[s]*\:\/\/)*(.*?)\.(?=[^\/]*\..{2,5})/i;
       var subdomain = location.match(regex)[1];
-      console.log(subdomain, subdomains.indexOf(subdomain))
+      // console.log(subdomain, subdomains.indexOf(subdomain))
       if (null !== subdomain && "www" !== subdomain &&  subdomains.indexOf(subdomain) !== -1 ) {
         this.subdomain = subdomain;
         return subdomain;

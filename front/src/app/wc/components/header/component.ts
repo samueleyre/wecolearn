@@ -86,7 +86,7 @@ export class HeaderComponent implements OnInit {
     this.webPath = GPPDComponent.updateUrl('/')
     this.imagePath = this.webPath + "img/";
     this.subDomain = this.domainService.getSubDomain();
-    console.log(this.subDomain)
+    // console.log(this.subDomain)
 
     if (this.subDomain === "main") {
       this.logoPath = this.webPath+'logo/wecolearn.png';
