@@ -14,7 +14,9 @@ use  FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use AppBundle\Pagination\Annotation as Pagination;
+//use AppBundle\Pagination\Annotation as Pagination;
+use AppBundle\Constant\SubdomainConstant;
+
 
 
 class PingController extends Controller
@@ -30,9 +32,19 @@ class PingController extends Controller
     /**
     * @Get("/api/ping" )
     */
-    public function getAction()
+    public function getAction(Request $request)
     {
-        return [];
+
+      $domain = $request->headers->get('host');
+
+      for ($i = 0; $i< count(SubdomainConstant::$list);$i++ ) {
+        if (strpos($domain, SubdomainConstant::$list[$i]) !== false) {
+          return SubdomainConstant::$list[$i];
+        }
+      }
+
+      return "lesbricodeurs";
+
     }
 
 

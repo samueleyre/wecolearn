@@ -12,7 +12,7 @@
                 <searchBar></searchBar>
             </form>
         </li>
-        <li  *ngIf="!connected" class="nav-item" >
+        <li  *ngIf="!connected && subDomain === 'main'" class="nav-item" >
             <form class="form-inline">
                 <cityBar></cityBar>
             </form>

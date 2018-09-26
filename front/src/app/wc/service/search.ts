@@ -27,6 +27,7 @@ export class SearchService {
   public loading: Subject<boolean>;
   public loadingOsm: Subject<boolean>;
   private currentlySearching: boolean = false;
+  private pauseRedirect:boolean = false;
 
   private setNameForOsm = function(elmnt:any) {
     return elmnt['value'] = elmnt['name'];
@@ -50,7 +51,7 @@ export class SearchService {
 
   }
 
-  search( first?: number, max?: number ): Observable<void> {
+  search( first?: number, max?: number ): Observable<boolean> {
 
     /*if (this.currentlySearching) {
       return Observable.empty<void>();
@@ -96,12 +97,25 @@ export class SearchService {
 
     return this.http.get(`${route}${params}`).pipe(
       map((response: any[]) => {
-        FilterService.clear();
         this.currentFoundClients.next(response);
         this.loading.next(false);
         this.currentlySearching = false;
+        FilterService.clear();
+        if (this.pauseRedirect) {
+          this.pauseRedirect = false;
+          return false;
+        }
+        return true;
       }));
 
+
+  }
+
+  cancelChangePageAfterSearch() {
+
+    if (this.currentlySearching) {
+      this.pauseRedirect = true;
+    }
 
   }
 

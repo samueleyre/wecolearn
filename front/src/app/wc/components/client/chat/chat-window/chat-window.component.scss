@@ -43,11 +43,11 @@
         @extend .btn;
         @extend .btn-primary;
         @extend .btn-sm;
-        background-color: #fecd06;
-        border-color: #cda608;
+        background-color: $mainYellow;
+        border-color: darken($mainYellow, 10%);
         &:hover{
-          background-color: #fecd06;
-          border-color: #cda608;
+          background-color: $mainYellow;
+          border-color: darken($mainYellow, 10%);
         }
       }
     }

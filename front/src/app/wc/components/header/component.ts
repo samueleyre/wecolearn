@@ -27,6 +27,7 @@ import {Observable} from "rxjs/Rx";
 
 import { LoggedService } from './../../service/logged';
 import {image} from "../../../applicativeService/constants/image";
+import {DomainService} from "../../service/domain";
 
 
 
@@ -43,6 +44,7 @@ export class HeaderComponent implements OnInit {
     private location: Location;
     private logoPath: string;
     private imagePath: string;
+    private webPath: string;
 		private baseUrl: string;
 		private connected: boolean = false;
 		private screen : boolean = false;
@@ -54,6 +56,8 @@ export class HeaderComponent implements OnInit {
 		private collapseClass: string = "collapse";
     private threads: Observable<any>;
     private baseImageName : string = image.default_200px;
+    private subDomain: string = null;
+
 
 
   constructor( private http : HttpClient,
@@ -67,8 +71,10 @@ export class HeaderComponent implements OnInit {
              private LoggedService: LoggedService,
              private authenticationService: AuthenticationService,
              private loggerService: LoggerService,
+               private domainService: DomainService,
 
-) {
+
+  ) {
 
         config.placement = 'bottom-right';
         this.location = location;
@@ -77,27 +83,35 @@ export class HeaderComponent implements OnInit {
 	}
 
 	ngOnInit() {
-      this.imagePath = GPPDComponent.updateUrl('/img/');
-      this.screen = GPPDComponent.getScreenSize();
-  	  this.ClientService.get().subscribe((client: Client )=> {
-          this.loggerService.log("got client", client)
-				this.currentClient = client;
-			});
-			this.logoPath = GPPDComponent.updateUrl('/logo/wecolearn.png');
-      Logged.get().subscribe( (logged:boolean) => {
-        this.loggerService.log("logged ??? ", logged)
-        this.connected = logged;
-        if (logged) {
-          this.loadClient();
-          this.loadMessages();
-        }
-			});
-      if ( !localStorage.getItem('cookieseen')) {
-        	MessageService.cookie();
-     }
-     this.router.events.subscribe(event => {
+    this.webPath = GPPDComponent.updateUrl('/')
+    this.imagePath = this.webPath + "img/";
+    this.subDomain = this.domainService.getSubDomain();
 
-      })
+    if (this.subDomain === "main") {
+      this.logoPath = this.webPath+'logo/wecolearn.png';
+    } else {
+      this.logoPath = this.webPath+'logo/'+this.subDomain+".png";
+    }
+
+    this.screen = GPPDComponent.getScreenSize();
+    this.ClientService.get().subscribe((client: Client )=> {
+        this.loggerService.log("got client", client)
+      this.currentClient = client;
+    });
+    Logged.get().subscribe( (logged:boolean) => {
+      this.loggerService.log("logged ??? ", logged)
+      this.connected = logged;
+      if (logged) {
+        this.loadClient();
+        this.loadMessages();
+      }
+    });
+    if ( !localStorage.getItem('cookieseen')) {
+        MessageService.cookie();
+   }
+   this.router.events.subscribe(event => {
+
+    })
   }
 
 
@@ -123,7 +137,6 @@ export class HeaderComponent implements OnInit {
 
 		this.threadsService.orderedThreads.subscribe( (currentThreads: Array<Thread>) => {
 
-		  console.log("header bug")
 			this.notifications = [];
 
 			_.map(currentThreads, (currentThread: Thread) => {
@@ -133,7 +146,7 @@ export class HeaderComponent implements OnInit {
 																(currentThread.lastMessage.sender.id === this.currentClient.id);
 
 					if (!currentThread.lastMessage.is_read && !messageIsFromUser && currentThread.lastMessage.sender) {
-                        this.loggerService.log("THREADS", currentThread);
+                        // this.loggerService.log("THREADS", currentThread);
 
                         this.notifications.push(currentThread)
 					}

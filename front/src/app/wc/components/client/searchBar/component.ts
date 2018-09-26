@@ -41,6 +41,7 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
   private loaderPath: string;
   private searchBarStyle : object;
   private loadingTemplate: string;
+  private notSearchPage: boolean = false;
 
 
 
@@ -77,6 +78,21 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
             }
           }
       )
+
+      // update value of notSearchPage value
+      this.router.events.subscribe(event => {
+
+        if (event instanceof NavigationEnd) {
+          // this.loggerService.log("route changed", event, event.urlAfterRedirects)
+          if (event.urlAfterRedirects === "/search") {
+            this.notSearchPage = false;
+          } else {
+            this.notSearchPage = true;
+          }
+
+        }
+      });
+
     }
 
 
@@ -105,9 +121,9 @@ export class SearchBarComponent extends GPPDComponent implements OnInit {
       this.searchService.addSearchParameter("tag", text);
 
       this.searchService.search().subscribe(
-        () =>{
+        (redirect:boolean) =>{
           FilterService.clear();
-          this.router.navigate(['/search']);
+          if (redirect) this.router.navigate(['/search']);
         }
       );
     }

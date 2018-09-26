@@ -50,23 +50,23 @@ class ClientController extends GPPDController
 	   * @Get("client")
      * @View(serializerEnableMaxDepthChecks=true)
      **/
-    public function getClientAction( )
+    public function getClientAction(Request $request  )
     {
 
 
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+      $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+      $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
 
-        $client = $this->getDoctrine()
+      $client = $this->getDoctrine()
             ->getRepository(Client::class)
-            ->findOneBy(["user"=>$user]);
+          ->findOneBy(["user"=>$user]);
 
-        $client->setClientUpdated($date);
+      $client->setClientUpdated($date);
 
-        $this->get("client.service")->patch($client, null, false, false);
+      $this->get("client.service")->patch($client, null, false, false);
 
-        return $client;
+      return $client;
 
 
     }

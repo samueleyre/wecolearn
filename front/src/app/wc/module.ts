@@ -82,6 +82,7 @@ import { CityBarComponent} from './components/client/cityBar/component';
 
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 import {PasswordStrengthBarComponent} from "../applicativeService/form/password/component";
+import {HomePageComponent} from "./components/client/home/page/component";
 // import {InterceptorHttpClient} from "../applicativeService/interceptor/interceptorHttpClient";
 // import {httpClientFactory} from "../applicativeService/interceptor/httpClientFactory";
 
@@ -132,6 +133,7 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
     CopyComponent,
     GeolocationComponent,
     SearchBarComponent,
+    HomePageComponent,
     SearchOsmComponent,
     EmailNotificationSettingsComponent,
     CityBarComponent,
@@ -157,6 +159,7 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
     ChatWindowComponent,
     FromNowPipe,
     SearchBarComponent,
+    HomePageComponent,
     SearchOsmComponent,
     EmailNotificationSettingsComponent,
     CityBarComponent,

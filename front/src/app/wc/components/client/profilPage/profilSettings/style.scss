@@ -55,7 +55,7 @@ label.label-form{
     //  border: solid 1px #861301;
     //}
     input:checked + img {
-      box-shadow: 0px 0px 0px 2px #fe5e38;
+      box-shadow: 0px 0px 0px 2px $mainOrange;
     }
   }
   img{
@@ -107,8 +107,8 @@ $foundation-theme: (
 );
 
 $foundation-tag-theme: (
-        background-color: #fecd06,
-        background: #fecd06
+        background-color: $mainYellow,
+        background: $mainYellow
 );
 
 .help-input{

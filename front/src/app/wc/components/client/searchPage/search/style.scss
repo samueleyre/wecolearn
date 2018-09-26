@@ -11,7 +11,7 @@
           flex-wrap: wrap;
           .tag{
             padding: 2px 6px;
-            background-color: #fecd06;
+            background-color: $mainYellow;
             border-radius: 3px;
             margin: 2px 0px;
             margin-right: 6px;
@@ -47,6 +47,7 @@
 }
 
 .card {
+  background-color: #ffffff;
   .btn{
     transition: color .10s ease-in-out, background-color .10s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }
@@ -56,8 +57,8 @@
     }
   }
   .btn:focus,.btn:hover {
-    //background-color: #fecd06;
-    background-color: #FF5722;
+    background-color: $mainYellow;
+    background-color: $mainOrange;
     color: #ffffff;
   }
 }

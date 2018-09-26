@@ -33,15 +33,17 @@ export class PingService {
           return observableOf({ status : status });
         }),
         map( response => {
+          console.log(response)
           if( 401 === response['status']  || 403 === response['status']) {
-            // console.log("catch error2")
-
-            this.loggerService.log("Ping", "url "+url, "router.url "+this.router.url)
+            // this.loggerService.log("Ping", "url "+url, "router.url "+this.router.url)
             if (this.OPENROUTES.indexOf(url) === -1) {
                 this.router.navigate(['/']);
             }
             return true;
           } else {
+            if (url === '/') {
+              this.router.navigate(['/search']);
+            }
             let logged = true;
             Logged.set(logged);
             return logged;
