@@ -16,7 +16,7 @@ import {subdomains} from "../../applicativeService/constants/domain";
 @Injectable()
 export class DomainService {
 
-  private subdomain:string  = 'main';
+  private subdomain:string;
   private location: Location;
 
   constructor(location: Location) {
@@ -28,21 +28,28 @@ export class DomainService {
     if (process.env.NODE_ENV === 'production') {
       var regex = /(?:http[s]*\:\/\/)*(.*?)\.(?=[^\/]*\..{2,5})/i;
       var subdomain = location.match(regex)[1];
-      console.log(subdomain)
+      console.log(subdomain, subdomains.indexOf(subdomain))
       if (null !== subdomain && "www" !== subdomain &&  subdomains.indexOf(subdomain) !== -1 ) {
         this.subdomain = subdomain;
+        return subdomain;
       } else {
         this.subdomain = "main";
+        return subdomain;
       }
 
     } else {
       this.subdomain = "main";
+      return "main";
     }
 
   }
 
   getSubDomain() {
-    return this.subdomain;
+    if (this.subdomain) {
+      return this.subdomain;
+    } else {
+      return this.setSubDomain();
+    }
   }
 
 
