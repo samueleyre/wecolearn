@@ -25,12 +25,12 @@ export class DomainService {
 
   setSubDomain() {
     const location = window.location.href;
-    let subdomain = "";
+    let subdomain = null;
     if (process.env.NODE_ENV === 'production') {
       const regex = /(?:http[s]*\:\/\/)*(.*?)\.(?=[^\/]*\..{2,5})/i;
 
       // console.log(subdomain, subdomains.indexOf(subdomain))
-      if (location.match(regex)[1]) {
+      if (location.match(regex) && location.match(regex)[1]) {
         subdomain = location.match(regex)[1];
       } else {
         this.subdomain = "main";
