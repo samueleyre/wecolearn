@@ -28,8 +28,12 @@ export class HomePageComponent implements OnInit {
 
     ngOnInit() {
         this.webPath = GPPDComponent.updateUrl('/');
+        let backgroundImage = "P3.png";
+        if (this.subDomain !== "main") {
+          backgroundImage = this.subDomain+".jpeg";
+        }
         this.homeBgImageStyle = {
-          backgroundImage: "url('"+this.webPath+"home/P3.jpg')"
+          backgroundImage: "url('"+this.webPath+"home/"+backgroundImage+"')"
         };
         this.screen =  GPPDComponent.getScreenSize();
     }

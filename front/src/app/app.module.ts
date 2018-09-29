@@ -2,7 +2,7 @@ import { BrowserModule }            from '@angular/platform-browser';
 import { FormsModule }              from '@angular/forms';
 import {Http, HttpModule, RequestOptions, XHRBackend} from '@angular/http';
 import { NgModule }                 from '@angular/core';
-import {Router, RouterModule, Routes} from '@angular/router';
+import {PreloadAllModules, Router, RouterModule, Routes} from '@angular/router';
 
 import { NgbModule }                from '@ng-bootstrap/ng-bootstrap';
 
@@ -66,6 +66,9 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
     WcModule,
     RouterModule.forRoot(appRoutes),
+    // RouterModule.forRoot(appRoutes, {   // todo: test this it should load faster
+    //   preloadingStrategy: PreloadAllModules
+    // }),
     MessageModule,
     routing,
     // BsDropdownModule.forRoot(),

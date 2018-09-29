@@ -68,8 +68,6 @@ button{
   color: $mainOrange;
 }
 
-/*form*/
-
 .ng-invalid:not(form) .ql-editor  {
   border-left: 5px solid #a94442; /* red */
 }
@@ -81,6 +79,10 @@ button{
   border-color: #5cb3fd;
   outline: 0;
 }
+
+/*form*/
+
+
 
 input.ng-invalid.showvalidity  {
   border-left: 5px solid #a94442; /* red */

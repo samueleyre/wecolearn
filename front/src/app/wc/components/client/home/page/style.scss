@@ -6,14 +6,25 @@
   #homeBgImage{
     height: 456px;
     width: 100%;
-    background-position: center -24px;
+    &.mainBg{
+      background-position: center -24px;
+    }
+    .filterBg{
+      height: 100%;
+      //background-color: #00000042;
+      background: linear-gradient(rgb(255, 255, 255),rgba(255, 255, 255, 0.9), #ffffff75);
+    }
     @media (min-width: 1000px) {
       height: 376px;
       width: 100%;
-      background-position: center -240px;
+      &.mainBg{
+        background-position: center -240px;
+      }
     }
     @media (max-width: 768px) {
-      background-position: center 0px;
+      &.mainBg{
+        background-position: center 0px;
+      }
       height: 596px;
       padding-top: 65px;
     }
@@ -31,6 +42,7 @@
     -webkit-background-size: cover;
     background-size: cover;
   }
+
 }
 
 #tagLinksContainer{
