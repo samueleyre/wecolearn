@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
 
 class ClientRepository extends EntityRepository
 {
-  public function search(Client $client = null, Tag $tag = null, $first = 0, $max = 10, $startLatitude = null, $startLongitude = null)
+  public function search(Client $client = null, Tag $tag = null, $first = 0, $max = 10, $startLatitude = null, $startLongitude = null, $noClientTags = false)
   {
 
     if (!$startLatitude || !$startLongitude) {
@@ -20,7 +20,7 @@ class ClientRepository extends EntityRepository
 
     $tags = [];
 
-    if ($client) {
+    if ($client && !$noClientTags) {
       $tags = $client->getTags();
     }
 
@@ -45,8 +45,8 @@ class ClientRepository extends EntityRepository
 
     $qb->innerJoin('entity.tags', 't');
 
-//        $qb->where( 't.type = :number' )->setParameter('number', 0);
-    $qb->Where('entity.showProfil = :showProfil')->setParameter('showProfil', true);
+//    $qb->where( 't.type = :number' )->setParameter('number', 0);
+    $qb->Where('entity.showProfil = :showProfil')->setParameter('showProfil', 1);
     if ($client) {
       $qb->andWhere('entity.id != :clientId')->setParameter('clientId', $client->getId());
     }
@@ -58,13 +58,11 @@ class ClientRepository extends EntityRepository
       $qb->andWhere($condition);
     }
 
-    $qb->orderBy('distance', 'ASC');
+    $qb->groupBy('entity.id');
+    $qb->orderBy('distance', "ASC");
     $qb->having('distance < 1000');
     $qb->setFirstResult($first);
     $qb->setMaxResults($max);
-//            $qb->groupBy('entity.id'); todo: is groupBy useful ? ( nothing is returned when only one value )
-
-//            return $qb->getQuery()->getSQL();
 
 //            syslog(LOG_ERR,$qb->getQuery()->getSQL());
 

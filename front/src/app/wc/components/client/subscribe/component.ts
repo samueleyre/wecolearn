@@ -21,7 +21,9 @@ import {Logged} from "../../../../applicativeService/authguard/logged";
 
  
 @Component({
-    templateUrl: 'template.html'
+    templateUrl: 'template.html',
+    styleUrls : ['./../../../../components/login/style.scss']
+
 })
 
 

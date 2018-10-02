@@ -29,9 +29,6 @@
   }
 }
 
-.slackIcon{
-  max-height: 27px;
-}
 
 
 .emptyCardsMessage{
@@ -76,9 +73,9 @@
 
 #searchLoader {
   padding-top: 10px;
+  height: 72px;
   svg{
     margin: auto;
     fill: transparent;
-
   }
 }

@@ -57,11 +57,14 @@ class SearchService extends GPPDService {
         ->getRepository(Client::class)
         ->search($client, $tag, $first, $max, $latitude, $longitude);
 
-      if ($result === [] ) {
+     // todo: search for type 0, if less than 5, search for other types.
+
+     if ($result === [] ) {
         $result = $this->em
           ->getRepository(Client::class)
-          ->search(null, $tag, $first, $max, $latitude, $longitude);
+          ->search($client, $tag, $first, $max, $latitude, $longitude, true);
       }
+
 
       return $result;
 

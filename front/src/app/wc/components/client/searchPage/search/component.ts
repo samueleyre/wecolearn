@@ -134,18 +134,16 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     onScroll() {
       //todo: only when arrives at bottom
-      //todo: add loader when loading
-      this.max += 1;
+      this.max += 4;
       if (this.max % 4 === 0 && false === this.currentlySearching && "/search" === this.router.url ) {
         this.searchService.search( 0, this.max ).subscribe(() =>{
+
         });
       }
 
-      //console.log('scrolled down');
     }
 
     onScrollUp(){
-      //console.log('scrolled up');
     }
 
 
