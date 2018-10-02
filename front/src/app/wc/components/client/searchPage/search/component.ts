@@ -27,6 +27,7 @@ import {LoggedService} from "../../../../service/logged";
 import {image} from "../../../../../applicativeService/constants/image";
 import {LoggerService} from "../../../../../applicativeService/logger/service";
 import {Observable} from "rxjs";
+import {ClientService} from "../../../../service/client";
 
 
 @Component({
@@ -47,6 +48,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     private loading: Observable<boolean>;
     private currentlySearching: boolean = false;
     private baseImageName : string = image.default_200px;
+    private currentClient: object;
 
 
   constructor( protected service: GPPDService,
@@ -55,7 +57,8 @@ export class SearchComponent extends GPPDComponent implements OnInit {
                  private router: Router,
                  private searchService: SearchService,
                  private LoggedService: LoggedService,
-                 private loggerService: LoggerService
+                 private loggerService: LoggerService,
+                 private clientService: ClientService
     ) {
         super(service);
     }
@@ -84,6 +87,14 @@ export class SearchComponent extends GPPDComponent implements OnInit {
       this.searchService.getCurrentFoundClients().subscribe( ( clients:any[] ) => {
         this.cards = clients;
       });
+
+
+      this.clientService.get().subscribe((client:Client)=> {
+        this.currentClient = client;
+      });
+
+
+
 
       this.loading = this.searchService.getLoading('tag');
 

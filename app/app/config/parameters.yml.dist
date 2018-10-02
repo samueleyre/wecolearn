@@ -30,7 +30,10 @@ parameters:
     password:           password
     limit_until_destroy: 50
 
+    client_id:         getfromslackapp
+    client_secret:      getfromslackapp
 
 sendin_blue_api:
     api_key:            ~
     timeout:            5000
+

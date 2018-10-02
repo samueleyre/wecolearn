@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 //use AppBundle\Pagination\Annotation as Pagination;
 use AppBundle\Constant\SubdomainConstant;
+use WcBundle\Service\DomainService;
 
 
 
@@ -39,11 +40,16 @@ class PingController extends Controller
 
       for ($i = 0; $i< count(SubdomainConstant::$list);$i++ ) {
         if (strpos($domain, SubdomainConstant::$list[$i]) !== false) {
-          return SubdomainConstant::$list[$i];
+          $this
+            ->get('domain.service')
+            ->setSubDomain(SubdomainConstant::$list[$i]);
+
         }
       }
-
-      return "lesbricodeurs";
+      $this
+      ->get('domain.service')
+      ->setSubDomain("wecolearn");
+      return [];
 
     }
 

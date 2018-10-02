@@ -32,6 +32,8 @@ export class Client extends Entity implements IEntity  {
 	public image : Image;
 	public show_profil: boolean;
 	public email_notifications: boolean;
+	public slack_id: number;
+	public domain: string;
 
 
 
@@ -62,5 +64,7 @@ export class Client extends Entity implements IEntity  {
 		this.image = new Image();
 		this.show_profil = false;
 		this.email_notifications = true;
+		this.slack_id = null;
+		this.domain = null;
     }
 }

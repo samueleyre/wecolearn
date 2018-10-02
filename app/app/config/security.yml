@@ -20,7 +20,6 @@ security:
             memory:
                 users:
                     %user%:  { password: %password%, roles: [ 'ROLE_ADMIN' ] }
-                    anonymous:  { password: anonymous700root+, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
 

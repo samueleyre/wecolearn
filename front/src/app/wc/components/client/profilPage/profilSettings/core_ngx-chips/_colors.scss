@@ -1,4 +1,4 @@
-@import './../../../../../../../assets/scss/variables.scss'; //main variable file
+@import './../../../../../../../assets/scss/variables.scss';
 
 
 
@@ -29,10 +29,10 @@ $color-arrow-dark-focused: #000 !default;
 
 //$color-bootstrap-default: #0275d8 !default;
 //$color-bootstrap-focused: #025aa5 !default;
-$color-bootstrap-default: darken($mainYellow, 5%) !default;
-$color-bootstrap-focused: darken($mainYellow, 10%) !default;
+$color-bootstrap-default: var(--main-color-2-dark-5) !default;
+$color-bootstrap-focused: var(--main-color-2-dark-10) !default;
 
 //$color-bootstrap3-info-default: #5bc0de !default;
 //$color-bootstrap3-info-focused: darken(#5bc0de, 15%) !default;
 $color-bootstrap3-info-default: $mainYellow !default;
-$color-bootstrap3-info-focused: darken($mainYellow, 15%) !default;
+$color-bootstrap3-info-focused: var(--main-color-2-dark-15) !default;

@@ -38,6 +38,9 @@ class SearchService extends GPPDService {
         if (array_key_exists ("latitude", $filter) && array_key_exists ("longitude", $filter) ){
             $latitude = $filter["latitude"];
             $longitude = $filter["longitude"];
+        } else {
+          $latitude = ($client && null !== $client->getLatitude()) ? $client->getLatitude() : 45.75;
+          $longitude = ($client && null !== $client->getLongitude()) ? $client->getLongitude() : 4.85;
         }
 
         if( array_key_exists('first', $filter ) && array_key_exists('max', $filter )) {
@@ -48,9 +51,19 @@ class SearchService extends GPPDService {
       }
 
 
-      return $this->em
+
+
+      $result =  $this->em
         ->getRepository(Client::class)
         ->search($client, $tag, $first, $max, $latitude, $longitude);
+
+      if ($result === [] ) {
+        $result = $this->em
+          ->getRepository(Client::class)
+          ->search(null, $tag, $first, $max, $latitude, $longitude);
+      }
+
+      return $result;
 
    }
 }

@@ -49,6 +49,7 @@ import {ThreadsService} from "./wc/service/threads.service";
 import {MessagesService} from "./wc/service/messages";
 import {ClientService} from "./wc/service/client";
 import {DomainService} from "./wc/service/domain";
+import {SeoService} from "./wc/service/seo";
 // import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 // import {TokenService} from "./applicativeService/token/service";
 
@@ -98,9 +99,8 @@ const appRoutes: Routes = [
       ThreadsService,
       MessagesService,
       ClientService,
-      DomainService
-
-
+      DomainService,
+      SeoService
   ],
   bootstrap:[ 
   	AppComponent

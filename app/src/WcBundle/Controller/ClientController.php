@@ -73,6 +73,7 @@ class ClientController extends GPPDController
 
     /**
      * @Get("client/matchs")
+     * @View( serializerGroups={"search"})
      */
     public function getClientMatchsAction(Request $request )
     {

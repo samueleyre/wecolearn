@@ -2,7 +2,7 @@ import {
         Component, 
         OnInit 
    }                             from '@angular/core';
-import { Router }                from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
  
 import { AuthenticationService } from './../../applicativeService/authentication/service';
 import {LoggerService} from "../../applicativeService/logger/service";
@@ -24,15 +24,22 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         private loggerService: LoggerService,
-        private tokenService : TokenService
+        private tokenService : TokenService,
+        private activatedRoute: ActivatedRoute
     ) { }
  
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
+        this.activatedRoute.queryParams.subscribe((params: Params) => {
+          console.log(params);
+          if (params && params['code']) {
+            this.slackLogin(params['code'])
+          }
+        });
     }
 
-    login() {    
+    login() {
       this.loading = true;
       this.authenticationService.login(this.model.email, this.model.password)
         .subscribe(
@@ -47,6 +54,28 @@ export class LoginComponent implements OnInit {
                   this.loading = false;
             }
         );
+    }
+
+    slackLogin(code:string) {
+      this.loading = true;
+      this.authenticationService.slackLogin(code).subscribe(
+         result => {
+           this.loading = false;
+           if ( result === true ) {
+             this.router.navigate(['/search']);
+           }
+
+         },
+         error => {
+           this.error = "Une erreur est survenue";
+           this.loading = false;
+
+         }
+      ) ;
+
+
+
+
     }
 
 

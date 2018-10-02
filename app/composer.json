@@ -36,6 +36,7 @@
         "jms/di-extra-bundle": "dev-master",
         "jms/serializer-bundle": "dev-master",
         "lexik/jwt-authentication-bundle": "dev-master",
+        "mashape/unirest-php": "^3.0",
         "nelmio/cors-bundle": "^1.5",
         "nuovo/spreadsheet-reader": "dev-master",
         "oro/doctrine-extensions": "^1.2",

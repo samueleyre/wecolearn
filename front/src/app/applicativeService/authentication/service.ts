@@ -20,21 +20,36 @@ export class AuthenticationService {
     }
  
     login( email: string, password: string ): Observable<boolean> {
+      console.log("sending login", email, password)
         return this.http.post('/api/login_check', { email: email, password: password }).pipe(
             map((response: Response ) => {
-                // login successful if there's a jwt token in the response
-                let token = response && response['token'];
-                if ( token ) {
-                    // store username and jwt token in local storage to keep user logged in between page refreshes
-                    this.tokenService.set( token );
-                    Logged.set(true);
-                  // return true to indicate successful login
-                    return true;
-                } else {
-                    // return false to indicate failed login
-                    return false;
-                }
+                return this.loginResponse(response);
             }));
+    }
+
+    slackLogin( code: string): Observable<boolean> {
+      return this.http.get('/api/login_check/slack?code='+code, ).pipe(
+          map((response: Response ) => {
+            return this.loginResponse(response);
+          }));
+    }
+
+    loginResponse(response: Response) {
+
+      let token = response && response['token'];
+      let error = response && response['error'];
+
+      if (error) {
+        return error;
+      } else if (token) {
+        console.log("token " + token)
+        this.tokenService.set( token );
+        Logged.set(true);
+        return true;
+      } else {
+        return false;
+      }
+
     }
  
     logout(returnHome = false) {

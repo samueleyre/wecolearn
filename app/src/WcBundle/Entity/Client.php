@@ -124,6 +124,17 @@ class Client
     public $emailNotifications = true;
 
 
+    /**
+     * @ORM\Column(type="string", name="slackId", nullable=true)
+     */
+    public $slackId;
+
+
+    /**
+     * @ORM\Column(type="string", name="domain", nullable=true)
+     */
+    public $domain;
+    
 
 
   /**
@@ -653,5 +664,53 @@ class Client
     public function getReceivedMessages()
     {
         return $this->receivedMessages;
+    }
+
+    /**
+     * Set slackId
+     *
+     * @param string $slackId
+     *
+     * @return Client
+     */
+    public function setSlackId($slackId)
+    {
+        $this->slackId = $slackId;
+
+        return $this;
+    }
+
+    /**
+     * Get slackId
+     *
+     * @return string
+     */
+    public function getSlackId()
+    {
+        return $this->slackId;
+    }
+
+    /**
+     * Set domain
+     *
+     * @param string $domain
+     *
+     * @return Client
+     */
+    public function setDomain($domain)
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }
+
+    /**
+     * Get domain
+     *
+     * @return string
+     */
+    public function getDomain()
+    {
+        return $this->domain;
     }
 }

@@ -44,10 +44,10 @@
         @extend .btn-primary;
         @extend .btn-sm;
         background-color: $mainYellow;
-        border-color: darken($mainYellow, 10%);
+        border-color: var(--main-color-2-dark-10);
         &:hover{
           background-color: $mainYellow;
-          border-color: darken($mainYellow, 10%);
+          border-color: var(--main-color-2-dark-10);
         }
       }
     }

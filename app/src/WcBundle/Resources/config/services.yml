@@ -1,7 +1,7 @@
 services:
   client.service:
     class: WcBundle\Service\ClientService
-    arguments: ['@doctrine.orm.entity_manager']
+    arguments: ['@doctrine.orm.entity_manager' ,'%client_id%', '%client_secret%']
   token.service:
     class: WcBundle\Service\TokenService
     arguments: ['@doctrine.orm.entity_manager']
@@ -22,6 +22,8 @@ services:
   user.service:
     class: WcBundle\Service\UserService
     arguments: ['@doctrine.orm.entity_manager']
+  domain.service:
+      class: WcBundle\Service\DomainService
 
 #commands
   client.tag.command:

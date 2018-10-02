@@ -14,8 +14,8 @@ class ClientRepository extends EntityRepository
   {
 
     if (!$startLatitude || !$startLongitude) {
-      $startLatitude = (null !== $client->getLatitude()) ? $client->getLatitude() : 45.75;
-      $startLongitude = (null !== $client->getLongitude()) ? $client->getLongitude() : 4.85;
+      $startLatitude = 45.75;
+      $startLongitude = 4.85;
     }
 
     $tags = [];
@@ -66,7 +66,7 @@ class ClientRepository extends EntityRepository
 
 //            return $qb->getQuery()->getSQL();
 
-//            syslog(LOG_ERR,$qb->getQuery()->getSQL());
+            syslog(LOG_ERR,$qb->getQuery()->getSQL());
 
     $ret = $qb->getQuery()->getResult();
 

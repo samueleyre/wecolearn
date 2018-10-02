@@ -12,6 +12,10 @@ import { User }            from './../../../../applicativeService/user/model';
 import { Modal, bootstrap4Mode } from 'ngx-modialog/plugins/bootstrap';
 import {AuthenticationService} from "../../../../applicativeService/authentication/service";
 import { MessageService }          from './../../../../applicativeService/message/service';
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
+import {Response} from "@angular/http";
+import {Logged} from "../../../../applicativeService/authguard/logged";
 
 
 
@@ -62,13 +66,12 @@ export class SubscribeComponent implements OnInit {
 
            }
        );
-        // this.user = new User( null, '', '', '' );
-        // f.resetForm();
+
     }
 
     login() {
         this.loading = true;
-        this.authenticationService.login(this.user.email, this.user.password)
+        this.authenticationService.login(this.user.email, this.user.password) // is this useful ??
             .subscribe(
                 result => {
                   this.loading = false;
@@ -82,6 +85,8 @@ export class SubscribeComponent implements OnInit {
                 }
             );
     }
+
+
 
 
 }

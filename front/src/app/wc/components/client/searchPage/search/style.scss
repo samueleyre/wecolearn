@@ -17,9 +17,20 @@
             margin-right: 6px;
           }
         }
+        .chatButtonContainer{
+          display: flex;
+          flex-wrap: wrap;
+          &>button, &>a{
+            margin: 1px;
+          }
+        }
       }
     }
   }
+}
+
+.slackIcon{
+  max-height: 27px;
 }
 
 

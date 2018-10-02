@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 
 class UserService {
 
-	private $em;
+	public $em;
 
 	public function __construct( EntityManager $em ) {
 		$this->em = $em;

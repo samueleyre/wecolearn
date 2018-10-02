@@ -65,7 +65,7 @@ button{
 
 .ql-editor p{
   font-size: 1rem;
-  color: $mainOrange;
+  //color: $mainOrange;
 }
 
 .ng-invalid:not(form) .ql-editor  {
@@ -109,7 +109,7 @@ button.close{
 }
 
 .modal-header{
-  background-color: lighten($mainYellow, 5%);
+  background-color: var(--main-color-2-light-5);
   border-radius: 2px 2px 0 0;
 }
 
@@ -207,8 +207,8 @@ button.close{
 
 .btn-primary-wc:hover, .btn-primary-wc:focus {
   color: #fff;
-  background-color: lighten($mainOrange, 10%);
-  border-color: lighten($mainOrange, 10%);
+  background-color: var(--main-color-1-light-10);
+  border-color: var(--main-color-1-light-10);
 }
 
 .btn-edit {
@@ -227,7 +227,7 @@ button.close{
 }
 
 .dropdown-item:active {
-  background-color: lighten($mainOrange, 10%);
+  background-color: var(--main-color-1-light-10);
 }
 
 

@@ -34,9 +34,9 @@ label.label-form{
 }
 
 #showProfilContainer{
-  background-color: lighten($mainYellow, 15%);
+  background-color: var(--main-color-2-light-15);
   padding: 10px 10px 1px 10px;
-  border: 1px solid darken($mainOrange, 10%);
+  border: 1px solid var(--main-color-1-dark-10);
 }
 
 .imageContainer{

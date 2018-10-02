@@ -4,7 +4,7 @@
                 <div *ngIf="!screen" class="imageContainer">
                     <img width="65px" src="{{webPath}}logo/wecolearn.png" alt="">
                 </div>
-                <h3>Apprenez <br> ce que <b>vous</b> voulez, <br> avec qui voulez !</h3>
+                <h3>Rencontre des personnes <br> avec qui apprendre !</h3>
                 <br><br>
                 <a class="btn btn-inscription btn-primary btn-lg " routerLink="/subscribe">Inscription</a>
                 <div *ngIf="!screen" style="color: white; font-weight: 700;">
@@ -17,7 +17,7 @@
     </div>
 
 
-    <div *ngIf="subDomain !== 'main'" class="row center">
+    <div *ngIf="subDomain === 'lesbricodeurs'" class="row center">
       <div id="homeBgImageContainer" class="col-12 no-padding">
         <div id="homeBgImage" [ngStyle]="homeBgImageStyle" >
           <div class="filterBg">
@@ -25,10 +25,11 @@
               <img width="65px" src="{{webPath}}logo/wecolearn.png" alt="">
             </div>
             <h3>
-              Connecte-toi aux autres membres de l'association des Bricodeurs pour monter en compétences avec eux ! :)
+              Bienvenu dans la communauté des colearners de l'association !
               <br>
-              Si ce n'est pas encore fait, <a href="https://www.helloasso.com/associations/les-bricodeurs/adhesions/adhesions-bricodeurs-2016">adhère à l'association</a> et
-              <a href="https://join.slack.com/t/bricodeurs/shared_invite/enQtMjk4MDg1NTIxMDI4LWU1MjRhMjlmYmYyYmM3MGRhNjg3YjIzMGRiMzk0YjE4OTYyYzUxZWFkMDE1MTZiZTRiOTBhYTA4YTQ5YTA2NTY">rejoins-nous sur slack</a> !
+              <br>
+              Connecte-toi aux autres Bricodeurs pour monter en compétences avec eux ! :)
+              <br>
             </h3>
             <br><br>
             <a class="btn btn-inscription btn-primary btn-lg " routerLink="/subscribe">Inscription</a>
@@ -125,16 +126,24 @@
             <img src="{{webPath}}home/discussion2.png" alt="">
           </span>
             <br>
-            <p>
+            <p *ngIf="subDomain === 'main'" >
               Rencontrez-vous en vrai !
             </p>
 
-          </article>
+            <p *ngIf="subDomain !== 'main'" >
+              Prends rendez-vous !
+            </p>
 
-         </div>
+          </article>
+          <h3 *ngIf="subDomain === 'lesbricodeurs'">
+            Si ce n'est pas encore fait, <a href="https://www.helloasso.com/associations/les-bricodeurs/adhesions/adhesions-bricodeurs-2016">adhère à l'association</a> et
+            <a href="https://join.slack.com/t/bricodeurs/shared_invite/enQtMjk4MDg1NTIxMDI4LWU1MjRhMjlmYmYyYmM3MGRhNjg3YjIzMGRiMzk0YjE4OTYyYzUxZWFkMDE1MTZiZTRiOTBhYTA4YTQ5YTA2NTY">rejoins-nous sur slack</a> !
+          </h3>
+
+        </div>
     </section>
 
-    <div class="row social-icons-row">
+    <div *ngIf="subDomain === 'main'" class="row social-icons-row">
         <div class="col-10 offset-1 center">
             <div class="social-icons">
                 <a href="https://twitter.com/WeColearn" title="WeColearn on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>

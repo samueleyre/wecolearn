@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 
-// import './../assets/css/styles.css';
 import './../../node_modules/loaders.css/loaders.min.css';
 import '@angular/material/prebuilt-themes/indigo-pink.css'; // is this usefull ????
 import {APP_BASE_HREF, Location} from "@angular/common";
@@ -14,6 +13,9 @@ import { MessagesService } from './wc/service/messages';
 import { NavigationEnd } from '@angular/router';
 import {SearchService} from "./wc/service/search";
 import {DomainService} from "./wc/service/domain";
+import {DomSanitizer} from "@angular/platform-browser";
+import {GPPDComponent} from "./wc/component/gppd";
+import {SeoService} from "./wc/service/seo";
 
 
 @Component({
@@ -30,6 +32,7 @@ export class AppComponent  implements OnInit {
     private location: string;
     private refreshed = false;
     public subDomain = "main";
+    private themeCssUrl : string;
 
     constructor(
        private router: Router,
@@ -38,12 +41,16 @@ export class AppComponent  implements OnInit {
        private loggerService: LoggerService,
        public messagesService: MessagesService,
        private searchService: SearchService,
+       private seoService: SeoService,
+       public sanitizer: DomSanitizer
     ) {
+      this.setThemeCss();
       // this.loggerService.log("location ", this.router.url)
       this.location = this.router.url;
       router.events.subscribe(event => {
           // this.loggerService.log("route changed", event)
-        this.domainService.setSubDomain()
+        this.domainService.setSubDomain();
+        this.setThemeCss();
         // console.log("ON EVERY LOAD ? ?? ?", this.domainService.setSubDomain())
 
           if (event instanceof NavigationEnd) {
@@ -70,6 +77,12 @@ export class AppComponent  implements OnInit {
 
     ngOnInit() {
         this.hideLoaderFunction();
+    }
+
+    setThemeCss() {
+      const domain = this.domainService.getSubDomain();
+      this.themeCssUrl = GPPDComponent.updateUrl('/css/theme/'+domain+'.css');
+      this.seoService.updateTitle(domain);
     }
 
 

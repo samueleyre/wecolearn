@@ -1,7 +1,10 @@
-//$mainOrange : #fb6532;
-$mainOrange : #fe5e38;
-//$mainYellow: #fdce2f;
-$mainYellow: #fdce2f;
+
+
+
+
+$mainOrange : var(--main-color-1);
+
+$mainYellow: var(--main-color-2);
 
 
 
