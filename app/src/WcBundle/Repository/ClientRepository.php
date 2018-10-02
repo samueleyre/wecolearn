@@ -66,7 +66,7 @@ class ClientRepository extends EntityRepository
 
 //            return $qb->getQuery()->getSQL();
 
-            syslog(LOG_ERR,$qb->getQuery()->getSQL());
+//            syslog(LOG_ERR,$qb->getQuery()->getSQL());
 
     $ret = $qb->getQuery()->getResult();
 
