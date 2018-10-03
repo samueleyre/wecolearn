@@ -17,7 +17,7 @@ class DomainService {
 
   public function getSubDomain(Request $request) {
 
-    $domain = $request->headers->get('host');
+    $domain = $request->headers->get('origin');
 
     for ($i = 0; $i< count(SubdomainConstant::$list);$i++ ) {
       if (strpos($domain, SubdomainConstant::$list[$i]) !== false) {
