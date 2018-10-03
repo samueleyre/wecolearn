@@ -34,7 +34,7 @@ class ClientService {
     } else {
       $subDomain .= '.';
     }
-    $redirectURI = rawurlencode("https://".$subDomain."wecolearn.com/login");
+    $redirectURI = "https://".$subDomain."wecolearn.com/login";
 //    $redirectURI = "http://0.0.0.0:8080/login";
 
     $url = "https://slack.com/api/oauth.access";
