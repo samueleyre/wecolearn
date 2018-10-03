@@ -2,6 +2,9 @@
 
 namespace WcBundle\Service;
 
+use Symfony\Component\HttpFoundation\Request;
+
+use AppBundle\Constant\SubdomainConstant;
 
 
 class DomainService {
@@ -11,12 +14,22 @@ class DomainService {
   public function __construct() {
   }
 
-  public function setSubDomain($subDomaine) {
-    $this->currentSubDomain = $subDomaine;
+
+  public function getSubDomain(Request $request) {
+
+    $domain = $request->headers->get('host');
+
+    for ($i = 0; $i< count(SubdomainConstant::$list);$i++ ) {
+      if (strpos($domain, SubdomainConstant::$list[$i]) !== false) {
+        return SubdomainConstant::$list[$i];
+      }
+    }
+
+    return "wecolearn";
+
   }
 
-  public function getSubDomain() {
-    return $this->currentSubDomain;
-  }
+
+
 
 }

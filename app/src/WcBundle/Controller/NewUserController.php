@@ -63,7 +63,7 @@ class NewUserController extends GPPDController
     public function postNewUserAction(User $user, Request $request)
     {
 
-      return $this->createNewUser($user);
+      return $this->createNewUser($user, null, $this->get('domain.service')->getSubDomain($request));
 
     }
 
@@ -135,7 +135,7 @@ class NewUserController extends GPPDController
 
       $response = $this
         ->get('client.service')
-        ->getSlackUserData($code);
+        ->getSlackUserData($code, $this->get('domain.service')->getSubDomain($request));
 
 
       if ($response->code === 200 && $response->body->ok) {
@@ -164,7 +164,7 @@ class NewUserController extends GPPDController
           $user->setPassword($randPwd);
           $user->setUsername($response->body->user->name);
           //todo: also get avatar !
-          return $this->createNewUser($user, $response->body->user->id);
+          return $this->createNewUser($user, $response->body->user->id, $this->get('domain.service')->getSubDomain($request));
         }
 
 
@@ -178,7 +178,7 @@ class NewUserController extends GPPDController
     }
   }
 
-  private function createNewUser(User $user, $slackId = null) {
+  private function createNewUser(User $user, $slackId = null, $domain = "wecolearn") {
 
     $userManager = $this->get('fos_user.user_manager');
 
@@ -237,7 +237,7 @@ class NewUserController extends GPPDController
     $client->setUser($user);
     $client->setFirstName($user->getUsername());
 
-    $client->setDomain($this->get('domain.service')->getSubDomain());
+    $client->setDomain($domain);
 
 
     if ($slackId !== null) {

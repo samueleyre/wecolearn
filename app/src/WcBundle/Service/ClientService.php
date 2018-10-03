@@ -24,11 +24,9 @@ class ClientService {
 		$this->domainService = $domainService;
 	}
 
-  function getSlackUserData($code)
+  function getSlackUserData($code, $subDomain)
   {
 
-
-    $subDomain = $this->domainService->getSubDomain();
     if ($subDomain === "wecolearn") {
       $subDomain = '';
     } else {
