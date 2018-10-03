@@ -33,7 +33,7 @@ export class PingService {
           return observableOf({ status : status });
         }),
         map( response => {
-          console.log(response)
+          // console.log(response)
           if( 401 === response['status']  || 403 === response['status']) {
             // this.loggerService.log("Ping", "url "+url, "router.url "+this.router.url)
             if (this.OPENROUTES.indexOf(url) === -1) {

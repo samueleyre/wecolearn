@@ -88,11 +88,9 @@ export class HeaderComponent implements OnInit {
     this.subDomain = this.domainService.getSubDomain();
     // console.log(this.subDomain)
 
-    if (this.subDomain === "main") {
-      this.logoPath = this.webPath+'logo/wecolearn.png';
-    } else {
-      this.logoPath = this.webPath+'logo/'+this.subDomain+".png";
-    }
+
+    this.logoPath = this.webPath+'logo/'+this.subDomain+".png";
+
 
     this.screen = GPPDComponent.getScreenSize();
     this.ClientService.get().subscribe((client: Client )=> {

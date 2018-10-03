@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
         // reset login status
         this.authenticationService.logout();
         this.activatedRoute.queryParams.subscribe((params: Params) => {
-          console.log(params);
           if (params && params['code']) {
             this.slackLogin(params['code'])
           }

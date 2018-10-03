@@ -49,7 +49,7 @@ export class UploadComponent {
               });
 
           this.uploader.onSuccessItem = (item:any, response:any, status:any, headers:any) => {
-              console.log( response );
+              // console.log( response );
               this.complete.emit( {response : JSON.parse(response), status : status });
           };
           this.uploader.onCompleteItem = (item:any, response:any, status:number, headers:any) => {

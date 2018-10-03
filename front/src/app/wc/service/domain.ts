@@ -33,16 +33,14 @@ export class DomainService {
       if (location.match(regex) && location.match(regex)[1]) {
         subdomain = location.match(regex)[1];
       } else {
-        this.subdomain = "main";
-        return "main";
+        return this.subdomain = "wecolearn";
       }
 
       if (null !== subdomain && "www" !== subdomain &&  subdomains.indexOf(subdomain) !== -1 ) {
         this.subdomain = subdomain;
         return subdomain;
       } else {
-        this.subdomain = "main";
-        return "main";
+        return this.subdomain = "wecolearn";
       }
 
 

@@ -16,6 +16,7 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Response} from "@angular/http";
 import {Logged} from "../../../../applicativeService/authguard/logged";
+import {DomainService} from "../../../service/domain";
 
 
 
@@ -34,6 +35,7 @@ export class SubscribeComponent implements OnInit {
     edition: boolean = false;
     loading = false;
     public barLabel: string = "Difficulté du mot de passe : ";
+    private redirectURI: string;
 
 
     constructor(
@@ -41,6 +43,8 @@ export class SubscribeComponent implements OnInit {
         private userService : UserService,
         public modal: Modal,
         private authenticationService: AuthenticationService,
+        private domainService: DomainService,
+
     ) {
         this.users = [];
         this.user = new User();
@@ -49,8 +53,13 @@ export class SubscribeComponent implements OnInit {
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
-
-
+        let subDomain = this.domainService.getSubDomain();
+        if (subDomain === "wecolearn") {
+          subDomain = '';
+        } else {
+          subDomain += '.';
+        }
+        this.redirectURI = encodeURI("https://"+subDomain+"wecolearn.com/login");
     }
 
    

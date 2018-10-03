@@ -20,7 +20,6 @@ export class AuthenticationService {
     }
  
     login( email: string, password: string ): Observable<boolean> {
-      console.log("sending login", email, password)
         return this.http.post('/api/login_check', { email: email, password: password }).pipe(
             map((response: Response ) => {
                 return this.loginResponse(response);
@@ -42,7 +41,6 @@ export class AuthenticationService {
       if (error) {
         return error;
       } else if (token) {
-        console.log("token " + token)
         this.tokenService.set( token );
         Logged.set(true);
         return true;

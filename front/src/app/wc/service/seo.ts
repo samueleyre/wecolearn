@@ -8,7 +8,6 @@ export class SeoService {
 
 
   updateTitle(title: string) {
-    if (title === "main") title = "WeColearn";
     this.title.setTitle(title);
   }
 

@@ -31,7 +31,7 @@ export class AppComponent  implements OnInit {
     private smallLoader = true;
     private location: string;
     private refreshed = false;
-    public subDomain = "main";
+    public subDomain = "";
     private themeCssUrl : string;
 
     constructor(
@@ -80,7 +80,7 @@ export class AppComponent  implements OnInit {
     }
 
     setThemeCss() {
-      const domain = this.domainService.getSubDomain();
+      let domain = this.domainService.getSubDomain();
       this.themeCssUrl = GPPDComponent.updateUrl('/css/theme/'+domain+'.css');
       this.seoService.updateTitle(domain);
     }
