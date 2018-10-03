@@ -8,6 +8,7 @@ import { AuthenticationService } from './../../applicativeService/authentication
 import {LoggerService} from "../../applicativeService/logger/service";
 import {Response} from "@angular/http";
 import { TokenService } from './../../applicativeService/token/service';
+import {DomainService} from "../../wc/service/domain";
 
  
 @Component({
@@ -19,13 +20,17 @@ export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
     error = '';
- 
-    constructor(
+    private redirectURI: string;
+
+
+  constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
         private loggerService: LoggerService,
         private tokenService : TokenService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private domainService: DomainService,
+
     ) { }
  
     ngOnInit() {
@@ -40,6 +45,14 @@ export class LoginComponent implements OnInit {
 
     login() {
       this.loading = true;
+      let subDomain = this.domainService.getSubDomain();
+      if (subDomain === "wecolearn") {
+        subDomain = '';
+      } else {
+        subDomain += '.';
+      }
+      this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/login");
+
       this.authenticationService.login(this.model.email, this.model.password)
         .subscribe(
                 result => {
