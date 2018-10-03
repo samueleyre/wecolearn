@@ -15,21 +15,33 @@ class ClientService {
 	private $em;
 	private $clientId;
 	private $clientSecret;
+	private $domainService;
 
-	public function __construct( EntityManager $em, $client_id, $client_secret ) {
+	public function __construct( EntityManager $em, DomainService $domainService, $client_id, $client_secret ) {
 		$this->em = $em;
 		$this->clientId = $client_id;
 		$this->clientSecret = $client_secret;
+		$this->domainService = $domainService;
 	}
 
   function getSlackUserData($code)
   {
+
+
+    $subDomain = $this->domainService->getSubDomain();
+    if ($subDomain === "wecolearn") {
+      $subDomain = '';
+    } else {
+      $subDomain .= '.';
+    }
+    $redirectURI = rawurlencode("https://".$subDomain."wecolearn.com/login");
 
     $url = "https://slack.com/api/oauth.access";
 
     $data["client_id"] = $this->clientId;
     $data["client_secret"] = $this->clientSecret;
     $data["code"] = $code;
+    $data["redirect_uri"] = $redirectURI;
     $url = sprintf("%s?%s", $url, http_build_query($data));
 
     $response = Unirest\Request::get($url);

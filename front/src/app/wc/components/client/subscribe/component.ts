@@ -59,7 +59,7 @@ export class SubscribeComponent implements OnInit {
         } else {
           subDomain += '.';
         }
-        this.redirectURI = encodeURI("https://"+subDomain+"wecolearn.com/login");
+        this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/login");
     }
 
    
