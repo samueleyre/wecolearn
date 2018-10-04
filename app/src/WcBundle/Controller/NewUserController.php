@@ -74,61 +74,6 @@ class NewUserController extends GPPDController
   public function newSlackUserAction(Request $request)
   {
 
-/*
- * array (
-  'code' => 200,
-  'raw_body' => '{"ok":true,"access_token":"xoxp-5014201828-5014201838-447410966998-33ecd4bfe7fa8c0da1d07b9c55c8f37f","scope":"identify,chat:write:bot,identity.basic,identity.email,identity.avatar,identity.team","user":{"name":"samueleyre","id":"U050E5XQN","email":"samuel.eyre@hotmail.fr","image_24":"https:\\/\\/avatars.slack-edge.com\\/2015-10-31\\/13630758087_48a26b7102ef27df0d85_24.jpg","image_32":"https:\\/\\/avatars.slack-edge.com\\/2015-10-31\\/13630758087_48a26b7102ef27df0d85_32.jpg","image_48":"https:\\/\\/avatars.slack-edge.com\\/2015-10-31\\/13630758087_48a26b7102ef27df0d85_48.jpg","image_72":"https:\\/\\/avatars.slack-edge.com\\/2015-10-31\\/13630758087_48a26b7102ef27df0d85_72.jpg","image_192":"https:\\/\\/avatars.slack-edge.com\\/2015-10-31\\/13630758087_48a26b7102ef27df0d85_72.jpg","image_512":"https:\\/\\/avatars.slack-edge.com\\/2015-10-31\\/13630758087_48a26b7102ef27df0d85_72.jpg","image_1024":"https:\\/\\/avatars.slack-edge.com\\/2015-10-31\\/13630758087_48a26b7102ef27df0d85_72.jpg"},"team":{"id":"T050E5XQC"}}',
-  'body' =>
-  array (
-    'ok' => true,
-    'access_token' => 'xoxp-5014201828-5014201838-447410966998-33ecd4bfe7fa8c0da1d07b9c55c8f37f',
-    'scope' => 'identify,chat:write:bot,identity.basic,identity.email,identity.avatar,identity.team',
-    'user' =>
-    array (
-      'name' => 'samueleyre',
-      'id' => 'U050E5XQN',
-      'email' => 'samuel.eyre@hotmail.fr',
-      'image_24' => 'https://avatars.slack-edge.com/2015-10-31/13630758087_48a26b7102ef27df0d85_24.jpg',
-      'image_32' => 'https://avatars.slack-edge.com/2015-10-31/13630758087_48a26b7102ef27df0d85_32.jpg',
-      'image_48' => 'https://avatars.slack-edge.com/2015-10-31/13630758087_48a26b7102ef27df0d85_48.jpg',
-      'image_72' => 'https://avatars.slack-edge.com/2015-10-31/13630758087_48a26b7102ef27df0d85_72.jpg',
-      'image_192' => 'https://avatars.slack-edge.com/2015-10-31/13630758087_48a26b7102ef27df0d85_72.jpg',
-      'image_512' => 'https://avatars.slack-edge.com/2015-10-31/13630758087_48a26b7102ef27df0d85_72.jpg',
-      'image_1024' => 'https://avatars.slack-edge.com/2015-10-31/13630758087_48a26b7102ef27df0d85_72.jpg',
-    ),
-    'team' =>
-    array (
-      'id' => 'T050E5XQC',
-    ),
-  ),
-  'headers' =>
-  array (
-    0 => 'HTTP/1.1 200 OK',
-    'Content-Type' => 'application/json; charset=utf-8',
-    'Content-Length' => '335',
-    'Connection' => 'keep-alive',
-    'Date' => 'Mon, 01 Oct 2018 10:46:37 GMT',
-    'Server' => 'Apache',
-    'X-Slack-Exp' => '1',
-    'X-Slack-Backend' => 'h',
-    'x-slack-router' => 'p',
-    'Referrer-Policy' => 'no-referrer',
-    'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains; preload',
-    'X-Slack-Req-Id' => 'c9bec20d-4691-4239-a6ae-cad184d3c7ee',
-    'X-XSS-Protection' => '0',
-    'X-Content-Type-Options' => 'nosniff',
-    'Vary' => 'Accept-Encoding',
-    'Content-Encoding' => 'gzip',
-    'Access-Control-Allow-Origin' => '*',
-    'X-Via' => 'haproxy-www-rb7f',
-    'X-Cache' => 'Miss from cloudfront',
-    'Via' => '1.1 433bf30dfb22e94fd993ce42989c86e8.cloudfront.net (CloudFront)',
-    'X-Amz-Cf-Id' => 'gDXO8uGoE2M7igPgIy8LXvIglZ0e9KZFBRH72DOgIzT0k32qKLVRMA==',
-  ),
-)
- *
- *
- */
 
     if ($code = $request->query->get("code")) {
 
@@ -152,6 +97,29 @@ class NewUserController extends GPPDController
           ->em
           ->getRepository(User::class)
           ->findOneBy(['email'=>$email])) {
+
+          $client = $this
+            ->get('client.service')
+            ->em
+            ->getRepository(Client::class)
+            ->findOneBy(['user'=>$user] );
+
+          $change = false;
+          if (null === $client->getSlackId() ) {
+            $client->setSlackId($response->body->user->id);
+            $change = true;
+          }
+
+          $domain = $this->get('domain.service')->getSubDomain($request);
+          if ("wecolearn" !== $domain && $domain !== $client->getDomain() ) {
+            $client->setDomain($domain);
+            $change = true;
+          }
+
+          if ($change) {
+            $this->get('client.service')->em->merge( $client );
+            $this->get('client.service')->em->flush();
+          }
 
           $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($user);
 
