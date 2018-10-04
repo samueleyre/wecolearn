@@ -1,4 +1,4 @@
-    <div *ngIf="subDomain === 'main'" class="row center">
+    <div *ngIf="subDomain === 'wecolearn'" class="row center">
         <div id="homeBgImageContainer" class="col-12 no-padding">
             <div id="homeBgImage" class="mainBg" [ngStyle]="homeBgImageStyle" >
                 <div *ngIf="!screen" class="imageContainer">
@@ -126,11 +126,11 @@
             <img src="{{webPath}}home/discussion2.png" alt="">
           </span>
             <br>
-            <p *ngIf="subDomain === 'main'" >
+            <p *ngIf="subDomain === 'wecolearn'" >
               Rencontrez-vous en vrai !
             </p>
 
-            <p *ngIf="subDomain !== 'main'" >
+            <p *ngIf="subDomain !== 'wecolearn'" >
               Prends rendez-vous !
             </p>
 
@@ -143,7 +143,7 @@
         </div>
     </section>
 
-    <div *ngIf="subDomain === 'main'" class="row social-icons-row">
+    <div *ngIf="subDomain === 'wecolearn'" class="row social-icons-row">
         <div class="col-10 offset-1 center">
             <div class="social-icons">
                 <a href="https://twitter.com/WeColearn" title="WeColearn on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>
