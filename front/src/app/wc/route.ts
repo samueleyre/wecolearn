@@ -7,6 +7,7 @@ import { SettingsComponent } 				from './components/client/settings/component';
 import { SearchComponent } 				from './components/client/searchPage/search/component';
 import { ProfilSettingsComponent } 		from './components/client/profilPage/profilSettings/component';
 import { MentionsComponent } 			from './components/client/mentionslegales/component';
+import { AboutComponent } 			from './components/client/about/component';
 
 
 
@@ -30,6 +31,7 @@ const wcRoutes: Routes = [
     { path: 'profilsettings', component: ProfilSettingsComponent, canActivate: [AuthGuard] },
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     { path : 'mentionslegales', component: MentionsComponent},
+    { path : 'about', component: AboutComponent},
     { path : 'subscribe', component: SubscribeComponent},
     { path : '', component: HomeComponent, canActivate: [AuthGuard] }
 

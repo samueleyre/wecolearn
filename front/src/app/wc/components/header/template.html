@@ -17,6 +17,16 @@
                 <cityBar></cityBar>
             </form>
         </li>
+        <li *ngIf="!connected && screen" class="nav-item">
+            <a class="nav-link" routerLink="/about" style="margin-left: 1rem; padding-left: 5px;">
+              A propos
+            </a>
+        </li>
+        <!--<li *ngIf="!connected && screen" class="nav-item">-->
+          <!--<a class="nav-link" routerLink="/about" style="padding-left: 5px;">-->
+            <!--Communautés-->
+          <!--</a>-->
+        <!--</li>-->
 
     </ul>
     <ul class="navbar-nav ml-auto">

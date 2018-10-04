@@ -91,7 +91,7 @@ class NewUserController extends GPPDController
         $randPwd = bin2hex(random_bytes(10));
         $email = $response->body->user->email;
 
-
+        $ret = [];
         if ( $user = $this
           ->get('user.service')
           ->em
@@ -121,9 +121,6 @@ class NewUserController extends GPPDController
             $this->get('client.service')->em->flush();
           }
 
-          $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($user);
-
-          return ['token'=>$token];
 
         } else {
 
@@ -132,8 +129,15 @@ class NewUserController extends GPPDController
           $user->setPassword($randPwd);
           $user->setUsername($response->body->user->name);
           //todo: also get avatar !
-          return $this->createNewUser($user, $response->body->user->id, $this->get('domain.service')->getSubDomain($request));
+          $this->createNewUser($user, $response->body->user->id, $this->get('domain.service')->getSubDomain($request));
+          $ret['subscribe']= true;
         }
+
+        $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($user);
+
+
+        $ret['token']=$token;
+        return $ret;
 
 
       } else {

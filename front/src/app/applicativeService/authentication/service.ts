@@ -26,10 +26,10 @@ export class AuthenticationService {
             }));
     }
 
-    slackLogin( code: string): Observable<boolean> {
+    slackLogin( code: string): Observable<any> {
       return this.http.get('/api/login_check/slack?code='+code, ).pipe(
           map((response: Response ) => {
-            return this.loginResponse(response);
+            return (this.loginResponse(response)) ? response : false;
           }));
     }
 

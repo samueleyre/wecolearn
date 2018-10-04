@@ -72,7 +72,9 @@ export class LoginComponent implements OnInit {
       this.authenticationService.slackLogin(code).subscribe(
          result => {
            this.loading = false;
-           if ( result === true ) {
+           if ( result['subscribe']) {
+             this.router.navigate(['/profilsettings']);
+           } else {
              this.router.navigate(['/search']);
            }
 

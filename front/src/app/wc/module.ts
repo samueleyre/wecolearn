@@ -85,6 +85,8 @@ import {PasswordStrengthBarComponent} from "../applicativeService/form/password/
 import {HomePageComponent} from "./components/client/home/page/component";
 // import {InterceptorHttpClient} from "../applicativeService/interceptor/interceptorHttpClient";
 // import {httpClientFactory} from "../applicativeService/interceptor/httpClientFactory";
+import { AboutComponent } 			from './components/client/about/component';
+import { CommunitiesComponent} 			from './components/client/communities/component';
 
 
 
@@ -130,6 +132,8 @@ import {HomePageComponent} from "./components/client/home/page/component";
     HeaderComponent,
     ReadMoreComponent,
     MentionsComponent,
+    AboutComponent,
+    CommunitiesComponent,
     CopyComponent,
     GeolocationComponent,
     SearchBarComponent,
@@ -150,6 +154,8 @@ import {HomePageComponent} from "./components/client/home/page/component";
     ConfirmModaleComponent,
     ReadMoreComponent,
     MentionsComponent,
+    AboutComponent,
+    CommunitiesComponent,
     CopyComponent,
     GeolocationComponent,
     SearchComponent,
