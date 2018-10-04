@@ -41,18 +41,17 @@ export class LoginComponent implements OnInit {
             this.slackLogin(params['code'])
           }
         });
+        let subDomain = this.domainService.getSubDomain();
+        if (subDomain === "wecolearn") {
+          subDomain = '';
+        } else {
+          subDomain += '.';
+        }
+        this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/login");
     }
 
     login() {
       this.loading = true;
-      let subDomain = this.domainService.getSubDomain();
-      if (subDomain === "wecolearn") {
-        subDomain = '';
-      } else {
-        subDomain += '.';
-      }
-      this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/login");
-
       this.authenticationService.login(this.model.email, this.model.password)
         .subscribe(
                 result => {
