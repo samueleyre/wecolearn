@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 
 class ClientService {
 
-	private $em;
+	public $em;
 	private $clientId;
 	private $clientSecret;
 	private $domainService;
