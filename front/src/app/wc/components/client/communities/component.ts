@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {DomainService} from "../../../service/domain";
-import {GPPDComponent} from "../../../component/gppd";
 
 @Component({
     templateUrl: 'template.html',
@@ -9,13 +8,20 @@ import {GPPDComponent} from "../../../component/gppd";
  
 export class CommunitiesComponent implements OnInit {
 
-  private webPath: string;
+  private communities: Array<object>;
 
-  constructor(
-  ) {}
+  constructor() {
+    this.communities = [
+      {
+        title: "Les Bricodeurs",
+        description:  "Collectif du numérique citoyen",
+        subDomain: "lesbricodeurs"
+      }
+    ]
+
+  }
 
   ngOnInit() {
-    this.webPath = GPPDComponent.updateUrl('/');
   }
 
 

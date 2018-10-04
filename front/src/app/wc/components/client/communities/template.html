@@ -1,23 +1,21 @@
 <div id="communitiesPage" class="container-fluid">
-
   <div class="col-12">
-    <div class="row center">
-      <h3>
+    <div class="center">
+      <h1 class="title">
         LES COMMUNAUTES WECOLEARN
-      </h3>
+      </h1>
     </div>
-      <div class="col-8 center text-justify">
-        <div class="row">
-          <p>
-            Liste des communautés utilisant l'application WeColearn pour connecter les apprenants entre eux.
-          </p>
-        </div>
-        <div class="row">
-          <!--<community *ngFor="community as communities"></community>-->
-        </div>
-      </div>
-
+    <div class="col-12 col-sm-8 offset-sm-2 center">
+        <p>
+          Liste des communautés utilisant l'application WeColearn pour connecter les apprenants entre eux.
+        </p>
+    </div>
   </div>
-
+  <div class="col-xs-12 col-sm-8 offset-sm-2">
+    <community *ngFor="let community of communities" [community]="community"></community>
+  </div>
 </div>
+
+
+
 

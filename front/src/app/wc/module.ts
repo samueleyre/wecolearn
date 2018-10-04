@@ -87,6 +87,8 @@ import {HomePageComponent} from "./components/client/home/page/component";
 // import {httpClientFactory} from "../applicativeService/interceptor/httpClientFactory";
 import { AboutComponent } 			from './components/client/about/component';
 import { CommunitiesComponent} 			from './components/client/communities/component';
+import { CommunityComponent} 			from './components/client/communities/community/component';
+
 
 
 
@@ -141,7 +143,8 @@ import { CommunitiesComponent} 			from './components/client/communities/componen
     SearchOsmComponent,
     EmailNotificationSettingsComponent,
     CityBarComponent,
-    PasswordStrengthBarComponent
+    PasswordStrengthBarComponent,
+    CommunityComponent
   ],
   declarations: [
     HeaderComponent,
@@ -169,7 +172,8 @@ import { CommunitiesComponent} 			from './components/client/communities/componen
     SearchOsmComponent,
     EmailNotificationSettingsComponent,
     CityBarComponent,
-    PasswordStrengthBarComponent
+    PasswordStrengthBarComponent,
+    CommunityComponent
 
   ],
   providers : [

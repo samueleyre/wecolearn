@@ -14,6 +14,7 @@ import { AboutComponent } 			from './components/client/about/component';
 import {AuthGuard} from './../applicativeService/authguard/service';
 import {HomeComponent}                  from   "./components/client/home/component";
 import { SubscribeComponent }          from './components/client/subscribe/component';
+import {CommunitiesComponent} from "./components/client/communities/component";
 
 
 const wcRoutes: Routes = [
@@ -32,6 +33,7 @@ const wcRoutes: Routes = [
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     { path : 'mentionslegales', component: MentionsComponent},
     { path : 'about', component: AboutComponent},
+    { path : 'communities', component: CommunitiesComponent},
     { path : 'subscribe', component: SubscribeComponent},
     { path : '', component: HomeComponent, canActivate: [AuthGuard] }
 

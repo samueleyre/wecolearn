@@ -20,7 +20,6 @@ import { ThreadsService } from './../../service/threads.service';
 import { Thread } from '../../entities/thread/entity';
 import { Message } from '../../entities/message/entity';
 import { Client } from '../../entities/client/entity';
-import {ChatExampleData} from "../client/chat/data/chat-example-data";
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from "rxjs/Rx";
 // import { GPPDComponent }          from './../../component/gppd';

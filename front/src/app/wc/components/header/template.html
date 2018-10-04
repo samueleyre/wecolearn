@@ -12,21 +12,21 @@
                 <searchBar></searchBar>
             </form>
         </li>
-        <li  *ngIf="!connected" [hidden]="subDomain !== ''" class="nav-item" >
+        <li  *ngIf="!connected" [hidden]="subDomain !== 'wecolearn'" class="nav-item" >
             <form class="form-inline">
                 <cityBar></cityBar>
             </form>
         </li>
-        <li *ngIf="!connected && screen" class="nav-item">
+        <li *ngIf="!connected && screen" [hidden]="subDomain !== 'wecolearn'" class="nav-item">
             <a class="nav-link" routerLink="/about" style="margin-left: 1rem; padding-left: 5px;">
               A propos
             </a>
         </li>
-        <!--<li *ngIf="!connected && screen" class="nav-item">-->
-          <!--<a class="nav-link" routerLink="/about" style="padding-left: 5px;">-->
-            <!--Communautés-->
-          <!--</a>-->
-        <!--</li>-->
+        <li *ngIf="!connected && screen" [hidden]="subDomain !== 'wecolearn'" class="nav-item">
+          <a class="nav-link" routerLink="/communities" style="padding-left: 5px;">
+            Communautés
+          </a>
+        </li>
 
     </ul>
     <ul class="navbar-nav ml-auto">

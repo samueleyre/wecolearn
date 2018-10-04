@@ -16,7 +16,6 @@ import { Thread } from '../../../../entities/thread/entity';
 import { Message } from '../../../../entities/message/entity';
 
 
-import { ChatExampleData } from './../../chat/data/chat-example-data';
 import {LoggerService} from "../../../../../applicativeService/logger/service";
 import {Router} from "@angular/router";
 import {Logged} from "../../../../../applicativeService/authguard/logged";

@@ -31,8 +31,8 @@ $smScreen : 768px;
 // backgrounds
 
 .gradient_background_mainYellow {
-  background-color: $mainYellow;
-  background: -moz-linear-gradient(-45deg, #fefcea 0%, $mainYellow 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg, #fefcea 0%,$mainYellow 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg, #fefcea 0%,$mainYellow 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background-color: var(--main-color-2-light-10);
+  background: -moz-linear-gradient(-45deg, #fefcea 0%, var(--main-color-2-light-10) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #fefcea 0%,var(--main-color-2-light-10) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #fefcea 0%, var(--main-color-2-light-10) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
