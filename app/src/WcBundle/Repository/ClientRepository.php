@@ -24,9 +24,6 @@ class ClientRepository extends EntityRepository
       $tags = $client->getTags();
     }
 
-    if ($tag) {
-      $tags[] = $tag;
-    }
 
     //syslog(LOG_ERR, $client->getLatitude());
     //syslog(LOG_ERR, $startLatitude);
@@ -49,6 +46,9 @@ class ClientRepository extends EntityRepository
     $qb->Where('entity.showProfil = :showProfil')->setParameter('showProfil', 1);
     if ($client) {
       $qb->andWhere('entity.id != :clientId')->setParameter('clientId', $client->getId());
+    }
+    if ($tag) {
+      $qb->andWhere(sprintf('t.id=%s', $tag->getId()));
     }
     if (count($tags) > 0) {
       $condition = sprintf('t.id=%s', $tags[0]->getId());
