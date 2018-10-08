@@ -78,7 +78,7 @@ class NewUserController extends GPPDController
     if ($code = $request->query->get("code")) {
 
       if ( $request->query->get("redirect_uri")) {
-        $redirect_uri = $request->query->get("redirect_uri");
+        $redirect_uri = rawurldecode($request->query->get("redirect_uri"));
       } else {
         $subDomain = $this->get('domain.service')->getSubDomain($request);
         if ($subDomain === "wecolearn") {
