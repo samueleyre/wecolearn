@@ -11,6 +11,7 @@ import {IEntity} from "../../applicativeService/entity/interface";
 import {Message} from "../entities/message/entity";
 import {LoggerService} from "../../applicativeService/logger/service";
 import {subdomains} from "../../applicativeService/constants/domain";
+import {slacks} from "../../applicativeService/constants/slack";
 
 
 @Injectable()
@@ -45,7 +46,7 @@ export class DomainService {
 
 
     } else {
-      return this.subdomain = "wecolearn";
+      return this.subdomain = "lesbricodeurs";
     }
 
   }
@@ -56,6 +57,11 @@ export class DomainService {
     } else {
       return this.setSubDomain();
     }
+  }
+
+  hasSlack() {
+    this.getSubDomain();
+    return (slacks.indexOf(this.subdomain) !== -1);
   }
 
 

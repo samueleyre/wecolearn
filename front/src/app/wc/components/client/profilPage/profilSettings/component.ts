@@ -32,6 +32,8 @@ import {FilterService}            from "../../../../../applicativeService/filter
 import {log} from "util";
 import { APP_BASE_HREF, Location } from '@angular/common';
 import {image} from "../../../../../applicativeService/constants/image";
+import {DomainService} from "./../../../../service/domain";
+import { AuthenticationService } from './../../../../../applicativeService/authentication/service';
 
 
 
@@ -55,6 +57,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
       "toolbar" : false
     }
     private editing: object = {};
+    private loading = false;
     private ranges = [
       {
         value: 1,
@@ -124,9 +127,25 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
       },
     ];
     private firstTime = false;
+    private error = {
+      "slack": ''
+    };
+    private redirectURI : string;
+    private hasSlack: boolean;
 
 
-  constructor( protected service: GPPDService, protected clientService : ClientService,  protected tagService : TagService,  private activatedRoute: ActivatedRoute,  protected http : HttpClient, @Inject(APP_BASE_HREF) r:string, ) {
+
+
+  constructor(
+    protected service: GPPDService,
+    protected clientService : ClientService,
+    protected tagService : TagService,
+    private activatedRoute: ActivatedRoute,
+    protected http : HttpClient,
+    @Inject(APP_BASE_HREF) r:string,
+    private domainService: DomainService,
+    private authenticationService: AuthenticationService
+) {
         super(service);
         this.base_url = r;
         this.tagService = tagService;
@@ -143,12 +162,25 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     }
 
     load() : void {
-        this.service.setApi(this.getApi());
+      let subDomain = this.domainService.getSubDomain();
+      this.hasSlack = this.domainService.hasSlack();
+      if (subDomain === "wecolearn") {
+        subDomain = '';
+      } else {
+        subDomain += '.';
+      }
+      this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/profilsettings");
+      this.activatedRoute.queryParams.subscribe((params: Params) => {
+      if (params && params['code']) {
+          this.slackConnect(params['code'], this.redirectURI)
+        }
+      });
 
-        
-        this.service.getOne().subscribe( ( client: IEntity) => {
-            this.setEntity(client);
-        });
+      this.service.setApi(this.getApi());
+      this.service.getOne().subscribe( ( client: IEntity) => {
+          this.setEntity(client);
+      });
+
     }
 
     setEntity(client: IEntity) {
@@ -184,6 +216,20 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
             }
         }
         return client;
+    }
+
+    slackConnect(code:string, redirect_uri:string) {
+      this.loading = true;
+      this.authenticationService.slackConnect(code, redirect_uri).subscribe(
+         result => {
+           this.loading = false;
+         },
+         error => {
+           this.error.slack = "Une erreur est survenue";
+           this.loading = false;
+
+         }
+      ) ;
     }
 
     submit() {
@@ -299,6 +345,12 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
         return null;
     }
+
+    // private connectSlackAccount() {
+    //
+    //   this.clientService.connectSlackAccount();
+    //
+    // }
 
 
     public validators = [this.notAlphaNumeric];

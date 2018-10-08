@@ -20,7 +20,7 @@ import {DomainService} from "../../../service/domain";
 
 
 
- 
+
 @Component({
     templateUrl: 'template.html',
     styleUrls : ['./../../../../components/login/style.scss']
@@ -29,7 +29,7 @@ import {DomainService} from "../../../service/domain";
 
 
 export class SubscribeComponent implements OnInit {
-    
+
     user : User;
     users: User[];
     edition: boolean = false;
@@ -49,9 +49,8 @@ export class SubscribeComponent implements OnInit {
         this.users = [];
         this.user = new User();
     }
- 
+
     ngOnInit() {
-        // reset login status
         this.authenticationService.logout();
         let subDomain = this.domainService.getSubDomain();
         if (subDomain === "wecolearn") {
@@ -59,11 +58,10 @@ export class SubscribeComponent implements OnInit {
         } else {
           subDomain += '.';
         }
-        this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/login");
-        // this.redirectURI = encodeURIComponent("http://0.0.0.0:8080/login");
+        this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/profilsettings");
     }
 
-   
+
     submit(f:NgForm) {
 
        this.userService.post(this.user).subscribe(

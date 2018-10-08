@@ -40,18 +40,12 @@ export class ClientService {
 
   }
 
-  pull(): Observable<Array<Message>>  { // TODO : probably check for any kind of update, if other
-    return this.http.get('/api/checknewmessage').pipe(
-      map((response: Array<Message>) => {
-        return response;
-      }));
+  pull(): Observable<object>  { // TODO : probably check for any kind of update, if other
+    return this.http.get('/api/checknewmessage');
   }
 
   changeParameter(data: object): Observable<any> {
-    return this.http.post('/api/client/changesettings', data).pipe(
-      map((response: Response ) => {
-        return response;
-    }));
+    return this.http.post('/api/client/changesettings', data);
   }
 
 

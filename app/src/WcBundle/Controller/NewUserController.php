@@ -77,10 +77,21 @@ class NewUserController extends GPPDController
 
     if ($code = $request->query->get("code")) {
 
+      if ( $request->query->get("redirect_uri")) {
+        $redirect_uri = $request->query->get("redirect_uri");
+      } else {
+        $subDomain = $this->get('domain.service')->getSubDomain($request);
+        if ($subDomain === "wecolearn") {
+          $subDomain = '';
+        } else {
+          $subDomain .= '.';
+        }
+        $redirect_uri = "https://".$subDomain."wecolearn.com/login";
+      }
 
       $response = $this
         ->get('client.service')
-        ->getSlackUserData($code, $this->get('domain.service')->getSubDomain($request));
+        ->getSlackUserData($code, $redirect_uri);
 
 
       if ($response->code === 200 && $response->body->ok) {

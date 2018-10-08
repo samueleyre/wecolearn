@@ -13,12 +13,12 @@ import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthenticationService {
-    
+
     constructor( private http: HttpClient, private tokenService : TokenService, private router: Router,
     ) {
-        
+
     }
- 
+
     login( email: string, password: string ): Observable<boolean> {
         return this.http.post('/api/login_check', { email: email, password: password }).pipe(
             map((response: Response ) => {
@@ -27,7 +27,15 @@ export class AuthenticationService {
     }
 
     slackLogin( code: string): Observable<any> {
-      return this.http.get('/api/login_check/slack?code='+code, ).pipe(
+      return this.http.get('/api/login_check/slack?code='+code).pipe(
+          map((response: Response ) => {
+            return (this.loginResponse(response)) ? response : false;
+          }));
+    }
+
+    slackConnect( code: string, indirect_uri: string): Observable<any> {
+
+      return this.http.get('/api/login_check/slack?code='+code+'?indirect_uri='+indirect_uri).pipe(
           map((response: Response ) => {
             return (this.loginResponse(response)) ? response : false;
           }));
@@ -49,7 +57,7 @@ export class AuthenticationService {
       }
 
     }
- 
+
     logout(returnHome = false) {
         // clear token remove user from local storage to log user out
         this.tokenService.clear();
@@ -61,4 +69,3 @@ export class AuthenticationService {
 
     }
 }
-

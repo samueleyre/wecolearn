@@ -24,15 +24,9 @@ class ClientService {
 		$this->domainService = $domainService;
 	}
 
-  function getSlackUserData($code, $subDomain)
+  function getSlackUserData($code, $redirectURI)
   {
 
-    if ($subDomain === "wecolearn") {
-      $subDomain = '';
-    } else {
-      $subDomain .= '.';
-    }
-    $redirectURI = "https://".$subDomain."wecolearn.com/login";
 //    $redirectURI = "http://0.0.0.0:8080/login";
 
     $url = "https://slack.com/api/oauth.access";

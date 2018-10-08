@@ -71,42 +71,63 @@ class ClientController extends GPPDController
 
     }
 
-    /**
-     * @Get("client/matchs")
-     * @View( serializerGroups={"search"})
-     */
-    public function getClientMatchsAction(Request $request )
-    {
+    // /**
+    //  * @Get("client/connectslack")
+    //  * @View( serializerGroups={"search"})
+    //  */
+    // public function getClientMatchsAction(Request $request )
+    // {
+    //
+    //     $user = $this->get('security.token_storage')->getToken()->getUser();
+    //     $client = $this->getDoctrine()
+    //         ->getRepository(Client::class)
+    //         ->findOneBy(["user"=>$user]);
+    //
+    //
+    //
+    //     return $this
+    //         ->get('search.service')
+    //         ->search($client, $filter );
+    //
+    // }
 
-        $first = $request->query->get( 'first', 0 );
-        $max = $request->query->get( 'max', 6 );
 
-        $filter = ['first' => $first,'max' => $max ];
+        /**
+         * @Get("client/matchs")
+         * @View( serializerGroups={"search"})
+         */
+        public function getClientMatchsAction(Request $request )
+        {
 
-        if ($request->get("tag")) {
-            $filter["tag"] = $request->get("tag");
+            $first = $request->query->get( 'first', 0 );
+            $max = $request->query->get( 'max', 6 );
+
+            $filter = ['first' => $first,'max' => $max ];
+
+            if ($request->get("tag")) {
+                $filter["tag"] = $request->get("tag");
+            }
+
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+
+            $client = $this->getDoctrine()
+                ->getRepository(Client::class)
+                ->findOneBy(["user"=>$user]);
+
+            return $this
+                ->get('search.service')
+                ->search($client, $filter );
+
         }
-
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        $client = $this->getDoctrine()
-            ->getRepository(Client::class)
-            ->findOneBy(["user"=>$user]);
-
-        return $this
-            ->get('search.service')
-            ->search($client, $filter );
-
-    }
 
     /**
      * @Post("/client/changesettings")
      * @ParamConverter(
-      "message",
-      class="AppBundle\Entity\User",
-      converter="fos_rest.request_body",
-      options={"deserializationContext"={"groups"={"input"} } }
-      )
+     * "message",
+     * class="AppBundle\Entity\User",
+     * converter="fos_rest.request_body",
+     * options={"deserializationContext"={"groups"={"input"} } }
+     * )
      */
     public function changeSettingsAction( Request $request )
     {
@@ -204,11 +225,11 @@ class ClientController extends GPPDController
     /**
     * @Patch("/client")
     * @ParamConverter(
-            "client",
-            class="WcBundle\Entity\Client",
-            converter="fos_rest.request_body",
-            options={"deserializationContext"={"groups"={"input"} } }
-      )
+    *       "client",
+    *       class="WcBundle\Entity\Client",
+    *       converter="fos_rest.request_body",
+    *       options={"deserializationContext"={"groups"={"input"} } }
+    * )
 	  */
     public function patchClientAction( Client $client, Request $request )
     {
