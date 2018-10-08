@@ -32,7 +32,7 @@ export class Client extends Entity implements IEntity  {
 	public image : Image;
 	public show_profil: boolean;
 	public email_notifications: boolean;
-	public slack_id: number;
+	public slack_id: string;
 	public domain: string;
 
 
