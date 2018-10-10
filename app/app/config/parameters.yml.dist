@@ -33,6 +33,8 @@ parameters:
     client_id:         getfromslackapp
     client_secret:      getfromslackapp
 
+    environment:        ~
+
 sendin_blue_api:
     api_key:            ~
     timeout:            5000

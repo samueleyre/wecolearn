@@ -27,10 +27,10 @@ WcBundle\Entity\Client:
           groups: [ input, output, search ]
         sentMessages:
           groups: [ input, output ]
-          max_depth: 4
+          max_depth: 3
         receivedMessages:
           groups: [ input, output ]
-          max_depth: 4
+          max_depth: 3
         user:
           groups: [ input ]
         image:
@@ -41,7 +41,7 @@ WcBundle\Entity\Client:
           groups: [ input, output ]
         slackId:
           groups: [ input, output, search ]
-        domain:
+        slackTeamId:
           groups: [ input, output, search ]
 
 

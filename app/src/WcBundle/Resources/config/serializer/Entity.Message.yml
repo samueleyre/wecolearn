@@ -1,6 +1,7 @@
 WcBundle\Entity\Message:
     exclusion_policy: all
     access_order:     alphabetical
+    enable_max_depth: true
     properties:
         id:
           groups: [ input, output ]
@@ -10,8 +11,10 @@ WcBundle\Entity\Message:
           groups: [ output ]
         receiver:
           groups: [ input, output ]
+          max_depth: 2
         sender:
           groups: [ input, output ]
+          max_depth: 2
         isRead:
           groups: [ input, output ]
 

@@ -274,6 +274,83 @@ class ClientController extends GPPDController
 
       return $ret;
     }
+
+
+  /**
+   * @Get("client/slack")
+   *
+   */
+  public function connectSlackAction(Request $request)
+  {
+// todo: should be a post
+    $ret = [];
+
+    if ( ($code = $request->query->get("code") ) && ( $redirect_uri = $request->query->get("redirect_uri") )) {
+
+      $redirect_uri = rawurldecode($redirect_uri);
+//      $redirect_uri = "http://0.0.0.0:8080/profilsettings";
+
+//      return $code;
+
+      $response = $this
+        ->get('client.service')
+        ->getSlackUserData($code, $redirect_uri);
+
+
+      if ($response->code === 200 && $response->body->ok) {
+
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $client = $this->getDoctrine()
+          ->getRepository(Client::class)
+          ->findOneBy(["user"=>$user]);
+        $client->setSlackId($response->body->user->id);
+        $client->setSlackTeamId($response->body->team->id);
+        $this->get('client.service')->em->merge( $client );
+        $this->get('client.service')->em->flush();
+
+//        $ret['success'] = true;
+        return $client;
+
+      } else {
+        $ret['error'] = $response->body->error;
+      }
+
+      return $ret;
+
+
+    } else {
+      return null;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
 //    /**
 //    * @Delete("/client/{id}")

@@ -35,10 +35,8 @@ export class AuthenticationService {
 
     slackConnect( code: string, indirect_uri: string): Observable<any> {
 
-      return this.http.get('/api/login_check/slack?code='+code+'?indirect_uri='+indirect_uri).pipe(
-          map((response: Response ) => {
-            return (this.loginResponse(response)) ? response : false;
-          }));
+      return this.http.get('/api/client/slack?code=' + code + '&redirect_uri=' + indirect_uri);
+
     }
 
     loginResponse(response: Response) {

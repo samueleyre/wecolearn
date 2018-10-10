@@ -169,7 +169,12 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
       } else {
         subDomain += '.';
       }
-      this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/profilsettings");
+      if (process.env.NODE_ENV === 'production') {
+        this.redirectURI = encodeURIComponent("https://" + subDomain + "wecolearn.com/profilsettings");
+      } else {
+        this.redirectURI = encodeURIComponent("http://0.0.0.0:8080/profilsettings");
+      }
+
       this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params && params['code']) {
           this.slackConnect(params['code'], this.redirectURI)
@@ -223,6 +228,11 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
       this.authenticationService.slackConnect(code, redirect_uri).subscribe(
          result => {
            this.loading = false;
+           if (result['error']) {
+             this.error.slack = result['error'];
+           } else {
+             this.setEntity(result);
+           }
          },
          error => {
            this.error.slack = "Une erreur est survenue";

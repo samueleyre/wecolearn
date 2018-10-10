@@ -86,7 +86,12 @@ class NewUserController extends GPPDController
         } else {
           $subDomain .= '.';
         }
-        $redirect_uri = "https://".$subDomain."wecolearn.com/login";
+        if ( "dev" === $this->getParameter("environment")) {
+          $redirect_uri = "http://0.0.0.0:8080/login";
+        } else {
+          $redirect_uri = "https://".$subDomain."wecolearn.com/login";
+        }
+
       }
 
       $response = $this

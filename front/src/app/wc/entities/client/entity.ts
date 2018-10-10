@@ -33,7 +33,7 @@ export class Client extends Entity implements IEntity  {
 	public show_profil: boolean;
 	public email_notifications: boolean;
 	public slack_id: string;
-	public domain: string;
+	public slack_team_id: string;
 
 
 
@@ -65,6 +65,6 @@ export class Client extends Entity implements IEntity  {
 		this.show_profil = false;
 		this.email_notifications = true;
 		this.slack_id = null;
-		this.domain = null;
+		this.slack_team_id = null;
     }
 }

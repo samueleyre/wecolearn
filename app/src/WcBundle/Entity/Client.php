@@ -129,6 +129,10 @@ class Client
      */
     public $slackId;
 
+    /**
+     * @ORM\Column(type="string", name="slackTeamId", nullable=true)
+     */
+    public $slackTeamId;
 
     /**
      * @ORM\Column(type="string", name="domain", nullable=true)
@@ -712,5 +716,29 @@ class Client
     public function getDomain()
     {
         return $this->domain;
+    }
+
+    /**
+     * Set slackTeamId
+     *
+     * @param string $slackTeamId
+     *
+     * @return Client
+     */
+    public function setSlackTeamId($slackTeamId)
+    {
+        $this->slackTeamId = $slackTeamId;
+
+        return $this;
+    }
+
+    /**
+     * Get slackTeamId
+     *
+     * @return string
+     */
+    public function getSlackTeamId()
+    {
+        return $this->slackTeamId;
     }
 }
