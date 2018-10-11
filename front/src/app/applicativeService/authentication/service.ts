@@ -26,16 +26,16 @@ export class AuthenticationService {
             }));
     }
 
-    slackLogin( code: string): Observable<any> {
-      return this.http.get('/api/login_check/slack?code='+code).pipe(
+    slackLogin( code: string, redirect_uri: string): Observable<any> {
+      return this.http.get('/api/login_check/slack?code='+code+'&redirect_uri=' + redirect_uri).pipe(
           map((response: Response ) => {
             return (this.loginResponse(response)) ? response : false;
           }));
     }
 
-    slackConnect( code: string, indirect_uri: string): Observable<any> {
+    slackConnect( code: string, redirect_uri: string): Observable<any> {
 
-      return this.http.get('/api/client/slack?code=' + code + '&redirect_uri=' + indirect_uri);
+      return this.http.get('/api/client/slack?code=' + code + '&redirect_uri=' + redirect_uri);
 
     }
 

@@ -75,24 +75,8 @@ class NewUserController extends GPPDController
   {
 
 
-    if ($code = $request->query->get("code")) {
+    if (($code = $request->query->get("code")) && ($redirect_uri = $request->query->get("redirect_uri"))) {
 
-      if ( $request->query->get("redirect_uri")) {
-        $redirect_uri = rawurldecode($request->query->get("redirect_uri"));
-      } else {
-        $subDomain = $this->get('domain.service')->getSubDomain($request);
-        if ($subDomain === "wecolearn") {
-          $subDomain = '';
-        } else {
-          $subDomain .= '.';
-        }
-        if ( "dev" === $this->getParameter("environment")) {
-          $redirect_uri = "http://0.0.0.0:8080/login";
-        } else {
-          $redirect_uri = "https://".$subDomain."wecolearn.com/login";
-        }
-
-      }
 
       $response = $this
         ->get('client.service')

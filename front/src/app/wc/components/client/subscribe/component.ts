@@ -58,7 +58,12 @@ export class SubscribeComponent implements OnInit {
         } else {
           subDomain += '.';
         }
-        this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/profilsettings");
+      if (process.env.NODE_ENV === 'production') {
+        this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/login");
+      } else {
+        this.redirectURI = encodeURIComponent("http://0.0.0.0:8080/login");
+      }
+
     }
 
 

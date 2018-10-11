@@ -36,22 +36,23 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
-        this.activatedRoute.queryParams.subscribe((params: Params) => {
-          if (params && params['code']) {
-            this.slackLogin(params['code'])
-          }
-        });
         let subDomain = this.domainService.getSubDomain();
         if (subDomain === "wecolearn") {
           subDomain = '';
         } else {
           subDomain += '.';
         }
-      if (process.env.NODE_ENV === 'production') {
-        this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/login");
-      } else {
-        this.redirectURI = encodeURIComponent("http://0.0.0.0:8080/login");
-      }
+        if (process.env.NODE_ENV === 'production') {
+          this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/login");
+        } else {
+          this.redirectURI = encodeURIComponent("http://0.0.0.0:8080/login");
+        }
+
+        this.activatedRoute.queryParams.subscribe((params: Params) => {
+          if (params && params['code']) {
+            this.slackLogin(params['code'], this.redirectURI)
+          }
+        });
     }
 
     login() {
@@ -71,9 +72,9 @@ export class LoginComponent implements OnInit {
         );
     }
 
-    slackLogin(code:string) {
+    slackLogin(code:string, redirectUri:string) {
       this.loading = true;
-      this.authenticationService.slackLogin(code).subscribe(
+      this.authenticationService.slackLogin(code, redirectUri).subscribe(
          result => {
            this.loading = false;
            if ( result['subscribe']) {
