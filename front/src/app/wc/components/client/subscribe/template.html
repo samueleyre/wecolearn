@@ -7,13 +7,13 @@
             <div class="bloc-content">
                 <form name="form" (ngSubmit)="f.form.valid && submit(f)" #f="ngForm" novalidate>
                     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-                        <label for="username">Nom d'utilisateur</label>
-                        <input id="username" type="text" class="form-control showvalidity" name="username" [(ngModel)]="user.username" #username="ngModel" required />
+                        <label for="firstname">Prénom</label>
+                        <input id="firstname" type="text" class="form-control showvalidity" name="firstname" [(ngModel)]="user.username" #username="ngModel" required />
                         <div *ngIf="f.submitted && !username.valid" class="help-block">Le nom d'utilisateur est obligatoire</div>
                     </div>
                     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
                         <label for="email">Email</label>
-                        <input id="email" type="email" class="form-control showvalidity" name="email" [(ngModel)]="user.email" #email="ngModel" required pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"/>
+                        <input id="email" type="email" class="form-control showvalidity" name="email" [(ngModel)]="user.email" #email="ngModel" required pattern="{{pattern}}"/>
                         <div *ngIf="f.submitted && !email.valid" class="help-block">L'email est obligatoire</div>
                     </div>
                     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
@@ -36,7 +36,6 @@
                   <br>
                     <div class="form-group">
                         <button *ngIf="!edition" type="submit" [disabled]="loading" class="btn btn-primary-wc">Inscription</button>
-                        <button *ngIf="edition" type="submit" [disabled]="loading" class="btn btn-primary-wc">Modifier</button>
                         <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                     </div>
                     <div *ngIf="error" class="alert alert-danger">{{error}}</div>

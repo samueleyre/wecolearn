@@ -48,6 +48,8 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
   private newemail : string;
   private newpassword : string;
   private editing: object = {};
+  private pattern: string;
+
 
 
   constructor( protected service: GPPDService, protected clientService : ClientService, private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, private userService : UserService,
@@ -67,6 +69,12 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
 
     ngOnInit() {
         this.load();
+      if (process.env.NODE_ENV === 'production') {
+        this.pattern = "[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
+      } else {
+        this.pattern = "[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
+      }
+
     }
 
     load() : void {
@@ -123,14 +131,15 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
             // this.message['password'] = "Le mot de passe a été modifié";
             MessageService.info("Le mot de passe a été modifié")
 
-          } else {
-            if (type === 'email') {
+          } else if (response['error'] ) {
+            MessageService.error(response['error'])
+          } else if (type === 'email') {
               MessageService.info("Un email vous a été envoyé pour confirmer votre nouvel email")
-            // this.message['email'] = "Un email vous a été envoyé pour confirmer votre nouvel email";
-            } else {
-              // this.message['password'] = "Un mot de passe vous a été envoyé pour confirmer votre nouvel email";
-            }
+            this.setEntity(response['user']);
+          } else {
+            // this.message['password'] = "Un email vous a été envoyé pour confirmer votre nouveau mot de passe";
           }
+
       },
       error => { console.log(error)
       }

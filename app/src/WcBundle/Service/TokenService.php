@@ -6,46 +6,47 @@ use Doctrine\ORM\EntityManager;
 
 use AppBundle\Entity\Token;
 
-class TokenService {
+class TokenService
+{
 
-	private $em;
-	
-	public function __construct( EntityManager $em ) {
-		$this->em = $em;
-	}
+  private $em;
 
-
-    public function get( $filters = []) { // not used
-
-        $params = [];
-        $condition = '';
-        $sep = '';
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('entity');
-        $qb->from(sprintf('%s', 'AppBundle:Token' ),'entity');
+  public function __construct(EntityManager $em)
+  {
+    $this->em = $em;
+  }
 
 
-//        return count($filters);
-        if(count($filters) > 0 ) {
-            foreach( $filters as $field => $value ) {
-                $condition = sprintf('%s entity.%s=:%s', $sep , $field, $field);
-                $sep = " AND ";
-                $params[':'.$field] = $value;
-            }
-            $qb->where( $condition );
-            $qb->setParameters( $params);
-        }
+  public function setNewToken($user, $type, $deleteOld = false) {
 
-//        $qb->setMaxResults( 5 );
-//        $qb->setFirstResult( 0 );
+    if ($deleteOld) {
 
-        $ret = $qb->getQuery()->getResult();
+      $token = $this->em
+        ->getRepository(Token::class)
+        ->findOneBy(["user"=>$user, "type"=> $type]);
 
-        return $ret;
+      if ($token) {
+        $this
+          ->remove($token);
+      }
 
     }
 
-    public function post(Token $token ) {
+
+    $token = new Token();
+    $token->setToken(bin2hex(random_bytes(16)));
+    $token->setUser($user);
+    $token->setType($type);
+
+    $this
+    ->post($token);
+
+    return $token;
+  }
+
+
+
+  public function post(Token $token ) {
 
       $this->em->merge( $token );
       $this->em->flush();

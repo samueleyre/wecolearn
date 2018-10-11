@@ -1,7 +1,7 @@
 <div class="row" id="message">
-	<div [hidden]="hidden" class="alert alert-info message">
+	<div [hidden]="hidden" class="alert alert-{{type}} message">
 	        {{ message }}
 		<a *ngIf="type === 'cookie'" href="https://wecolearn/politique-cookies/">En savoir plus.</a>
-		<button *ngIf="type === 'cookie'" button class="btn" (click)="close()" >Fermer</button>
+		<button *ngIf="type === 'cookie'" class="btn" (click)="close()" >Fermer</button>
 	</div>
 </div>

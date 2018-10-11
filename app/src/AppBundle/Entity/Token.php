@@ -23,7 +23,7 @@ class Token
   public $token;
 
   /**
-   * @ORM\OneToOne(targetEntity="AppBundle\Entity\User",inversedBy="emailToken", cascade={"persist", "merge"})
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User",inversedBy="emailToken", cascade={"persist", "merge"})
    * @ORM\JoinColumn(name="userId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
    */
   public $user;

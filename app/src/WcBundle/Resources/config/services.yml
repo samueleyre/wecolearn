@@ -23,7 +23,8 @@ services:
     class: WcBundle\Service\UserService
     arguments: ['@doctrine.orm.entity_manager']
   domain.service:
-      class: WcBundle\Service\DomainService
+    class: WcBundle\Service\DomainService
+    arguments : ['%host%', '%environment%']
 
 #commands
   client.tag.command:

@@ -71,54 +71,34 @@ class ClientController extends GPPDController
 
     }
 
-    // /**
-    //  * @Get("client/connectslack")
-    //  * @View( serializerGroups={"search"})
-    //  */
-    // public function getClientMatchsAction(Request $request )
-    // {
-    //
-    //     $user = $this->get('security.token_storage')->getToken()->getUser();
-    //     $client = $this->getDoctrine()
-    //         ->getRepository(Client::class)
-    //         ->findOneBy(["user"=>$user]);
-    //
-    //
-    //
-    //     return $this
-    //         ->get('search.service')
-    //         ->search($client, $filter );
-    //
-    // }
 
+    /**
+     * @Get("client/matchs")
+     * @View( serializerGroups={"search"})
+     */
+    public function getClientMatchsAction(Request $request )
+    {
 
-        /**
-         * @Get("client/matchs")
-         * @View( serializerGroups={"search"})
-         */
-        public function getClientMatchsAction(Request $request )
-        {
+        $first = $request->query->get( 'first', 0 );
+        $max = $request->query->get( 'max', 6 );
 
-            $first = $request->query->get( 'first', 0 );
-            $max = $request->query->get( 'max', 6 );
+        $filter = ['first' => $first,'max' => $max ];
 
-            $filter = ['first' => $first,'max' => $max ];
-
-            if ($request->get("tag")) {
-                $filter["tag"] = $request->get("tag");
-            }
-
-            $user = $this->get('security.token_storage')->getToken()->getUser();
-
-            $client = $this->getDoctrine()
-                ->getRepository(Client::class)
-                ->findOneBy(["user"=>$user]);
-
-            return $this
-                ->get('search.service')
-                ->search($client, $filter );
-
+        if ($request->get("tag")) {
+            $filter["tag"] = $request->get("tag");
         }
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $client = $this->getDoctrine()
+            ->getRepository(Client::class)
+            ->findOneBy(["user"=>$user]);
+
+        return $this
+            ->get('search.service')
+            ->search($client, $filter );
+
+    }
 
     /**
      * @Post("/client/changesettings")
@@ -154,35 +134,19 @@ class ClientController extends GPPDController
           $user->setEmail($email);
           $user->setEmailConfirmed(false);
 
-          $oldToken = $user->getEmailToken();
+          $token = $this->get("token.service")->setNewToken($user, TokenConstant::$types["CONFIRMEMAIL"], true);
 
-          if ($oldToken) {
-            $this
-            ->get('token.service')
-            ->remove($oldToken);
-          }
-
-          $token = new Token();
-          $token->setToken(bin2hex(random_bytes(16)));
-          $token->setType(TokenConstant::$types["CONFIRMEMAIL"]);
-
-          $token->setUser($user);
-          $user->setEmailToken($token);
-
-          $this->get('token.service')->post($token);
-
-
+          $user->addEmailToken($token);
 
           $data = $this
             ->get('email.service')
-            ->setData(6, ["HOST"=>$this->getParameter("host"), "TOKEN" => $token->getToken(), "USERNAME"=>$user->getUsername()], $user->getEmail())
+            ->setData(6, ["HOST"=>$this->get("domain.service")->getHost($request), "TOKEN" => $token->getToken(), "USERNAME"=>$user->getUsername()], $user->getEmail())
             ->sendEmail();
 
           $this
             ->get('user.service')
             ->patch($user);
 
-//          $ret["emailChange"] = $data["code"];
 
         }
 
@@ -211,6 +175,7 @@ class ClientController extends GPPDController
 
       }
 
+      $ret["user"] = $user;
 
       return $ret;
 
@@ -326,12 +291,113 @@ class ClientController extends GPPDController
 
 
 
+  /**
+   * @Get("resetPassword/email")
+   *
+   */
+  public function sendEmailForPasswordResetAction(Request $request)
+  {
+
+    $ret = null;
+    if ( $email = $request->query->get( 'email' ) ) {
+      $ret = [];
+
+      $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->findOneBy(["email"=>$email]);
+
+      if ($user) {
+
+        $token = $this->get("token.service")->setNewToken($user, TokenConstant::$types["CONFIRMEMAILPASSWORD"], true);
+
+        $user->addEmailToken($token);
+
+        $this
+          ->get('user.service')
+          ->patch($user);
+
+        $this->get('token.service')->post($token);
+
+        $this
+          ->get('email.service')
+          ->setData(7, ["HOST"=>$this->get("domain.service")->getHost($request), "TOKEN" => $token->getToken(), "USERNAME"=>$user->getUsername()], $user->getEmail())
+          ->sendEmail();
+
+        $ret["success"] = "Email envoyé";
+      } else {
+        $ret["error"] = "Email non trouvé";
+      }
+
+    }
+
+    return $ret;
+
+  }
+
+  /**
+   * @Post("/resetPassword/password")
+   *
+   */
+  public function resetPasswordAction(Request $request)
+  {
+
+    $ret = null;
+    if ( ( $password = $request->request->get( 'password' ) ) && ( $token = $request->request->get( 'token' )) ) {
+      $ret = [];
+
+      $tokenEntity = $this->getDoctrine()
+        ->getRepository(Token::class)
+        ->findOneBy(["token"=>$token, "type"=>TokenConstant::$types["CONFIRMEMAILPASSWORD"]]);
+
+      if ($tokenEntity) {
+        $user = $tokenEntity->getUser();
+        $user->setPlainPassword($password);
+        $this->get('fos_user.user_manager')->updateUser($user);
+        $this
+          ->get('token.service')
+          ->remove($tokenEntity);
+
+        $ret["success"] = "Mot de passe modifié";
+      } else {
+        $ret["error"] = "Token non valide";
+      }
 
 
 
+    }
+
+    return $ret;
+
+  }
 
 
 
+  /**
+   * @Get("resetPassword/token")
+   *
+   */
+  public function checkPasswordTokenAction(Request $request)
+  {
+
+    $ret = null;
+    if ( $token = $request->query->get( 'token' ) ) {
+      $ret = [];
+
+      $tokenEntity = $this->getDoctrine()
+        ->getRepository(Token::class)
+        ->findOneBy(["token"=>$token, "type"=>TokenConstant::$types["CONFIRMEMAILPASSWORD"]]);
+
+      if ($tokenEntity) {
+        $ret['success'] = "ok";
+      } else {
+        $ret['error'] = "Token non trouvé";
+      }
+
+    }
+
+    return $ret;
+
+  }
 
 
 

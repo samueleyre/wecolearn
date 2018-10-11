@@ -26,6 +26,20 @@ export class MessageService {
 		MessageService.post(message);
 	}
 
+  static success( body : string ) {
+    let message = new Message();
+    message.body = body;
+    message.type = "success";
+    MessageService.post(message);
+  }
+
+  static error( body : string ) {
+    let message = new Message();
+    message.body = body;
+    message.type = "danger";
+    MessageService.post(message);
+  }
+
 	static cookie() {
         let message = new Message();
         message.body = "En naviguant sur ce site, vous acceptez l'utilisation des cookies. ";

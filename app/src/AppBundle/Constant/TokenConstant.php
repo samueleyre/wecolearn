@@ -15,6 +15,7 @@ class TokenConstant {
 
   public static $types = [
     "CONFIRMEMAIL" => 0,
+    "CONFIRMEMAILPASSWORD" => 1
   ];
 
 

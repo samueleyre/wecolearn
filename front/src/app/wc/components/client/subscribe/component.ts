@@ -36,6 +36,8 @@ export class SubscribeComponent implements OnInit {
     loading = false;
     public barLabel: string = "Difficulté du mot de passe : ";
     private redirectURI: string;
+    private error: string;
+    private pattern: string;
 
 
     constructor(
@@ -60,8 +62,10 @@ export class SubscribeComponent implements OnInit {
         }
       if (process.env.NODE_ENV === 'production') {
         this.redirectURI = encodeURIComponent("https://"+subDomain+"wecolearn.com/login");
+        this.pattern = "[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
       } else {
         this.redirectURI = encodeURIComponent("http://0.0.0.0:8080/login");
+        this.pattern = "[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
       }
 
     }
@@ -72,7 +76,10 @@ export class SubscribeComponent implements OnInit {
        this.userService.post(this.user).subscribe(
            response => {
                if (response === "duplicate") {
-                   MessageService.info("Le nom d'utilisateur ou l'adresse email est déjà utilisé.")
+                   this.error = "Le nom d'utilisateur ou l'adresse email est déjà utilisé.";
+                   setTimeout(()=>{
+                     this.error = null;
+                   }, 5000);
                } else {
                    this.login();
                }

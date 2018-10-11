@@ -13,7 +13,7 @@ export class MessageComponent implements OnInit {
 
 	public hidden: boolean = true;
 	public message: string = '';
-	public type: string = '';
+	public type: string = 'info';
 
 	ngOnInit() {
 		MessageService.get().subscribe(( message: Message) => {

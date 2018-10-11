@@ -24,7 +24,7 @@ class User extends BaseUser
 
 
   /**
-   * @ORM\OneToOne(targetEntity="AppBundle\Entity\Token",mappedBy="user", cascade={"persist", "merge"})
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Token",mappedBy="user", cascade={"persist", "merge"})
    * @ORM\JoinColumn(name="emailTokenId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
    */
   public $emailToken;
@@ -62,24 +62,35 @@ class User extends BaseUser
 
 
 
+
     /**
-     * Set emailToken
+     * Add emailToken
      *
      * @param \AppBundle\Entity\Token $emailToken
      *
      * @return User
      */
-    public function setEmailToken(\AppBundle\Entity\Token $emailToken = null)
+    public function addEmailToken(\AppBundle\Entity\Token $emailToken)
     {
-        $this->emailToken = $emailToken;
+        $this->emailToken[] = $emailToken;
 
         return $this;
     }
 
     /**
+     * Remove emailToken
+     *
+     * @param \AppBundle\Entity\Token $emailToken
+     */
+    public function removeEmailToken(\AppBundle\Entity\Token $emailToken)
+    {
+        $this->emailToken->removeElement($emailToken);
+    }
+
+    /**
      * Get emailToken
      *
-     * @return \AppBundle\Entity\Token
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEmailToken()
     {

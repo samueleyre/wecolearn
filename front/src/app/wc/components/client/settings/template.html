@@ -18,7 +18,7 @@
                            <button type="button" class="btn btn-sm btn-edit" (click)="makeEditable('newemail')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
                          </div>
                          <div *ngIf="editing.newemail" [ngClass]="{ 'has-error': f1.submitted && !email.valid }">
-                           <input id="email" type="email" class="form-control showvalidity" name="email" [(ngModel)]="newemail" #email="ngModel" required pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"/>
+                           <input id="email" type="email" class="form-control showvalidity" name="email" [(ngModel)]="newemail" #email="ngModel" required pattern="{{pattern}}"/>
                            <div *ngIf="f1.submitted && !email.valid" class="help-block">L'adresse email n'est pas valide</div>
                            <div *ngIf="message.email" class="help-block">{{message.email}}</div>
                          </div>

@@ -16,6 +16,7 @@ user:
     prefix:   api
     resource: '@AppBundle/Controller/UserController.php'
 
+
 ping:
     type:     rest
     prefix:   api

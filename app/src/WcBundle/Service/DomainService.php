@@ -9,9 +9,13 @@ use AppBundle\Constant\SubdomainConstant;
 
 class DomainService {
 
-  private $currentSubDomain;
+  private $host;
+  private $environment;
 
-  public function __construct() {
+  public function __construct($host, $environment) {
+    $this->host = $host;
+    $this->environment = $environment;
+
   }
 
 
@@ -26,6 +30,24 @@ class DomainService {
     }
 
     return "wecolearn";
+
+  }
+
+  public function getHost(Request $request) {
+
+
+    $host = $this->host;
+    if ("dev" === $this->environment) {
+      $host = "http://" . $host;
+    } else {
+      if ("wecolearn" !== ( $subDomain = $this->getSubDomain($request)) ) {
+        $host = "https://".$subDomain.".".$host;
+      } else {
+        $host = "https://".$host;
+      }
+    }
+
+    return $host;
 
   }
 

@@ -89,6 +89,10 @@ import { AboutComponent } 			from './components/client/about/component';
 import { CommunitiesComponent} 			from './components/client/communities/component';
 import { CommunityComponent} 			from './components/client/communities/community/component';
 
+import {SendPasswordConfirmationEmailComponent} from "./../components/resetPassword/sendConfirmationEmail/component";
+import {ResetPasswordFormComponent} from "./../components/resetPassword/resetPasswordForm/component";
+
+
 
 
 
@@ -144,7 +148,9 @@ import { CommunityComponent} 			from './components/client/communities/community/
     EmailNotificationSettingsComponent,
     CityBarComponent,
     PasswordStrengthBarComponent,
-    CommunityComponent
+    CommunityComponent,
+    ResetPasswordFormComponent,
+    SendPasswordConfirmationEmailComponent
   ],
   declarations: [
     HeaderComponent,
@@ -173,7 +179,9 @@ import { CommunityComponent} 			from './components/client/communities/community/
     EmailNotificationSettingsComponent,
     CityBarComponent,
     PasswordStrengthBarComponent,
-    CommunityComponent
+    CommunityComponent,
+    ResetPasswordFormComponent,
+    SendPasswordConfirmationEmailComponent
 
   ],
   providers : [
