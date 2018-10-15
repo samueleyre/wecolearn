@@ -46,7 +46,7 @@ export class GeolocationComponent implements OnInit {
   @Input() public longitude: number;
   @Input() public editing: boolean;
   @Input() public firstTime: boolean;
-  private zoom = 4;
+  private zoom = 14;
 
   @Output() latitudeChange = new EventEmitter<number>();
   @Output() longitudeChange = new EventEmitter<number>();
