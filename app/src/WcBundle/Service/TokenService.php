@@ -21,13 +21,13 @@ class TokenService
 
     if ($deleteOld) {
 
-      $token = $this->em
+      $oldToken = $this->em
         ->getRepository(Token::class)
         ->findOneBy(["user"=>$user, "type"=> $type]);
 
-      if ($token) {
+      if ($oldToken) {
         $this
-          ->remove($token);
+          ->remove($oldToken);
       }
 
     }

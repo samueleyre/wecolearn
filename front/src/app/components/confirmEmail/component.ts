@@ -49,9 +49,9 @@ export class ConfirmEmailComponent implements OnInit {
                               this.router.navigate(['/login']),
                               3000
                           )
-                      } else if (result.error = "confirmation_token_not_found") {
+                      } else if (result.error === "confirmation_token_not_found") {
                           this.error = "Une erreur est survenue, vérifiez que vous avez bien ouvert le dernier email et qu'il ne date pas de plus de 14 jours."
-                      } else if (result.error = "confirmation_token_not_found") {
+                      } else if (result.error === "confirmation_token_not_found") { //todo: specify this case
                           this.error = "Votre compte a déjà été validé."
                       } else {
                           this.error = "Une erreur est survenue, vérifiez que vous avez bien ouvert le dernier email et qu'il ne date pas de plus de 14 jours."
