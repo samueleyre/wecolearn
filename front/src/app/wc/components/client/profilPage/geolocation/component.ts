@@ -1,10 +1,10 @@
 import {
-    Component,
-    Injectable,
-    Input,
-    Output,
-    EventEmitter
-}                             from '@angular/core';
+  Component,
+  Injectable,
+  Input,
+  Output,
+  EventEmitter, Renderer2
+} from '@angular/core';
 
     import { ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 
@@ -19,20 +19,17 @@ import { MapsAPILoader } from '@agm/core';
     selector: 'geolocation',
     template: `
       <!--<searchOsm (latitude)="latitude" (longitude)="longitude"></searchOsm> // This does not work to search specific address, only cities -->
-      <div *ngIf="editing" class="form-group center">
+      <div [hidden]="!editing" class="form-group center">
         <div class="input-group">
           <span class="input-group-addon">Changer d'adresse</span>
-          <input style="width: 80%; display: inline-block;" placeholder="Rechercher une adresse" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+          <input id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="Rechercher une adresse" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search >
           </div>
         <div class="input-group" style="margin-top: 8px;">
           <button class="btn btn-outline-dark" type="button" (click)="setCurrentPosition()"> Se géolocaliser <i class="fa fa-map-marker" aria-hidden="true"></i></button>
         </div>
       </div>
-      <div *ngIf="editing && !firstTime" class="btn-container" style="margin-bottom: 8px;">
-        <button name="submit" class="btn btn-sm btn-primary-wc">Enregistrer</button>
-      </div>
       <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+            <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
       </agm-map>
     `,
     styleUrls : ['style.scss'],
@@ -49,81 +46,70 @@ export class GeolocationComponent implements OnInit {
   @Input() public longitude: number;
   @Input() public editing: boolean;
   @Input() public firstTime: boolean;
+  private zoom = 4;
 
   @Output() latitudeChange = new EventEmitter<number>();
   @Output() longitudeChange = new EventEmitter<number>();
 
-  public searchControl: FormControl;
-  public searchControlOsm: FormControl;
-  public zoom: number;
-
-  @ViewChild("search")
-  public searchElementRef: ElementRef;
+  @ViewChild("search") searchElementRef: ElementRef;
 
   constructor(
       private mapsAPILoader: MapsAPILoader,
       private ngZone: NgZone
   ) {}
 
+
+
   ngOnInit() {
-      //set google maps defaults
-      this.zoom = 4;
+  }
 
-      //create search FormControl
-      this.searchControl = new FormControl();
-      this.searchControlOsm = new FormControl();
+  ngAfterViewInit() {
 
-      //set current position
-      if (!this.latitude) {
-          this.setCurrentPosition();
-      }
+    this.load();
 
-      this.load();
+  }
 
-      //load Places Autocomplete
-
+  private setCurrentPosition() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        // console.log(position)
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.update();
+      });
+    }
   }
 
   private load() {
 
 
-      this.mapsAPILoader.load().then(() => {
-          let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-              types: ["address"]
-          });
+    this.mapsAPILoader.load().then(() => {
 
-          autocomplete.addListener("place_changed", () => {
-            console.log(this.searchElementRef.nativeElement)
-              this.ngZone.run(() => {
-                  //get the place result
-                  let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+      console.log("got element", <HTMLInputElement>document.getElementById('searchGeolocation'))
 
-                  //verify result
-                  if (place.geometry === undefined || place.geometry === null) {
-                      return;
-                  }
-
-                  //set latitude, longitude and zoom
-                  this.latitude = place.geometry.location.lat();
-                  this.longitude = place.geometry.location.lng();
-                  // console.log("setted again", this.latitude)
-                  this.update();
-                  this.zoom = 12;
-              });
-          });
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
       });
-  }
 
-  private setCurrentPosition() {
-      if ("geolocation" in navigator) {
-          navigator.geolocation.getCurrentPosition((position) => {
-            // console.log(position)
-              this.latitude = position.coords.latitude;
-              this.longitude = position.coords.longitude;
-              this.zoom = 12;
-              this.update();
-          });
-      }
+
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place = autocomplete.getPlace();
+
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          //set latitude, longitude and zoom
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          this.update();
+        });
+      });
+    });
+
   }
 
   private update() {
@@ -146,11 +132,3 @@ export class GeolocationComponent implements OnInit {
 
 
 }
-    // getGeolocation() {
-    //     if(navigator.geolocation){
-    //         navigator.geolocation.getCurrentPosition(position =>
-    //         {
-    //             console.log("position", position);
-    //         });
-    //     };
-    // }

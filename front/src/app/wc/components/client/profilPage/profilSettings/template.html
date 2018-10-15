@@ -220,7 +220,10 @@
                                   <button *ngIf="!editing.geolocation" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('geolocation')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
                                 </label>
                                 <div class="col-md-12">
-                                    <geolocation [firstTime]="firstTime" [editing]="editing.geolocation" [(latitude)]="entity.latitude" [(longitude)]="entity.longitude"></geolocation>
+                                    <geolocation [editing]="editing.geolocation" [(latitude)]="entity.latitude" [(longitude)]="entity.longitude"></geolocation>
+                                    <div *ngIf="editing.geolocation" class="btn-container" style="margin-bottom: 8px;">
+                                      <button name="submit" (click)="submit()" type="submit" class="btn btn-sm btn-primary-wc">Enregistrer</button>
+                                    </div>
                                 </div>
                             </div>
 

@@ -97,7 +97,7 @@ class NewUserController extends GPPDController
           ->get('user.service')
           ->em
           ->getRepository(User::class)
-          ->findOneBy(['email'=>$email])) {
+          ->findOneBy(['email'=>$email])) { // todo: or if found by slack user id !
 
           $client = $this
             ->get('client.service')

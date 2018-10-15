@@ -1,4 +1,6 @@
 export const environment = {
 	origin: '#endpoint#',
-	publique : '#publique#'
+	publique : '#publique#',
+  mapApiKey : '#mapApiKey#'
 }
+

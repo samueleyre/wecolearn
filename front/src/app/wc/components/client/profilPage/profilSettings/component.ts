@@ -47,6 +47,8 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
 
     public  base_url : string;
+    public zoom: number = 4;
+
     private modify = false;
     private webPath : string;
     private uploadError : object = {};
@@ -186,6 +188,9 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
           this.setEntity(client);
       });
 
+
+
+
     }
 
     setEntity(client: IEntity) {
@@ -197,6 +202,8 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         if (!this.entity['image']) {
           this.entity['image'] = new Image();
         }
+
+
 
     }
 
@@ -283,6 +290,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     setDefaultLatLong() {
         this.entity['latitude'] = 45.764043;
         this.entity['longitude'] = 4.835659;
+        this.zoom = 4;
     }
 
 
@@ -356,12 +364,6 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         return null;
     }
 
-    // private connectSlackAccount() {
-    //
-    //   this.clientService.connectSlackAccount();
-    //
-    // }
-
 
     public validators = [this.notAlphaNumeric];
 
@@ -372,6 +374,8 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     public requestAutocompleteItems = (text: string): Observable<Array<String>> => {
         return this.tagService.findTags(text);
     };
+
+
 
 
 

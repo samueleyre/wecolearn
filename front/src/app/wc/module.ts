@@ -92,6 +92,7 @@ import { CommunityComponent} 			from './components/client/communities/community/
 import {SendPasswordConfirmationEmailComponent} from "./../components/resetPassword/sendConfirmationEmail/component";
 import {ResetPasswordFormComponent} from "./../components/resetPassword/resetPasswordForm/component";
 
+import {environment} from "../applicativeService/config/environment";
 
 
 
@@ -123,7 +124,7 @@ import {ResetPasswordFormComponent} from "./../components/resetPassword/resetPas
     NgxPageScrollModule,
     Ng2ImgMaxModule,
     AgmCoreModule.forRoot({
-        apiKey: "AIzaSyA9v3Cne0PPDnAal2Gt1jAbeGmxSym5Ltg",
+        apiKey: environment.mapApiKey,
         libraries: ["places"]
     }),
     TagInputModule,
