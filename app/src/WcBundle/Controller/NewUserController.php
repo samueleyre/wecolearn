@@ -83,7 +83,6 @@ class NewUserController extends GPPDController
         ->get('client.service')
         ->getSlackUserData($code, $redirect_uri);
 
-
       if ($response->code === 200 && $response->body->ok) {
 
 
@@ -127,10 +126,10 @@ class NewUserController extends GPPDController
 
           $user = new User();
           $user->setEmail($email);
-          $user->setPlainPassword($randPwd);
+          $user->setPassword($randPwd);
           $user->setUsername($response->body->user->name);
           //todo: also get avatar !
-          $this->createNewUser($user, $response->body->user->id, $request);
+          $this->createNewUser($user, $response->body->user->id, $request, false);
           $ret['subscribe']= true;
         }
 
@@ -159,7 +158,6 @@ class NewUserController extends GPPDController
 
 
     $user->setRoles(['ROLE_USER']);
-
     $user->setPlainPassword($user->getPassword());
     $user->setEnabled(true);
 
@@ -230,7 +228,7 @@ class NewUserController extends GPPDController
 
     }
 
-    $ret['insertUser'] = $this
+    $ret['insertClient'] = $this
       ->postAction($client); // why post on user ? todo: stop using gppdcontroller
 
     return $ret;
