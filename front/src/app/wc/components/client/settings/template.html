@@ -28,7 +28,7 @@
                        <div *ngIf="editing.newemail" class="form-group">
                          <div class="col-md-12 center">
                            <button id="cancelEmail" type="button" (click)="initEditable()" class="btn btn-secondary">Annuler</button>
-                           <button id="submitEmail" name="submit" class="btn btn-primary-wc">Changer l'email</button>
+                           <button id="submitEmail" name="submit" class="btn btn-primary">Changer l'email</button>
                          </div>
                        </div>
 
@@ -64,7 +64,7 @@
                         <div *ngIf="editing.newpassword" class="form-group">
                           <div class="col-md-12 center">
                             <button id="cancelPassword" type="button" (click)="initEditable()" class="btn btn-secondary">Annuler</button>
-                            <button id="submitPassword" name="submit" class="btn btn-primary-wc">Changer mot de passe</button>
+                            <button id="submitPassword" name="submit" class="btn btn-primary">Changer mot de passe</button>
                           </div>
                         </div>
 
@@ -76,6 +76,11 @@
 
                       <emailNotificationSettings></emailNotificationSettings>
 
+                    <hr>
+                    <label>Supprimer mon compte</label>
+                    <div>
+                      <confirm [iconName]="null" [iconText]="'Supprimer'" [text]="'Etes-vous sûr de vouloir supprimer votre compte ?'" (ret)="deleteAccount($event)" ></confirm>
+                    </div>
                   </div>
 
                 </div>

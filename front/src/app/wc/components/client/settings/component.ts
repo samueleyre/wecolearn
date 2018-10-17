@@ -52,7 +52,12 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
 
 
 
-  constructor( protected service: GPPDService, protected clientService : ClientService, private activatedRoute: ActivatedRoute,  protected http : Http, @Inject(APP_BASE_HREF) r:string, private userService : UserService,
+  constructor( protected service: GPPDService,
+               protected clientService : ClientService,
+               private activatedRoute: ActivatedRoute,
+               protected http : Http, @Inject(APP_BASE_HREF) r:string,
+               private userService : UserService,
+               private router: Router,
   ) {
         super(service);
         this.clientService= clientService;
@@ -175,6 +180,26 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
   makeEditable(idName:string) {
     this.initEditable();
     this.editing[idName] = true;
+  }
+
+  deleteAccount(choice:boolean) {
+
+    if (choice === true) {
+      this.clientService.deleteAccount().subscribe((response) => {
+        // if ok go back to homz and show message
+        // else error message
+        if (response['ok']) {
+          MessageService.info("Votre compte a bien été supprimé, ainsi que tout l'historique de vos messages.")
+          this.router.navigate(['/']);
+
+        } else {
+          MessageService.error("Une erreur est survenue")
+        }
+      });
+    } else {
+      console.log('dont want to delete')
+    }
+
   }
 
 

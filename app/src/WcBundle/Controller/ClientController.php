@@ -8,6 +8,7 @@ use WcBundle\Entity\Tag;
 use AppBundle\Entity\Token;
 
 use AppBundle\Constant\TokenConstant;
+use \Doctrine\Common\Collections\Collection;
 
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -400,34 +401,68 @@ class ClientController extends GPPDController
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//  /**
+//  * @get("/client/deleteClient")
+//  */
+//  public function deleteClientAction()
+//  {
 //
-//    /**
-//    * @Delete("/client/{id}")
-//    */
-//    public function deleteClientAction( $id , Request $request )
-//    {
+//    $user = $this->get('security.token_storage')->getToken()->getUser();
+//    $client = $this->getDoctrine()
+//      ->getRepository(Client::class)
+//      ->findOneBy(["user"=>$user]);
 //
-//        $this->deleteAction( $id );
 //
-//        return $this->getClientAction();
-//    }
+//    $ret = [];
+//
+//    $ret['clientDelete'] = $this->get('client.service')->delete($client);
+//    $ret['userDelete'] = $this->get('fos_user.user_manager')->deleteUser($user);
+//
+//    return $ret;
+//
+//  }
+
+
+  /**
+   * @get("/client/delete")
+   */
+  public function deleteClientAction()
+  {
+
+    $user = $this->get('security.token_storage')->getToken()->getUser();
+    $client = $this->getDoctrine()
+      ->getRepository(Client::class)
+      ->findOneBy(["user"=>$user]);
+
+
+    $user->setUsername("rand".$user->getId());
+    $user->setEmail("rand".$user->getId());
+    $user->setPassword("rand".$user->getId());
+    $user->setEnabled(0);
+
+    $client->setFirstName("rand".$user->getId());
+    $client->setLastName("rand".$user->getId());
+    $client->setProfilUrl("rand".$user->getId());
+    $client->setBiographie(null);
+    $client->getTags()->clear();
+    $client->setImage(null);
+    $client->setShowProfil(false);
+    $client->setSlackId(null);
+    $client->setDomain(null);
+    $client->setLatitude(null);
+    $client->setLongitude(null);
+    $client->setSlackTeamId(null);
+    $client->setEmailNotifications(false);
+
+    $ret = [];
+
+
+    $ret['clientDelete'] = $this->get('client.service')->patch($client);
+    $ret['userDelete'] = $this->get('fos_user.user_manager')->updateUser($user);
+    $ret['ok'] = true;
+    return $ret;
+
+  }
 
 
 }

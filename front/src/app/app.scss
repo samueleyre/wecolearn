@@ -167,7 +167,7 @@ button.close{
 }
 
 .bloc-content{
-  padding: 16px 16px 0;
+  padding: 16px;
 }
 
 /*SEARCH BAR*/
@@ -180,7 +180,7 @@ button.close{
 
 /* Bootstrap default */
 
-.btn-primary-wc {
+.btn-primary {
   color: #fff;
   background-color: $mainOrange;
   border-color: $mainOrange;
@@ -205,7 +205,7 @@ button.close{
   box-shadow: 0 0 0 0.2rem rgba(254, 94, 56, 0.13);
 }
 
-.btn-primary-wc:hover, .btn-primary-wc:focus {
+.btn-primary:hover, .btn-primary:focus {
   color: #fff;
   background-color: var(--main-color-1-light-10);
   border-color: var(--main-color-1-light-10);

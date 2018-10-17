@@ -59,4 +59,8 @@ export class ClientService {
           }));
   }
 
+  deleteAccount(): Observable<object> {
+    return this.http.get(`${this.endpoint}/delete`);
+  }
+
 }

@@ -14,7 +14,7 @@ bootstrap4Mode();
 @Component({
     selector: 'confirm',
     template: `        
-      <button [ngStyle]="styleObj" (click)="onClick()" class="btn"><i [ngClass]="iconName" aria-hidden="true">{{iconText}}</i>
+      <button [ngStyle]="styleObj" [ngClass]="buttonClass" (click)="onClick()" class="btn"><i *ngIf="iconName" [ngClass]="iconName" aria-hidden="true"></i>{{iconText}}
       </button>
   `,
 })
@@ -23,10 +23,11 @@ bootstrap4Mode();
 export class ConfirmModaleComponent {
 
     @Output() ret = new EventEmitter<boolean>();
-    @Input() styleObj: Object;
+    @Input() styleObj: Object = {};
     @Input() iconName : string = "fa fa-trash";
     @Input() iconText : string = "";
     @Input() text = "";
+    @Input() buttonClass = 'btn btn-primary';
 
     constructor(public modal: Modal) {
     }
@@ -43,8 +44,12 @@ export class ConfirmModaleComponent {
             .then( dialogRef => {
                 dialogRef.result.then( result => {
                             this.ret.emit(result)
-                    }
+                    }, () => {
+                console.log("rejected")
+              }
                 );
+            }, () => {
+              console.log("rejected")
             }).catch(() => {});
     }
 

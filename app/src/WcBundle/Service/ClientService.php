@@ -27,8 +27,6 @@ class ClientService {
   function getSlackUserData($code, $redirectURI)
   {
 
-//    $redirectURI = "http://0.0.0.0:8080/login";
-
     $url = "https://slack.com/api/oauth.access";
 
     $data["client_id"] = $this->clientId;
@@ -151,8 +149,6 @@ class ClientService {
 
       $parameters = [ "firstName", "lastName", "profilUrl", "biographie", "intensity", "atmosphere", "latitude", "longitude", "tags", "showProfil", "emailNotifications" ];
 
-//        $oldClient->setEmailNotifications(0);
-
       for ($i=0; $i< count($parameters); $i++) {
 
           $getMethod = "get".ucfirst($parameters[$i]);
@@ -163,25 +159,13 @@ class ClientService {
 
       }
 
+      //set defaults ( shouldn't be here )
       $oldClient->setEmailNotifications(($client->getEmailNotifications()) ? 1 : 0);
       $oldClient->setShowProfil(($client->getShowProfil()) ? 1 : 0);
 
-
-
-//        return $oldClient->getTags();
-//        return $this->patchTags($oldClient->getTags(), $client->getTags());
+      // insert or update new tags in database
       $oldClient->setTags($this->patchTags($oldClient->getTags(), $client->getTags()));
 
-//		if( $addUser ) { // FOR CHANGE OF PASSWORD / EMAIL ADRESS / USERNAME
-//            $oldClient->setUser($user);
-//        }
-
-//		if( null === $client->getCreated()) { // SHOULD BE USELESS
-//			$oldClient->setCreated(new \Datetime());
-//		}
-
-
-//        return $oldClient;
 
       $this->em->merge( $oldClient );
 
@@ -192,40 +176,34 @@ class ClientService {
   }
 
 
-  private function patchTags(Collection $oldClientTags, $tags)
+  private function patchTags(Collection $oldClientTags, Collection $tags)
   {
 
-//        return $oldClientTags;
       for( $i = 0; $i < count($tags); $i++ ) {
 
           $oldTag = $this->em
               ->getRepository(Tag::class)
               ->findOneBy(["name"=>$tags[$i]->getName(), "type"=>$tags[$i]->getType()]);
-//            return $oldTag;
 
 
-              if ($oldTag ) {
+          if ($oldTag ) {
 
-//                    return $oldTag;
-                  if (!$oldClientTags->contains($oldTag)) {
-                      $this->addIterationTag($oldTag);
-                  }
-//                    return $oldTag;
-                  $tags[$i] = $oldTag;
-
-
-              } else {
-
-                  $this->insertNewTag($tags[$i]);
-  //                $this->em->persist( $tags[$i] );
-  //                $this->em->flush();
-
+              if (!$oldClientTags->contains($oldTag)) {
+                  $this->addIterationTag($oldTag);
               }
+              $tags[$i] = $oldTag;
 
-              if (!$oldClientTags->contains($tags[$i])) {
-                  $oldClientTags->add($tags[$i]);
 
-              }
+          } else {
+
+              $this->insertNewTag($tags[$i]);
+
+          }
+
+          if (!$oldClientTags->contains($tags[$i])) {
+              $oldClientTags->add($tags[$i]);
+
+          }
 
 
       }
@@ -241,24 +219,17 @@ class ClientService {
 
       $tag->setCreated($date);
 
-//        $this->em->persist( $tag );
-//        $this->em->flush();
-
   }
 
   private function addIterationTag(Tag &$tag)
   {
       $tag->setIteration($tag->getIteration() + 1);
 
-//        return $tag->getIteration();
+  }
 
-//        $this->em->merge( $tag);
-//
-//        $this->em->flush();
-
-//        return $tag;
-
-
+  public function delete (Client $client) {
+    $this->em->remove(  $client );
+    $this->em->flush();
   }
 
 
