@@ -3,10 +3,16 @@
 namespace WcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="slackAccount")
+ * @ORM\Table(name="slackAccount",
+ *    uniqueConstraints={
+ *        @UniqueConstraint(name="uniqueSlackAccount",
+ *            columns={"accountId", "slackTeamId"})
+ *    })
  *
  */
 class SlackAccount

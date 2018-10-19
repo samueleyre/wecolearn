@@ -5,9 +5,11 @@ WcBundle\Entity\SlackTeam:
         id:
           groups: [ input, output, search ]
         teamId:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         name:
           groups: [ input, output ]
+        type:
+          groups: [ input, output, search ]
 
 
 

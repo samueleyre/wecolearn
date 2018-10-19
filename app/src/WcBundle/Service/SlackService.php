@@ -20,7 +20,7 @@ class SlackService
 
   public function getSlackAccount($id) {
 
-    return $this->em->getRepository(SlackAccount::class)->find($id);
+    return $this->em->getRepository(SlackAccount::class)->findOneBy(["accountId"=>$id]);
 
   }
 
@@ -56,6 +56,11 @@ class SlackService
     $newSlackTeam->setType($type);
     return $newSlackTeam;
 
+  }
+
+  public function patchSlackAccount(&$slackAccount) {
+    $this->em->merge($slackAccount);
+    $this->em->flush();
   }
 
 

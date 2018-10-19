@@ -68,7 +68,6 @@ export class ClientService {
 
   hasSlackAccount(client: Client) {
    return ([] !== client.slack_accounts) ? (undefined !== client.slack_accounts.find((slack_account)=> slack_account.slack_team.type === "slack")) : false;
-
   }
 
   deleteAccount(): Observable<object> {

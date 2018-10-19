@@ -254,9 +254,6 @@ class ClientController extends GPPDController
     if ( ($code = $request->query->get("code") ) && ( $redirect_uri = $request->query->get("redirect_uri") )) {
 
       $redirect_uri = rawurldecode($redirect_uri);
-//      $redirect_uri = "http://0.0.0.0:8080/profilsettings";
-
-//      return $code;
 
       $response = $this
         ->get('client.service')
@@ -274,8 +271,9 @@ class ClientController extends GPPDController
         $slackAccount = $this->get('slack.service')->getSlackAccount($response->body->user->id);
 
         if ($slackAccount ) { // in case slack account is connected to an other account
+          //todo: before doing this, ask user if its ok with him
           $slackAccount->setClient($client);
-          $client->addSlackAccount($slackAccount);
+          $this->get('slack.service')->patchSlackAccount($slackAccount);
         } else {
           $slackAccount = $this->get('slack.service')->createSlackAccount($client, $response->body->user->id, $response->body->team->id, "slack");
         }
@@ -405,28 +403,6 @@ class ClientController extends GPPDController
     return $ret;
 
   }
-
-
-//  /**
-//  * @get("/client/deleteClient")
-//  */
-//  public function deleteClientAction()
-//  {
-//
-//    $user = $this->get('security.token_storage')->getToken()->getUser();
-//    $client = $this->getDoctrine()
-//      ->getRepository(Client::class)
-//      ->findOneBy(["user"=>$user]);
-//
-//
-//    $ret = [];
-//
-//    $ret['clientDelete'] = $this->get('client.service')->delete($client);
-//    $ret['userDelete'] = $this->get('fos_user.user_manager')->deleteUser($user);
-//
-//    return $ret;
-//
-//  }
 
 
   /**

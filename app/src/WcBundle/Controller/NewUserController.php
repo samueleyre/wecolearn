@@ -211,17 +211,13 @@ class NewUserController extends GPPDController
       ->postAction($client); // why post on user ? todo: stop using gppdcontroller
 
     if ($slackId !== null && $slackTeamId !== null) {
-//      $slackAccount = $this->get('slack.service')->getSlackAccount($slackId);
-//      if (!$slackAccount) {
-        $newSlackAccount = $this->get('slack.service')->createSlackAccount($client, $slackId, $slackTeamId, "slack");
-//        $client->addSlackAccount($newSlackAccount);
-//      } else { // in case of DB issue
-//        $slackAccount->setClient($client);
-        // update slack account ??
-//        $client->addSlackAccount($slackAccount);
-//      }
+      $slackAccount = $this->get('slack.service')->getSlackAccount($slackId);
+      if (!$slackAccount) {
+        $this->get('slack.service')->createSlackAccount($client, $slackId, $slackTeamId, "slack");
+      } else {
+//     todo:   account already connected to email : xxxxx, do you wish to connected to this account ?
+      }
     }
-
 
 
     if ($retEmail) {
@@ -237,7 +233,6 @@ class NewUserController extends GPPDController
       if (isset($retEmail['code'])) {
         $ret["email"] = $retEmail['code'];
       }
-
     }
 
 
