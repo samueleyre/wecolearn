@@ -39,9 +39,7 @@ WcBundle\Entity\Client:
           groups: [ input, output ]
         emailNotifications:
           groups: [ input, output ]
-        slackId:
-          groups: [ input, output, search ]
-        slackTeamId:
+        slackAccounts:
           groups: [ input, output, search ]
 
 

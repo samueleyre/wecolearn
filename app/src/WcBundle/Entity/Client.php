@@ -123,25 +123,21 @@ class Client
      */
     public $emailNotifications = true;
 
-
     /**
-     * @ORM\Column(type="string", name="slackId", nullable=true)
+     * @ORM\OneToMany(targetEntity="WcBundle\Entity\SlackAccount",mappedBy="client", cascade={"persist", "merge"})
+     * @ORM\JoinColumn(name="slackAccountIds", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    public $slackId;
-
-    /**
-     * @ORM\Column(type="string", name="slackTeamId", nullable=true)
-     */
-    public $slackTeamId;
-
-    /**
-     * @ORM\Column(type="string", name="domain", nullable=true)
-     */
-    public $domain;
-    
+    public $slackAccounts;
 
 
   /**
+     * @ORM\ManyToMany(targetEntity="Domain", inversedBy="clients", cascade={"persist", "merge"})
+     * @ORM\JoinColumn(name="DomainIds", referencedColumnName="id", nullable=true)
+     */
+    public $domains;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -670,75 +666,72 @@ class Client
         return $this->receivedMessages;
     }
 
+
     /**
-     * Set slackId
+     * Add domain
      *
-     * @param string $slackId
+     * @param \WcBundle\Entity\Domain $domain
      *
      * @return Client
      */
-    public function setSlackId($slackId)
+    public function addDomain(\WcBundle\Entity\Domain $domain)
     {
-        $this->slackId = $slackId;
+        $this->domains[] = $domain;
 
         return $this;
     }
 
     /**
-     * Get slackId
+     * Remove domain
      *
-     * @return string
+     * @param \WcBundle\Entity\Domain $domain
      */
-    public function getSlackId()
+    public function removeDomain(\WcBundle\Entity\Domain $domain)
     {
-        return $this->slackId;
+        $this->domains->removeElement($domain);
     }
 
     /**
-     * Set domain
+     * Get domains
      *
-     * @param string $domain
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDomains()
+    {
+        return $this->domains;
+    }
+
+    /**
+     * Add slackAccount
+     *
+     * @param \WcBundle\Entity\SlackAccount $slackAccount
      *
      * @return Client
      */
-    public function setDomain($domain)
+    public function addSlackAccount(\WcBundle\Entity\SlackAccount $slackAccount)
     {
-        $this->domain = $domain;
+        $this->slackAccounts[] = $slackAccount;
 
         return $this;
     }
 
     /**
-     * Get domain
+     * Remove slackAccount
      *
-     * @return string
+     * @param \WcBundle\Entity\SlackAccount $slackAccount
      */
-    public function getDomain()
+    public function removeSlackAccount(\WcBundle\Entity\SlackAccount $slackAccount)
     {
-        return $this->domain;
+        $this->slackAccounts->removeElement($slackAccount);
     }
 
     /**
-     * Set slackTeamId
+     * Get slackAccounts
      *
-     * @param string $slackTeamId
-     *
-     * @return Client
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setSlackTeamId($slackTeamId)
+    public function getSlackAccounts()
     {
-        $this->slackTeamId = $slackTeamId;
-
-        return $this;
-    }
-
-    /**
-     * Get slackTeamId
-     *
-     * @return string
-     */
-    public function getSlackTeamId()
-    {
-        return $this->slackTeamId;
+        return $this->slackAccounts;
     }
 }

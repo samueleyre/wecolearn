@@ -47,8 +47,6 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     private openChat: string;
     private loading: Observable<boolean>;
     private currentlySearching: boolean = false;
-    private baseImageName : string = image.default_200px;
-    private currentClient: object;
 
 
   constructor( protected service: GPPDService,
@@ -73,28 +71,9 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     load() : void {
 
 
-      let logged = this.LoggedService.get();
-
-      if (logged) {
-        this.logged = true;
-        // this.searchService.search().subscribe();
-        this.openChat = "Discuter";
-      } else {
-        this.openChat = "Connectez-vous pour discuter !";
-        // todo: if tag and lat/long are in url, get them
-      }
-
       this.searchService.getCurrentFoundClients().subscribe( ( clients:any[] ) => {
         this.cards = clients;
       });
-
-
-      this.clientService.get().subscribe((client:Client)=> {
-        this.currentClient = client;
-      });
-
-
-
 
       this.loading = this.searchService.getLoading('tag');
 
@@ -109,28 +88,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
         return new Client();
     }
 
-    openThread(card : Client) {
 
-      this.loggerService.log("openThread", this.logged)
-      if (this.logged) {
-
-        if (false) { // todo: see if thread exists
-
-        } else {
-            if (!card.image) {
-              card.image = new Image(null, image.default_200px);
-            }
-            let thread = new Thread( card.id, card.first_name, card.image.filename)
-            this.threadsService.setCurrentThread(thread);
-        }
-
-      } else {
-
-        this.router.navigate(['/login']);
-
-      }
-
-    }
 
     onScroll() {
       //todo: only when arrives at bottom

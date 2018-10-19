@@ -166,7 +166,7 @@ export class HeaderComponent implements OnInit {
 
 
 	loadClient() {
-        this.ClientService.load().subscribe();
+        this.ClientService.load().subscribe(); // todo: should be in main component
 	}
 
 	preventDefault(e:any) {

@@ -64,7 +64,6 @@ export class AuthenticationService {
 
   resetPassword(password: string, token: string) {
 
-    console.log("password", password)
     return this.http.post('/api/resetPassword/password', {password: password, token: token});
 
   }

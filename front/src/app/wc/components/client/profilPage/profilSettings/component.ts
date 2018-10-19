@@ -43,12 +43,12 @@ import { AuthenticationService } from './../../../../../applicativeService/authe
 })
 
 @Injectable()
-export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
+export class ProfilSettingsComponent implements OnInit {
 
 
     public  base_url : string;
     public zoom: number = 4;
-
+    public client : Client;
     private modify = false;
     private webPath : string;
     private uploadError : object = {};
@@ -134,6 +134,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     };
     private redirectURI : string;
     private hasSlack: boolean;
+    private hasSlackAccount: boolean = false;
 
 
 
@@ -148,7 +149,6 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     private domainService: DomainService,
     private authenticationService: AuthenticationService
 ) {
-        super(service);
         this.base_url = r;
         this.tagService = tagService;
         this.clientService= clientService;
@@ -183,9 +183,9 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         }
       });
 
-      this.service.setApi(this.getApi());
-      this.service.getOne().subscribe( ( client: IEntity) => {
-          this.setEntity(client);
+      this.clientService.get().subscribe( ( client: Client) => {
+        console.log(client)
+          this.setClient(client);
       });
 
 
@@ -193,21 +193,21 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
     }
 
-    setEntity(client: IEntity) {
+    setClient(client: Client) {
 
-        this.entity = this.setTags(client);
-        if (!this.entity['latitude']) {
+        this.client = this.setTags(client);
+        if (!this.client['latitude']) {
           this.setDefaultLatLong();
         }
-        if (!this.entity['image']) {
-          this.entity['image'] = new Image();
+        if (!this.client['image']) {
+          this.client['image'] = new Image();
         }
 
-
+        this.hasSlackAccount =  this.clientService.hasSlackAccount(client);
 
     }
 
-    setTags(client: IEntity) {
+    setTags(client: Client) {
         client['learn_tags'] = [];
         client['know_tags'] = [];
         client['teach_tags'] = [];
@@ -238,7 +238,7 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
            if (result['error']) {
              this.error.slack = result['error'];
            } else {
-             this.setEntity(result);
+             this.setClient(result);
            }
          },
          error => {
@@ -252,10 +252,9 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
     submit() {
         this.initEditable();
         this.joinTags();
-        this.service.setApi(this.getApi());
-        this.service.patchOne( this.entity ).subscribe(
-            ( client: IEntity ) => {
-              this.setEntity(client);
+        this.clientService.patch( this.client ).subscribe(
+            ( client: Client ) => {
+              this.setClient(client);
             },
             error => { console.log(error) }
         );
@@ -265,39 +264,34 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
       setTimeout(()=> {
         this.submit();
-        // console.log("show", this.entity['show_profil'])
+        // console.log("show", this.client['show_profil'])
       }, 500);
 
 
-      }
+    }
 
     joinTags() {
-        this.entity['tags'] = [];
+        this.client['tags'] = [];
         for(let i=0; i < this.tagTypes.length; i++) {
-            if (this.entity[this.tagTypes[i]].length > 0) {
-                for(let j=0; j < this.entity[this.tagTypes[i]].length; j++) {
-                    let newValue = this.entity[this.tagTypes[i]][j];
+            if (this.client[this.tagTypes[i]].length > 0) {
+                for(let j=0; j < this.client[this.tagTypes[i]].length; j++) {
+                    let newValue = this.client[this.tagTypes[i]][j];
                     if (newValue.hasOwnProperty("value")) {
                         newValue = newValue["value"];
                     }
-                    this.entity['tags'].push(new Tag(null, newValue, i))
+                    this.client['tags'].push(new Tag(null, newValue, i))
                 }
             }
         }
-        // console.log("jointags", this.entity)
+        // console.log("jointags", this.client)
     }
 
     setDefaultLatLong() {
-        this.entity['latitude'] = 45.764043;
-        this.entity['longitude'] = 4.835659;
+        this.client['latitude'] = 45.764043;
+        this.client['longitude'] = 4.835659;
         this.zoom = 4;
     }
 
-
-
-    getApi() {
-        return '/api/client';
-    }
 
     getEntity() {
         let client = new Client();
@@ -311,8 +305,8 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
 
     onComplete(id:string, response:any )
     {
-        this.entity['image'] = response.response['image'];
-        this.entity['avatarSrc'] = response.response['avatarSrc'];
+        this.client['image'] = response.response['image'];
+        this.client['avatarSrc'] = response.response['avatarSrc'];
         this.uploadError[id] = false;
         this.submit();
     }
@@ -345,8 +339,8 @@ export class ProfilSettingsComponent extends GPPDComponent implements OnInit {
         geolocation: value,
       };
 
-      // if (this.entity['first_name'] === '') this.editing['first_name'] = true; // the intention was to make editing mode apear when value in DB was null
-      // if (this.entity['last_name'] === '') this.editing['last_name'] = true;
+      // if (this.client['first_name'] === '') this.editing['first_name'] = true; // the intention was to make editing mode apear when value in DB was null
+      // if (this.client['last_name'] === '') this.editing['last_name'] = true;
 
     }
 

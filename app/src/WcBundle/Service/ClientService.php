@@ -90,7 +90,7 @@ class ClientService {
 
   }
 
-  public function find( $filters = []) {
+  public function find( $filters = []) { // not used anymore
 
 //        syslog(LOG_ERR, 'filter'.count($filters));
       $params = [];
@@ -98,7 +98,7 @@ class ClientService {
       $sep = '';
       $qb = $this->em->createQueryBuilder();
       $qb->select('entity, image.filename');
-      $qb->from(sprintf('%s', $this->entityRef ),'entity');
+      $qb->from(sprintf('%s', $this->entityRef ),'entity'); // todo: error here ?
       $qb->leftJoin('WcBundle:Image', 'image', 'WITH', 'entity.photoid = image.id');
 //        $qb->where('entity.photoid = image.id');
 //        return count($filters);
@@ -125,7 +125,7 @@ class ClientService {
 
 
 
-  private function setClientPhotoname(&$clients)
+  private function setClientPhotoname(&$clients) // not used anymore
   {
 
 

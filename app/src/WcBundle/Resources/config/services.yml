@@ -24,8 +24,10 @@ services:
     arguments: ['@doctrine.orm.entity_manager']
   domain.service:
     class: WcBundle\Service\DomainService
-    arguments : ['%host%', '%environment%']
-
+    arguments : ['@doctrine.orm.entity_manager', '%host%', '%environment%']
+  slack.service:
+    class: WcBundle\Service\SlackService
+    arguments : ['@doctrine.orm.entity_manager']
 #commands
   client.tag.command:
     class: WcBundle\Command\ClientTag

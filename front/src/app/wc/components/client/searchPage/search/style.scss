@@ -1,47 +1,10 @@
 @import './../../../../../../assets/scss/variables.scss';
 
-#possibleMatchesContainer{
-  .row{
-    .card-container{
-      padding: 1rem;
-      .card{
-        padding: 2rem;
-        .tagContainer{
-          display: flex;
-          flex-wrap: wrap;
-          .tag{
-            padding: 2px 6px;
-            background-color: $mainYellow;
-            border-radius: 3px;
-            margin: 2px 0px;
-            margin-right: 6px;
-          }
-        }
-        .chatButtonContainer{
-          display: flex;
-          flex-wrap: wrap;
-          &>button, &>a{
-            margin: 1px;
-          }
-        }
-      }
-    }
-  }
-}
-
-
 
 .emptyCardsMessage{
   padding: 30px;
 }
 
-.bioContainer{
-  padding: 1rem 2rem 0.5rem;
-  text-align: justify;
-  @media (max-width: 765px) {
-    padding: 1rem 1rem 0.5rem;
-  }
-}
 
 @media (min-width: 992px){
   #conversationColumn{
@@ -54,22 +17,7 @@
   border-radius: 2px;
 }
 
-.card {
-  background-color: #ffffff;
-  .btn{
-    transition: color .10s ease-in-out, background-color .10s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-  }
-  @media (max-width: 992px){
-    .btn {
-      font-size: 0.7rem;
-    }
-  }
-  .btn:focus,.btn:hover {
-    background-color: $mainYellow;
-    background-color: $mainOrange;
-    color: #ffffff;
-  }
-}
+
 
 #searchLoader {
   padding-top: 10px;

@@ -77,7 +77,7 @@ const appRoutes: Routes = [
     LoadersCssModule,
 
   ],
-  declarations: [ 
+  declarations: [
     LoginComponent,
     ConfirmEmailComponent,
     HomeComponent,
@@ -86,7 +86,7 @@ const appRoutes: Routes = [
     AutofocusDirective,
     // PasswordStrengthBarComponent,
     AppComponent,
-    NotFoundComponent
+    NotFoundComponent,
 
   ],
   providers : [
@@ -102,7 +102,7 @@ const appRoutes: Routes = [
       DomainService,
       SeoService
   ],
-  bootstrap:[ 
+  bootstrap:[
   	AppComponent
   ],
 })

@@ -34,9 +34,7 @@ use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-
-
-
+use WcBundle\Entity\SlackAccount;
 
 
 class NewUserController extends GPPDController
@@ -64,7 +62,7 @@ class NewUserController extends GPPDController
     public function postNewUserAction(User $user, Request $request)
     {
 
-      return $this->createNewUser($user, null, $request);
+      return $this->createNewUser($user, $request);
 
     }
 
@@ -104,22 +102,25 @@ class NewUserController extends GPPDController
             ->getRepository(Client::class)
             ->findOneBy(['user'=>$user] );
 
-          $change = false;
-          if (null === $client->getSlackId() ) {
-            $client->setSlackId($response->body->user->id);
-            $change = true;
+
+          if (!$this->get('slack.service')->getSlackAccount($response->body->user->id)) {
+
+            $newSlackAccount = $this->get('slack.service')->createSlackAccount($client, $response->body->user->id, $response->body->team->id, "slack");
+            $client->addSlackAccount($newSlackAccount);
           }
 
-          $domain = $this->get('domain.service')->getSubDomain($request);
-          if ("wecolearn" !== $domain && $domain !== $client->getDomain() ) {
-            $client->setDomain($domain);
-            $change = true;
+          $domainName = $this->get('domain.service')->getSubDomain($request);
+          $domain = $this->get('domain.service')->getSubDomainEntity($domainName);
+
+          if (!$domain) {
+            $domain = $this->get('domain.service')->createSubDomainEntity($domainName);
           }
 
-          if ($change) {
-            $this->get('client.service')->em->merge( $client );
-            $this->get('client.service')->em->flush();
+          if (false === $client->getDomains()->indexOf($domain)) {
+            $client->addDomain($domain);
           }
+
+          $this->get('client.service')->patch( $client );
 
 
         } else {
@@ -129,7 +130,7 @@ class NewUserController extends GPPDController
           $user->setPassword($randPwd);
           $user->setUsername($response->body->user->name);
           //todo: also get avatar !
-          $this->createNewUser($user, $response->body->user->id, $request, false);
+          $this->createNewUser($user, $request, $response->body->user->id, $response->body->team->id ,false);
           $ret['subscribe']= true;
         }
 
@@ -150,11 +151,18 @@ class NewUserController extends GPPDController
     }
   }
 
-  private function createNewUser(User $user, $slackId = null, $request, $retEmail = true) {
+  private function createNewUser(User $user, $request, $slackId = null, $slackTeamId = null, $retEmail = true) { // todo: fuse client and user !
+
+    $ret = [];
 
     $userManager = $this->get('fos_user.user_manager');
 
-    $domain = $this->get('domain.service')->getSubDomain($request);
+    $domainName = $this->get('domain.service')->getSubDomain($request);
+    $domain = $this->get('domain.service')->getSubDomainEntity($domainName);
+
+    if (!$domain) {
+      $domain = $this->get('domain.service')->createSubDomainEntity($domainName);
+    }
 
 
     $user->setRoles(['ROLE_USER']);
@@ -187,36 +195,40 @@ class NewUserController extends GPPDController
     }
 
 
-    $token = $this
-      ->get("token.service")
-      ->setNewToken($user, TokenConstant::$types["CONFIRMEMAIL"], true);
-
-
-
 //        $roles = $user->getRoles();
 //        if (in_array("ROLE_USER", $roles)) { // not useful at this point as it is always the case.
 
     $client = new Client();
     $client->setUser($user);
     $client->setFirstName($user->getUsername());
-    $client->setDomain($domain);
-
-
-    if ($slackId !== null) {
-      $client->setSlackId($slackId);
-    }
-
+    $client->addDomain($domain);
     $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
     $client->setCreated($date);
-
-
     $this
       ->get('client.service')
       ->generateUrl($client);
+    $ret['insertClient'] = $this
+      ->postAction($client); // why post on user ? todo: stop using gppdcontroller
 
-    $ret = [];
+    if ($slackId !== null && $slackTeamId !== null) {
+//      $slackAccount = $this->get('slack.service')->getSlackAccount($slackId);
+//      if (!$slackAccount) {
+        $newSlackAccount = $this->get('slack.service')->createSlackAccount($client, $slackId, $slackTeamId, "slack");
+//        $client->addSlackAccount($newSlackAccount);
+//      } else { // in case of DB issue
+//        $slackAccount->setClient($client);
+        // update slack account ??
+//        $client->addSlackAccount($slackAccount);
+//      }
+    }
+
+
 
     if ($retEmail) {
+      $token = $this
+        ->get("token.service")
+        ->setNewToken($user, TokenConstant::$types["CONFIRMEMAIL"], true);
+
       $emailSender = $this->getParameter("delivery_address");
       $retEmail = $this
         ->get('email.service')
@@ -228,8 +240,6 @@ class NewUserController extends GPPDController
 
     }
 
-    $ret['insertClient'] = $this
-      ->postAction($client); // why post on user ? todo: stop using gppdcontroller
 
     return $ret;
 

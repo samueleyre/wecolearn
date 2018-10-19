@@ -14,10 +14,10 @@ import {LoggerService} from "../../applicativeService/logger/service";
 @Injectable()
 export class ClientService {
 
-  private currentClient = new Subject<Client>();
+  private currentClientSubject = new Subject<Client>();
   private endpoint: string;
-  private cClientOb: Observable<Client>;
-  private cClientNu: Client = null;
+  private currentClientObservable: Observable<Client>;
+  private currentClientStatic: Client = null; // probably useless
 
 
   constructor(protected http : HttpClient, private loggerService: LoggerService) {
@@ -26,19 +26,26 @@ export class ClientService {
 
   getOb(): any {
 
-    return this.cClientOb;
+    return this.currentClientObservable;
 
   }
 
   getCli() : any {
-    return this.cClientNu;
+    return this.currentClientStatic;
   }
 
-  get(api : boolean = false): Observable<Client> {
+  get(): Observable<Client> {
 
-      return this.currentClient.asObservable();
+      return this.currentClientSubject.asObservable();
 
   }
+
+  patch($client: Client) {
+
+    return this.http.patch(`/api/client`, $client)
+
+  }
+
 
   pull(): Observable<object>  { // TODO : probably check for any kind of update, if other
     return this.http.get('/api/checknewmessage');
@@ -52,11 +59,16 @@ export class ClientService {
   load(): Observable<string>  {
       return this.http.get(`${this.endpoint}`).pipe(
           map((response: Client) => {
-              this.currentClient.next(response);
-              this.cClientNu = response;
+              this.currentClientSubject.next(response);
+              this.currentClientStatic = response;
               // this.loggerService.log("loaded", response)
               return 'loaded';
           }));
+  }
+
+  hasSlackAccount(client: Client) {
+   return ([] !== client.slack_accounts) ? (undefined !== client.slack_accounts.find((slack_account)=> slack_account.slack_team.type === "slack")) : false;
+
   }
 
   deleteAccount(): Observable<object> {

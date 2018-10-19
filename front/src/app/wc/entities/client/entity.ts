@@ -3,6 +3,7 @@ import { Entity } from '../../../applicativeService/entity/entity';
 import { Tag } from './../../entities/tag/entity';
 import { Message } from './../../entities/message/entity';
 import { Image } from './../../entities/image/entity';
+import { SlackAccount } from './../../entities/slackAccount/entity';
 
 export class Client extends Entity implements IEntity  {
 
@@ -32,12 +33,11 @@ export class Client extends Entity implements IEntity  {
 	public image : Image;
 	public show_profil: boolean;
 	public email_notifications: boolean;
-	public slack_id: string;
-	public slack_team_id: string;
+	public slack_accounts: Array<SlackAccount>;
 
 
 
-	constructor(id?: number) {
+	constructor(id?: number, slack_accounts? : Array<SlackAccount>) {
 		super();
 		this.id = id || null;
 		this.user = {
@@ -64,7 +64,6 @@ export class Client extends Entity implements IEntity  {
 		this.image = new Image();
 		this.show_profil = false;
 		this.email_notifications = true;
-		this.slack_id = null;
-		this.slack_team_id = null;
+		this.slack_accounts = slack_accounts || [];
     }
 }

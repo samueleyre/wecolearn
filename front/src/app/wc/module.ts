@@ -93,6 +93,7 @@ import {SendPasswordConfirmationEmailComponent} from "./../components/resetPassw
 import {ResetPasswordFormComponent} from "./../components/resetPassword/resetPasswordForm/component";
 
 import {environment} from "../applicativeService/config/environment";
+import {CardComponent} from "./components/client/searchPage/card/component";
 
 
 
@@ -151,7 +152,9 @@ import {environment} from "../applicativeService/config/environment";
     PasswordStrengthBarComponent,
     CommunityComponent,
     ResetPasswordFormComponent,
-    SendPasswordConfirmationEmailComponent
+    SendPasswordConfirmationEmailComponent,
+    CardComponent
+
   ],
   declarations: [
     HeaderComponent,
@@ -182,7 +185,9 @@ import {environment} from "../applicativeService/config/environment";
     PasswordStrengthBarComponent,
     CommunityComponent,
     ResetPasswordFormComponent,
-    SendPasswordConfirmationEmailComponent
+    SendPasswordConfirmationEmailComponent,
+    CardComponent
+
 
   ],
   providers : [

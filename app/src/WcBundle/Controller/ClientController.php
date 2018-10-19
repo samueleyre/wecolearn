@@ -270,13 +270,19 @@ class ClientController extends GPPDController
         $client = $this->getDoctrine()
           ->getRepository(Client::class)
           ->findOneBy(["user"=>$user]);
-        $client->setSlackId($response->body->user->id);
-        $client->setSlackTeamId($response->body->team->id);
-        $this->get('client.service')->em->merge( $client );
-        $this->get('client.service')->em->flush();
 
-//        $ret['success'] = true;
-        return $client;
+        $slackAccount = $this->get('slack.service')->getSlackAccount($response->body->user->id);
+
+        if ($slackAccount ) { // in case slack account is connected to an other account
+          $slackAccount->setClient($client);
+          $client->addSlackAccount($slackAccount);
+        } else {
+          $slackAccount = $this->get('slack.service')->createSlackAccount($client, $response->body->user->id, $response->body->team->id, "slack");
+        }
+
+        $client->addSlackAccount($slackAccount);
+
+        return $this->get('client.service')->patch( $client );
 
       } else {
         $ret['error'] = $response->body->error;
@@ -444,18 +450,16 @@ class ClientController extends GPPDController
     $client->setLastName("rand".$user->getId());
     $client->setProfilUrl("rand".$user->getId());
     $client->setBiographie(null);
-    $client->getTags()->clear();
     $client->setImage(null);
     $client->setShowProfil(false);
-    $client->setSlackId(null);
-    $client->setDomain(null);
+    $client->getTags()->clear();
+    $client->getSlackAccounts()->clear();
+    $client->getDomains()->clear();
     $client->setLatitude(null);
     $client->setLongitude(null);
-    $client->setSlackTeamId(null);
     $client->setEmailNotifications(false);
 
     $ret = [];
-
 
     $ret['clientDelete'] = $this->get('client.service')->patch($client);
     $ret['userDelete'] = $this->get('fos_user.user_manager')->updateUser($user);

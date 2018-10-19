@@ -2,17 +2,22 @@
 
 namespace WcBundle\Service;
 
+use WcBundle\Entity\Domain;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManager;
 
 use AppBundle\Constant\SubdomainConstant;
 
 
+
 class DomainService {
 
+  public $em;
   private $host;
   private $environment;
 
-  public function __construct($host, $environment) {
+  public function __construct( EntityManager $em, $host, $environment) {
+    $this->em = $em;
     $this->host = $host;
     $this->environment = $environment;
 
@@ -30,6 +35,22 @@ class DomainService {
     }
 
     return "wecolearn";
+
+  }
+
+  public function getSubDomainEntity($domainName) {
+
+    return $domainEntity = $this->em->getRepository(Domain::Class)->findOneBy(["name"=>$domainName]);
+
+
+
+  }
+
+  public function createSubDomainEntity($domainName) {
+
+      $domain = new Domain();
+      $domain->setName($domainName);
+      return $domain;
 
   }
 
