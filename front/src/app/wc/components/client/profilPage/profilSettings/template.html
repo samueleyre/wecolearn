@@ -67,7 +67,7 @@
                             <!-- Text input-->
                             <div class="form-group" >
                             <!--<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !learnTags.valid }">-->
-                                <label class="col-md-6 control-label label-form" for="learnTags">Ce que je veux apprendre</label>
+                                <label class="col-md-6 control-label label-form">Ce que je veux apprendre</label>
                                 <div *ngIf="!editing.learnTags" class="col-md-12">
                                   <span class="value-span"><span *ngFor="let tag of client.learn_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== client.learn_tags.length - 1">, </span></span></span>
                                   <label for="editLearnTags">
@@ -76,12 +76,9 @@
                                   </label>
                                 </div>
                                 <div *ngIf="editing.learnTags" class="col-md-12">
-                                    <tag-input id="learnTags" [modelAsStrings]="true"  [theme]="'foundation-theme'" [(ngModel)]='client.learn_tags' name="learnTags" #learnTags="ngModel"  [errorMessages]="errorMessages"
-                                               [validators]="validators">
-                                        <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
-                                    </tag-input>
+                                  <tagInput [(tags)]="client.learn_tags" [tagListName]="'learnTags'"></tagInput>
                                   <div *ngIf="!firstTime" class="btn-container">
-                                    <button name="submit" class="btn btn-sm  btn-primary">Enregistrer</button>
+                                    <button name="submit" (click)="submitAfterBlur()" class="btn btn-sm  btn-primary">Enregistrer</button>
                                   </div>
                                 </div>
                             </div>
@@ -112,7 +109,7 @@
 
                           <!-- Text input-->
                             <div class="form-group">
-                              <label class="col-md-6 control-label label-form" for="knowTags">Ce que je connais</label>
+                              <label class="col-md-6 control-label label-form">Ce que je connais</label>
                               <div *ngIf="!editing.knowTags" class="col-md-12">
                                 <span class="value-span"><span *ngFor="let tag of client.know_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== client.know_tags.length - 1">, </span></span></span>
 
@@ -122,12 +119,9 @@
                                 </label>
                               </div>
                               <div *ngIf="editing.knowTags" class="col-md-12">
-                                <tag-input id="knowTags" [modelAsStrings]="true"  [theme]="'foundation-theme'" [(ngModel)]='client.know_tags' name="knowTags" #knowTags="ngModel"  [errorMessages]="errorMessages"
-                                           [validators]="validators">
-                                  <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
-                                </tag-input>
+                                <tagInput [(tags)]="client.know_tags" [tagListName]="'knowTags'"></tagInput>
                                 <div *ngIf="!firstTime" class="btn-container">
-                                  <button name="submit" class="btn btn-sm  btn-primary">Enregistrer</button>
+                                  <button name="submit" (click)="submitAfterBlur()" class="btn btn-sm  btn-primary">Enregistrer</button>
                                 </div>
                               </div>
                             </div>
@@ -137,7 +131,7 @@
 
                             <!-- Text input-->
                             <div class="form-group">
-                              <label class="col-md-6 control-label label-form" for="teachTags">Ce que j'ai envie de transmettre</label>
+                              <label class="col-md-6 control-label label-form">Ce que j'ai envie de transmettre</label>
                               <div *ngIf="!editing.teachTags" class="col-md-12">
                                 <span class="value-span"><span *ngFor="let tag of client.teach_tags; let i = index"><span>{{tag}}</span><span *ngIf="i !== client.teach_tags.length - 1">, </span></span></span>
                                 <label for="editTeachTags">
@@ -146,12 +140,9 @@
                                 </label>
                               </div>
                               <div *ngIf="editing.teachTags" class="col-md-12">
-                                <tag-input id="teachTags" [modelAsStrings]="true"  [theme]="'foundation-theme'" [(ngModel)]='client.teach_tags' name="teachTags" #teachTags="ngModel"  [errorMessages]="errorMessages"
-                                           [validators]="validators">
-                                  <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
-                                </tag-input>
+                                <tagInput [(tags)]="client.teach_tags" [tagListName]="'teachTags'"></tagInput>
                                 <div *ngIf="!firstTime" class="btn-container">
-                                  <button name="submit" class="btn btn-sm  btn-primary">Enregistrer</button>
+                                  <button name="submit" (click)="submitAfterBlur()" type="submit" class="btn btn-sm  btn-primary">Enregistrer</button>
                                 </div>
                               </div>
                             </div>

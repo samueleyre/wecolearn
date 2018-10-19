@@ -184,7 +184,6 @@ export class ProfilSettingsComponent implements OnInit {
       });
 
       this.clientService.get().subscribe( ( client: Client) => {
-        console.log(client)
           this.setClient(client);
       });
 
@@ -344,31 +343,12 @@ export class ProfilSettingsComponent implements OnInit {
 
     }
 
-    // tags ------------
 
-    private notAlphaNumeric(control: FormControl) {
-
-        let regex = /^[a-z0-9]+$/i;
-        if (regex.exec(control.value) === null) {
-            return {
-                'notAlphaNumeric': true
-            };
-        }
-
-        return null;
+    public submitAfterBlur($event:any) {
+      setTimeout(()=> {
+        this.submit();
+      }, 200)
     }
-
-
-    public validators = [this.notAlphaNumeric];
-
-    public errorMessages = {
-        'notAlphaNumeric': 'Le tag doit être alphanumerique.',
-    };
-
-    public requestAutocompleteItems = (text: string): Observable<Array<String>> => {
-        return this.tagService.findTags(text);
-    };
-
 
 
 

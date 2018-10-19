@@ -94,6 +94,7 @@ import {ResetPasswordFormComponent} from "./../components/resetPassword/resetPas
 
 import {environment} from "../applicativeService/config/environment";
 import {CardComponent} from "./components/client/searchPage/card/component";
+import {WcTagInputComponent} from "./components/client/profilPage/profilSettings/tagInput/component";
 
 
 
@@ -153,7 +154,8 @@ import {CardComponent} from "./components/client/searchPage/card/component";
     CommunityComponent,
     ResetPasswordFormComponent,
     SendPasswordConfirmationEmailComponent,
-    CardComponent
+    CardComponent,
+    WcTagInputComponent
 
   ],
   declarations: [
@@ -186,7 +188,8 @@ import {CardComponent} from "./components/client/searchPage/card/component";
     CommunityComponent,
     ResetPasswordFormComponent,
     SendPasswordConfirmationEmailComponent,
-    CardComponent
+    CardComponent,
+    WcTagInputComponent
 
 
   ],

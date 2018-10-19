@@ -1,6 +1,5 @@
-@import './../../../../../../assets/scss/variables.scss';
-@import "./core_ngx-chips/_core.scss";
-
+@import './../../../../../../../assets/scss/variables.scss';
+@import "./../core_ngx-chips/_core.scss";
 
 
 
@@ -103,7 +102,7 @@ td.selected-range{
 $foundation-theme: (
         container-border-bottom: 1px solid $mainYellow,
         container-border-bottom-focused: 2px solid $mainYellow !important,
-        //container-border-bottom-loading: $mainYellow !important
+  //container-border-bottom-loading: $mainYellow !important
 );
 
 $foundation-tag-theme: (
