@@ -71,8 +71,10 @@ class SearchController extends GPPDController
       $filter['max'] = $request->get('max');
     }
 
+    $domain = $this->get('domain.service')->getSubDomain($request);
+
     return $this
         ->get('search.service')
-        ->search(null, $filter);
+        ->search(null, $filter, $domain);
   }
 }

@@ -95,9 +95,11 @@ class ClientController extends GPPDController
             ->getRepository(Client::class)
             ->findOneBy(["user"=>$user]);
 
-        return $this
+      $domain = $this->get('domain.service')->getSubDomain($request);
+
+      return $this
             ->get('search.service')
-            ->search($client, $filter );
+            ->search($client, $filter, $domain  );
 
     }
 

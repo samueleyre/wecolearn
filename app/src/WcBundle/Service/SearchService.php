@@ -12,13 +12,13 @@ class SearchService extends GPPDService {
 
 	private $em;
 
-	public function __construct( EntityManager $em ) {
+	public function __construct( EntityManager $em) {
         parent::__construct( $em);
 		$this->em = $em;
 	}
 
 
-   public function search(Client $client = null, $filter = null ) {
+   public function search(Client $client = null, $filter = null, $domain = "wecolearn" ) {
 
       $tag = null;
       $latitude = null;
@@ -51,22 +51,19 @@ class SearchService extends GPPDService {
       }
 
 
-
-
       $result =  $this->em
-        ->getRepository(Client::class)
-        ->search($client, $tag, $first, $max, $latitude, $longitude);
+      ->getRepository(Client::class)
+      ->search($client, $tag, $first, $max, $latitude, $longitude, false, $domain);
 
      // todo: search for type 0, if less than 5, search for other types.
 
      if ($result === [] ) {
         $result = $this->em
           ->getRepository(Client::class)
-          ->search($client, $tag, $first, $max, $latitude, $longitude, true);
-      }
+          ->search($client, $tag, $first, $max, $latitude, $longitude, true, $domain);
+     }
 
-
-      return $result;
+     return $result;
 
    }
 }

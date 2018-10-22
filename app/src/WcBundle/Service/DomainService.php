@@ -34,6 +34,10 @@ class DomainService {
       }
     }
 
+    if ("dev" === $this->environment) {
+      return "wecolearn";
+    }
+
     return "wecolearn";
 
   }
