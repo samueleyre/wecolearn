@@ -103,7 +103,7 @@ colored 'Installing  php dependencies' title
 sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;SYMFONY_ENV=${SYMFONY_ENV} composer install;"
 
 colored 'Replacement and environement' title
-sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;bin/console app:env;"
+sudo -E /usr/bin/docker exec -"$TI" ${CONTAINER}_web_1 /bin/bash -c "cd /src/app;php bin/console app:env;"
 
 if [[ $BUILD == true ]]; then
 	
