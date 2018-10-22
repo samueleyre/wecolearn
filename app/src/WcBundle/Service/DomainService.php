@@ -6,7 +6,7 @@ use WcBundle\Entity\Domain;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 
-use AppBundle\Constant\SubdomainConstant;
+use WcBundle\Constant\SubdomainConstant;
 
 
 

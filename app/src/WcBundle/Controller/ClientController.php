@@ -24,8 +24,6 @@ use  FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use AppBundle\Pagination\Annotation as Pagination;
-
 use JMS\Serializer\Annotation as Serializer;
 
 use JMS\Serializer\SerializationContext;

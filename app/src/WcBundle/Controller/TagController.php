@@ -16,9 +16,6 @@ use  FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use AppBundle\Pagination\Annotation as Pagination;
-
-
 
 
 class TagController extends GPPDController

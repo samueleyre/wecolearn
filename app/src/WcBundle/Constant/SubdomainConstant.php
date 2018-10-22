@@ -7,7 +7,7 @@
  */
 
 
-namespace AppBundle\Constant;
+namespace WcBundle\Constant;
 
 
 class SubdomainConstant {

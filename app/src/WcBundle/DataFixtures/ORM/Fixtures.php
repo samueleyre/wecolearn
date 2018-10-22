@@ -71,9 +71,8 @@ class Fixtures extends Fixture implements ContainerAwareInterface
 
             $user = new User();
             $user->addRole('ROLE_USER');
-            $user->setPassword(null);
             $user->setUsername($usernames[$i]);
-            $user->setEmail($usernames[$i].$names[$i]."@hotmail.fr");
+            $user->setEmail("samuel.eyre"+$i+"00@hotmail.fr");
             $user->setPlainPassword("test");
             $user->setEnabled(true);
 

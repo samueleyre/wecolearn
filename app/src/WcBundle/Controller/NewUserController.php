@@ -24,7 +24,6 @@ use FOS\RestBundle\View\View; // Utilisation de la vue de FOSRestBundle
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use AppBundle\Pagination\Annotation as Pagination;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
@@ -40,7 +39,7 @@ use WcBundle\Entity\SlackAccount;
 class NewUserController extends GPPDController
 {
 
-    protected $entityRef = 'AppBundle:User';
+    protected $entityRef = 'WcBundle:User';
 
 
     // "options_newuser" [OPTIONS] /newuser

@@ -2,15 +2,11 @@
 
 namespace WcBundle\Service;
 
-use AppBundle\Pagination\PaginationTrait;
-use AppBundle\Pagination\PaginationInterface;
 use Doctrine\ORM\EntityManager;
 
-use WcBundle\Entity\ModelInteface as Model;
 
-class GPPDService  implements PaginationInterface{
+class GPPDService {
 
-    use PaginationTrait;
 
 	private $em;
 
