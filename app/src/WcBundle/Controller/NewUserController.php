@@ -104,9 +104,7 @@ class NewUserController extends GPPDController
 
 
           if (!$this->get('slack.service')->getSlackAccount($response->body->user->id)) {
-
-            $newSlackAccount = $this->get('slack.service')->createSlackAccount($client, $response->body->user->id, $response->body->team->id, "slack");
-            $client->addSlackAccount($newSlackAccount);
+            $this->get('slack.service')->createSlackAccount($client, $response->body->user->id, $response->body->team->id, "slack");
           }
 
           $domainName = $this->get('domain.service')->getSubDomain($request);

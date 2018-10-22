@@ -277,10 +277,8 @@ class ClientController extends GPPDController
           $slackAccount->setClient($client);
           $this->get('slack.service')->patchSlackAccount($slackAccount);
         } else {
-          $slackAccount = $this->get('slack.service')->createSlackAccount($client, $response->body->user->id, $response->body->team->id, "slack");
+          $this->get('slack.service')->createSlackAccount($client, $response->body->user->id, $response->body->team->id, "slack");
         }
-
-        $client->addSlackAccount($slackAccount);
 
         return $this->get('client.service')->patch( $client );
 

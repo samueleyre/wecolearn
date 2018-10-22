@@ -7,7 +7,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Email")
+ * @ORM\Table(name="email")
  */
 class Email
 {
