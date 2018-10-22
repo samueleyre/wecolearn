@@ -33,7 +33,13 @@ search:
     prefix:   api
     resource: '@WcBundle/Controller/SearchController.php'
 
-#resetPassword:
-#    type:     rest
-#    prefix:   api
-#    resource: '@WcBundle/Controller/ClientController.php'
+user:
+    type:     rest
+    prefix:   api
+    resource: '@WcBundle/Controller/UserController.php'
+
+ping:
+    type:     rest
+    prefix:   api
+    resource: '@WcBundle/Controller/PingController.php'
+

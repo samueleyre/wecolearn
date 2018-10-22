@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Entity;
+namespace WcBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +24,7 @@ class User extends BaseUser
 
 
   /**
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Token",mappedBy="user", cascade={"persist", "merge"})
+   * @ORM\OneToMany(targetEntity="WcBundle\Entity\Token",mappedBy="user", cascade={"persist", "merge"})
    * @ORM\JoinColumn(name="emailTokenId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
    */
   public $emailToken;
@@ -66,11 +66,11 @@ class User extends BaseUser
     /**
      * Add emailToken
      *
-     * @param \AppBundle\Entity\Token $emailToken
+     * @param \WcBundle\Entity\Token $emailToken
      *
      * @return User
      */
-    public function addEmailToken(\AppBundle\Entity\Token $emailToken)
+    public function addEmailToken(\WcBundle\Entity\Token $emailToken)
     {
         $this->emailToken[] = $emailToken;
 
@@ -80,9 +80,9 @@ class User extends BaseUser
     /**
      * Remove emailToken
      *
-     * @param \AppBundle\Entity\Token $emailToken
+     * @param \WcBundle\Entity\Token $emailToken
      */
-    public function removeEmailToken(\AppBundle\Entity\Token $emailToken)
+    public function removeEmailToken(\WcBundle\Entity\Token $emailToken)
     {
         $this->emailToken->removeElement($emailToken);
     }

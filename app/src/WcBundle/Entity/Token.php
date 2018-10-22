@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace WcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,7 +23,7 @@ class Token
   public $token;
 
   /**
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User",inversedBy="emailToken", cascade={"persist", "merge"})
+   * @ORM\ManyToOne(targetEntity="WcBundle\Entity\User",inversedBy="emailToken", cascade={"persist", "merge"})
    * @ORM\JoinColumn(name="userId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
    */
   public $user;
@@ -140,11 +140,11 @@ class Token
     /**
      * Set user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param \WcBundle\Entity\User $user
      *
      * @return Token
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(\WcBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -154,7 +154,7 @@ class Token
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User
+     * @return \WcBundle\Entity\User
      */
     public function getUser()
     {

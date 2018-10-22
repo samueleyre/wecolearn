@@ -3,10 +3,10 @@
 namespace WcBundle\Controller;
 
 
-use AppBundle\Entity\User;
+use WcBundle\Entity\User;
 use WcBundle\Entity\Client;
-use AppBundle\Entity\Token;
-use AppBundle\Constant\TokenConstant;
+use WcBundle\Entity\Token;
+use WcBundle\Constant\TokenConstant;
 
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -54,7 +54,7 @@ class NewUserController extends GPPDController
      * @Post("newuser")
      * @ParamConverter(
     "user",
-    class="AppBundle\Entity\User",
+    class="WcBundle\Entity\User",
     converter="fos_rest.request_body",
     options={"deserializationContext"={"groups"={"input"} } }
     )

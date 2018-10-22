@@ -4,7 +4,7 @@ namespace WcBundle\Service;
 
 use WcBundle\Entity\Client;
 use WcBundle\Entity\Tag;
-use AppBundle\Entity\User;
+use WcBundle\Entity\User;
 
 use Doctrine\ORM\EntityManager;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace WcBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -29,7 +29,7 @@ class PingController extends Controller
 
 
     /**
-    * @Get("/api/ping" )
+    * @Get("ping" )
     */
     public function getAction(Request $request)
     {

@@ -2,27 +2,5 @@ wc:
     resource: '@WcBundle/Resources/config/routing/routes.yml'
     prefix:   /
 
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
-
-users:
-    type:     rest
-    prefix:   api
-    resource: '@AppBundle/Controller/UsersController.php'
-
-user:
-    type:     rest
-    prefix:   api
-    resource: '@AppBundle/Controller/UserController.php'
-
-
-ping:
-    type:     rest
-    prefix:   api
-    resource: '@AppBundle/Controller/PingController.php'
-
-
-
 api_login_check:
    path: /api/login_check

@@ -1,4 +1,4 @@
-AppBundle\Entity\User:
+WcBundle\Entity\User:
     exclusion_policy: all
     xml_root_name:    page
     access_order:     alphabetical

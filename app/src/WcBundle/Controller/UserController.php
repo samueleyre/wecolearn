@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace WcBundle\Controller;
 
-use AppBundle\Entity\User;
-use AppBundle\Entity\Token;
-use AppBundle\Constant\TokenConstant;
+use WcBundle\Entity\User;
+use WcBundle\Entity\Token;
+use WcBundle\Constant\TokenConstant;
 
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -27,7 +27,7 @@ class UserController extends Controller
   }
 
   /**
-   * @Get("/api/user")
+   * @Get("user")
    *
    */
   public function getUserAction()

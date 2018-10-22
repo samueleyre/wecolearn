@@ -7,7 +7,7 @@ use WcBundle\Entity\Client;
 use WcBundle\Entity\Selection;
 use WcBundle\Entity\Message;
 use WcBundle\Entity\Tag;
-use AppBundle\Entity\User;
+use WcBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;

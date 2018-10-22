@@ -4,7 +4,7 @@ namespace WcBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 
-use AppBundle\Entity\Token;
+use WcBundle\Entity\Token;
 
 class TokenService
 {

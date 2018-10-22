@@ -3,11 +3,11 @@
 namespace WcBundle\Controller;
 
 use WcBundle\Entity\Client;
-use AppBundle\Entity\User;
+use WcBundle\Entity\User;
 use WcBundle\Entity\Tag;
-use AppBundle\Entity\Token;
+use WcBundle\Entity\Token;
 
-use AppBundle\Constant\TokenConstant;
+use WcBundle\Constant\TokenConstant;
 use \Doctrine\Common\Collections\Collection;
 
 
@@ -107,7 +107,7 @@ class ClientController extends GPPDController
      * @Post("/client/changesettings")
      * @ParamConverter(
      * "message",
-     * class="AppBundle\Entity\User",
+     * class="WcBundle\Entity\User",
      * converter="fos_rest.request_body",
      * options={"deserializationContext"={"groups"={"input"} } }
      * )

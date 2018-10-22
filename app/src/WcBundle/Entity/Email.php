@@ -19,7 +19,7 @@ class Email
     public $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", cascade={"persist", "merge"})
+     * @ORM\OneToOne(targetEntity="WcBundle\Entity\User", cascade={"persist", "merge"})
      * @ORM\JoinColumn(name="userId", referencedColumnName="id", onDelete="NO ACTION")
      */
     public $user;
@@ -138,11 +138,11 @@ class Email
     /**
      * Set user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param \WcBundle\Entity\User $user
      *
      * @return Email
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(\WcBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -152,7 +152,7 @@ class Email
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User
+     * @return \WcBundle\Entity\User
      */
     public function getUser()
     {

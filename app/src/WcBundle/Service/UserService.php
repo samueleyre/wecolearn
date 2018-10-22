@@ -2,7 +2,7 @@
 
 namespace WcBundle\Service;
 
-use AppBundle\Entity\User;
+use WcBundle\Entity\User;
 use \Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\EntityManager;
