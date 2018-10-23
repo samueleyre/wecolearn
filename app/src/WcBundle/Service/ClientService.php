@@ -4,7 +4,6 @@ namespace WcBundle\Service;
 
 use WcBundle\Entity\Client;
 use WcBundle\Entity\Tag;
-use WcBundle\Entity\User;
 use \Doctrine\Common\Collections\Collection;
 use Unirest;
 
@@ -61,84 +60,6 @@ class ClientService {
 
   }
 
-  public function get( $filters = []) {
-
-//        syslog(LOG_ERR, 'filter'.count($filters));
-      $params = [];
-      $condition = '';
-      $sep = '';
-      $qb = $this->em->createQueryBuilder();
-      $qb->select('entity, image.filename');
-      $qb->from(sprintf('%s', $this->entityRef ),'entity');
-
-      if(count($filters) > 0 ) {
-          foreach( $filters as $field => $value ) {
-              $condition = sprintf('%s entity.%s=:%s', $sep , $field, $field);
-              $sep = "  ";
-              $params[':'.$field] = $value;
-          }
-          $qb->andWhere( $condition );
-          $qb->setParameters( $params);
-      }
-
-//        $qb->setMaxResults( 5 );
-//        $qb->setFirstResult( 0 );
-
-      $ret = $qb->getQuery()->getResult();
-
-      return  $ret;
-
-  }
-
-  public function find( $filters = []) { // not used anymore
-
-//        syslog(LOG_ERR, 'filter'.count($filters));
-      $params = [];
-      $condition = '';
-      $sep = '';
-      $qb = $this->em->createQueryBuilder();
-      $qb->select('entity, image.filename');
-      $qb->from(sprintf('%s', $this->entityRef ),'entity'); // todo: error here ?
-      $qb->leftJoin('WcBundle:Image', 'image', 'WITH', 'entity.photoid = image.id');
-//        $qb->where('entity.photoid = image.id');
-//        return count($filters);
-      if(count($filters) > 0 ) {
-          foreach( $filters as $field => $value ) {
-              $condition = sprintf('%s entity.%s=:%s', $sep , $field, $field);
-              $sep = "  ";
-              $params[':'.$field] = $value;
-          }
-          $qb->andWhere( $condition );
-          $qb->setParameters( $params);
-      }
-
-//        $qb->setMaxResults( 5 );
-//        $qb->setFirstResult( 0 );
-
-      $ret = $qb->getQuery()->getResult();
-
-      $this->setClientPhotoname($ret);
-
-      return  $ret;
-
-  }
-
-
-
-  private function setClientPhotoname(&$clients) // not used anymore
-  {
-
-
-      for ($i=0; $i< count($clients); $i++) {
-          $client = $clients[$i];
-          if($client[0]->getPhotoid()) {
-              $client[0]->setPhotoname($client['filename']);
-          }
-          $clients[$i] = $client[0];
-      }
-
-
-  }
 
   public function patch(Client $client, $user = null, $addTags = true, $addUser = true)
   {
@@ -230,6 +151,12 @@ class ClientService {
   public function delete (Client $client) {
     $this->em->remove(  $client );
     $this->em->flush();
+  }
+
+  public function post(Client $client) {
+    $this->em->persist( $client );
+    $this->em->flush();
+    return $client;
   }
 
 

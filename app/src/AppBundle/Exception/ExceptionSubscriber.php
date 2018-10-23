@@ -58,7 +58,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
                 $ret = [
                     'code' => 500, 
                     'message' => 'Erreur', 
-                    'trace' => 'email: edouard.touraille@gmail.com'
+                    'trace' => 'email: samueleyre@wecolearn.com'
                     ]
                 ;
             }

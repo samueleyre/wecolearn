@@ -18,17 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 
-class TagController extends GPPDController
+class TagController extends Controller
 {
-
-    protected $entityRef = 'WcBundle:Tag';
-
-    // "options_tag" [OPTIONS] /tag
-    public function optionTagAction()
-    {
-        return $this->optionAction();
-
-    }
 
     /**
 	* @Get("findTag")

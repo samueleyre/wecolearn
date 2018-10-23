@@ -23,30 +23,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 
-class UploadController extends GPPDController
+class UploadController extends Controller
 {
-    
-    protected $entityRef = 'WcBundle:Image';
-
-    // "options_uploads" [OPTIONS] /uploads
-    public function optionUploadAction()
-    {
-        return $this->optionAction();
-        
-    }
-
 
     /**
-    * @Post("/uploads")
+    * @Post("uploads")
     */
     public function postUploadAction( Request $request )
     {
 
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+      $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $client = $this->getDoctrine()
-            ->getRepository(Client::class)
-            ->findOneBy(["user"=>$user]);
+      $client = $this->getDoctrine()
+          ->getRepository(Client::class)
+          ->findOneBy(["user"=>$user]);
 
       $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
 
@@ -57,7 +47,7 @@ class UploadController extends GPPDController
         $image->upload();
         $uploaded = $this
           ->get('gppd.service')
-          ->setEntityRef( $this->entityRef )
+          ->setEntityRef( 'WcBundle:Image' )
           ->patch( $image );
       } else {
         $image = new Image;
@@ -67,7 +57,7 @@ class UploadController extends GPPDController
         $image->upload();
         $uploaded = $this
           ->get('gppd.service')
-          ->setEntityRef( $this->entityRef )
+          ->setEntityRef( 'WcBundle:Image' )
           ->post( $image );
       }
 

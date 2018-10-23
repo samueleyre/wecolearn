@@ -19,13 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 class PingController extends Controller
 {
 
-    // "options_ping" [OPTIONS] /ping
-    public function optionsAction()
-    {
-        return [];
-    }
-
-
     /**
     * @Get("ping" )
     */

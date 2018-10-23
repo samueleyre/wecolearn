@@ -9,6 +9,7 @@ class GPPDService {
 
 
 	private $em;
+	private $entityRef;
 
 	public function __construct( EntityManager $em ) {
 		$this->em = $em;

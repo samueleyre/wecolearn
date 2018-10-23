@@ -27,17 +27,8 @@ use JMS\Serializer\SerializationContext;
 
 
 
-class SearchController extends GPPDController
+class SearchController extends Controller
 {
-
-  protected $entityRef = 'WcBundle:Client';
-
-  // "options_client" [OPTIONS] /client
-  public function optionClientAction()
-  {
-    return $this->optionAction();
-
-  }
 
 
   /**

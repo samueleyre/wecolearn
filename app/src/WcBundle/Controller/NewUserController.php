@@ -36,18 +36,9 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use WcBundle\Entity\SlackAccount;
 
 
-class NewUserController extends GPPDController
+class NewUserController extends Controller
 {
 
-    protected $entityRef = 'WcBundle:User';
-
-
-    // "options_newuser" [OPTIONS] /newuser
-    public function optionNewUserAction()
-    {
-        return $this->optionAction();
-
-    }
 
     /**
      * @Post("newuser")
@@ -126,7 +117,7 @@ class NewUserController extends GPPDController
           $user->setEmail($email);
           $user->setPassword($randPwd);
           $user->setUsername($response->body->user->name);
-          //todo: also get avatar !
+          //todo: also get avatar ! and team name !
           $this->createNewUser($user, $request, $response->body->user->id, $response->body->team->id ,false);
           $ret['subscribe']= true;
         }
@@ -204,8 +195,10 @@ class NewUserController extends GPPDController
     $this
       ->get('client.service')
       ->generateUrl($client);
+
     $ret['insertClient'] = $this
-      ->postAction($client); // why post on user ? todo: stop using gppdcontroller
+      ->get('client.service')
+      ->post($client);
 
     if ($slackId !== null && $slackTeamId !== null) {
       $slackAccount = $this->get('slack.service')->getSlackAccount($slackId);

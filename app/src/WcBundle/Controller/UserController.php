@@ -20,11 +20,6 @@ use  FOS\RestBundle\Controller\Annotations\Post;
 
 class UserController extends Controller
 {
-  // "options_user" [OPTIONS] /user
-  public function optionsUserAction()
-  {
-    return [];
-  }
 
   /**
    * @Get("user")
@@ -32,13 +27,9 @@ class UserController extends Controller
    */
   public function getUserAction()
   {
-
     return $this->get('security.token_storage')->getToken()->getUser();
 
   }
-
-
-
 
 
 }

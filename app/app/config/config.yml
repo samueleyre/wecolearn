@@ -123,8 +123,8 @@ fos_user:
     use_username_form_type: true
     model_manager_name:     null  # change it to the name of your entity/document manager if you don't want to use the default one.
     from_email:
-        address:        webmaster@example.com
-        sender_name:    Admin
+        address:        samueleyre@wecolearn.com
+        sender_name:    wecolearn
 
 #lexik_jwt_authentication:
 #    private_key_path: %jwt_private_key_path%
@@ -138,4 +138,5 @@ nelmio_cors:
             allow_origin: ['*']
             allow_headers: ['X-Custom-Auth','Content-Type', 'Authorization','X-Pagination','undefined']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE','PATCH','OPTIONS']
+            allow_credentials: true
             max_age: 3600

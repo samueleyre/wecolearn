@@ -29,21 +29,9 @@ use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\SerializationContext;
 
 
-//TODO : usefull :     * @View(serializerGroups={"test"})
 
-
-
-class ClientController extends GPPDController
+class ClientController extends Controller
 {
-
-    protected $entityRef = 'WcBundle:Client';
-
-    // "options_client" [OPTIONS] /client
-    public function optionClientAction()
-    {
-        return $this->optionAction();
-
-    }
 
     /**
 	   * @Get("client")
@@ -225,7 +213,9 @@ class ClientController extends GPPDController
 
         if ($user->getEmailConfirmed() === false) {
           $user->setEmailConfirmed(true);
-          $ret["success"] = $this->patchAction($user);
+          $ret["success"] = $this
+            ->get('user.service')
+            ->patch($user);
         } else {
           $ret["error"] = "token_already_confirmed";
         }

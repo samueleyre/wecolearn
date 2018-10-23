@@ -22,17 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 
-class MessageController extends GPPDController
+class MessageController extends Controller
 {
-
-    protected $entityRef = 'WcBundle:Message';
-
-    // "options_message" [OPTIONS] /message
-    public function optionMessageAction()
-    {
-        return $this->optionAction();
-
-    }
 
 
     /**
@@ -68,7 +59,7 @@ class MessageController extends GPPDController
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        syslog(LOG_ERR,'check new message, getting user '.$user);
+//        syslog(LOG_ERR,'check new message, getting user '.$user);
 
         $client = $this->getDoctrine()
             ->getRepository(Client::class)
@@ -181,17 +172,6 @@ class MessageController extends GPPDController
         return "ok";
 
     }
-//
-//    /**
-//    * @Delete("/message/{id}")
-//    */
-//    public function deleteMessageAction( $id , Request $request )
-//    {
-//
-//        $this->deleteAction( $id );
-//
-//        return $this->getMessageAction();
-//    }
 
 
 }
