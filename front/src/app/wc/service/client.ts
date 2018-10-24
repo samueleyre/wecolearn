@@ -2,7 +2,7 @@
 import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { Client } from './../entities/client/entity';
+import { User } from '../entities/user/entity';
 import {Http, Response} from "@angular/http";
 import {HttpClient} from "@angular/common/http";
 
@@ -14,10 +14,10 @@ import {LoggerService} from "../../applicativeService/logger/service";
 @Injectable()
 export class ClientService {
 
-  private currentClientSubject = new Subject<Client>();
+  private currentClientSubject = new Subject<User>();
   private endpoint: string;
-  private currentClientObservable: Observable<Client>;
-  private currentClientStatic: Client = null; // probably useless
+  private currentClientObservable: Observable<User>;
+  private currentClientStatic: User = null; // probably useless
 
 
   constructor(protected http : HttpClient, private loggerService: LoggerService) {
@@ -34,15 +34,15 @@ export class ClientService {
     return this.currentClientStatic;
   }
 
-  get(): Observable<Client> {
+  get(): Observable<User> {
 
       return this.currentClientSubject.asObservable();
 
   }
 
-  patch($client: Client) {
+  patch(client: User) {
 
-    return this.http.patch(`/api/client`, $client)
+    return this.http.patch(`/api/client`, client)
 
   }
 
@@ -58,7 +58,7 @@ export class ClientService {
 
   load(): Observable<string>  {
       return this.http.get(`${this.endpoint}`).pipe(
-          map((response: Client) => {
+          map((response: User) => {
               this.currentClientSubject.next(response);
               this.currentClientStatic = response;
               // this.loggerService.log("loaded", response)
@@ -66,7 +66,7 @@ export class ClientService {
           }));
   }
 
-  hasSlackAccount(client: Client) {
+  hasSlackAccount(client: User) {
    return ([] !== client.slack_accounts) ? (undefined !== client.slack_accounts.find((slack_account)=> slack_account.slack_team.type === "slack")) : false;
   }
 

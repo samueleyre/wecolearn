@@ -4,4 +4,39 @@ WcBundle\Entity\User:
     access_order:     alphabetical
     properties:
       id:
-          groups: [ output, input ] 
+        groups: [ output ]
+      created:
+        groups: [ input, output, search ]
+      firstName:
+        groups: [ input, output, search ]
+      lastName:
+        groups: [ input, output, search ]
+      profilUrl:
+        groups: [ input, output, search ]
+      biographie:
+        groups: [ input, output, search ]
+      intensity:
+        groups: [ input, output ]
+      atmosphere:
+        groups: [ input, output ]
+      latitude:
+        groups: [ input, output ]
+      longitude:
+        groups: [ input, output ]
+      tags:
+        groups: [ input, output, search ]
+      sentMessages:
+        groups: [ input, output ]
+        max_depth: 3
+      receivedMessages:
+        groups: [ input, output ]
+        max_depth: 3
+      image:
+        groups: [ input, output, search ]
+      showProfil:
+        groups: [ input, output ]
+      emailNotifications:
+        groups: [ input, output ]
+      slackAccounts:
+        groups: [ input, output, search ]
+

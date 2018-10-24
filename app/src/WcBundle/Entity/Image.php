@@ -23,10 +23,10 @@ class Image
     public $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Client", mappedBy="image")
-     * @ORM\JoinColumn(name="clientId", referencedColumnName="id", onDelete="NO ACTION")
+     * @ORM\OneToOne(targetEntity="User", mappedBy="image")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="id", onDelete="NO ACTION")
      */
-    public $client;
+    public $user;
 
     /**
      * @ORM\Column(type="string",name="filename")
@@ -174,26 +174,26 @@ class Image
     }
 
     /**
-     * Set client
+     * Set user
      *
-     * @param \WcBundle\Entity\Client $client
+     * @param \WcBundle\Entity\User $user
      *
      * @return Image
      */
-    public function setClient(\WcBundle\Entity\Client $client = null)
+    public function setUser(\WcBundle\Entity\User $user = null)
     {
-        $this->client = $client;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get client
+     * Get user
      *
-     * @return \WcBundle\Entity\Client
+     * @return \WcBundle\Entity\User
      */
-    public function getClient()
+    public function getUser()
     {
-        return $this->client;
+        return $this->user;
     }
 }

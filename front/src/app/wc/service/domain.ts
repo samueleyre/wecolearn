@@ -2,7 +2,6 @@
 import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { Client } from './../entities/client/entity';
 import {Http, Response} from "@angular/http";
 import {HttpClient} from "@angular/common/http";
 import {Location} from "@angular/common";

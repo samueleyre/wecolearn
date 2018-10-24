@@ -27,7 +27,7 @@ class ClientTag extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $query = " SELECT * FROM client_tag WHERE tag_id != 23 GROUP BY client_id ";
+        $query = " SELECT * FROM client_tag WHERE tag_id != 23 GROUP BY user_id ";
 
         $stmp = $this->em->getConnection()->prepare( $query );
         $stmp->execute();

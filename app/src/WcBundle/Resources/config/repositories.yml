@@ -1,10 +1,10 @@
 services:
-  client.repository:
-    class: WcBundle\Repository\ClientRepository
-    arguments: [ '@doctrine.orm.entity_manager' ]
+  user.repository:
+    class: WcBundle\Repository\UserRepository
   tag.repository:
     class: WcBundle\Repository\TagRepository
-    arguments: [ '@doctrine.orm.entity_manager' ]
+  message.repository:
+    class: WcBundle\Repository\MessageRepository
 
 
-#todo : IS THIS USED ??
+

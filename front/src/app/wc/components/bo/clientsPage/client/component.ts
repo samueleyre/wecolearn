@@ -14,7 +14,7 @@ import { LocalStorageService }       from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
 
-import { Client }                    from './../../../../entities/client/entity';
+import { User }                    from '../../../../entities/user/entity';
 
 import { IEntity }                 from '../../../../../applicativeService/entity/interface';
 
@@ -77,7 +77,7 @@ export class ClientComponent extends GPPDComponent implements OnInit {
     }
 
     getEntity() {
-        return new Client();
+        return new User();
     }
 
 

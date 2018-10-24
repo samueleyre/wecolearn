@@ -4,7 +4,7 @@ namespace WcBundle\Controller;
 
 use WcBundle\Entity\Message;
 use WcBundle\Entity\Tag;
-use WcBundle\Entity\Client;
+use WcBundle\Entity\User;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,9 +17,6 @@ use  FOS\RestBundle\Controller\Annotations\Get;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
-
-
 
 
 class MessageController extends Controller
@@ -35,18 +32,13 @@ class MessageController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
 
-        $client = $this->getDoctrine()
-            ->getRepository(Client::class)
-            ->findOneBy(["user"=>$user]);
-
-
         $friend = $this->getDoctrine()
-            ->getRepository(Client::class)
+            ->getRepository(User::class)
             ->findOneBy(["id"=>$id]);
 
         return $this->getDoctrine()
             ->getRepository(Message::class)
-            ->findMessages($client, $friend );
+            ->findMessages($user, $friend );
 
 
     }
@@ -61,29 +53,23 @@ class MessageController extends Controller
 
 //        syslog(LOG_ERR,'check new message, getting user '.$user);
 
-        $client = $this->getDoctrine()
-            ->getRepository(Client::class)
-            ->findOneBy(["user"=>$user]);
-
-
         try {
 
             if ($lastMessages = $this->getDoctrine()
                 ->getRepository(Message::class)
-                ->getLastMessages($client) !== []) {
+                ->getLastMessages($user) !== []) {
 
 
                 $newDate = $lastMessages[count($lastMessages)-1]->getCreated();
 
 
 //                $newDate = new \DateTime($lastMessages[count($lastMessages)-1]->getCreated());
-                $client->setClientUpdated($newDate);
+                $user->setUserUpdated($newDate);
 
-                $this->get("client.service")->patch($client, null, false, false);
+                $this->get("user.service")->patch($user);
 
                 return $lastMessages;
 
-//                return $client;
             } else {
                 return null;
             }
@@ -115,16 +101,12 @@ class MessageController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
 
-        $client = $this->getDoctrine()
-            ->getRepository(Client::class)
-            ->findOneBy(["user"=>$user]);
-
         $friend = $this->getDoctrine()
-            ->getRepository(Client::class)
+            ->getRepository(User::class)
             ->findOneBy(["id"=>$message->getReceiver()->getId()]);
 
         $message->setReceiver($friend);
-        $message->setSender($client);
+        $message->setSender($user);
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
         $message->setCreated($date);
 

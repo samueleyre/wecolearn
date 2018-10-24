@@ -42,9 +42,9 @@ class Tag
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Client", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="tags")
      */
-    private $clients;
+    private $users;
 
 
 
@@ -53,7 +53,7 @@ class Tag
      */
     public function __construct()
     {
-        $this->clients = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
 //        $this->iteration = 0;
 //        $this->created = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
     }
@@ -181,36 +181,36 @@ class Tag
     }
 
     /**
-     * Add client
+     * Add user
      *
-     * @param \WcBundle\Entity\Client $client
+     * @param \WcBundle\Entity\User $user
      *
      * @return Tag
      */
-    public function addClient(\WcBundle\Entity\Client $client)
+    public function addUser(\WcBundle\Entity\User $user)
     {
-        $this->clients[] = $client;
+        $this->users[] = $user;
 
         return $this;
     }
 
     /**
-     * Remove client
+     * Remove user
      *
-     * @param \WcBundle\Entity\Client $client
+     * @param \WcBundle\Entity\User $user
      */
-    public function removeClient(\WcBundle\Entity\Client $client)
+    public function removeUser(\WcBundle\Entity\User $user)
     {
-        $this->clients->removeElement($client);
+        $this->users->removeElement($user);
     }
 
     /**
-     * Get clients
+     * Get users
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getClients()
+    public function getUsers()
     {
-        return $this->clients;
+        return $this->users;
     }
 }

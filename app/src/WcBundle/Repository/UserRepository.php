@@ -3,15 +3,15 @@
 
 namespace WcBundle\Repository;
 
-use WcBundle\Entity\Client;
+use WcBundle\Entity\User;
 use WcBundle\Entity\Tag;
 use WcBundle\Entity\Domain;
 
 use Doctrine\ORM\EntityRepository;
 
-class ClientRepository extends EntityRepository
+class UserRepository extends EntityRepository
 {
-  public function search(Client $client = null, Tag $tag = null, $first = 0, $max = 10, $startLatitude = null, $startLongitude = null, $noClientTags = false, $domain = "wecolearn")
+  public function search(User $user = null, Tag $tag = null, $first = 0, $max = 10, $startLatitude = null, $startLongitude = null, $noUserTags = false, $domain = "wecolearn")
   {
 
     if (!$startLatitude || !$startLongitude) {
@@ -21,36 +21,36 @@ class ClientRepository extends EntityRepository
 
     $tags = [];
 
-    if ($client && !$noClientTags) {
-      $tags = $client->getTags();
+    if ($user && !$noUserTags) {
+      $tags = $user->getTags();
     }
 
 
-    //syslog(LOG_ERR, $client->getLatitude());
+    //syslog(LOG_ERR, $user->getLatitude());
     //syslog(LOG_ERR, $startLatitude);
 
 
     $qb = $this->getEntityManager()->createQueryBuilder();
-    $qb->select('client');
+    $qb->select('user');
 
     $qb->addSelect(sprintf(' 
-            pow(69.1 * (client.latitude - %s), 2) +
+            pow(69.1 * (user.latitude - %s), 2) +
             pow(69.1 
-                * (%s - client.longitude) 
-                * cos(client.latitude / 57.3), 2) AS distance', $startLatitude, $startLongitude));
+                * (%s - user.longitude) 
+                * cos(user.latitude / 57.3), 2) AS distance', $startLatitude, $startLongitude));
 
-    $qb->from('WcBundle:Client', 'client');
+    $qb->from('WcBundle:User', 'user');
 
-    $qb->innerJoin('client.tags', 't');
+    $qb->innerJoin('user.tags', 't');
 //
     if ($domain) {
-      $qb->innerJoin('client.domains', 'd');
+      $qb->innerJoin('user.domains', 'd');
     }
 
 //    $qb->where( 't.type = :number' )->setParameter('number', 0);
-    $qb->Where('client.showProfil = :showProfil')->setParameter('showProfil', 1);
-    if ($client) {
-      $qb->andWhere('client.id != :clientId')->setParameter('clientId', $client->getId());
+    $qb->Where('user.showProfil = :showProfil')->setParameter('showProfil', 1);
+    if ($user) {
+      $qb->andWhere('user.id != :userId')->setParameter('userId', $user->getId());
     }
     if ($tag) {
       $qb->andWhere(sprintf('t.id=%s', $tag->getId()));
@@ -68,7 +68,7 @@ class ClientRepository extends EntityRepository
       $qb->andWhere($condition);
     }
 
-    $qb->groupBy('client.id');
+    $qb->groupBy('user.id');
     $qb->orderBy('distance', "ASC");
     $qb->having('distance < 1000');
     $qb->setFirstResult($first);

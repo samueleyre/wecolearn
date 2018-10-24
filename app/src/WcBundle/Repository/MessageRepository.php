@@ -3,14 +3,14 @@
 
 namespace WcBundle\Repository;
 
-use WcBundle\Entity\Client;
+use WcBundle\Entity\User;
 use WcBundle\Entity\Message;
 use Doctrine\ORM\EntityRepository;
 
 class MessageRepository extends EntityRepository
 {
 
-    public function findMessages(Client $client, Client $friend)
+    public function findMessages(User $client, User $friend)
     {
 
         $qb = $this->getEntityManager( )->createQueryBuilder();
@@ -27,7 +27,7 @@ class MessageRepository extends EntityRepository
 
     }
 
-    public function countMessages(Client $client, Client $friend) {
+    public function countMessages(User $client, User $friend) {
 
         return $this->getEntityManager()->createQueryBuilder()->
         select('count(entity)')->
@@ -41,7 +41,7 @@ class MessageRepository extends EntityRepository
         // and isRead = true
     }
 
-    public function getFirstMessage(Client $client, Client $friend) {
+    public function getFirstMessage(User $client, User $friend) {
 
         return $this->getEntityManager()->createQueryBuilder()->
         select('entity')->
@@ -55,13 +55,13 @@ class MessageRepository extends EntityRepository
 
     }
 
-    public function getLastMessageUpdate(Client $client) {
+    public function getLastMessageUpdate(User $client) {
 
         return $this->getEntityManager()->createQueryBuilder()->
         select('entity.created')->
         from(sprintf('%s', 'WcBundle:Message' ),'entity')->
         where( 'entity.receiver = :client')->setParameter('client',$client )->
-        andWhere( 'entity.created > :update')->setParameter('update', $client->getClientUpdated())->
+        andWhere( 'entity.created > :update')->setParameter('update', $client->getUserUpdated())->
         orderBy('entity.created', 'DESC')->
         setMaxResults(1)->
         getQuery()->
@@ -69,13 +69,13 @@ class MessageRepository extends EntityRepository
 
     }
 
-    public function getLastMessages (Client $client) {
+    public function getLastMessages (User $client) {
 
         return $this->getEntityManager()->createQueryBuilder()->
         select('entity')->
         from(sprintf('%s', 'WcBundle:Message' ),'entity')->
         where( 'entity.receiver = :client')->setParameter('client',$client )->
-        andWhere( 'entity.created > :update')->setParameter('update', $client->getClientUpdated())->
+        andWhere( 'entity.created > :update')->setParameter('update', $client->getUserUpdated())->
         orderBy('entity.created', 'DESC')->
         setMaxResults(10)->
         getQuery()->

@@ -11,7 +11,7 @@ import { ClientService } from './../../../../service/client';
 
 import { Message } from './../../../../entities/message/entity';
 import { Thread } from './../../../../entities/thread/entity';
-import { Client } from './../../../../entities/client/entity';
+import { User } from '../../../../entities/user/entity';
 import {GPPDComponent} from "../../../../component/gppd";
 import {image} from "../../../../../applicativeService/constants/image";
 

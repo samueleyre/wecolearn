@@ -2,7 +2,7 @@
 import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {Subject, Observable, BehaviorSubject} from 'rxjs';
-import { Client } from './../entities/client/entity';
+import { User } from '../entities/user/entity';
 import { Message } from './../entities/message/entity';
 import { Thread } from './../entities/thread/entity';
 import {ClientService} from "./client";

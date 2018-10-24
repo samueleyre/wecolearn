@@ -10,7 +10,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import {FormControl, NgForm} from '@angular/forms';
 
 import { IEntity }                from '../../../../../../applicativeService/entity/interface';
-import { Client }                from './../../../../../entities/client/entity';
+import { User }                from '../../../../../entities/user/entity';
 
 import { MessageService }         from './../../../../../../applicativeService/message/service';
 import {FilterService}            from "../../../../../../applicativeService/filter/service";

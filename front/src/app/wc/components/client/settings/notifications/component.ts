@@ -9,7 +9,7 @@ import {
 import { NgForm }             from '@angular/forms';
 
 import { IEntity }                from '../../../../../applicativeService/entity/interface';
-import { Client }                from './../../../../entities/client/entity';
+import { User }                from '../../../../entities/user/entity';
 
 import { GPPDService }            from './../../../../service/gppd';
 import { GPPDComponent }          from './../../../../component/gppd';
@@ -30,7 +30,7 @@ export class EmailNotificationSettingsComponent extends GPPDComponent implements
 
   constructor( protected service: GPPDService) {
     super(service);
-    this.entity = new Client();
+    this.entity = new User();
 
   }
 

@@ -25,9 +25,9 @@ class Domain
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Client", mappedBy="domains")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="domains")
      */
-    public $clients;
+    public $users;
 
     /**
      * Get id
@@ -67,40 +67,40 @@ class Domain
      */
     public function __construct()
     {
-        $this->clients = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add client
+     * Add user
      *
-     * @param \WcBundle\Entity\Client $client
+     * @param \WcBundle\Entity\User $user
      *
      * @return Domain
      */
-    public function addClient(\WcBundle\Entity\Client $client)
+    public function addUser(\WcBundle\Entity\User $user)
     {
-        $this->clients[] = $client;
+        $this->users[] = $user;
 
         return $this;
     }
 
     /**
-     * Remove client
+     * Remove user
      *
-     * @param \WcBundle\Entity\Client $client
+     * @param \WcBundle\Entity\User $user
      */
-    public function removeClient(\WcBundle\Entity\Client $client)
+    public function removeUser(\WcBundle\Entity\User $user)
     {
-        $this->clients->removeElement($client);
+        $this->users->removeElement($user);
     }
 
     /**
-     * Get clients
+     * Get users
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getClients()
+    public function getUsers()
     {
-        return $this->clients;
+        return $this->users;
     }
 }

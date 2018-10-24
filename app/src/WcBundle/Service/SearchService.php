@@ -2,7 +2,6 @@
 
 namespace WcBundle\Service;
 
-use WcBundle\Entity\Client;
 use WcBundle\Entity\Tag;
 use WcBundle\Entity\User;
 
@@ -18,7 +17,7 @@ class SearchService extends GPPDService {
 	}
 
 
-   public function search(Client $client = null, $filter = null, $domain = "wecolearn" ) {
+   public function search(User $user = null, $filter = null, $domain = "wecolearn" ) {
 
       $tag = null;
       $latitude = null;
@@ -39,8 +38,8 @@ class SearchService extends GPPDService {
             $latitude = $filter["latitude"];
             $longitude = $filter["longitude"];
         } else {
-          $latitude = ($client && null !== $client->getLatitude()) ? $client->getLatitude() : 45.75;
-          $longitude = ($client && null !== $client->getLongitude()) ? $client->getLongitude() : 4.85;
+          $latitude = ($user && null !== $user->getLatitude()) ? $user->getLatitude() : 45.75;
+          $longitude = ($user && null !== $user->getLongitude()) ? $user->getLongitude() : 4.85;
         }
 
         if( array_key_exists('first', $filter ) && array_key_exists('max', $filter )) {
@@ -52,15 +51,15 @@ class SearchService extends GPPDService {
 
 
       $result =  $this->em
-      ->getRepository(Client::class)
-      ->search($client, $tag, $first, $max, $latitude, $longitude, false, $domain);
+      ->getRepository(User::class)
+      ->search($user, $tag, $first, $max, $latitude, $longitude, false, $domain);
 
      // todo: search for type 0, if less than 5, search for other types.
 
      if ($result === [] ) {
         $result = $this->em
-          ->getRepository(Client::class)
-          ->search($client, $tag, $first, $max, $latitude, $longitude, true, $domain);
+          ->getRepository(User::class)
+          ->search($user, $tag, $first, $max, $latitude, $longitude, true, $domain);
      }
 
      return $result;

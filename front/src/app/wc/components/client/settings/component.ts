@@ -17,9 +17,8 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import { NgForm }             from '@angular/forms';
 
 import { IEntity }                from '../../../../applicativeService/entity/interface';
-import { Client }                from '../../../entities/client/entity';
+import { User }                from '../../../entities/user/entity';
 import { Tag }                from '../../../entities/tag/entity';
-import { User }                from '../../../../applicativeService/user/model';
 
 import { GPPDService }            from '../../../service/gppd';
 import { ClientService }            from '../../../service/client';
@@ -104,15 +103,6 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
 
   }
 
-  verifyCurrentPassword() {
-
-
-
-
-
-
-  }
-
   submitNewPassword(f:NgForm) {
 
     this.callApi({password: this.newpassword });
@@ -158,7 +148,7 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
 
 
   getApi() {
-      return '/api/user';
+      return '/api/client';
   }
 
   getEntity() {

@@ -18,7 +18,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import { NgForm }             from '@angular/forms';
 
 import { IEntity }                from '../../../../../applicativeService/entity/interface';
-import { Client }                from './../../../../entities/client/entity';
+import { User} from '../../../../entities/user/entity';
 import { Tag }                from './../../../../entities/tag/entity';
 import { Image }                from './../../../../entities/image/entity';
 
@@ -48,7 +48,7 @@ export class ProfilSettingsComponent implements OnInit {
 
     public  base_url : string;
     public zoom: number = 4;
-    public client : Client;
+    public client : User;
     private modify = false;
     private webPath : string;
     private uploadError : object = {};
@@ -183,7 +183,7 @@ export class ProfilSettingsComponent implements OnInit {
         }
       });
 
-      this.clientService.get().subscribe( ( client: Client) => {
+      this.clientService.get().subscribe( ( client: User) => {
           this.setClient(client);
       });
 
@@ -192,7 +192,7 @@ export class ProfilSettingsComponent implements OnInit {
 
     }
 
-    setClient(client: Client) {
+    setClient(client: User) {
 
         this.client = this.setTags(client);
         if (!this.client['latitude']) {
@@ -206,7 +206,7 @@ export class ProfilSettingsComponent implements OnInit {
 
     }
 
-    setTags(client: Client) {
+    setTags(client: User) {
         client['learn_tags'] = [];
         client['know_tags'] = [];
         client['teach_tags'] = [];
@@ -252,7 +252,7 @@ export class ProfilSettingsComponent implements OnInit {
         this.initEditable();
         this.joinTags();
         this.clientService.patch( this.client ).subscribe(
-            ( client: Client ) => {
+            ( client: User ) => {
               this.setClient(client);
             },
             error => { console.log(error) }
@@ -293,7 +293,7 @@ export class ProfilSettingsComponent implements OnInit {
 
 
     getEntity() {
-        let client = new Client();
+        let client = new User();
         client.learn_tags = null;
         client.teach_tags = null;
         client.know_tags = null;

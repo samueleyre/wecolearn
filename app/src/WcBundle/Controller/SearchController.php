@@ -2,7 +2,7 @@
 
 namespace WcBundle\Controller;
 
-use WcBundle\Entity\Client;
+use WcBundle\Entity\User;
 use WcBundle\Entity\Tag;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

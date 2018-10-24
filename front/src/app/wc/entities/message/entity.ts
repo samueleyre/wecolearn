@@ -1,4 +1,4 @@
-import { Client } from '../client/entity';
+import { User } from '../user/entity';
 import { Thread } from '../thread/entity';
 import {IEntity} from "../../../applicativeService/entity/interface";
 import {Entity} from "../../../applicativeService/entity/entity";
@@ -12,9 +12,9 @@ export class Message extends Entity implements IEntity  {
     id: number;
     created: Date;
     is_read: boolean;
-    sender: Client;
+    sender: User;
     message: string;
-    receiver : Client;
+    receiver : User;
     thread: Thread;
 
     constructor(obj?: any) {

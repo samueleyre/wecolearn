@@ -5,14 +5,10 @@ import { Message } from './../../entities/message/entity';
 import { Image } from './../../entities/image/entity';
 import { SlackAccount } from './../../entities/slackAccount/entity';
 
-export class Client extends Entity implements IEntity  {
+export class User extends Entity implements IEntity  {
 
 	public id: 		number|null;
-	public user: {
-		username: string,
-		email: string
-	};
-	// test
+	public email: string;
 	public created : any;
 	public first_name : 	string;
 	public last_name : 	string;
@@ -40,10 +36,7 @@ export class Client extends Entity implements IEntity  {
 	constructor(id?: number, slack_accounts? : Array<SlackAccount>) {
 		super();
 		this.id = id || null;
-		this.user = {
-            username: '',
-            email: ''
-		};
+		this.email = '';
 		this.created = null;
 		this.first_name = '';
 		this.last_name = '';

@@ -38,10 +38,10 @@ class SlackAccount
 
 
   /**
-   * @ORM\ManyToOne(targetEntity="WcBundle\Entity\Client",inversedBy="slackAccounts", cascade={"persist", "merge"})
-   * @ORM\JoinColumn(name="clientId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+   * @ORM\ManyToOne(targetEntity="WcBundle\Entity\User",inversedBy="slackAccounts", cascade={"persist", "merge"})
+   * @ORM\JoinColumn(name="userId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
    */
-   public $client;
+   public $user;
 
 
 
@@ -82,27 +82,27 @@ class SlackAccount
     }
 
     /**
-     * Set client
+     * Set user
      *
-     * @param \WcBundle\Entity\Client $client
+     * @param \WcBundle\Entity\User $user
      *
      * @return SlackAccount
      */
-    public function setClient(\WcBundle\Entity\Client $client = null)
+    public function setUser(\WcBundle\Entity\User $user = null)
     {
-        $this->client = $client;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get client
+     * Get user
      *
-     * @return \WcBundle\Entity\Client
+     * @return \WcBundle\Entity\User
      */
-    public function getClient()
+    public function getUser()
     {
-        return $this->client;
+        return $this->user;
     }
 
     /**

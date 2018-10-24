@@ -3,7 +3,7 @@ import {publishReplay, refCount, takeWhile, filter,  scan , map} from 'rxjs/oper
 
 import {of as observableOf,  Subject, Observable , SubscriptionLike as ISubscription} from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Client } from './../entities/client/entity';
+import { User } from '../entities/user/entity';
 import { Message } from './../entities/message/entity';
 import { Thread } from './../entities/thread/entity';
 import {ClientService} from "./client";
@@ -52,7 +52,7 @@ export class MessagesService {
     // stored in `messages`)
     public updates: Subject<any> = new Subject<any>();
 
-    public currentClient: Client = new Client();
+    public currentClient: User = new User();
     private sentMessages: Array<Message>;
     private receivedMessages: Array<Message>;
 
@@ -174,7 +174,7 @@ export class MessagesService {
   }
 
 
-  messagesForThreadUser(thread: Thread, user: Client): Observable<Message> {
+  messagesForThreadUser(thread: Thread, user: User): Observable<Message> {
     return this.newMessages.pipe(
       filter((message: Message) => {
 
@@ -237,7 +237,7 @@ export class MessagesService {
 
     let getClientSubscribe = this.ClientService.get()
       .subscribe(
-        (user: Client) => {
+        (user: User) => {
           if (user && this.router.url === "/search" && null === this.currentClient.id) {
             this.currentClient = user;
             this.sentMessages = user.sent_messages;

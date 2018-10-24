@@ -39,7 +39,7 @@ class Selection
      */
     public function __construct()
     {
-        $this->clients = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

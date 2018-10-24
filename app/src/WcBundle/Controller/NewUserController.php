@@ -4,7 +4,6 @@ namespace WcBundle\Controller;
 
 
 use WcBundle\Entity\User;
-use WcBundle\Entity\Client;
 use WcBundle\Entity\Token;
 use WcBundle\Constant\TokenConstant;
 
@@ -68,7 +67,7 @@ class NewUserController extends Controller
 
 
       $response = $this
-        ->get('client.service')
+        ->get('user.service')
         ->getSlackUserData($code, $redirect_uri);
 
       if ($response->code === 200 && $response->body->ok) {
@@ -86,15 +85,9 @@ class NewUserController extends Controller
           ->getRepository(User::class)
           ->findOneBy(['email'=>$email])) { // todo: or if found by slack user id !
 
-          $client = $this
-            ->get('client.service')
-            ->em
-            ->getRepository(Client::class)
-            ->findOneBy(['user'=>$user] );
-
 
           if (!$this->get('slack.service')->getSlackAccount($response->body->user->id)) {
-            $this->get('slack.service')->createSlackAccount($client, $response->body->user->id, $response->body->team->id, "slack");
+            $this->get('slack.service')->createSlackAccount($user, $response->body->user->id, $response->body->team->id, "slack");
           }
 
           $domainName = $this->get('domain.service')->getSubDomain($request);
@@ -104,11 +97,11 @@ class NewUserController extends Controller
             $domain = $this->get('domain.service')->createSubDomainEntity($domainName);
           }
 
-          if (false === $client->getDomains()->indexOf($domain)) {
-            $client->addDomain($domain);
+          if (false === $user->getDomains()->indexOf($domain)) {
+            $user->addDomain($domain);
           }
 
-          $this->get('client.service')->patch( $client );
+          $this->get('user.service')->patch( $user );
 
 
         } else {
@@ -139,7 +132,7 @@ class NewUserController extends Controller
     }
   }
 
-  private function createNewUser(User $user, $request, $slackId = null, $slackTeamId = null, $retEmail = true) { // todo: fuse client and user !
+  private function createNewUser(User $user, $request, $slackId = null, $slackTeamId = null, $retEmail = true) {
 
     $ret = [];
 
@@ -156,6 +149,9 @@ class NewUserController extends Controller
     $user->setRoles(['ROLE_USER']);
     $user->setPlainPassword($user->getPassword());
     $user->setEnabled(true);
+    $user->addDomain($domain);
+    $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+    $user->setCreated($date);
 
 
     if ( $this
@@ -165,6 +161,12 @@ class NewUserController extends Controller
         ->findOneBy(['username'=>$user->getUsername()])) {
       $user->setUsername($user->getUsername().rand(10,100));
     }
+
+    $user->setFirstName($user->getUsername());
+    $this
+      ->get('user.service')
+      ->generateUrl($user);
+
 
     try {
     $userManager->updateUser($user);
@@ -182,28 +184,10 @@ class NewUserController extends Controller
 
     }
 
-
-//        $roles = $user->getRoles();
-//        if (in_array("ROLE_USER", $roles)) { // not useful at this point as it is always the case.
-
-    $client = new Client();
-    $client->setUser($user);
-    $client->setFirstName($user->getUsername());
-    $client->addDomain($domain);
-    $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
-    $client->setCreated($date);
-    $this
-      ->get('client.service')
-      ->generateUrl($client);
-
-    $ret['insertClient'] = $this
-      ->get('client.service')
-      ->post($client);
-
     if ($slackId !== null && $slackTeamId !== null) {
       $slackAccount = $this->get('slack.service')->getSlackAccount($slackId);
       if (!$slackAccount) {
-        $this->get('slack.service')->createSlackAccount($client, $slackId, $slackTeamId, "slack");
+        $this->get('slack.service')->createSlackAccount($user, $slackId, $slackTeamId, "slack");
       } else {
 //     todo:   account already connected to email : xxxxx, do you wish to connected to this account ?
       }

@@ -18,13 +18,13 @@ class Message
     public $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="sentMessages")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="sentMessages")
      * @ORM\JoinColumn(name="senderId", referencedColumnName="id", onDelete="NO ACTION")
      */
     public $sender;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="receivedMessages")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="receivedMessages")
      * @ORM\JoinColumn(name="receiverId", referencedColumnName="id", onDelete="NO ACTION")
      */
     public $receiver;
@@ -176,11 +176,11 @@ class Message
     /**
      * Set sender
      *
-     * @param \WcBundle\Entity\Client $sender
+     * @param \WcBundle\Entity\User $sender
      *
      * @return Message
      */
-    public function setSender(\WcBundle\Entity\Client $sender = null)
+    public function setSender(\WcBundle\Entity\User $sender = null)
     {
         $this->sender = $sender;
 
@@ -190,7 +190,7 @@ class Message
     /**
      * Get sender
      *
-     * @return \WcBundle\Entity\Client
+     * @return \WcBundle\Entity\User
      */
     public function getSender()
     {
@@ -200,11 +200,11 @@ class Message
     /**
      * Set receiver
      *
-     * @param \WcBundle\Entity\Client $receiver
+     * @param \WcBundle\Entity\User $receiver
      *
      * @return Message
      */
-    public function setReceiver(\WcBundle\Entity\Client $receiver = null)
+    public function setReceiver(\WcBundle\Entity\User $receiver = null)
     {
         $this->receiver = $receiver;
 
@@ -214,7 +214,7 @@ class Message
     /**
      * Get receiver
      *
-     * @return \WcBundle\Entity\Client
+     * @return \WcBundle\Entity\User
      */
     public function getReceiver()
     {

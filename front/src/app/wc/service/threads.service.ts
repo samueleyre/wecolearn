@@ -8,7 +8,7 @@ import { MessagesService } from './messages';
 import * as _ from 'lodash';
 import {LoggerService} from "../../applicativeService/logger/service";
 import {EmptyObservable} from "rxjs/observable/EmptyObservable";
-import { Client } from './../entities/client/entity';
+import { User } from '../entities/user/entity';
 
 
 @Injectable()
@@ -93,7 +93,7 @@ export class ThreadsService {
 
   resetThreads(): void {
     this.orderedThreads = new EmptyObservable();
-    this.messagesService.currentClient = new Client();
+    this.messagesService.currentClient = new User();
 
   }
 

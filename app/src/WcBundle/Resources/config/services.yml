@@ -1,7 +1,7 @@
 services:
-  client.service:
-    class: WcBundle\Service\ClientService
-    arguments: ['@doctrine.orm.entity_manager' , '@domain.service', '%client_id%', '%client_secret%']
+  user.service:
+    class: WcBundle\Service\UserService
+    arguments: ['@doctrine.orm.entity_manager' , '@domain.service', '%client_id%', '%client_secret%', '@security.token_storage']
   token.service:
     class: WcBundle\Service\TokenService
     arguments: ['@doctrine.orm.entity_manager']
@@ -18,9 +18,6 @@ services:
     arguments: ['@doctrine.orm.entity_manager', '%limit_until_destroy%']
   search.service:
     class: WcBundle\Service\SearchService
-    arguments: ['@doctrine.orm.entity_manager']
-  user.service:
-    class: WcBundle\Service\UserService
     arguments: ['@doctrine.orm.entity_manager']
   domain.service:
     class: WcBundle\Service\DomainService

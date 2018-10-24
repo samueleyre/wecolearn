@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Client } from '../../../../entities/client/entity';
+import { User} from '../../../../entities/user/entity';
 import { MessagesService } from './../../../../service/messages';
 import { ClientService } from './../../../../service/client';
 import { ThreadsService } from './../../../../service/threads.service';
@@ -33,7 +33,7 @@ export class ChatWindowComponent implements OnInit {
   currentMessages: Array<Message>;
   currentThread: Thread;
   draftMessage: Message;
-  currentUser: Client = null;
+  currentUser: User = null;
   private disabled = false;
   // private element: ElementRef;
   @ViewChild('chatInput') inputEl:ElementRef;
@@ -75,7 +75,7 @@ export class ChatWindowComponent implements OnInit {
 
     this.ClientService.get()
         .subscribe(
-            (user: Client) => {
+            (user: User) => {
               // console.log("got client - message window", user)
                 this.currentUser = user;
         });
@@ -119,12 +119,12 @@ export class ChatWindowComponent implements OnInit {
     if (this.draftMessage.message !== null && this.draftMessage.message  !== '') {
       this.disabled = true;
       // console.log("message being sent", this.draftMessage.message)
-      this.draftMessage.receiver= new Client(this.currentThread.id);
+      this.draftMessage.receiver= new User(this.currentThread.id);
       this.draftMessage.is_read = false;
       this.messagesService.sendMessage(this.draftMessage)
           .subscribe(answer => {
             this.disabled = false;
-            this.draftMessage.sender = new Client(this.currentUser.id);
+            this.draftMessage.sender = new User(this.currentUser.id);
             this.draftMessage.thread = new Thread(this.currentThread.id, this.currentThread.name, this.currentThread.avatarSrc);
             this.messagesService.addMessage(this.draftMessage);
             this.draftMessage = new Message();

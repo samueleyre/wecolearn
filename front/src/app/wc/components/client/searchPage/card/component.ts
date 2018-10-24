@@ -9,7 +9,7 @@ import {
 import { Router, ActivatedRoute, Params} from '@angular/router';
 
 
-import { Client }                from './../../../../entities/client/entity';
+import  { User} from '../../../../entities/user/entity';
 import { Image }                 from './../../../../entities/image/entity';
 
 import { GPPDService }            from './../../../../service/gppd';
@@ -35,13 +35,13 @@ import {ThreadsService} from "../../../../service/threads.service";
 export class CardComponent implements OnInit {
 
 
-  @Input() card: Client;
+  @Input() card: User;
 
 
   private avatarSrcBase : string;
   public max: number = 4;
   public screen: boolean =  false;
-  private currentClient: Client;
+  private currentClient: User;
   private cardSlackId: string;
   private showSlack: boolean = false;
   private baseImageName : string = image.default_200px;
@@ -76,10 +76,10 @@ export class CardComponent implements OnInit {
     this.avatarSrcBase =  GPPDComponent.updateUrl('/img/');
     this.screen =  GPPDComponent.getScreenSize();
 
-    this.clientService.get().subscribe((client:Client)=> {
+    this.clientService.get().subscribe((client:User)=> {
       this.currentClient = client;
-      let currentClientSlackAccount = this.currentClient.slack_accounts.find((slack_account)=> (slack_account.slack_team.type === "slack"));
-      let cardSlackAccount = this.card.slack_accounts.find((slack_account)=> (slack_account.slack_team.type === "slack"));
+      let currentClientSlackAccount = this.currentClient.slack_accounts.find((slack_account:any)=> (slack_account.slack_team.type === "slack"));
+      let cardSlackAccount = this.card.slack_accounts.find((slack_account:any)=> (slack_account.slack_team.type === "slack"));
 
       if (undefined !== cardSlackAccount && undefined !==  currentClientSlackAccount) {
         this.cardSlackId = cardSlackAccount.account_id;
@@ -92,7 +92,7 @@ export class CardComponent implements OnInit {
 
   }
 
-  openThread(card : Client) {
+  openThread(card : User) {
 
     this.loggerService.log("openThread", this.logged)
 

@@ -10,7 +10,7 @@ import { Router, ActivatedRoute, Params} from '@angular/router';
 import { NgForm }             from '@angular/forms';
 
 import { IEntity }                from '../../../../../applicativeService/entity/interface';
-import { Client }                from './../../../../entities/client/entity';
+import {User} from '../../../../entities/user/entity';
 import { Thread }                from './../../../../entities/thread/entity';
 import { Image }                 from './../../../../entities/image/entity';
 
@@ -85,7 +85,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     }
 
     getEntity() {
-        return new Client();
+        return new User();
     }
 
 

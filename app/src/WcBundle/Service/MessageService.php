@@ -3,9 +3,9 @@
 namespace WcBundle\Service;
 
 use WcBundle\Entity\Message;
-use WcBundle\Entity\Client;
 
 use Doctrine\ORM\EntityManager;
+use WcBundle\Entity\User;
 
 class MessageService extends GPPDService {
 
@@ -47,18 +47,18 @@ class MessageService extends GPPDService {
 
    }
 
-   public function setReminderDate( $clientId ) {
+   public function setReminderDate( $userId ) {
 
-      if (null === $clientId || '' == $clientId) {
+      if (null === $userId || '' == $userId) {
         return;
       }
 
 
-     $client = $this->em->getRepository(Client::class)->find($clientId);
+     $user = $this->em->getRepository(User::class)->find($userId);
 
      $lastReminder = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
 
-     $receivedMessages = $client->getReceivedMessages();
+     $receivedMessages = $user->getReceivedMessages();
 
      foreach ($receivedMessages as $receivedMessage) {
 

@@ -3,11 +3,10 @@
 
 namespace WcBundle\DataFixtures\ORM;
 
-use WcBundle\Entity\Client;
+use WcBundle\Entity\User;
 use WcBundle\Entity\Selection;
 use WcBundle\Entity\Message;
 use WcBundle\Entity\Tag;
-use WcBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -76,11 +75,11 @@ class Fixtures extends Fixture implements ContainerAwareInterface
             $user->setPlainPassword("test");
             $user->setEnabled(true);
 
-            $userManager->updateUser( $user );
+
 
             $user = $userManager->findUserByUsername($user->getUsername());
 
-            $client = new Client();
+            $client = new User();
                 $client->setUser($user);
             $client->setFirstName($usernames[$i]);
             $client->setLastName($names[$i]);
@@ -108,7 +107,7 @@ class Fixtures extends Fixture implements ContainerAwareInterface
 
             }
             $client->setCreated($date);
-            $client->setClientUpdated($date);
+            $client->setUserUpdated($date);
 
             $randChosen = [];
             for($j=0; $j< 4; $j++) {

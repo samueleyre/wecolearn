@@ -1,12 +1,12 @@
-Message:
+message:
     type:     rest
     prefix:   api
     resource: '@WcBundle/Controller/MessageController.php'
 
-clients:
+client:
     type:     rest
     prefix:   api
-    resource: '@WcBundle/Controller/ClientController.php'
+    resource: '@WcBundle/Controller/UserController.php'
 
 newuser:
     type:     rest
@@ -16,7 +16,7 @@ newuser:
 confirmEmail:
     type:     rest
     prefix:   api
-    resource: '@WcBundle/Controller/ClientController.php'
+    resource: '@WcBundle/Controller/UserController.php'
 
 findTag:
     type:     rest

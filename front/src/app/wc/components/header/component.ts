@@ -19,7 +19,7 @@ import { MessagesService } from './../../service/messages';
 import { ThreadsService } from './../../service/threads.service';
 import { Thread } from '../../entities/thread/entity';
 import { Message } from '../../entities/message/entity';
-import { Client } from '../../entities/client/entity';
+import { User } from '../../entities/user/entity';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from "rxjs/Rx";
 // import { GPPDComponent }          from './../../component/gppd';
@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
     private searchBarType: string = "tag";
 		private searchBarTypeChecked : any = false;
 		private notifications: Array<Thread>;
-		private currentClient : Client = new Client;
+		private currentClient : User = new User;
 		private collapseClass: string = "collapse";
     private threads: Observable<any>;
     private baseImageName : string = image.default_200px;
@@ -92,7 +92,7 @@ export class HeaderComponent implements OnInit {
 
 
     this.screen = GPPDComponent.getScreenSize();
-    this.ClientService.get().subscribe((client: Client )=> {
+    this.ClientService.get().subscribe((client: User )=> {
         this.loggerService.log("got client", client)
       this.currentClient = client;
     });

@@ -3,7 +3,7 @@
 namespace WcBundle\Controller;
 
 use WcBundle\Entity\Image;
-use WcBundle\Entity\Client;
+use WcBundle\Entity\User;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -34,14 +34,10 @@ class UploadController extends Controller
 
       $user = $this->get('security.token_storage')->getToken()->getUser();
 
-      $client = $this->getDoctrine()
-          ->getRepository(Client::class)
-          ->findOneBy(["user"=>$user]);
-
       $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
 
-      if (null !== $client->getImage()) {
-        $image = $client->getImage();
+      if (null !== $user->getImage()) {
+        $image = $user->getImage();
         $image->setUpdated($date);
         $image->setFile($request->files->get('file'));
         $image->upload();
@@ -52,7 +48,7 @@ class UploadController extends Controller
       } else {
         $image = new Image;
         $image->setCreated($date);
-        $image->setClient($client);
+        $image->setUser($user);
         $image->setFile($request->files->get('file'));
         $image->upload();
         $uploaded = $this
@@ -62,13 +58,12 @@ class UploadController extends Controller
       }
 
 
-        $client->setImage($image);
+      $user->setImage($image);
 
-
-        return
-            $this
-                ->get('client.service')
-                ->patch($client, $user, false, false);
+      return
+          $this
+              ->get('user.service')
+              ->patch($user);
 
 
     }
