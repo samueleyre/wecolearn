@@ -101,7 +101,7 @@ class NewUserController extends Controller
             $user->addDomain($domain);
           }
 
-          $this->get('user.service')->patch( $user );
+          $this->get('user.service')->patch( $user, $user->getId() );
 
 
         } else {

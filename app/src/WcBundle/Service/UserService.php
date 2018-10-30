@@ -65,10 +65,15 @@ class UserService {
   }
 
 
-  public function patch(User $user)
+  public function patch(User $user, $id = null)
   {
 
-    $oldUser = $this->securityStorage->getToken()->getUser();
+    if (null !== $id) { // because used before connection
+      $oldUser = $this->em->getRepository(User::class)->findOneBy(['id'=>$id]);
+    } else {
+      $oldUser = $this->securityStorage->getToken()->getUser(); // we get it from security storage to avoid modifying other clients
+    }
+
 
     $parameters = [ "emailConfirmed", "firstName", "lastName", "profilUrl", "biographie", "intensity", "atmosphere", "latitude", "longitude", "tags", "showProfil", "emailNotifications" ];
 

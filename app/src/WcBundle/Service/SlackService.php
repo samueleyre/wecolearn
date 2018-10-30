@@ -29,7 +29,7 @@ class SlackService
 
 
     $newSlackAccount = new SlackAccount();
-    $newSlackAccount->setClient($client);
+    $newSlackAccount->setUser($client);
     $newSlackAccount->setAccountId($id);
     $slackTeam = $this->getSlackTeam($teamId);
     if (!$slackTeam) {
