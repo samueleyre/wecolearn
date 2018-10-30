@@ -4,7 +4,7 @@ WcBundle\Entity\User:
     access_order:     alphabetical
     properties:
       id:
-        groups: [ output ]
+        groups: [ input, output, search ]
       created:
         groups: [ input, output, search ]
       firstName:

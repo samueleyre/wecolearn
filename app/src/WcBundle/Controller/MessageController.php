@@ -100,10 +100,17 @@ class MessageController extends Controller
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
+//        return $message->getReceiver()->getId();
+//
+//        return $this->getDoctrine()
+//      ->getRepository(Tag::class)
+//      ->findOneBy(["id"=>11]);
 
         $friend = $this->getDoctrine()
             ->getRepository(User::class)
-            ->findOneBy(["id"=>$message->getReceiver()->getId()]);
+            ->findOneBy(["id"=>11]);
+
+        return $friend;
 
         $message->setReceiver($friend);
         $message->setSender($user);

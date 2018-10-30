@@ -88,6 +88,7 @@ export class ThreadsService {
   }
 
   setCurrentThread(newThread: Thread): void {
+    // console.log("setting current thread", newThread)
     this.currentThread.next(newThread);
   }
 
