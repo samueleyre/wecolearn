@@ -17,7 +17,7 @@
           <div class="tagContainer" *ngIf="card.tags">
             <div *ngFor="let tag of card.tags">
               <div class="tag" *ngIf="tag.type === '0'">
-                <span>{{tag.name}}</span>
+                <span title="Je veux apprendre dans ce domaine : {{tag.name}}">{{tag.name}}</span>
               </div>
             </div>
           </div>
@@ -30,7 +30,7 @@
     </div>
 
     <div class="chatButtonContainer">
-      <button *ngIf="openChat" class="btn" (click)="openThread(card)">
+      <button title="Pour discuter avec moi clique ici !" *ngIf="openChat" class="btn" (click)="openThread(card)">
         <i class="fa fa-comment"></i> {{openChat}}
       </button>
       <a *ngIf="showSlack" target="_blank" href="https://bricodeurs.slack.com/messages/@{{cardSlackId}}">

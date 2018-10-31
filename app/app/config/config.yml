@@ -57,6 +57,8 @@ doctrine:
                 dql:
                     numeric_functions:
                       pow: Oro\ORM\Query\AST\Functions\Numeric\Pow
+                      cast: Oro\ORM\Query\AST\Functions\Cast
+                      round: AppBundle\Dql\Round
                       cos: DoctrineExtensions\Query\Mysql\Cos
 
 # Swiftmailer Configuration

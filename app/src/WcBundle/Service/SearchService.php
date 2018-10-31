@@ -49,7 +49,6 @@ class SearchService extends GPPDService {
         }
       }
 
-
       $result =  $this->em
       ->getRepository(User::class)
       ->search($user, $tag, $first, $max, $latitude, $longitude, false, $domain);

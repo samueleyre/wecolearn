@@ -31,13 +31,16 @@ class UserRepository extends EntityRepository
 
 
     $qb = $this->getEntityManager()->createQueryBuilder();
-    $qb->select('user');
+    $qb->select('DISTINCT user');
 
     $qb->addSelect(sprintf(' 
+      cast(
+          round(
             pow(69.1 * (user.latitude - %s), 2) +
             pow(69.1 
                 * (%s - user.longitude) 
-                * cos(user.latitude / 57.3), 2) AS distance', $startLatitude, $startLongitude));
+                * cos(user.latitude / 57.3), 2)
+          , 2 ) AS decimal(6,2) ) AS distance', $startLatitude, $startLongitude));
 
     $qb->from('WcBundle:User', 'user');
 
@@ -68,11 +71,10 @@ class UserRepository extends EntityRepository
       $qb->andWhere($condition);
     }
 
-    $qb->groupBy('user.id');
     $qb->orderBy('distance', "ASC");
-    $qb->having('distance < 1000');
     $qb->setFirstResult($first);
     $qb->setMaxResults($max);
+    $qb->having('distance < 100');
 
 //    syslog(LOG_ERR,$qb->getQuery()->getSQL());
 
