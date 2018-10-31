@@ -201,13 +201,13 @@ class UserController extends Controller
 
     $ret = [];
 
-    if ($token && $user = $token->getUser() ) {
+    if ($token && ($user = $token->getUser()) ) {
 
       if ($user->getEmailConfirmed() === false) {
         $user->setEmailConfirmed(true);
         $ret["success"] = $this
           ->get('user.service')
-          ->patch($user);
+          ->patch($user, $user->getId());
       } else {
         $ret["error"] = "token_already_confirmed";
       }
@@ -296,7 +296,7 @@ class UserController extends Controller
 
         $this
           ->get('user.service')
-          ->patch($user);
+          ->patch($user, $user->getId());
 
         $this->get('token.service')->post($token);
 

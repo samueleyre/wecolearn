@@ -76,7 +76,7 @@ export class SubscribeComponent implements OnInit {
        this.userService.post(this.user).subscribe(
            response => {
                if (response === "duplicate") {
-                   this.error = "Le nom d'utilisateur ou l'adresse email est déjà utilisé.";
+                   this.error = "L'adresse email est déjà utilisé.";
                    setTimeout(()=>{
                      this.error = null;
                    }, 5000);
