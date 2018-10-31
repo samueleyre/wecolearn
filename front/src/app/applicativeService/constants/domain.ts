@@ -1,3 +1,4 @@
 export const subdomains = [
-    "lesbricodeurs"
+    "lesbricodeurs",
+    "lamyne"
 ];

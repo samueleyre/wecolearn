@@ -14,7 +14,8 @@ class SubdomainConstant {
 
 
   public static $list = [
-    "lesbricodeurs"
+    "lesbricodeurs",
+    "lamyne"
   ];
 
 

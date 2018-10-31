@@ -44,6 +44,33 @@
       </div>
     </div>
 
+    <div *ngIf="subDomain === 'lamyne'" class="row center">
+      <div id="homeBgImageContainer" class="col-12 no-padding">
+        <div id="homeBgImage" [ngStyle]="homeBgImageStyle" >
+          <div class="filterBg">
+            <div *ngIf="!screen" class="imageContainer">
+              <img width="65px" src="{{webPath}}logo/lamyne.png" alt="">
+            </div>
+            <h3>
+              Bienvenu dans la communauté des colearners de l'association !
+              <br>
+              <br>
+              Connecte-toi aux autres Mynois pour monter en compétences avec eux ! :)
+              <br>
+            </h3>
+            <br><br>
+            <a class="btn btn-inscription btn-primary btn-lg " routerLink="/subscribe">Inscription</a>
+            <div *ngIf="!screen" style="color: white; font-weight: 700;">
+              <br>
+              <br>
+              Déjà membre ? <a class="" routerLink="/login">Je me connecte</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
 
     <section class="row presentation-row">
         <div class="col-12 col-sm-6 offset-sm-3 col-md-4 offset-md-4">

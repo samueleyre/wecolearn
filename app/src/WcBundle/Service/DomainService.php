@@ -35,7 +35,7 @@ class DomainService {
     }
 
     if ("dev" === $this->environment) {
-      return "wecolearn";
+      return "lamyne";
     }
 
     return "wecolearn";

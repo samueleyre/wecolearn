@@ -4,4 +4,6 @@ export const slacks = [
 ];
 
 
-
+export const rocketchats = [
+    "lamyne"
+];
