@@ -11,7 +11,12 @@
         {{community.description}}
       </p>
       <div class="center">
-        <a  href="https://{{community.subDomain}}.wecolearn.com">
+        <a *ngIf="environment === 'production'" href="{{link}}" >
+          <button type="button" class="btn btn-primary">
+            Rejoindre
+          </button>
+        </a>
+        <a *ngIf="environment !== 'production'" (click)='setDevSubdomain(community.subDomain)'>
           <button type="button" class="btn btn-primary">
             Rejoindre
           </button>

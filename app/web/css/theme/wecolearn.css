@@ -4,12 +4,19 @@
 main theme todo: try and generate this with webpack ??
 
 USE THIS
-color: lighten(#fdce2f, 5);
-color: lighten(#fdce2f, 10);
-color: lighten(#fdce2f, 15);
-color: darken(#fdce2f, 5);
-color: darken(#fdce2f, 10);
-color: darken(#fdce2f, 15);
+color: lighten(#ff7f1d, 5);
+color: lighten(#ff7f1d, 10);
+color: lighten(#ff7f1d, 15);
+color: darken(#ff7f1d, 5);
+color: darken(#ff7f1d, 10);
+color: darken(#ff7f1d, 15);
+
+color: lighten(#ffd531, 5);
+color: lighten(#ffd531, 10);
+color: lighten(#ffd531, 15);
+color: darken(#ffd531, 5);
+color: darken(#ffd531, 10);
+color: darken(#ffd531, 15);
 ON THIS
 https://www.sassmeister.com/
 

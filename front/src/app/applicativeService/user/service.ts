@@ -36,7 +36,7 @@ export class UserService {
         // clear token remove user from local storage to log user out
         return this.http.post(`${this.newUserEndpoint}`, { id : user.id, username : user.username , email : user.email, password : user.password })
             .map((response: any ) => {
-                console.log(response)
+                // console.log(response)
                 // login successful if there's a jwt token in the response
                 return response;
             });

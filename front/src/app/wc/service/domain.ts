@@ -24,9 +24,9 @@ export class DomainService {
   }
 
   setSubDomain() {
-    const location = window.location.href;
     let subdomain = null;
     if (process.env.NODE_ENV === 'production') {
+      const location = window.location.href;
       const regex = /(?:http[s]*\:\/\/)*(.*?)\.(?=[^\/]*\..{2,5})/i;
 
       // console.log(subdomain, subdomains.indexOf(subdomain))
@@ -45,7 +45,9 @@ export class DomainService {
 
 
     } else {
-      return this.subdomain = "wecolearn";
+      if (!this.subdomain) {
+        return this.subdomain = "wecolearn";
+      }
     }
 
   }
@@ -56,6 +58,10 @@ export class DomainService {
     } else {
       return this.setSubDomain();
     }
+  }
+
+  setDevSubDomain(subdomain: string) {
+    this.subdomain = subdomain;
   }
 
   hasSlack() {
