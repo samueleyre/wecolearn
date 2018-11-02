@@ -23,6 +23,8 @@ import {image} from "../../../../../applicativeService/constants/image";
 import {Thread} from "../../../../entities/thread/entity";
 import {Observable} from "rxjs";
 import {ThreadsService} from "../../../../service/threads.service";
+import {DomainService} from "../../../../service/domain";
+import {ObjectIteratorTypeGuard} from "lodash";
 
 
 @Component({
@@ -42,11 +44,16 @@ export class CardComponent implements OnInit {
   public max: number = 4;
   public screen: boolean =  false;
   private currentClient: User;
-  private cardSlackId: string;
-  private showSlack: boolean = false;
+  private cardSlackId: Object = {};
+  private showSlack : Object = {};
   private baseImageName : string = image.default_200px;
   private logged = false;
   private openChat: string;
+  private subDomain : string = null;
+  private slackSubDomain : string = null;
+  private rocketChatDomain: string = null;
+  private types = ["slack", "rocketchat"]; // from database !
+
 
 
   constructor( protected service: GPPDService,
@@ -57,33 +64,55 @@ export class CardComponent implements OnInit {
                  private loggerService: LoggerService,
                  private clientService: ClientService,
                  public threadsService: ThreadsService,
+                 private domainService: DomainService,
 
-  ) {}
+
+  ) {
+
+    for( let i= 0; i< this.types.length; i++ ) {
+        this.showSlack[this.types[i]] = false;
+        this.cardSlackId[this.types[i]] = false;
+    }
+  }
 
   ngOnInit() {
 
+    // todo: if tag and lat/long are in url, get them
+
+
+
     let logged = this.LoggedService.get();
+    this.subDomain = this.domainService.getSubDomain();
+    this.slackSubDomain = this.domainService.getSlackSubDomain();
+
+    this.rocketChatDomain = this.domainService.getRocketChatDomain();
+
+
 
     if (logged) {
       this.logged = true;
       this.openChat = "Discuter";
     } else {
       this.openChat = "Connecte-toi pour discuter !";
-      // todo: if tag and lat/long are in url, get them
     }
 
-
     this.avatarSrcBase =  GPPDComponent.updateUrl('/img/');
+
     this.screen =  GPPDComponent.getScreenSize();
-
     this.clientService.get().subscribe((client:User)=> {
-      this.currentClient = client;
-      let currentClientSlackAccount = this.currentClient.slack_accounts.find((slack_account:any)=> (slack_account.slack_team.type === "slack"));
-      let cardSlackAccount = this.card.slack_accounts.find((slack_account:any)=> (slack_account.slack_team.type === "slack"));
 
-      if (undefined !== cardSlackAccount && undefined !==  currentClientSlackAccount) {
-        this.cardSlackId = cardSlackAccount.account_id;
-        this.showSlack = ( cardSlackAccount.slack_team.id === currentClientSlackAccount.slack_team.id );
+
+      this.currentClient = client;
+      for( let i= 0; i< this.types.length; i++ ) {
+
+        let currentClientSlackAccount = this.currentClient.slack_accounts.find((slack_account:any)=> (slack_account.slack_team.type === this.types[i]));
+        let cardSlackAccount = this.card.slack_accounts.find((slack_account:any)=> (slack_account.slack_team.type === this.types[i]));
+
+        if (undefined !== cardSlackAccount && undefined !==  currentClientSlackAccount) {
+          this.cardSlackId[this.types[i]] = cardSlackAccount.account_id;
+          this.showSlack[this.types[i]] = ( cardSlackAccount.slack_team.id === currentClientSlackAccount.slack_team.id );
+        }
+
       }
 
     });

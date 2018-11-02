@@ -10,7 +10,7 @@ import {IEntity} from "../../applicativeService/entity/interface";
 import {Message} from "../entities/message/entity";
 import {LoggerService} from "../../applicativeService/logger/service";
 import {subdomains} from "../../applicativeService/constants/domain";
-import {slacks} from "../../applicativeService/constants/slack";
+import {rocketchats, slacks, slacksSubDomains, rocketChatDomains} from "../../applicativeService/constants/slack";
 
 
 @Injectable()
@@ -46,7 +46,7 @@ export class DomainService {
 
     } else {
       if (!this.subdomain) {
-        return this.subdomain = "wecolearn";
+        return this.subdomain = "lamyne";
       }
     }
 
@@ -69,5 +69,19 @@ export class DomainService {
     return (slacks.indexOf(this.subdomain) !== -1);
   }
 
+  hasRocketChat() {
+    this.getSubDomain();
+    return (rocketchats.indexOf(this.subdomain) !== -1);
+  }
+
+  getSlackSubDomain() {
+    this.getSubDomain();
+    return ( slacksSubDomains[this.subdomain] ? slacksSubDomains[this.subdomain] : null );
+  }
+
+  getRocketChatDomain() {
+    this.getSubDomain();
+    return ( rocketChatDomains[this.subdomain] ? rocketChatDomains[this.subdomain] : null );
+  }
 
 }

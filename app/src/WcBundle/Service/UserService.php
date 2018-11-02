@@ -2,6 +2,8 @@
 
 namespace WcBundle\Service;
 
+use WcBundle\Entity\SlackAccount;
+use WcBundle\Entity\SlackTeam;
 use WcBundle\Entity\User;
 use \Doctrine\Common\Collections\Collection;
 use WcBundle\Entity\Tag;
@@ -75,7 +77,7 @@ class UserService {
     }
 
 
-    $parameters = [ "emailConfirmed", "firstName", "lastName", "profilUrl", "biographie", "intensity", "atmosphere", "latitude", "longitude", "tags", "showProfil", "emailNotifications" ];
+    $parameters = [ "emailConfirmed", "firstName", "lastName", "profilUrl", "biographie", "intensity", "atmosphere", "latitude", "longitude", "tags", "showProfil", "emailNotifications"];
 
     for ($i=0; $i< count($parameters); $i++) {
 
@@ -93,6 +95,9 @@ class UserService {
 
     // insert or update new tags in database
     $oldUser->setTags($this->patchTags($oldUser->getTags(), $user->getTags()));
+
+    // insert or update "slack" accounts
+    $oldUser->setSlackAccounts($this->patchSlackAccounts($oldUser, $user->getSlackAccounts()));
 
 
     $this->em->merge( $oldUser );
@@ -119,7 +124,7 @@ class UserService {
         if (!$oldUserTags->contains($oldTag)) {
           $this->addIterationTag($oldTag);
         }
-        $tags[$i] = $oldTag;
+        $tags[$i] = $oldTag; // if tag already exists, we get the old one and replace it in the persisted variable
 
 
       } else {
@@ -140,6 +145,66 @@ class UserService {
 
   }
 
+  private function patchSlackAccounts(User $oldUser, Collection $slackAccounts)
+  {
+
+    $oldSlackAccounts = $oldUser->getSlackAccounts();
+
+    for( $i = 0; $i < count($slackAccounts); $i++ ) {
+
+      $slackTeam = $this->em
+        ->getRepository(SlackTeam::class)
+        ->findOneBy(["teamId"=>$slackAccounts[$i]->getSlackTeam()->getTeamId(), "type"=>$slackAccounts[$i]->getSlackTeam()->getType()]);
+
+      if ($slackTeam) {
+
+        $slackAccounts[$i] = $this->patchSlackAccount($slackAccounts[$i], $slackTeam, $oldUser);
+
+      } else {
+
+        $slackAccounts[$i] = $this->patchSlackAccount($slackAccounts[$i], null, $oldUser);
+
+      }
+
+      if (!$oldSlackAccounts->contains($slackAccounts[$i])) {
+        $oldSlackAccounts->add($slackAccounts[$i]);
+      }
+
+
+    }
+
+    return $oldSlackAccounts;
+
+
+  }
+
+  private function patchSlackAccount(SlackAccount $slackAccount, $slackTeam, User $user) {
+
+    $oldSlackAccount = $this->em
+    ->getRepository(SlackAccount::class)
+    ->findOneBy(["accountId"=>$slackAccount->getAccountId(), "slackTeam"=>$slackTeam]);
+
+    if ($oldSlackAccount ) {
+
+    return $oldSlackAccount;
+
+    } else {
+
+      // insert new slackaccount :
+      if(null !== $slackTeam) {
+        $slackAccount->setSlackTeam($slackTeam);
+      }
+
+      $slackAccount->setUser($user); // as it is not configured in post !
+
+      return $slackAccount;
+
+    }
+
+
+  }
+
+
   private function insertNewTag(Tag &$tag) {
 
     $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
@@ -148,6 +213,16 @@ class UserService {
     $tag->setCreated($date);
 
   }
+
+  private function insertSlackAccount(SlackAccount $slackAccount) {
+
+    $this->em->persist( $slackAccount );
+    $this->em->flush();
+
+    return $slackAccount;
+
+  }
+
 
   private function addIterationTag(Tag &$tag)
   {

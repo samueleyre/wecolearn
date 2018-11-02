@@ -93,7 +93,6 @@ export class HeaderComponent implements OnInit {
 
     this.screen = GPPDComponent.getScreenSize();
     this.ClientService.get().subscribe((client: User )=> {
-        this.loggerService.log("got client", client)
       this.currentClient = client;
     });
     Logged.get().subscribe( (logged:boolean) => {
@@ -166,7 +165,7 @@ export class HeaderComponent implements OnInit {
 
 
 	loadClient() {
-        this.ClientService.load().subscribe(); // todo: should be in main component
+        // this.ClientService.load().subscribe(); // todo: should be in main component
 	}
 
 	preventDefault(e:any) {

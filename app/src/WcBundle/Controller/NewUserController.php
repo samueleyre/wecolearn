@@ -91,15 +91,8 @@ class NewUserController extends Controller
           }
 
           $domainName = $this->get('domain.service')->getSubDomain($request);
-          $domain = $this->get('domain.service')->getSubDomainEntity($domainName);
 
-          if (!$domain) {
-            $domain = $this->get('domain.service')->createSubDomainEntity($domainName);
-          }
-
-          if (false === $user->getDomains()->indexOf($domain)) {
-            $user->addDomain($domain);
-          }
+          $this->connectDomain($user, $domainName);
 
           $this->get('user.service')->patch( $user, $user->getId() );
 
@@ -139,17 +132,12 @@ class NewUserController extends Controller
     $userManager = $this->get('fos_user.user_manager');
 
     $domainName = $this->get('domain.service')->getSubDomain($request);
-    $domain = $this->get('domain.service')->getSubDomainEntity($domainName);
 
-    if (!$domain) {
-      $domain = $this->get('domain.service')->createSubDomainEntity($domainName);
-    }
-
+    $this->connectDomain($user, $domainName);
 
     $user->setRoles(['ROLE_USER']);
     $user->setPlainPassword($user->getPassword());
     $user->setEnabled(true);
-    $user->addDomain($domain);
     $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
     $user->setCreated($date);
 
@@ -211,6 +199,22 @@ class NewUserController extends Controller
 
 
     return $ret;
+
+  }
+
+  private function connectDomain(User &$user, $domainName) {
+
+    $domain = $this->get('domain.service')->getSubDomainEntity($domainName);
+
+    if (!$domain) {
+      $domain = $this->get('domain.service')->createSubDomainEntity($domainName);
+    }
+
+    if (false === $user->getDomains()->indexOf($domain)) {
+      $user->addDomain($domain);
+    }
+
+    return $user;
 
   }
 

@@ -8,7 +8,7 @@ export class SlackTeam extends Entity implements IEntity  {
     public team_id : 	string;
     public type : 	string;
 
-    constructor(id?: number , name?:string, team_id?: string, type?: null ) {
+    constructor(id?: number , name?:string, team_id?: string, type?: string ) {
         super();
         this.id = id || null;
         this.name = name || null;

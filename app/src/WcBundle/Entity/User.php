@@ -779,4 +779,19 @@ class User extends BaseUser
   {
     return $this->slackAccounts;
   }
+
+
+  /**
+   * Set slackAccounts
+   *
+   * @param \Doctrine\Common\Collections\Collection
+   */
+  public function setSlackAccounts($slackAccounts)
+  {
+    $this->slackAccounts = $slackAccounts;
+  }
+
+
+
+
 }

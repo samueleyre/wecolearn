@@ -241,6 +241,33 @@
                               </div>
                             </div>
 
+                          <!-- Textarea -->
+                          <div *ngIf="hasRocketChat" class="form-group">
+                            <label class="col-md-12 control-label label-form" >Nom d'utilisateur du chat de la communauté</label>
+                            <div class="col-md-12" *ngIf="!editing.rocketchatid">
+                              <label for="rocketchatconnect" (click)="makeEditable('rocketchatid')">
+                                <span *ngIf="rocketChatId" class="value-span">{{rocketChatId}}<button type="button" class="btn btn-sm btn-edit" ><i class="fa fa-pencil" aria-hidden="true"></i></button></span>
+                                <button *ngIf="!rocketChatId" id="rocketchatconnect" type="button" class="btn btn-primary"  >
+                                  Connecter le chat de la communauté
+                                </button>
+                              </label>
+                              <p class="help-input">
+                                Connecter le compte rocketchat permettra aux autres apprenants d'ouvrir une conversation directement sur le rocketchat de la communauté.
+                              </p>
+                            </div>
+                            <div *ngIf="editing.rocketchatid" class="col-md-12">
+                              <input placeholder="Nom d'utilisateur tel que définit dans votre profil" id="rocketchatid" class="form-control" [(ngModel)]="rocketChatId" name="rocketChatId" #rochetchatid="ngModel">
+                              <div class="btn-container">
+                                <button type="button" name="submit" (click)="connectRocketChat()" class="btn btn-sm btn-primary">Enregistrer</button>
+                              </div>
+                              <div *ngIf="f.submitted && !rocketchatid.valid" class="help-block"></div>
+                              <p class="help-input">
+                                Vous trouverez le nom d'utilisateur dans la partie profil de votre commpte sur le chat de la communauté
+                              </p>
+                            </div>
+                          </div>
+
+
 
                           <!-- Button -->
                           <div class="form-group" id="showProfilContainer">

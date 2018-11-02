@@ -34,6 +34,8 @@ import { APP_BASE_HREF, Location } from '@angular/common';
 import {image} from "../../../../../applicativeService/constants/image";
 import {DomainService} from "./../../../../service/domain";
 import { AuthenticationService } from './../../../../../applicativeService/authentication/service';
+import {SlackTeam} from "../../../../entities/slackTeam/entity";
+import {SlackAccount} from "../../../../entities/slackAccount/entity";
 
 
 
@@ -134,8 +136,9 @@ export class ProfilSettingsComponent implements OnInit {
     };
     private redirectURI : string;
     private hasSlack: boolean;
+    private hasRocketChat: boolean;
     private hasSlackAccount: boolean = false;
-
+    private rocketChatId: string;
 
 
 
@@ -166,6 +169,7 @@ export class ProfilSettingsComponent implements OnInit {
     load() : void {
       let subDomain = this.domainService.getSubDomain();
       this.hasSlack = this.domainService.hasSlack();
+      this.hasRocketChat = this.domainService.hasRocketChat();
       if (subDomain === "wecolearn") {
         subDomain = '';
       } else {
@@ -202,7 +206,9 @@ export class ProfilSettingsComponent implements OnInit {
           this.client['image'] = new Image();
         }
 
-        this.hasSlackAccount =  this.clientService.hasSlackAccount(client);
+        this.hasSlackAccount =  (null !== this.clientService.getSlackAccount(client, 'slack'));
+        this.rocketChatId =  this.clientService.getSlackAccount(client, 'rocketchat');
+        // console.log("rocketchatid", this.rocketChatId)
 
     }
 
@@ -336,6 +342,7 @@ export class ProfilSettingsComponent implements OnInit {
         biographie: value,
         intensity: value,
         geolocation: value,
+        rocketchatid: value
       };
 
       // if (this.client['first_name'] === '') this.editing['first_name'] = true; // the intention was to make editing mode apear when value in DB was null
@@ -350,6 +357,28 @@ export class ProfilSettingsComponent implements OnInit {
       }, 200)
     }
 
+    private connectRocketChat() {
+
+      let subDomain = this.domainService.getSubDomain();
+
+      let found = false;
+      for(let i = 0; i < this.client.slack_accounts.length; i++) {
+        if( this.client.slack_accounts[i].slack_team.type === "rocketchat" && this.client.slack_accounts[i].slack_team.team_id === subDomain) {  // for rocketchat we use subodmain as an id for a rocketchat team
+          this.client.slack_accounts[i].account_id = this.rocketChatId;
+          found = true;
+        }
+      }
+      if (false === found) {
+        let newTeam = new SlackTeam(null, subDomain, subDomain, 'rocketchat');
+        let newAccount = new SlackAccount(null, null, this.rocketChatId, newTeam);
+        this.client.slack_accounts.push(newAccount);
+      }
+
+
+      this.submit();
+
+
+    }
 
 
 

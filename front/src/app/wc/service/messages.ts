@@ -235,21 +235,17 @@ export class MessagesService {
 
   private getMessages() :void {
 
-    let getClientSubscribe = this.ClientService.get()
+    this.ClientService.get()
       .subscribe(
         (user: User) => {
-          if (user && this.router.url === "/search" && null === this.currentClient.id) {
-            this.currentClient = user;
-            this.sentMessages = user.sent_messages;
-            this.receivedMessages = user.received_messages;
-            this.generateMessages();
-            getClientSubscribe.unsubscribe(); // this doens't work ?
-
-          }
-        });
-
-
-
+          // console.log("getmessage", user)
+      if (user && this.router.url === "/search" && null === this.currentClient.id) {
+        this.currentClient = user;
+        this.sentMessages = user.sent_messages;
+        this.receivedMessages = user.received_messages;
+        this.generateMessages();
+      }
+    });
 
   }
 
