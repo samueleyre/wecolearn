@@ -37,18 +37,24 @@ export class ClientService {
 
   get(): Observable<User> {
     if (null === this.currentClientStatic) {
-      this.loggerService.log("get client static")
+      this.loggerService.log("get client subject")
       return this.currentClientSubject.asObservable();
     } else {
-      this.loggerService.log("get client object")
-      return new Observable<User>((subscriber: Subscriber<User>) => subscriber.next(this.currentClientStatic));
+      this.loggerService.log("get client static", this['currentClientStatic'])
+      return new Observable<User>((subscriber: Subscriber<User>) => subscriber.next(this['currentClientStatic']));
     }
   }
 
   patch(client: User) {
-
+    client = this.filterPatch(client);
     return this.http.patch(`/api/client`, client)
+  }
 
+  filterPatch(client: User) {
+    client.received_messages = [];
+    client.messages = [];
+    client.sent_messages = [];
+    return client;
   }
 
 

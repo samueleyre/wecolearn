@@ -188,6 +188,7 @@ export class ProfilSettingsComponent implements OnInit {
       });
 
       this.clientService.get().subscribe( ( client: User) => {
+        console.log("client", client)
           this.setClient(client);
       });
 

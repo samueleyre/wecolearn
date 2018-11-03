@@ -24,10 +24,9 @@ export class TagService {
   public findTags(text:string): Observable<Array<String>> {
 
 
-    return this.http.get(`/api/findTag?tagLetters=`+text).pipe(map((response: any) => {
+    return this.http.get(`/api/findTag?tagLetters=`+text).pipe(map((tags: any) => {
 
-      // console.log(response)
-      let tags = response;
+      tags.unshift(new Tag(null, text))
 
       return tags.map(function(obj:any) {
         return obj.name;
