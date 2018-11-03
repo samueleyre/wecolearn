@@ -20,6 +20,11 @@ export class ThreadsService {
   // `orderedThreads` contains a newest-first chronological list of threads
   public orderedThreads: Observable<Thread[]> = new EmptyObservable();
 
+
+  // `orderedThreads` contains the newest-first chronological list of threads
+  public newThreadsSubject : BehaviorSubject<Array<Thread>> = new BehaviorSubject<Array<Thread>>([]);
+
+
   // `currentThread` contains the currently selected thread
   currentThread: Subject<Thread> =
     new BehaviorSubject<Thread>(new Thread());
@@ -58,6 +63,15 @@ export class ThreadsService {
         const threads: Thread[] = _.values(threadGroups);
         return _.sortBy(threads, (t: Thread) => t.lastMessage.created).reverse();
       }));
+
+    // `orderedThreads` contains the newest-first chronological list of threads
+    this.orderedThreads.subscribe(
+        (currentThreads: Array<Thread>) => {
+          // console.log("currentThreads comp !! ", currentThreads)
+          this.newThreadsSubject.next(currentThreads);
+        },
+        (error) => console.log('error', error)
+    );
 
     // `currentThreadMessages` Observable that contains the set of messages for the currently selected thread
     this.currentThreadMessages = this.currentThread.pipe(

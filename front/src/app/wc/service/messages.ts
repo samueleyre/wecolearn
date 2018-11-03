@@ -128,18 +128,15 @@ export class MessagesService {
 
   // an imperative function call to this action stream
   addMessage(message: Message): void {
-    // this.loggerService.log("adding message", message)
     this.newMessages.next(message);
   }
 
   addMessageToUpdate(message: Message): void {
-      this.loggerService.log("add to be updated", message)
     this.messagesToUpdate.push(message);
   }
 
   pushUpdatedMessages(): Observable<void> {
 
-    // console.log("pushUpdatedMessages")
     if (this.messagesToUpdate.length > 0) {
         this.loggerService.log("going to be sent", this['messagesToUpdate'])
       return this.http.patch(`/api/messages`, this.messagesToUpdate).pipe(map((response: Response) => {
@@ -204,7 +201,6 @@ export class MessagesService {
 
   private newTimer(period:number = MessagesService.initialPeriod) : void {
 
-    // console.log("period change", period)
     if ( false === this.loggedService.get() ) {
       return;
     }
@@ -214,7 +210,6 @@ export class MessagesService {
 
     // only fires when component is alive
     this.timerSubscription = this.timer.subscribe(() => {
-      // console.log("timer called", period)
       this.checkNewMessages();
     });
 
@@ -238,12 +233,11 @@ export class MessagesService {
     this.ClientService.get()
       .subscribe(
         (user: User) => {
-          // console.log("getmessage", user)
-      if (user && this.router.url === "/search" && null === this.currentClient.id) {
-        this.currentClient = user;
-        this.sentMessages = user.sent_messages;
-        this.receivedMessages = user.received_messages;
-        this.generateMessages();
+          if (user && null === this.currentClient.id) {
+          this.currentClient = user;
+          this.sentMessages = user.sent_messages;
+          this.receivedMessages = user.received_messages;
+          this.generateMessages();
       }
     });
 
@@ -280,7 +274,6 @@ export class MessagesService {
   private generateMessages() {
 
     this.messages = new EmptyObservable();
-    // console.log("messages", this['messages'])
 
     let messagestoBeAdded: Array<Message> = [];
 

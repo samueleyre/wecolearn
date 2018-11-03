@@ -5,7 +5,7 @@ WcBundle\Entity\SlackAccount:
         id:
           groups: [ input, output ]
         accountId:
-          groups: [ input, output ]
+          groups: [ input, output, search ]
         slackTeam:
           groups: [ input, output, search ]
 

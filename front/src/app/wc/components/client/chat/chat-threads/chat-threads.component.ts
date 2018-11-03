@@ -18,10 +18,8 @@ import {Logged} from "../../../../../applicativeService/authguard/logged";
   styleUrls: ['./chat-threads.component.scss']
 })
 export class ChatThreadsComponent {
-  threads: Observable<any>;
-  // currentThreads: Array<Thread> = [new Thread()];
-  newThreads : Subject<Array<Thread>> =
-      new BehaviorSubject<Array<Thread>>([new Thread()]);
+  newThreads : BehaviorSubject<Array<Thread>> =
+      new BehaviorSubject<Array<Thread>>([]);
 
 
   constructor(public threadsService: ThreadsService, private ref: ChangeDetectorRef, private ngZone: NgZone ) {
@@ -29,14 +27,8 @@ export class ChatThreadsComponent {
   }
 
   ngOnInit():void{
-    this.threadsService.orderedThreads.subscribe(
-        (currentThreads: Array<Thread>) => {
-          // console.log("currentThreads comp !! ", currentThreads)
-          this.newThreads.next(currentThreads);
 
-        },
-        (error) => console.log('error', error)
-    );
+    this.newThreads = this.threadsService.newThreadsSubject;
 
 
     Logged.get().subscribe( (logged:boolean) => {

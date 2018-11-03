@@ -36,12 +36,12 @@ export class ClientService {
   }
 
   get(): Observable<User> {
-    // this.loggerService.log("get client")
     if (null === this.currentClientStatic) {
+      this.loggerService.log("get client static")
       return this.currentClientSubject.asObservable();
     } else {
+      this.loggerService.log("get client object")
       return new Observable<User>((subscriber: Subscriber<User>) => subscriber.next(this.currentClientStatic));
-
     }
   }
 

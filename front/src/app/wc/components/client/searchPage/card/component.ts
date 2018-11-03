@@ -107,7 +107,6 @@ export class CardComponent implements OnInit {
 
         let currentClientSlackAccount = this.currentClient.slack_accounts.find((slack_account:any)=> (slack_account.slack_team.type === this.types[i]));
         let cardSlackAccount = this.card.slack_accounts.find((slack_account:any)=> (slack_account.slack_team.type === this.types[i]));
-
         if (undefined !== cardSlackAccount && undefined !==  currentClientSlackAccount) {
           this.cardSlackId[this.types[i]] = cardSlackAccount.account_id;
           this.showSlack[this.types[i]] = ( cardSlackAccount.slack_team.id === currentClientSlackAccount.slack_team.id );
