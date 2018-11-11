@@ -9,6 +9,7 @@ import {HttpClient} from "@angular/common/http";
 import {IEntity} from "../../applicativeService/entity/interface";
 import {Message} from "../entities/message/entity";
 import {LoggerService} from "../../applicativeService/logger/service";
+import {Logged} from "../../applicativeService/authguard/logged";
 
 
 @Injectable()
@@ -22,7 +23,6 @@ export class ClientService {
 
   constructor(protected http : HttpClient, private loggerService: LoggerService) {
       this.endpoint = '/api/client';
-      this.load().subscribe();
   }
 
   getOb(): any {
@@ -36,8 +36,12 @@ export class ClientService {
   }
 
   get(): Observable<User> {
+    Logged.get().subscribe( (logged:boolean) => {
+      if (logged) {
+        this.load().subscribe();
+      }
+    });
     if (null === this.currentClientStatic) {
-      this.loggerService.log("get client subject")
       return this.currentClientSubject.asObservable();
     } else {
       this.loggerService.log("get client static", this['currentClientStatic'])
@@ -68,12 +72,12 @@ export class ClientService {
 
 
   load(): Observable<void>  {
-      return this.http.get(`${this.endpoint}`).pipe(
-          map((response: User) => {
-            // this.loggerService.log("got client")
-            this.currentClientSubject.next(response);
-              this.currentClientStatic = response;
-          }));
+    return this.http.get(`${this.endpoint}`).pipe(
+        map((response: User) => {
+          this.currentClientSubject.next(response);
+          this.currentClientStatic = response;
+        }));
+
   }
 
   getSlackAccount(client: User, type: string) {
