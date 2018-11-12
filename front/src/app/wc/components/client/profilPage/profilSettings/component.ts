@@ -186,9 +186,8 @@ export class ProfilSettingsComponent implements OnInit {
           this.slackConnect(params['code'], this.redirectURI)
         }
       });
-
       this.clientService.get().subscribe( ( client: User) => {
-        console.log("client", client)
+        // console.log("client", client)
           this.setClient(client);
       });
 

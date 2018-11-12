@@ -92,6 +92,7 @@ export class HeaderComponent implements OnInit {
 
 
     this.screen = GPPDComponent.getScreenSize();
+
     this.ClientService.get().subscribe((client: User )=> {
       this.currentClient = client;
     });

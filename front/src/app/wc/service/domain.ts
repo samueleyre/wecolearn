@@ -46,7 +46,7 @@ export class DomainService {
 
     } else {
       if (!this.subdomain) {
-        return this.subdomain = "lamyne";
+        return this.subdomain = "lesbricodeurs";
       }
     }
 

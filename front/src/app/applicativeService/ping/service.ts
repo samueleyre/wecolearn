@@ -22,6 +22,7 @@ export class PingService {
 
   public ping(url: string) : Observable<boolean>{
 
+
     return this
         .http
         .get( '/api/ping' ).pipe(
@@ -48,29 +49,11 @@ export class PingService {
             Logged.set(logged);
             return logged;
           }
-        }),);
+        }));
 
 
   }
 
-  public pingHome(): Observable<void> {
-
-    return this
-        .http
-        .get( '/api/ping' ).pipe(
-        map(response=>{
-          if( 401 !== response['status']  &&  403 !== response['status']) {
-            this.loggerService.log("Loggin set true")
-            Logged.set(true);
-            this.router.navigate(['/search']);
-          } else {
-            Logged.set(false);
-          }
-
-        }))
-
-
-  }
 
 
 }

@@ -99,6 +99,7 @@ export class CardComponent implements OnInit {
     this.avatarSrcBase =  GPPDComponent.updateUrl('/img/');
 
     this.screen =  GPPDComponent.getScreenSize();
+
     this.clientService.get().subscribe((client:User)=> {
 
 

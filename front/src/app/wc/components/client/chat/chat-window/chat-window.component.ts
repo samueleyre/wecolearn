@@ -35,7 +35,6 @@ export class ChatWindowComponent implements OnInit {
   draftMessage: Message;
   currentUser: User = null;
   private disabled = false;
-  // private element: ElementRef;
   @ViewChild('chatInput') inputEl:ElementRef;
 
 
@@ -64,9 +63,8 @@ export class ChatWindowComponent implements OnInit {
       });
 
 
-    // console.log("client - message iwndow", this.ClientService.getCli());
 
-    let currentUser = this.ClientService.getCli()
+    const currentUser = this.ClientService.getCli()
 
     if (currentUser) {
 
@@ -76,16 +74,8 @@ export class ChatWindowComponent implements OnInit {
     this.ClientService.get()
         .subscribe(
             (user: User) => {
-              // console.log("got client - message window", user)
                 this.currentUser = user;
         });
-
-    // this.ClientService.getOb().subscribe(
-    //   (user: Client) => {
-    //       console.log("yoyo", user)
-    //
-    //   }
-    // );
 
 
     this.messages

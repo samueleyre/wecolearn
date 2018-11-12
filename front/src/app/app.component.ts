@@ -51,7 +51,6 @@ export class AppComponent  implements OnInit {
           // this.loggerService.log("route changed", event)
         this.domainService.setSubDomain();
         this.setThemeCss();
-        // console.log("ON EVERY LOAD ? ?? ?", this.domainService.setSubDomain())
 
           if (event instanceof NavigationEnd) {
             // this.loggerService.log("route changed", event, event.urlAfterRedirects)

@@ -85,7 +85,7 @@ export class GeolocationComponent implements OnInit {
 
     this.mapsAPILoader.load().then(() => {
 
-      console.log("got element", <HTMLInputElement>document.getElementById('searchGeolocation'))
+      // console.log("got element", <HTMLInputElement>document.getElementById('searchGeolocation'))
 
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"]
@@ -120,7 +120,6 @@ export class GeolocationComponent implements OnInit {
     // private ngOnChanges(changes:any) {
     //     console.log(changes);
     //     if (!changes.latitude.firstChange || !changes.latitude.firstChange) {
-    //     console.log("yooooo", changes.longitude.currentValue);
     //         let newLongitude = changes.longitude.currentValue;
     //         let newLatitude = changes.longitude.currentValue;
     //         this.latitude = Number(newLatitude);
