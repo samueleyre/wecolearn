@@ -10,14 +10,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use AppBundle\Env\ScanAndCopy;
 class Env extends Command
 {
-    private $logger;
 
-    public function __construct(LoggerInterface $logger )
+    public function __construct()
     {
-        
-        parent::__construct();
 
-        
+        parent::__construct();
 
     }
 
