@@ -210,7 +210,7 @@ class NewUserController extends Controller
       $domain = $this->get('domain.service')->createSubDomainEntity($domainName);
     }
 
-    if (false === $user->getDomains()->indexOf($domain)) {
+    if (null === $user->getDomains() || false === $user->getDomains()->indexOf($domain)) {
       $user->addDomain($domain);
     }
 
