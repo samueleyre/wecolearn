@@ -20,15 +20,13 @@ export class CommunitiesComponent implements OnInit {
 
     ];
 
-    if (process.env.NODE_ENV !== 'production') {
 
-      this.communities.push({
-        title: "La Myne",
-        description:  "La MYNE est un laboratoire de recherche pour les citoyen.ne.s qui expérimentent le futur. Nous agissons en Tier(s)-Lieu(x) par les Communs.",
-        subDomain: "lamyne"
-      });
+    this.communities.push({
+      title: "La Myne",
+      description:  "La MYNE est un laboratoire de recherche pour les citoyen.ne.s qui expérimentent le futur. Nous agissons en Tier(s)-Lieu(x) par les Communs.",
+      subDomain: "lamyne"
+    });
 
-    }
 
 
   }
