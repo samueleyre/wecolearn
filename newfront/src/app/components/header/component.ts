@@ -76,19 +76,13 @@ export class HeaderComponent implements OnInit {
     this.webPath = GPPDComponent.updateUrl('/')
     this.imagePath = this.webPath + "img/";
     this.subDomain = this.domainService.getSubDomain();
-    // console.log(this.subDomain)
-
-
     this.logoPath = this.webPath+'logo/'+this.subDomain+".png";
-
-
     this.screen = GPPDComponent.getScreenSize();
 
     this.ClientService.get().subscribe((client: User )=> {
       this.currentClient = client;
     });
     Logged.get().subscribe( (logged:boolean) => {
-      this.loggerService.log("logged ??? ", logged)
       this.connected = logged;
       if (logged) {
         this.loadClient();

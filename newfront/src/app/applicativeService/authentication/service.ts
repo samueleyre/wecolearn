@@ -80,7 +80,9 @@ export class AuthenticationService {
         this.tokenService.clear();
         Logged.set(false);
         if( returnHome) {
-          this.router.navigate(['/']);
+          setTimeout(()=>{
+            this.router.navigate(['/']);
+          })
         }
       return this;
 

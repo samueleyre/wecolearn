@@ -179,10 +179,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-6 control-label label-form" >
-                                  <span>Ambiance</span>
-                                  <button *ngIf="!client.atmosphere" type="button" class="btn btn-sm btn-edit" (click)="makeEditable('atmosphere')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                                </label>
+
+                              <label class="col-md-6 control-label label-form" >Ambiance </label>
+
+                              <div class="col-md-12" *ngIf="!editing.atmosphere">
+                                    <span class="help-input" *ngIf="!client.atmosphere">Choisir l'ambiance</span>
+                                    <button type="button" class="btn btn-sm btn-edit" (click)="makeEditable('atmosphere')" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                              </div>
 
                               <div class="col-md-12">
                                     <div class="imageContainer">
@@ -194,7 +197,6 @@
                                             <img *ngIf="editing.atmosphere" src="{{webPath}}settings/{{atmosphere.image}}">
                                           </div>
                                         </label>
-
                                     </div>
                                     <div *ngIf="!firstTime" class="btn-container">
                                       <button *ngIf="editing.atmosphere" name="submit" class="btn btn-sm btn-primary">Enregistrer</button>

@@ -17,8 +17,9 @@ import {ThreadsService}           from "../../../../service/threads.service";
 import {SearchService}            from "../../../../service/search";
 import {LoggedService} from "../../../../service/logged";
 import {LoggerService} from "../../../../applicativeService/logger/service";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {ClientService} from "../../../../service/client";
+import {Thread} from "../../../../entities/thread/entity";
 
 
 @Component({
@@ -38,7 +39,7 @@ export class SearchComponent extends GPPDComponent implements OnInit {
     private openChat: string;
     private loading: Observable<boolean>;
     private currentlySearching: boolean = false;
-
+    public noThreads : boolean = true;
 
   constructor( protected service: GPPDService,
                  private activatedRoute: ActivatedRoute,
@@ -61,6 +62,9 @@ export class SearchComponent extends GPPDComponent implements OnInit {
 
     load() : void {
 
+      this.threadsService.newThreadsSubject.subscribe((threads) => {
+        this.noThreads = (threads.length === 0);
+      });
 
       this.searchService.getCurrentFoundClients().subscribe( ( clients:any[] ) => {
         this.cards = clients;

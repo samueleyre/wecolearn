@@ -11,7 +11,16 @@ use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
-  public function search(User $user = null, Tag $tag = null, $first = 0, $max = 10, $startLatitude = null, $startLongitude = null, $noUserTags = false, $domain = "wecolearn")
+  public function search(
+    User $user = null,
+    Tag $tag = null,
+    $first,
+    $max,
+    $startLatitude,
+    $startLongitude,
+    $domain,
+    $parameters
+  )
   {
 
     if (!$startLatitude || !$startLongitude) {
@@ -21,7 +30,7 @@ class UserRepository extends EntityRepository
 
     $tags = [];
 
-    if ($user && !$noUserTags) {
+    if ($user && $parameters['withUserTags']) {
       $tags = $user->getTags();
     }
 
@@ -50,13 +59,15 @@ class UserRepository extends EntityRepository
       $qb->innerJoin('user.domains', 'd');
     }
 
-//    $qb->where( 't.type = :number' )->setParameter('number', 0);
     $qb->Where('user.showProfil = :showProfil')->setParameter('showProfil', 1);
     if ($user) {
       $qb->andWhere('user.id != :userId')->setParameter('userId', $user->getId());
     }
     if ($tag) {
       $qb->andWhere(sprintf('t.id=%s', $tag->getId()));
+    }
+    if ($parameters['onlyLearnTags']) {
+      $qb->andWhere( 't.type = :number' )->setParameter('number', 0);
     }
 
     if ($domain) {
@@ -77,7 +88,7 @@ class UserRepository extends EntityRepository
     $qb->having('distance < 100');
 
 //    syslog(LOG_ERR,$qb->getQuery()->getSQL());
-
+//    return $qb->getQuery()->getSQL();
     $ret = $qb->getQuery()->getResult();
 
     return $ret;

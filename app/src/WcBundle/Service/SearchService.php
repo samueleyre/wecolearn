@@ -49,16 +49,31 @@ class SearchService extends GPPDService {
         }
       }
 
+
+     $parameters = [
+       'withUserTags' => true,
+       'onlyLearnTags' => true
+     ];
+
+      // search by user tags & learn tags ( type 0 )
       $result =  $this->em
       ->getRepository(User::class)
-      ->search($user, $tag, $first, $max, $latitude, $longitude, false, $domain);
+      ->search($user, $tag, $first, $max, $latitude, $longitude, $domain, $parameters);
 
-     // todo: search for type 0, if less than 5, search for other types.
-
+     // search by user tags & not only learn tags ( types 0, 1, 2 )
      if ($result === [] ) {
-        $result = $this->em
+       $parameters['onlyLearnTags'] = false;
+       $result =  $this->em
+         ->getRepository(User::class)
+         ->search($user, $tag, $first, $max, $latitude, $longitude, $domain, $parameters);
+     }
+
+     // search by input tag only
+     if ($result === [] ) {
+       $parameters['withUserTags'] = false;
+       $result = $this->em
           ->getRepository(User::class)
-          ->search($user, $tag, $first, $max, $latitude, $longitude, true, $domain);
+          ->search($user, $tag, $first, $max, $latitude, $longitude, $domain, $parameters);
      }
 
      return $result;

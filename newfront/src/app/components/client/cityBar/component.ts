@@ -28,16 +28,12 @@ export class CityBarComponent implements OnInit {
 
     constructor(private searchService: SearchService,
                 private LoggedService: LoggedService,) {
-      this.defaultCity = new City({id: 1, latitude: 45.75, longitude: 4.85, name:"Lyon"})
+      this.defaultCity = this.searchService.getDefaultCity();
     }
 
     ngOnInit() {
       this.searchAutoComplete = [this.defaultCity];
       this.searchInput = "Lyon";
-      // let logged = this.LoggedService.get();
-      // if (logged) {
-      this.searchService.addSearchParameter("city", this.defaultCity); // should be getting city of user
-      // }
     }
 
     onChange() {
