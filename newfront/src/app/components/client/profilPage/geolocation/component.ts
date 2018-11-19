@@ -6,13 +6,18 @@ import {
   EventEmitter, Renderer2
 } from '@angular/core';
 
-    import { ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import { FormControl } from '@angular/forms';
-// import { } from 'googlemaps';
+
 import { MapsAPILoader } from '@agm/core';
+
+
+declare const google: any;
+
+
 
 
 @Component({
@@ -46,7 +51,7 @@ export class GeolocationComponent implements OnInit {
   @Input() public longitude: number;
   @Input() public editing: boolean;
   @Input() public firstTime: boolean;
-  private zoom = 14;
+  public zoom = 14;
 
   @Output() latitudeChange = new EventEmitter<number>();
   @Output() longitudeChange = new EventEmitter<number>();

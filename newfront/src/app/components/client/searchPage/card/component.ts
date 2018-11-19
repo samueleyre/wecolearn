@@ -11,7 +11,7 @@ import { User} from '../../../../entities/user/entity';
 import { Image } from '../../../../entities/image/entity';
 
 import { GPPDService } from '../../../../service/gppd';
-import { GPPDComponent } from './../../../component/gppd';
+import { GPPDComponent } from '../../../component/gppd';
 
 import {SearchService} from '../../../../service/search';
 import {LoggedService} from '../../../../service/logged';

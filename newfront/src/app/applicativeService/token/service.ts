@@ -1,23 +1,22 @@
-import { Injectable }               from '@angular/core';
-import { LocalStorageService }       from 'angular-2-local-storage';
+import { Injectable } from '@angular/core';
+import { LocalStorage } from '@ngx-pwa/local-storage';
+import {Observable} from 'rxjs';
 
- 
 @Injectable()
 export class TokenService {
-    
-    public token: string;
+  public token: string;
 
-    constructor( private localStorage: LocalStorageService ) {}
- 
-    public set( token: string ): void {
-        this.localStorage.set('token', token );
-    }
- 
-    public get(): any {
-        return this.localStorage.get('token');
-    }
+  constructor( private localStorage: LocalStorage ) {}
 
-    public clear(): void {
-        this.localStorage.remove('token');
-    }
+  public set( token: string ): void {
+    this.localStorage.setItem('token', token).subscribe(() => {});
+
+  }
+  public get(): Observable<any> {
+    return this.localStorage.getItem<string>('token');
+  }
+
+  public clear(): void {
+    this.localStorage.removeItem('token').subscribe(() => {});
+  }
 }

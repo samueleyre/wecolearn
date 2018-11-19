@@ -6,8 +6,8 @@ import { GPPDService }             from '../../service/gppd';
 import { IEntity }                 from '../../applicativeService/entity/interface';
 
 import { MessageService }          from '../../applicativeService/message/service';
+import {environment} from "../../../environments/environment";
 
-import { environment  }            from '../../applicativeService/config/environment';
 
 export class GPPDComponent {
     

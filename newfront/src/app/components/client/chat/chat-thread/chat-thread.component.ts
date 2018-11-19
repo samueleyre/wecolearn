@@ -8,9 +8,9 @@ import {
 import { Observable } from 'rxjs';
 import { ThreadsService } from './../../../../service/threads.service';
 import { Thread } from '../../../../entities/thread/entity';
-import {GPPDComponent} from "../../../../component/gppd";
+import {GPPDComponent} from "../../../component/gppd";
 import {MessagesService} from "../../../../service/messages";
-import { image }            from "../../../../../applicativeService/constants/image";
+import { image }            from "../../../../applicativeService/constants/image";
 
 
 @Component({

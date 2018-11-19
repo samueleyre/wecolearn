@@ -1,14 +1,13 @@
 import {BrowserModule } from '@angular/platform-browser';
-import {FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {APP_BASE_HREF, Location } from '@angular/common';
+import {APP_BASE_HREF, CommonModule, Location} from '@angular/common';
 import {getBaseLocation } from './applicativeService/base_url/base_url';
 import {UploadModule} from './applicativeService/upload/module';
 import {MessageModule } from './applicativeService/message/module';
 import {EqualValidator } from './applicativeService/form/validator/equalValidator';
-import {routing } from './applicativeService/routing/app.routing';
 import {AppComponent } from './app.component';
 import {LoginComponent } from './components/login/component';
 import {ConfirmEmailComponent} from './components/confirmEmail/component';
@@ -60,7 +59,33 @@ import {PeriodService} from './service/period';
 import {SearchService} from './service/search';
 import {TagService} from './service/tag';
 import {LoggedService} from './service/logged';
-import {HttpClient} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {MomentModule} from "angular2-moment";
+import {MatNativeDateModule} from "@angular/material";
+import {BootstrapModalModule} from "ngx-modialog/plugins/bootstrap";
+import {ModalModule} from "ngx-modialog";
+import {QuillModule} from "ngx-quill";
+import {NgxPageScrollModule} from "ngx-page-scroll";
+import {Ng2ImgMaxModule} from "ng2-img-max";
+import {AgmCoreModule} from "@agm/core";
+import {environment} from "../environments/environment";
+import {TagInputModule} from "ngx-chips";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NguiAutoCompleteModule} from "@ngui/auto-complete";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+import {LocalStorageModule} from "angular-2-local-storage";
+import {FilterComponent} from "./applicativeService/filter/component";
+import {HttpApiInterceptor} from "./applicativeService/interceptor/httpApiInterceptor";
+import {AuthenticationService} from "./applicativeService/authentication/service";
+import {AuthGuard} from "./applicativeService/authguard/service";
+import {TokenService} from "./applicativeService/token/service";
+import {UserService} from "./applicativeService/user/service";
+import {HeaderBag} from "./applicativeService/interceptor/header-bag";
+import {FilterService} from "./applicativeService/filter/service";
+import {PingService} from "./applicativeService/ping/service";
+import {WcRoutingModule} from "./app-routing.module";
+
 
 
 
@@ -74,9 +99,39 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     MessageModule,
-    routing,
     UploadModule,  // is this used ?
     LoadersCssModule,
+    NgbModule,
+    BrowserModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UploadModule,
+    MatNativeDateModule,
+    MomentModule,
+    RouterModule,
+    QuillModule,
+    ModalModule.forRoot(),
+    BootstrapModalModule,
+    NgxMyDatePickerModule.forRoot(),
+    NgxPageScrollModule,
+    Ng2ImgMaxModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.mapApiKey,
+      libraries: ["places"]
+    }),
+    TagInputModule,
+    BrowserAnimationsModule,
+    NguiAutoCompleteModule,
+    InfiniteScrollModule,
+    HttpClientModule,
+    LocalStorageModule.withConfig({
+      prefix: 'my-app',
+      storageType: 'localStorage'
+    }),
+    MessageModule,
+    WcRoutingModule
+
   ],
   declarations: [
     LoginComponent,
@@ -116,7 +171,9 @@ const appRoutes: Routes = [
     ResetPasswordFormComponent,
     SendPasswordConfirmationEmailComponent,
     CardComponent,
-    WcTagInputComponent
+    WcTagInputComponent,
+    FilterComponent,
+
 
   ],
   providers : [
@@ -139,12 +196,25 @@ const appRoutes: Routes = [
     MessagesService,
     ClientService,
     DomainService,
-    SeoService
+    SeoService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpApiInterceptor,
+      multi: true,
+    },
+
+    AuthenticationService,
+    AuthGuard,
+    TokenService,
+    UserService,
+    HeaderBag,
+    FilterService,
+    PingService
   ],
   bootstrap: [
     AppComponent,
-    ConfirmModaleComponent,
-    GeolocationComponent,
+    // ConfirmModaleComponent,
+    // GeolocationComponent,
   ],
 })
 export class AppModule { }

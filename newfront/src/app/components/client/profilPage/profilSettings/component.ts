@@ -7,22 +7,23 @@ import {
 
 import { HttpClient } from '@angular/common/http';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import { IEntity } from '../../../../../applicativeService/entity/interface';
+import { IEntity } from '../../../../applicativeService/entity/interface';
 import { User} from '../../../../entities/user/entity';
 import { Tag } from '../../../../entities/tag/entity';
 import { Image } from '../../../../entities/image/entity';
 import { GPPDService } from '../../../../service/gppd';
 import { ClientService } from '../../../../service/client';
 import { TagService } from '../../../../service/tag';
-import { GPPDComponent } from './../../../../component/gppd';
-import { MessageService } from './../../../../../applicativeService/message/service';
-import {FilterService} from '../../../../../applicativeService/filter/service';
+import { GPPDComponent } from '../../../component/gppd';
+import { MessageService } from '../../../../applicativeService/message/service';
+import {FilterService} from '../../../../applicativeService/filter/service';
 import { APP_BASE_HREF, Location } from '@angular/common';
-import {image} from '../../../../../applicativeService/constants/image';
+import {image} from '../../../../applicativeService/constants/image';
 import {DomainService} from '../../../../service/domain';
-import { AuthenticationService } from './../../../../../applicativeService/authentication/service';
+import { AuthenticationService } from '../../../../applicativeService/authentication/service';
 import {SlackTeam} from '../../../../entities/slackTeam/entity';
 import {SlackAccount} from '../../../../entities/slackAccount/entity';
+import {environment} from "../../../../../environments/environment";
 
 
 
@@ -160,7 +161,7 @@ export class ProfilSettingsComponent implements OnInit {
       } else {
         subDomain += '.';
       }
-      if (process.env.NODE_ENV === 'production') {
+      if (environment.production) {
         this.redirectURI = encodeURIComponent('https://' + subDomain + 'wecolearn.com/profilsettings');
       } else {
         this.redirectURI = encodeURIComponent('http://0.0.0.0:8080/profilsettings');

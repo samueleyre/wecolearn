@@ -17,14 +17,20 @@ export class TagService {
 
 
     return this.http.get(`/api/findTag?tagLetters=`+text).pipe(map((tags: any) => {
-
-      tags.unshift(new Tag(null, text))
+      if (null !== text && '' !== text && 0 === this.findTextInTags(text, tags).length )
+        tags.unshift(new Tag(null, text));
 
       return tags.map(function(obj:any) {
         return obj.name;
       });
 
     }));
+
+  }
+
+  private findTextInTags(text: string, tags: any) {
+
+    return tags.filter(obj => obj.name.includes(text));
 
   }
 

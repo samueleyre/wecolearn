@@ -7,8 +7,6 @@ import {
 
 import {Observable} from 'rxjs';
 
-import { Http, Response }		from '@angular/http';
-
 
 import { FormControl } from '@angular/forms';
 
@@ -27,10 +25,10 @@ import { GPPDComponent }          from '../../component/gppd';
 
 import { MessageService }         from '../../../applicativeService/message/service';
 import {FilterService}            from "../../../applicativeService/filter/service";
-import {log} from "util";
 import { APP_BASE_HREF, Location } from '@angular/common';
 import {image} from "../../../applicativeService/constants/image";
 import {UserService} from "../../../applicativeService/user/service";
+import {environment} from "../../../../environments/environment";
 
 
 
@@ -54,7 +52,7 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
   constructor( protected service: GPPDService,
                protected clientService : ClientService,
                private activatedRoute: ActivatedRoute,
-               protected http : Http, @Inject(APP_BASE_HREF) r:string,
+               @Inject(APP_BASE_HREF) r:string,
                private userService : UserService,
                private router: Router,
   ) {
@@ -73,7 +71,7 @@ export class SettingsComponent extends GPPDComponent implements OnInit {
 
     ngOnInit() {
         this.load();
-      if (process.env.NODE_ENV === 'production') {
+      if (environment.production) {
         this.pattern = "[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
       } else {
         this.pattern = "[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";

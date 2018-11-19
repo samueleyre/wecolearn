@@ -8,7 +8,7 @@ import { Component, Input }		from '@angular/core';
 })
 export class LanguageComponent {
 	
-	private _idLanguage:number=1;
+	public _idLanguage:number=1;
 
 	@Input()
 	set idLanguage( value : number){

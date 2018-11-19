@@ -1,8 +1,9 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {GPPDComponent} from "../../../../component/gppd";
+import {GPPDComponent} from "../../../component/gppd";
 import {DomainService} from "../../../../service/domain";
 import {Community} from "../../../../entities/community/entity";
 import {Router} from "@angular/router";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
     selector: 'community',
@@ -15,13 +16,13 @@ export class CommunityComponent implements OnInit {
   private webPath: string;
   private logoPath: string;
   private link: string;
-  private environment : string;
+  private production : boolean;
   @Input() community: Community;
 
   constructor(         private domainService: DomainService,
                        private router: Router,
   ) {
-    this.environment = process.env.NODE_ENV;
+    this.production = environment.production;
   }
 
   ngOnInit() {
@@ -34,7 +35,7 @@ export class CommunityComponent implements OnInit {
   setDevSubdomain(e:any) {
 
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (false === environment.production) {
       this.domainService.setDevSubDomain(this.community.subDomain);
       this.router.navigate(['/']);
     }

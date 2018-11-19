@@ -4,8 +4,8 @@ import { Component,
     Injectable, 
     Output }                  from '@angular/core';
 import { FileUploader }       from 'ng2-file-upload';
-import { environment }        from './../config/environment';
 import { HeaderBag }          from './../interceptor/header-bag';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'upload',

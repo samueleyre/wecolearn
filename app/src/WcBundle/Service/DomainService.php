@@ -24,6 +24,8 @@ class DomainService {
   }
 
 
+
+
   public function getSubDomain(Request $request) {
 
     $domain = $request->headers->get('origin');
@@ -35,7 +37,7 @@ class DomainService {
     }
 
     if ("dev" === $this->environment) {
-      return "lesbricodeurs";
+      return "wecolearn";
     }
 
     return "wecolearn";

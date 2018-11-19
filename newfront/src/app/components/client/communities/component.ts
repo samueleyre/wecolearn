@@ -19,7 +19,6 @@ export class CommunitiesComponent implements OnInit {
 
     ];
 
-    if (process.env.NODE_ENV !== 'production') {
 
       this.communities.push({
         title: 'La Myne',
@@ -27,7 +26,6 @@ export class CommunitiesComponent implements OnInit {
         subDomain: 'lamyne'
       });
 
-    }
 
 
   }

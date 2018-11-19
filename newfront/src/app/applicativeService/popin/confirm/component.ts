@@ -12,7 +12,7 @@ bootstrap4Mode();
 
 
 @Component({
-    selector: 'confirm',
+    selector: 'app-confirm',
     template: `        
       <button [ngStyle]="styleObj" [ngClass]="buttonClass" (click)="onClick()" class="btn"><i *ngIf="iconName" [ngClass]="iconName" aria-hidden="true"></i>{{iconText}}
       </button>

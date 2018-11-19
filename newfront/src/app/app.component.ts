@@ -9,6 +9,7 @@ import {SearchService} from './service/search';
 import {DomainService} from './service/domain';
 import {GPPDComponent} from './components/component/gppd';
 import {SeoService} from './service/seo';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class AppComponent  implements OnInit {
   private refreshed = false;
   public subDomain = '';
   private themeCssUrl: string;
+  public sanitizer;
 
   constructor(
       private router: Router,
@@ -34,7 +36,10 @@ export class AppComponent  implements OnInit {
       public messagesService: MessagesService,
       private searchService: SearchService,
       private seoService: SeoService,
+      private sanitizerService: DomSanitizer,
   ) {
+
+    this.sanitizer = sanitizerService;
     this.setThemeCss();
     this.location = this.router.url;
     router.events.subscribe(event => {

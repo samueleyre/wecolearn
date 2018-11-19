@@ -11,10 +11,10 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 
 import { NgForm }             from '@angular/forms';
 
-import { IEntity }                from '../../../../../applicativeService/entity/interface';
+import { IEntity }                from '../../../../applicativeService/entity/interface';
 
 
-import { MessageService }         from './../../../../../applicativeService/message/service';
+import { MessageService }         from '../../../../applicativeService/message/service';
 import { SearchService }         from './../../../../service/search';
 import {log} from "util";
 import {SafeHtml} from "@angular/platform-browser";

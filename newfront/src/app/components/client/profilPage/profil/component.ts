@@ -9,14 +9,14 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import { NgForm } from '@angular/forms';
 
-import { IEntity } from '../../../../../applicativeService/entity/interface';
+import { IEntity } from '../../../../applicativeService/entity/interface';
 import { User } from '../../../../entities/user/entity';
 
 import { GPPDService } from './../../../../service/gppd';
-import { GPPDComponent } from './../../../../component/gppd';
+import { GPPDComponent } from '../../../component/gppd';
 
-import { MessageService } from './../../../../../../applicativeService/message/service';
-import {FilterService} from '../../../../../applicativeService/filter/service';
+import { MessageService } from '../../../../applicativeService/message/service';
+import {FilterService} from '../../../../applicativeService/filter/service';
 
 
 @Component({

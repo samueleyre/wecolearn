@@ -4,12 +4,9 @@ import {
   Inject, ChangeDetectorRef, NgZone
 } from '@angular/core';
 import {Observable, BehaviorSubject, Subject} from 'rxjs';
-import { ThreadsService } from './../../../../service/threads.service';
+import { ThreadsService } from '../../../../service/threads.service';
 import { Thread } from '../../../../entities/thread/entity';
-import {Logged} from "../../../../../applicativeService/authguard/logged";
-// import { map} from 'rxjs/operators';
-// import * as _ from "lodash";
-// import {BehaviourSubject} from 'rxjs/BehaviourSubject'
+import {Logged} from "../../../../applicativeService/authguard/logged";
 
 
 @Component({

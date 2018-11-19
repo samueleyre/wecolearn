@@ -16,9 +16,9 @@ import { Thread } from '../../../../entities/thread/entity';
 import { Message } from '../../../../entities/message/entity';
 
 
-import {LoggerService} from "../../../../../applicativeService/logger/service";
+import {LoggerService} from "../../../../applicativeService/logger/service";
 import {Router} from "@angular/router";
-import {Logged} from "../../../../../applicativeService/authguard/logged";
+import {Logged} from "../../../../applicativeService/authguard/logged";
 
 @Component({
   selector: 'chat-window',

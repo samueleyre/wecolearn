@@ -86,7 +86,7 @@
                 <div *ngIf="uploadError[entity.id]" class="alert alert-danger">{{uploadError[entity.id]}}</div>
               </td>
               <td><a target="_blank" href="{{base_url}}/profil/{{ entity.urlprofil }}">{{base_url}}/profil/{{ entity.urlprofil }}</a><copy [data]="base_url+'/profil/'+entity.urlprofil"></copy></td>
-              <td id="delete"><confirm [text]="'ce demandeur d\'emploi'" (ret)="delete(entity.id, $event)" ></confirm><div id="rightWindow"></div></td>
+              <td id="delete"><app-confirm [text]="'ce demandeur d\'emploi'" (ret)="delete(entity.id, $event)" ></app-confirm><div id="rightWindow"></div></td>
             </tr>
           </tbody>
         </table>

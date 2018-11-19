@@ -9,11 +9,11 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import {FormControl, NgForm} from '@angular/forms';
 
-import { IEntity } from '../../../../../../applicativeService/entity/interface';
+import { IEntity } from '../../../../../applicativeService/entity/interface';
 import { User } from '../../../../../entities/user/entity';
 
-import { MessageService } from './../../../../../../applicativeService/message/service';
-import {FilterService} from '../../../../../../applicativeService/filter/service';
+import { MessageService } from '../../../../../applicativeService/message/service';
+import {FilterService} from '../../../../../applicativeService/filter/service';
 import {Observable} from 'rxjs';
 import {TagService} from '../../../../../service/tag';
 

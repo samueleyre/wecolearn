@@ -1,13 +1,13 @@
 import {Component, Inject, OnInit, Input} from '@angular/core';
-import { AuthenticationService } from '../../../../../applicativeService/authentication/service';
-import {GPPDComponent} from "../../../../component/gppd";
-import {FilterService} from "../../../../../applicativeService/filter/service";
+import { AuthenticationService } from '../../../../applicativeService/authentication/service';
+import {GPPDComponent} from "../../../component/gppd";
+import {FilterService} from "../../../../applicativeService/filter/service";
 import { SearchService }         from '../../../../service/search';
 import {Router} from "@angular/router";
-import {Logged} from "../../../../../applicativeService/authguard/logged";
+import {Logged} from "../../../../applicativeService/authguard/logged";
 import {LoggedService} from "../../../../service/logged";
-import {LoggerService} from "../../../../../applicativeService/logger/service";
-import {PingService} from "../../../../../applicativeService/ping/service"
+import {LoggerService} from "../../../../applicativeService/logger/service";
+import {PingService} from "../../../../applicativeService/ping/service"
 import {DomainService} from "../../../../service/domain";
 
 @Component({
