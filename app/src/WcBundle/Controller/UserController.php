@@ -20,6 +20,7 @@ use  FOS\RestBundle\Controller\Annotations\Post;
 
 
 use \Doctrine\Common\Collections\Collection;
+use \Doctrine\Common\Collections\Criteria;
 
 use  FOS\RestBundle\Controller\Annotations\Patch;
 use  FOS\RestBundle\Controller\Annotations\Delete;
@@ -45,8 +46,14 @@ class UserController extends Controller
 
     $user = $this->get('security.token_storage')->getToken()->getUser();
 
-    $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
+    $subDomain = $this->get('domain.service')->getSubDomain($request);
+    $domain = $this->get('domain.service')->getSubDomainEntity($subDomain);
 
+    if (false === $user->getDomains()->indexOf($domain)) {
+      $user->addDomain($domain);
+    }
+
+    $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
     $user->setUserUpdated($date);
 
     $this->get("user.service")->patch($user);

@@ -47,7 +47,7 @@ export class ProfilSettingsComponent implements OnInit {
     private tagTypes = ['learn_tags', 'know_tags', 'teach_tags'];
     private quillConfig: {
       'toolbar': false
-    }
+    };
     private editing: object = {};
     private loading = false;
     private ranges = [
