@@ -25,6 +25,13 @@ docker exec -ti docker_php_1 /bin/bash -c "composer install"
 ``
 
 
+# Remplacer les variables d'environments
+
+
+Remplacer les variables d'environment dans front/src/environments/environment.ts
+
+
+
 # Lancer le front 
 
 ``
