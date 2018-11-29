@@ -1,9 +1,17 @@
 
+Install 
+
+``
+cd docker
+``
+
+``
+docker-compose up -d
+``
+
+
+Accéder au conteneur Node 
 
 
 
 
-
-package.json
-
-    - karma-webpack not compatible with webpack 4
