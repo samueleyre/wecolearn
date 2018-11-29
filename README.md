@@ -25,7 +25,7 @@ yarn install
 
 
 ``
-docker-compose run php bash
+docker-compose run web bash
 ``
 
 ``
@@ -43,7 +43,11 @@ Remplacer les variables d'environment dans front/src/environments/environment.ts
 # Lancer le front 
 
 ``
-docker exec -ti docker_node_1 /bin/bash -c "ng serve --port 8080 --host 0.0.0.0"
+docker-compose run node bash
+``
+
+``
+ng serve --port 8080 --host 0.0.0.0"
 ``
 
 
