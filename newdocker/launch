@@ -1,0 +1,10 @@
+#!/bin/bash
+
+export ENV=production
+docker-compose kill
+sudo chown -R root:root php/ini
+sudo chown -R root:root php/phpConf
+sudo chown -R root:root php/ini
+sudo chown -R root:root php/ini
+docker-compose up -d
+
