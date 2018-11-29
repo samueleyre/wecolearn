@@ -30,7 +30,7 @@ services:
 
   node:
     volumes:
-       - ./../newfront/:/src
+       - ./../front/:/src
        - /var/log/RunProgrammation:/var/log/RunProgrammation
     tty: true
     build: node
