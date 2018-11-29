@@ -14,14 +14,22 @@ docker-compose up -d
 
 
 ``
-docker exec -ti docker_node_1 /bin/bash -c "yarn install"
+docker-compose run node bash
+``
+
+``
+yarn install
 ``
 
 # Installation du back
 
 
 ``
-docker exec -ti docker_php_1 /bin/bash -c "composer install"
+docker-compose run php bash
+``
+
+``
+composer install
 ``
 
 
