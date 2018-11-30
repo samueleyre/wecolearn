@@ -14,7 +14,7 @@ docker-compose up -d
 
 
 ``
-docker-compose run node bash
+docker exec -ti docker_node_1 /bin/bash -c "yarn install"
 ``
 
 ``
@@ -25,11 +25,20 @@ yarn install
 
 
 ``
-docker-compose run web bash
+docker exec -ti docker_web_1 /bin/bash -c "composer install"
+
 ``
 
 ``
 composer install
+``
+
+
+# Remplacer les variables d'environment
+
+
+``
+docker exec -ti docker_web_1 /bin/bash -c "php app/bin/console app:ENV
 ``
 
 
@@ -47,7 +56,7 @@ docker-compose run node bash
 ``
 
 ``
-ng serve --port 8080 --host 0.0.0.0"
+docker exec -ti docker_node_1 /bin/bash -c "ng serve --port 8080 --host 0.0.0.0"
 ``
 
 

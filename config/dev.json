@@ -1,0 +1,5 @@
+{
+  	"endpoint" : "http://localhost/app_dev.php",
+  	"publique" : "http://localhost",
+    "mapApiKey" :  "AIzaSyAkTAUCcqkD4lbTeQdM5nQIn0Vy5voUQF8"
+}
