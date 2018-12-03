@@ -61,7 +61,13 @@ cd docker ; make start
 ``
 
 
-# Bugs
+# Debug dev
+
+Problème de cache ? 
+
+``
+cd script ; ./clear.sh
+``
 
 Problème de droits ? 
 ``
