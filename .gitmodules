@@ -1,9 +1,0 @@
-[submodule "docker"]
-	path = docker
-	url = git@github.com:etouraille/docker-stack.git
-[submodule "front/src/app/pr"]
-	path = front/src/app/pr
-	url = git@gitlab.com:samueleyre/passrhonealpes.git
-[submodule "app/src/PrBundle"]
-	path = app/src/PrBundle
-	url = git@gitlab.com:samueleyre/pra-back.git

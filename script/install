@@ -1,3 +1,0 @@
-#!/bin/bash
-
-docker exec -ti docker_node_1 /bin/bash -c "npm install"

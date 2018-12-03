@@ -3,7 +3,7 @@
 namespace AppBundle\Env;
 
 
-
+// This class is used to replace config in the environment files.
 class ReplaceAndCopy {
 
 	public function __construct($replacements = '/src/config') {
@@ -43,7 +43,9 @@ class ReplaceAndCopy {
 			$patterns[] = sprintf('/#%s#/', $name );
 			$replacements[] = $value;
 		}
-		file_put_contents($dest, preg_replace($patterns, $replacements, file_get_contents( $file )))
+		$patterns[] = '/\'#production#\'/';
+    $replacements[] = ($this->envName === "production") ? "true" : "false";
+    file_put_contents($dest, preg_replace($patterns, $replacements, file_get_contents( $file )))
 		;
 	}
 }

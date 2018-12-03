@@ -1,12 +1,15 @@
+# Dépendances
+
+Docker
+
+Make
+
 
 # Installation des containers
 
-``
-cd docker
-``
 
 ``
-docker-compose up -d
+cd docker ; docker-compose up
 ``
 
 
@@ -14,23 +17,15 @@ docker-compose up -d
 
 
 ``
-docker exec -ti docker_node_1 /bin/bash -c "yarn install"
+cd docker ; docker-compose exec node bash -c "yarn install"
 ``
 
-``
-yarn install
-``
 
 # Installation du back
 
 
 ``
-docker exec -ti docker_web_1 /bin/bash -c "composer install"
-
-``
-
-``
-composer install
+cd docker ; docker-compose exec node web -c "composer install"
 ``
 
 
@@ -38,25 +33,36 @@ composer install
 
 
 ``
-docker exec -ti docker_web_1 /bin/bash -c "php app/bin/console app:ENV
+cd docker ; make env
 ``
 
 
-# Remplacer les variables d'environments
+# Créer la base de donnée
 
-
-Remplacer les variables d'environment dans front/src/environments/environment.ts
-
-
-
-# Lancer le front 
 
 ``
-docker-compose run node bash
+cd docker ; make database
 ``
 
+# Démarrer
+
 ``
-docker exec -ti docker_node_1 /bin/bash -c "ng serve --port 8080 --host 0.0.0.0"
+cd docker ; make front
+``
+
+
+# Tout démarrer 
+
+``
+cd docker ; make start
+``
+
+
+# Bugs
+
+Problème de droits ? 
+``
+cd script ; ./dev.sh
 ``
 
 
