@@ -28,6 +28,9 @@ cd docker ; docker-compose exec node bash -c "yarn install"
 cd docker ; docker-compose exec node web -c "composer install"
 ``
 
+# Configurer les variables d'environment
+
+Dans le dossier /config
 
 # Remplacer les variables d'environment
 
