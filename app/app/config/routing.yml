@@ -1,6 +1,0 @@
-wc:
-    resource: '@WcBundle/Resources/config/routing/routes.yml'
-    prefix:   /
-
-api_login_check:
-   path: /api/login_check
