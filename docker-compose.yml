@@ -10,7 +10,7 @@ services:
         - ./:/src
         - ./docker/php/nginxConf/:/etc/nginx/conf.d/
         - ./api/var/jwt:/src/api/var/jwt
-        - ./var/log/RunProgrammation:/var/log/RunProgrammation
+        - ./docker/var/log/RunProgrammation:/var/log/RunProgrammation
         - /dev/log:/dev/log
         - /etc/letsencrypt:/etc/letsencrypt
         - ./docker/php/nginxDefault/nginx.conf:/etc/nginx/nginx.conf
