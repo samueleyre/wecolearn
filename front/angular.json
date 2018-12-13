@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "newfront": {
+    "front": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/newfront",
+            "outputPath": "dist/front",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -60,18 +60,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "newfront:build"
+            "browserTarget": "front:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "newfront:build:production"
+              "browserTarget": "front:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "newfront:build"
+            "browserTarget": "front:build"
           }
         },
         "test": {
@@ -105,7 +105,7 @@
         }
       }
     },
-    "newfront-e2e": {
+    "front-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -114,11 +114,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "newfront:serve"
+            "devServerTarget": "front:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "newfront:serve:production"
+              "devServerTarget": "front:serve:production"
             }
           }
         },
@@ -134,5 +134,5 @@
       }
     }
   },
-  "defaultProject": "newfront"
+  "defaultProject": "front"
 }
