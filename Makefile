@@ -20,3 +20,11 @@ start:
 front:
 	@docker-compose exec node bash -c "ng serve --port 8080 --host 0.0.0.0"
 
+fix:
+	sudo find api/ -type d -exec chmod 775 {} \;
+	sudo find api/ -type f -exec chmod 664 {} \;
+	sudo chown -R $(shell whoami):www-data ./api
+
+ssl: fix
+	sudo rm -R api/var/jwt/*
+	@docker-compose up ssl

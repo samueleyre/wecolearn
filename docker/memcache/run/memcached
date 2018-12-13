@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/usr/bin/memcached -p 11211 -u root -m 64

@@ -231,5 +231,4 @@ RUN mv phpunit.phar /usr/local/bin/phpunit
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 #launch command
-
 CMD ["/usr/bin/runsvdir","-P", "/etc/service"]

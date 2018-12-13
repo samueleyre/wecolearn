@@ -1,56 +1,42 @@
 version: "3.1"
 services:
-  web:
-    build: php
+# api container
+  api:
+    build: docker/php
     ports:
         - "80:80"
         - "443:443"
     volumes:
-        - ./../.:/src
-        - ./php/nginxConf/:/etc/nginx/conf.d/
-        - ./../app/var/jwt:/src/app/var/jwt
+        - ./:/src
+        - ./docker/php/nginxConf/:/etc/nginx/conf.d/
+        - ./api/var/jwt:/src/api/var/jwt
         - ./var/log/RunProgrammation:/var/log/RunProgrammation
         - /dev/log:/dev/log
         - /etc/letsencrypt:/etc/letsencrypt
-        - ./php/nginxDefault/nginx.conf:/etc/nginx/nginx.conf
+        - ./docker/php/nginxDefault/nginx.conf:/etc/nginx/nginx.conf
     environment:
         - ENV=${ENV}
     links:
         - db
-        - rabbit
-        - memcache
-  memcache:
-      build: memcache
-      ports:
-        - "11211:11211"
-  ssl:
-    build: ssl
-    volumes:
-        - ./../app/var/jwt:/src/app/var/jwt
 
+# ssl is used to create jwt private tokens for user authentication
+  ssl:
+    build: docker/ssl
+    volumes:
+        - ./api/var/jwt:/src/api/var/jwt
+
+# front container
   node:
     volumes:
-       - ./../front/:/src
+       - ./front/:/src
        - /var/log/RunProgrammation:/var/log/RunProgrammation
     tty: true
-    build: node
+    build: docker/node
     ports:
       - "8080:8080"
       - "3000:3000"
 
-
-  rabbit:
-    build: rabbit
-    tty: true
-    ports:
-        - "5672:5672"
-    volumes:
-        - ./:/root
-        - /var/log/rabbitmq_bg:/var/log/rabbimq
-    logging:
-      driver: syslog
-      
-
+# database container for dev only
   db:
     image: mariadb
     restart: always
@@ -63,12 +49,13 @@ services:
       - MYSQL_PASSWORD=inCodeWeTrust
       - TERM=dumb
     volumes:
-      - ./db:/etc/mysql/conf.d
-      - ./:/opt
+      - ./docker/db:/etc/mysql/conf.d
+      - ./docker/:/opt
     tty: true
     logging:
       driver: syslog
 
+# phpmyadmin for dev only
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: always
@@ -79,9 +66,3 @@ services:
       - MYSQL_PASSWORD=inReusableCodeWeTrust
     links:
       - db:db
-
-  certbot:
-    build: certbot
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-      - ./../.:/src
