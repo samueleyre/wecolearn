@@ -1,6 +1,0 @@
-#!/bin/bash
-sudo mkdir /home/ambrieu
-sudo groupadd ambrieu
-sudo useradd --create-home --g ambrieu ambrieu
-cd /home/ambrieu
-sudo ssh-keygen

@@ -1,7 +1,1 @@
-*/5 * * * *	root /bin/bash /home/samuel_eyre73/wecolearn/script/c-run >> /var/log/cron.run.log
-
-10 1 * * * root docker exec docker_web_1 /bin/bash -c "cd /src/app;bin/console wc:alive;" >> /var/log/cron.alive.log
-
-7 3 * * * root /bin/bash /home/samuel_eyre73/wecolearn/backup/back >> /var/log/cron.back.log
-
 00 16 * * * /home/samuel_eyre73/wecolearn/script/sendReminder.sh >> /home/samuel_eyre73/wecolearn/app/var/logs/cron.log
