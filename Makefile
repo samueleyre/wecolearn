@@ -1,4 +1,6 @@
 install:
+	@git clone git@gitlab.com:samueleyre/wecolearn_front.git front
+	@git clone git@gitlab.com:samueleyre/wecolearn_api.git api
 	@docker-compose down
 	@docker-compose build --force-rm
 	@docker-compose run node bash yarn
