@@ -1,5 +1,5 @@
 #!/bin/bash
 
 mkdir -p /src/api/var/jwt
-openssl genrsa -out /src/api/var/jwt/private.pem -aes256 -passout pass:thisIsNotASecret_changeIt!
-openssl rsa -pubout -in /src/api/var/jwt/private.pem -out /src/api/var/jwt/public.pem -passin pass:thisIsNotASecret_changeIt!
+openssl genrsa -out var/jwt/private.pem -aes256 -passout pass:oezjfozjefozi340034808346erg
+openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem -passin pass:oezjfozjefozi340034808346erg

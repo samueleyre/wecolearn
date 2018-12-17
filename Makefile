@@ -15,9 +15,8 @@ database:
 
 start:
 	@docker-compose up -d
-	@make front
 
-front:
+frontServer:
 	@docker-compose exec node bash -c "ng serve --port 8080 --host 0.0.0.0"
 
 fix:
