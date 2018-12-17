@@ -1,4 +1,0 @@
-<tag-input id="{{tagListName}}" [modelAsStrings]="true"  [theme]="'foundation-theme'" [(ngModel)]='tags' name="{{tagListName}}" [errorMessages]="errorMessages"
-           [validators]="validators" [addOnBlur]="true" (onAdd)="update()" (onRemove)="update()">
-  <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
-</tag-input>

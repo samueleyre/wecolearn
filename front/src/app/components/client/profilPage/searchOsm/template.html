@@ -1,5 +1,0 @@
-<div class="input-group">
-    <input id="searchOsm" autocomplete="off" placeholder="Rechercher" class="form-control" auto-complete [(ngModel)]="searchInput" [source]="observableSource.bind(this)" (valueChanged)="setAddress($event)" [list-formatter]="autocompleListFormatter" />
-    <a class="input-group-addon" (click)="search()"><i class="fa fa-search"></i></a>
-</div>
-
