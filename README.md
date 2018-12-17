@@ -4,61 +4,39 @@ Docker
 
 Make
 
-
-# Installation des containers
-
+# Installation 
 
 ``
-cd docker ; docker-compose up
+make install
 ``
 
 
-# Installation du front
-
-
-``
-cd docker ; docker-compose exec node bash -c "yarn install"
-``
-
-
-# Installation du back
-
-
-``
-cd docker ; docker-compose exec node web -c "composer install"
-``
-
-# Configurer les variables d'environment
+# Configurer les variables d'environment ( et relancer make env)
 
 Dans le dossier /config
-
-# Remplacer les variables d'environment
-
-
-``
-cd docker ; make env
-``
 
 
 # Créer la base de donnée
 
 
 ``
-cd docker ; make database
+make database
 ``
 
-# Démarrer
+# Démarrer containers 
 
 ``
-cd docker ; make front
+make start
 ``
 
 
-# Tout démarrer 
+
+# Démarrer front
 
 ``
-cd docker ; make start
+make front
 ``
+
 
 
 # Debug dev
