@@ -1,6 +1,7 @@
 # Dépendances
 
-Docker
+docker
+docker-compose
 
 Make
 
