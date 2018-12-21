@@ -1,8 +1,7 @@
 # Dépendances
 
 docker
-docker-compose
-
+docker-compose ( avec sudo )
 Make
 
 # Installation 
@@ -51,6 +50,18 @@ cd script ; ./clear.sh
 Problème de droits ? 
 ``
 cd script ; ./dev.sh
+``
+
+Services Mysql, Nginx ou Apache2 ? 
+
+``
+sudo service mysql stop
+``
+``
+sudo service nginx stop
+``
+``
+sudo service apache2 stop
 ``
 
 

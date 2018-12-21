@@ -4,16 +4,16 @@ install:
 	@docker-compose down
 	@docker-compose build --force-rm
 	@docker-compose run node bash yarn
-	@docker-compose run web composer install
+	@docker-compose run api composer install
 	@make env
 	@echo "Installation completed"
 
 env:
-	@docker-compose exec web bash -c "php app/bin/console app:env"
+	@docker-compose exec api bash -c "php api/bin/console app:env"
 
 database:
-	@docker-compose exec web bash -c "php app/bin/console do:da:cr"
-	@docker-compose exec web bash -c "php app/bin/console do:sc:cr"
+	@docker-compose exec api bash -c "php api/bin/console do:da:cr"
+	@docker-compose exec api bash -c "php api/bin/console do:sc:cr"
 
 start:
 	@docker-compose up -d
