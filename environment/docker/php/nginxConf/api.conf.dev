@@ -1,6 +1,6 @@
 server {
     server_name localhost;
-    root /src/app/web;
+    root /src/api/web;
 
     location / {
         # try to serve file directly, fallback to app.php
