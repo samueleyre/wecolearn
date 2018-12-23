@@ -11,19 +11,19 @@ make install
 ``
 
 
-# Configurer les variables d'environment ( et relancer make env)
+## Configurer les variables d'environment ( et relancer make env)
 
 Dans le dossier /config
 
 
-# Créer la base de donnée
+## Créer la base de donnée
 
 
 ``
 make database
 ``
 
-# Démarrer containers 
+## Démarrer containers 
 
 ``
 make start
@@ -31,7 +31,7 @@ make start
 
 
 
-# Démarrer front
+## Démarrer front
 
 ``
 make front
@@ -39,7 +39,7 @@ make front
 
 
 
-# Debug dev
+## Debug dev
 
 Problème de cache ? 
 
@@ -65,7 +65,13 @@ sudo service apache2 stop
 ``
 
 
+# production
 
+# Connect to production database
+
+``
+scalingo -a wecolearn-api-dev db-tunnel SCALINGO_MYSQL_URL
+``
 
 
 
