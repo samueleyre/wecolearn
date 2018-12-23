@@ -29,3 +29,4 @@ fix:
 ssl: fix
 	sudo rm -R api/var/jwt/*
 	@docker-compose up ssl
+	@docker-compose kill ssl
