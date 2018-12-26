@@ -39,7 +39,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       libmcrypt-dev \
       libpspell-dev \
       librecode-dev \
-      runit 
+      runit \
+      php-zip
 
 RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
 
