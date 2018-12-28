@@ -11,13 +11,12 @@ make install
 ``
 
 
-## Configurer les variables d'environment ( et relancer make env)
+## Configurer les variables d'environment ( et relancer make env) 
 
 Dans le dossier /config
 
 
 ## Créer la base de donnée
-
 
 ``
 make database
@@ -52,22 +51,10 @@ Problème de droits ?
 cd script ; ./dev.sh
 ``
 
-Services Mysql, Nginx ou Apache2 ? 
-
-``
-sudo service mysql stop
-``
-``
-sudo service nginx stop
-``
-``
-sudo service apache2 stop
-``
-
 
 # production
 
-# Connect to production database
+## Connect to production database
 
 ``
 scalingo -a wecolearn-api-dev db-tunnel SCALINGO_MYSQL_URL
