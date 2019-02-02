@@ -19,6 +19,7 @@ database:
 fixture:
 	@docker-compose exec api bash -c "php api/bin/console do:fi:lo"
 
+
 start:
 	@docker-compose up -d
 
