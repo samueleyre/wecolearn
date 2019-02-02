@@ -1,0 +1,121 @@
+body{
+    font-family: 'Raleway', sans-serif;
+}
+
+header {
+    height: 100vh;
+    background-image: url("../img/purplegroup.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.nav-link {
+    font-family: 'Cabin', sans-serif;
+    color: #FFF !important;
+    border-bottom: solid 3px transparent;
+    margin-top: 3px;
+}
+
+.connexion {
+    color: #ffc600 !important;
+    font-weight: bold;
+    border-bottom: none;
+}
+
+.nav-link:hover {
+    color: #ffc600 !important;
+    border-bottom: solid 3px #ffc600;
+}
+
+.connexion:hover {
+    border-bottom: none;
+
+}
+/* 
+.navbar {
+    background-color: #310c31;
+} */
+
+form .btn {
+    background-color: #ffc600;
+}
+
+.description h2 {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: 60px;
+}
+
+.login-form{
+    margin-top: 100px;
+}
+
+.login-picture{
+    height: 600px;
+    padding: 0;
+}
+.social-link h3{
+    color: #FFF;
+    font-weight: bold;
+    /* position: absolute; */
+    font-size: 90px;
+    line-height: 85px;
+    /* transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%; */
+}
+.social-link p {
+    color: #310c31;
+    margin-bottom:0;
+}
+
+.social-link ul {
+    font-size: 35px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    list-style:none;
+    padding-left: 0;
+}
+.social-link ul li a{
+    color: #fff;
+}
+.social-link .slack, .social-link .facebook{
+padding: 5px 60px 5px 60px;
+margin: 10px;
+font-size: 25px;
+color:#fff;
+}
+.social-link .facebook{
+    background-color: #4267b2;
+}
+.social-link .slack{
+    background-color:#d91446;
+}
+.social-link{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+.form-content{
+    height: 600px;
+    background-color: #FFF;
+    border-radius:0 5px 5px 0;
+
+}
+.form-content h2 {
+    text-align:center; 
+    font-size: 50px;
+    margin:40px 0 40px 0;
+}
+.login-picture img{
+    object-fit: cover;
+    height: 600px;
+    border-radius:5px 0 0 5px;
+}
+
+.login-form .row {
+    border-radius: 3px;
+}
