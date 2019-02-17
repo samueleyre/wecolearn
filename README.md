@@ -11,15 +11,16 @@ make install
 ``
 
 
-## Configurer les variables d'environment ( et relancer make env) 
-
-Dans le dossier /config
-
-
 ## Créer la base de donnée
 
 ``
 make database
+``
+
+## Remplir les fixtures
+
+``
+make fixture
 ``
 
 ## Démarrer containers 

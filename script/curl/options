@@ -1,2 +1,0 @@
-#!/bin/bash
-curl -H "Content-Type: application/json" -X OPTION  http://localhost/app_dev.php/api/login_check
