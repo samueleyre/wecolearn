@@ -1,1 +1,0 @@
-00 16 * * * /home/samuel_eyre73/wecolearn/script/sendReminder.sh >> /home/samuel_eyre73/wecolearn/app/var/logs/cron.log

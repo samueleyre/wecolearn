@@ -3,8 +3,9 @@ install:
 	@git clone git@gitlab.com:samueleyre/wecolearn_api.git api
 	@docker-compose down
 	@docker-compose build --force-rm
-	@docker-compose run node bash -c "yarn"
-	@docker-compose run api composer install -d /src/api
+	@docker-compose up -d
+	@docker-compose exec node bash -c "yarn"
+	@docker-compose exec api bash -c "composer install"
 	@make env
 	@echo "Installation completed"
 
@@ -14,6 +15,10 @@ env:
 database:
 	@docker-compose exec api bash -c "php api/bin/console doctrine:database:create"
 	@docker-compose exec api bash -c "php api/bin/console doctrine:schema:create"
+
+fixture:
+	@docker-compose exec api bash -c "php api/bin/console do:fi:lo"
+
 
 start:
 	@docker-compose up -d
