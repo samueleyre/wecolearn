@@ -47,9 +47,9 @@ RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
 RUN ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
       && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so
 
-RUN wget http://au1.php.net/get/php-7.1.5.tar.gz/from/this/mirror && tar xvzf mirror
+RUN wget http://au1.php.net/get/php-7.2.14.tar.gz/from/this/mirror && tar xvzf mirror
 
-RUN cd php-7.1.5 && ./buildconf --force && ./configure --prefix=/usr/local/php7 \
+RUN cd php-7.2.14 && ./buildconf --force && ./configure --prefix=/usr/local/php7 \
       --with-config-file-path=/usr/local/etc \
       --with-config-file-scan-dir=/usr/local/etc/php-fpm.d \
       --enable-bcmath \
