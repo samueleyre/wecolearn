@@ -35,3 +35,5 @@ ssl: fix
 	sudo rm -R api/var/jwt/*
 	@docker-compose up ssl
 	@docker-compose kill ssl
+test:
+	@docker-compose exec api bash -c "cd api;APP_ENV=test vendor/bin/behat"
