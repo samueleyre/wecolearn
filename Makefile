@@ -9,6 +9,15 @@ install:
 	@make env
 	@echo "Installation completed"
 
+install-dev.wecolearn:
+	@git clone git@gitlab.com:samueleyre/wecolearn_front.git front
+	@docker-compose down
+	@docker-compose build --force-rm
+	@docker-compose up -d
+	@docker-compose exec node bash -c "yarn"
+	@echo "Installation completed"
+
+
 env:
 	@docker-compose exec api bash -c "php api/bin/console app:env"
 

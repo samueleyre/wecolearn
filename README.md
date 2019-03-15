@@ -1,14 +1,22 @@
-# Dépendances
+# Dépendances [ NCC ]
 
 docker
+
 docker-compose ( avec sudo )
+
 Make
 
-# Installation 
+## Installation back et front
 
 ``
 make install
 ``
+
+### Installation seulement front [ NCC ]
+
+``make install-dev.wecolearn``
+
+Et copier les variables d'environnement de environment.staging.ts vers un fichier environment.ts
 
 
 ## Créer la base de donnée
@@ -23,7 +31,7 @@ make database
 make fixture
 ``
 
-## Démarrer containers 
+## Démarrer containers [ NCC ]
 
 ``
 make start
@@ -31,7 +39,7 @@ make start
 
 
 
-## Démarrer front
+## Démarrer front [ NCC ]
 
 ``
 make frontServer
@@ -60,6 +68,7 @@ cd script ; ./dev.sh
 ``
 scalingo -a wecolearn-api-dev db-tunnel SCALINGO_MYSQL_URL
 ``
+
 
 
 

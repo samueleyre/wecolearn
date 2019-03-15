@@ -1,5 +1,5 @@
 {
-  	"endpoint" : "http://localhost:88/app_dev.php",
+  	"endpoint" : "http://localhost:88",
   	"publique" : "http://localhost:88",
     "mapApiKey" :  "AIzaSyAkTAUCcqkD4lbTeQdM5nQIn0Vy5voUQF8"
 }
