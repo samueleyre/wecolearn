@@ -6,7 +6,6 @@ install:
 	@docker-compose up -d
 	@docker-compose exec node bash -c "yarn"
 	@docker-compose exec api bash -c "composer install"
-	@make env
 	@echo "Installation completed"
 
 install-dev.wecolearn:
@@ -17,9 +16,6 @@ install-dev.wecolearn:
 	@docker-compose exec node bash -c "yarn"
 	@echo "Installation completed"
 
-
-env:
-	@docker-compose exec api bash -c "php api/bin/console app:env"
 
 database:
 	@docker-compose exec api bash -c "php api/bin/console doctrine:database:create"
