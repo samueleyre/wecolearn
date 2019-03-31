@@ -1,10 +1,11 @@
 install:
 	@git clone git@gitlab.com:samueleyre/wecolearn_front.git front
 	@git clone git@gitlab.com:samueleyre/wecolearn_api.git api
+	@git clone git@gitlab.com:wecolearn/wecolearn_socket.git node
 	@docker-compose down
 	@docker-compose build --force-rm
 	@docker-compose up -d
-	@docker-compose exec node bash -c "yarn"
+	@docker-compose exec angular bash -c "yarn"
 	@docker-compose exec api bash -c "composer install"
 	@echo "Installation completed"
 
@@ -13,7 +14,7 @@ install-dev.wecolearn:
 	@docker-compose down
 	@docker-compose build --force-rm
 	@docker-compose up -d
-	@docker-compose exec node bash -c "yarn"
+	@docker-compose exec angular bash -c "yarn"
 	@echo "Installation completed"
 
 
@@ -29,7 +30,7 @@ start:
 	@docker-compose up -d
 
 frontServer:
-	@docker-compose exec node bash -c "ng serve --port 8080 --host 0.0.0.0"
+	@docker-compose exec angular bash -c "ng serve --port 8080 --host 0.0.0.0"
 
 fix:
 	sudo find api/ -type d -exec chmod 775 {} \;
