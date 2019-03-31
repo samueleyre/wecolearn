@@ -9,22 +9,12 @@ install:
 	@docker-compose exec api bash -c "composer install"
 	@echo "Installation completed"
 
-install-dev.wecolearn:
-	@git clone git@gitlab.com:samueleyre/wecolearn_front.git front
-	@docker-compose down
-	@docker-compose build --force-rm
-	@docker-compose up -d
-	@docker-compose exec angular bash -c "yarn"
-	@echo "Installation completed"
-
-
 database:
 	@docker-compose exec api bash -c "php api/bin/console doctrine:database:create"
 	@docker-compose exec api bash -c "php api/bin/console doctrine:schema:create"
 
 fixture:
 	@docker-compose exec api bash -c "php api/bin/console do:fi:lo"
-
 
 start:
 	@docker-compose up -d
@@ -41,7 +31,14 @@ ssl: fix
 	sudo rm -R api/var/jwt/*
 	@docker-compose up ssl
 	@docker-compose kill ssl
+
 test:
 	@docker-compose exec api bash -c "cd api;APP_ENV=test vendor/bin/behat"
+
 clear:
 	@docker-compose exec api bash -c "cd api;bin/console cache:clear"
+
+dev:
+	sudo chown -R $(shell whoami):www-data ./api
+	sudo find ./api/ -type d -exec chmod 775 {} \
+    sudo find ./api/ -type f -exec chmod 664 {} \
