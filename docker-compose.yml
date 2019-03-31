@@ -17,6 +17,7 @@ services:
         - ENV=${ENV}
     links:
         - db
+        - rabbit
 
   node:
     volumes:
@@ -28,6 +29,16 @@ services:
       - "8080:8080"
       - "3000:3000"
 
+  node2:
+    volumes:
+      - ./node:/src
+    tty: true
+    build: docker/node
+    ports:
+      - "44:44"
+    links:
+      - api
+      - rabbit
   db:
     image: mariadb
     restart: always
@@ -53,3 +64,14 @@ services:
       - "85:80"
     links:
       - db:db
+
+  rabbit:
+    image: rabbitmq:3
+    hostname: brocker
+    ports:
+      - "5672:5672"
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=secret
+      - RABBITMQ_DEFAULT_USER=wcl
+      - RABBITMQ_DEFAULT_PASS=test
+

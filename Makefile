@@ -42,3 +42,5 @@ ssl: fix
 	@docker-compose kill ssl
 test:
 	@docker-compose exec api bash -c "cd api;APP_ENV=test vendor/bin/behat"
+clear:
+	@docker-compose exec api bash -c "cd api;bin/console cache:clear"

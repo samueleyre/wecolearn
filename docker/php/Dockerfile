@@ -65,6 +65,7 @@ RUN cd php-7.2.14 && ./buildconf --force && ./configure --prefix=/usr/local/php7
       --enable-fpm \
       --enable-wddx \
       --enable-zip \
+      --enable-sockets \
       --with-fpm \
       --with-curl \
       --with-mcrypt \
