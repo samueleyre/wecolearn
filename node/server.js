@@ -147,4 +147,5 @@ function amqpCatch( userId , socket) {
     })
 }
 http.listen(44);
+console.log('listen on port 44');
 
