@@ -19,7 +19,7 @@ services:
         - db
         - rabbit
 
-  node:
+  angular:
     volumes:
        - ./front/:/src
        - /var/log/RunProgrammation:/var/log/RunProgrammation
@@ -29,11 +29,11 @@ services:
       - "8080:8080"
       - "3000:3000"
 
-  node2:
+  socket:
     volumes:
       - ./node:/src
     tty: true
-    build: docker/node
+    image: node:8.15.0
     ports:
       - "44:44"
     links:
