@@ -8,6 +8,7 @@ install:
 	@docker-compose exec node bash -c "yarn"
 	@docker-compose exec angular bash -c "yarn"
 	@docker-compose exec api bash -c "composer install"
+	@docker-compose exec socket bash -c "cd /src;npm install"
 	@echo "Installation completed"
 
 database:
@@ -22,6 +23,9 @@ start:
 
 frontServer:
 	@docker-compose exec angular bash -c "ng serve --port 8080 --host 0.0.0.0"
+
+socket:
+	@docker-compose exec socket bash -c "cd /src;node server.js"
 
 fix:
 	sudo find api/ -type d -exec chmod 775 {} \;

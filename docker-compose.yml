@@ -33,7 +33,7 @@ services:
     volumes:
       - ./node:/src
     tty: true
-    build: docker/node
+    image: node:8.15.0
     ports:
       - "44:44"
     links:
