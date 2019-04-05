@@ -5,6 +5,7 @@ install:
 	@docker-compose down
 	@docker-compose build --force-rm
 	@docker-compose up -d
+	@docker-compose exec node bash -c "yarn"
 	@docker-compose exec angular bash -c "yarn"
 	@docker-compose exec api bash -c "composer install"
 	@echo "Installation completed"
