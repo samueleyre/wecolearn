@@ -1,4 +1,4 @@
-# Dépendances [ NCC ]
+# Dépendances
 
 docker
 
@@ -11,12 +11,6 @@ Make
 ``
 make install
 ``
-
-### Installation seulement front [ NCC ]
-
-``make install-dev.wecolearn``
-
-Et copier les variables d'environnement de environment.staging.ts vers un fichier environment.ts
 
 
 ## Créer la base de donnée
@@ -31,7 +25,7 @@ make database
 make fixture
 ``
 
-## Démarrer containers [ NCC ]
+## Démarrer containers
 
 ``
 make start
@@ -39,7 +33,7 @@ make start
 
 
 
-## Démarrer front [ NCC ]
+## Démarrer front 
 
 ``
 make frontServer
@@ -49,24 +43,23 @@ make frontServer
 
 ## Debug dev
 
-Problème de cache ? 
+Problème de cache ou de droits ?   
 
 ``
-cd script ; ./clear.sh
-``
-
-Problème de droits ? 
-``
-cd script ; ./dev.sh
+make dev
 ``
 
 
 # production
 
-## Connect to production database
+## Connect to online database
 
 ``
-scalingo -a wecolearn-api-dev db-tunnel SCALINGO_MYSQL_URL
+scalingo -a wecolearn-api-prod db-tunnel SCALINGO_MYSQL_URL
+``
+
+``
+scalingo -a wecolearn-api-staging db-tunnel SCALINGO_MYSQL_URL
 ``
 
 
