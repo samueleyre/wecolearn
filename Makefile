@@ -20,6 +20,7 @@ fixture:
 
 start:
 	@docker-compose up -d
+	@make socket
 
 frontServer:
 	@docker-compose exec angular bash -c "ng serve --port 8080 --host 0.0.0.0"
