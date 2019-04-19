@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:10
 
 RUN apt-get -qq update && apt-get -qq install -y  --no-install-recommends \
       git \
