@@ -1,0 +1,49 @@
+App\_User\DomainModel\User\User:
+    exclusion_policy: all
+    xml_root_name:    page
+    access_order:     alphabetical
+    properties:
+      id:
+        groups: [ input, output, user, search, message, profile ]
+      created:
+        groups: [ input, output, user, search, message, profile]
+      firstName:
+        groups: [ input, output, user, search, message, profile ]
+      lastName:
+        groups: [ input, output, user, search, message, profile ]
+      profilUrl:
+        groups: [ input, output, user, search, message, profile ]
+      password:
+        groups: [ input ]
+      biographie:
+        groups: [ input, output, user, search, message, profile ]
+      intensity:
+        groups: [ input, output, user, profile ]
+      atmosphere:
+        groups: [ input, output, user, profile ]
+      latitude:
+        groups: [ input, output, user ]
+      longitude:
+        groups: [ input, output, user ]
+      tags:
+        groups: [ input, output, user, search, profile ]
+      sentMessages:
+        groups: [ input, output ]
+        max_depth: 4
+      receivedMessages:
+        groups: [ input, output ]
+        max_depth: 4
+      image:
+        type: App\_User\DomainModel\Image\Image
+        groups: [ input, output, user, search, message, profile ]
+      showProfil:
+        groups: [ input, output, user ]
+      emailNotifications:
+        groups: [ input, output,  user ]
+      slackAccounts:
+        groups: [ input, output, user, search ]
+      userNotified:
+        groups: [ input, output,  user ]
+      notificationSubscribe:
+        groups: [ input, output,  user]
+

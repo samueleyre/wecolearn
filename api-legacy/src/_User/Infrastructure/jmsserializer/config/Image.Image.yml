@@ -1,0 +1,16 @@
+App\_User\DomainModel\Image\Image:
+    exclusion_policy: all
+    access_order:     alphabetical
+    properties:
+        id:
+          groups: [ input, output ]
+        version:
+          groups: [ output, search, profil, message ]
+        publicId:
+          groups: [ output, search, profil, message ]
+        created:
+          groups: [ output ]
+        filename:
+          groups: [ input ]
+
+

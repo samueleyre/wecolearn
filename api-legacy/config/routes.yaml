@@ -1,0 +1,9 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+wc:
+  resource: routes/wc_routes.yaml
+  prefix:   /
+
+api_login_check:
+  path: /api/login_check

@@ -1,0 +1,37 @@
+jms_serializer:
+  #visitors:
+  #  json_serialization:
+  #    options: 0 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
+  #    #depth: 512
+  #  json_deserialization:
+  #    options: 0 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
+  #  xml_serialization:
+  #    format_output: false
+  #    version: false
+  #    default_root_name: "result"
+  #    default_root_ns: null
+  #  xml_deserialization:
+  #    external_entities: false
+  #    doctype_whitelist:
+  #    - '<!DOCTYPE authorized SYSTEM "http://some_url">'
+  metadata:
+    auto_detection: false
+    directories:
+      FOSUserBundle:
+        namespace_prefix: "FOS\\UserBundle"
+        path:             "%kernel.project_dir%/src/_User/Infrastructure/jmsserializer/config/fos"
+      WcBundle:
+        namespace_prefix: "App"
+        path:             "@WcBundle/Resources/config/serializer"
+      _User:
+        namespace_prefix: "App\\_User\\DomainModel"
+        path:             "%kernel.project_dir%/src/_User/Infrastructure/jmsserializer/config"
+      _Tag:
+        namespace_prefix: "App\\_Tag\\DomainModel\\Tag"
+        path:             "%kernel.project_dir%/src/_Tag/Infrastructure/jmsserializer/config"
+      _Domain:
+        namespace_prefix: "App\\_Domain\\Domain"
+        path:             "%kernel.project_dir%/src/_Application/Infrastructure/jmsserializer/config"
+      _Chat:
+        namespace_prefix: "App\\_Chat\\DomainModel"
+        path:             "%kernel.project_dir%/src/_Chat/Infrastructure/jmsserializer/config"

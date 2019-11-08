@@ -22,7 +22,7 @@ make database
 ## Remplir les fixtures
 
 ``
-make fixture
+make addFixtures
 ``
 
 ## Démarrer containers

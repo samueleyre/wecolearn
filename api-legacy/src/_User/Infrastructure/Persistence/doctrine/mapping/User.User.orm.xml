@@ -1,0 +1,91 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+
+    <entity name="App\_User\DomainModel\User\User" table="fos_user" repository-class="App\_User\Infrastructure\Persistence\doctrine\UserRepository">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="firstName" column="firstName" type="string" length="255" nullable="true" />
+        <field name="lastName" column="lastName" type="string" length="255" nullable="true"/>
+        <field name="emailConfirmed" column="emailConfirmed" type="boolean" />
+        <one-to-many field="emailToken" target-entity="App\_User\DomainModel\Token\Token" mapped-by="user">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+            </cascade>
+        </one-to-many>
+        <field name="profilUrl" type="string" column="profilUrl"/>
+        <field name="created" type="datetime" />
+        <field name="updated" type="datetime" nullable="true" />
+        <field name="userUpdated" type="datetime" nullable="true" column="userUpdated"/>
+        <field name="userNotified" type="datetime" nullable="true" column="userNotified"/>
+        <field name="biographie" type="string" length="5000" nullable="true" />
+        <field name="intensity" type="integer" nullable="true" />
+        <field name="atmosphere" type="integer" nullable="true" />
+        <field name="latitude" type="float" nullable="true" />
+        <field name="longitude" type="float" nullable="true" />
+        <one-to-one field="image" target-entity="App\_User\DomainModel\Image\Image" inversed-by="user">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+            </cascade>
+            <join-column on-delete="SET NULL" name="imageId" nullable="true"/>
+        </one-to-one>
+        <many-to-many field="tags" target-entity="App\_Tag\DomainModel\Tag\Tag" inversed-by="users">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+            </cascade>
+            <join-table name="user_tag">
+                <join-columns>
+                    <join-column name="user_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="tag_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        <one-to-many field="sentMessages" target-entity="App\_Chat\DomainModel\Message\Message" mapped-by="sender">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+            </cascade>
+        </one-to-many>
+        <one-to-many field="receivedMessages" target-entity="App\_Chat\DomainModel\Message\Message" mapped-by="receiver">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+            </cascade>
+        </one-to-many>
+        <field name="showProfil" type="boolean" column="showProfil"/>
+        <field name="emailNotifications" type="boolean" column="emailNotifications"/>
+        <one-to-many field="slackAccounts" target-entity="App\Entity\SlackAccount" mapped-by="user">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+            </cascade>
+        </one-to-many>
+        <many-to-many field="domains" target-entity="App\_Application\Domain\Domain" inversed-by="users">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+            </cascade>
+            <join-table name="user_domain">
+                <join-columns>
+                    <join-column name="user_id" referenced-column-name="id"/>
+                </join-columns>
+                    <inverse-join-columns>
+                    <join-column name="domain_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        <field name="lastConnexion" type="datetime" nullable="true" column="lastConnexion"/>
+        <field name="deleted" type="datetime" nullable="true" />
+        <field name="notificationSubscribe" column="notificationSubscribe" type="boolean" nullable="true"/>
+        <one-to-many field="subscriptions" target-entity="App\_User\DomainModel\NotificationSubscription\Subscription" mapped-by="user" />
+    </entity>
+
+</doctrine-mapping>

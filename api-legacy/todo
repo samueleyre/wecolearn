@@ -1,0 +1,26 @@
+todo:
+domaines de l'application:
+ - tag
+ - search
+ - user
+ - admin
+ - chat
+
+deux api : api vers l'application.
+api pour les entreprise avec un autre authentication provider.
+
+
+Merger le back
+Merger le front
+Deployer le front en mode PWA.
+Créér un repo socket.
+Installer server de socket.
+Installer server AMQP.
+
+
+NOTA :
+
+- changer le group search dans @View du UserController.
+- essayer sentry pour les logs.
+- demander sur le chat de scalingo pour les logs.
+- mettre script dans le make.
