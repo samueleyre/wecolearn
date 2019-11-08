@@ -5,7 +5,7 @@ import {
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-import { AuthenticationService } from '~/shared/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth';
 
 
 @Component({

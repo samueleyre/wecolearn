@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { Permission } from './const';
 import { NotificationInterface } from './interface';
-import { UrlService } from '../../services/url';
+import { UrlService } from '../../../core/services/url';
 
 @Injectable()
 export class NotificationService {

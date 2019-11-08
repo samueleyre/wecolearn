@@ -9,10 +9,11 @@ import { NgForm } from '@angular/forms';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
-import { User } from '~/shared/entities/user/entity';
-import { ClientService } from '~/shared/services/client';
-import { UserService } from '~/shared/services/user';
+import { User } from '~/core/entities/user/entity';
+import { ClientService } from '~/core/services/client';
 import { environment } from '~/../environments/environment';
+import { PATTERN } from '~/shared/config/pattern';
+import {ProfileService} from "~/modules/profile/services/profile";
 
 
 @Component({
@@ -26,7 +27,6 @@ export class SettingsComponent implements OnInit {
   @Input() user: User;
 
 
-  private message: object;
   private newemail: string;
   private newpassword: string;
   public editing: object = {};
@@ -34,24 +34,18 @@ export class SettingsComponent implements OnInit {
 
 
   constructor(
-      private clientService: ClientService,
+      private profileService: ProfileService,
       private activatedRoute: ActivatedRoute,
       @Inject(APP_BASE_HREF) r: string,
-      private userService: UserService,
       private router: Router,
       private _toastr: ToastrService,
   ) {
-    this.message = {
-      email: null,
-      password: null,
-    };
     this.initEditable();
   }
 
 
   ngOnInit() {
-    this.pattern = (environment.production) ?
-      '[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}' : '[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
+    this.pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 
 
@@ -68,7 +62,7 @@ export class SettingsComponent implements OnInit {
   callApi(data: object) {
     const type = Object.keys(data)[0];
 
-    this.clientService.changeParameter(data).subscribe(
+    this.profileService.changeParameter(data).subscribe(
       (response) => {
         if (response['duplicate']) {
           this._toastr.info('Cette adresse email est déjà utilisée.');
@@ -83,7 +77,6 @@ export class SettingsComponent implements OnInit {
           this._toastr.info('Un email vous a été envoyé pour confirmer votre nouvel email');
           this.user = response['user'];
         } else {
-            // this.message['password'] = "Un email vous a été envoyé pour confirmer votre nouveau mot de passe";
         }
       },
       (error) => {
@@ -107,9 +100,7 @@ export class SettingsComponent implements OnInit {
 
   deleteAccount(choice: boolean) {
     if (choice) {
-      this.clientService.deleteAccount().subscribe((response) => {
-        // if ok go back to homz and show message
-        // else error message
+      this.profileService.deleteAccount().subscribe((response) => {
         if (response['ok']) {
           this._toastr.info('Votre compte a bien été supprimé, ainsi que tout l\'historique de vos messages.');
           this.router.navigate(['/']);

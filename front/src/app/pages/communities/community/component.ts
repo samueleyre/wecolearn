@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DomainService } from '~/shared/services/domain';
-import { Community } from '~/shared/entities/community/entity';
+import { DomainService } from '~/core/services/domain';
+import { Community } from '~/core/entities/community/entity';
 import { environment } from '~/../environments/environment';
-import { UrlService } from '~/shared/services/url';
+import { UrlService } from '~/core/services/url';
 
 @Component({
   selector: 'community',

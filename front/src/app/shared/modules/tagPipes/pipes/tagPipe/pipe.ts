@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Tag } from '~/shared/entities/tag/entity';
+import { Tag } from '~/core/entities/tag/entity';
 
 @Pipe({
   name: 'tagPipe',

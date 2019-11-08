@@ -2,10 +2,11 @@
 
 namespace App\Services\User\Service;
 
+use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
-use Doctrine\Common\Collections\Collection;
 use App\Services\Tag\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -17,6 +18,7 @@ class UserService
     private $clientSecret; // for slack
 //    private $domainService;
     private $securityStorage;
+    private $tagService;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -24,30 +26,27 @@ class UserService
         //                                 DomainService $domainService,
         $client_id,
         $client_secret,
-        TokenStorageInterface $securityStorage
+        TokenStorageInterface $securityStorage,
+        TagService $tagService
     ) {
         $this->em = $em;
         $this->clientId = $container->getParameter('client_id');
         $this->clientSecret = $container->getParameter('client_secret');
 //    $this->domainService = $domainService;
         $this->securityStorage = $securityStorage;
+        $this->tagService = $tagService;
     }
 
-    //  function getSlackUserData($code, $redirectURI)
-    //  {
-//
-//    $url = "https://slack.com/api/oauth.access";
-//
-//    $data["client_id"] = $this->clientId;
-//    $data["client_secret"] = $this->clientSecret;
-//    $data["code"] = $code;
-//    $data["redirect_uri"] = $redirectURI;
-//    $url = sprintf("%s?%s", $url, http_build_query($data));
-//
-//    $response = Unirest\Request::get($url);
-//
-//    return $response;
-    //  }
+
+    public function getAll()
+    {
+        return $this->em->getRepository(User::class)->findAll();
+    }
+
+    public function findById(Integer $id)
+    {
+        return $this->em->getRepository(User::class)->find($id);
+    }
 
     public function patch(User $user, $id = null)
     {
@@ -85,7 +84,7 @@ class UserService
         $oldUser->setShowProfil(($user->getShowProfil()) ? 1 : 0);
 
         // insert or update new tags in database
-        $oldUser->setTags($this->patchTags($oldUser->getTags(), $user->getTags()));
+        $oldUser->setTags($this->tagService->patchTags($oldUser->getTags(), $user->getTags()));
 
         // insert or update "slack" accounts
         //    $oldUser->setSlackAccounts($this->patchSlackAccounts($oldUser, $user->getSlackAccounts()));
@@ -97,30 +96,39 @@ class UserService
         return $oldUser;
     }
 
-    public function patchTags(Collection $oldUserTags, Collection $tags)
+    public function delete(User $user)
     {
-        for ($i = 0; $i < count($tags); ++$i) {
-            $oldTag = $this->em
-                ->getRepository(Tag::class)
-                ->findOneBy(['name' => $tags[$i]->getName(), 'type' => $tags[$i]->getType()]);
-
-            if ($oldTag) {
-                if (!$oldUserTags->contains($oldTag)) {
-                    $this->addIterationTag($oldTag);
-                }
-                // if tag already exists, we get the old one and replace it in the persisted variable
-                $tags[$i] = $oldTag;
-            } else {
-                $this->insertNewTag($tags[$i]);
-            }
-
-            if (!$oldUserTags->contains($tags[$i])) {
-                $oldUserTags->add($tags[$i]);
-            }
-        }
-
-        return $oldUserTags;
+        $this->em->remove($user);
+        $this->em->flush();
     }
+
+    public function post(User $user)
+    {
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
+    }
+
+
+
+    // todo: put this in slack service
+
+    //  function getSlackUserData($code, $redirectURI)
+    //  {
+//
+//    $url = "https://slack.com/api/oauth.access";
+//
+//    $data["client_id"] = $this->clientId;
+//    $data["client_secret"] = $this->clientSecret;
+//    $data["code"] = $code;
+//    $data["redirect_uri"] = $redirectURI;
+//    $url = sprintf("%s?%s", $url, http_build_query($data));
+//
+//    $response = Unirest\Request::get($url);
+//
+//    return $response;
+    //  }
 
     //  private function patchSlackAccounts(User $oldUser, Collection $slackAccounts)
     //  {
@@ -181,16 +189,7 @@ class UserService
 //
     //  }
 
-    private function insertNewTag(Tag &$tag)
-    {
-        try {
-            $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        } catch (\Exception $e) {
-        }
-        $tag->setIteration(1);
 
-        $tag->setCreated($date);
-    }
 
     //  private function insertSlackAccount(SlackAccount $slackAccount) {
 //
@@ -200,23 +199,4 @@ class UserService
 //    return $slackAccount;
 //
     //  }
-
-    private function addIterationTag(Tag &$tag)
-    {
-        $tag->setIteration($tag->getIteration() + 1);
-    }
-
-    public function delete(User $user)
-    {
-        $this->em->remove($user);
-        $this->em->flush();
-    }
-
-    public function post(User $user)
-    {
-        $this->em->persist($user);
-        $this->em->flush();
-
-        return $user;
-    }
 }

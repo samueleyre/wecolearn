@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Image } from '~/shared/entities/image/entity';
+import { Image } from '~/core/entities/image/entity';
 
 @Pipe({
   name: 'cloudinaryImagePipe',

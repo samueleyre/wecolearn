@@ -30,7 +30,6 @@ class PingController extends AbstractController
         $user->setLastConnexion(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
         $this->userManager->updateUser($user);
 
-        // todo: this should return full user data instead of client route
-        return ['userId' => $user->getId()];
+        return $user;
     }
 }

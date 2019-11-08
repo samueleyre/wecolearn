@@ -11,7 +11,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CreateUserService
 {
-
     private $userManager;
     private $dispatcher;
 //    private $addDomainService;
@@ -34,12 +33,6 @@ class CreateUserService
 
     public function process(User $user)
     {
-
-        /*
-        if ( $this->getParameter("environment") === "dev" ) {
-            $retEmail = false;
-        }
-        */
         $ret = [];
 
         //todo fix : serialization should be enough.

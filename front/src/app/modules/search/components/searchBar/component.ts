@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
 
-import { TagService } from '~/shared/services/tag';
+import { TagService } from '~/core/services/tag';
 
 import { SearchService } from '../../services/search';
 

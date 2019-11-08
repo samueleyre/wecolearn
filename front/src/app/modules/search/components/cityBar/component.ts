@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 
-import { City } from '~/shared/entities/city/entity';
+import { City } from '~/core/entities/city/entity';
 import { city } from '~/config/city';
 
 import { SearchService } from '../../services/search';

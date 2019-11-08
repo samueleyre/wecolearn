@@ -7,14 +7,14 @@ import * as _ from 'lodash';
 import { Router } from '@angular/router';
 
 import { SocketInit } from '~/shared/components/socket/init';
-import { MessagerieService } from '~/shared/services/messagerie/service';
+import { MessagerieService } from '~/core/services/messagerie/service';
 import { SocketService } from '~/shared/components/socket/service';
 
-import { User } from '~/shared/entities/user/entity';
-import { Message } from '~/shared/entities/message/entity';
-import { Thread } from '~/shared/entities/thread/entity';
-import { ClientService } from '~/shared/services/client';
-import { LoggedService } from '~/shared/services/loggedService';
+import { User } from '~/core/entities/user/entity';
+import { Message } from '~/core/entities/message/entity';
+import { Thread } from '~/core/entities/thread/entity';
+import { ClientService } from '~/core/services/client';
+import { LoggedService } from '~/core/services/loggedService';
 
 
 const initialMessages: Message[] = [];

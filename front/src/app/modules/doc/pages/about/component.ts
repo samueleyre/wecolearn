@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UrlService } from '~/shared/services/url';
+import { UrlService } from '~/core/services/url';
 
 
 @Component({

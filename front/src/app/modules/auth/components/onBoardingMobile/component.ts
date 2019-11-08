@@ -6,8 +6,7 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UserService } from '~/shared/services/user';
-import { AuthenticationService } from '~/shared/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth';
 
 import { environment } from '~/../environments/environment';
 
@@ -45,7 +44,6 @@ export class AuthOnboardingMobileComponent{
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
     private authenticationService: AuthenticationService,
     private router: Router,
   ) {
@@ -53,7 +51,7 @@ export class AuthOnboardingMobileComponent{
   }
 
   submit() {
-    this.userService.postNewUser({ tags: this.userForm.value.learn_tags, ...this.userForm.value }).subscribe(
+    this.authenticationService.signUp({ tags: this.userForm.value.learn_tags, ...this.userForm.value }).subscribe(
       (response) => {
         this.login();
       },

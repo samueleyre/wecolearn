@@ -4,13 +4,14 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { city } from '~/config/city';
-import { APIService } from '~/shared/services/crud/api';
+import { APIService } from '~/core/services/crud/api';
+import { User } from '~/core/entities/user/entity';
 
 import { SEARCH } from '../config/main';
 
 
 @Injectable()
-export class SearchService extends APIService {
+export class SearchService extends APIService<User> {
   private currentlySearching = false;
   private pauseRedirect = false;
   private searchInput: BehaviorSubject<string> = new BehaviorSubject('');
@@ -38,7 +39,7 @@ export class SearchService extends APIService {
   currentFoundAddress: any[];
   currentSearch: Object;
   public loading: Subject<boolean>;
-  public endPoint = '/api/user/matchs';
+  public endPoint = '/api/user/match';
 
   getSearchInput(): Observable<string> {
     return this.searchInput;
@@ -61,17 +62,17 @@ export class SearchService extends APIService {
     }
 
 
-    return this.get(filters).pipe(
-            map((response: any[]) => {
-              this.currentFoundClients.next(response);
-              this.loading.next(false);
-              this.currentlySearching = false;
-              if (this.pauseRedirect) {
-                this.pauseRedirect = false;
-                return false;
-              }
-              return true;
-            }));
+    return this.list(filters).pipe(
+      map((response: User[]) => {
+        this.currentFoundClients.next(response);
+        this.loading.next(false);
+        this.currentlySearching = false;
+        if (this.pauseRedirect) {
+          this.pauseRedirect = false;
+          return false;
+        }
+        return true;
+      }));
   }
 
   cancelChangePageAfterSearch() {

@@ -3,8 +3,8 @@ import { Observable, Subject } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { takeUntil } from 'rxjs/operators';
 
-import { User } from '~/shared/entities/user/entity';
-import { ClientService } from '~/shared/services/client';
+import { User } from '~/core/entities/user/entity';
+import { ClientService } from '~/core/services/client';
 
 
 @Component({

@@ -1,9 +1,9 @@
 import { Component, Input, Injectable, OnInit, HostListener } from '@angular/core';
 
-import { Image } from '~/shared/entities/image/entity';
+import { Image } from '~/core/entities/image/entity';
 import { image } from '~/config/image';
-import { MenuService } from '~/shared/services/layout/menu';
-import { UrlService } from '~/shared/services/url';
+import { MenuService } from '~/core/services/layout/menu';
+import { UrlService } from '~/core/services/url';
 import { WINDOW } from '~/config/window';
 
 @Component({

@@ -4,8 +4,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from '~/shared/entities/user/entity';
-import { Thread } from '~/shared/entities/thread/entity';
+import { User } from '~/core/entities/user/entity';
+import { Thread } from '~/core/entities/thread/entity';
 import { Threads } from '~/modules/chat/services/threads';
 
 @Component({

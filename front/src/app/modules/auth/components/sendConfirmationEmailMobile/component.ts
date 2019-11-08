@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { AuthenticationService } from '~/shared/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth';
 
 
 @Component({

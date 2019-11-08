@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MainComponent } from '~/layout/dashboard/component';
-import { AuthGuard } from '~/shared/services/auth/authGuard';
+import { MainComponent } from '~/core/layouts/dashboard/component';
+import { AuthGuard } from '~/core/services/auth/authGuard';
 
 import { SearchComponent } from './pages/search/component';
 

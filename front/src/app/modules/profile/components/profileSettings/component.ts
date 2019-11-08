@@ -9,16 +9,16 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-import { User } from '~/shared/entities/user/entity';
-import { Tag } from '~/shared/entities/tag/entity';
-import { Image } from '~/shared/entities/image/entity';
-import { ClientService } from '~/shared/services/client';
-import { TagService } from '~/shared/services/tag';
-import { DomainService } from '~/shared/services/domain';
-import { AuthenticationService } from '~/shared/services/auth/auth';
-import { SlackTeam } from '~/shared/entities/slackTeam/entity';
-import { SlackAccount } from '~/shared/entities/slackAccount/entity';
-import { UrlService } from '~/shared/services/url';
+import { User } from '~/core/entities/user/entity';
+import { Tag } from '~/core/entities/tag/entity';
+import { Image } from '~/core/entities/image/entity';
+import { ClientService } from '~/core/services/client';
+import { TagService } from '~/core/services/tag';
+import { DomainService } from '~/core/services/domain';
+import { AuthenticationService } from '~/core/services/auth/auth';
+import { SlackTeam } from '~/core/entities/slackTeam/entity';
+import { SlackAccount } from '~/core/entities/slackAccount/entity';
+import { UrlService } from '~/core/services/url';
 import { environment } from '~/../environments/environment';
 
 
@@ -31,12 +31,12 @@ import { environment } from '~/../environments/environment';
 @Injectable()
 export class ProfileSettingsComponent implements OnInit {
   @Input()
-  set _client(client) {
-    this.client = client;
+  set _user(user) {
+    this.user = user;
   }
 
   public zoom = 4;
-  public client: User;
+  public user: User;
 
   public tags = [];
 
@@ -94,6 +94,8 @@ export class ProfileSettingsComponent implements OnInit {
     let subDomain = this.domainService.getSubDomain();
     this.hasSlack = this.domainService.hasSlack();
     this.hasRocketChat = this.domainService.hasRocketChat();
+
+    // TODO : set as enum
     if (subDomain === 'wecolearn') {
       subDomain = '';
     } else {
@@ -109,15 +111,14 @@ export class ProfileSettingsComponent implements OnInit {
     //     this.slackConnect(params['code'], this.redirectURI);
     //   }
     // });
-    if (this.client) {
-      this.setClient(this.client);
+    if (this.user) {
+      this.setClient(this.user);
     }
   }
 
   setClient(user: User) {
     this.userForm.patchValue(user);
     this.setTags(user);
-    console.log(user);
 
     // if (!this.client['latitude']) {
     //   this.setDefaultLatLong();

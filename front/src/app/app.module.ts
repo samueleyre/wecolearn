@@ -14,27 +14,27 @@ import { AuthModule } from '~/modules/auth/auth.module';
 import { SearchModule } from '~/modules/search/search.module';
 // shared modules
 import { SafeUrlPipeModule } from '~/shared/modules/safeUrl/safeUrlPipe.module';
-import { CleanService } from '~/shared/services/crud/cleanService';
+import { CleanService } from '~/core/services/crud/cleanService';
 import { PushSubscriptionService } from '~/shared/components/push-subscription/service';
 import { SocketService } from '~/shared/components/socket/service';
 import { SocketInit } from '~/shared/components/socket/init';
-import { MessagerieService } from '~/shared/services/messagerie/service';
+import { MessagerieService } from '~/core/services/messagerie/service';
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
-import { HeaderMobileComponent } from '~/layout/header-mobile/component';
-import { MenuMobileService } from '~/shared/services/layout/menu-mobile';
+import { HeaderMobileComponent } from '~/core/layouts/header-mobile/component';
+import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 import { MessagesService } from '~/modules/chat/services/messages';
 import { Threads } from '~/modules/chat/services/threads';
-import { FooterMobileComponent } from '~/layout/footer-mobile/component';
-import { FooterMobileService } from '~/shared/services/layout/footer-mobile';
+import { FooterMobileComponent } from '~/core/layouts/footer-mobile/component';
+import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { CoreModule } from '~/core/core.module';
 import { SharedModule } from '~/shared/shared.module';
 
 // local components
-import { MainComponent } from './layout/dashboard/component';
+import { MainComponent } from './core/layouts/dashboard/component';
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './pages/notFound/component';
-import { MenuComponent } from './layout/menu/component';
-import { HeaderComponent } from './layout/header/component';
+import { MenuComponent } from './core/layouts/menu/component';
+import { HeaderComponent } from './core/layouts/header/component';
 import { CommunitiesComponent } from './pages/communities/component';
 import { CommunityComponent } from './pages/communities/community/component';
 // local modules
@@ -45,22 +45,22 @@ import { SafeHtmlPipe } from './shared/pipes/safeHtmlPipe/pipe';
 import { AutofocusDirective } from './modules/search/directives/input/directive';
 import { NotificationService } from './shared/components/notification/service';
 // shares services
-import { UrlService } from './shared/services/url';
-import { ScreenService } from './shared/services/layout/screen';
-import { PingService } from './shared/services/auth/ping';
-import { TokenService } from './shared/services/auth/token';
-import { UserService } from './shared/services/user';
-import { HeaderBag } from './shared/services/auth/headerBag';
-import { HttpApiInterceptor } from './shared/services/auth/httpApiInterceptor';
-import { AuthenticationService } from './shared/services/auth/auth';
-import { getBaseLocation } from './shared/services/layout/baseUrl';
-import { ClientService } from './shared/services/client';
-import { DomainService } from './shared/services/domain';
-import { TagService } from './shared/services/tag';
-import { SeoService } from './shared/services/seo';
-import { LoggedService } from './shared/services/loggedService';
-import { AuthGuard } from './shared/services/auth/authGuard';
-import { MenuService } from './shared/services/layout/menu';
+import { UrlService } from './core/services/url';
+import { ScreenService } from './core/services/layout/screen';
+import { PingService } from './core/services/auth/ping';
+import { TokenService } from './core/services/auth/token';
+import { HeaderBag } from './core/services/auth/headerBag';
+import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
+import { AuthenticationService } from './core/services/auth/auth';
+import { getBaseLocation } from './core/services/layout/baseUrl';
+import { ClientService } from './core/services/client';
+import { DomainService } from './core/services/domain';
+import { TagService } from './core/services/tag';
+import { SeoService } from './core/services/seo';
+import { LoggedService } from './core/services/loggedService';
+import { AuthGuard } from './core/services/auth/authGuard';
+import { MenuService } from './core/services/layout/menu';
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   imports: [
@@ -75,12 +75,14 @@ import { MenuService } from './shared/services/layout/menu';
     BootstrapModalModule,
     WcRoutingModule,
     DeviceDetectorModule.forRoot(),
-        // shared modules
+    // shared modules
     SafeUrlPipeModule,
-        // feature modules
+    // feature modules
     AuthModule,
     SearchModule,
-    MatSliderModule, // needed here otherwise slider doesn't work
+    MatSliderModule,
+    MatIconModule,
+    // needed here otherwise slider doesn't work
 
   ],
   declarations: [
@@ -105,8 +107,8 @@ import { MenuService } from './shared/services/layout/menu';
 
         //  tools
     CopyComponent,
-
   ],
+  // todo: no need for providers anymore
   providers: [
     {
       provide: APP_BASE_HREF,
@@ -129,7 +131,6 @@ import { MenuService } from './shared/services/layout/menu';
     AuthenticationService,
     AuthGuard,
     TokenService,
-    UserService,
     HeaderBag,
     PingService,
     NotificationService,

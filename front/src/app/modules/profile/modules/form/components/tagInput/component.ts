@@ -6,7 +6,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { TagService } from '~/shared/services/tag';
+import { TagService } from '~/core/services/tag';
 
 
 @Component({

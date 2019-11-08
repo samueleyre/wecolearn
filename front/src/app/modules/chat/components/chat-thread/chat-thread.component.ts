@@ -8,8 +8,8 @@ import {
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-import { Thread } from '~/shared/entities/thread/entity';
-import { UrlService } from '~/shared/services/url';
+import { Thread } from '~/core/entities/thread/entity';
+import { UrlService } from '~/core/services/url';
 import { NAV } from '~/config/navigation/nav';
 
 import { Threads } from '../../services/threads';

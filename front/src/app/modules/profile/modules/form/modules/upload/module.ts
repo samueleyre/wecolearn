@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FileUploadModule } from 'ng2-file-upload';
 
-import { TokenService } from '~/shared/services/auth/token';
-import { HeaderBag } from '~/shared/services/auth/headerBag';
+import { TokenService } from '~/core/services/auth/token';
+import { HeaderBag } from '~/core/services/auth/headerBag';
 
 import { UploadComponent } from './component';
 

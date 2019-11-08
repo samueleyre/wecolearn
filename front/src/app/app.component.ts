@@ -2,12 +2,13 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { Logged } from '~/shared/services/logged';
-import { MessagerieService } from '~/shared/services/messagerie/service';
+import { Logged } from '~/core/services/logged';
+import { MessagerieService } from '~/core/services/messagerie/service';
+import { IconService } from '~/core/services/icon.service';
 
 import { SearchService } from './modules/search/services/search';
-import { DomainService } from './shared/services/domain';
-import { SeoService } from './shared/services/seo';
+import { DomainService } from './core/services/domain';
+import { SeoService } from './core/services/seo';
 
 
 @Component({
@@ -20,11 +21,7 @@ export class AppComponent {
   constructor(
       private router: Router,
       private domainService: DomainService,
-      private searchService: SearchService,
-      private seoService: SeoService,
-      private sanitizerService: DomSanitizer,
-      private messagerieService: MessagerieService,
-
+      private iconService: IconService,
   ) {
     // set subdomain
     router.events.subscribe((event) => {
@@ -32,6 +29,7 @@ export class AppComponent {
     });
 
     this.initMessagerieService();
+    this.iconService.init();
   }
 
   private initMessagerieService() {

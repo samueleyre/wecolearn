@@ -15,6 +15,7 @@ use App\Services\User\Service\UserService;
 use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Integer;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,41 +28,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserController extends AbstractController
 {
-    /**
-     * @Get("user")
-     * @View(serializerEnableMaxDepthChecks=true,
-     *     serializerGroups={"output", "receivedMessages":{"output", "sender":{"search"}}})
-     * // todo: specifying subchild groups isn't working
-     *
-     **@throws \Exception
-     */
-    public function getUserAction(
-        Request $request,
-        TokenStorageInterface $tokenStorage,
-        DomainService $domainService,
-        UserService $userService,
-        LoggerInterface $logger
-    ) {
-        $user = $tokenStorage->getToken()->getUser();
-
-        $subDomain = $domainService->getSubDomain();
-
-        $domain = $domainService->getSubDomainEntity($subDomain);
-
-        if (!$domain) {
-            $logger->error('Subdomain not found :', [$subDomain]);
-            $user->addDomain(new Domain($subDomain));
-        } elseif (false === $user->getDomains()->indexOf($domain)) {
-            $user->addDomain($domain);
-        }
-
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        $user->setUserUpdated($date);
-
-        $userService->patch($user);
-
-        return $user;
-    }
 
     /**
      * @Get("user/matchs")
@@ -187,6 +153,40 @@ class UserController extends AbstractController
 
         return $ret;
     }
+
+//     ADMIN -----------------------------------
+
+    /**
+     * @Get("admin/user/{id}")
+     * @View(serializerEnableMaxDepthChecks=true,
+     *     serializerGroups={"output", "receivedMessages":{"output", "sender":{"search"}}})
+     **
+     * @return object
+     */
+    public function findUserAction(
+        Integer $id,
+        UserService $userService
+    ) {
+        return $userService->findById($id);
+    }
+
+    /**
+     * @Get("admin/users")
+     * @View(serializerEnableMaxDepthChecks=true,
+     *     serializerGroups={"output", "receivedMessages":{"output", "sender":{"search"}}})
+     **
+     * @return object[]
+     */
+    public function getUsersAction(
+        UserService $userService
+    ) {
+        return $userService->getAll();
+    }
+
+
+
+
+
 
 //
     //  /**
@@ -322,38 +322,6 @@ class UserController extends AbstractController
         return $ret;
     }
 
-    /**
-     * @Get("/profile/delete")
-     */
-    public function deleteUserAction()
-    {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        $user->setUsername('rand'.$user->getId());
-        $user->setEmail('rand'.$user->getId());
-        $user->setPassword('rand'.$user->getId());
-        $user->setEnabled(0);
-        $user->setFirstName('rand'.$user->getId());
-        $user->setLastName('rand'.$user->getId());
-        $user->setProfilUrl('rand'.$user->getId());
-        $user->setBiographie(null);
-        $user->setImage(null);
-        $user->setShowProfil(false);
-        $user->getTags()->clear();
-        $user->getSlackAccounts()->clear();
-        $user->getDomains()->clear();
-        $user->setLatitude(null);
-        $user->setLongitude(null);
-        $user->setEmailNotifications(false);
-        $user->setDeleted(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
-
-        $ret = [];
-
-        $ret['userDelete'] = $this->get('fos_user.user_manager')->updateUser($user);
-        $ret['ok'] = true;
-
-        return $ret;
-    }
 
     /**
      * @Get("/user/notified")

@@ -7,11 +7,11 @@ import {
 import { Observable } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-import { User } from '~/shared/entities/user/entity';
-import { ClientService } from '~/shared/services/client';
-import { Thread } from '~/shared/entities/thread/entity';
-import { Message } from '~/shared/entities/message/entity';
-import { MenuMobileService } from '~/shared/services/layout/menu-mobile';
+import { User } from '~/core/entities/user/entity';
+import { ClientService } from '~/core/services/client';
+import { Thread } from '~/core/entities/thread/entity';
+import { Message } from '~/core/entities/message/entity';
+import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 
 import { MessagesService } from '../../services/messages';
 import { Threads } from '../../services/threads';

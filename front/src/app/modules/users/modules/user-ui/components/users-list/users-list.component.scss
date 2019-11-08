@@ -1,0 +1,41 @@
+@import 'variables';
+
+.UsersList {
+  &-list {
+    &-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      font-family: 'WorkSans', sans-serif;
+
+      & > * {
+        flex: 1;
+
+        &.UsersList-list-item-role {
+          flex: 0.5;
+        }
+      }
+
+      &-name {
+        font-weight: 600;
+
+        &--itself {
+          color: $color-primary;
+          font-style: italic;
+        }
+      }
+
+      &-email {
+        font-style: italic;
+      }
+
+      &-actions {
+        text-align: right;
+
+        & > *:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

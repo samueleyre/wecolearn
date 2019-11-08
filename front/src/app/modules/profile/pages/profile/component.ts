@@ -5,11 +5,10 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { tap } from 'rxjs/internal/operators/tap';
 import { takeUntil } from 'rxjs/operators';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-import { User } from '~/shared/entities/user/entity';
+import { User } from '~/core/entities/user/entity';
 
 import { ProfileService } from '../../services/profile';
 

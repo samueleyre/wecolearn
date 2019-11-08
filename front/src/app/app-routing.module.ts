@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MainComponent } from '~/layout/dashboard/component';
+import { MainComponent } from '~/core/layouts/dashboard/component';
 
-import { AuthGuard } from './shared/services/auth/authGuard';
+import { AuthGuard } from './core/services/auth/authGuard';
 import { CommunitiesComponent } from './pages/communities/component';
 import { NotFoundComponent } from './pages/notFound/component';
 

@@ -3,7 +3,7 @@ import {
   Injectable, Input,
 } from '@angular/core';
 
-import { User } from '~/shared/entities/user/entity';
+import { User } from '~/core/entities/user/entity';
 
 
 @Component({

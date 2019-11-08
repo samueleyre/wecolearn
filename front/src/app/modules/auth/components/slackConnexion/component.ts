@@ -5,10 +5,10 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { DomainService } from '~/shared/services/domain';
+import { DomainService } from '~/core/services/domain';
 import { environment } from '~/../environments/environment';
-import { TokenService } from '~/shared/services/auth/token';
-import { AuthenticationService } from '~/shared/services/auth/auth';
+import { TokenService } from '~/core/services/auth/token';
+import { AuthenticationService } from '~/core/services/auth/auth';
 
 
 @Component({

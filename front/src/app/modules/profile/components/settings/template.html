@@ -13,7 +13,6 @@
         <input id="email" type="email" class="form-control showvalidity" name="email" [(ngModel)]="newemail"
                #email="ngModel" required pattern="{{pattern}}"/>
         <div *ngIf="f1.submitted && !email.valid" class="help-block">L'adresse email n'est pas valide</div>
-        <div *ngIf="message.email" class="help-block">{{message.email}}</div>
       </div>
     </div>
 
@@ -54,11 +53,10 @@
                   <span style="float: left; ">
                     Difficulté
                   </span>
-          <password-strength-bar style="text-align: center" [style.textAlign]="center"
+          <password-strength-bar style="text-align: center" [style.textAlign]="'center'"
                                  [passwordToCheck]="newpassword"
-                                 [barLabel]="barLabel"></password-strength-bar>
+                                 [barLabel]="'Difficulté'"></password-strength-bar>
         </div>
-        <div *ngIf="message.password" class="help-block">{{message.password}}</div>
       </div>
     </div>
 

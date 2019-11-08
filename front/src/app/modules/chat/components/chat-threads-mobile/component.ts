@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { Thread } from '~/shared/entities/thread/entity';
-import { Logged } from '~/shared/services/logged';
+import { Thread } from '~/core/entities/thread/entity';
+import { Logged } from '~/core/services/logged';
 
 import { Threads } from '../../services/threads';
 

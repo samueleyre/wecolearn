@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-import { User } from '~/shared/entities/user/entity';
+import { User } from '~/core/entities/user/entity';
 
 import { SearchService } from '../../services/search';
 import { SEARCH } from '../../config/main';

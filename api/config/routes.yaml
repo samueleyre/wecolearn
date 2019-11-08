@@ -9,7 +9,7 @@ api_login_check:
 signup:
   type:     rest
   prefix:   api
-  resource: App\Services\User\Controller\NewUserController
+  resource: App\Services\User\Controller\SignUpController
 
 # todo: integrate ping in user
 ping:

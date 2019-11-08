@@ -5,7 +5,7 @@ import {
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthenticationService } from '~/shared/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth';
 
 
 @Component({

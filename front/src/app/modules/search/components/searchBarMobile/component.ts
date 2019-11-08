@@ -10,8 +10,8 @@ import { debounceTime, map } from 'rxjs/operators';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { MatAutocompleteTrigger } from '@angular/material';
 
-import { TagService } from '~/shared/services/tag';
-import { FooterMobileService } from '~/shared/services/layout/footer-mobile';
+import { TagService } from '~/core/services/tag';
+import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 
 import { SearchService } from '../../services/search';
 

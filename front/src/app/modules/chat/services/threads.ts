@@ -4,9 +4,9 @@ import * as _ from 'lodash';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 
-import { Thread } from '~/shared/entities/thread/entity';
-import { Message } from '~/shared/entities/message/entity';
-import { User } from '~/shared/entities/user/entity';
+import { Thread } from '~/core/entities/thread/entity';
+import { Message } from '~/core/entities/message/entity';
+import { User } from '~/core/entities/user/entity';
 
 import { MessagesService } from './messages';
 

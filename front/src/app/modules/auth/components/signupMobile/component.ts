@@ -4,13 +4,11 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { User } from '~/shared/entities/user/entity';
-import { UserService } from '~/shared/services/user';
-import { AuthenticationService } from '~/shared/services/auth/auth';
-import { DomainService } from '~/shared/services/domain';
+import { User } from '~/core/entities/user/entity';
+import { AuthenticationService } from '~/core/services/auth/auth';
+import { DomainService } from '~/core/services/domain';
 import { environment } from '~/../environments/environment';
 import { ERRORS } from '~/config/errors';
 
@@ -35,8 +33,6 @@ export class SignupMobileComponent implements OnInit {
 
   constructor(
       private router: Router,
-      private userService: UserService,
-      public modal: Modal,
       private authenticationService: AuthenticationService,
       private domainService: DomainService,
   ) {
@@ -58,7 +54,7 @@ export class SignupMobileComponent implements OnInit {
 
 
   submit(f: NgForm) {
-    this.userService.postNewUser(this.user).subscribe(
+    this.authenticationService.signUp(this.user).subscribe(
       (response) => {
         if (response === 'duplicate') {
           this.error = 'L\'adresse email est déjà utilisé.';

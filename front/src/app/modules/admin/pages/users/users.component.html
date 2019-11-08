@@ -1,0 +1,57 @@
+<div class="Users">
+  <div class="Users-list" [hidden]="editUserFormVisible">
+    <div class="Users-list-header">
+      <h2>
+        Utilisateurs
+      </h2>
+      <form [formGroup]="searchFilters">
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher</mat-label>
+          <input matInput placeholder="Nom d'utilisateur, email" formControlName="query" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="Users-list--loading" *ngIf="loaded">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="Users-list-table">
+      <app-users-list
+        *ngIf="usersToShow"
+        [canEditUser]="canEditUser$ | async"
+        [users]="usersToShow"
+        (editUser)="showEditForm($event)"
+      ></app-users-list>
+      <mat-paginator
+        [hidden]="!usersToShow && !usersFiltered"
+        [length]="countUsers"
+        [pageSize]="PAGE_SIZE"
+      ></mat-paginator>
+    </div>
+  </div>
+  <div
+    class="Users-add"
+  >
+    <button mat-flat-button class="large" *ngIf="!editUserFormVisible" (click)="showEditForm()" color="primary">
+      Ajouter un utilisateur
+    </button>
+    <div [hidden]="!editUserFormVisible">
+      <h2 *ngIf="isCreatingUser">
+        Ajouter un utilisateur
+      </h2>
+
+      <h2 *ngIf="!isCreatingUser">
+        Modifier un utilisateur
+      </h2>
+
+      <div class="Users-form">
+        <app-user-form
+          [isCreating]="isCreatingUser"
+          [user]="editedUser"
+          [groupEditable]="true"
+          (onCloseEditUser)="closeUserForm()"
+        ></app-user-form>
+      </div>
+    </div>
+  </div>
+</div>

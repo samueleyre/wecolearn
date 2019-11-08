@@ -4,7 +4,7 @@ import {
   Input,
 } from '@angular/core';
 
-import { Message } from '~/shared/entities/message/entity';
+import { Message } from '~/core/entities/message/entity';
 
 
 @Component({

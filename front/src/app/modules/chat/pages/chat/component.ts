@@ -5,9 +5,9 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-import { Thread } from '~/shared/entities/thread/entity';
+import { Thread } from '~/core/entities/thread/entity';
 import { Threads } from '~/modules/chat/services/threads';
-import { MessagerieService } from '~/shared/services/messagerie/service';
+import { MessagerieService } from '~/core/services/messagerie/service';
 
 @Component({
   templateUrl: 'template.html',

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 
-import { HeaderBag } from '~/shared/services/auth/headerBag';
+import { HeaderBag } from '~/core/services/auth/headerBag';
 
 import { environment } from '~/../environments/environment';
 

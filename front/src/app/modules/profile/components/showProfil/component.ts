@@ -5,9 +5,9 @@ import {
 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
-import { User } from '~/shared/entities/user/entity';
-import { ClientService } from '~/shared/services/client';
-import { Tag } from '~/shared/entities/tag/entity';
+import { User } from '~/core/entities/user/entity';
+import { ClientService } from '~/core/services/client';
+import { Tag } from '~/core/entities/tag/entity';
 
 
 @Component({
