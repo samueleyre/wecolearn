@@ -1,0 +1,8 @@
+  <img *ngIf="!editing" defaultProfileImage [src]="parentForm.value.image | cloudinaryImagePipe" alt="" >
+  <button *ngIf="!editing"  type="button" class="btn btn-sm btn-edit" (click)="editing=true"><i
+          class="fas fa-pencil-alt" aria-hidden="true"></i>
+  </button>
+  <upload *ngIf="editing" [url]="'/api/uploads'" [filename]="userId"
+          (complete)="onComplete($event)" (error)="onError($event)"></upload>
+
+

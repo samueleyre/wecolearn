@@ -1,0 +1,165 @@
+@import 'variables';
+
+
+
+
+.landing-page {
+
+  .brand {
+    width: 200px;
+    margin-top: 30px;
+
+  }
+
+  .landing-description {
+
+    .slogan {
+      font-size: 35px;
+      font-family: "ralewayblack";
+      background-color: #211D1E;
+      border-left: 20px solid #ffc600;
+      color: white;
+      padding: 20px;
+    }
+
+    .resume {
+      font-family: "ralewaymedium";
+      font-size: 15px;
+      margin-top: 40px;
+
+      strong {
+        font-family: "ralewaybold";
+      }
+    }
+
+
+  }
+
+  .landing-picture-background {
+    animation-name: fromleft;
+    animation-duration: .9s;
+    animation-timing-function: cubic-bezier(.76, 0, .52, 1.01);
+    height: 100vh;
+    background-color: #211D1E;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    width: 100%;
+
+    .landing-picture {
+      height: 100vh;
+      background-image: url("../../../../../../assets/home/group.jpg");
+      background-size: cover;
+      background-position: center;
+      padding: 0;
+      width: 100%;
+      animation: opacity;
+      animation-duration: 1.1s;
+      position: absolute;
+
+    }
+
+  }
+
+}
+
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100%;
+
+  }
+}
+
+@keyframes fromleft {
+  from {
+    width: 0;
+
+  }
+
+  to {
+    width: 100%;
+
+  }
+}
+
+
+
+
+
+
+// Medias
+
+@media screen and (max-width: 1200px) {
+
+  .brand img {
+    width: 170px;
+    transition: .5s;
+  }
+
+  .landing-page {
+    .landing-description {
+
+      .slogan {
+        font-size: 25px;
+        border-left: 10px solid #ffc600;
+        transition: .5s;
+
+      }
+
+      .resume {
+        margin-top: 25px;
+        transition: .5s;
+
+      }
+
+      .connexion-form {
+        margin-top: 25px;
+        transition: .5s;
+
+        .btn {
+          margin-top: 10px;
+          transition: .5s;
+
+        }
+      }
+    }
+  }
+
+}
+
+
+// Medias
+
+
+@media screen and (max-width: 992px) {
+
+
+  .landing-description {
+    padding: 70px 35px;
+
+  }
+
+}
+
+@media screen and (min-width:992px) {
+  .landing-page {
+    height: 100vh;
+    .landing-description{
+      height: 100vh;
+
+    }
+  }
+}
+
+@media screen and (max-width:768px) {
+  .slogan {
+    font-size: 25px !important;
+  }
+
+}
+

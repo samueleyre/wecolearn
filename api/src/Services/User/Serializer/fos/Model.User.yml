@@ -1,0 +1,10 @@
+FOS\UserBundle\Model\User:
+    exclusion_policy: none
+    access_order:     alphabetical
+    properties:
+        username:
+          groups: [ input, output ]
+        email:
+          groups: [ input, output , search ]
+        password:
+          groups: [ input ]

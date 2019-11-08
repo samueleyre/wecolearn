@@ -1,0 +1,17 @@
+
+input {
+  transition: .2s;
+
+  &:focus,
+  &:active {
+    border: 2px solid #ffc600 !important;
+    box-shadow: none;
+    transition: .2s;
+  }
+}
+
+
+.btn {
+  margin-top: 10px;
+}
+

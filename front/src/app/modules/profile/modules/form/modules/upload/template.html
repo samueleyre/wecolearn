@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <input type="file" accept="image/*" class="btn" name="{{_filename}}" ng2FileSelect [uploader]="uploader"/>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 justify-content-center">
+            <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="center">
+                <button type="button" class="btn btn-primary btn-s"
+                        (click)="uploader.uploadAll()"
+                        [disabled]="!uploader.getNotUploadedItems().length">
+                    <i class="fa fa-upload" aria-hidden="true"></i> Uploader
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-secondary btn-s"
+                        (click)="cancel()">
+                    Annuler
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

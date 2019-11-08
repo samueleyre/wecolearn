@@ -1,0 +1,20 @@
+@import 'variables';
+
+
+.button-container{
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  background-color: $mainOrange;
+  .footer-link{
+    width: 50%;
+    text-align: center;
+    padding: 11px 0;
+    color: white;
+    &:hover, &.is-active {
+      color: #ffc600;
+      box-sizing: border-box;
+      border-bottom: 4px solid #ffc600;
+    }
+  }
+}

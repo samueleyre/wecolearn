@@ -1,0 +1,9 @@
+@import "variables";
+
+
+
+@media (max-width: $smScreen) {
+  .container-fluid{
+    overflow: auto;
+  }
+}

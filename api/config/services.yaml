@@ -1,0 +1,60 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'fr'
+    client_id: '%env(CLIENT_ID)%'
+    client_secret: '%env(CLIENT_SECRET)%'
+    delivery_address: '%env(DELIVERY_ADDRESS)%'
+    sendinblue_api: '%env(SENDINBLUE_API)%'
+    limit_until_destroy: '%env(LIMIT_UNTIL_DESTROY)%'
+    host: '%env(HOST)%'
+    environment: '%env(APP_ENV)%'
+    vapid_private: '%env(VAPID_PRIVATE)%'
+    vapid_public : '%env(VAPID_PUBLIC)%'
+    rabbit_url : '%env(RABBIT_URL)%'
+
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+          # fetching services directly from the container via $container->get() won't work.
+        # The best practice is to be explicit about your dependencies anyway.
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+#    App\Services\User\Service\EmailService:
+#        arguments:
+#            $deliveryAddress: '%delivery_address%'
+#            $sendInBlueApi: '@sendinblue_api.smtp_endpoint'
+
+    App\Services\Domain\Service\DomainService:
+        arguments:
+            $host: '%host%'
+            $environment: '%environment%'
+
+# Is this needed ??
+    App\Services\Shared\Service\UploadService:
+        arguments:
+            $uploader: '@speicher210_cloudinary.uploader'
+
+    App\Services\User\Service\UserService:
+        public: true
+        arguments:
+            $client_id: '%client_id%'
+            $client_secret: '%client_secret%'
+#
+#    App\Services\User\Service\ConfirmEmailSubscriber:
+#        tags:
+#            - { name: 'kernel.event_subscriber' }
+#        arguments:
+#            $delivery_address: '%delivery_address%'
+
+    generate_url_service:
+        public: true
+        alias: 'App\Services\User\Service\GenerateUrlService'

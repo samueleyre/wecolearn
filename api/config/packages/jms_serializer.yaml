@@ -1,0 +1,19 @@
+jms_serializer:
+    metadata:
+        auto_detection: false
+        directories:
+            FOSUserBundle:
+                namespace_prefix: "FOS\\UserBundle"
+                path:             "%kernel.project_dir%/src/Services/User/Serializer/fos"
+            User:
+                namespace_prefix: "App\\Services\\User\\Entity"
+                path:             "%kernel.project_dir%/src/Services/User/Serializer"
+            Tag:
+                namespace_prefix: "App\\Services\\Tag\\Entity"
+                path:             "%kernel.project_dir%/src/Services/Tag/Serializer"
+            Domain:
+                namespace_prefix: "App\\Services\\Domain\\Entity"
+                path:             "%kernel.project_dir%/src/Services/Domain/Serializer"
+            Message:
+                namespace_prefix: "App\\Services\\Chat\\Entity"
+                path:             "%kernel.project_dir%/src/Services/Chat/Serializer"

@@ -1,0 +1,24 @@
+mat-horizontal-stepper{
+  background: none;
+}
+
+.card{
+  min-height: 50vh;
+  .card-body{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    :first-child{
+      width: 100%
+    }
+  }
+}
+
+.btn-container-first{
+  float: right;
+}
+
+.btn-container{
+  display: flex;
+  justify-content: space-between;
+}

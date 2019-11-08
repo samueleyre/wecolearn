@@ -1,0 +1,12 @@
+<div id="wrapper" *ngIf="!isMobile">
+  <dash-menu></dash-menu>
+  <div id="page-content-wrapper" [ngClass]="{'activated' : activated }">
+    <dash-header></dash-header>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+<dash-header-mobile *ngIf="isMobile"></dash-header-mobile>
+<router-outlet *ngIf="isMobile"></router-outlet>
+<dash-footer-mobile *ngIf="isMobile && showFooter && !searchFocusState"></dash-footer-mobile>

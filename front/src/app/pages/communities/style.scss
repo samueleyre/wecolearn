@@ -1,0 +1,11 @@
+@import '../../../assets/scss/variables';
+
+
+#communitiesPage{
+
+  min-height: 95vh;
+  .title{
+    color: $mainOrange;
+    padding: 50px 0px;
+  }
+}

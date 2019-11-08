@@ -1,0 +1,54 @@
+@import 'variables';
+@import "extendables";
+
+
+.cards {
+  padding: 15px;
+}
+
+h5{
+  color: grey;
+}
+
+.dashboard-header{
+  margin: 18px 0 0px 0;
+}
+
+.dashboard-header-mobile{
+  padding-top: 5px;
+  position: fixed;
+  z-index: 500;
+  width: 100%;
+  background-color: white;
+}
+
+
+#conversationColumn{
+  position: fixed;
+  right: 0;
+}
+
+.profil [class*="col-"] {
+  display: flex;
+
+}
+
+.col-fixed-2{
+  width: 13.333333%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+#cardsContainer{
+  &.desktop{
+    @extend %wc-thin-scroll-bar;
+    height: calc(100vh - 143px);
+  }
+  &.mobile{
+    height: calc(100vh - 182px);
+    margin-top: 71px;
+  }
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}

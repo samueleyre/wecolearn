@@ -1,0 +1,51 @@
+
+html{
+  --main-color-1: #501B4A;
+  --main-color-1-light-5: #63215c;
+  --main-color-1-light-10: #76286d;
+  --main-color-1-light-15: #892e7f;
+  --main-color-1-dark-5: #3d1538;
+  --main-color-1-dark-10: #2a0e27;
+  --main-color-1-dark-15: #170815;
+
+  --main-color-2: #ffc52d;
+  --main-color-2-light-5: #ffcc47;
+  --main-color-2-light-10: #ffd360;
+  --main-color-2-light-15: #ffda7a;
+  --main-color-2-dark-5: #ffbe14;
+  --main-color-2-dark-10: #f9b400;
+  --main-color-2-dark-15: #e0a200;
+}
+
+
+$mainOrange : var(--main-color-1);
+$mainYellow: var(--main-color-2);
+
+$mainBgColor : #f5f5f5;
+$basicBorderColor : #e6e6e6;
+
+.mainColor1{
+  color: $mainOrange;
+}
+
+
+$headerHeight: 60px;
+
+//profil page
+
+$profilInfoWidth : 20%;
+
+
+//homepage
+
+$homeborder : #b8b2b2;
+$homecolbg : #fffaf3;
+
+
+//SCREENS
+
+
+$smScreen : 768px;
+$mdScreen : 992px;
+
+

@@ -1,0 +1,92 @@
+<form (keydown.enter)="$event.preventDefault()" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
+    <mat-horizontal-stepper>
+        <ng-template matStepperIcon="edit">
+            <i class="fa fa-check"></i>
+        </ng-template>
+        <mat-step state="profil">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="center">Qui je suis</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-12 col-md-4">
+                        <div class="col-12 no-padding">
+                            <mat-form-field appearance="legacy" >
+                                <mat-label>Prénom</mat-label>
+                                <input matInput placeholder="" formControlName="first_name"  >
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 no-padding">
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Nom</mat-label>
+                                <input matInput placeholder="" formControlName="last_name"  >
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-container-first">
+                        <button type="button" class="btn btn-primary" matStepperNext>Suivant</button>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step >
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="center">Ce que j'ai envie d'apprendre</h6>
+                </div>
+                <div class="card-body">
+                    <profile-form-learntags [parentForm]="userForm"></profile-form-learntags>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-container">
+                        <button type="button" class="btn btn-secondary" matStepperPrevious>Retour</button>
+                        <button type="button" class="btn btn-primary" matStepperNext>Suivant</button>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step >
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="center">Pourquoi je veux apprendre</h6>
+                </div>
+                <div class="card-body">
+                    <profile-form-biography [parentForm]="userForm"></profile-form-biography>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-container">
+                        <button type="button" class="btn btn-secondary" matStepperPrevious>Retour</button>
+                        <button type="button" class="btn btn-primary" matStepperNext>Suivant</button>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step >
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="center">Pour me connecter</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                        <div class="col-12 no-padding">
+                            <auth-form-email [parentForm]="userForm"></auth-form-email>
+                        </div>
+                        <div class="col-12 no-padding">
+                            <auth-form-password [parentForm]="userForm"></auth-form-password>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-container">
+                        <button type="button" class="btn btn-secondary" matStepperPrevious>Retour</button>
+                        <button type="submit" class="btn btn-primary" matStepperNext>Créer mon compte</button>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+
+    </mat-horizontal-stepper>
+</form>

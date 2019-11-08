@@ -1,0 +1,10 @@
+<div class="form-group mb-3">
+  <div class="col-12">
+    <app-geolocation [latitude]="parentForm.value.latitude"
+                     [longitude]="parentForm.value.longitude"
+                     (latitudeChange)="latitudeChange($event)"
+                     (longitudeChange)="longitudeChange($event)"
+    ></app-geolocation>
+
+  </div>
+</div>

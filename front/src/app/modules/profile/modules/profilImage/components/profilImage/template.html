@@ -1,0 +1,4 @@
+<div (window:resize)="onResize($event)">
+    <img *ngIf="image && image.public_id" [ngStyle]="style" [src]="getUrl()" class="profil-img" alt="" >
+    <img *ngIf="!image || !image.public_id" [ngStyle]="style" [src]="baseImageName | safeUrl" class="profil-img" alt="">
+</div>

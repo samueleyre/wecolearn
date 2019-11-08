@@ -1,0 +1,20 @@
+@import '../../../assets/scss/variables';
+
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding-left: 250px;
+  transition: .6s;
+}
+
+
+@media ( max-width: $smScreen ) {
+  #page-content-wrapper {
+    padding-left: 80px;
+  }
+}
+
+.activated#page-content-wrapper {
+  padding-left: 80px;
+}

@@ -1,0 +1,47 @@
+doctrine:
+    dbal:
+        driver: 'mysql'
+        server_version: '5.7'
+
+        # needed for MySQL
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+
+        url: '%env(resolve:DATABASE_URL)%'
+    orm:
+        dql:
+            numeric_functions:
+                pow: Oro\ORM\Query\AST\Functions\Numeric\Pow
+                cast: Oro\ORM\Query\AST\Functions\Cast
+                round: App\Services\Core\Dql\Round
+                cos: DoctrineExtensions\Query\Mysql\Cos
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            User:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Services/User/Entity/Mapping'
+                prefix: 'App\Services\User\Entity'
+                alias: User
+            Tag:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Services/Tag/Entity/Mapping'
+                prefix: 'App\Services\Tag\Entity'
+                alias: Tag
+            Domain:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Services/Domain/Entity/Mapping'
+                prefix: 'App\Services\Domain\Entity'
+                alias: Domain
+            Message:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Services/Chat/Entity/Mapping'
+                prefix: 'App\Services\Chat\Entity'
+                alias: Message
+

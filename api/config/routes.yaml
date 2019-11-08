@@ -1,0 +1,43 @@
+root:
+  prefix:   /
+  type: rest
+  resource: App\Services\Core\Controller\RootController
+
+api_login_check:
+  path: /api/login_check
+
+signup:
+  type:     rest
+  prefix:   api
+  resource: App\Services\User\Controller\NewUserController
+
+# todo: integrate ping in user
+ping:
+  type:     rest
+  prefix:   api
+  resource: App\Services\User\Controller\PingController
+
+user:
+  type:     rest
+  prefix:   api
+  resource: App\Services\User\Controller\UserController
+
+profile:
+  prefix: api
+  type: rest
+  resource: App\Services\User\Controller\ProfileController
+
+tag:
+  type:     rest
+  prefix:   api
+  resource: App\Services\Tag\Controller\TagController
+
+upload:
+  type:     rest
+  prefix:   api
+  resource: App\Services\User\Controller\UploadController
+
+message:
+  type:     rest
+  prefix:   api
+  resource: App\Services\Chat\Controller\MessageController

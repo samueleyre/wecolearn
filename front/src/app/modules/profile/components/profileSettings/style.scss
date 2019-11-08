@@ -1,0 +1,48 @@
+@import 'variables';
+
+
+.fieldContainer{
+  border: #ececec solid 1px;
+  padding-top: 15px;
+  background-color: white;
+  ::ng-deep h6{
+    text-transform: uppercase;
+    color: grey;
+  }
+}
+
+
+.label-form{
+  font-family: 'ralewaymedium';
+  font-size:20px;
+}
+
+.form-group{
+  margin-bottom: 0;
+}
+
+
+//slack
+.btn-container{
+  margin: 3px;
+}
+
+.slackLoginContainer {
+  padding-left: 15px;
+}
+//rocket chat
+.value-span {
+  font-family: 'ralewayregular';
+  font-size:16px;
+}
+
+
+.help-input{
+  color: grey;
+  text-align: center;
+  margin: 15px;
+}
+
+
+
+

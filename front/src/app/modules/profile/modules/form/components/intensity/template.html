@@ -1,0 +1,21 @@
+<div class="form-group mb-3" [formGroup]="parentForm">
+  <div class="col-12">
+      <div class="col-12">
+          <p class="center"><b>
+              {{parentForm.value.intensity}} heures par semaine
+          </b></p>
+      </div>
+      <div class="col-12">
+          <mat-slider
+                  formControlName="intensity"
+                  (ngModelChange)="change()"
+                  [max]="40"
+                  [min]="1"
+                  [step]="1"
+                  [thumbLabel]="true"
+                  [tickInterval]="10"
+          >
+          </mat-slider>
+      </div>
+  </div>
+</div>

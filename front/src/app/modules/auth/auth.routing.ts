@@ -1,0 +1,40 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { ContainerComponent } from './layouts/main/component';
+import { ConfirmEmailComponent } from './components/confirmEmail/component';
+import { LandingPageComponent } from './pages/landing/component';
+import { AuthOnboardingPageComponent } from './pages/onBoarding/component';
+import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirmationEmail/component';
+import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/component';
+
+
+const routes: Routes = [
+
+
+  {
+    path: 'auth', component: ContainerComponent,
+    children: [
+            { path: 'subscribe', component: AuthOnboardingPageComponent },
+            { path: 'password/email', component: SendPasswordConfirmationEmailPageComponent },
+            { path: 'password/reset', component: ResetPasswordFormPageComponent },
+
+    ],
+  },
+    { path: 'signin', component: LandingPageComponent },
+    { path: 'confirmemail', component: ConfirmEmailComponent },
+
+
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes),
+  ],
+  exports: [
+    RouterModule,
+  ],
+})
+
+export class AuthRouting {
+}

@@ -1,0 +1,11 @@
+<hr>
+<div class="form-group" id="notificationSettings">
+    <label> Affichage du profil</label>
+  <br>
+    <app-toggler [(active)]="user.show_profil" (change)="submit()"  [disabled]="disabled"></app-toggler>
+    <p class="form-text text-muted">
+        Ceci vous permet d'être visible et contacté par d'autres utilisateurs. <span *ngIf="disabled">Pour rendre
+        accessible votre profil il faut remplir votre description de profil et donner au moins une chose
+        que vous souhaitez apprendre.</span>
+    </p>
+</div>

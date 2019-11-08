@@ -1,0 +1,94 @@
+@import '../../../../../assets/scss/variables';
+
+
+.card{
+  text-align:center;
+  box-shadow: 1px 7px 27px rgb(233, 233, 233);
+  border: none;
+}
+
+.card-img-top{
+  height: 100px; // 200px when bg upload ready
+  object-fit: cover;
+  background-color: #ffc600;
+}
+.profil-img {
+  width: 130px;
+  position:absolute;
+  left:50%;
+  transform: translate(-50%);
+  padding-top: 35px; // 135px when bg upload ready
+}
+.profil-img img{
+  border-radius:50%;
+  height: 130px;
+  width: 130px;
+  object-fit: cover;
+}
+
+
+.card-header {
+  padding: 65px 0 0 0;
+}
+.card-title{
+  padding: 20px;
+  margin-bottom: 0;
+}
+
+.card-btn a, .card-btn button {
+  background-color: #ffc600;
+  color: #310c31 !important;
+  font-weight: bold;
+}
+.card-text {
+  padding: 0 20px 0 20px;
+}
+
+
+.learning {
+  background-color: #310c31;
+  padding: 20px 0 0 0;
+}
+.learning-title {
+  padding:0 20px 0 20px;
+  color: #fff !important;
+}
+.learning-tags {
+  display:flex;
+  list-style: none;
+  padding: 0;
+  margin:0;
+  justify-content: center;
+}
+.learning-tags li{
+  border:2px;
+  color: #ffc600;
+  font-size: 18px;
+  padding: 5px;
+}
+
+.card-btn .btn {
+  margin: 0 5px 0 5px;
+}
+
+.tags p {
+  margin-bottom: 0;
+}
+
+.badge {
+  padding:8px;
+  background-color: #ffc600;
+  color: #310c31;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-footer{
+  background-color: rgb(255, 255, 255)
+}
+
+

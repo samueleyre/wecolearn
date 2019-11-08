@@ -1,0 +1,6 @@
+<div id="cityBarContainer" class="input-group">
+    <input disabled id="cityBar" class="form-control" auto-complete placeholder="Ville" [(ngModel)]="searchInput" [source]="searchAutoComplete"   value-property-name="id"
+           display-property-name="name" [list-formatter]="autocompleListFormatter"
+           (ngModelChange)="onChange()" />
+</div>
+

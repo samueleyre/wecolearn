@@ -1,0 +1,30 @@
+<section *ngIf="!isMobile">
+    <div class="container" *ngIf="user$ | async as user">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10">
+                <br><br>
+                <a routerLink="/dashboard/search"><i class="fas fa-chevron-left"></i>&nbsp;<span>retour</span></a>
+                <div class="card">
+                    <br><br>
+                    <profile [user]="user"></profile>
+                </div>
+                <br><br><br>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section *ngIf="isMobile">
+    <div class="container-fluid" *ngIf="user$ | async as user">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 no-padding">
+                <br><br>
+                <profile [user]="user"></profile>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</section>
+
+

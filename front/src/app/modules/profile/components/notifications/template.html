@@ -1,0 +1,9 @@
+<hr>
+<div class="form-group" id="notificationSettings">
+    <label> Recevoir des notifications par email</label>
+  <br>
+    <app-toggler [(active)]="user['email_notifications']" (change)="submit()" ></app-toggler>
+    <p class="form-text text-muted">
+      Les notifications permettent de vous tenir au courant des nouveaux messages que vous avez reçu d'autres utilisateurs.
+    </p>
+</div>

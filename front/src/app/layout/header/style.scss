@@ -1,0 +1,69 @@
+@import '../../../assets/scss/variables';
+
+
+.navbar{
+  background-color: #ececec;
+  min-height: 60px;
+  padding: 0;
+
+
+  @media (max-width:768px){
+    #menu-toggle {
+      display:none;
+    }
+  }
+
+  .btn{
+    color: #757575 !important;
+    box-shadow:none;
+  }
+
+
+  .navbar-nav .nav-link {
+    color: #585858 !important;
+    font-size: 1rem;
+  }
+  .navbar-nav .nav-link span {
+    font-size: 14px;
+  }
+  .navbar-nav .nav-link:hover {
+    color: #310c31 !important;
+  }
+
+
+  #notifications{
+    #headerBell{
+      padding-top: 12px;
+      padding-right: 12px;
+      .badge{
+        border: solid 1px grey;
+        background-color: white;
+        color: $mainOrange;
+      }
+    }
+    .client-name{
+      color: $mainOrange;
+    }
+    .dropdown-toggle::after{
+      display: none;
+    }
+  }
+
+
+
+
+  #dropdownParameters-button {
+    display: flex;
+    &.dropdown-toggle::after {
+      margin-top: 13px;
+    }
+  }
+
+  .dropdown-menu-right{
+    li i.fas{
+        padding: 0px 13px;
+    }
+  }
+
+
+}
