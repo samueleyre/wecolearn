@@ -1,0 +1,57 @@
+<div class="Domains">
+  <div class="Domains-list" [hidden]="editDomainFormVisible">
+    <div class="Domains-list-header">
+      <h2>
+        Nom de domaines
+      </h2>
+      <form [formGroup]="searchFilters">
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher</mat-label>
+          <input matInput placeholder="Nom, type" formControlName="query" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="Domains-list--loading" *ngIf="!loaded">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="Domains-list-table">
+      <app-domain-list
+        *ngIf="domainsToShow"
+        [canEditDomain]="canEditDomain$ | async"
+        [domains]="domainsToShow"
+        (editDomain)="showEditForm($event)"
+      ></app-domain-list>
+      <mat-paginator
+        [hidden]="!domainsToShow && !domainsFiltered"
+        [length]="countDomains"
+        [pageSize]="PAGE_SIZE"
+      ></mat-paginator>
+    </div>
+  </div>
+  <div
+    class="Domains-add"
+  >
+    <button mat-flat-button class="large" *ngIf="!editDomainFormVisible" (click)="showEditForm()" color="primary">
+      + Ajouter un domaine
+    </button>
+    <div *ngIf="editDomainFormVisible">
+      <h2 *ngIf="isCreatingDomain">
+        Ajouter un domaine
+      </h2>
+
+      <h2 *ngIf="!isCreatingDomain">
+        Modifier un domaine
+      </h2>
+
+      <div class="Domains-form">
+        <app-domain-form
+          [isCreating]="isCreatingDomain"
+          [domain]="editedDomain"
+          [groupEditable]="true"
+          (onCloseEditDomain)="closeDomainForm()"
+        ></app-domain-form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { Routes } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatNativeDateModule, MatSliderModule } from '@angular/material';
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';

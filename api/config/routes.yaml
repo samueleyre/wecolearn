@@ -31,10 +31,6 @@ tag:
   prefix:   api
   resource: App\Services\Tag\Controller\TagController
 
-adminTag:
-  type:     rest
-  prefix:   api
-  resource: App\Services\Tag\Controller\AdminTagController
 
 upload:
   type:     rest
@@ -45,3 +41,14 @@ message:
   type:     rest
   prefix:   api
   resource: App\Services\Chat\Controller\MessageController
+
+
+adminTag:
+  type:     rest
+  prefix:   api
+  resource: App\Services\Tag\Controller\AdminTagController
+
+adminDomain:
+  type:     rest
+  prefix:   api
+  resource: App\Services\Domain\Controller\AdminDomainController

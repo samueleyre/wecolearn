@@ -46,7 +46,7 @@ class DomainService
 
     public function getSubDomainEntity($domainName)
     {
-        return $domainEntity = $this->em->getRepository(Domain::class)->findOneBy(['name' => $domainName]);
+        return $this->em->getRepository(Domain::class)->findOneBy(['name' => $domainName]);
     }
 
     public function createSubDomainEntity($domainName)
@@ -71,5 +71,34 @@ class DomainService
         }
 
         return $host;
+    }
+
+    public function getAll()
+    {
+        return $this->em->getRepository(Domain::class)->findAll();
+    }
+
+    public function patchName(int $id, string $name)
+    {
+        $domain = $this->em->getRepository(Domain::class)->find($id);
+        $domain->setName($name);
+        $this->em->merge($domain);
+        $this->em->flush();
+        return $domain;
+    }
+
+    public function create(Domain $domain)
+    {
+        $this->em->persist($domain);
+        $this->em->flush();
+        return $domain;
+    }
+
+    public function delete(int $id)
+    {
+        $domain = $this->em->getRepository(Domain::class)->find($id);
+        $this->em->remove($domain);
+        $this->em->flush();
+        return $domain;
     }
 }

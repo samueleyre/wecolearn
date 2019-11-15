@@ -1,0 +1,8 @@
+.CreateEditDomainForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  &-close {
+    margin-left: 20px;
+  }
+}

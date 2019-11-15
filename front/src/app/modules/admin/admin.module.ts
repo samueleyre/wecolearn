@@ -10,9 +10,11 @@ import { UsersComponent } from './pages/users/users.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { TagsComponent } from './pages/tags/tags.component';
 import {TagUiModule} from "~/modules/tags/modules/tag-ui/tag-ui.module";
+import { DomainsComponent } from './pages/domains/domains.component';
+import {DomainUiModule} from "~/modules/domains/modules/domain-ui/domain-ui.module";
 
 @NgModule({
-  declarations: [UsersComponent, TagsComponent],
+  declarations: [UsersComponent, TagsComponent, DomainsComponent],
   imports: [
     AdminRoutingModule,
     CommonModule,
@@ -22,6 +24,7 @@ import {TagUiModule} from "~/modules/tags/modules/tag-ui/tag-ui.module";
     ReactiveFormsModule,
     MatPaginatorModule,
     TagUiModule,
+    DomainUiModule,
   ],
 })
 export class AdminModule { }

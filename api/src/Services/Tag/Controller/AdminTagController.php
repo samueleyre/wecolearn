@@ -2,8 +2,10 @@
 
 namespace App\Services\Tag\Controller;
 
+use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Service\TagService;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Patch;
@@ -11,6 +13,8 @@ use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminTagController extends AbstractController
 {
@@ -53,7 +57,11 @@ class AdminTagController extends AbstractController
         Tag $tag,
         TagService $tagService
     ) {
-        return $tagService->create($tag);
+        try {
+            return $tagService->create($tag);
+        } catch (UniqueConstraintViolationException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+        }
     }
 
     /**

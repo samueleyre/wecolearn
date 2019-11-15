@@ -11,6 +11,7 @@ class Domain
     public $id;
     public $name;
     public $users;
+    public $count;
 
     /**
      * Constructor.
@@ -89,5 +90,16 @@ class Domain
     public function getUsers()
     {
         return $this->users;
+    }
+
+    public function countUsers()
+    {
+        $this->count = count($this->users);
+    }
+
+
+    public function getCount()
+    {
+        return $this->count;
     }
 }
