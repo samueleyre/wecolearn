@@ -1,0 +1,121 @@
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
+
+import { Tag } from '~/core/entities/tag/entity';
+import { TagFormComponent } from '~/modules/tags/modules/tag-ui/components/tag-form/tag-form.component';
+import { AuthenticationService } from '~/core/services/auth/auth';
+import { AdminTagService } from '~/modules/tags/services/admin-tag.service';
+import { DestroyObservable } from '~/core/components/destroy-observable';
+import {TagTypeEnum, tagTypeFR} from "~/core/enums/tag/tag-type.enum";
+
+@Component({
+  selector: 'app-tags',
+  templateUrl: './tags.component.html',
+  styleUrls: ['./tags.component.scss'],
+})
+export class TagsComponent extends DestroyObservable implements OnInit, AfterViewInit {
+  tagsToShow: Tag[];
+  tags$: BehaviorSubject<Tag[]> = new BehaviorSubject(null);
+  tagsFiltered: Tag[];
+
+  searchFilters: FormGroup;
+  editTagFormVisible = false;
+  isCreatingTag = false;
+  PAGE_SIZE = 10;
+
+  @ViewChild(TagFormComponent) tagForm: TagFormComponent;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  public editedTag: Tag;
+  canEditTag$: Observable<boolean>;
+
+  constructor(
+    public authenticationService: AuthenticationService,
+    public tagService: AdminTagService,
+    private fb: FormBuilder,
+  ) {
+    super();
+  }
+
+  ngOnInit() {
+    // listen to tag list
+    this.tagService.tags$.pipe(takeUntil(this.destroy$)).subscribe((tags) => {
+      this.tags$.next(tags);
+    });
+    this.loadTags();
+    this.initSearchForm();
+  }
+
+  ngAfterViewInit() {
+    merge(
+      this.tags$,
+      this.searchFilters.valueChanges.pipe(
+        debounceTime(300),
+        tap(() => (this.paginator.pageIndex = 0)),
+      ),
+      this.paginator.page,
+    )
+      .pipe(
+        filter(() => !!this.tags), // skip if tags is not defined yet
+        distinctUntilChanged(),
+        switchMap(() => {
+          this.closeTagForm();
+          const query = this.searchFilters ? this.searchFilters.controls.query.value : '';
+          const page = this.paginator.pageIndex;
+          const start = Number(page) * this.PAGE_SIZE;
+          const end = Number(page) * this.PAGE_SIZE + this.PAGE_SIZE;
+          this.tagsFiltered = this.tags.filter(
+            t => `${t.name} ${this.toFrenchType(t.type)}`.toLowerCase().includes(query.toLowerCase()),
+          );
+          return of(this.tagsFiltered.slice(start, end));
+        }),
+      )
+      .subscribe((filteredTags) => {
+        this.tagsToShow = filteredTags;
+      });
+  }
+
+  get tags() {
+    return this.tags$.value;
+  }
+
+  get loaded(): boolean {
+    return !!this.tags;
+  }
+
+  get countTags(): number {
+    return this.tagsFiltered && this.tagsFiltered.length;
+  }
+
+  toFrenchType(type: TagTypeEnum): string {
+    return tagTypeFR[type];
+  }
+
+  showEditForm(tag: Tag = null) {
+    const emptyTag = new Tag();
+    this.editedTag =
+      tag === null
+        ? emptyTag
+        : tag;
+
+    this.isCreatingTag = !this.editedTag.id;
+    this.editTagFormVisible = true;
+  }
+
+  closeTagForm() {
+    this.editTagFormVisible = false;
+  }
+
+  private loadTags() {
+    this.tagService.list().subscribe();
+  }
+
+  private initSearchForm() {
+    this.searchFilters = this.fb.group({
+      query: [''],
+    });
+  }
+}

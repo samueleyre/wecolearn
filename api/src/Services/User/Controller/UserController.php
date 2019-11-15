@@ -225,47 +225,10 @@ class UserController extends AbstractController
     }
 
 
-//
-    //  /**
-    //   * @Get("user/slack")
-    //   *
-    //   */
-//    public function connectSlackAction(Request $request, UserService $userService, TokenStorageInterface $tokenStorage, SlackService $slackService)
-//    {
-    //  // todo: should be a post
-//        $ret = [];
-//
-//        if (($code = $request->query->get("code") ) && ( $redirect_uri = $request->query->get("redirect_uri") )) {
-//            $redirect_uri = rawurldecode($redirect_uri);
-//
-//            $response = $userService
-//            ->getSlackUserData($code, $redirect_uri);
-//
-//
-//            if ($response->code === 200 && $response->body->ok) {
-//                $user = $tokenStorage->getToken()->getUser();
-//
-//                $slackAccount = $slackService->getSlackAccount($response->body->user->id);
-//
-//                if ($slackAccount) { // in case slack account is connected to an other account
-//                  //todo: before doing this, ask user if its ok with him
-//                    $slackAccount->setUser($user);
-//                    $slackService->patchSlackAccount($slackAccount);
-//                } else {
-//                    $slackService->createSlackAccount($user, $response->body->user->id, $response->body->team->id, "slack");
-//                }
-//
-//                return $userService->patch($user);
-//            } else {
-//                $ret['error'] = $response->body->error;
-//            }
-//
-//            return $ret;
-//        } else {
-//            return null;
-//        }
-//    }
-//
+//          ---------------
+//    --------- AUTH -------------
+//          ---------------
+
 
     /**
      * @Get("resetPassword/email")
@@ -358,6 +321,57 @@ class UserController extends AbstractController
 
         return $ret;
     }
+
+    //
+    //  /**
+    //   * @Get("user/slack")
+    //   *
+    //   */
+//    public function connectSlackAction(Request $request, UserService $userService, TokenStorageInterface $tokenStorage, SlackService $slackService)
+//    {
+    //  // todo: should be a post
+//        $ret = [];
+//
+//        if (($code = $request->query->get("code") ) && ( $redirect_uri = $request->query->get("redirect_uri") )) {
+//            $redirect_uri = rawurldecode($redirect_uri);
+//
+//            $response = $userService
+//            ->getSlackUserData($code, $redirect_uri);
+//
+//
+//            if ($response->code === 200 && $response->body->ok) {
+//                $user = $tokenStorage->getToken()->getUser();
+//
+//                $slackAccount = $slackService->getSlackAccount($response->body->user->id);
+//
+//                if ($slackAccount) { // in case slack account is connected to an other account
+//                  //todo: before doing this, ask user if its ok with him
+//                    $slackAccount->setUser($user);
+//                    $slackService->patchSlackAccount($slackAccount);
+//                } else {
+//                    $slackService->createSlackAccount($user, $response->body->user->id, $response->body->team->id, "slack");
+//                }
+//
+//                return $userService->patch($user);
+//            } else {
+//                $ret['error'] = $response->body->error;
+//            }
+//
+//            return $ret;
+//        } else {
+//            return null;
+//        }
+//    }
+//
+
+
+
+
+//             ---------------
+//    --------- NOTIFICATIONS -------------
+//             ---------------
+
+
 
 
     /**

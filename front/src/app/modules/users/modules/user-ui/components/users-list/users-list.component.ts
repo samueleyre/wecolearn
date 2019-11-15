@@ -72,7 +72,6 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
   }
 
   public onEdit(user: User) {
-    console.log({ user });
     this.editUser.emit(user);
   }
 }

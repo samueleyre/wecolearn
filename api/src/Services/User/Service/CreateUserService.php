@@ -42,7 +42,7 @@ class CreateUserService
         $user->setRoles(['ROLE_USER']);
         $user->setPlainPassword($user->getPassword());
         if ($user->getTags()) {
-            $user->setTags($this->tagService->patchTags(new ArrayCollection(), $user->getTags()));
+            $user->setTags($this->tagService->beforePatchTags(new ArrayCollection(), $user->getTags()));
         }
         $user->setEnabled(true);
         $user->setShowProfil(true);

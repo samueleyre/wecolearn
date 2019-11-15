@@ -31,6 +31,11 @@ tag:
   prefix:   api
   resource: App\Services\Tag\Controller\TagController
 
+adminTag:
+  type:     rest
+  prefix:   api
+  resource: App\Services\Tag\Controller\AdminTagController
+
 upload:
   type:     rest
   prefix:   api

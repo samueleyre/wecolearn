@@ -34,8 +34,6 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
   updateFormValues() {
     const user: User = this.user;
 
-    console.log({ user })
-
     this.updateValidators();
     if (this.createEditUserForm) {
       this.createEditUserForm.setValue({

@@ -1,0 +1,57 @@
+<div class="Tags">
+  <div class="Tags-list" [hidden]="editTagFormVisible">
+    <div class="Tags-list-header">
+      <h2>
+        Domaines d'apprentissage
+      </h2>
+      <form [formGroup]="searchFilters">
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher</mat-label>
+          <input matInput placeholder="Nom, type" formControlName="query" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="Tags-list--loading" *ngIf="!loaded">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="Tags-list-table">
+      <app-tag-list
+        *ngIf="tagsToShow"
+        [canEditTag]="canEditTag$ | async"
+        [tags]="tagsToShow"
+        (editTag)="showEditForm($event)"
+      ></app-tag-list>
+      <mat-paginator
+        [hidden]="!tagsToShow && !tagsFiltered"
+        [length]="countTags"
+        [pageSize]="PAGE_SIZE"
+      ></mat-paginator>
+    </div>
+  </div>
+  <div
+    class="Tags-add"
+  >
+    <button mat-flat-button class="large" *ngIf="!editTagFormVisible" (click)="showEditForm()" color="primary">
+      + Ajouter un domaine
+    </button>
+    <div *ngIf="editTagFormVisible">
+      <h2 *ngIf="isCreatingTag">
+        Ajouter un domaine
+      </h2>
+
+      <h2 *ngIf="!isCreatingTag">
+        Modifier un domaine
+      </h2>
+
+      <div class="Tags-form">
+        <app-tag-form
+          [isCreating]="isCreatingTag"
+          [tag]="editedTag"
+          [groupEditable]="true"
+          (onCloseEditTag)="closeTagForm()"
+        ></app-tag-form>
+      </div>
+    </div>
+  </div>
+</div>

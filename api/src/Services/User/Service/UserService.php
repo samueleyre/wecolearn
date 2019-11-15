@@ -90,7 +90,7 @@ class UserService
 
         // insert or update new tags in database
         if ($params->getTags()) {
-            $oldUser->setTags($this->tagService->patchTags($oldUser->getTags(), $params->getTags()));
+            $oldUser->setTags($this->tagService->beforePatchTags($oldUser->getTags(), $params->getTags()));
         }
 
         // insert or update "slack" accounts

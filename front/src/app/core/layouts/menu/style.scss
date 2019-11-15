@@ -140,6 +140,7 @@
     padding: 0;
     list-style: none;
     &-sectionTitle {
+      margin-top: 40px;
       text-align: center;
       color: white;
       font-style: italic;
@@ -185,7 +186,7 @@
     flex-direction: column;
     justify-content: center;
     margin-right: 20px;
-    margin-left: 25px;
+    padding-left: 25px;
     transition: .6s;
   }
 

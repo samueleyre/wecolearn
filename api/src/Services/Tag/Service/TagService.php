@@ -6,6 +6,7 @@ use App\Services\Tag\Entity\Tag;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class TagService
 {
@@ -20,18 +21,14 @@ class TagService
         $this->container = $container;
     }
 
-    private function insertNewTag(Tag &$tag)
+    private function initializeNewTag(Tag &$tag)
     {
-        try {
-            $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        } catch (\Exception $e) {
-        }
+        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
         $tag->setIteration(1);
-
         $tag->setCreated($date);
     }
 
-    public function patchTags(Collection $oldUserTags, Collection $tags)
+    public function beforePatchTags(Collection $oldUserTags, Collection $tags)
     {
         for ($i = 0; $i < count($tags); ++$i) {
             $oldTag = $this->em
@@ -45,7 +42,7 @@ class TagService
                 // if tag already exists, we get the old one and replace it in the persisted variable
                 $tags[$i] = $oldTag;
             } else {
-                $this->insertNewTag($tags[$i]);
+                $this->initializeNewTag($tags[$i]);
             }
 
             if (!$oldUserTags->contains($tags[$i])) {
@@ -56,8 +53,43 @@ class TagService
         return $oldUserTags;
     }
 
+    public function getAll()
+    {
+        return $this->em->getRepository(Tag::class)->findBy([], ['created' => 'DESC']);
+    }
+
     private function addIterationTag(Tag &$tag)
     {
         $tag->setIteration($tag->getIteration() + 1);
+    }
+
+    public function patchIteration(int $id, int $iteration)
+    {
+        $tag = $this->em->getRepository(Tag::class)->find($id);
+        $tag->setIteration($iteration);
+        $this->em->merge($tag);
+        $this->em->flush();
+        return $tag;
+    }
+
+    public function delete(int $id)
+    {
+        $tag = $this->em->getRepository(Tag::class)->find($id);
+        $this->em->remove($tag);
+        $this->em->flush();
+        return new Response();
+    }
+
+    public function getAllByImportance()
+    {
+        return $this->em->getRepository(Tag::class)->findBy([], ['iteration' => 'DESC']);
+    }
+
+    public function create(Tag $tag)
+    {
+        $this->initializeNewTag($tag);
+        $this->em->persist($tag);
+        $this->em->flush();
+        return $tag;
     }
 }

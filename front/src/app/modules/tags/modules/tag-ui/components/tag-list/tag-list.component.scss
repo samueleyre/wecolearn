@@ -1,0 +1,45 @@
+@import 'variables';
+
+
+table {
+  width: 100%;
+}
+
+.TagsList {
+  &-list {
+    &-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      font-family: 'WorkSans', sans-serif;
+
+      & > * {
+        flex: 1;
+
+        &.TagsList-list-item-role {
+          flex: 0.5;
+        }
+      }
+
+      &-name {
+        font-weight: 600;
+      }
+
+      &-type {
+        font-style: italic;
+      }
+
+      &-iteration {
+        font-weight: 600;
+      }
+
+      &-actions {
+        text-align: right;
+
+        & > *:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
