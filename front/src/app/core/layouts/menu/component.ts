@@ -4,6 +4,7 @@ import { User } from '~/core/entities/user/entity';
 
 import { ClientService } from '~/core/services/client';
 import { MenuService } from '~/core/services/layout/menu';
+import { AuthenticationService } from '~/core/services/auth/auth';
 
 
 @Component({
@@ -14,23 +15,26 @@ import { MenuService } from '~/core/services/layout/menu';
 
 @Injectable()
 export class MenuComponent implements OnInit {
-  @Input() user: User;
+  me: User;
   activated: boolean;
 
 
   constructor(
-      private clientService: ClientService, private menuService: MenuService,
+      private authService: AuthenticationService, private menuService: MenuService,
   ) {
 //
   }
 
   ngOnInit() {
-    this.clientService.get().subscribe((resp) => {
-      this.user = resp;
-    });
+    this.me = this.authService.user;
 
+    // update menu display ( not used anymore )
     this.menuService.get().subscribe((on) => {
       this.activated = on;
     });
+  }
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin;
   }
 }

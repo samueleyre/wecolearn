@@ -1,5 +1,10 @@
 @import 'variables';
 
+
+table {
+  width: 100%;
+}
+
 .UsersList {
   &-list {
     &-item {
@@ -18,11 +23,6 @@
 
       &-name {
         font-weight: 600;
-
-        &--itself {
-          color: $color-primary;
-          font-style: italic;
-        }
       }
 
       &-email {

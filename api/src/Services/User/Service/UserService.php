@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class UserService
 {
@@ -40,7 +41,7 @@ class UserService
 
     public function getAll()
     {
-        return $this->em->getRepository(User::class)->findAll();
+        return $this->em->getRepository(User::class)->findBy(['enabled'=>true], ['created' => 'DESC']);
     }
 
     public function findById(Integer $id)
@@ -96,10 +97,12 @@ class UserService
         return $oldUser;
     }
 
-    public function delete(User $user)
+    public function delete(Integer $id)
     {
+        $user = $this->findById($id);
         $this->em->remove($user);
         $this->em->flush();
+        return 'ok';
     }
 
     public function post(User $user)

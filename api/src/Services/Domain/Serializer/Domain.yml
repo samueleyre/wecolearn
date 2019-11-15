@@ -5,7 +5,7 @@ App\Services\Domain\Serializer:
         id:
           groups: [ input, output ]
         name:
-          groups: [ input, output ]
+          groups: [ input, output, admin-users ]
 
 
 

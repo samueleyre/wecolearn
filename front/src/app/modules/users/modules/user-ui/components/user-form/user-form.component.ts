@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 import { User } from '~/core/entities/user/entity';
-import { UsersService } from '~/modules/users/services/users.service';
+import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 import { USER_ROLES, USER_ROLES_FR, UserRoleEnum } from '~/core/enums/user/user-role.enum';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { PATTERN } from '~/shared/config/pattern';
@@ -27,7 +27,7 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
 
   public roles = USER_ROLES;
 
-  constructor(private _fb: FormBuilder, private _userService: UsersService, private _toastr: ToastrService) {
+  constructor(private _fb: FormBuilder, private _userService: AdminUsersService, private _toastr: ToastrService) {
     super();
   }
 
@@ -37,8 +37,8 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
     this.updateValidators();
     if (this.createEditUserForm) {
       this.createEditUserForm.setValue({
-        firstname: user.first_name,
-        lastname: user.last_name,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
         roles: user.roles,
       });
@@ -126,8 +126,8 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
   ): void {
     const pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
     this.createEditUserForm = this._fb.group({
-      firstname: [user.first_name, Validators.required],
-      lastname: [user.last_name, Validators.required],
+      first_name: [user.first_name, Validators.required],
+      last_name: [user.last_name, Validators.required],
       email: [user.email, [Validators.required, Validators.pattern(pattern)]],
       roles: [user.roles],
     });

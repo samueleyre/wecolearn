@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatPaginator } from '@angular/material/paginator';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, skipUntil, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { UsersService } from '~/modules/users/services/users.service';
+import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 import { UserFormComponent } from '~/modules/users/modules/user-ui/components/user-form/user-form.component';
 
 @Component({
@@ -27,7 +27,6 @@ export class UsersComponent extends DestroyObservable implements OnInit {
   PAGE_SIZE = 10;
 
   @ViewChild(UserFormComponent) userForm: UserFormComponent;
-  @ViewChild(MatButtonToggleGroup) toggle: MatButtonToggleGroup;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public editedUser: User;
@@ -35,7 +34,7 @@ export class UsersComponent extends DestroyObservable implements OnInit {
 
   constructor(
     public authenticationService: AuthenticationService,
-    public userService: UsersService,
+    public userService: AdminUsersService,
     private fb: FormBuilder,
   ) {
     super();
@@ -43,10 +42,10 @@ export class UsersComponent extends DestroyObservable implements OnInit {
 
   ngOnInit() {
     // listen to user list
-    this.userService.list().pipe(takeUntil(this.destroy$)).subscribe((users) => {
+    this.userService.users$.pipe(takeUntil(this.destroy$)).subscribe((users) => {
       this.users$.next(users);
     });
-    // this.loadUsers();
+    this.loadUsers();
     this.initSearchForm();
   }
 
@@ -57,10 +56,10 @@ export class UsersComponent extends DestroyObservable implements OnInit {
         debounceTime(300),
         tap(() => (this.paginator.pageIndex = 0)),
       ),
-      this.toggle.change.pipe(tap(() => (this.paginator.pageIndex = 0))),
       this.paginator.page,
     )
       .pipe(
+        filter(() => !!this.users), // skip if users is not defined yet
         distinctUntilChanged(),
         switchMap(() => {
           this.closeUserForm();
@@ -69,8 +68,7 @@ export class UsersComponent extends DestroyObservable implements OnInit {
           const start = Number(page) * this.PAGE_SIZE;
           const end = Number(page) * this.PAGE_SIZE + this.PAGE_SIZE;
           this.usersFiltered = this.users.filter(
-            (u) =>
-              `${u.email} ${u.first_name} ${u.last_name}`.toLowerCase().includes(query.toLowerCase()),
+            u => `${u.email} ${u.first_name} ${u.last_name}`.toLowerCase().includes(query.toLowerCase()),
           );
           return of(this.usersFiltered.slice(start, end));
         }),
@@ -107,9 +105,9 @@ export class UsersComponent extends DestroyObservable implements OnInit {
     this.editUserFormVisible = false;
   }
 
-  // private loadUsers() {
-  //   this.userService.load().subscribe();
-  // }
+  private loadUsers() {
+    this.userService.list().subscribe();
+  }
 
   private initSearchForm() {
     this.searchFilters = this.fb.group({

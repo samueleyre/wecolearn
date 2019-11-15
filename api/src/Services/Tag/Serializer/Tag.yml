@@ -5,9 +5,9 @@ App\Services\Tag\Entity\Tag:
         id:
           groups: [ input, output, profile ]
         name:
-          groups: [ input, output, search, profile ]
+          groups: [ input, output, search, profile, admin-users ]
         type:
-          groups: [ input, output, search, profile ]
+          groups: [ input, output, search, profile, admin-users ]
         created:
           groups: [  ]
         iteration:

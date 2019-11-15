@@ -8,6 +8,7 @@ import { ModalModule } from 'ngx-modialog';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { MatIconModule } from '@angular/material/icon';
 
 // feature modules
 import { AuthModule } from '~/modules/auth/auth.module';
@@ -60,7 +61,6 @@ import { SeoService } from './core/services/seo';
 import { LoggedService } from './core/services/loggedService';
 import { AuthGuard } from './core/services/auth/authGuard';
 import { MenuService } from './core/services/layout/menu';
-import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   imports: [

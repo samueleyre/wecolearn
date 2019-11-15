@@ -1,64 +1,134 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
-import { switchMap, tap } from 'rxjs/operators';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 
 @Injectable()
 export class APIService<T> {
   public endPoint;
 
+  protected _entities$ = new BehaviorSubject<T[]>([]);
+  protected _entity$ = new BehaviorSubject<T>(null);
+
+  protected _loading$ = new BehaviorSubject<boolean>(false);
+  protected _loaded$ = new BehaviorSubject<boolean>(false);
+
+
+  // ===== Get ======
+  get entities$(): Observable<T[]> {
+    return this._entities$;
+  }
+
+  get entities(): T[] {
+    return this._entities$.value;
+  }
+
+  get entity$(): Observable<T> {
+    return this._entity$;
+  }
+
+  get entity(): T {
+    return this._entity$.value;
+  }
+
+  get loading(): boolean {
+    return this._loading$.value;
+  }
+
+  get loaded(): boolean {
+    return this._loaded$.value;
+  }
+
   constructor(private http: HttpClient) {}
 
   get(filters: {} = {}, slash: string = ''): Observable<T> {
     const params = this.getUrlParams(filters, slash);
-    return <any>this.http.get(`${this.endPoint}${params}`);
+    return this.http.get(`${this.endPoint}${params}`)
+      .pipe(
+        tap((data: T) => {
+          this._entity$.next(data);
+          this._loaded$.next(true);
+        }),
+        finalize(() => {
+          this._loading$.next(false);
+        }),
+      );
   }
 
   list(filters: {} = {}, slash: string = ''): Observable<T[]> {
     const params = this.getUrlParams(filters, slash);
-    return <any>this.http.get(`${this.endPoint}s${params}`);
+    return this.http.get(`${this.endPoint}s${params}`)
+      .pipe(
+        tap((data: T[]) => {
+          this._entities$.next(data);
+          this._loaded$.next(true);
+        }),
+        finalize(() => {
+          this._loading$.next(false);
+        }),
+      );
   }
 
   patch(entity: T): Observable<T> {
-    return <any>this.http.patch(`${this.endPoint}`, entity);
+    return this.http.patch(`${this.endPoint}`, entity)
+      .pipe(
+        tap((data: T) => {
+          this._entity$.next(data);
+          this._loaded$.next(true);
+        }),
+        finalize(() => {
+          this._loading$.next(false);
+        }),
+      );
   }
 
   post(entity: T): Observable<T> {
-    return <any>this.http.post(`${this.endPoint}`, entity);
+    return this.http.post(`${this.endPoint}`, entity)
+      .pipe(
+        tap((data: T) => {
+          this._entity$.next(data);
+          this._loaded$.next(true);
+        }),
+        finalize(() => {
+          this._loading$.next(false);
+        }),
+      );
   }
 
-  delete(id: number): Observable<T> {
-    return <any>this.http.delete(`${this.endPoint}/${id}`);
-  }
-
-  getAndList(filters: {} = {}, slash: string = ''): Observable<T[]> {
-    const params = this.getUrlParams(filters, slash);
-    return <any>this.http.get(`${this.endPoint}${params}`).pipe(
-      switchMap(() => <any>this.http.get(`${this.endPoint}s`)),
-    );
+  delete(id: number): Observable<void> {
+    return <any>this.http.delete(`${this.endPoint}/${id}`)
+      .pipe(
+        tap((data: T) => {
+          this._entity$.next(null);
+          this._loaded$.next(true);
+        }),
+        finalize(() => {
+          this._loading$.next(false);
+        }),
+      );
   }
 
   postAndList(entity: any): Observable<T[]> {
-    return <any>this.http.post(`${this.endPoint}`, entity).pipe(
-      switchMap(() => <any>this.http.get(`${this.endPoint}s`)),
+    return this.http.post(`${this.endPoint}`, entity).pipe(
+      switchMap(() => this.list()),
     );
   }
 
   patchAndList(entity: any): Observable<T[]> {
-    return <any>this.http.patch(`${this.endPoint}`, entity).pipe(
-      switchMap(() => <any>this.http.get(`${this.endPoint}s`)),
+    return this.http.patch(`${this.endPoint}`, entity).pipe(
+      switchMap(() => this.list()),
     );
   }
 
   deleteAndList(id: any): Observable<T[]> {
-    return <any>this.http.delete(`${this.endPoint}/${id}`).pipe(
+    return this.http.delete(`${this.endPoint}/${id}`).pipe(
       tap((response) => {
         if (!('success' in response)) {
           throw Error();
         }
       }),
-      switchMap(() => <any>this.http.get(`${this.endPoint}s`)),
+      switchMap(() => this.list()),
     );
   }
 

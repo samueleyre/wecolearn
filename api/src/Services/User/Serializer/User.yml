@@ -4,15 +4,15 @@ App\Services\User\Entity\User:
     access_order:     alphabetical
     properties:
       id:
-        groups: [ input, output, user, search, message, profile ]
+        groups: [ input, output, user, search, message, profile, admin-users ]
       created:
-        groups: [ input, output, user, search, message, profile]
+        groups: [ input, output, user, search, message, profile, admin-users]
       firstName:
-        groups: [ input, output, user, search, message, profile ]
+        groups: [ input, output, user, search, message, profile, admin-users ]
       lastName:
-        groups: [ input, output, user, search, message, profile ]
+        groups: [ input, output, user, search, message, profile, admin-users ]
       profilUrl:
-        groups: [ input, output, user, search, message, profile ]
+        groups: [ input, output, user, search, message, profile, admin-users ]
       password:
         groups: [ input ]
       biographie:
@@ -22,11 +22,11 @@ App\Services\User\Entity\User:
       atmosphere:
         groups: [ input, output, user, profile ]
       latitude:
-        groups: [ input, output, user ]
+        groups: [ input, output, user, admin-users ]
       longitude:
-        groups: [ input, output, user ]
+        groups: [ input, output, user, admin-users ]
       tags:
-        groups: [ input, output, user, search, profile ]
+        groups: [ input, output, user, search, profile, admin-users ]
       sentMessages:
         groups: [ input, output ]
         max_depth: 4
@@ -37,7 +37,7 @@ App\Services\User\Entity\User:
         type: App\Services\User\Entity\Image
         groups: [ input, output, user, search, message, profile ]
       showProfil:
-        groups: [ input, output, user ]
+        groups: [ input, output, user, admin-users ]
       emailNotifications:
         groups: [ input, output,  user ]
       slackAccounts:

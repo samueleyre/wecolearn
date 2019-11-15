@@ -6,7 +6,6 @@ namespace App\Services\User\Controller;
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\User\Entity\User;
 use App\Services\User\Entity\Token;
-use App\Services\User\Entity\TokenConstant;
 
 
 //use App\_Application\Domain\DomainService;

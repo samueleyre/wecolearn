@@ -62,5 +62,6 @@ export class User {
     this.slack_accounts = obj && obj.slack_accounts ? obj.slack_accounts : [];
     this.user_notified = null;
     this.notification_subscribe = false;
+    this.roles = null;
   }
 }

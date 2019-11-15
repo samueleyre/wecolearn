@@ -6,8 +6,7 @@ import { USER_ROLES_FR, UserRoleEnum } from '~/core/enums/user/user-role.enum';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { DialogService } from '~/core/services/dialog.service';
 import { User } from '~/core/entities/user/entity';
-import { UsersService } from '~/modules/users/services/users.service';
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 
 @Component({
   selector: 'app-users-list',
@@ -22,7 +21,7 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
   displayedColumns: string[] = ['name', 'email', 'role', 'actions'];
 
   constructor(
-    public userService: UsersService,
+    public userService: AdminUsersService,
     private _toastr: ToastrService,
     private dialogService: DialogService,
   ) {
@@ -54,8 +53,9 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
       });
   }
 
-  public getFrenchRole(role: UserRoleEnum): string {
-    return USER_ROLES_FR[role];
+  public getFrenchRoles(roles: UserRoleEnum[]): string {
+    if (roles.length === 0) return USER_ROLES_FR[UserRoleEnum.USER];
+    return roles.reduce((acc, current) => `${acc} ${USER_ROLES_FR[current]}`, '');
   }
 
   public onEdit(user: User) {

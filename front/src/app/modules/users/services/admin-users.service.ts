@@ -8,12 +8,17 @@ import { User } from '~/core/entities/user/entity';
 @Injectable({
   providedIn: 'root',
 })
-export class UsersService extends APIService<User>{
+export class AdminUsersService extends APIService<User>{
+  public endPoint = '/api/admin/user';
   constructor(private _http: HttpClient) {
     super(_http);
   }
 
   createAndList(user: User): Observable<User[]> {
     return this.postAndList(user);
+  }
+
+  get users$() {
+    return this.entities$;
   }
 }

@@ -11,7 +11,6 @@ signup:
   prefix:   api
   resource: App\Services\User\Controller\SignUpController
 
-# todo: integrate ping in user
 ping:
   type:     rest
   prefix:   api

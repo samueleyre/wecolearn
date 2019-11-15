@@ -5,10 +5,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 import { ConfirmDialogComponent } from '~/core/components/dialog/confirm-dialog.component';
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -24,5 +24,7 @@ import {MatButtonModule} from "@angular/material/button";
     MatDialogModule,
     MatButtonModule,
   ],
+  entryComponents: [ConfirmDialogComponent],
+
 })
 export class CoreModule {}

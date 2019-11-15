@@ -1,12 +1,13 @@
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { NAV } from '~/config/navigation/nav';
 import { User } from '~/core/entities/user/entity';
+import { UserRoleEnum } from '~/core/enums/user/user-role.enum';
 
 import { TokenService } from './token';
 import { Logged } from '../logged';
@@ -26,6 +27,10 @@ export class AuthenticationService {
 
   get user(): User {
     return this._user$.value;
+  }
+
+  get isAdmin(): boolean {
+    return this.user.roles.includes(UserRoleEnum.ADMIN);
   }
 
   setUser(user: User) {
