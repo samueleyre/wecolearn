@@ -34,6 +34,8 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
   updateFormValues() {
     const user: User = this.user;
 
+    console.log({ user })
+
     this.updateValidators();
     if (this.createEditUserForm) {
       this.createEditUserForm.setValue({
@@ -98,7 +100,7 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
         },
         errM);
     } else {
-      this._userService.patchAndList({ ...formVal, _id: this.user.id }).subscribe(
+      this._userService.patchAndList({ ...formVal, id: this.user.id }).subscribe(
         (data) => {
           const user = data[0];
           this.isCreatingUpdating = false;
@@ -121,7 +123,6 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
 
   private initForm(
     isCreating: boolean = this.isCreating,
-    groupEditable: boolean = this.groupEditable,
     user: User = this.user,
   ): void {
     const pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;

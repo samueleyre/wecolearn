@@ -2,7 +2,6 @@ import { Component, Injectable, OnInit, Input } from '@angular/core';
 
 import { User } from '~/core/entities/user/entity';
 
-import { ClientService } from '~/core/services/client';
 import { MenuService } from '~/core/services/layout/menu';
 import { AuthenticationService } from '~/core/services/auth/auth';
 

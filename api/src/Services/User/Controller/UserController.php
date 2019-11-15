@@ -18,7 +18,6 @@ use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\Annotations\Delete;
 use phpDocumentor\Reflection\Types\Integer;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -29,6 +28,8 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\Delete;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -116,20 +117,6 @@ class UserController extends AbstractController
         return $ret;
     }
 
-    /**
-     * @Patch("/user")
-     * @ParamConverter(
-     *       "user",
-     *       class="App\Services\User\Entity\User",
-     *       converter="fos_rest.request_body",
-     *       options={"deserializationContext"={"groups"={"input"} } }
-     * )
-     */
-    public function patchUserAction(User $user, UserService $userService)
-    {
-        return $userService
-            ->patch($user);
-    }
 
     /**
      * @Get("confirmEmail/{token}")
@@ -160,7 +147,9 @@ class UserController extends AbstractController
         return $ret;
     }
 
-//     ADMIN -----------------------------------
+//          ---------------
+//    --------- ADMIN -------------
+//          ---------------
 
     /**
      * @Get("admin/user/{id}")
@@ -200,7 +189,6 @@ class UserController extends AbstractController
         User $user,
         CreateUserService $service
     ) {
-
         $user->setPassword('NotDefinedYet');
 
         try {
@@ -211,13 +199,26 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Patch("admin/user")
+     * @ParamConverter(
+     *       "user",
+     *       class="App\Services\User\Entity\User",
+     *       converter="fos_rest.request_body",
+     *       options={"deserializationContext"={"groups"={"input"} } }
+     * )
+     */
+    public function patchUserAction(User $user, UserService $userService)
+    {
+        return $userService
+            ->patch($user, $user->getId());
+    }
+
+    /**
      * @Delete("admin/user/{id}")
-     * @param Integer $id
-     * @param UserService $userService
      * @return string
      */
     public function deleteUserAction(
-        Integer $id,
+        int $id,
         UserService $userService
     ) {
         return $userService->delete($id);

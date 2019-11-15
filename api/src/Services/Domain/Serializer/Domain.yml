@@ -1,4 +1,4 @@
-App\Services\Domain\Serializer:
+App\Services\Domain\Entity\Domain:
     exclusion_policy: all
     access_order:     alphabetical
     properties:

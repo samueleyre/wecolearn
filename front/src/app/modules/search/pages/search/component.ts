@@ -21,11 +21,7 @@ import { SEARCH } from '../../config/main';
 @Injectable()
 export class SearchComponent implements OnInit {
   public cards: any[] = [];
-
-  public loading: Observable<boolean>;
-  public currentlySearching = false;
   public scrolling;
-  public noThreads = true;
   public searchInput = null;
   private lastScrollTop = 0;
   private direction = 'down';
@@ -34,7 +30,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
         private router: Router,
-        private searchService: SearchService,
+        private _searchService: SearchService,
         private deviceService: DeviceDetectorService,
   ) {
     this.detectScrollDown();
@@ -48,7 +44,7 @@ export class SearchComponent implements OnInit {
   load(): void {
         // todo: if tag and lat/long are in url, get them
 
-    this.searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
+    this._searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
       if (SearchService.searchType !== 'scroll' && this.cardsContainerElementRef) {
         // new SEARCH
         this.cardsContainerElementRef.nativeElement.scrollTo(0, 0);
@@ -59,16 +55,8 @@ export class SearchComponent implements OnInit {
       }
     });
 
-    this.loading = this.searchService.getLoading('tag');
-
-    this.loading.subscribe(
-      (loading:boolean) => {
-        this.currentlySearching = loading;
-      },
-    );
-
     // init search on page load
-    this.searchService.search().subscribe();
+    this._searchService.search().subscribe();
   }
 
 
@@ -100,7 +88,11 @@ export class SearchComponent implements OnInit {
       };
     }
 
-    this.searchService.search(filledFilters).subscribe();
+    this._searchService.search(filledFilters).subscribe();
+  }
+
+  get loading(): boolean {
+    return this._searchService.loading;
   }
 
   get isMobile() {
@@ -108,7 +100,7 @@ export class SearchComponent implements OnInit {
   }
 
   get canScroll() {
-    return !this.currentlySearching && !this.scrolling && (this.direction === 'down');
+    return !this.loading && !this.scrolling && (this.direction === 'down');
   }
 
   private detectScrollDown() {

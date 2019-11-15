@@ -12,7 +12,9 @@ use App\Services\Domain\Entity\Domain;
 use App\Services\Domain\Service\DomainService;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\UserService;
+use FOS\RestBundle\Controller\Annotations\Patch;
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -25,7 +27,7 @@ class ProfileController extends AbstractController
      * @Get("profile/{profileUrl}")
      * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"profile"})
      **/
-    public function getProfileAction(string $profileUrl)
+    public function getPublicProfileAction(string $profileUrl)
     {
         $user = $this
             ->getDoctrine()
@@ -49,7 +51,7 @@ class ProfileController extends AbstractController
      *
      **@throws \Exception
      */
-    public function getUserAction(
+    public function getProfileAction(
         Request $request,
         TokenStorageInterface $tokenStorage,
         DomainService $domainService,
@@ -78,35 +80,27 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @Patch("/profile")
+     * @ParamConverter(
+     *       "user",
+     *       class="App\Services\User\Entity\User",
+     *       converter="fos_rest.request_body",
+     *       options={"deserializationContext"={"groups"={"input"} } }
+     * )
+     */
+    public function patchProfileAction(User $user, TokenStorageInterface $tokenStorage, UserService $userService )
+    {
+        return $userService
+            ->patch($user);
+    }
+
+    /**
      * @Get("/profile/delete")
      */
-    public function deleteUserAction()
-    {
+    public function deleteProfileAction(
+        UserService $userService
+    ) {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        $user->setUsername('rand'.$user->getId());
-        $user->setEmail('rand'.$user->getId());
-        $user->setPassword('rand'.$user->getId());
-        $user->setEnabled(0);
-        $user->setFirstName('rand'.$user->getId());
-        $user->setLastName('rand'.$user->getId());
-        $user->setProfilUrl('rand'.$user->getId());
-        $user->setBiographie(null);
-        $user->setImage(null);
-        $user->setShowProfil(false);
-        $user->getTags()->clear();
-        $user->getSlackAccounts()->clear();
-        $user->getDomains()->clear();
-        $user->setLatitude(null);
-        $user->setLongitude(null);
-        $user->setEmailNotifications(false);
-        $user->setDeleted(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
-
-        $ret = [];
-
-        $ret['userDelete'] = $this->get('fos_user.user_manager')->updateUser($user);
-        $ret['ok'] = true;
-
-        return $ret;
+        return $userService->delete($user->getId());
     }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatPaginator } from '@angular/material/paginator';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of, pipe } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, skipUntil, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
@@ -43,7 +43,7 @@ export class UsersComponent extends DestroyObservable implements OnInit {
   ngOnInit() {
     // listen to user list
     this.userService.users$.pipe(takeUntil(this.destroy$)).subscribe((users) => {
-      this.users$.next(users);
+      this.users$.next(users.filter(user => user.deleted === null));
     });
     this.loadUsers();
     this.initSearchForm();
@@ -68,7 +68,8 @@ export class UsersComponent extends DestroyObservable implements OnInit {
           const start = Number(page) * this.PAGE_SIZE;
           const end = Number(page) * this.PAGE_SIZE + this.PAGE_SIZE;
           this.usersFiltered = this.users.filter(
-            u => `${u.email} ${u.first_name} ${u.last_name}`.toLowerCase().includes(query.toLowerCase()),
+            u => `${u.email} ${u.first_name} ${u.last_name} ${u.tags.map(tag => tag.name)
+              .join()}`.toLowerCase().includes(query.toLowerCase()),
           );
           return of(this.usersFiltered.slice(start, end));
         }),
@@ -95,7 +96,7 @@ export class UsersComponent extends DestroyObservable implements OnInit {
     this.editedUser =
       user === null
         ? emptyUser
-        : new User(user);
+        : user;
 
     this.isCreatingUser = !this.editedUser.id;
     this.editUserFormVisible = true;

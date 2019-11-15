@@ -1,4 +1,5 @@
 import { UserRoleEnum } from '~/core/enums/user/user-role.enum';
+import { DomainInterface } from '~/core/interfaces/user/domain.interface';
 
 // tslint:disable variable-name
 import { Tag } from '../tag/entity';
@@ -13,6 +14,7 @@ export class User {
   public first_name: string;
   public last_name: string;
   public roles: UserRoleEnum[];
+  public domains?: DomainInterface[];
   public profil_url: string;
   public biographie: string;
   public intensity: number;
@@ -34,6 +36,7 @@ export class User {
   public notification_subscribe: boolean | null;
 
   public created: any;
+  public deleted: string | null;
 
 
   constructor(obj?: any) {
@@ -63,5 +66,11 @@ export class User {
     this.user_notified = null;
     this.notification_subscribe = false;
     this.roles = null;
+    if (obj && obj.domains) {
+      this.domains = obj.domains;
+    }
+    if (obj && obj.deleted) {
+      this.deleted = obj.deleted;
+    }
   }
 }

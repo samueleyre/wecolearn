@@ -13,7 +13,7 @@ class User extends BaseUser
     protected $id;
     public $firstName;
     public $lastName;
-    public $emailConfirmed = false;
+    public $emailConfirmed;
     public $emailToken;
     public $profilUrl;
     private $created;
@@ -33,8 +33,8 @@ class User extends BaseUser
     public $receivedMessages;
 
     //  USER CONFIG ----------------------------------
-    public $showProfil = false;
-    public $emailNotifications = true;
+    public $showProfil;
+    public $emailNotifications;
     //  public $slackAccounts;
     public $domains;
     private $lastConnexion;

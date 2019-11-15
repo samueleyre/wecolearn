@@ -23,7 +23,6 @@ import { SearchService } from '../../services/search';
 @Injectable()
 export class SearchBarComponent implements OnInit {
   public searchInputControl = new FormControl();
-  public currentlySearching = false;
   autocompleteDisabled = false;
   observableSource: Observable<string[]>;
   @Output() searchInputChange = new EventEmitter();
@@ -33,7 +32,7 @@ export class SearchBarComponent implements OnInit {
 
   constructor(
         protected tagService: TagService,
-        private searchService: SearchService,
+        private _searchService: SearchService,
         private router: Router,
     ) {
     this.tagService = tagService;
@@ -41,11 +40,7 @@ export class SearchBarComponent implements OnInit {
 
 
   ngOnInit() {
-    this.searchService.getLoading('tag').subscribe((loading) => {
-      this.currentlySearching = loading;
-    });
-
-    this.searchService.getSearchInput().subscribe((tag: string) => {
+    this._searchService.getSearchInput().subscribe((tag: string) => {
       this.searchInputControl.setValue(tag);
     });
 
@@ -55,6 +50,9 @@ export class SearchBarComponent implements OnInit {
     );
   }
 
+  get loading(): boolean {
+    return this._searchService.loading;
+  }
 
   search() {
     const filters = {};
@@ -62,7 +60,7 @@ export class SearchBarComponent implements OnInit {
       filters['tag'] = this.searchInputControl.value;
     }
     this.searchInputChange.next(this.searchInputControl.value);
-    this.searchService.search(filters).subscribe();
+    this._searchService.search(filters).subscribe();
     this.focusOut();
     this.hideAutocomplete();
   }

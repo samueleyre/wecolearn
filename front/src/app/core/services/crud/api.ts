@@ -123,11 +123,6 @@ export class APIService<T> {
 
   deleteAndList(id: any): Observable<T[]> {
     return this.http.delete(`${this.endPoint}/${id}`).pipe(
-      tap((response) => {
-        if (!('success' in response)) {
-          throw Error();
-        }
-      }),
       switchMap(() => this.list()),
     );
   }

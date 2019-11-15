@@ -36,6 +36,21 @@ table {
           margin-right: 10px;
         }
       }
+
+      &-tags {
+        > div span {
+          padding-right: 5px;
+        }
+        &-learn {
+          color: $learnColor,
+        }
+        &-know {
+          color: $knowColor,
+        }
+        &-teach {
+          color: $teachColor,
+        }
+      }
     }
   }
 }

@@ -46,4 +46,9 @@ App\Services\User\Entity\User:
         groups: [ input, output,  user ]
       notificationSubscribe:
         groups: [ input, output,  user]
+      domains:
+        groups: [ admin-users ]
+      deleted:
+        groups: [ admin-users ]
+
 

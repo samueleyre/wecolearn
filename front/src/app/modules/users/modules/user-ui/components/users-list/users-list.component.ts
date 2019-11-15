@@ -7,6 +7,7 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
 import { DialogService } from '~/core/services/dialog.service';
 import { User } from '~/core/entities/user/entity';
 import { AdminUsersService } from '~/modules/users/services/admin-users.service';
+import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 
 @Component({
   selector: 'app-users-list',
@@ -18,7 +19,7 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
   @Input() canEditUser = false;
   @Output() editUser = new EventEmitter<User>();
 
-  displayedColumns: string[] = ['name', 'email', 'role', 'actions'];
+  displayedColumns: string[] = ['name', 'email', 'role', 'domains', 'tags', 'actions'];
 
   constructor(
     public userService: AdminUsersService,
@@ -53,12 +54,25 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
       });
   }
 
+  getDomains(user: User): string {
+    if (!user.domains || user.domains.length === 0) {
+      console.error('No user domain defined !', user);
+      return 'Pas de domaine associé à cet utilisateur';
+    }
+    return user.domains.map(domain => domain.name).join();
+  }
+
+  getTags(user: User, type: TagTypeEnum): string {
+    return user.tags.filter(tag => tag.type === type).map(tag => tag.name).join();
+  }
+
   public getFrenchRoles(roles: UserRoleEnum[]): string {
     if (roles.length === 0) return USER_ROLES_FR[UserRoleEnum.USER];
     return roles.reduce((acc, current) => `${acc} ${USER_ROLES_FR[current]}`, '');
   }
 
   public onEdit(user: User) {
+    console.log({ user });
     this.editUser.emit(user);
   }
 }

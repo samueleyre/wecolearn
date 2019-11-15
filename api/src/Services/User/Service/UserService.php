@@ -7,7 +7,10 @@ use App\Services\User\Entity\User;
 use App\Services\Tag\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Tests\Test\Constraint\ResponseHeaderSameTest;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -20,6 +23,7 @@ class UserService
 //    private $domainService;
     private $securityStorage;
     private $tagService;
+    private $logger;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -28,7 +32,8 @@ class UserService
         $client_id,
         $client_secret,
         TokenStorageInterface $securityStorage,
-        TagService $tagService
+        TagService $tagService,
+        LoggerInterface $logger
     ) {
         $this->em = $em;
         $this->clientId = $container->getParameter('client_id');
@@ -36,6 +41,7 @@ class UserService
 //    $this->domainService = $domainService;
         $this->securityStorage = $securityStorage;
         $this->tagService = $tagService;
+        $this->logger = $logger;
     }
 
 
@@ -44,15 +50,17 @@ class UserService
         return $this->em->getRepository(User::class)->findBy(['enabled'=>true], ['created' => 'DESC']);
     }
 
-    public function findById(Integer $id)
+    public function findById(int $id)
     {
         return $this->em->getRepository(User::class)->find($id);
     }
 
-    public function patch(User $user, $id = null)
+    public function patch(User $params, $id = null)
     {
-        if (null !== $id) { // because used before connection
-            $oldUser = $this->em->getRepository(User::class)->findOneBy(['id' => $id]);
+
+        // todo: separate in different methods
+        if (null !== $id) {
+            $oldUser = $this->findById($id);
         } else {
             // we get it from security storage to avoid modifying other clients
             $oldUser = $this->securityStorage->getToken()->getUser();
@@ -75,17 +83,15 @@ class UserService
         for ($i = 0; $i < count($parameters); ++$i) {
             $getMethod = 'get'.ucfirst($parameters[$i]);
             $setMethod = 'set'.ucfirst($parameters[$i]);
-            if ($user->$getMethod()) {
-                $oldUser->$setMethod($user->$getMethod());
+            if ($params->$getMethod()) {
+                $oldUser->$setMethod($params->$getMethod());
             }
         }
 
-        //set defaults ( shouldn't be here )
-        $oldUser->setEmailNotifications(($user->getEmailNotifications()) ? 1 : 0);
-        $oldUser->setShowProfil(($user->getShowProfil()) ? 1 : 0);
-
         // insert or update new tags in database
-        $oldUser->setTags($this->tagService->patchTags($oldUser->getTags(), $user->getTags()));
+        if ($params->getTags()) {
+            $oldUser->setTags($this->tagService->patchTags($oldUser->getTags(), $params->getTags()));
+        }
 
         // insert or update "slack" accounts
         //    $oldUser->setSlackAccounts($this->patchSlackAccounts($oldUser, $user->getSlackAccounts()));
@@ -97,12 +103,13 @@ class UserService
         return $oldUser;
     }
 
-    public function delete(Integer $id)
+    public function delete(int $id)
     {
         $user = $this->findById($id);
-        $this->em->remove($user);
+        $user->setDeleted(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+        $this->em->merge($user);
         $this->em->flush();
-        return 'ok';
+        return new Response();
     }
 
     public function post(User $user)
