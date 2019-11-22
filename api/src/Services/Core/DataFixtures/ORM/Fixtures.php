@@ -6,9 +6,11 @@ use App\Services\Chat\Entity\Message;
 use App\Services\Core\DataFixtures\ORM\Constant\UserConstant;
 use App\Services\Domain\Entity\Domain;
 use App\Services\Tag\Entity\Tag;
+use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\Image;
 use App\Services\User\Entity\Token;
 use App\Services\User\Entity\User;
+use App\Services\User\Service\UserService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\FixtureInterface;
@@ -20,11 +22,21 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
 {
     private $generateUrlService;
     private $userService;
+    private $tagService;
     private $manager;
     private $userManager;
     private $em;
 
     private $container;
+
+    public function __construct(
+        TagService $tagService,
+        UserService $userService
+    ) {
+        $this->tagService = $tagService;
+        $this->userService = $userService;
+    }
+
 
     public function setContainer(ContainerInterface $container = null)
     {
@@ -36,7 +48,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $this->manager = $manager;
         $this->em = $this->container->get('doctrine.orm.entity_manager');
         $this->generateUrlService = $this->container->get('generate_url_service');
-        $this->userService = $this->container->get('App\Services\User\Service\UserService');
         $this->userManager = $this->container->get('fos_user.user_manager');
 //        $this->addCronTab();
         $this->addUsers();
@@ -86,6 +97,8 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setLongitude(4.85);
         $admin->setEnabled(true);
         $admin->addDomain($domain);
+        $admin->setShowProfil(false);
+        $admin->setEmailNotifications(false);
         $this->userManager->updateUser($admin);
 
         // set Learn tags
@@ -143,7 +156,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $randTag3 = $tags[random_int(0, count($tags) - 1)];
             $randTag4 = $tags[random_int(0, count($tags) - 1)];
             $randTags = [$randLearnTag, $randTag, $randTag2, $randTag3, $randTag4];
-            $user->setTags($this->userService->patchTags(new ArrayCollection(), new ArrayCollection($randTags)));
+            $user->setTags($this->tagService->beforePatchTags(new ArrayCollection(), new ArrayCollection($randTags)));
 
             // default image
             $image = new Image();

@@ -4,12 +4,12 @@ namespace App\Services\Chat\Repository;
 
 use App\Services\Chat\Entity\Message;
 use App\Services\User\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class MessageRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Message::class);
     }

@@ -8,6 +8,7 @@ use App\Services\Chat\Service\MessageService;
 use App\Services\Chat\Service\PushService;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\UserService;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Patch;
@@ -15,6 +16,8 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\View;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MessageController extends AbstractController
@@ -89,7 +92,9 @@ class MessageController extends AbstractController
         TokenStorageInterface $tokenStorage,
         MessageService $messageService,
         PushService $pushService,
-        BrockerService $brokerService
+        BrockerService $brokerService,
+        PublisherInterface $publisher,
+    LoggerInterface $logger
     ) {
         $user = $tokenStorage->getToken()->getUser();
 
@@ -104,11 +109,17 @@ class MessageController extends AbstractController
 
         $messageService->postMessage($message);
 
-        $pushService->process($friend, $message, $request);
+        $update = new Update('http://monsite.com/ping', "[]");
 
-        //if( !$sended ) {
-            $brokerService->process($friend, $message);
-        //}
+        $test = $publisher($update);
+
+        $logger->debug('test');
+
+//        $pushService->process($friend, $message, $request);
+//
+//        //if( !$sended ) {
+//            $brokerService->process($friend, $message);
+//        //}
 
         return $message;
     }

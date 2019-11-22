@@ -5,14 +5,14 @@ namespace App\Services\User\Repository;
 use App\Services\User\Entity\User;
 use App\Services\Tag\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 
 class UserRepository extends ServiceEntityRepository
 {
     private $logger;
 
-    public function __construct(RegistryInterface $registry, LoggerInterface $logger)
+    public function __construct(ManagerRegistry $registry, LoggerInterface $logger)
     {
         parent::__construct($registry, User::class);
     }

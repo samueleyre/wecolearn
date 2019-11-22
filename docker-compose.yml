@@ -14,13 +14,18 @@ services:
     volumes:
       - ./docker/db:/etc/mysql/conf.d
       - ./docker/:/opt
+      - ./db/mysql:/var/lib/mysql
   api:
     build: ./docker/php
     volumes:
       - ./api:/application
       - ./logs/symfony:/appliation/var/log:cached
+    ports:
+      - "3000:3000"
     links:
       - db
+    networks:
+      - main
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: always
@@ -38,6 +43,8 @@ services:
       - "8080:80"
     depends_on:
       - api
+    networks:
+      - main
   composer:
     image: composer
     working_dir: /application
@@ -51,7 +58,8 @@ services:
     tty: true
     ports:
       - "4200:4200"
-      - "3000:3000"
+    networks:
+      - main
   socket:
     image: node:8.15.0
     volumes:
@@ -70,7 +78,8 @@ services:
       - RABBITMQ_DEFAULT_PASS=test
 
 
-
+networks:
+  main:
 
 #
 #  api:
