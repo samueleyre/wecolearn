@@ -20,12 +20,9 @@ services:
     volumes:
       - ./api:/application
       - ./logs/symfony:/appliation/var/log:cached
-    ports:
-      - "3000:3000"
     links:
       - db
-    networks:
-      - main
+      - mercure
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: always
@@ -43,8 +40,7 @@ services:
       - "8080:80"
     depends_on:
       - api
-    networks:
-      - main
+      - mercure
   composer:
     image: composer
     working_dir: /application
@@ -58,8 +54,6 @@ services:
     tty: true
     ports:
       - "4200:4200"
-    networks:
-      - main
   socket:
     image: node:8.15.0
     volumes:
@@ -76,50 +70,16 @@ services:
       - RABBITMQ_ERLANG_COOKIE=secret
       - RABBITMQ_DEFAULT_USER=wcl
       - RABBITMQ_DEFAULT_PASS=test
+  mercure:
+    image: dunglas/mercure
+    environment:
+      - JWT_KEY=myJWTKey
+      - DEMO=1
+      - ALLOW_ANONYMOUS=1
+      - PUBLISH_ALLOWED_ORIGINS=*
+      - CORS_ALLOWED_ORIGINS=http://localhost:4200
+      - DEBUG=1
+    ports:
+      - "3000:80"
 
 
-networks:
-  main:
-
-#
-#  api:
-#    build: docker/php
-#    ports:
-#        - "88:88"
-#        - "443:443"
-#    volumes:
-#        - ./:/src
-#        - ./docker/php/nginxConf/:/etc/nginx/conf.d/
-#        - ./docker/php/nginxDefault/nginx.conf:/etc/nginx/nginx.conf
-#    environment:
-#        - ENV=${ENV}
-#    links:
-#        - db
-#        - rabbit
-
-
-#  db:
-#    image: mariadb
-#    restart: always
-#    ports:
-#      - "3308:3308"
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=inReusableCodeWeTrust
-#      - MYSQL_DATABASE=symfony
-#      - MYSQL_USER=simplon
-#      - MYSQL_PASSWORD=inCodeWeTrust
-#      - TERM=dumb
-#    volumes:
-#      - ./docker/db:/etc/mysql/conf.d
-#      - ./docker/:/opt
-#    tty: true
-#    logging:
-#      driver: syslog
-#
-#  phpmyadmin:
-#    image: phpmyadmin/phpmyadmin
-#    restart: always
-#    ports :
-#      - "85:80"
-#    links:
-#      - db:db

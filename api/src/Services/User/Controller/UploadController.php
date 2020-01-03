@@ -26,7 +26,6 @@ class UploadController extends AbstractController
         LoggerInterface $logger
     ) {
 
-        $logger->debug('Mmmmmh');
         $user = $tokenStorage->getToken()->getUser();
 
         $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));

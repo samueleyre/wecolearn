@@ -12,6 +12,7 @@ parameters:
     vapid_private: '%env(VAPID_PRIVATE)%'
     vapid_public : '%env(VAPID_PUBLIC)%'
     rabbit_url : '%env(RABBIT_URL)%'
+    mercure_jwt_key : '%env(MERCURE_JWT_KEY)'
 
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
@@ -38,7 +39,6 @@ services:
             $host: '%host%'
             $environment: '%environment%'
 
-# Is this needed ??
     App\Services\Shared\Service\UploadService:
         arguments:
             $uploader: '@speicher210_cloudinary.uploader'
@@ -58,3 +58,7 @@ services:
     generate_url_service:
         public: true
         alias: 'App\Services\User\Service\GenerateUrlService'
+
+    App\Services\Chat\Service\MercureCookieGenerator:
+        arguments:
+            $secret: '%mercure_jwt_key%'

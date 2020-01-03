@@ -37,3 +37,5 @@ test:
 
 clearCache:
 	@docker-compose exec api bash -c "php bin/console cache:clear"
+
+startMercure:

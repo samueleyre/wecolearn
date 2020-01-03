@@ -109,11 +109,12 @@ class MessageController extends AbstractController
 
         $messageService->postMessage($message);
 
-        $update = new Update('http://monsite.com/ping', "[]");
+        $update = new Update('http://monsite.com/ping', json_encode($message->getMessage()), [
+//            `http://monsite.com/ping/{$friend->getId()}`
+        ]);
 
-        $test = $publisher($update);
+        $publisher($update);
 
-        $logger->debug('test');
 
 //        $pushService->process($friend, $message, $request);
 //
