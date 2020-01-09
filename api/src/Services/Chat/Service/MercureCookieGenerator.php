@@ -24,7 +24,7 @@ class MercureCookieGenerator
     {
         $token = (new Builder())
             ->set('mercure', ['subscribe'=> [`http://monsite.com/{$user->getId()}`]])
-            ->sign(new Sha384(), $this->secret)
+            ->sign(new Sha384(), 'file://application/config/mercureJwt/private.key')
             ->getToken();
 
 

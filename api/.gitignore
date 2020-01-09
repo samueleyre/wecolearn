@@ -26,8 +26,7 @@
 ###< squizlabs/php_codesniffer ###
 
 ###> lexik/jwt-authentication-bundle ###
-/config/jwt/**/private.pem
-!/config/jwt/local/private.pem
+/config/jwt/private.pem
 ###< lexik/jwt-authentication-bundle ###
 
 ###> friendsofphp/php-cs-fixer ###

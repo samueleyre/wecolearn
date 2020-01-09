@@ -2,7 +2,7 @@ root:
   prefix:   /
   type: rest
   resource: App\Services\Core\Controller\RootController
-  
+
 signin:
   path: /api/login_check
 
