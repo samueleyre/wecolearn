@@ -39,7 +39,7 @@ export class AppComponent {
         const subs: any = { unsubscribe : null };
         if (logged && !oldLog) {
           // subscribe to notifications
-          const url = `http://localhost:3000/.well-known/mercure?topic=http://monsite.com/ping`;
+          const url = `http://localhost:3000/.well-known/mercure?topic=https://wecolearn.com/message`;
           const subscribeToMercureNotifs = new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
             console.log('message', evt.data);
           };

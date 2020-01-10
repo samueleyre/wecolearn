@@ -4,15 +4,13 @@
 
 namespace App\Services\Chat\Service;
 
-
 use App\Services\User\Entity\User;
 use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Signer\Rsa\Sha384;
+use Lcobucci\JWT\Signer\Hmac\Sha384;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class MercureCookieGenerator
 {
-
-
     private $secret;
 
     public function __construct(string $secret)
@@ -23,16 +21,12 @@ class MercureCookieGenerator
     public function generate(User $user)
     {
         $token = (new Builder())
-            ->set('mercure', ['subscribe'=> [`http://monsite.com/{$user->getId()}`]])
-            ->sign(new Sha384(), 'file://application/config/mercureJwt/private.key')
+            ->set('mercure', ['subscribe'=> ["https://wecolearn.com/message/{$user->getId()}"]])
+            ->sign(new Sha384(), $this->secret)
             ->getToken();
 
+        $cookie = new Cookie("mercureAuthorization", $token, strtotime('+1 day'));
 
-        return `mercureAuthorization={$token}: Path=/.well-known/mercure; HttpOnly`;
+        return $cookie->__toString();
     }
-
 }
-
-
-
-

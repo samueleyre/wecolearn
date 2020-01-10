@@ -8,6 +8,8 @@ use App\Services\Chat\Service\MessageService;
 use App\Services\Chat\Service\PushService;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\UserService;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerInterface;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\Annotations\Post;
@@ -94,6 +96,7 @@ class MessageController extends AbstractController
         PushService $pushService,
         BrockerService $brokerService,
         PublisherInterface $publisher,
+        SerializerInterface $serializer,
     LoggerInterface $logger
     ) {
         $user = $tokenStorage->getToken()->getUser();
@@ -108,9 +111,9 @@ class MessageController extends AbstractController
         $message->setCreated($date);
 
         $messageService->postMessage($message);
-
-        $update = new Update('http://monsite.com/ping', json_encode($message->getMessage()), [
-//            `http://monsite.com/ping/{$friend->getId()}`
+        $thread = $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('thread'));
+        $update = new Update('https://wecolearn.com/message', $thread, [
+            "https://wecolearn.com/message/{$friend->getId()}"
         ]);
 
         $publisher($update);

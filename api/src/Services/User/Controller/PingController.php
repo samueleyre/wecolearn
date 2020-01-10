@@ -31,15 +31,23 @@ class PingController extends AbstractController
      *
      * @throws \Exception
      */
-    public function getAction(Request $request, TokenStorageInterface $tokenStorage, SerializerInterface $serializer, MercureCookieGenerator $cookieGenerator)
+    public function getAction(Request $request, TokenStorageInterface $tokenStorage, SerializerInterface $serializer, MercureCookieGenerator $cookieGenerator, LoggerInterface $logger)
     {
         $user = $tokenStorage->getToken()->getUser();
         $user->setLastConnexion(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
         $this->userManager->updateUser($user);
-        $response = new Response(
-            $serializer->serialize($user, 'json', SerializationContext::create()->setGroups('output'))
-        );
-        $response->headers->set('set-cookie', 'mercureAuthorization', $cookieGenerator->generate($user));
-        return $response;
+
+        /*
+         * Manage cookie for mercureAuthorization
+         */
+        $cookies = $request->cookies;
+        if (!$cookies->has('mercureAuthorization')) {
+            $response = new Response(
+                $serializer->serialize($user, 'json', SerializationContext::create()->setGroups('output'))
+            );
+            $response->headers->set('set-cookie', $cookieGenerator->generate($user));
+            return $response;
+        }
+        return $user;
     }
 }

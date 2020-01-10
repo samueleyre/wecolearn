@@ -51,6 +51,11 @@ export class HttpApiInterceptor implements HttpInterceptor {
         update['headers'] = new HttpHeaders(httpHeaders);
       }
 
+      // cookie for notifications
+      if (req.url.indexOf('ping') !== -1) {
+        update['withCredentials'] = true;
+      }
+
       const clonedRequest: HttpRequest<any> = req.clone(update);
       return next.handle(clonedRequest).pipe(tap(
         (event: HttpEvent<any>) => {

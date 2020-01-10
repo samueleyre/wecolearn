@@ -152,44 +152,44 @@ export class MessagesService {
   }
 
   private initSocketListener() {
-    return this.socketService.connect().subscribe((message: Message) => {
-      console.log('message par socket', message);
-      const messages = [message];
-      _.sortBy(messages, (m: Message) => m.created)
-              .map((sortedMessage: Message) => {
-                sortedMessage.thread = new Thread({
-                  id: sortedMessage.sender.id,
-                  name: sortedMessage.sender.first_name,
-                  image: sortedMessage.sender.image,
-                });
-                this.addMessage(sortedMessage);
-              });
-    });
+    // return this.socketService.connect().subscribe((message: Message) => {
+    //   console.log('message par socket', message);
+    //   const messages = [message];
+    //   _.sortBy(messages, (m: Message) => m.created)
+    //           .map((sortedMessage: Message) => {
+    //             sortedMessage.thread = new Thread({
+    //               id: sortedMessage.sender.id,
+    //               name: sortedMessage.sender.first_name,
+    //               image: sortedMessage.sender.image,
+    //             });
+    //             this.addMessage(sortedMessage);
+    //           });
+    // });
   }
 
   private initPushListener() {
-    if ('serviceWorker' in navigator) {
-      const channel = new BroadcastChannel('sw-messages');
-      const listener = (event) => {
-        const messages = [JSON.parse(event.data)];
-        _.sortBy(messages, (m: Message) => m.created)
-                  .map((message: Message) => {
-                    message.thread = new Thread({
-                      id: message.sender.id,
-                      name: message.sender.first_name,
-                      image: message.sender.image,
-                    });
-                    this.addMessage(message);
-                  });
-      };
-      channel.addEventListener('message', listener);
-      return () => {
-        channel.removeEventListener('message', listener);
-      };
-    }
-    return () => {
-      console.log('no service worker in navigator');
-    };
+    // if ('serviceWorker' in navigator) {
+    //   const channel = new BroadcastChannel('sw-messages');
+    //   const listener = (event) => {
+    //     const messages = [JSON.parse(event.data)];
+    //     _.sortBy(messages, (m: Message) => m.created)
+    //               .map((message: Message) => {
+    //                 message.thread = new Thread({
+    //                   id: message.sender.id,
+    //                   name: message.sender.first_name,
+    //                   image: message.sender.image,
+    //                 });
+    //                 this.addMessage(message);
+    //               });
+    //   };
+    //   channel.addEventListener('message', listener);
+    //   return () => {
+    //     channel.removeEventListener('message', listener);
+    //   };
+    // }
+    // return () => {
+    //   console.log('no service worker in navigator');
+    // };
   }
 
   private initListener(): void {
