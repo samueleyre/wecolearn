@@ -1,8 +1,6 @@
 .idea/
 .idea/*
 /node
-/db
-
+/db/mysql/
 .php_cs.cache
-
 
