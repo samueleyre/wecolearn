@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit {
 
     if (!localStorage.getItem('cookieseen')) {
       // todo: fix cookie
-      // MessageService.cookie();
+      MessageService.cookie();
     }
   }
 
@@ -125,9 +125,7 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.authenticationService.logout(true);
-    this.messagesService.stopNewMessageLoop();
   }
-
 
   toggle() {
     MenuService.displayToggle();

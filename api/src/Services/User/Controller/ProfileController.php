@@ -25,7 +25,7 @@ class ProfileController extends AbstractController
 {
     /**
      * @Get("profile/{profileUrl}")
-     * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"profile"})
+     * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"public-profile"})
      **/
     public function getPublicProfileAction(string $profileUrl)
     {
@@ -45,12 +45,8 @@ class ProfileController extends AbstractController
 
     /**
      * @Get("profile")
-     * @View(serializerEnableMaxDepthChecks=true,
-     *     serializerGroups={"output", "receivedMessages":{"output", "sender":{"search"}}})
-     * // todo: specifying subchild groups isn't working
-     *
-     **@throws \Exception
-     */
+     * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"profile"})
+     **/
     public function getProfileAction(
         Request $request,
         TokenStorageInterface $tokenStorage,

@@ -41,13 +41,10 @@ class PingController extends AbstractController
          * Manage cookie for mercureAuthorization
          */
         $cookies = $request->cookies;
-        if (!$cookies->has('mercureAuthorization')) {
-            $response = new Response(
-                $serializer->serialize($user, 'json', SerializationContext::create()->setGroups('output'))
-            );
-            $response->headers->set('set-cookie', $cookieGenerator->generate($user));
-            return $response;
-        }
-        return $user;
+        $response = new Response(
+            $serializer->serialize($user, 'json', SerializationContext::create()->setGroups('profile'))
+        );
+        $response->headers->set('set-cookie', $cookieGenerator->generate($user));
+        return $response;
     }
 }

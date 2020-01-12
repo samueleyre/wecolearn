@@ -26,7 +26,6 @@ type IMessagesOperation = (messages: Message[]) => Message[];
 export class MessagesService {
   static initialPeriod = 120000;
 
-  private alive: boolean; // used to unsubscribe from the IntervalObservable
   // when OnDestroy is called.
   private timer: Observable<number>;
 
@@ -66,10 +65,8 @@ export class MessagesService {
               private messagerieService: MessagerieService,
               private socketService: SocketService,
   ) {
-    // todo: repare this
-    // this.initListener();
+    this.initListener();
 
-    this.alive = true;
     this.messages = this.updates.pipe(
         // watch the updates and accumulate operations on the messages
         scan((messages: Message[], operation: IMessagesOperation) => operation(messages), initialMessages),
@@ -168,51 +165,51 @@ export class MessagesService {
   }
 
   private initPushListener() {
-    // if ('serviceWorker' in navigator) {
-    //   const channel = new BroadcastChannel('sw-messages');
-    //   const listener = (event) => {
-    //     const messages = [JSON.parse(event.data)];
-    //     _.sortBy(messages, (m: Message) => m.created)
-    //               .map((message: Message) => {
-    //                 message.thread = new Thread({
-    //                   id: message.sender.id,
-    //                   name: message.sender.first_name,
-    //                   image: message.sender.image,
-    //                 });
-    //                 this.addMessage(message);
-    //               });
-    //   };
-    //   channel.addEventListener('message', listener);
-    //   return () => {
-    //     channel.removeEventListener('message', listener);
-    //   };
-    // }
-    // return () => {
-    //   console.log('no service worker in navigator');
-    // };
+    if ('serviceWorker' in navigator) {
+      const channel = new BroadcastChannel('sw-messages');
+      const listener = (event) => {
+        const messages = [JSON.parse(event.data)];
+        _.sortBy(messages, (m: Message) => m.created)
+                  .map((message: Message) => {
+                    message.thread = new Thread({
+                      id: message.sender.id,
+                      name: message.sender.first_name,
+                      image: message.sender.image,
+                    });
+                    this.addMessage(message);
+                  });
+      };
+      channel.addEventListener('message', listener);
+      return () => {
+        channel.removeEventListener('message', listener);
+      };
+    }
+    return () => {
+      console.log('no service worker in navigator');
+    };
   }
 
   private initListener(): void {
     console.log('init listener');
-
-    let socketSubscriber: any = () => {
-      //
-    };
+    //
+    // let socketSubscriber: any = () => {
+    //   //
+    // };
     let pushSubscriber: any = () => {
       //
     };
     this.messagerieService.type().subscribe((type) => {
       switch (type) {
-        case 'socket':
-          pushSubscriber();
-          socketSubscriber = this.initSocketListener();
-          break;
+        // case 'socket':
+        //   pushSubscriber();
+        //   socketSubscriber = this.initSocketListener();
+        //   break;
         case 'push':
-          socketSubscriber();
+          // socketSubscriber();
           pushSubscriber = this.initPushListener();
           break;
         default:
-          socketSubscriber();
+          // socketSubscriber();
           pushSubscriber();
           break;
       }
@@ -243,7 +240,7 @@ export class MessagesService {
     const typeOfMessage = (senderOrReceiver === 'sender') ? 'receivedMessages' : 'sentMessages';
 
     this[typeOfMessage].map((message: Message) => {
-      if (Object.keys(threads).length === 0 || (Object.keys(threads).indexOf(message[senderOrReceiver].id) === -1)) {
+      if (Object.keys(threads).length === 0 || (Object.keys(threads).indexOf(String(message[senderOrReceiver].id)) === -1)) {
         const thread = new Thread({
           id: message[senderOrReceiver].id,
           name: message[senderOrReceiver].first_name,
@@ -277,10 +274,6 @@ export class MessagesService {
         .map((message: Message) => {
           this.addMessage(message);
         });
-  }
-
-  public stopNewMessageLoop() {
-    this.alive = false;
   }
 
   public post(message: Message): Observable<Object> {

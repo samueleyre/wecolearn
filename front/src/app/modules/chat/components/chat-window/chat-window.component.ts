@@ -102,16 +102,13 @@ export class ChatWindowComponent implements OnInit {
               this.disabled = false;
               this.draftMessage.sender = new User({ id: this.currentUser.id });
               this.draftMessage.thread = new Thread({
-                id: this.currentThread.id,
-                name: this.currentThread.name,
-                image: this.currentThread.image,
+                id: this.draftMessage.sender.id,
+                name: this.draftMessage.sender.first_name,
+                image: this.draftMessage.sender.image,
               });
               this.messagesService.addMessage(this.draftMessage);
               this.draftMessage = new Message();
-              setTimeout(() =>
-                    this.inputEl.nativeElement.focus()
-                ,
-                         0);
+              setTimeout(() => this.inputEl.nativeElement.focus(), 0);
             });
     }
   }
@@ -136,9 +133,5 @@ export class ChatWindowComponent implements OnInit {
   closeChat(): void {
     this.currentThread = new Thread();
     this.threadsService.setCurrentThread(this.currentThread);
-  }
-
-  stopStream(): void {
-    this.messagesService.stopNewMessageLoop();
   }
 }

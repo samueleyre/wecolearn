@@ -1,6 +1,6 @@
 <div *ngIf="_thread.id" class="media conversation" [class.selected]="selected"  >
   <div class="pull-left">
-    <wc-profil-image [image]="_thread" [style]="{width: '50px', height: '50px', padding: '6px', borderRadius: '50px'  }"></wc-profil-image>
+    <wc-profil-image [image]="_thread.image" [style]="{width: '50px', height: '50px', padding: '6px', borderRadius: '50px'  }"></wc-profil-image>
   </div>
   <div class="media-body">
     <span class="media-heading">{{_thread.name}}
@@ -10,5 +10,5 @@
       <small *ngIf="!_thread.lastMessage.sender || !(_thread.id === _thread.lastMessage.sender.id)" class="message-preview"></small>
     </div>
   </div>
-  <a (click)="loadMessages($event)" class="div-link">Select</a>
+  <a (click)="loadMessages($event)" class="div-link"></a>
 </div>

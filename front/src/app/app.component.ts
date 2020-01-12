@@ -1,14 +1,13 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 
 import { Logged } from '~/core/services/logged';
-import { MessagerieService } from '~/core/services/messagerie/service';
 import { IconService } from '~/core/services/icon.service';
+import { MessagesService } from '~/modules/chat/services/messages';
+import { Message } from '~/core/entities/message/entity';
+import { Thread } from '~/core/entities/thread/entity';
 
-import { SearchService } from './modules/search/services/search';
 import { DomainService } from './core/services/domain';
-import { SeoService } from './core/services/seo';
 
 
 @Component({
@@ -22,6 +21,7 @@ export class AppComponent {
       private router: Router,
       private domainService: DomainService,
       private iconService: IconService,
+      public messagesService: MessagesService,
   ) {
     // set subdomain
     router.events.subscribe((event) => {
@@ -41,9 +41,14 @@ export class AppComponent {
           // subscribe to notifications
           const url = `http://localhost:3000/.well-known/mercure?topic=https://wecolearn.com/message`;
           const subscribeToMercureNotifs = new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
-            console.log('message', evt.data);
+            const message = new Message(JSON.parse(evt.data));
+            message.thread = new Thread({
+              id: message.sender.id,
+              name: message.sender.first_name,
+              image: message.sender.image,
+            });
+            this.messagesService.addMessage(message);
           };
-
 
           // todo: repare this
           // subs = this.messagerieService.init().subscribe(

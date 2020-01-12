@@ -37,11 +37,9 @@ export class Threads {
     this.threads = messagesService.messages.pipe(
       map((messages: Message[]) => {
         const threads: {[key: string]: Thread} = {};
-        // console.log("messages to be threaded", messages)
         // Store the message's thread in our accumulator `threads`
         messages.map((message: Message) => {
-          threads[message.thread.id] = threads[message.thread.id] || message.thread;
-
+          threads[message.thread.id] = threads[String(message.thread.id)] || message.thread;
           // Cache the most recent message for each thread
           const messagesThread: Thread = threads[message.thread.id];
           if (
@@ -74,32 +72,33 @@ export class Threads {
 
     // `currentThreadMessages` Observable that contains the set of messages for the currently selected thread
     this.currentThreadMessages = this.currentThread.pipe(
-      combineLatest(messagesService.messages,
-                    (currentThread: Thread, messages: Message[]) => {
-                      if (currentThread && messages.length > 0) {
-                        return _.chain(messages)
-                        .filter((message: Message) => {
-                          return (message.thread.id === currentThread.id);
-                        })
-                          // .sortBy(messages, (m: Message) => m.created).reverse()
-                        .map((message: Message) => {
-                          if (!message.is_read && message.receiver && message.thread.id !== message.receiver.id) {
-                            message.is_read = true;
-                            this.messagesService.addMessageToUpdate(message);
-                          }
-                          return message;
-                        })
-                        .value();
-                      }
-                      if (currentThread) {
-                        return [new Message(
-                          { message: 'Prenez contact avec votre première relation !',
-                            thread: currentThread,
-                            senderId: currentThread.id },
-                          )];
-                      }
-                      return [];
-                    }));
+      combineLatest(
+        messagesService.messages,
+        (currentThread: Thread, messages: Message[]) => {
+          if (currentThread && messages.length > 0) {
+            return _.chain(messages)
+            .filter((message: Message) => {
+              return (message.thread.id === currentThread.id);
+            })
+              // .sortBy(messages, (m: Message) => m.created).reverse()
+            .map((message: Message) => {
+              if (!message.is_read && message.receiver && message.thread.id !== message.receiver.id) {
+                message.is_read = true;
+                this.messagesService.addMessageToUpdate(message);
+              }
+              return message;
+            })
+            .value();
+          }
+          if (currentThread) {
+            return [new Message(
+              { message: 'Prenez contact avec votre première relation !',
+                thread: currentThread,
+                senderId: currentThread.id },
+              )];
+          }
+          return [];
+        }));
 
     // when currently selected front is selected, mark all the messages that it contains as read
     this.currentThread.subscribe(this.messagesService.markThreadAsRead);

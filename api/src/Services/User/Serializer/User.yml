@@ -4,29 +4,29 @@ App\Services\User\Entity\User:
     access_order:     alphabetical
     properties:
       id:
-        groups: [ input, output, user, search, message, profile, admin-users ]
+        groups: [ input, output, search, message, profile, public-profile,  admin-users, thread ]
       created:
-        groups: [ input, output, user, search, message, profile, admin-users]
+        groups: [ input, output, search, profile, admin-users]
       firstName:
-        groups: [ input, output, user, search, message, profile, admin-users ]
+        groups: [ input, output, search, message, profile, public-profile, admin-users ]
       lastName:
-        groups: [ input, output, user, search, message, profile, admin-users ]
+        groups: [ input, output, search, message, profile, public-profile, admin-users ]
       profilUrl:
-        groups: [ input, output, user, search, message, profile, admin-users ]
+        groups: [ input, output, search, message, profile, public-profile, admin-users ]
       password:
         groups: [ input ]
       biographie:
-        groups: [ input, output, user, search, message, profile ]
+        groups: [ input, output, search, profile, public-profile ]
       intensity:
-        groups: [ input, output, user, profile ]
+        groups: [ input, output, profile, public-profile ]
       atmosphere:
-        groups: [ input, output, user, profile ]
+        groups: [ input, output, profile, public-profile ]
       latitude:
-        groups: [ input, output, user, admin-users ]
+        groups: [ input, output, admin-users ]
       longitude:
-        groups: [ input, output, user, admin-users ]
+        groups: [ input, output, admin-users ]
       tags:
-        groups: [ input, output, user, search, profile, admin-users ]
+        groups: [ input, output, search, profile, public-profile, admin-users ]
       sentMessages:
         groups: [ input, output ]
         max_depth: 4
@@ -35,17 +35,17 @@ App\Services\User\Entity\User:
         max_depth: 4
       image:
         type: App\Services\User\Entity\Image
-        groups: [ input, output, user, search, message, profile ]
+        groups: [ input, output, search, message, profile, public-profile ]
       showProfil:
-        groups: [ input, output, user, admin-users ]
+        groups: [ input, output, admin-users ]
       emailNotifications:
         groups: [ input, output,  user ]
       slackAccounts:
-        groups: [ input, output, user, search ]
+        groups: [ input, output, search ]
       userNotified:
-        groups: [ input, output,  user ]
+        groups: [ input, output ]
       notificationSubscribe:
-        groups: [ input, output,  user]
+        groups: [ input, output ]
       domains:
         groups: [ admin-users ]
       deleted:

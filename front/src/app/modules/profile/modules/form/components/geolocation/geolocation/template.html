@@ -3,7 +3,7 @@
         <input id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="Rechercher une adresse" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search >
     </div>
     <div class="input-group" style="margin-top: 8px;">
-        <button class="btn btn-outline-dark" type="button" (click)="setCurrentPosition()"> Se géolocaliser <i class="fa fa-map-marker" aria-hidden="true"></i></button>
+        <button class="btn btn-outline-dark" type="button" (click)="setCurrentPosition()"> Me géolocaliser <i class="fa fa-map-marker" aria-hidden="true"></i></button>
     </div>
 </div>
 <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">

@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MessageController extends AbstractController
@@ -90,14 +91,11 @@ class MessageController extends AbstractController
      */
     public function postMessageAction(
         Message $message,
-        Request $request,
         TokenStorageInterface $tokenStorage,
         MessageService $messageService,
-        PushService $pushService,
-        BrockerService $brokerService,
-        PublisherInterface $publisher,
+        MessageBusInterface $bus,
         SerializerInterface $serializer,
-    LoggerInterface $logger
+        LoggerInterface $logger
     ) {
         $user = $tokenStorage->getToken()->getUser();
 
@@ -111,19 +109,14 @@ class MessageController extends AbstractController
         $message->setCreated($date);
 
         $messageService->postMessage($message);
-        $thread = $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('thread'));
-        $update = new Update('https://wecolearn.com/message', $thread, [
-            "https://wecolearn.com/message/{$friend->getId()}"
-        ]);
 
-        $publisher($update);
-
-
-//        $pushService->process($friend, $message, $request);
+//        $update = new Update(
+//            'https://wecolearn.com/message',
+//            $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('message')),
+//            ["https://wecolearn.com/message/{$friend->getId()}"]
+//        );
 //
-//        //if( !$sended ) {
-//            $brokerService->process($friend, $message);
-//        //}
+//        $bus->dispatch($update);
 
         return $message;
     }

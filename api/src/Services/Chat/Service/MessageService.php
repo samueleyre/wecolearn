@@ -39,14 +39,17 @@ class MessageService
             ->getRepository(Message::class)
             ->findOneBy(['id' => $message->getId()]);
 
-        $oldMessage->setMessage($message->getMessage());
-        $oldMessage->setIsRead($message->getIsRead());
-        $oldMessage->setUpdated($date = new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+        if ($oldMessage) {
+            $oldMessage->setMessage($message->getMessage());
+            $oldMessage->setIsRead($message->getIsRead());
+            $oldMessage->setUpdated($date = new \DateTime('now', new \DateTimeZone('Europe/Paris')));
 
-        $this->em->merge($oldMessage);
-        $this->em->flush();
+            $this->em->merge($oldMessage);
+            $this->em->flush();
+            return $oldMessage;
+        }
 
-        return $oldMessage;
+        return $message;
     }
 
     public function setReminderDate($userId)
