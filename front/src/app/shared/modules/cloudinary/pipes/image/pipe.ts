@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { Image } from '~/core/entities/image/entity';
+import { image as defaultImage } from '~/config/image';
 
 @Pipe({
   name: 'cloudinaryImagePipe',
@@ -9,7 +10,7 @@ import { Image } from '~/core/entities/image/entity';
 export class CloudinaryImagePipe implements PipeTransform {
   transform(image: Image): any {
     if (!image) {
-      return image;
+      return defaultImage.default_200px;
     }
     let version = '';
     if (image.version) {

@@ -21,6 +21,7 @@ import { ToggleComponent } from './components/toggle/component';
 import { ProfileService } from './services/profile';
 import { EmailNotificationSettingsComponent } from './components/notifications/component';
 import { ProfileImageModule } from './modules/profilImage/profileImage.module';
+import {MaterialModule} from "~/shared/modules/material/material.module";
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { ProfileImageModule } from './modules/profilImage/profileImage.module';
     FormsModule,
     ReactiveFormsModule,
     PasswordDifficultyModule,
+    MaterialModule,
   ],
   providers: [
     ProfileService,

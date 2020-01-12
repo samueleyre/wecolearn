@@ -39,7 +39,7 @@ export class EmailNotificationSettingsComponent implements OnInit {
       () => {
         this.clientService.patch(this.user).subscribe(
           (entity: User) => {
-            this.toastr.info('Modification prise en compte !');
+            this.toastr.success('Modification prise en compte !');
           },
           (error) => {
             console.log(error);

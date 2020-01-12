@@ -156,7 +156,6 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
 
   logOut() {
     this.authenticationService.logout(true);
-    this.messagesService.stopNewMessageLoop();
   }
 
 

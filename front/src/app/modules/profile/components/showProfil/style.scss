@@ -2,7 +2,9 @@
 
 
 #notificationSettings{
-  //display: flex;
+  label{
+    display: flex;
+  }
   & > span{
     align-self: center;
     padding-top: 5px;

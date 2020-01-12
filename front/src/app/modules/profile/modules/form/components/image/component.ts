@@ -17,7 +17,6 @@ export class ProfileFormImageComponent implements OnInit {
   editing = false;
 
   ngOnInit(): void {
-    console.log(this.parentForm.value.image);
     //
   }
 

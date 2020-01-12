@@ -5,7 +5,7 @@ FOS\UserBundle\Model\User:
         username:
           groups: [ input, output ]
         email:
-          groups: [ input, output, admin-users ]
+          groups: [ input, output, profile, admin-users ]
         password:
           groups: [ input ]
         roles:

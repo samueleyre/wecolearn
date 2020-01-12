@@ -20,6 +20,8 @@ import { Tag } from '~/core/entities/tag/entity';
 export class ShowProfilSettingsComponent implements OnInit {
   public user: User;
   public disabled = true;
+  public profilDisableInformation = 'Pour pouvoir rendre votre profil ' +
+    "vous devez remplir votre biographie et ajouter un domaine d'apprentissage";
 
 
   constructor(private clientService: ClientService, private _toastr: ToastrService) {
@@ -43,7 +45,7 @@ export class ShowProfilSettingsComponent implements OnInit {
       () => {
         this.clientService.patch(this.user).subscribe(
           (entity: User) => {
-            this._toastr.info('Modification prise en compte !');
+            this._toastr.success('Modification prise en compte !');
           },
           (error) => {
             console.log(error);
