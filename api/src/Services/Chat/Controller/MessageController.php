@@ -88,6 +88,8 @@ class MessageController extends AbstractController
     converter="fos_rest.request_body",
     options={"deserializationContext"={"groups"={"input"} } }
     )
+     * @View( serializerGroups={"message"})
+     *
      */
     public function postMessageAction(
         Message $message,
@@ -97,6 +99,7 @@ class MessageController extends AbstractController
         SerializerInterface $serializer,
         LoggerInterface $logger
     ) {
+
         $user = $tokenStorage->getToken()->getUser();
 
         $friend = $this->getDoctrine()
@@ -110,19 +113,20 @@ class MessageController extends AbstractController
 
         $messageService->postMessage($message);
 
-//        $update = new Update(
-//            'https://wecolearn.com/message',
-//            $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('message')),
-//            ["https://wecolearn.com/message/{$friend->getId()}"]
-//        );
-//
-//        $bus->dispatch($update);
+        $update = new Update(
+            'https://wecolearn.com/message',
+            $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('message')),
+            ["https://wecolearn.com/message/{$friend->getId()}"]
+        );
+
+        $bus->dispatch($update);
 
         return $message;
     }
 
     /**
      * @Patch("/messages")
+     * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"message"})
      * @ParamConverter(
     "messages",
     class="array<App\Services\Chat\Entity\Message>",

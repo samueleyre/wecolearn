@@ -5,9 +5,9 @@ App\Services\User\Entity\Image:
         id:
           groups: [ input, output ]
         version:
-          groups: [ output, search, profil, message ]
+          groups: [ output, search, profile, message ]
         publicId:
-          groups: [ output, search, profil, message ]
+          groups: [ output, search, profile, message ]
         created:
           groups: [ output ]
         filename:

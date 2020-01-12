@@ -77,6 +77,7 @@ class ProfileController extends AbstractController
 
     /**
      * @Patch("/profile")
+     * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"profile"})
      * @ParamConverter(
      *       "user",
      *       class="App\Services\User\Entity\User",

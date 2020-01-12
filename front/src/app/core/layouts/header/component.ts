@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 import { Logged } from '~/core/services/logged';
 import { AuthenticationService } from '~/core/services/auth/auth';
@@ -67,24 +68,14 @@ export class HeaderComponent implements OnInit {
       });
     });
 
-    if (!localStorage.getItem('cookieseen')) {
-      // todo: fix cookie
-      MessageService.cookie();
-    }
+    // if (!localStorage.getItem('cookieseen')) {
+    //   // todo: fix cookie
+    //   this.messagesService.cookie();
+    // }
   }
 
   loadMessages() {
     this.messagesService.init();
-
-    // if (!environment.production) {
-    //   this.unreadMessagesCount = 1;
-    //   this.notifications = [
-    //     new Thread({
-    //       name: 'bla',
-    //       lastMessage: new Message({message: 'blablabla'})
-    //     })
-    //   ];
-    // } else {
 
     this.threadsService.orderedThreads.subscribe((currentThreads: Thread[]) => {
       this.notifications = [];
@@ -94,15 +85,18 @@ export class HeaderComponent implements OnInit {
             this.currentClient &&
             (currentThread.lastMessage.sender.id === this.currentClient.id);
 
-        if (!currentThread.lastMessage.is_read && !messageIsFromUser && currentThread.lastMessage.sender) {
+        // not read, sent to User, is not recent
+        if (
+          !currentThread.lastMessage.is_read
+          && !messageIsFromUser && currentThread.lastMessage.sender
+          && moment(currentThread.lastMessage.created).isBefore(moment().subtract(1, 'day'))
+        ) {
           this.notifications.push(currentThread);
         }
       });
       // todo: only if not on message page !
       this.unreadMessagesCount = (this.notifications.length > 0) ? this.notifications.length : null;
     });
-
-    // }
   }
 
   preventDefault(e: any) {

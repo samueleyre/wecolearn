@@ -101,11 +101,9 @@ export class ChatWindowComponent implements OnInit {
             (answer) => {
               this.disabled = false;
               this.draftMessage.sender = new User({ id: this.currentUser.id });
-              this.draftMessage.thread = new Thread({
-                id: this.draftMessage.sender.id,
-                name: this.draftMessage.sender.first_name,
-                image: this.draftMessage.sender.image,
-              });
+              this.draftMessage.thread = {
+                ...this.currentThread,
+              };
               this.messagesService.addMessage(this.draftMessage);
               this.draftMessage = new Message();
               setTimeout(() => this.inputEl.nativeElement.focus(), 0);

@@ -10,6 +10,7 @@ import { User } from '~/core/entities/user/entity';
 @Injectable()
 export class ClientService {
   private currentClientSubject = new Subject<User>();
+  private currentClientObservable = this.currentClientSubject.asObservable();
   private endpoint: string;
   private currentClientStatic: User = null; // probably useless
 
@@ -24,7 +25,7 @@ export class ClientService {
 
   get(): Observable<User> {
     if (null === this.currentClientStatic) {
-      return this.currentClientSubject.asObservable();
+      return this.currentClientObservable;
     }
     return new Observable<User>((subscriber: Subscriber<User>) => subscriber.next(this['currentClientStatic']));
   }

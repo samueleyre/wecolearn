@@ -34,7 +34,6 @@ export class ShowProfilSettingsComponent implements OnInit {
   load(): void {
     this.clientService.get().subscribe((client: User) => {
       this.user = client;
-      console.log(client);
       this.disabled = !(!!client.first_name && !!client.biographie && !!client.tags.filter((tag:Tag) => tag.type === 0)[0]);
     });
   }
