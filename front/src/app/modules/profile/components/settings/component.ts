@@ -4,16 +4,15 @@ import {
   Injectable,
   Inject, Input,
 } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { APP_BASE_HREF, Location } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/client';
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
-import {ProfileService} from "~/modules/profile/services/profile";
+import { ProfileService } from '~/modules/profile/services/profile';
 
 
 @Component({
@@ -32,7 +31,6 @@ export class SettingsComponent implements OnInit {
   public editing: object = {};
   public pattern: string;
 
-
   constructor(
       private profileService: ProfileService,
       private activatedRoute: ActivatedRoute,
@@ -43,11 +41,10 @@ export class SettingsComponent implements OnInit {
     this.initEditable();
   }
 
-
   ngOnInit() {
     this.pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+    this.newemail = this.user.email;
   }
-
 
   submitChangeEmail(f: NgForm) {
     this.callApi({ email: this.newemail });
@@ -67,9 +64,7 @@ export class SettingsComponent implements OnInit {
         if (response['duplicate']) {
           this._toastr.info('Cette adresse email est déjà utilisée.');
         } else if (response['noChange']) {
-            // this._toastr.info("L'adresse email ")
         } else if (response['changed']) {
-            // this.message['password'] = "Le mot de passe a été modifié";
           this._toastr.info('Le mot de passe a été modifié');
         } else if (response['error']) {
           this._toastr.error(response['error']);
@@ -84,7 +79,6 @@ export class SettingsComponent implements OnInit {
       },
     );
   }
-
 
   initEditable(value: boolean = false) {
     this.editing = {
@@ -108,8 +102,6 @@ export class SettingsComponent implements OnInit {
           this._toastr.error('Une erreur est survenue');
         }
       });
-    } else {
-      //
     }
   }
 }

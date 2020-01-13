@@ -45,6 +45,7 @@ export class SearchBarComponent implements OnInit {
     });
 
     this.observableSource = this.searchInputControl.valueChanges.pipe(
+      // tslint:disable-next-line:no-magic-numbers
       debounceTime(300),
       switchMap(value => this.tagService.findTags(value)),
     );

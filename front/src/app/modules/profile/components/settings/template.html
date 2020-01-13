@@ -18,7 +18,7 @@
 
     <!-- Button -->
     <div *ngIf="editing['newemail']" class="form-group">
-      <div class="col-md-12 center">
+      <div class="profilSettings-actions">
         <button id="cancelEmail" type="button" (click)="initEditable()" class="btn btn-secondary">Annuler
         </button>
         &nbsp;
@@ -46,22 +46,14 @@
         <div *ngIf="f2.submitted && password.errors?.required" class="help-block">Le mot de passe est
           obligatoire
         </div>
-        <div style="display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-top: 10px;">
-                  <span style="float: left; ">
-                    Difficulté
-                  </span>
-          <password-strength-bar style="text-align: center" [style.textAlign]="'center'"
-                                 [passwordToCheck]="newpassword"
-                                 [barLabel]="'Difficulté'"></password-strength-bar>
+        <div class="profilSettings-passswordDifficulty">
+          <password-strength-bar [passwordToCheck]="newpassword" [barLabel]="'Difficulté'"></password-strength-bar>
         </div>
       </div>
     </div>
 
     <div *ngIf="editing['newpassword']" class="form-group">
-      <div class="col-md-12 center">
+      <div class="profilSettings-actions">
         <button id="cancelPassword" type="button" (click)="initEditable()" class="btn btn-secondary">
           Annuler
         </button>

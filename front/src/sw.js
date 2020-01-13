@@ -77,8 +77,6 @@ self.addEventListener('push', async function(e) {
     e.waitUntil(
         sendMessageIfWindowIsVisible( e )
     );
-
-
 });
 
 self.addEventListener('notificationclick', function(e) {

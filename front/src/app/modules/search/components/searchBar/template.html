@@ -1,8 +1,8 @@
 <form>
   <mat-form-field >
-    <input  type="text" matInput placeholder="Rechercher des profils par apprentissage" (keyup.enter)="search()" [disabled]="currentlySearching" [formControl]="searchInputControl" [matAutocomplete]="auto" [matAutocompleteDisabled]="autocompleteDisabled" >
-    <mat-icon *ngIf="currentlySearching" matSuffix class="spinner-border spinner-border-sm"></mat-icon>
-    <mat-icon *ngIf="!currentlySearching" matSuffix class="fas fa-search"></mat-icon>
+    <input  type="text" matInput placeholder="Rechercher des profils par apprentissage" (keyup.enter)="search()" [disabled]="loading" [formControl]="searchInputControl" [matAutocomplete]="auto" [matAutocompleteDisabled]="autocompleteDisabled" >
+    <mat-icon *ngIf="loading" matSuffix class="spinner-border spinner-border-sm"></mat-icon>
+    <mat-icon *ngIf="!loading" matSuffix class="fas fa-search"></mat-icon>
     <mat-autocomplete (optionSelected)="search()" #auto="matAutocomplete" >
       <mat-option *ngFor="let option of observableSource | async" [value]="option">
         {{option}}
