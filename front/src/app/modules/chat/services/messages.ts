@@ -6,9 +6,9 @@ import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 
-import { SocketInit } from '~/shared/components/socket/init';
+// import { SocketInit } from '~/shared/components/socket/init';
 import { MessagerieService } from '~/core/services/messagerie/service';
-import { SocketService } from '~/shared/components/socket/service';
+// import { SocketService } from '~/shared/components/socket/service';
 
 import { User } from '~/core/entities/user/entity';
 import { Message } from '~/core/entities/message/entity';
@@ -61,9 +61,9 @@ export class MessagesService {
               protected http: HttpClient,
               private router: Router,
               private loggedService: LoggedService,
-              private socketInit: SocketInit,
+              // private socketInit: SocketInit,
               private messagerieService: MessagerieService,
-              private socketService: SocketService,
+              // private socketService: SocketService,
   ) {
     this.initListener();
 

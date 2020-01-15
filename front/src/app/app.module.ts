@@ -16,8 +16,6 @@ import { SearchModule } from '~/modules/search/search.module';
 import { SafeUrlPipeModule } from '~/shared/modules/safeUrl/safeUrlPipe.module';
 import { CleanService } from '~/core/services/crud/cleanService';
 import { PushSubscriptionService } from '~/shared/components/push-subscription/service';
-import { SocketService } from '~/shared/components/socket/service';
-import { SocketInit } from '~/shared/components/socket/init';
 import { MessagerieService } from '~/core/services/messagerie/service';
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
 import { HeaderMobileComponent } from '~/core/layouts/header-mobile/component';
@@ -135,8 +133,6 @@ import { MenuService } from './core/services/layout/menu';
     NotificationService,
     PushSubscriptionService,
     MessagerieService,
-    SocketService,
-    SocketInit,
     UrlService,
     ScreenService,
     CleanService,
