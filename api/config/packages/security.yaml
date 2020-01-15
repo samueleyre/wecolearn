@@ -45,19 +45,6 @@ security:
             stateless: true
             anonymous: true
 
-#        signin:
-#            pattern:   ^/api/signin
-#            stateless: true
-#            anonymous: true
-#            provider: fos_userbundle
-#            form_login:
-#                check_path: /api/signin
-#                require_previous_session: false
-#                username_parameter: email
-#                password_parameter: password
-#                success_handler: lexik_jwt_authentication.handler.authentication_success
-#                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-
         confirmEmail:
             pattern:   ^/api/confirmEmail
             stateless: true
