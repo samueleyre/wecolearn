@@ -8,6 +8,7 @@ import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 
 import { DomainService } from './core/services/domain';
+import { environment } from '../environments/environment';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class AppComponent {
         const subs: any = { unsubscribe : null };
         if (logged && !oldLog) {
           // subscribe to notifications
-          const url = `http://localhost:3000/.well-known/mercure?topic=https://wecolearn.com/message`;
+          const url = `${environment.mercureUrl}?topic=https://wecolearn.com/message`;
           const subscribeToMercureNotifs = new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
             const message = new Message(JSON.parse(evt.data));
             message.thread = new Thread({

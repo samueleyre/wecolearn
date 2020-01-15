@@ -3,6 +3,6 @@ export const environment = {
   publique : 'http://localhost:8080',
   mapApiKey :  'AIzaSyAkTAUCcqkD4lbTeQdM5nQIn0Vy5voUQF8',
   production : false,
-  socketServer : 'http://localhost:44',
+  mercureUrl : 'http://localhost:3000/.well-known/mercure',
   vapidPublic : 'BI4_eiMKp80OeVlgpIlgz219DCMwQqU1ZDwikXdsOnMBozGUFz0Knrm2503Fp4d9jqGWoMmASuGv6w38ABIc6ZY',
 };
