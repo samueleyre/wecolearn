@@ -78,7 +78,7 @@ security:
 
 
     access_control:
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/signup, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/confirmEmail, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/resetPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
