@@ -29,10 +29,10 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-#    App\Services\User\Service\EmailService:
-#        arguments:
-#            $deliveryAddress: '%delivery_address%'
-#            $sendInBlueApi: '@sendinblue_api.smtp_endpoint'
+    App\Services\Chat\Service\EmailService:
+        arguments:
+            $deliveryAddress: '%delivery_address%'
+            $sendInBlueApi: '@sendinblue_api.smtp_endpoint'
 
     App\Services\Domain\Service\DomainService:
         arguments:

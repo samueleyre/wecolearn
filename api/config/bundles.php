@@ -20,4 +20,7 @@ return [
     Speicher210\CloudinaryBundle\Speicher210CloudinaryBundle::class => ['all' => true],
     Symfony\Bundle\MercureBundle\MercureBundle::class => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
+    Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class => ['all' => true],
+    SendinBlue\Bundle\ApiBundle\SendinBlueApiBundle::class => ['all' => true],
+    Shapecode\Bundle\CronBundle\ShapecodeCronBundle::class => ['all' => true],
 ];

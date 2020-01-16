@@ -1,2 +1,2 @@
-clock: "php bin/console cron:start --blocking"
+clock: "php bin/console shapecode:cron:scan; php bin/console shapecode:cron:run"
 postdeploy: "php bin/console doctrine:schema:update --force"
