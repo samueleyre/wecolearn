@@ -20,25 +20,18 @@ security:
 
     firewalls:
 
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            #pattern:  ^/api/(_(profiler|wdt|doc))/
-            pattern:  ^/(api/(_(wdt|doc)))/
-            security: false
-
         login:
-            pattern:  ^/api/login_check
+            pattern:  ^/api/login
             stateless: true
             anonymous: true
-            provider: fos_userbundle
             form_login:
+                provider: fos_userbundle
                 check_path: /api/login_check
                 require_previous_session: false
                 username_parameter: email
                 password_parameter: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
-
 
         newuser:
             pattern:   ^/api/newuser
@@ -64,9 +57,6 @@ security:
             pattern:   ^/api
             stateless: true
             provider: fos_userbundle
-            #guard:
-            #    authenticators:
-            #    - lexik_jwt_authentication.jwt_token_authenticator
             lexik_jwt:
                 authorization_header:
                     enabled: true
