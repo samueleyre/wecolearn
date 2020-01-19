@@ -12,8 +12,8 @@ import { User } from '~/core/entities/user/entity';
 
 @Injectable()
 export class MenuMobileService {
-  static redirectedUrl: string;
-  static beforeRedirectionUrl: string;
+  static redirectedUrl: string = null;
+  static beforeRedirectionUrl: string = null;
 
   static discussingUser: BehaviorSubject<User> = new BehaviorSubject(new User({ first_name: '', last_name: '' }));
 

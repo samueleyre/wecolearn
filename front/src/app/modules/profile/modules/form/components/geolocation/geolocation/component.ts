@@ -6,10 +6,6 @@ import {
   EventEmitter, OnInit, ViewChild, ElementRef, NgZone,
 } from '@angular/core';
 
-
-import { MapsAPILoader } from '@agm/core';
-
-
 declare const google: any;
 
 
@@ -30,10 +26,10 @@ export class ProfileGeolocationComponent implements OnInit {
   @Output() latitudeChange = new EventEmitter<number>();
   @Output() longitudeChange = new EventEmitter<number>();
 
-  @ViewChild('search') searchElementRef: ElementRef;
+  // @ViewChild('search') searchElementRef: ElementRef;
 
   constructor(
-      private mapsAPILoader: MapsAPILoader,
+      // private mapsAPILoader: MapsAPILoader,
       private ngZone: NgZone,
   ) {}
 
@@ -57,31 +53,31 @@ export class ProfileGeolocationComponent implements OnInit {
   }
 
   private load() {
-    this.mapsAPILoader.load().then(() => {
-      // console.log("got element", <HTMLInputElement>document.getElementById('searchGeolocation'))
-
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['address'],
-      });
-
-
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          // get the place result
-          const place = autocomplete.getPlace();
-
-          // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-
-          // set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.update();
-        });
-      });
-    });
+    // this.mapsAPILoader.load().then(() => {
+    //   // console.log("got element", <HTMLInputElement>document.getElementById('searchGeolocation'))
+    //
+    //   const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+    //     types: ['address'],
+    //   });
+    //
+    //
+    //   autocomplete.addListener('place_changed', () => {
+    //     this.ngZone.run(() => {
+    //       // get the place result
+    //       const place = autocomplete.getPlace();
+    //
+    //       // verify result
+    //       if (place.geometry === undefined || place.geometry === null) {
+    //         return;
+    //       }
+    //
+    //       // set latitude, longitude and zoom
+    //       this.latitude = place.geometry.location.lat();
+    //       this.longitude = place.geometry.location.lng();
+    //       this.update();
+    //     });
+    //   });
+    // });
   }
 
   private update() {

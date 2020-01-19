@@ -31,7 +31,7 @@ export class ChatWindowComponent implements OnInit {
   draftMessage: Message;
   currentUser: User = null;
   disabled = false;
-  @ViewChild('chatInput') inputEl: ElementRef;
+  @ViewChild('chatInput', { static: false }) inputEl: ElementRef;
 
 
   constructor(public messagesService: MessagesService,

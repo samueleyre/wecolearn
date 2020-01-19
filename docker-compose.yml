@@ -54,22 +54,6 @@ services:
     tty: true
     ports:
       - "4200:4200"
-  socket:
-    image: node:8.15.0
-    volumes:
-      - ./node:/src
-    tty: true
-    ports:
-      - "44:44"
-  rabbit:
-    image: rabbitmq:3
-    hostname: brocker
-    ports:
-      - "5672:5672"
-    environment:
-      - RABBITMQ_ERLANG_COOKIE=secret
-      - RABBITMQ_DEFAULT_USER=wcl
-      - RABBITMQ_DEFAULT_PASS=test
   mercure:
     image: dunglas/mercure
     environment:
@@ -81,5 +65,3 @@ services:
       - DEBUG=1
     ports:
       - "3000:80"
-
-

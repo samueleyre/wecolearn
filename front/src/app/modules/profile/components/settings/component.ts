@@ -8,11 +8,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { takeUntil } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
 import { ProfileService } from '~/modules/profile/services/profile';
+import { DialogService } from '~/core/services/dialog.service';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 
 @Component({
@@ -22,22 +25,24 @@ import { ProfileService } from '~/modules/profile/services/profile';
 })
 
 @Injectable()
-export class SettingsComponent implements OnInit {
+export class SettingsComponent extends DestroyObservable implements OnInit {
   @Input() user: User;
 
 
-  private newemail: string;
-  private newpassword: string;
+  public newemail: string;
+  public newpassword: string;
   public editing: object = {};
   public pattern: string;
 
   constructor(
       private profileService: ProfileService,
       private activatedRoute: ActivatedRoute,
+      private _dialog: DialogService,
       @Inject(APP_BASE_HREF) r: string,
       private router: Router,
       private _toastr: ToastrService,
   ) {
+    super();
     this.initEditable();
   }
 
@@ -92,16 +97,25 @@ export class SettingsComponent implements OnInit {
     this.editing[idName] = true;
   }
 
-  deleteAccount(choice: boolean) {
-    if (choice) {
-      this.profileService.deleteAccount().subscribe((response) => {
-        if (response['ok']) {
-          this._toastr.info('Votre compte a bien été supprimé, ainsi que tout l\'historique de vos messages.');
-          this.router.navigate(['/']);
-        } else {
-          this._toastr.error('Une erreur est survenue');
+  deleteAccount() {
+    const title = 'Etes-vous sûr de vouloir supprimer votre compte ?';
+    this._dialog
+      .confirm(
+        title,
+        '',
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((choice) => {
+        if (choice) {
+          this.profileService.deleteAccount().subscribe((response) => {
+            if (response['ok']) {
+              this._toastr.info('Votre compte a bien été supprimé, ainsi que tout l\'historique de vos messages.');
+              this.router.navigate(['/']);
+            } else {
+              this._toastr.error('Une erreur est survenue');
+            }
+          });
         }
       });
-    }
   }
 }

@@ -26,8 +26,8 @@ export class TagsComponent extends DestroyObservable implements OnInit, AfterVie
   isCreatingTag = false;
   PAGE_SIZE = 10;
 
-  @ViewChild(TagFormComponent) tagForm: TagFormComponent;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(TagFormComponent, { static: false }) tagForm: TagFormComponent;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   public editedTag: Tag;
   canEditTag$: Observable<boolean>;

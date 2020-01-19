@@ -26,8 +26,8 @@ export class UsersComponent extends DestroyObservable implements OnInit {
   isCreatingUser = false;
   PAGE_SIZE = 10;
 
-  @ViewChild(UserFormComponent) userForm: UserFormComponent;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(UserFormComponent, { static: false }) userForm: UserFormComponent;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   public editedUser: User;
   canEditUser$: Observable<boolean>;

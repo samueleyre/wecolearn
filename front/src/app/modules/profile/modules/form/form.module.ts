@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { GestureConfig, MatFormFieldModule, MatInputModule, MatSliderModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
-import { AgmCoreModule } from '@agm/core';
 
 import { CloudinaryModule } from '~/shared/modules/cloudinary/pipes/cloudinary.module';
 import { ProfileFormBiographyComponent } from '~/modules/profile/modules/form/components/biography/component';
@@ -62,10 +61,6 @@ import { ProfileFormFirstnameComponent } from './components/firstname/component'
     CloudinaryModule,
     TagInputModule,
     MatSliderModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.mapApiKey,
-      libraries: ['places'],
-    }),
   ],
 })
 export class ProfileFormModule {

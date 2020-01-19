@@ -4,6 +4,7 @@ import {
    } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 
@@ -34,7 +35,9 @@ export class ConfirmEmailComponent implements OnInit {
       const token = params['token'];
       if (token) {
         this.http.get('/api/confirmEmail/' + token)
-              .map((response: Response) => response)
+              .pipe(
+                map((response: Response) => response),
+              )
                 .subscribe((result: any) => {
                   this.loading = false;
                   if (result.success) {

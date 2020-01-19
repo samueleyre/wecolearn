@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { finalize, switchMap, tap } from 'rxjs/operators';
 

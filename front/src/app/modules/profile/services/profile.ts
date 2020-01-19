@@ -6,7 +6,9 @@ import { APIService } from '~/core/services/crud/api';
 import { User } from '~/core/entities/user/entity';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ProfileService extends APIService<User> {
   public endPoint = '/api/profile';
 

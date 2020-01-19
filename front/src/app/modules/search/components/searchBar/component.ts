@@ -26,8 +26,8 @@ export class SearchBarComponent implements OnInit {
   autocompleteDisabled = false;
   observableSource: Observable<string[]>;
   @Output() searchInputChange = new EventEmitter();
-  @ViewChild('searchBar') searchBarField: ElementRef;
-  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
+  @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
+  @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
 
 
   constructor(

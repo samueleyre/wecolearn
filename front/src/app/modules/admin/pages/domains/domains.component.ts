@@ -25,8 +25,8 @@ export class DomainsComponent extends DestroyObservable implements OnInit, After
   isCreatingDomain = false;
   PAGE_SIZE = 10;
 
-  @ViewChild(DomainFormComponent) domainForm: DomainFormComponent;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(DomainFormComponent, { static: false }) domainForm: DomainFormComponent;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   public editedDomain: Domain;
   canEditDomain$: Observable<boolean>;

@@ -71,7 +71,5 @@
 <hr>
 <label>Supprimer mon compte</label>
 <div>
-  <app-confirm [iconName]="null" [iconText]="'Supprimer'"
-               [text]="'Etes-vous sûr de vouloir supprimer votre compte ?'"
-               (ret)="deleteAccount($event)"></app-confirm>
+  <button (click)="deleteAccount()">Supprimer</button>
 </div>

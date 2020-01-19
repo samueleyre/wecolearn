@@ -2,8 +2,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatNativeDateModule, MatSliderModule } from '@angular/material';
-import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
-import { ModalModule } from 'ngx-modialog';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DeviceDetectorModule } from 'ngx-device-detector';
@@ -68,8 +66,6 @@ import { MenuService } from './core/services/layout/menu';
     BsDropdownModule.forRoot(),
     ReactiveFormsModule,
     MatNativeDateModule,
-    ModalModule.forRoot(),
-    BootstrapModalModule,
     WcRoutingModule,
     DeviceDetectorModule.forRoot(),
     // shared modules

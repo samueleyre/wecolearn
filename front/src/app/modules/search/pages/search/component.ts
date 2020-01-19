@@ -25,7 +25,7 @@ export class SearchComponent implements OnInit {
   public searchInput = null;
   private lastScrollTop = 0;
   private direction = 'down';
-  @ViewChild('cardsContainer') cardsContainerElementRef: ElementRef;
+  @ViewChild('cardsContainer', { static: false }) cardsContainerElementRef: ElementRef;
 
 
   constructor(
@@ -45,7 +45,7 @@ export class SearchComponent implements OnInit {
         // todo: if tag and lat/long are in url, get them
 
     this._searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
-      if (SearchService.searchType !== 'scroll' && this.cardsContainerElementRef) {
+      if (this._searchService.searchType !== 'scroll' && this.cardsContainerElementRef) {
         // new SEARCH
         this.cardsContainerElementRef.nativeElement.scrollTo(0, 0);
         this.cards = clients;

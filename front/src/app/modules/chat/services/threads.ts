@@ -1,8 +1,7 @@
 import { combineLatest, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { Subject, BehaviorSubject, Observable } from 'rxjs';
-import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
@@ -17,7 +16,7 @@ export class Threads {
   threads: Observable<{ [key: string]: Thread }>;
 
   // `orderedThreads` contains a newest-first chronological list of threads
-  public orderedThreads: Observable<Thread[]> = new EmptyObservable();
+  public orderedThreads: Observable<Thread[]> = of();
 
 
   // `orderedThreads` contains the newest-first chronological list of threads
@@ -119,7 +118,7 @@ export class Threads {
   }
 
   resetThreads(): void {
-    this.orderedThreads = new EmptyObservable();
+    this.orderedThreads = of();
     this.newThreadsSubject = new BehaviorSubject<Thread[]>([]);
     this.messagesService.currentClient = new User();
   }

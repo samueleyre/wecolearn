@@ -1,8 +1,7 @@
 import { publishReplay, refCount, takeWhile, filter, scan, map } from 'rxjs/operators';
-import { of as observableOf, Subject, Observable, SubscriptionLike as ISubscription } from 'rxjs';
+import {of as observableOf, Subject, Observable, SubscriptionLike as ISubscription, of} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 
@@ -255,7 +254,7 @@ export class MessagesService {
   }
 
   private generateMessages() {
-    this.messages = new EmptyObservable();
+    this.messages = of();
 
     let messagestoBeAdded: Message[];
 

@@ -17,19 +17,16 @@ export class SearchService extends APIService<User> {
   private searchInput: BehaviorSubject<string> = new BehaviorSubject('');
   static max = SEARCH.default.max;
 
-  currentFoundClients: Subject<any[]>;
-  currentFoundAddress: any[];
-  currentSearch: Object;
+  currentFoundClients: Subject<any[]> = new Subject<any[]>();
+  currentFoundAddress: any[] = [];
+  currentSearch: {} = {};
   public endPoint = '/api/user/match';
 
   constructor(http: HttpClient) {
     super(http);
-    this.currentFoundClients = new Subject<any[]>();
-    this.currentFoundAddress = [];
-    this.currentSearch = {};
   }
 
-  static get searchType():string {
+  get searchType():string {
     if (SearchService.max !== SEARCH.default.max) {
       return 'scroll';
     }

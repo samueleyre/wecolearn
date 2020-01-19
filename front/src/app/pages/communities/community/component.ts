@@ -15,7 +15,7 @@ import { UrlService } from '~/core/services/url';
 export class CommunityComponent implements OnInit {
   private webPath: string;
   public logoPath: string;
-  private link: string;
+  public link: string;
   public production: boolean;
   @Input() community: Community;
 

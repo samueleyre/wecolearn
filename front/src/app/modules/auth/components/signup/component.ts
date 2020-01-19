@@ -4,7 +4,6 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 import { User } from '~/core/entities/user/entity';
 import { AuthenticationService } from '~/core/services/auth/auth';
