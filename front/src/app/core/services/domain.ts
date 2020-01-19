@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 
 import { subdomains } from '~/config/domain';
 import { rocketchats, slacks, slacksSubDomains, rocketChatDomains } from '~/config/slack';
+
 import { environment } from '../../../environments/environment';
 
 

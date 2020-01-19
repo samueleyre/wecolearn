@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,7 +9,7 @@ import { TagFormComponent } from '~/modules/tags/modules/tag-ui/components/tag-f
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { AdminTagService } from '~/modules/tags/services/admin-tag.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import {TagTypeEnum, tagTypeFR} from "~/core/enums/tag/tag-type.enum";
+import { TagTypeEnum, tagTypeFR } from '~/core/enums/tag/tag-type.enum';
 
 @Component({
   selector: 'app-tags',
