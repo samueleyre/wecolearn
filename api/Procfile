@@ -1,2 +1,1 @@
-clock: "php bin/console shapecode:cron:scan; php bin/console shapecode:cron:run"
-postdeploy: "php bin/console doctrine:schema:update --force"
+postdeploy: "php bin/console doctrine:schema:update --force; php bin/console shapecode:cron:scan; php bin/console shapecode:cron:run"
