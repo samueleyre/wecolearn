@@ -62,6 +62,7 @@ services:
     App\Services\Chat\Service\MercureCookieGenerator:
         arguments:
             $secret: '%mercure_jwt_key%'
+            $domain: '%host%'
 
     App\Services\Core\Provider\JwtProvider:
         arguments:
