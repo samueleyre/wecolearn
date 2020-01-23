@@ -60,12 +60,7 @@ export class MessagesService {
 
   constructor(public clientService: ClientService,
               protected http: HttpClient,
-              private router: Router,
-              private loggedService: LoggedService,
-              private messagerieService: MessagerieService,
   ) {
-    this.initListener();
-
     this.messages = this.updates.pipe(
         // watch the updates and accumulate operations on the messages
         scan((messages: Message[], operation: IMessagesOperation) => operation(messages), initialMessages),
@@ -141,44 +136,45 @@ export class MessagesService {
     this.getMessages();
   }
 
-  private initPushListener() {
-    if ('serviceWorker' in navigator) {
-      const channel = new BroadcastChannel('sw-messages');
-      const listener = (event) => {
-        const messages = [JSON.parse(event.data)];
-        _.sortBy(messages, (m: Message) => m.created)
-                  .map((message: Message) => {
-                    message.thread = new Thread({
-                      id: message.sender.id,
-                      name: message.sender.first_name,
-                      image: message.sender.image,
-                    });
-                    this.addMessage(message);
-                  });
-      };
-      channel.addEventListener('message', listener);
-      return () => {
-        channel.removeEventListener('message', listener);
-      };
-    }
-    return () => {
-      console.log('no service worker in navigator');
-    };
-  }
-
-  private initListener(): void {
-    let pushSubscriber: any = () => {};
-    this.messagerieService.type().subscribe((type) => {
-      switch (type) {
-        case 'push':
-          pushSubscriber = this.initPushListener();
-          break;
-        default:
-          pushSubscriber();
-          break;
-      }
-    });
-  }
+  // todo: is this usefull ? delects push notifs from SW
+  // private initPushListener() {
+  //   if ('serviceWorker' in navigator) {
+  //     const channel = new BroadcastChannel('sw-messages');
+  //     const listener = (event) => {
+  //       const messages = [JSON.parse(event.data)];
+  //       _.sortBy(messages, (m: Message) => m.created)
+  //                 .map((message: Message) => {
+  //                   message.thread = new Thread({
+  //                     id: message.sender.id,
+  //                     name: message.sender.first_name,
+  //                     image: message.sender.image,
+  //                   });
+  //                   this.addMessage(message);
+  //                 });
+  //     };
+  //     channel.addEventListener('message', listener);
+  //     return () => {
+  //       channel.removeEventListener('message', listener);
+  //     };
+  //   }
+  //   return () => {
+  //     console.log('no service worker in navigator');
+  //   };
+  // }
+  //
+  // private initListener(): void {
+  //   let pushSubscriber: any = () => {};
+  //   this.messagerieService.type().subscribe((type) => {
+  //     switch (type) {
+  //       case 'push':
+  //         pushSubscriber = this.initPushListener();
+  //         break;
+  //       default:
+  //         pushSubscriber();
+  //         break;
+  //     }
+  //   });
+  // }
 
   private getMessages(): void {
     this.clientService.get()
@@ -232,7 +228,6 @@ export class MessagesService {
 
     messagestoBeAdded = this.sentMessages.concat(this.receivedMessages);
 
-    // let sorted =
     _.sortBy(messagestoBeAdded, (m: Message) => m.created)
         .map((message: Message) => {
           this.addMessage(message);
