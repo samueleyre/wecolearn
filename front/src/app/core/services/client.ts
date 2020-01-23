@@ -7,7 +7,9 @@ import { User } from '~/core/entities/user/entity';
 
 // todo: refactor this !
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ClientService {
   private currentClientSubject = new Subject<User>();
   private currentClientObservable = this.currentClientSubject.asObservable();

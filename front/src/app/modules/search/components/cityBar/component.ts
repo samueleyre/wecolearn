@@ -17,8 +17,6 @@ import { SearchService } from '../../services/search';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class CityBarComponent implements OnInit {
   @Output() userUpdated = new EventEmitter();
 

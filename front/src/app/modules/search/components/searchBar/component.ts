@@ -18,10 +18,7 @@ import { SearchService } from '../../services/search';
   selector: 'app-searchbar',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-})
-
-@Injectable()
-export class SearchBarComponent implements OnInit {
+})export class SearchBarComponent implements OnInit {
   public searchInputControl = new FormControl();
   autocompleteDisabled = false;
   observableSource: Observable<string[]>;

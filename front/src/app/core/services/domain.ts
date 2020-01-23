@@ -7,7 +7,9 @@ import { rocketchats, slacks, slacksSubDomains, rocketChatDomains } from '~/conf
 import { environment } from '../../../environments/environment';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DomainService {
   private subdomain: string;
   private location: Location;

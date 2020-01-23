@@ -4,7 +4,9 @@ import { Logged } from './logged';
 import { ClientService } from './client';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class LoggedService {
   private logged = false;
 

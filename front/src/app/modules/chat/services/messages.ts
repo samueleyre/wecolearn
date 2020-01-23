@@ -21,7 +21,9 @@ const initialMessages: Message[] = [];
 type IMessagesOperation = (messages: Message[]) => Message[];
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MessagesService {
   static initialPeriod = 120000;
 
@@ -60,9 +62,7 @@ export class MessagesService {
               protected http: HttpClient,
               private router: Router,
               private loggedService: LoggedService,
-              // private socketInit: SocketInit,
               private messagerieService: MessagerieService,
-              // private socketService: SocketService,
   ) {
     this.initListener();
 
@@ -127,12 +127,6 @@ export class MessagesService {
     return observableOf(null);
   }
 
-
-  // updateMessage(message: Message): Observable<void> { // todo : can be used to edit old message also
-  //   return this.http.patch(`/api/message`, message).pipe(map((response: Response) => {}));
-  // }
-
-
   messagesForThreadUser(thread: Thread, user: User): Observable<Message> {
     return this.newMessages.pipe(
         filter((message: Message) =>
@@ -145,22 +139,6 @@ export class MessagesService {
 
   public init(): void {
     this.getMessages();
-  }
-
-  private initSocketListener() {
-    // return this.socketService.connect().subscribe((message: Message) => {
-    //   console.log('message par socket', message);
-    //   const messages = [message];
-    //   _.sortBy(messages, (m: Message) => m.created)
-    //           .map((sortedMessage: Message) => {
-    //             sortedMessage.thread = new Thread({
-    //               id: sortedMessage.sender.id,
-    //               name: sortedMessage.sender.first_name,
-    //               image: sortedMessage.sender.image,
-    //             });
-    //             this.addMessage(sortedMessage);
-    //           });
-    // });
   }
 
   private initPushListener() {
@@ -189,48 +167,34 @@ export class MessagesService {
   }
 
   private initListener(): void {
-    console.log('init listener');
-    //
-    // let socketSubscriber: any = () => {
-    //   //
-    // };
-    let pushSubscriber: any = () => {
-      //
-    };
+    let pushSubscriber: any = () => {};
     this.messagerieService.type().subscribe((type) => {
       switch (type) {
-        // case 'socket':
-        //   pushSubscriber();
-        //   socketSubscriber = this.initSocketListener();
-        //   break;
         case 'push':
-          // socketSubscriber();
           pushSubscriber = this.initPushListener();
           break;
         default:
-          // socketSubscriber();
           pushSubscriber();
           break;
       }
     });
   }
 
-
   private getMessages(): void {
     this.clientService.get()
-        .subscribe(
-            (user: User) => {
-              if (user && null === this.currentClient.id) {
-                this.currentClient = user;
-                this.http.get('/api/messages').subscribe(
-                    (array: any) => {
-                      this.sentMessages = array.sent_messages;
-                      this.receivedMessages = array.received_messages;
-                      this.generateMessages();
-                    },
-                );
-              }
-            });
+      .subscribe(
+        (user: User) => {
+          if (user && null === this.currentClient.id) {
+            this.currentClient = user;
+            this.http.get('/api/messages').subscribe(
+                (array: any) => {
+                  this.sentMessages = array.sent_messages;
+                  this.receivedMessages = array.received_messages;
+                  this.generateMessages();
+                },
+            );
+          }
+        });
   }
 
 

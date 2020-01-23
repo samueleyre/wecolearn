@@ -10,7 +10,9 @@ import { User } from '~/core/entities/user/entity';
 import { MessagesService } from './messages';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class Threads {
   // `threads` is a observable that contains the most up to date list of threads
   threads: Observable<{ [key: string]: Thread }>;

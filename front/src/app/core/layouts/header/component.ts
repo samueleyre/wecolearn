@@ -22,8 +22,6 @@ import { NAV } from '~/config/navigation/nav';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class HeaderComponent implements OnInit {
   private location: Location;
   private logoPath: string;
@@ -67,11 +65,6 @@ export class HeaderComponent implements OnInit {
         }
       });
     });
-
-    // if (!localStorage.getItem('cookieseen')) {
-    //   // todo: fix cookie
-    //   this.messagesService.cookie();
-    // }
   }
 
   loadMessages() {

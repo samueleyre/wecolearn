@@ -4,8 +4,6 @@ import { Component, Injectable, OnInit, Input } from '@angular/core';
   selector: 'text-limit',
   templateUrl: 'template.html',
 })
-
-@Injectable()
 export class TextLimitComponent implements OnInit {
   @Input() text: string;
   @Input() classes: string;

@@ -10,7 +10,9 @@ import { User } from '~/core/entities/user/entity';
 import { SEARCH } from '../config/main';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SearchService extends APIService<User> {
   private currentlySearching = false;
   private pauseRedirect = false;

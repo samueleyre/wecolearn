@@ -9,7 +9,9 @@ import { Logged } from '~/core/services/logged';
 
 import { PingService } from './ping';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthGuard implements CanActivate {
   constructor(private _router: Router,
               private _pingService: PingService,

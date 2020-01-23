@@ -10,7 +10,9 @@ import { REDIRECT_URLS } from '~/config/navigation/redirectUrls';
 import { User } from '~/core/entities/user/entity';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MenuMobileService {
   static redirectedUrl: string = null;
   static beforeRedirectionUrl: string = null;

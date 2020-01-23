@@ -6,8 +6,6 @@ import { FormGroup } from '@angular/forms';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class ProfileFormBiographyComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Output() onBlur = new EventEmitter();

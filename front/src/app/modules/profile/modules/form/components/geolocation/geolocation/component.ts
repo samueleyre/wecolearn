@@ -15,9 +15,6 @@ declare const google: any;
   styleUrls : ['./style.scss'],
 
 })
-
-
-@Injectable()
 export class ProfileGeolocationComponent implements OnInit {
   @Input() public latitude: number;
   @Input() public longitude: number;

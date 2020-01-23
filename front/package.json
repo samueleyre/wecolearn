@@ -2,11 +2,12 @@
   "name": "front",
   "version": "0.1.0",
   "scripts": {
-    "ng": "ng",
     "build": "ng build --aot --configuration=$NODE_ENV && node precacheAndBuild.js",
     "precommit": "yarn lint",
-    "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "serve": "ng serve --aot --host 0.0.0.0 && node precacheAndBuild.js",
+    "build:debug": "ng build --aot --watch && node precacheAndBuild.js",
+    "serve:build": "lite-server --baseDir=dist/front"
   },
   "private": true,
   "dependencies": {

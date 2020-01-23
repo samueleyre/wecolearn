@@ -10,10 +10,7 @@ import { ProfileService } from '~/modules/profile/services/profile';
 @Component({
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-})
-
-@Injectable()
-export class ProfileSettingsPageComponent implements OnInit, OnDestroy {
+})export class ProfileSettingsPageComponent implements OnInit, OnDestroy {
   user$: Observable<User>;
   private readonly onDestroy = new Subject<void>();
 

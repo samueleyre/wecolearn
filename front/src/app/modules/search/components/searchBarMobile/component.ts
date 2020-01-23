@@ -20,10 +20,7 @@ import { SearchService } from '../../services/search';
   selector: 'app-searchbar-mobile',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-})
-
-@Injectable()
-export class SearchBarMobileComponent implements OnInit {
+})export class SearchBarMobileComponent implements OnInit {
   public searchInputControl = new FormControl();
   autocompleteDisabled = false;
   observableSource: Observable<string[]>;

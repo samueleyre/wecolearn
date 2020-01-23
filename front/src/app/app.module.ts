@@ -41,21 +41,8 @@ import { SafeHtmlPipe } from './shared/pipes/safeHtmlPipe/pipe';
 import { AutofocusDirective } from './modules/search/directives/input/directive';
 import { NotificationService } from './shared/components/notification/service';
 // shares services
-import { UrlService } from './core/services/url';
-import { ScreenService } from './core/services/layout/screen';
-import { PingService } from './core/services/auth/ping';
-import { TokenService } from './core/services/auth/token';
-import { HeaderBag } from './core/services/auth/headerBag';
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
-import { AuthenticationService } from './core/services/auth/auth';
 import { getBaseLocation } from './core/services/layout/baseUrl';
-import { ClientService } from './core/services/client';
-import { DomainService } from './core/services/domain';
-import { TagService } from './core/services/tag';
-import { SeoService } from './core/services/seo';
-import { LoggedService } from './core/services/loggedService';
-import { AuthGuard } from './core/services/auth/authGuard';
-import { MenuService } from './core/services/layout/menu';
 
 @NgModule({
   imports: [
@@ -108,34 +95,11 @@ import { MenuService } from './core/services/layout/menu';
       useFactory: getBaseLocation,
     },
     { provide: LOCALE_ID, useValue: 'fr-FR' },
-    TagService,
-    LoggedService,
-    ClientService,
-    DomainService,
-    SeoService,
-    MenuService,
-    MenuMobileService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpApiInterceptor,
       multi: true,
     },
-
-    AuthenticationService,
-    AuthGuard,
-    TokenService,
-    HeaderBag,
-    PingService,
-    NotificationService,
-    PushSubscriptionService,
-    MessagerieService,
-    UrlService,
-    ScreenService,
-    CleanService,
-    MessagesService,
-    Threads,
-    FooterMobileService,
-
   ],
   bootstrap: [
     AppComponent,

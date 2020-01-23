@@ -11,8 +11,6 @@ import { AuthenticationService } from '~/core/services/auth/auth';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class MenuComponent implements OnInit {
   me: User;
   activated: boolean;

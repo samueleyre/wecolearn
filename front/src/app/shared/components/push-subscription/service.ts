@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '~/../environments/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PushSubscriptionService {
   constructor(private http: HttpClient) {
 
@@ -16,6 +18,7 @@ export class PushSubscriptionService {
           reg.pushManager.getSubscription().then(
             (pushSub) => {
               if (pushSub) {
+                console.log(pushSub)
                 this.checkIfExistOrAddAndSubscribe(pushSub).subscribe(
                 (data) => {
                   resolve('subscribed');

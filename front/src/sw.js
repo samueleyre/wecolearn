@@ -13,7 +13,7 @@ workbox.setConfig({
 if(workbox) {
     console.log('INFO Workbox loaded');
 }
-console.log('SW');
+
 //workbox.skipWaiting();
 //workbox.clientsClaim();
 

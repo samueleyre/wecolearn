@@ -23,8 +23,6 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class SettingsComponent extends DestroyObservable implements OnInit {
   @Input() user: User;
 

@@ -10,10 +10,7 @@ import { WINDOW } from '~/config/window';
   selector: 'wc-profil-image',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-})
-
-@Injectable()
-@HostListener('window:resize', ['$event'])
+})@HostListener('window:resize', ['$event'])
 export class ProfilImageComponent implements OnInit {
   @Input() image: Image;
   @Input() style = { width: '100%', height: '100%', objectFit: 'cover', transition: 'inherited', marginTop: 'inherited' };

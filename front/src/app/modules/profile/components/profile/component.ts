@@ -14,8 +14,6 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
   templateUrl: 'template.html',
   styleUrls : ['./style.scss'],
 })
-
-@Injectable()
 export class ProfileComponent extends DestroyObservable {
   constructor(private _searchService: SearchService) {
     super();

@@ -14,8 +14,6 @@ import { ClientService } from '~/core/services/client';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class EmailNotificationSettingsComponent implements OnInit {
   public user;
 

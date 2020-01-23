@@ -8,8 +8,6 @@ import { RANGES } from '~/modules/profile/modules/form/config/range';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class ProfileFormIntensityComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Output() onChange = new EventEmitter();

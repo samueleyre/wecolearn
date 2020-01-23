@@ -4,10 +4,7 @@ import { Component, Injectable, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'copy',
   templateUrl: 'template.html',
-})
-
-@Injectable()
-export class CopyComponent implements OnInit {
+})export class CopyComponent implements OnInit {
   @Input() data: string;
   public rand: string;
 

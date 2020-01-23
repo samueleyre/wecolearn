@@ -6,6 +6,7 @@ import { IconService } from '~/core/services/icon.service';
 import { MessagesService } from '~/modules/chat/services/messages';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
+import { MessagerieService } from '~/core/services/messagerie/service';
 
 import { DomainService } from './core/services/domain';
 import { environment } from '../environments/environment';
@@ -23,6 +24,7 @@ export class AppComponent {
       private domainService: DomainService,
       private iconService: IconService,
       public messagesService: MessagesService,
+      public messagerieService: MessagerieService,
   ) {
     // set subdomain
     router.events.subscribe((event) => {
@@ -37,7 +39,7 @@ export class AppComponent {
     let oldLog = false;
     Logged.get().subscribe(
       (logged) => {
-        const subs: any = { unsubscribe : null };
+        let subs: any = { unsubscribe : null };
         if (logged && !oldLog) {
           // subscribe to notifications
           const url = `${environment.mercureUrl}?topic=https://wecolearn.com/message`;
@@ -51,12 +53,11 @@ export class AppComponent {
             this.messagesService.addMessage(message);
           };
 
-          // todo: repare this
-          // subs = this.messagerieService.init().subscribe(
-          //   (available) => {
-          //     console.log(available);
-          //     this.messagerieService.setStatus(available);
-          //   });
+          subs = this.messagerieService.init().subscribe(
+            (available) => {
+              console.log(available);
+              this.messagerieService.setStatus(available);
+            });
         } else if (!logged && typeof subs.unsubscribe === 'function') {
           subs.unsubscribe();
         }

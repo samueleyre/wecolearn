@@ -4,7 +4,9 @@ import { map } from 'rxjs/operators';
 
 import { TokenService } from './token';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HeaderBag {
   static token: string = null;
 

@@ -12,7 +12,9 @@ import { Logged } from '../logged';
 import { TokenService } from './token';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PingService {
   constructor(private _router: Router, private _tokenService: TokenService, private _http: HttpClient,
               private authService: AuthenticationService,

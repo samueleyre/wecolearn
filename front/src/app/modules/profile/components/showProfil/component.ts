@@ -15,8 +15,6 @@ import { Tag } from '~/core/entities/tag/entity';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class ShowProfilSettingsComponent implements OnInit {
   public user: User;
   public disabled = true;

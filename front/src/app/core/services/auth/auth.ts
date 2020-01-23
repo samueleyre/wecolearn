@@ -13,7 +13,9 @@ import { TokenService } from './token';
 import { Logged } from '../logged';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthenticationService {
   private _user$: BehaviorSubject<User> = new BehaviorSubject(null);
 

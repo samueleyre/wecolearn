@@ -20,10 +20,7 @@ import { Threads } from '../../../chat/services/threads';
   selector: 'app-card',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-})
-
-@Injectable()
-export class CardComponent implements OnInit {
+})export class CardComponent implements OnInit {
   @Input() card: User;
 
   private currentClient: User;

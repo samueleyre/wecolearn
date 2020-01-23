@@ -9,8 +9,6 @@ import { Component, OnChanges, Input, SimpleChange, Injectable } from '@angular/
   templateUrl: 'template.html',
   styleUrls : ['./style.scss'],
 })
-
-@Injectable()
 export class PasswordStrengthBarComponent implements OnChanges {
   @Input() passwordToCheck: string;
   @Input() barLabel: string;

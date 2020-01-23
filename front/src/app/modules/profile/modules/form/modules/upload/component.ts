@@ -15,10 +15,7 @@ import { environment } from '~/../environments/environment';
   selector: 'upload',
   templateUrl: 'template.html',
   styleUrls: ['style.scss'],
-})
-
-@Injectable()
-export class UploadComponent {
+})export class UploadComponent {
   public uploader: FileUploader;
   public _filename = 'filename';
 

@@ -27,8 +27,6 @@ import { environment } from '~/../environments/environment';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class ProfileSettingsComponent implements OnInit {
   @Input()
   set _user(user) {

@@ -12,10 +12,8 @@ import { TagService } from '~/core/services/tag';
 @Component({
   selector: 'app-taginput',
   templateUrl: 'template.html',
-  styleUrls : ['./style.scss'],
+  styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class ProfileTagInputComponent implements OnInit {
   public errorMessages = {
     notAlphaNumeric: 'Le tag doit être alphanumerique.',

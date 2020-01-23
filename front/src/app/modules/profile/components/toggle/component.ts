@@ -9,8 +9,6 @@ import {
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class ToggleComponent {
   @Input() active;
   @Input() disabled = false;

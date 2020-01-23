@@ -16,10 +16,7 @@ import { SEARCH } from '../../config/main';
 @Component({
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-})
-
-@Injectable()
-export class SearchComponent implements OnInit {
+})export class SearchComponent implements OnInit {
   public cards: any[] = [];
   public scrolling;
   public searchInput = null;

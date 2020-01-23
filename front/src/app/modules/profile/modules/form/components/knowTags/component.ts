@@ -6,8 +6,6 @@ import { FormGroup } from '@angular/forms';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class ProfileFormKnowTagsComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Output() onChange = new EventEmitter();

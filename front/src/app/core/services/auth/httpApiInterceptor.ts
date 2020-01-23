@@ -14,7 +14,9 @@ import { TokenService } from './token';
 import { environment } from '../../../../environments/environment';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HttpApiInterceptor implements HttpInterceptor {
   private APIMETHODS = ['POST', 'GET', 'PATCH', 'DELETE'];
   private api = environment.origin;

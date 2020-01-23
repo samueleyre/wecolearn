@@ -6,7 +6,9 @@ import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./style.scss'],
 })
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class FooterMobileComponent implements OnInit {
   constructor(
 

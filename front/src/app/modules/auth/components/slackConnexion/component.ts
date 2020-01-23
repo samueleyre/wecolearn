@@ -16,8 +16,6 @@ import { AuthenticationService } from '~/core/services/auth/auth';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class SlackConnexionComponent implements OnInit {
   public subDomain: string = null;
   public redirectURI: string;

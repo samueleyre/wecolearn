@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { WINDOW } from '~/config/window';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ScreenService {
   static isScreenSmall() {
     const w = window;

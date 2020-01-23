@@ -2,17 +2,22 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
+import { Threads } from '~/modules/chat/services/threads';
+import { UrlService } from '~/core/services/url';
+
 import { Permission } from './const';
 import { NotificationInterface } from './interface';
-import { UrlService } from '../../../core/services/url';
+import {NAV} from "~/config/navigation/nav";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class NotificationService {
   public permission: Permission;
-  public notificationAction: any;
 
   constructor(
       private router: Router,
+      private _threadsService: Threads,
   ) {
     this.permission = this.isSupported() ? 'default' : 'denied';
   }
@@ -89,13 +94,12 @@ export class NotificationService {
       const notify = self.create(item.title, options).subscribe();
     });
   }
-  /*
+
   private notificationAction(data) {
     if (data['thread']) {
-      this.threadsService.setCurrentThread(data['thread']);
-      this.router.navigate(['/search']);
+      this._threadsService.setCurrentThread(data['thread']);
+      this.router.navigate([NAV.discussion]);
     }
   }
-  */
 }
 

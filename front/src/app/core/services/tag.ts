@@ -6,7 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { Tag } from '../entities/tag/entity';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TagService {
   constructor(protected http: HttpClient) {}
 

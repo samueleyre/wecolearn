@@ -9,8 +9,6 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   templateUrl: 'template.html',
   styleUrls : ['./style.scss'],
 })
-
-@Injectable()
 export class AuthOnboardingPageComponent implements OnInit {
   constructor(
     private deviceService: DeviceDetectorService,

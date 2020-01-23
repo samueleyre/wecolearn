@@ -10,10 +10,7 @@ import { ClientService } from '~/core/services/client';
 @Component({
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-})
-
-@Injectable()
-export class SettingsPageComponent implements OnInit {
+})export class SettingsPageComponent implements OnInit {
   user$: Observable<User>;
   private readonly onDestroy = new Subject<void>();
 

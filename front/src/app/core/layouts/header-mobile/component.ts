@@ -26,8 +26,6 @@ import { MenuMobileService } from '~/core/services/layout/menu-mobile';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-
-@Injectable()
 export class HeaderMobileComponent implements OnInit, OnDestroy {
   private location: Location;
   private logoPath: string;

@@ -5,10 +5,7 @@ import { FormGroup } from '@angular/forms';
   selector: 'profile-form-teachtags',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-})
-
-@Injectable()
-export class ProfileFormTeachTagsComponent implements OnInit {
+})export class ProfileFormTeachTagsComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Output() onChange = new EventEmitter();
 
