@@ -2,8 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';

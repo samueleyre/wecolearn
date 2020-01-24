@@ -111,7 +111,11 @@ export class MessagesService {
   }
 
   addMessageToUpdate(message: Message): void {
-    this.messagesToUpdate.push(message);
+    const messageToSend = { ...message };
+    if ('thread' in messageToSend) {
+      delete messageToSend.thread;
+    }
+    this.messagesToUpdate.push(messageToSend);
   }
 
   pushUpdatedMessages(): Observable<object> {

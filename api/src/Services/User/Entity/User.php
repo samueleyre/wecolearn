@@ -39,8 +39,8 @@ class User extends BaseUser
     public $domains;
     private $lastConnexion;
     private $deleted;
-    //  private $notificationSubscribe = false;
-    //  private $subscriptions;
+    private $notificationSubscribe = false;
+    private $subscriptions;
 
     public function __construct()
     {
@@ -723,19 +723,39 @@ class User extends BaseUser
         return $this->userNotified;
     }
 
-//    /**
-//     * @return bool
-//     */
-//    public function isNotificationSubscribe(): bool
-//    {
-//        return $this->notificationSubscribe;
-//    }
-//
-//    /**
-//     * @param bool $notificationSubscribe
-//     */
-//    public function setNotificationSubscribe(bool $notificationSubscribe): void
-//    {
-//        $this->notificationSubscribe = $notificationSubscribe;
-//    }
+    /**
+     * @return bool
+     */
+    public function isNotificationSubscribe(): bool
+    {
+        return $this->notificationSubscribe;
+    }
+
+    /**
+     * @param bool $notificationSubscribe
+     */
+    public function setNotificationSubscribe(bool $notificationSubscribe): void
+    {
+        $this->notificationSubscribe = $notificationSubscribe;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSubscriptions(): ArrayCollection
+    {
+        return $this->subscriptions;
+    }
+
+    public function addNotification( Subscription $subscription ) {
+        $this->subscriptions[] = $subscription;
+    }
+
+    /**
+     * @param ArrayCollection $notifications
+     */
+    public function setSubscriptions(ArrayCollection $subscriptions): void
+    {
+        $this->subscriptions = $subscriptions;
+    }
 }

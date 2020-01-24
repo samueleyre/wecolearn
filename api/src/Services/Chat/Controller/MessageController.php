@@ -92,10 +92,12 @@ class MessageController extends AbstractController
      *
      */
     public function postMessageAction(
+        Request $request,
         Message $message,
         TokenStorageInterface $tokenStorage,
         MessageService $messageService,
         MessageBusInterface $bus,
+        PushService $pushMessage,
         SerializerInterface $serializer,
         LoggerInterface $logger
     ) {
@@ -111,14 +113,18 @@ class MessageController extends AbstractController
         $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
         $message->setCreated($date);
 
+        ## SAVE MESSAGE IN DB
         $messageService->postMessage($message);
 
+        ## SEND IT TO SERVICE WORKER BY WEB PUSH
+        $pushMessage->process($friend, $message, $request );
+
+        ## SEND IT BY MERCURE PROTOCOLE
         $update = new Update(
             'https://wecolearn.com/message',
             $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('message')),
             ["https://wecolearn.com/message/{$friend->getId()}"]
         );
-
         $bus->dispatch($update);
 
         return $message;
@@ -136,6 +142,7 @@ class MessageController extends AbstractController
      */
     public function patchMessagesAction(array $messages, MessageService $messageService)
     {
+        ## ONLY USED TO KNOW IF MESSAGE IS READ
         return $messageService->patchMessages($messages);
     }
 

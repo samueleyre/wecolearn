@@ -1,0 +1,19 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+
+    <entity name="App\Services\User\Entity\Subscription" table="subscription" repository-class="App\Services\User\Repository\SubscriptionRepository">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <many-to-one field="user" target-entity="App\Services\User\Entity\User" inversed-by="subscriptions" >
+            <join-column name="userId" nullable="false"/>
+        </many-to-one>
+        <field name="endpoint"/>
+        <field name="auth" />
+        <field name="p256dh"/>
+        <field name="agent"/>
+    </entity>
+</doctrine-mapping>

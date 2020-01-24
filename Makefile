@@ -29,8 +29,11 @@ frontServer:
 
 fixPermissions:
 	sudo find api/ -type d -exec chmod 775 {} \;
+	sudo find front/ -type d -exec chmod 775 {} \;
 	sudo find api/ -type f -exec chmod 664 {} \;
-	sudo chown -R $(shell whoami):www-data ./api
+	sudo find front/ -type f -exec chmod 664 {} \;
+	sudo chown -R $(shell whoami):www-data ./api;
+	sudo chown -R $(shell whoami):www-data ./front
 
 test:
 	@docker-compose exec api bash -c "cd api;APP_ENV=test vendor/bin/behat"

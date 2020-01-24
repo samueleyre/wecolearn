@@ -37,9 +37,9 @@ App\Services\User\Entity\User:
         type: App\Services\User\Entity\Image
         groups: [ input, output, search, message, profile, public-profile ]
       showProfil:
-        groups: [ input, output, admin-users ]
+        groups: [ input, output, profile, admin-users ]
       emailNotifications:
-        groups: [ input, output,  user ]
+        groups: [ input, output, profile, user ]
       slackAccounts:
         groups: [ input, output, search ]
       userNotified:

@@ -136,7 +136,7 @@ var sendMessageIfWindowIsVisible = ( e ) => {
                 var body = data.message.message;
                 var options = {
                     body: body,
-                    icon: 'assets/logo/wecolearn.png',
+                    icon: 'http://localhost:4200/assets/logo/wecolearn.png',
                     vibrate: [100, 50, 100],
                     data: {
                         dateOfArrival: Date.now(),

@@ -67,3 +67,8 @@ services:
     App\Services\Core\Provider\JwtProvider:
         arguments:
             $secret: '%mercure_jwt_key%'
+
+    App\Services\Chat\Service\PushService:
+        arguments:
+            $vapidPrivate: '%vapid_private%'
+            $vapidPublic : '%vapid_public%'

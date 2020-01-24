@@ -60,12 +60,8 @@
         </one-to-many>
         <field name="showProfil" type="boolean" column="showProfil"/>
         <field name="emailNotifications" type="boolean" column="emailNotifications"/>
-<!--        <one-to-many field="slackAccounts" target-entity="App\Entity\SlackAccount" mapped-by="user">-->
-<!--            <cascade>-->
-<!--                <cascade-persist/>-->
-<!--                <cascade-merge/>-->
-<!--            </cascade>-->
-<!--        </one-to-many>-->
+        <field name="notificationSubscribe" column="notificationSubscribe" type="boolean" nullable="true"/>
+        <one-to-many field="subscriptions" target-entity="App\Services\User\Entity\Subscription" mapped-by="user" />
         <many-to-many field="domains" target-entity="App\Services\Domain\Entity\Domain" inversed-by="users">
             <cascade>
                 <cascade-persist/>
@@ -75,7 +71,7 @@
                 <join-columns>
                     <join-column name="user_id"/>
                 </join-columns>
-                    <inverse-join-columns>
+                <inverse-join-columns>
                     <join-column name="domain_id"/>
                 </inverse-join-columns>
             </join-table>
@@ -83,5 +79,12 @@
         <field name="lastConnexion" type="datetime" nullable="true" column="lastConnexion"/>
         <field name="deleted" type="datetime" nullable="true" />
     </entity>
-
 </doctrine-mapping>
+
+
+        <!--        <one-to-many field="slackAccounts" target-entity="App\Entity\SlackAccount" mapped-by="user">-->
+        <!--            <cascade>-->
+        <!--                <cascade-persist/>-->
+        <!--                <cascade-merge/>-->
+        <!--            </cascade>-->
+        <!--        </one-to-many>-->

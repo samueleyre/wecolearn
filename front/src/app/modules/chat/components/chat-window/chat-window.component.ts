@@ -76,7 +76,6 @@ export class ChatWindowComponent implements OnInit {
               if (messages.length > 0) {
                 this.currentMessages = messages;
               }
-              // console.log("messages" ,this.messages)
               setTimeout(() => {
                 if (this.currentThread.id) {
                   this.scrollToBottom();
@@ -118,7 +117,6 @@ export class ChatWindowComponent implements OnInit {
       scrollPane.scrollTop = scrollPane.scrollHeight;
     }
   }
-
 
   draftMessageChange(event: any) {
       // ?

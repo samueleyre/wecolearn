@@ -42,7 +42,7 @@ services:
       - api
       - mercure
   composer:
-    image: composer
+    build: docker/composer
     working_dir: /application
     volumes:
       - ./api:/application

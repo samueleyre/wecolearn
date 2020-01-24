@@ -3,8 +3,8 @@
 namespace App\Services\User\Controller;
 
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
-use App\Services\Domain\Entity\Domain;
 use App\Services\Domain\Service\DomainService;
+use App\Services\User\Entity\Subscription;
 use App\Services\User\Entity\Token;
 use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\User;
@@ -17,7 +17,6 @@ use App\Services\User\Service\UserService;
 use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use phpDocumentor\Reflection\Types\Integer;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

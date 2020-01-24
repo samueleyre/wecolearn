@@ -61,7 +61,7 @@ export class PushSubscriptionService {
 
 
   private checkIfExistOrAddAndSubscribe(sub) {
-    return this.http.post('/api/client/notification/check-if-exist-or-add-and-subscribe', sub);
+    return this.http.post('/api/user/notification/check-if-exist-or-add-and-subscribe', sub);
   }
 
   private urlB64ToUint8Array(base64String) {
