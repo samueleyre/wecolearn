@@ -1,5 +1,5 @@
 <div class="container-fluid" *ngIf="!loading && !isMobile">
-    <div class="row" *ngIf="(threads.value.length > 0)">
+    <div class="row" *ngIf="!emptyChat">
         <div class="col-2 no-padding">
             <chat-threads></chat-threads>
         </div>
@@ -7,7 +7,7 @@
             <chat-window></chat-window>
         </div>
     </div>
-    <div class="row" *ngIf="(threads.value.length === 0 )">
+    <div class="row" *ngIf="emptyChat">
         <div class="col-12 center">
             <br><br><br>
             Vous n'avez pas encore commencé de discussion.
@@ -16,12 +16,12 @@
 </div>
 
 <div class="container-fluid" *ngIf="!loading && isMobile">
-    <div class="row" *ngIf="(threads.value.length > 0)">
+    <div class="row" *ngIf="!emptyChat">
         <div class="col-12 no-padding">
             <chat-threads-mobile></chat-threads-mobile>
         </div>
     </div>
-    <div class="row" *ngIf="(threads.value.length === 0 )">
+    <div class="row" *ngIf="emptyChat">
         <div class="col-12 center">
             <br><br><br>
             Vous n'avez pas encore commencé de discussion.

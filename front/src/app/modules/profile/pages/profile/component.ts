@@ -1,7 +1,7 @@
 import {
     Component,
     OnInit,
-    Injectable, OnDestroy,
+    OnDestroy,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -12,11 +12,11 @@ import { User } from '~/core/entities/user/entity';
 
 import { ProfileService } from '../../services/profile';
 
-
 @Component({
   templateUrl: 'template.html',
   styleUrls : ['./style.scss'],
-})export class ProfilePageComponent implements OnInit, OnDestroy {
+})
+export class ProfilePageComponent implements OnInit, OnDestroy {
   public user$: Observable<User>;
   private readonly onDestroy = new Subject<void>();
 

@@ -17,7 +17,7 @@ export class MenuMobileService {
   static redirectedUrl: string = null;
   static beforeRedirectionUrl: string = null;
 
-  static discussingUser: BehaviorSubject<User> = new BehaviorSubject(new User({ first_name: '', last_name: '' }));
+  static discussingUser: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(router: Router) {
     // hack to get url before redirection

@@ -1,19 +1,14 @@
-import { publishReplay, refCount, takeWhile, filter, scan, map } from 'rxjs/operators';
-import { of as observableOf, Subject, Observable, SubscriptionLike as ISubscription, of } from 'rxjs';
+import { publishReplay, refCount, filter, scan, map } from 'rxjs/operators';
+import { of as observableOf, Subject, Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
-import { Router } from '@angular/router';
 
-// import { SocketInit } from '~/shared/components/socket/init';
-import { MessagerieService } from '~/core/services/messagerie/service';
-// import { SocketService } from '~/shared/components/socket/service';
 
 import { User } from '~/core/entities/user/entity';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { ClientService } from '~/core/services/client';
-import { LoggedService } from '~/core/services/loggedService';
 
 
 const initialMessages: Message[] = [];
@@ -25,15 +20,8 @@ type IMessagesOperation = (messages: Message[]) => Message[];
   providedIn: 'root',
 })
 export class MessagesService {
-  static initialPeriod = 120000;
-
-  // when OnDestroy is called.
-  private timer: Observable<number>;
-
-  private timerSubscription: ISubscription;
-
-
-  public route = '/api';
+  protected _loading$ = new BehaviorSubject<boolean>(false);
+  protected _loaded$ = new BehaviorSubject<boolean>(false);
 
   // a stream that publishes new messages only once
   public newMessages: Subject<Message> = new Subject<Message>();
@@ -52,11 +40,13 @@ export class MessagesService {
 
   public messagesToUpdate: Message[] = [];
 
-
   // action streams
   create: Subject<Message> = new Subject<Message>();
   markThreadAsRead: Subject<any> = new Subject<any>();
 
+  get loading(): boolean {
+    return this._loading$.value;
+  }
 
   constructor(public clientService: ClientService,
               protected http: HttpClient,
@@ -140,47 +130,8 @@ export class MessagesService {
     this.getMessages();
   }
 
-  // todo: is this usefull ? delects push notifs from SW
-  // private initPushListener() {
-  //   if ('serviceWorker' in navigator) {
-  //     const channel = new BroadcastChannel('sw-messages');
-  //     const listener = (event) => {
-  //       const messages = [JSON.parse(event.data)];
-  //       _.sortBy(messages, (m: Message) => m.created)
-  //                 .map((message: Message) => {
-  //                   message.thread = new Thread({
-  //                     id: message.sender.id,
-  //                     name: message.sender.first_name,
-  //                     image: message.sender.image,
-  //                   });
-  //                   this.addMessage(message);
-  //                 });
-  //     };
-  //     channel.addEventListener('message', listener);
-  //     return () => {
-  //       channel.removeEventListener('message', listener);
-  //     };
-  //   }
-  //   return () => {
-  //     console.log('no service worker in navigator');
-  //   };
-  // }
-  //
-  // private initListener(): void {
-  //   let pushSubscriber: any = () => {};
-  //   this.messagerieService.type().subscribe((type) => {
-  //     switch (type) {
-  //       case 'push':
-  //         pushSubscriber = this.initPushListener();
-  //         break;
-  //       default:
-  //         pushSubscriber();
-  //         break;
-  //     }
-  //   });
-  // }
-
   private getMessages(): void {
+    this._loading$.next(true);
     this.clientService.get()
       .subscribe(
         (user: User) => {
@@ -191,12 +142,14 @@ export class MessagesService {
                   this.sentMessages = array.sent_messages;
                   this.receivedMessages = array.received_messages;
                   this.generateMessages();
+                  this._loading$.next(false);
                 },
             );
+          } else {
+            this._loading$.next(false);
           }
         });
   }
-
 
   private generateThreadAndAddMessage(senderOrReceiver: string) {
     const threads: Object = {};
@@ -233,9 +186,9 @@ export class MessagesService {
     messagestoBeAdded = this.sentMessages.concat(this.receivedMessages);
 
     _.sortBy(messagestoBeAdded, (m: Message) => m.created)
-        .map((message: Message) => {
-          this.addMessage(message);
-        });
+      .map((message: Message) => {
+        this.addMessage(message);
+      });
   }
 
   public post(message: Message): Observable<Object> {

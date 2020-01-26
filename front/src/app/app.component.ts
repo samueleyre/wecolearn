@@ -43,7 +43,7 @@ export class AppComponent {
         if (logged && !oldLog) {
           // subscribe to notifications
           const url = `${environment.mercureUrl}?topic=https://wecolearn.com/message`;
-          const subscribeToMercureNotifs = new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
+          new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
             const message = new Message(JSON.parse(evt.data));
             message.thread = new Thread({
               id: message.sender.id,
@@ -55,7 +55,6 @@ export class AppComponent {
 
           subs = this.messagerieService.init().subscribe(
             (available) => {
-              console.log(available);
               this.messagerieService.setStatus(available);
             });
         } else if (!logged && typeof subs.unsubscribe === 'function') {

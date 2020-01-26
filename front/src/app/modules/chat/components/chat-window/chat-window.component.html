@@ -19,7 +19,6 @@
                   placeholder="Ecrivez votre message ici !"
                   (keydown.enter)="onEnter($event)"
                   [(ngModel)]="draftMessage.message"
-                  (ngModelChange)="draftMessageChange($event)"
                   [disabled]="disabled"
           ></textarea>
                 <span class="input-group-append">
@@ -52,7 +51,6 @@
                   placeholder="Message"
                   (keydown.enter)="onEnter($event)"
                   [(ngModel)]="draftMessage.message"
-                  (ngModelChange)="draftMessageChange($event)"
                   [disabled]="disabled"
           ></textarea>
                 <span class="input-group-append mobile">

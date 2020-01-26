@@ -88,7 +88,6 @@ class MessageController extends AbstractController
     converter="fos_rest.request_body",
     options={"deserializationContext"={"groups"={"input"} } }
     )
-     * @View( serializerGroups={"message"})
      *
      */
     public function postMessageAction(
@@ -98,8 +97,7 @@ class MessageController extends AbstractController
         MessageService $messageService,
         MessageBusInterface $bus,
         PushService $pushMessage,
-        SerializerInterface $serializer,
-        LoggerInterface $logger
+        SerializerInterface $serializer
     ) {
 
         $user = $tokenStorage->getToken()->getUser();
@@ -119,15 +117,17 @@ class MessageController extends AbstractController
         ## SEND IT TO SERVICE WORKER BY WEB PUSH
         $pushMessage->process($friend, $message, $request );
 
+        $serializedMessage = $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('message'));
+
         ## SEND IT BY MERCURE PROTOCOLE
         $update = new Update(
             'https://wecolearn.com/message',
-            $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('message')),
+            $serializedMessage,
             ["https://wecolearn.com/message/{$friend->getId()}"]
         );
         $bus->dispatch($update);
 
-        return $message;
+        return $serializedMessage;
     }
 
     /**

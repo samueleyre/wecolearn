@@ -18,7 +18,6 @@ export class PushSubscriptionService {
           reg.pushManager.getSubscription().then(
             (pushSub) => {
               if (pushSub) {
-                console.log(pushSub)
                 this.checkIfExistOrAddAndSubscribe(pushSub).subscribe(
                 (data) => {
                   resolve('subscribed');

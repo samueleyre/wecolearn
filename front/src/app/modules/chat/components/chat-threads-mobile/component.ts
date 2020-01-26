@@ -20,8 +20,9 @@ export class ChatThreadsMobileComponent {
   }
 
   ngOnInit(): void {
-    this.threads = this.threadsService.newThreadsSubject;
+    this.threads = this.threadsService.orderedThreads$;
 
+    // todo: remove this
     Logged.get().subscribe((logged: boolean) => {
       if (!logged) {
         this.threadsService.resetThreads();

@@ -65,16 +65,23 @@ class PushService
         return true;
     }
 
-    private function getSubscriptions($receiver, $message, Request $request)
+    private function getSubscriptions(User $receiver, Message $message, Request $request)
     {
         $subscriptions = $this->em->getRepository(SubscriptionModel::class )->findByUser( $receiver );
         $ret = [];
 
-        $context = new SerializationContext();
-        $context->setGroups(['message']);
-
         $host = $request->headers->get('origin');
-        $payload = $this->serializer->serialize( ['message' => $message, 'host' =>  $host ], 'json', $context );
+        $payload = $this->serializer->serialize(
+            [
+                'message' =>
+                    [
+                        'message' => $message->message,
+                        'senderName' => $message->sender->firstName,
+                    ],
+                'host' =>  $host
+            ],
+            'json'
+        );
 
         foreach( $subscriptions as $sub ) {
             $ret[]  = [

@@ -7,6 +7,10 @@ button {
   font-weight: bold;
 }
 
+img {
+  border-radius: 50%;
+}
+
 .tags-container {
   background-color: #310c31;
   padding: 20px 0 0 0;
@@ -37,21 +41,3 @@ button {
     }
   }
 }
-
-//.bio-container {
-//  @extend %wc-thin-scroll-bar;
-//  overflow: auto;
-//  max-height: 38vh;
-//}
-
-//.card-footer {
-//  display: flex;
-//  justify-content: center;
-//
-//  button {
-//    background-color: #ffc600;
-//    color: #310c31 !important;
-//    font-weight: bold;
-//  }
-//
-//}

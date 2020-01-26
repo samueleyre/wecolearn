@@ -121,36 +121,35 @@ var sendMessageIfWindowIsVisible = ( e ) => {
 
             for (var i = 0; i < c.length; i++) {
                 const windowClient = c[i];
-                if (windowClient.visibilityState==="visible") {
+                if (windowClient.visibilityState === "visible") {
                     clientIsVisible = true;
                     break;
                 }
             }
             const data = e.data.json();
             if( clientIsVisible ) {
-                //brodcast message
-                const channel = new BroadcastChannel('sw-messages');
-                channel.postMessage(JSON.stringify(data.message));
-                resolve( true );
+                //broadcast message
+
+              // todo : useful ?
+                // const channel = new BroadcastChannel('sw-messages');
+                // channel.postMessage(JSON.stringify(data.message));
+                // resolve( true );
             } else {
                 var body = data.message.message;
                 var options = {
                     body: body,
-                    icon: 'http://localhost:4200/assets/logo/wecolearn.png',
+                    icon: 'assets/logo/wecolearn.png',
                     vibrate: [100, 50, 100],
                     data: {
                         dateOfArrival: Date.now(),
                         primaryKey: 1
                     },
-                    actions: [
-                        { action: 'navigate', title: 'Répondre au message' },
-                    ],
                     tag : data.host
                 };
 
-                self.registration.showNotification(data.message.sender.first_name, options ).then(( onNotif ) => {
-                    const channel = new BroadcastChannel('sw-messages');
-                    channel.postMessage(JSON.stringify(data.message));
+                self.registration.showNotification(data.message.senderName, options ).then(( onNotif ) => {
+                    // const channel = new BroadcastChannel('sw-messages');
+                    // channel.postMessage(JSON.stringify(data.message));
                     resolve( onNotif );
                 })
 

@@ -42,7 +42,7 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   public showReturn = false;
   showDiscussionUser = false;
   public returnLink: string;
-  discussingUser$:Observable<User>;
+  discussingUser$:Observable<string>;
 
 
   constructor(private http: HttpClient,

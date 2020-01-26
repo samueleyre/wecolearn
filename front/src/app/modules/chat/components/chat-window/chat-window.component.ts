@@ -47,67 +47,67 @@ export class ChatWindowComponent implements OnInit {
     this.draftMessage = new Message();
 
     this.threadsService.currentThread.subscribe(
-        (thread: Thread) => {
-          this.currentThread = thread;
+      (thread: Thread) => {
+        this.currentThread = thread;
+        MenuMobileService.discussingUser.next(thread.name);
 
-          // mark threads as read when seen by user
-          this.messagesService.pushUpdatedMessages().subscribe();
-        });
+        // mark threads as read when seen by user
+        this.messagesService.pushUpdatedMessages().subscribe();
+      });
 
 
-    const currentUser = this.clientService.getCli();
-
-    if (currentUser) {
-      this.currentUser = currentUser;
-      MenuMobileService.discussingUser.next(currentUser);
-    } else {
-      this.clientService.get()
-          .subscribe(
-              (user: User) => {
-                this.currentUser = user;
-                MenuMobileService.discussingUser.next(user);
-              });
-    }
-
+    this.currentUser = this.clientService.getCli();
 
     this.messages
-        .subscribe(
-            (messages: Message[]) => {
-              if (messages.length > 0) {
-                this.currentMessages = messages;
-              }
-              setTimeout(() => {
-                if (this.currentThread.id) {
-                  this.scrollToBottom();
-                }
-              });
-            });
+      .subscribe(
+        (messages: Message[]) => {
+          if (messages.length > 0) {
+            this.currentMessages = messages;
+          }
+          setTimeout(() => {
+            if (this.currentThread.id) {
+              this.scrollToBottom();
+            }
+          });
+        });
   }
 
-
   onEnter(event: any): void {
+    if (this.draftMessage.message === null ||
+      this.draftMessage.message === '' ||
+      !this.currentThread.id) {
+      return;
+    }
     this.sendMessage();
     event.preventDefault();
   }
 
   sendMessage(): void {
-    if (this.draftMessage.message !== null && this.draftMessage.message !== '' && this.currentThread.id) {
-      this.disabled = true;
-      this.draftMessage.receiver = new User({ id: this.currentThread.id });
-      this.draftMessage.is_read = false;
-      this.messagesService.post(this.draftMessage)
-          .subscribe(
-            (answer) => {
-              this.disabled = false;
-              this.draftMessage.sender = new User({ id: this.currentUser.id });
-              this.draftMessage.thread = {
-                ...this.currentThread,
-              };
-              this.messagesService.addMessage(this.draftMessage);
-              this.draftMessage = new Message();
-              setTimeout(() => this.inputEl.nativeElement.focus(), 0);
-            });
-    }
+    this.disabled = true;
+    this.draftMessage.receiver = new User({ id: this.currentThread.id });
+    this.draftMessage.is_read = false;
+    setTimeout(
+      () => {
+        this.disabled = false;
+        this.draftMessage.sender = new User({ id: this.currentUser.id });
+        this.draftMessage.thread = {
+          ...this.currentThread,
+        };
+        this.messagesService.addMessage(this.draftMessage);
+        this.draftMessage = new Message();
+        setTimeout(() => this.inputEl.nativeElement.focus(), 0);
+      },
+      // tslint:disable-next-line:no-magic-numbers
+      400,
+    );
+    this.messagesService.post(this.draftMessage)
+      .subscribe(
+        (answer) => {
+
+        },
+        (error) => {
+          console.error('Message not sent properly');
+        });
   }
 
   scrollToBottom(): void {
@@ -116,10 +116,6 @@ export class ChatWindowComponent implements OnInit {
     if (scrollPane) {
       scrollPane.scrollTop = scrollPane.scrollHeight;
     }
-  }
-
-  draftMessageChange(event: any) {
-      // ?
   }
 
   get isMobile() {

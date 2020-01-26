@@ -8,6 +8,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { Thread } from '~/core/entities/thread/entity';
 import { Threads } from '~/modules/chat/services/threads';
 import { MessagerieService } from '~/core/services/messagerie/service';
+import { MessagesService } from '~/modules/chat/services/messages';
 
 @Component({
   templateUrl: 'template.html',
@@ -22,23 +23,32 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   threads: BehaviorSubject<Thread[]> =
     new BehaviorSubject<Thread[]>([]);
 
-  loading = true;
-
-  constructor(public threadsService: Threads, private messagerieService: MessagerieService, private deviceService: DeviceDetectorService) {
+  constructor(private _threadsService: Threads,
+              private _messagerieService: MessagerieService,
+              private _messageService: MessagesService,
+              private _deviceService: DeviceDetectorService,
+  ) {
 //
   }
 
   ngOnInit() {
-    this.threads = this.threadsService.newThreadsSubject;
-    this.threads.subscribe(value => this.loading = false);
+    this.threads = this._threadsService.orderedThreads$;
 
-    this.subs = this.messagerieService.available().subscribe((available) => {
+    this.subs = this._messagerieService.available().subscribe((available) => {
       this.available = available;
     });
   }
 
-  get isMobile() {
-    return this.deviceService.isMobile();
+  get loading(): boolean {
+    return this._messageService.loading;
+  }
+
+  get emptyChat(): boolean {
+    return this.threads.value.length === 0;
+  }
+
+  get isMobile(): boolean {
+    return this._deviceService.isMobile();
   }
 
   ngOnDestroy() {
