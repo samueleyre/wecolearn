@@ -1,4 +1,3 @@
-const environment = require('./src/environments/environment');
 const workboxBuild = require('workbox-build');
 
 // NOTE: This should be run *AFTER* all your assets are built
@@ -15,7 +14,7 @@ const buildSW = () => {
     }).then(({count, size, warnings}) => {
         // Optionally, log any warnings and details.
         warnings.forEach(console.warn);
-        if (!environment.production) {
+        if (process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'production') {
           console.log(`${count} files will be precached, totaling ${size} bytes.`);
         }
     });
