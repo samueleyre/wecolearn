@@ -9,8 +9,8 @@ import { PushSubscriptionService } from '~/shared/components/push-subscription/s
 })
 export class MessagerieService {
   public constructor(
-    private notificationService: NotificationService,
-    private pushSubscriptionService: PushSubscriptionService,
+    private _notificationService: NotificationService,
+    private _pushSubscriptionService: PushSubscriptionService,
   ) {
 
   }
@@ -20,9 +20,9 @@ export class MessagerieService {
 
   public init(): Observable<boolean> {
     return new Observable((subscriber) => {
-      this.notificationService.requestPermission().then(
+      this._notificationService.requestPermission().then(
         () => {
-          this.pushSubscriptionService.process()
+          this._pushSubscriptionService.process()
           .then(
             () => {
               subscriber.next(true);

@@ -1,6 +1,5 @@
 import {
-    Component,
-    OnInit,
+  Component, OnInit,
 } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Router } from '@angular/router';
@@ -12,15 +11,15 @@ import { NAV } from '~/config/navigation/nav';
   styleUrls: ['./style.scss'],
 
 })
-
-
 export class ChatWindowPageComponent implements OnInit {
-  constructor(public router: Router, private deviceService: DeviceDetectorService) {
-    if (!this.deviceService.isMobile()) {
-      this.router.navigate([NAV.discussion]);
+  loading = true;
+  constructor(private _router: Router, private _deviceService: DeviceDetectorService) {
+    if (!this._deviceService.isMobile()) {
+      this._router.navigate([NAV.discussion]);
     }
   }
 
   ngOnInit() {
+    this.loading = false;
   }
 }

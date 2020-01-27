@@ -39,7 +39,6 @@ import { WcRoutingModule } from './app-routing.module';
 import { CopyComponent } from './shared/components/copy/component';
 import { SafeHtmlPipe } from './shared/pipes/safeHtmlPipe/pipe';
 import { AutofocusDirective } from './modules/search/directives/input/directive';
-import { NotificationService } from './shared/components/notification/service';
 // shares services
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
@@ -88,7 +87,6 @@ import { getBaseLocation } from './core/services/layout/baseUrl';
         //  tools
     CopyComponent,
   ],
-  // todo: no need for providers anymore
   providers: [
     {
       provide: APP_BASE_HREF,

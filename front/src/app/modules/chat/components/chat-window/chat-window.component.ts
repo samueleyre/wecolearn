@@ -31,6 +31,7 @@ export class ChatWindowComponent implements OnInit {
   draftMessage: Message;
   currentUser: User = null;
   disabled = false;
+  loading = true;
   @ViewChild('chatInput', { static: false }) inputEl: ElementRef;
 
 
@@ -67,6 +68,9 @@ export class ChatWindowComponent implements OnInit {
           setTimeout(() => {
             if (this.currentThread.id) {
               this.scrollToBottom();
+              this.loading = false;
+            } else {
+              this.loading = false;
             }
           });
         });

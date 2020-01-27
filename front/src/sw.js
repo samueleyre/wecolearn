@@ -89,14 +89,14 @@ var openNewWindow = ( e ) => {
             });
             console.log( e.notification );
             if (client !== undefined) {
-                client.navigate( e.notification.tag + '/dashboard/discussion').then(( data ) => {
+                client.navigate( e.notification.tag + '/dashboard/discussion/current').then(( data ) => {
                     client.focus().then( ( onFocus ) => {
                         resolve( onFocus );
                     })
                 });
             } else {
                 // there are no visible windows. Open one.
-                clients.openWindow( e.notification.tag + '/dashboard/discussion').then( data => {
+                clients.openWindow( e.notification.tag + '/dashboard/discussion/current').then( data => {
                     e.notification.close().then( onClose => {
                         resolve(onClose);
                     })

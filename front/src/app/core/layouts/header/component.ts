@@ -16,6 +16,7 @@ import { DomainService } from '~/core/services/domain';
 import { MenuService } from '~/core/services/layout/menu';
 import { UrlService } from '~/core/services/url';
 import { NAV } from '~/config/navigation/nav';
+import {WcRouterService} from "~/core/services/wc-router.service";
 
 @Component({
   selector: 'dash-header',
@@ -45,6 +46,7 @@ export class HeaderComponent implements OnInit {
               public clientService: ClientService,
               private authenticationService: AuthenticationService,
               private domainService: DomainService,
+              private _wcRouter: WcRouterService,
   ) {
     this.location = location;
     this.baseUrl = r;
@@ -102,7 +104,7 @@ export class HeaderComponent implements OnInit {
   activateNotification(thread: Thread): void {
     this.threadsService.setCurrentThread(thread);
     this.messagesService.pushUpdatedMessages().subscribe(() => {
-      this.router.navigate([NAV.discussion]);
+      this._wcRouter.navigateToCurrentDiscussion();
     });
   }
 
