@@ -2,9 +2,6 @@ importScripts('workbox/workbox-sw.js');
 
 const VERSION = 'v7';
 
-console.log( VERSION );
-
-
 workbox.setConfig({
     debug: true,
     modulePathPrefix: 'workbox/'
@@ -81,6 +78,7 @@ self.addEventListener('push', async function(e) {
 
 self.addEventListener('notificationclick', function(e) {
     e.waitUntil(openNewWindow(e));
+    e.notification.close();
 });
 
 var openNewWindow = ( e ) => {
@@ -127,33 +125,33 @@ var sendMessageIfWindowIsVisible = ( e ) => {
                 }
             }
             const data = e.data.json();
+
             if( clientIsVisible ) {
-                //broadcast message
+                  //broadcast message
 
-              // todo : useful ?
-                // const channel = new BroadcastChannel('sw-messages');
-                // channel.postMessage(JSON.stringify(data.message));
-                // resolve( true );
-            } else {
-                var body = data.message.message;
-                var options = {
-                    body: body,
-                    icon: 'assets/logo/wecolearn.png',
-                    vibrate: [100, 50, 100],
-                    data: {
-                        dateOfArrival: Date.now(),
-                        primaryKey: 1
-                    },
-                    tag : data.host
-                };
+                // todo : useful ?
+                  // const channel = new BroadcastChannel('sw-messages');
+                  // channel.postMessage(JSON.stringify(data.message));
+                  // resolve( true );
+                } else {
+                    var body = data.message.message;
+                    var options = {
+                        body: body,
+                        icon: 'assets/logo/wecolearn.png',
+                        vibrate: [100, 50, 100],
+                        data: {
+                            dateOfArrival: Date.now(),
+                            primaryKey: 1
+                        },
+                        tag : data.host
+                    };
 
-                self.registration.showNotification(data.message.senderName, options ).then(( onNotif ) => {
-                    // const channel = new BroadcastChannel('sw-messages');
-                    // channel.postMessage(JSON.stringify(data.message));
-                    resolve( onNotif );
-                })
-
-            }
+                    self.registration.showNotification(data.message.senderName, options ).then(( onNotif ) => {
+                        // const channel = new BroadcastChannel('sw-messages');
+                        // channel.postMessage(JSON.stringify(data.message));
+                        resolve( onNotif );
+                    })
+                }
         });
 
     });
