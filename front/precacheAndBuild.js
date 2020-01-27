@@ -1,5 +1,4 @@
-import {environment} from "./src/environments/environment";
-
+const environment = require('./src/environments/environment');
 const workboxBuild = require('workbox-build');
 
 // NOTE: This should be run *AFTER* all your assets are built
@@ -20,6 +19,6 @@ const buildSW = () => {
           console.log(`${count} files will be precached, totaling ${size} bytes.`);
         }
     });
-}
+};
 
 buildSW();
