@@ -1,4 +1,4 @@
-@import '../../../../../assets/scss/variables';
+@import 'variables';
 
 .pull-left{
   float: left;
@@ -31,6 +31,19 @@
   .media-body{
     overflow: hidden;
 
+    .media-heading{
+      display: flex;
+      justify-content: space-between;
+      &-count {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        padding: 2px;
+        background: #fff;
+        color: #666;
+        text-align: center;
+      }
+    }
     .media-content {
       overflow: hidden;
       text-overflow: ellipsis;

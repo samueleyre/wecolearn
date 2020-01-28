@@ -19,4 +19,5 @@ RUN apt-get update \
     && curl -fsSL https://xdebug.org/files/xdebug-${XDEBUG_VERSION}.tgz | tar xz -C /usr/src/php/ext/xdebug --strip 1 \
     && docker-php-ext-install xdebug \
     && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini \
+    && echo 'date.timezone="Europe/Paris"' >> /usr/local/etc/php/php.ini \
     && rm -rf /var/lib/apt/lists/*

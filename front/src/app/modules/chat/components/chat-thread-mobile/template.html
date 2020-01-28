@@ -4,6 +4,9 @@
   </div>
   <div class="media-body">
     <span class="media-heading">{{_thread.name}}
+      <span class="media-heading-count" *ngIf="_thread.countNotRead">
+       {{_thread.countNotRead}}
+      </span>
     </span>
     <div class="media-content">
       <small *ngIf="_thread.lastMessage.sender && _thread.id === _thread.lastMessage.sender.id" class="message-preview">{{_thread.lastMessage.message}}</small>

@@ -44,20 +44,24 @@ export class Threads {
 
         // Store the message's thread in our accumulator
         messages.map((message: Message) => {
-          threadGroups[message.thread.id] = threadGroups[String(message.thread.id)] || message.thread;
+          threadGroups[message.thread.id] = threadGroups[String(message.thread.id)] || { ...message.thread };
           // Cache the most recent message for each thread
-          const messagesThread: Thread = threadGroups[message.thread.id];
           if (
-            (
-              !messagesThread.lastMessage ||
-              messagesThread.lastMessage.created < message.created)
+            !threadGroups[message.thread.id].lastMessage
+            || threadGroups[message.thread.id].lastMessage.created < message.created
           ) {
-            messagesThread.lastMessage = message;
+            threadGroups[message.thread.id].lastMessage = message;
+          }
+          // Count number of messages not read in each thread
+          if (!message.is_read) {
+            threadGroups[message.thread.id].countNotRead += 1;
           }
         });
 
         // from object to ordered list
         const threads: Thread[] = _.values(threadGroups);
+
+        // order thread
         const sortedThreads = _.sortBy(threads, (t: Thread) => new Date(t.lastMessage.created)).reverse();
 
         // select latest thread

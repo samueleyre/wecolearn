@@ -1,4 +1,8 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import { Threads } from '~/modules/chat/services/threads';
 
 @Component({
   selector: 'dash-footer-mobile',
@@ -10,13 +14,16 @@ import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
   providedIn: 'root',
 })
 export class FooterMobileComponent implements OnInit {
-  constructor(
+  public countNotRead$: Observable<number>;
 
+  constructor(
+    private _threadsService: Threads,
   ) {
-    //
   }
 
   ngOnInit() {
+    this.countNotRead$ = this._threadsService.orderedThreads
+      .pipe(map(threads => threads.reduce((count, thread) => (count + thread.countNotRead), 0)));
     //
   }
 }

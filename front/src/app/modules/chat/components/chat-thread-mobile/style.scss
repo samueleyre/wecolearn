@@ -31,6 +31,22 @@
   .media-body{
     overflow: hidden;
 
+    .media-heading{
+      display: flex;
+      justify-content: space-between;
+      &-count {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        padding: 2px;
+        background: #fff;
+        color: #666;
+        text-align: center;
+        margin-top: 5px;
+        margin-right: 5px;
+      }
+    }
+
     .media-content {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -64,7 +80,7 @@
     filter: alpha(opacity=0);
     /*workaround to make clickable in IE */
   }
-  
+
 
 }
 
