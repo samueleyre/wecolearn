@@ -2,21 +2,17 @@ import { Component, Injectable, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { Router } from '@angular/router';
-import * as _ from 'lodash';
-import * as moment from 'moment';
 
 import { Logged } from '~/core/services/logged';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { ClientService } from '~/core/services/client';
 import { MessagesService } from '~/modules/chat/services/messages';
-import { Threads } from '~/modules/chat/services/threads';
 import { Thread } from '~/core/entities/thread/entity';
 import { User } from '~/core/entities/user/entity';
 import { DomainService } from '~/core/services/domain';
 import { MenuService } from '~/core/services/layout/menu';
 import { UrlService } from '~/core/services/url';
-import { NAV } from '~/config/navigation/nav';
-import {WcRouterService} from "~/core/services/wc-router.service";
+import { WcRouterService } from '~/core/services/wc-router.service';
 
 @Component({
   selector: 'dash-header',
@@ -30,19 +26,17 @@ export class HeaderComponent implements OnInit {
   private webPath: string;
   private baseUrl: string;
   public connected = false;
-  public unreadMessagesCount: number;
+  // public unreadMessagesCount: number;
   public notifications: Thread[];
   public currentClient: User = new User();
   private collapseClass = 'collapse';
   private subDomain: string = null;
-
 
   constructor(private http: HttpClient,
               private router: Router,
               location: Location,
               @Inject(APP_BASE_HREF) r: string,
               public messagesService: MessagesService,
-              public threadsService: Threads,
               public clientService: ClientService,
               private authenticationService: AuthenticationService,
               private domainService: DomainService,
@@ -71,42 +65,40 @@ export class HeaderComponent implements OnInit {
 
   loadMessages() {
     this.messagesService.init();
-
-    this.threadsService.orderedThreads.subscribe((currentThreads: Thread[]) => {
-      this.notifications = [];
-
-      _.map(currentThreads, (currentThread: Thread) => {
-        const messageIsFromUser: boolean = currentThread.lastMessage.sender &&
-            this.currentClient &&
-            (currentThread.lastMessage.sender.id === this.currentClient.id);
-
-        // not read, sent to User, is not recent
-        if (
-          !currentThread.lastMessage.is_read
-          && !messageIsFromUser && currentThread.lastMessage.sender
-          && moment(currentThread.lastMessage.created).isBefore(moment().subtract(1, 'day'))
-        ) {
-          this.notifications.push(currentThread);
-        }
-      });
-      // todo: only if not on message page !
-      this.unreadMessagesCount = (this.notifications.length > 0) ? this.notifications.length : null;
-    });
+    // this.threadsService.orderedThreads.subscribe((currentThreads: Thread[]) => {
+    //   this.notifications = [];
+    //
+    //   _.map(currentThreads, (currentThread: Thread) => {
+    //     const messageIsFromUser: boolean = currentThread.lastMessage.sender &&
+    //         this.currentClient &&
+    //         (currentThread.lastMessage.sender.id === this.currentClient.id);
+    //
+    //     // not read, sent to User
+    //     if (
+    //       !currentThread.lastMessage.is_read
+    //       && !messageIsFromUser && currentThread.lastMessage.sender
+    //     ) {
+    //       this.notifications.push(currentThread);
+    //     }
+    //   });
+    //   // todo: only if not on message page !
+    //   this.unreadMessagesCount = (this.notifications.length > 0) ? this.notifications.length : null;
+    // });
   }
 
   preventDefault(e: any) {
     e.preventDefault();
   }
 
-  /**
-   * Open discussion && update ddb
-   */
-  activateNotification(thread: Thread): void {
-    this.threadsService.setCurrentThread(thread);
-    this.messagesService.pushUpdatedMessages().subscribe(() => {
-      this._wcRouter.navigateToCurrentDiscussion();
-    });
-  }
+  // /**
+  //  * Open discussion && update ddb
+  //  */
+  // activateNotification(thread: Thread): void {
+  //   this.threadsService.setCurrentThread(thread);
+  //   this.messagesService.pushUpdatedMessages().subscribe(() => {
+  //     this._wcRouter.navigateToCurrentDiscussion();
+  //   });
+  // }
 
   collapse() {
     (this.collapseClass === 'collapse') ? this.collapseClass = null : this.collapseClass = 'collapse';

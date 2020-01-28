@@ -127,7 +127,7 @@ class MessageController extends AbstractController
         );
         $bus->dispatch($update);
 
-        return $serializedMessage;
+        return;
     }
 
     /**

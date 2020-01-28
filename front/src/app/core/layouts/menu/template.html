@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<div id="sidebar-wrapper" [ngClass]="{'activated' : activated }">
+<div id="sidebar-wrapper" >
 
   <ul class="sidebar-nav" >
     <li id="sidebar-logo">
@@ -26,6 +26,9 @@
       <a routerLink="/dashboard/discussion" routerLinkActive="is-active">
         <i class="fas fa-comment"></i>
         <p>Discussion</p>
+        <span class="fa-stack fa-2x" *ngIf="countNotRead$ | async as countNotRead">
+          <i class="sidebar-countUnRead fa-stack-1x">{{countNotRead}}</i>
+        </span>
       </a>
     </li>
   </ul>

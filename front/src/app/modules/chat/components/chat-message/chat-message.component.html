@@ -1,11 +1,6 @@
 <div class="msg-container" *ngIf="clientId"
      [ngClass]="msgContainerClass">
 
-<!--  <div class="avatar"-->
-<!--       *ngIf="incoming && different === 1">-->
-<!--    <wc-profil-image [image]="message.sender.image" [style]="{height: '40px', width: '40px'}"></wc-profil-image>-->
-<!--  </div>-->
-
   <div class="messages"
     [ngClass]="msgContainerClass">
     <p>{{message.message}}</p>

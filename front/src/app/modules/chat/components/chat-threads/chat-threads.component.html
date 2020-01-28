@@ -5,7 +5,7 @@
             <div class="title" >
                 <span title="Vos conversations">Vos conversations</span>
             </div>
-            <chat-thread *ngFor="let thread of threads | async" [thread]="thread">
+            <chat-thread *ngFor="let thread of threads$ | async" [thread]="thread">
             </chat-thread>
         </div>
     </div>

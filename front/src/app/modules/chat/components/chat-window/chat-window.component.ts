@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import {map, takeUntil, tap} from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { ClientService } from '~/core/services/client';
@@ -15,6 +16,7 @@ import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 
 import { MessagesService } from '../../services/messages';
 import { Threads } from '../../services/threads';
+import {DestroyObservable} from "~/core/components/destroy-observable";
 
 
 @Component({
@@ -24,7 +26,7 @@ import { Threads } from '../../services/threads';
 })
 
 
-export class ChatWindowComponent implements OnInit {
+export class ChatWindowComponent extends DestroyObservable implements OnInit {
   messages: Observable<any>;
   currentMessages: Message[];
   currentThread: Thread;
@@ -41,10 +43,11 @@ export class ChatWindowComponent implements OnInit {
               public el: ElementRef,
               private deviceService: DeviceDetectorService,
   ) {
+    super();
   }
 
   ngOnInit(): void {
-    this.messages = this.threadsService.currentThreadMessages;
+    this.messages = this.threadsService.currentThreadMessages.pipe(takeUntil(this.destroy$));
     this.draftMessage = new Message();
 
     this.threadsService.currentThread.subscribe(
@@ -106,9 +109,7 @@ export class ChatWindowComponent implements OnInit {
     );
     this.messagesService.post(this.draftMessage)
       .subscribe(
-        (answer) => {
-
-        },
+        (answer) => {},
         (error) => {
           console.error('Message not sent properly');
         });

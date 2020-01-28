@@ -1,9 +1,11 @@
 import { Component, Injectable, OnInit, Input } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { User } from '~/core/entities/user/entity';
-
 import { MenuService } from '~/core/services/layout/menu';
 import { AuthenticationService } from '~/core/services/auth/auth';
+import { Threads } from '~/modules/chat/services/threads';
 
 
 @Component({
@@ -13,22 +15,17 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 })
 export class MenuComponent implements OnInit {
   me: User;
-  activated: boolean;
+  public countNotRead$: Observable<number>;
 
 
   constructor(
-      private authService: AuthenticationService, private menuService: MenuService,
-  ) {
-//
-  }
+      private authService: AuthenticationService, private menuService: MenuService, private _threadsService: Threads,
+  ) {}
 
   ngOnInit() {
     this.me = this.authService.user;
-
-    // update menu display ( not used anymore )
-    this.menuService.get().subscribe((on) => {
-      this.activated = on;
-    });
+    this.countNotRead$ = this._threadsService.orderedThreads
+      .pipe(map(threads => threads.reduce((count, thread) => (count + thread.countNotRead), 0)));
   }
 
   get isAdmin(): boolean {

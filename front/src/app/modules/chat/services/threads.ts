@@ -1,7 +1,7 @@
-import { combineLatest, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 
 import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
@@ -48,8 +48,9 @@ export class Threads {
           // Cache the most recent message for each thread
           const messagesThread: Thread = threadGroups[message.thread.id];
           if (
-            (!messagesThread.lastMessage
-              || messagesThread.lastMessage.created < message.created)
+            (
+              !messagesThread.lastMessage ||
+              messagesThread.lastMessage.created < message.created)
           ) {
             messagesThread.lastMessage = message;
           }
@@ -57,30 +58,28 @@ export class Threads {
 
         // from object to ordered list
         const threads: Thread[] = _.values(threadGroups);
-        _.sortBy(threads, (t: Thread) => t.lastMessage.created).reverse();
+        const sortedThreads = _.sortBy(threads, (t: Thread) => new Date(t.lastMessage.created)).reverse();
 
         // select latest thread
-        if (!this.currentThread.getValue().id && threads.length > 0) {
-          this.currentThread.next(threads[0]);
+        if (!this.currentThread.getValue().id && sortedThreads.length > 0) {
+          this.currentThread.next(sortedThreads[0]);
         }
 
-        this.orderedThreads$.next(threads);
-        return threads;
+        this.orderedThreads$.next(sortedThreads);
+        return sortedThreads;
       }));
   }
 
   private initCurrentThreadsConstuctor() {
     // `currentThreadMessages` Observable that contains the set of messages for the currently selected thread
-    this.currentThreadMessages = this.currentThread.pipe(
-      combineLatest(
-        this.messagesService.messages,
-        (currentThread: Thread, messages: Message[]) => {
+    this.currentThreadMessages = combineLatest(this.currentThread, this.messagesService.messages)
+      .pipe(
+        map(([currentThread, messages]) => {
           if (currentThread && messages.length > 0) {
             return _.chain(messages)
               .filter((message: Message) => {
                 return (message.thread.id === currentThread.id);
               })
-              // .sortBy(messages, (m: Message) => m.created).reverse()
               .map((message: Message) => {
                 if (!message.is_read && message.receiver && message.thread.id !== message.receiver.id) {
                   message.is_read = true;

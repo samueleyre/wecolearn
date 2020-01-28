@@ -1,4 +1,4 @@
-import { publishReplay, refCount, filter, scan, map } from 'rxjs/operators';
+import { publishReplay, refCount, scan, map, tap } from 'rxjs/operators';
 import { of as observableOf, Subject, Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -10,11 +10,7 @@ import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { ClientService } from '~/core/services/client';
 
-
-const initialMessages: Message[] = [];
-
 type IMessagesOperation = (messages: Message[]) => Message[];
-
 
 @Injectable({
   providedIn: 'root',
@@ -23,15 +19,10 @@ export class MessagesService {
   protected _loading$ = new BehaviorSubject<boolean>(false);
   protected _loaded$ = new BehaviorSubject<boolean>(false);
 
-  // a stream that publishes new messages only once
-  public newMessages: Subject<Message> = new Subject<Message>();
-
   // `messages` is a stream that emits an array of the most up to date messages
-  public messages: Observable<Message[]>;
+  public messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
 
   // `updates` receives _operations_ to be applied to our `messages`
-  // it's a way we can perform changes on *all* messages (that are currently
-  // stored in `messages`)
   public updates: Subject<any> = new Subject<any>();
 
   public currentClient: User = new User();
@@ -48,56 +39,38 @@ export class MessagesService {
     return this._loading$.value;
   }
 
-  constructor(public clientService: ClientService,
-              protected http: HttpClient,
-  ) {
-    this.messages = this.updates.pipe(
+  constructor(public clientService: ClientService, protected http: HttpClient) {
+    this.updates.pipe(
         // watch the updates and accumulate operations on the messages
-        scan((messages: Message[], operation: IMessagesOperation) => operation(messages), initialMessages),
+        scan((messages: Message[], operation: IMessagesOperation) => operation(messages), []),
 
-        // make sure we can share the most recent list of messages across anyone
-        // who's interested in subscribing and cache the last known list of
-        // messages
+      // make sure we can share the most recent list of messages across anyone
+      // who's interested in subscribing and cache the last known list of messages
         publishReplay(1),
-        refCount());
+        refCount(),
+    ).subscribe(
+      (messages) => {
+        this.messages.next(messages);
+      },
+    );
 
-    // `create` takes a Message and then puts an operation (the inner function)
-    // on the `updates` stream to add the Message to the list of messages.
-    //
-    // That is, for each item that gets added to `create` (by using `next`)
-    // this stream emits a concat operation function.
-    //
-    // Next we subscribe `this.updates` to listen to this stream, which means
-    // that it will receive each operation that is created
-    //
-    // Note that it would be perfectly acceptable to simply modify the
-    // "addMessage" function below to simply add the inner operation function to
-    // the update stream directly and get rid of this extra action stream
-    // entirely. The pros are that it is potentially clearer. The cons are that
-    // the stream is no longer composable.
     this.create.pipe(
       map((message: Message): IMessagesOperation => (messages: Message[]) => messages.concat(message))).subscribe(this.updates);
 
-    this.newMessages.subscribe(this.create);
-
-    // similarly, `markThreadAsRead` takes a Thread and then puts an operation
-    // on the `updates` stream to mark the Messages as read
+    // `markThreadAsRead` takes a Thread and then puts an operation on the `updates` stream to mark the Messages as read
     this.markThreadAsRead.pipe(
-        map((thread: Thread) => (messages: Message[]) => messages.map((message: Message) => {
-              // note that we're manipulating `message` directly here. Mutability
-              // can be confusing and there are lots of reasons why you might want
-          if (message.thread.id === thread.id && !message.is_read && message.sender && message.sender.id !== this.currentClient.id) {
-                // to, say, copy the Message object or some other 'immutable' here
-            message.is_read = true;
-            this.addMessageToUpdate(message);
-          }
-          return message;
-        }))).subscribe(this.updates);
+      map((thread: Thread) => (messages: Message[]) => messages.map((message: Message) => {
+        if (message.thread.id === thread.id && !message.is_read && message.sender && message.sender.id !== this.currentClient.id) {
+          message.is_read = true;
+          this.addMessageToUpdate(message);
+        }
+        return message;
+      }))).subscribe(this.updates);
   }
 
   // an imperative function call to this action stream
   addMessage(message: Message): void {
-    this.newMessages.next(message);
+    this.create.next(message);
   }
 
   addMessageToUpdate(message: Message): void {
@@ -116,16 +89,6 @@ export class MessagesService {
     return observableOf(null);
   }
 
-  messagesForThreadUser(thread: Thread, user: User): Observable<Message> {
-    return this.newMessages.pipe(
-        filter((message: Message) =>
-          // belongs to this thread
-          (message.thread.id === thread.id) &&
-              // and isn't authored by this user
-              (message.sender && (message.sender.id !== user.id)),
-        ));
-  }
-
   public init(): void {
     this.getMessages();
   }
@@ -138,12 +101,12 @@ export class MessagesService {
           if (user && null === this.currentClient.id) {
             this.currentClient = user;
             this.http.get('/api/messages').subscribe(
-                (array: any) => {
-                  this.sentMessages = array.sent_messages;
-                  this.receivedMessages = array.received_messages;
-                  this.generateMessages();
-                  this._loading$.next(false);
-                },
+              (array: any) => {
+                this.sentMessages = array.sent_messages;
+                this.receivedMessages = array.received_messages;
+                this.generateMessages();
+                this._loading$.next(false);
+              },
             );
           } else {
             this._loading$.next(false);
@@ -171,10 +134,6 @@ export class MessagesService {
   }
 
   private generateMessages() {
-    this.messages = of();
-
-    let messagestoBeAdded: Message[];
-
     if (this.sentMessages) {
       this.generateThreadAndAddMessage('receiver');
     }
@@ -183,7 +142,7 @@ export class MessagesService {
       this.generateThreadAndAddMessage('sender');
     }
 
-    messagestoBeAdded = this.sentMessages.concat(this.receivedMessages);
+    const messagestoBeAdded = this.sentMessages.concat(this.receivedMessages);
 
     _.sortBy(messagestoBeAdded, (m: Message) => m.created)
       .map((message: Message) => {
