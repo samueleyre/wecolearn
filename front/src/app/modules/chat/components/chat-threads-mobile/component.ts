@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { delay, takeUntil } from 'rxjs/operators';
 
 import { Thread } from '~/core/entities/thread/entity';
-import { Logged } from '~/core/services/logged';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 import { Threads } from '../../services/threads';
 
@@ -11,22 +12,17 @@ import { Threads } from '../../services/threads';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class ChatThreadsMobileComponent {
-  threads: BehaviorSubject<Thread[]> =
-      new BehaviorSubject<Thread[]>([]);
+export class ChatThreadsMobileComponent extends DestroyObservable {
+  threads$: Observable<Thread[]>;
 
   constructor(public threadsService: Threads) {
-
+    super();
   }
 
   ngOnInit(): void {
-    this.threads = this.threadsService.orderedThreads$;
-
-    // todo: remove this
-    Logged.get().subscribe((logged: boolean) => {
-      if (!logged) {
-        this.threadsService.resetThreads();
-      }
-    });
+    this.threads$ = this.threadsService.orderedThreads$.pipe(
+      delay(0),
+      takeUntil(this.destroy$),
+    );
   }
 }

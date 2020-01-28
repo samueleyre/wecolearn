@@ -6,17 +6,17 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import {map, takeUntil, tap} from 'rxjs/operators';
+import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { ClientService } from '~/core/services/client';
 import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 import { MessagesService } from '../../services/messages';
 import { Threads } from '../../services/threads';
-import {DestroyObservable} from "~/core/components/destroy-observable";
 
 
 @Component({

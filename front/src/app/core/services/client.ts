@@ -14,14 +14,14 @@ export class ClientService {
   private currentClientSubject = new Subject<User>();
   private currentClientObservable = this.currentClientSubject.asObservable();
   private endpoint: string;
-  private currentClientStatic: User = null; // probably useless
+  private currentClientStatic: User = null;
 
 
   constructor(protected http: HttpClient) {
     this.endpoint = '/api/profile';
   }
 
-  getCli(): any {
+  getCli(): User {
     return this.currentClientStatic;
   }
 

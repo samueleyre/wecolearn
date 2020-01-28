@@ -11,6 +11,7 @@ import { UserRoleEnum } from '~/core/enums/user/user-role.enum';
 
 import { TokenService } from './token';
 import { Logged } from '../logged';
+import {ClientService} from "~/core/services/client";
 
 
 @Injectable({

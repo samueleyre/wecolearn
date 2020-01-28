@@ -20,15 +20,13 @@ export class MessagerieService {
 
   public init(): Observable<boolean> {
     return new Observable((subscriber) => {
-      this._notificationService.requestPermission().then(
-        () => {
-          this._pushSubscriptionService.process()
-          .then(
-            () => {
-              subscriber.next(true);
-              this._type.next('push');
-            });
-        });
+      this._notificationService.requestPermission().then(() => {
+        this._pushSubscriptionService.process()
+          .then(() => {
+            subscriber.next(true);
+            this._type.next('push');
+          });
+      });
     });
   }
 

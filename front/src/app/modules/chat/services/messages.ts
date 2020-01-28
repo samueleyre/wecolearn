@@ -60,6 +60,7 @@ export class MessagesService {
     // `markThreadAsRead` takes a Thread and then puts an operation on the `updates` stream to mark the Messages as read
     this.markThreadAsRead.pipe(
       map((thread: Thread) => (messages: Message[]) => messages.map((message: Message) => {
+        console.log(message.sender.id, this.currentClient.id, message.is_read, message.message)
         if (message.thread.id === thread.id && !message.is_read && message.sender && message.sender.id !== this.currentClient.id) {
           message.is_read = true;
           this.addMessageToUpdate(message);
@@ -82,6 +83,7 @@ export class MessagesService {
   }
 
   pushUpdatedMessages(): Observable<object> {
+    console.log('should send message', this.messagesToUpdate)
     if (this.messagesToUpdate.length > 0) {
       return this.http.patch(`/api/messages`, this.messagesToUpdate);
     }

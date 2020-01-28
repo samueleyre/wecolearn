@@ -5,10 +5,12 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { takeUntil } from 'rxjs/operators';
 
 import { Thread } from '~/core/entities/thread/entity';
 import { UrlService } from '~/core/services/url';
 import { NAV } from '~/config/navigation/nav';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 import { Threads } from '../../services/threads';
 
@@ -18,7 +20,7 @@ import { Threads } from '../../services/threads';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class ChatThreadMobileComponent implements OnInit {
+export class ChatThreadMobileComponent extends DestroyObservable implements OnInit {
   selected = false;
   public webPath: string;
   public _thread: Thread;
@@ -28,8 +30,8 @@ export class ChatThreadMobileComponent implements OnInit {
     this._thread = value;
   }
 
-
   constructor(public threadsService: Threads, private router: Router, private deviceService: DeviceDetectorService) {
+    super();
   }
 
   ngOnInit(): void {
@@ -41,18 +43,15 @@ export class ChatThreadMobileComponent implements OnInit {
 
   load(): void {
     this.threadsService.currentThread
-        .subscribe((currentThread: Thread) => {
-          this.selected = currentThread &&
-              this._thread &&
-              (currentThread.id === this._thread.id);
-        });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((currentThread: Thread) => {
+        this.selected = currentThread && this._thread && (currentThread.id === this._thread.id);
+      });
   }
 
   loadMessages(event: any): void {
     event.preventDefault();
     this.threadsService.setCurrentThread(this._thread);
-    if (this.deviceService.isMobile()) {
-      this.router.navigate([NAV.currentDiscussion]);
-    }
+    this.router.navigate([NAV.currentDiscussion]);
   }
 }

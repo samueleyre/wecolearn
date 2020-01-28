@@ -8,6 +8,7 @@ import { Message } from '~/core/entities/message/entity';
 import { User } from '~/core/entities/user/entity';
 
 import { MessagesService } from './messages';
+import {ClientService} from "~/core/services/client";
 
 
 @Injectable({
@@ -26,7 +27,7 @@ export class Threads {
   // selected thread
   currentThreadMessages: Observable<Message[]>;
 
-  constructor(public messagesService: MessagesService) {
+  constructor(public messagesService: MessagesService, private _clientService: ClientService) {
     this.initThreadsConstructor();
 
     this.initCurrentThreadsConstuctor();
@@ -53,7 +54,7 @@ export class Threads {
             threadGroups[message.thread.id].lastMessage = message;
           }
           // Count number of messages not read in each thread
-          if (!message.is_read) {
+          if (!message.is_read && message.sender.id !== this._clientService.getCli().id) {
             threadGroups[message.thread.id].countNotRead += 1;
           }
         });
@@ -85,10 +86,11 @@ export class Threads {
                 return (message.thread.id === currentThread.id);
               })
               .map((message: Message) => {
-                if (!message.is_read && message.receiver && message.thread.id !== message.receiver.id) {
-                  message.is_read = true;
-                  this.messagesService.addMessageToUpdate(message);
-                }
+                // todo: this is a repetition
+                // if (!message.is_read && message.receiver && message.thread.id !== message.receiver.id) {
+                //   message.is_read = true;
+                //   this.messagesService.addMessageToUpdate(message);
+                // }
                 return message;
               })
               .value();

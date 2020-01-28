@@ -1,10 +1,9 @@
-import { Component, Injectable, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { APP_BASE_HREF, Location } from '@angular/common';
-import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import * as _ from 'lodash';
-import { takeWhile } from 'rxjs/internal/operators/takeWhile';
-import { filter, pairwise, tap } from 'rxjs/operators';
+import { delay, takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { Logged } from '~/core/services/logged';
@@ -17,16 +16,15 @@ import { User } from '~/core/entities/user/entity';
 import { DomainService } from '~/core/services/domain';
 import { MenuService } from '~/core/services/layout/menu';
 import { UrlService } from '~/core/services/url';
-import { NAV } from '~/config/navigation/nav';
-import { RETURN_URLS } from '~/config/navigation/returnUrls';
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 @Component({
   selector: 'dash-header-mobile',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-export class HeaderMobileComponent implements OnInit, OnDestroy {
+export class HeaderMobileComponent extends DestroyObservable implements OnInit, OnDestroy {
   private location: Location;
   private logoPath: string;
   private imagePath: string;
@@ -56,6 +54,7 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
               private domainService: DomainService,
               private menuMobileService: MenuMobileService,
   ) {
+    super();
     this.location = location;
     this.baseUrl = r;
   }
@@ -76,7 +75,10 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
         }
       });
     });
-    this.discussingUser$ = MenuMobileService.discussingUser.asObservable();
+    this.discussingUser$ = MenuMobileService.discussingUser.pipe(
+      delay(0),
+      takeUntil(this.destroy$),
+    );
   }
 
 
@@ -92,7 +94,7 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
 
     // on redirect
     this.router.events
-      .pipe(takeWhile(() => this.alive))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((e) => {
         if (e instanceof NavigationEnd) {
           this.showReturn = this.menuMobileService.showReturn(e.urlAfterRedirects);
@@ -104,16 +106,6 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
 
   loadMessages() {
     this.messagesService.init();
-
-    // if (!environment.production) {
-    //   this.unreadMessagesCount = 1;
-    //   this.notifications = [
-    //     new Thread({
-    //       name: 'bla',
-    //       lastMessage: new Message({message: 'blablabla'})
-    //     })
-    //   ];
-    // } else {
 
     this.threadsService.orderedThreads.subscribe((currentThreads: Thread[]) => {
       this.notifications = [];
@@ -130,8 +122,6 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
 
       this.unreadMessagesCount = (this.notifications.length > 0) ? this.notifications.length : null;
     });
-
-    // }
   }
 
   preventDefault(e: any) {
@@ -141,12 +131,12 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   /**
    * Open discussion && update ddb
    */
-  activateNotification(thread: Thread): void {
-    this.threadsService.setCurrentThread(thread);
-    this.messagesService.pushUpdatedMessages().subscribe(() => {
-      this.router.navigate([NAV.search]);
-    });
-  }
+  // activateNotification(thread: Thread): void {
+  //   this.threadsService.setCurrentThread(thread);
+  //   this.messagesService.pushUpdatedMessages().subscribe(() => {
+  //     this.router.navigate([NAV.search]);
+  //   });
+  // }
 
   collapse() {
     (this.collapseClass === 'collapse') ? this.collapseClass = null : this.collapseClass = 'collapse';
@@ -155,13 +145,7 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   logOut() {
     this.authenticationService.logout(true);
   }
-
-
   toggle() {
     MenuService.displayToggle();
-  }
-
-  ngOnDestroy(): void {
-    this.alive = false;
   }
 }

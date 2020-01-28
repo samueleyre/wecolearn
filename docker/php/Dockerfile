@@ -14,10 +14,12 @@ RUN apt-get update \
         zlib1g-dev \
         libssl-dev \
         libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql zip \
+    && docker-php-ext-install pdo pdo_mysql zip gmp \
     && mkdir -p /usr/src/php/ext/xdebug \
     && curl -fsSL https://xdebug.org/files/xdebug-${XDEBUG_VERSION}.tgz | tar xz -C /usr/src/php/ext/xdebug --strip 1 \
     && docker-php-ext-install xdebug \
     && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini \
     && echo 'date.timezone="Europe/Paris"' >> /usr/local/etc/php/php.ini \
+    && echo "extension=php_gmp.dll" >> /usr/local/etc/php/php.ini \
     && rm -rf /var/lib/apt/lists/*
+
