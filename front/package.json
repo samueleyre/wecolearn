@@ -2,6 +2,7 @@
   "name": "front",
   "version": "0.1.0",
   "scripts": {
+    "ng": "ng",
     "build": "ng build --aot --configuration=$NODE_ENV && node precacheAndBuild.js",
     "precommit": "yarn lint",
     "lint": "ng lint",
