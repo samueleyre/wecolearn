@@ -1,11 +1,11 @@
 import {
   Component,
   OnInit,
-  Injectable, ViewChild, ElementRef,
+  ViewChild, ElementRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import * as _ from 'lodash';
 
 import { User } from '~/core/entities/user/entity';
 
@@ -42,13 +42,18 @@ import { SEARCH } from '../../config/main';
         // todo: if tag and lat/long are in url, get them
 
     this._searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
+      console.log(clients)
       if (this._searchService.searchType !== 'scroll' && this.cardsContainerElementRef) {
         // new SEARCH
         this.cardsContainerElementRef.nativeElement.scrollTo(0, 0);
         this.cards = clients;
       } else {
         // SCROLL SEARCH
-        this.cards = this.cards.concat(clients.slice(SearchService.max - SEARCH.default.max));
+        if (clients.length > SearchService.max) {
+          this.cards = _.uniqBy(this.cards.concat(clients.slice(SearchService.max - SEARCH.default.max)), 'id');
+        } else {
+          this.cards = clients;
+        }
       }
     });
 

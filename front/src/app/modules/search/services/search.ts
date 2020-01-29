@@ -60,8 +60,8 @@ export class SearchService extends APIService<User> {
 
 
     return this.list(filters).pipe(
-      map((response: User[]) => {
-        this.currentFoundClients.next(response);
+      map((response: any[]) => {
+        this.currentFoundClients.next(response.map(val => val[0]));
         this._loading$.next(false);
         this.currentlySearching = false;
         if (this.pauseRedirect) {

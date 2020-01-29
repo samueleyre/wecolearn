@@ -23,7 +23,7 @@
           </div>
 
           <div *ngFor="let card of cards" [ngClass]="'col-xl-4 col-lg-6 col-md-8 mb-4'">
-            <app-card  [card]="card[0]"
+            <app-card  [card]="card"
             ></app-card>
           </div>
 
@@ -67,7 +67,7 @@
           </div>
 
           <div *ngFor="let card of cards" class="col-12">
-            <app-card  [card]="card[0]"
+            <app-card  [card]="card"
             ></app-card>
             <br>
           </div>

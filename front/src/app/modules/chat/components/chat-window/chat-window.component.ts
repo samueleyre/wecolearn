@@ -60,7 +60,7 @@ export class ChatWindowComponent extends DestroyObservable implements OnInit {
       });
 
 
-    this.currentUser = this.clientService.getCli();
+    this.currentUser = this.clientService.me;
 
     this.messages
       .subscribe(

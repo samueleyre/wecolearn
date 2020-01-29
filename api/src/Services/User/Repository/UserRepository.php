@@ -15,6 +15,7 @@ class UserRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry, LoggerInterface $logger)
     {
         parent::__construct($registry, User::class);
+        $this->logger = $logger;
     }
 
     public function search(
@@ -86,8 +87,6 @@ class UserRepository extends ServiceEntityRepository
         $qb->setMaxResults($max);
         $qb->having('distance < 100');
 
-        $ret = $qb->getQuery()->getResult();
-
-        return $ret;
+        return $qb->getQuery()->getResult();
     }
 }

@@ -54,7 +54,7 @@ export class Threads {
             threadGroups[message.thread.id].lastMessage = message;
           }
           // Count number of messages not read in each thread
-          if (!message.is_read && message.sender.id !== this._clientService.getCli().id) {
+          if (!message.is_read && message.sender.id !== this._clientService.me.id) {
             threadGroups[message.thread.id].countNotRead += 1;
           }
         });
@@ -115,7 +115,7 @@ export class Threads {
             senderId: newThread.id }),
       );
     } else if (!newThread.lastMessage) {
-      this.messagesService.addMessage(new Message({ message: '' , thread: newThread, senderId: newThread.id }));
+      this.messagesService.addMessage(new Message({ message: '' , thread: newThread, sender: { id: newThread.id } }));
     }
     this.currentThread.next(newThread);
   }

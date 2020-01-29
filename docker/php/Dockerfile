@@ -20,6 +20,5 @@ RUN apt-get update \
     && docker-php-ext-install xdebug \
     && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini \
     && echo 'date.timezone="Europe/Paris"' >> /usr/local/etc/php/php.ini \
-    && echo "extension=php_gmp.dll" >> /usr/local/etc/php/php.ini \
     && rm -rf /var/lib/apt/lists/*
 

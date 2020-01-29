@@ -21,7 +21,7 @@ export class ClientService {
     this.endpoint = '/api/profile';
   }
 
-  getCli(): User {
+  get me(): User {
     return this.currentClientStatic;
   }
 
