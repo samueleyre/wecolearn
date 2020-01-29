@@ -5,7 +5,7 @@ namespace App\Services\User\Service;
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
-use App\Services\User\Events\UserWasCreated;
+use App\Services\User\Event\UserWasCreated;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -46,7 +46,9 @@ class CreateUserService
         }
         $user->setEnabled(true);
         $user->setShowProfil(true);
-        $user->setUsername($user->getEmail());
+        $user->setEmailConfirmed(false);
+        $user->setEmailNotifications(true);
+        $user->setUsername($user->getEmail()); // todo: remove this someday
         $user = $this->generateUrlService->process($user);
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
         $user->setCreated($date);
@@ -55,11 +57,7 @@ class CreateUserService
         } catch (UniqueConstraintViolationException $e) {
             throw new ResourceAlreadyUsedException('resource already used');
         }
-        $this->dispatcher->dispatch(
-            new UserWasCreated(
-                $user
-            )
-        );
+        $this->dispatcher->dispatch(new UserWasCreated($user),UserWasCreated::NAME);
 
         return $user;
     }

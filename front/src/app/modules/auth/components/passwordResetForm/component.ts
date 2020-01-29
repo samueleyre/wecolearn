@@ -62,7 +62,7 @@ export class ResetPasswordFormComponent implements OnInit {
             (result) => {
               this.loading = false;
               if (result['error']) {
-                this.error = result['error'];
+                this._toastr.error(result['error']);
               } else {
                 this.success = 'Votre mot de passe a été modifié avec succès !';
                 setTimeout(
@@ -74,7 +74,7 @@ export class ResetPasswordFormComponent implements OnInit {
             },
             (error) => {
               this.loading = false;
-              this.error = 'Une erreur est survenue.';
+              this._toastr.error('Une erreur est survenue.');
             },
           );
     }

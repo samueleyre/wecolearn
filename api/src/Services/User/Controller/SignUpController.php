@@ -2,44 +2,23 @@
 
 namespace App\Services\User\Controller;
 
-//use App\_Application\Domain\AddDomainService;
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\User\Entity\User;
-use App\Services\User\Entity\Token;
 
 
-//use App\_Application\Domain\DomainService;
 use App\Services\User\Service\CreateUserService;
-use App\Services\User\Service\TokenService;
-//use App\WcBundle\Service\SlackService;
-use App\Services\User\Service\UserService;
+use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use FOS\RestBundle\Controller\Annotations\Post;
-use FOS\RestBundle\Controller\Annotations\Patch;
-use FOS\RestBundle\Controller\Annotations\Delete;
-use FOS\RestBundle\Controller\Annotations\Get;
 
-use FOS\RestBundle\View\ViewHandler;
-use FOS\RestBundle\View\View; // Utilisation de la vue de FOSRestBundle
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
-//use Doctrine\DBAL\Exception\PDOException;
-use Symfony\Component\Debug\ExceptionHandler;
-use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-
-//use App\Entity\SlackAccount;
 
 
 class SignUpController extends AbstractController
@@ -52,6 +31,7 @@ class SignUpController extends AbstractController
     converter="fos_rest.request_body",
     options={"deserializationContext"={"groups"={"input"} } }
     )
+     * @View( serializerGroups={"profile"})
      */
     public function postNewUserAction(
         User $user,

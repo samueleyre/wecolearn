@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 
@@ -16,13 +17,12 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 export class SendPasswordConfirmationEmailComponent implements OnInit {
   public newEmail: string;
   public loading = false;
-  public error: string;
-  public success: string;
 
 
   constructor(
       private router: Router,
       private authenticationService: AuthenticationService,
+      private _toastr: ToastrService,
   ) {
   }
 
@@ -38,9 +38,9 @@ export class SendPasswordConfirmationEmailComponent implements OnInit {
           (result) => {
             this.loading = false;
             if (result['error']) {
-              this.error = result['error'];
+              this._toastr.error(result['error']);
             } else {
-              this.success = 'Un email vous a été envoyé pour réinitialiser votre mot de passe. ';
+              this._toastr.success('Un email vous a été envoyé pour réinitialiser votre mot de passe.');
               setTimeout(
                 () => {
                   this.router.navigate(['/']);
@@ -50,7 +50,7 @@ export class SendPasswordConfirmationEmailComponent implements OnInit {
           },
           (error) => {
             this.loading = false;
-            this.error = 'Une erreur est survenue.';
+            this._toastr.error('Une erreur est survenue.');
           },
         );
   }

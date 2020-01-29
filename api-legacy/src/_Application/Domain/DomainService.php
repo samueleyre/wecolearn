@@ -25,9 +25,7 @@ class DomainService {
   }
 
   public function setRequest(Request $request ) {
-
-      $this->request = $request;
-
+    $this->request = $request;
   }
 
 

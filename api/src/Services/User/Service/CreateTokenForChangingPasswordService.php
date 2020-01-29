@@ -8,15 +8,15 @@
 
 namespace App\Services\User\Service;
 
-use App\Services\User\Entity\TokenConstant;
+use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\User;
+use App\Services\User\Event\TokenWasCreated;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CreateTokenForChangingPasswordService
 {
 
-    private $userRepository;
     private $tokenService;
     private $em;
     private $dispatcher;
@@ -35,8 +35,6 @@ class CreateTokenForChangingPasswordService
     public function process(string $email)
     {
 
-        $ret = [];
-
         $user = $this->em->getRepository(User::class)
             ->findOneBy(["email" => $email]);
 
@@ -53,7 +51,7 @@ class CreateTokenForChangingPasswordService
 
             $this->tokenService->post($token);
 
-            $this->dispatcher->dispatch(TokenWasCreated::NAME, new TokenWasCreated($user, $token));
+            $this->dispatcher->dispatch(new TokenWasCreated($user, $token), TokenWasCreated::NAME);
 
             return $token;
         } else {

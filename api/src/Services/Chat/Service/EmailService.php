@@ -3,6 +3,9 @@
 namespace App\Services\Chat\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use SendinBlue\Client\Model\SendSmtpEmail;
+use SendinBlue\Client\Model\SendSmtpEmailReplyTo;
+use SendinBlue\Client\Model\SendSmtpEmailTo;
 
 class EmailService
 {
@@ -62,6 +65,6 @@ class EmailService
 
         return $this
       ->sendInBlueApi
-      ->sendTransactionalEmail($data);
+      ->sendTransacEmail($data);
     }
 }

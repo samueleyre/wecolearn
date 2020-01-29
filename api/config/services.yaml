@@ -48,12 +48,6 @@ services:
         arguments:
             $client_id: '%client_id%'
             $client_secret: '%client_secret%'
-#
-#    App\Services\User\Service\ConfirmEmailSubscriber:
-#        tags:
-#            - { name: 'kernel.event_subscriber' }
-#        arguments:
-#            $delivery_address: '%delivery_address%'
 
     generate_url_service:
         public: true
@@ -72,3 +66,26 @@ services:
         arguments:
             $vapidPrivate: '%vapid_private%'
             $vapidPublic : '%vapid_public%'
+
+    App\Services\Core\Exception\ExceptionSubscriber:
+        arguments:  ['@service_container', '@logger']
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Services\User\Event\ConfirmEmailSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+        arguments:
+            $delivery_address: '%delivery_address%'
+
+    App\Services\User\Event\TokenWasCreatedSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Services\User\Event\EmailWasChangedSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Services\Domain\Event\DomainSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }

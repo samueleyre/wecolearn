@@ -4,9 +4,9 @@ namespace App\Services\User\Controller;
 
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\Domain\Service\DomainService;
+use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\Subscription;
 use App\Services\User\Entity\Token;
-use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\ChangeEmailService;
 use App\Services\User\Service\CreateTokenForChangingPasswordService;

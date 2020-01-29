@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 
@@ -16,16 +17,12 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 export class SendPasswordConfirmationEmailMobileComponent implements OnInit {
   public newEmail: string;
   public loading = false;
-  public error: string;
-  public success: string;
-
 
   constructor(
       private router: Router,
       private authenticationService: AuthenticationService,
-  ) {
-  }
-
+      private _toastr: ToastrService,
+  ) {}
 
   ngOnInit() {
     this.authenticationService.logout();
@@ -34,24 +31,24 @@ export class SendPasswordConfirmationEmailMobileComponent implements OnInit {
   sendEmail() {
     this.loading = true;
     this.authenticationService.sendEmailForPasswordReset(this.newEmail)
-        .subscribe(
-          (result) => {
-            this.loading = false;
-            if (result['error']) {
-              this.error = result['error'];
-            } else {
-              this.success = 'Un email vous a été envoyé pour réinitialiser votre mot de passe. ';
-              setTimeout(
-                () => {
-                  this.router.navigate(['/']);
-                },
-                4000); // tslint:disable-line no-magic-numbers
-            }
-          },
-          (error) => {
-            this.loading = false;
-            this.error = 'Une erreur est survenue.';
-          },
-        );
+      .subscribe(
+        (result) => {
+          this.loading = false;
+          if (result['error']) {
+            this._toastr.error(result['error']);
+          } else {
+            this._toastr.success('Un email vous a été envoyé pour réinitialiser votre mot de passe. ');
+            setTimeout(
+              () => {
+                this.router.navigate(['/']);
+              },
+              4000); // tslint:disable-line no-magic-numbers
+          }
+        },
+        (error) => {
+          this.loading = false;
+          this._toastr.success('Une erreur est survenue.');
+        },
+      );
   }
 }

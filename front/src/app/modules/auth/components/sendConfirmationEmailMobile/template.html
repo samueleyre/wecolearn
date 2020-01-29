@@ -1,6 +1,4 @@
 <form name="form" (ngSubmit)="f.form.valid && sendEmail()" #f="ngForm" [ngClass]="f.submitted ? 'was-validated':''">
-  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-  <div *ngIf="success" class="alert alert-success">{{success}}</div>
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
     <label for="email">Email</label>
     <input type="email" id="email" class="form-control showvalidity" name="email" [(ngModel)]="newEmail"

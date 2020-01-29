@@ -3,7 +3,7 @@
 namespace App\Services\User\Service;
 
 use App\Services\User\Entity\User;
-use App\Services\User\Events\EmailWasChanged;
+use App\Services\User\Event\EmailWasChanged;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ChangeEmailService
@@ -24,7 +24,7 @@ class ChangeEmailService
         $user->setEmail($email);
         $user->setEmailConfirmed(false);
         $this->userService->patch($user);
-        $this->dispatcher->dispatch(new EmailWasChanged($user));
+        $this->dispatcher->dispatch(new EmailWasChanged($user), EmailWasChanged::NAME);
         return $user;
     }
 }
