@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build --aot --configuration=$NODE_ENV && node precacheAndBuild.js",
+    "build:prod":"ng build --aot --prod && node precacheAndBuild.js",
     "precommit": "yarn lint",
     "lint": "ng lint",
     "serve": "ng serve --aot --host 0.0.0.0 && node precacheAndBuild.js",
