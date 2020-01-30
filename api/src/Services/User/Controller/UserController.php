@@ -74,7 +74,7 @@ class UserController extends AbstractController
 
     /**
      * @Post("/user/changesettings")
-     * @View( serializerGroups={"search"})
+     * @View( serializerGroups={"profile"})
      * )
      */
     public function changeSettingsAction(
@@ -95,7 +95,7 @@ class UserController extends AbstractController
                 } elseif ($searchEmail) {
                     $ret['duplicate'] = true;
                 } else {
-                    return $changeEmailService->process($user, $email);
+                    $user = $changeEmailService->process($user, $email);
                 }
             } elseif ($password = $request->get('password')) {
                 $user->setPlainPassword($password);
@@ -126,13 +126,14 @@ class UserController extends AbstractController
 
 
     /**
-     * @Get("confirmEmail/{token}")
+     * @Get("confirmEmail/{tokenString}")
+     * @View( serializerGroups={"profile"})
      */
-    public function confirmEmailAction(Token $token, UserService $userService, TokenService $tokenService)
+    public function confirmEmailAction($tokenString, UserService $userService, TokenService $tokenService)
     {
         $token = $this->getDoctrine()
             ->getRepository(Token::class)
-            ->findOneBy(['token' => $token, 'type' => TokenConstant::$types['CONFIRMEMAIL']]);
+            ->findOneBy(['token' => $tokenString, 'type' => TokenConstant::$types['CONFIRMEMAIL']]);
 
         $ret = [];
 
