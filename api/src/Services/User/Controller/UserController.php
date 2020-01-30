@@ -17,6 +17,7 @@ use App\Services\User\Service\UserService;
 use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -34,6 +35,14 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserController extends AbstractController
 {
+
+    private $userManager;
+
+    public function __construct(UserManagerInterface $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
 
     /**
      * @Get("user/matchs")
@@ -73,7 +82,6 @@ class UserController extends AbstractController
         TokenStorageInterface $tokenStorage,
         ChangeEmailService $changeEmailService
     ) {
-        $userManager = $this->get('fos_user.user_manager');
         $user = $tokenStorage->getToken()->getUser();
         $ret = [];
         try {
@@ -93,7 +101,7 @@ class UserController extends AbstractController
                 $user->setPlainPassword($password);
 
                 try {
-                    $userManager->updateUser($user);
+                    $this->userManager->updateUser($user);
                     $ret['changed'] = true;
                 } catch (NotNullConstraintViolationException $e) {
                     // Found the name of missed field
@@ -281,7 +289,7 @@ class UserController extends AbstractController
                 if ($tokenEntity) {
                     $user = $tokenEntity->getUser();
                     $user->setPlainPassword($password);
-                    $this->get('fos_user.user_manager')->updateUser($user);
+                    $this->userManager->updateUser($user);
                     $tokenService
                         ->remove($tokenEntity);
 
@@ -373,21 +381,21 @@ class UserController extends AbstractController
 
 
 
-    /**
-     * @Get("/user/notified")
-     */
-    public function userNotifiedAction(TokenStorageInterface $tokenStorage)
-    {
-        $ret = [];
-
-        $user = $tokenStorage->getToken()->getUser();
-
-        $user->setUserNotified(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
-        $ret['userNotified'] = $this->get('fos_user.user_manager')->updateUser($user);
-        $ret['success'] = true;
-
-        return [];
-    }
+//    /**
+//     * @Get("/user/notified")
+//     */
+//    public function userNotifiedAction(TokenStorageInterface $tokenStorage)
+//    {
+//        $ret = [];
+//
+//        $user = $tokenStorage->getToken()->getUser();
+//
+//        $user->setUserNotified(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+//        $ret['userNotified'] = $this->get('fos_user.user_manager')->updateUser($user);
+//        $ret['success'] = true;
+//
+//        return [];
+//    }
 
     /**
      * @Post("/user/notification/check-if-exist-or-add-and-subscribe")

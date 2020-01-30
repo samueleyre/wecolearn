@@ -72,11 +72,10 @@ export class ClientService {
     return (undefined !== slackAccount) ? slackAccount.account_id : null;
   }
 
-
-  /**
-   * Update userNotified entry for user
-   */
-  public userNotified(): Observable<object> {
-    return this.http.get('/api/user/notified');
-  }
+  // /**
+  //  * Update userNotified entry for user
+  //  */
+  // public userNotified(): Observable<object> {
+  //   return this.http.get('/api/user/notified');
+  // }
 }
