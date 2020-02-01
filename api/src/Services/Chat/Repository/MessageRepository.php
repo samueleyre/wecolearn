@@ -6,12 +6,16 @@ use App\Services\Chat\Entity\Message;
 use App\Services\User\Entity\User;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Psr\Log\LoggerInterface;
 
 class MessageRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $logger;
+
+    public function __construct(ManagerRegistry $registry, LoggerInterface $logger)
     {
         parent::__construct($registry, Message::class);
+        $this->logger = $logger;
     }
 
     public function findMessages(User $client, User $friend)
@@ -126,16 +130,12 @@ class MessageRepository extends ServiceEntityRepository
         foreach ($messages as $message) {
             $receiver = $message->getReceiver();
 
-            if (null !== $message->getDeleted()) { // check if user accepted to receive notifications
+            if (null !== $message->getDeleted()) {
                 continue;
             }
 
-            if (!$receiver) {
-                //TODO bug fix in database, shoudldn t happen
-                continue;
-            }
-
-            if (!$receiver->getEmailNotifications()) { // check if user accepted to receive notifications
+            // check if user accepted to receive notifications
+            if (!$receiver->getEmailNotifications()) {
                 continue;
             }
 
@@ -143,7 +143,6 @@ class MessageRepository extends ServiceEntityRepository
             if (isset($ret[$receiverId])) {
                 $ret[$receiverId]['messages'][] = $message;
             } else {
-//          $ret[$receiverId]["receiverId"] = $receiverId;
                 $ret[$receiverId]['messages'] = [$message];
                 $ret[$receiverId]['email'] = $receiver->getEmail();
                 $ret[$receiverId]['firstname'] = $receiver->getFirstName();

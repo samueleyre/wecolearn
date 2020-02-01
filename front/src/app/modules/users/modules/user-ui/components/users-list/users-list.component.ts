@@ -63,7 +63,7 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
   }
 
   getTags(user: User, type: TagTypeEnum): string {
-    return user.tags.filter(tag => tag.type === type).map(tag => tag.name).join();
+    return user.tags.filter(tag => tag.type === type).map(tag => tag.name).join(', ');
   }
 
   public getFrenchRoles(roles: UserRoleEnum[]): string {

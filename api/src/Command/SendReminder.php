@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Services\Chat\Entity\Message;
 use App\Services\Chat\Service\MessageService;
 use Psr\Log\LoggerInterface;
 use Shapecode\Bundle\CronBundle\Annotation\CronJob;
@@ -9,7 +10,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\_Chat\DomainModel\Message\Message;
 use Doctrine\ORM\EntityManager;
 use App\Services\Chat\Constant\EmailConstant;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,8 +49,7 @@ class SendReminder extends Command
 
     protected function execute (InputInterface $input, OutputInterface $output) {
 
-      $this->logger->info('In send reminder');
-
+//      get messages sent at least yesterday, not yet read and not yet notified.
       $MessagesSortedClients = $this->em
         ->getRepository(Message::class)
         ->getUnReadMessagesByUser();
@@ -73,9 +72,10 @@ class SendReminder extends Command
 
         $this->messageService->setReminderDate($clientId);
 
-//        $output->writeln( $client["email"]);
-//        $output->writeln( json_encode($messages));
-//        $output->writeln( $client["firstname"]);
+//          $this->logger->debug( $client["email"]);
+//          $this->logger->debug( 'messages', [$messages]);
+//          $this->logger->debug( $client["firstname"]);
+
         $return = $this->emailService
           ->setData(EmailConstant::$Ids["MESSAGE_NOTIFS"],
             [
@@ -87,9 +87,7 @@ class SendReminder extends Command
           )
           ->sendEmail();
 
-//        $output->writeln( json_encode($return));
-//        $output->writeln( "-------------------");
-
+//          $this->logger->debug( 'return', [$return]);
 
       }
     }
