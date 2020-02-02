@@ -89,3 +89,7 @@ services:
     App\Services\Domain\Event\DomainSubscriber:
         tags:
             - { name: 'kernel.event_subscriber' }
+
+    App\Command\SendReminder:
+        arguments:
+            $environment: '%environment%'

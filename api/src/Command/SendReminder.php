@@ -27,14 +27,16 @@ class SendReminder extends Command
   private $emailService;
   private $messageService ;
   private $logger;
+  private $environment;
 
-  public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService, LoggerInterface $logger )
+  public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService, string $environment, LoggerInterface $logger )
   {
 
     $this->em = $em;
     $this->emailService = $emailService;
     $this->messageService  = $messageService ;
     $this->logger = $logger;
+    $this->environment = $environment;
     parent::__construct();
 
   }
@@ -75,6 +77,10 @@ class SendReminder extends Command
 //          $this->logger->debug( $client["email"]);
 //          $this->logger->debug( 'messages', [$messages]);
 //          $this->logger->debug( $client["firstname"]);
+
+        if ($this->environment !== 'prod') {
+            $client["email"] = "samueleyre@wecolearn.com";
+        }
 
         $return = $this->emailService
           ->setData(EmailConstant::$Ids["MESSAGE_NOTIFS"],
