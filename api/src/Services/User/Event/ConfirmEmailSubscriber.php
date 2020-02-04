@@ -41,10 +41,8 @@ class ConfirmEmailSubscriber implements EventSubscriberInterface
         $token = $this->tokenService
             ->setNewToken($user, TokenConstant::$types["CONFIRMEMAIL"], true);
 
-        if( 'prod' === $this->container->getParameter("environment") ) {
-            $this->emailService
-                ->setData(3, ["TOKEN" => $token->getToken(), "HOST" => $this->domainService->getHost(), "USERNAME" => $user->getUsername()], $user->getEmail(), $this->delivery_address)
-                ->sendEmail();
-        }
+        $this->emailService
+            ->setData(9, ["TOKEN" => $token->getToken(), "HOST" => $this->domainService->getHost(), "FIRSTNAME" => $user->getFirstName()], $user->getEmail(), $this->delivery_address)
+            ->sendEmail();
     }
 }

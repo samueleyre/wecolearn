@@ -18,13 +18,10 @@ const routes: Routes = [
             { path: 'subscribe', component: AuthOnboardingPageComponent },
             { path: 'password/email', component: SendPasswordConfirmationEmailPageComponent },
             { path: 'password/reset', component: ResetPasswordFormPageComponent },
-
+            { path: 'confirm', component: ConfirmEmailComponent },
     ],
   },
-    { path: 'signin', component: LandingPageComponent },
-    { path: 'confirmemail', component: ConfirmEmailComponent },
-
-
+  { path: 'signin', component: LandingPageComponent },
 ];
 
 @NgModule({

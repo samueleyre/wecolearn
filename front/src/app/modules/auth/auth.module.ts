@@ -30,6 +30,7 @@ import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/compon
 import { SendPasswordConfirmationEmailComponent } from './components/sendConfirmationEmail/component';
 import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirmationEmail/component';
 import { ResetPasswordFormComponent } from './components/passwordResetForm/component';
+import {MaterialModule} from "~/shared/modules/material/material.module";
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { ResetPasswordFormComponent } from './components/passwordResetForm/compo
     MatInputModule,
     MatIconModule,
     FooterModule,
+    MaterialModule,
   ],
 })
 export class AuthModule {
