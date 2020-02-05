@@ -41,7 +41,7 @@ class EmailWasChangedSubscriber implements EventSubscriberInterface
         $user->addEmailToken($token);
 
         $this->emailService
-            ->setData(6, [
+            ->setData(10, [
                 "HOST" => $this->host,
                 "TOKEN" => $token->getToken(),
                 "USERNAME"=>$user->getUsername()],
