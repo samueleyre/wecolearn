@@ -26,16 +26,14 @@ class SendReminder extends Command
   private $em;
   private $emailService;
   private $messageService ;
-  private $logger;
   private $environment;
 
-  public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService, string $environment, LoggerInterface $logger )
+  public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService, string $environment )
   {
 
     $this->em = $em;
     $this->emailService = $emailService;
     $this->messageService  = $messageService ;
-    $this->logger = $logger;
     $this->environment = $environment;
     parent::__construct();
 
@@ -46,7 +44,6 @@ class SendReminder extends Command
         $this
             ->setName('app:sendReminder')
             ->setDescription('Send Messages');
-
     }
 
     protected function execute (InputInterface $input, OutputInterface $output) {
@@ -57,32 +54,26 @@ class SendReminder extends Command
         ->getUnReadMessagesByUser();
 
       foreach ($MessagesSortedClients as $clientId => $client) {
+
         $messages = "";
         $i = 0;
+
         while ($i <= 2 && isset($client["messages"][$i])):
           $MESSAGE = $client["messages"][$i]->getMessage();
           $FIRSTNAME = $client["messages"][$i]->getSender()->getFirstname();
           $TIME = $client["messages"][$i]->getCreated()->format('H:i');
           $DATE = $client["messages"][$i]->getCreated()->format('d-m-Y');
-
           $messages.= '<p><b>'.$FIRSTNAME.'</b> : "'.$MESSAGE.'", le '.$DATE.' à '.$TIME.'</p><br>';
-
           $i++;
-
-
         endwhile;
 
         $this->messageService->setReminderDate($clientId);
-
-//          $this->logger->debug( $client["email"]);
-//          $this->logger->debug( 'messages', [$messages]);
-//          $this->logger->debug( $client["firstname"]);
 
         if ($this->environment !== 'prod') {
             $client["email"] = "samueleyre@wecolearn.com";
         }
 
-        $return = $this->emailService
+        $this->emailService
           ->setData(EmailConstant::$Ids["MESSAGE_NOTIFS"],
             [
               "MESSAGES" => $messages,
@@ -92,8 +83,6 @@ class SendReminder extends Command
             $client["email"]
           )
           ->sendEmail();
-
-//          $this->logger->debug( 'return', [$return]);
 
       }
     }
