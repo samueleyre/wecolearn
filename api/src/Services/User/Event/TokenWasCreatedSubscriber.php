@@ -19,18 +19,24 @@ class TokenWasCreatedSubscriber implements EventSubscriberInterface
 
     private $emailService;
     private $domainService;
-    private $logger;
+    private $host;
 
-    public function __construct(EmailService $emailService, DomainService $domainService, LoggerInterface $logger ) {
+    public function __construct(
+        EmailService $emailService,
+        DomainService $domainService,
+        LoggerInterface $logger,
+        string $host
+    ) {
         $this->emailService = $emailService;
         $this->domainService = $domainService;
         $this->logger = $logger;
+        $this->host = $host;
     }
 
     public function handle(TokenWasCreated $event ) {
         $this->emailService
             ->setData(7, [
-                "HOST" => $this->domainService->getHost(),
+                "HOST" => $this->host,
                 "TOKEN" => $event->getToken()->getToken(),
                 "USERNAME" => $event->getUser()->getUsername()],
                 $event->getUser()->getEmail())

@@ -57,8 +57,7 @@ class UserController extends AbstractController
         Request $request,
         TokenStorageInterface $tokenStorage,
         DomainService $domainService,
-        SearchService $searchService,
-        LoggerInterface $logger
+        SearchService $searchService
     ) {
         $first = $request->query->get('first', 0);
         $max = $request->query->get('max', 6);
@@ -127,7 +126,6 @@ class UserController extends AbstractController
                     // Found the name of duplicate field
                     $ret['duplicate'] = true;
                 } catch (\Exception $e) {
-                    //for debugging you can do like this
                     dump($e->getMessage());
                 }
             }
@@ -163,8 +161,7 @@ class UserController extends AbstractController
                 $ret['error'] = 'token_already_confirmed';
             }
 
-            $tokenService
-                ->remove($token);
+            $tokenService->remove($token);
         } else {
             $ret['error'] = 'confirmation_token_not_found';
         }

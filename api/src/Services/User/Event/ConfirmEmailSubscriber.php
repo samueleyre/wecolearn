@@ -14,17 +14,19 @@ class ConfirmEmailSubscriber implements EventSubscriberInterface
 
     private $tokenService;
     private $emailService;
-    private $delivery_address;
-    private $domainService;
     private $container;
+    private $host;
 
-    public function __construct( EmailService $emailService, TokenService $tokenService, DomainService $domainService,ContainerInterface $container, $delivery_address ) {
+    public function __construct(
+        EmailService $emailService,
+        TokenService $tokenService,
+        ContainerInterface $container,
+        string $host
+    ) {
         $this->tokenService = $tokenService;
         $this->emailService = $emailService;
-        $this->delivery_address = $delivery_address;
-        $this->domainService = $domainService;
         $this->container = $container;
-
+        $this->host = $host;
     }
 
     public static function getSubscribedEvents()
@@ -42,7 +44,15 @@ class ConfirmEmailSubscriber implements EventSubscriberInterface
             ->setNewToken($user, TokenConstant::$types["CONFIRMEMAIL"], true);
 
         $this->emailService
-            ->setData(9, ["TOKEN" => $token->getToken(), "HOST" => $this->domainService->getHost(), "FIRSTNAME" => $user->getFirstName()], $user->getEmail(), $this->delivery_address)
+            ->setData(
+                9,
+                [
+                    "TOKEN" => $token->getToken(),
+                    "HOST" => $this->host,
+                    "FIRSTNAME" => $user->getFirstName()
+                ],
+                $user->getEmail()
+            )
             ->sendEmail();
     }
 }

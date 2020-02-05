@@ -73,16 +73,20 @@ services:
             - { name: 'kernel.event_subscriber' }
 
     App\Services\User\Event\ConfirmEmailSubscriber:
+        arguments:
+            $host: '%host%'
         tags:
             - { name: 'kernel.event_subscriber' }
-        arguments:
-            $delivery_address: '%delivery_address%'
 
     App\Services\User\Event\TokenWasCreatedSubscriber:
+        arguments:
+            $host: '%host%'
         tags:
             - { name: 'kernel.event_subscriber' }
 
     App\Services\User\Event\EmailWasChangedSubscriber:
+        arguments:
+            $host: '%host%'
         tags:
             - { name: 'kernel.event_subscriber' }
 
@@ -93,3 +97,4 @@ services:
     App\Command\SendReminder:
         arguments:
             $environment: '%environment%'
+

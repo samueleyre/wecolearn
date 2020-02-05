@@ -37,10 +37,6 @@ class DomainService
             }
         }
 
-        if ('dev' === $this->environment) {
-            return DomainConstant::$mainDomain;
-        }
-
         return DomainConstant::$mainDomain;
     }
 

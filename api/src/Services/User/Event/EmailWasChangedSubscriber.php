@@ -23,13 +23,13 @@ class EmailWasChangedSubscriber implements EventSubscriberInterface
     private $em;
     private $tokenService;
     private $emailService;
-    private $domainService;
+    private $host;
 
-    public function __construct(EntityManagerInterface $em , TokenService $tokenService, EmailService $emailService , DomainService $domainService ) {
+    public function __construct(EntityManagerInterface $em , TokenService $tokenService, EmailService $emailService, string $host) {
         $this->em = $em;
         $this->tokenService = $tokenService;
         $this->emailService = $emailService;
-        $this->domainService = $domainService;
+        $this->host = $host;
     }
 
     public function handle(EmailWasChanged $event ) {
@@ -42,7 +42,7 @@ class EmailWasChangedSubscriber implements EventSubscriberInterface
 
         $this->emailService
             ->setData(6, [
-                "HOST"=>$this->domainService->getHost(),
+                "HOST" => $this->host,
                 "TOKEN" => $token->getToken(),
                 "USERNAME"=>$user->getUsername()],
                 $user->getEmail())
