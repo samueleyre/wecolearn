@@ -23,8 +23,7 @@ class TokenService
         ->findOneBy(["user"=>$user, "type"=> $type]);
 
             if ($oldToken) {
-                $this
-          ->remove($oldToken);
+                $this->remove($oldToken);
             }
         }
 
@@ -34,8 +33,7 @@ class TokenService
         $token->setUser($user);
         $token->setType($type);
 
-        $this
-    ->post($token);
+        $this->post($token);
 
         return $token;
     }

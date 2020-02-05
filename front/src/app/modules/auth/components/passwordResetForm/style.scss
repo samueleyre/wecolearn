@@ -1,9 +1,7 @@
 form {
   margin-top: 30px;
-
   input {
     transition: .2s;
-
     &:focus,
     &:active {
       border: 2px solid #ffc600 !important;
@@ -22,3 +20,4 @@ form {
     }
   }
 }
+

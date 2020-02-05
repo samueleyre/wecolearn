@@ -1,13 +1,42 @@
-<form name="form" (ngSubmit)="f.form.valid && changePassword()" #f="ngForm" novalidate>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+<form [formGroup]="newPasswordForm">
+  <div class="form-group">
     <label for="password">Nouveau mot de passe</label>
-    <input type="password" id="password" class="form-control showvalidity" name="password"
-           [(ngModel)]="newPassword" #password="ngModel" required/>
-    <div *ngIf="f.submitted && !password.valid" class="help-block">Le mot de passe est obligatoire</div>
-    <password-strength-bar [passwordToCheck]="newPassword" [barLabel]="barLabel"></password-strength-bar>
+    <input type="password" id="password" #passwordValue class="form-control showvalidity" name="password"
+           (input)="onPasswordInput()" formControlName="new_password" required/>
+    <mat-error *ngIf="password.touched && password.hasError('required')" >Le mot de passe est invalide</mat-error>
+    <mat-error *ngIf="password.hasError('minlength')" >
+      Le mot de passe doit faire au minimum 6 caractères.
+    </mat-error>
+    <mat-error *ngIf="password.hasError('maxlength')" >
+      Le mot de passe ne peut pas faire plus de 128 caractères.
+    </mat-error>
+    <password-strength-bar [passwordToCheck]="passwordValue.value"></password-strength-bar>
+  </div>
+  <div class="form-group">
+    <label for="passwordVerification">Confirmation du mot de passe</label>
+    <input type="password" id="passwordVerification" class="form-control showvalidity" name="passwordVerification"
+           (input)="onPasswordInput()" formControlName="password_verification" required/>
+    <mat-error *ngIf="password.touched && passwordVerification.hasError('required')">Le mot de passe est invalide</mat-error>
+    <mat-error *ngIf="passwordVerification.hasError('minlength')" >
+      Le mot de passe doit faire au minimum 6 caractères.
+    </mat-error>
+    <mat-error *ngIf="passwordVerification.hasError('maxlength')" >
+      Le mot de passe ne peut pas faire plus de 128 caractères.
+    </mat-error>
+    <mat-error
+      *ngIf="
+            passwordVerification.touched &&
+            passwordVerification.hasError('passwordMismatch') &&
+            !passwordVerification.hasError('required') &&
+            !passwordVerification.hasError('minLength') &&
+            !passwordVerification.hasError('maxLength')
+          "
+    >
+      Les mots de passe ne correspondent pas.
+    </mat-error>
   </div>
   <div class="form-group text-center">
-    <button type="submit" [disabled]="loading" class="btn btn-primary">
+    <button type="submit" [disabled]="!newPasswordForm.valid" (click)="changePassword()" class="btn btn-primary">
       <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Envoyer
     </button>

@@ -25,7 +25,7 @@ const wcRoutes: Routes = [
   {
     path: 'doc', loadChildren: () => import('./modules/doc/doc.module').then(mod => mod.DocModule),
   },
-  { path: 'communities', component: CommunitiesComponent },
+  // { path: 'communities', component: CommunitiesComponent },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: 'dashboard', canActivate: [AuthGuard] },
 ];

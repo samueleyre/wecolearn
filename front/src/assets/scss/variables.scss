@@ -55,4 +55,12 @@ $homecolbg : #fffaf3;
 $smScreen : 768px;
 $mdScreen : 992px;
 
+@mixin screenSize($point) {
 
+  @if $point == "small" {
+    @media (max-width: #{$smScreen}) { @content; }
+  }
+  @else if $point == "medium" {
+    @media (max-width: #{$mdScreen}) { @content; }
+  }
+}

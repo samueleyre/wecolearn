@@ -11,7 +11,7 @@ import { Component, OnChanges, Input, SimpleChange, Injectable } from '@angular/
 })
 export class PasswordStrengthBarComponent implements OnChanges {
   @Input() passwordToCheck: string;
-  @Input() barLabel: string;
+  @Input() barLabel = 'Difficulté';
   bar0: string;
   bar1: string;
   bar2: string;

@@ -10,7 +10,7 @@ import { NAV } from '~/config/navigation/nav';
   styleUrls: ['./style.scss'],
 })
 
-export class MainFooterComponent{
+export class MainFooterComponent {
   faceBookLink = SOCIALS.faceBookLink;
   twitterLink = SOCIALS.twitterLink;
   telegramLink = SOCIALS.telegramLink;
@@ -20,4 +20,6 @@ export class MainFooterComponent{
   aboutLink = NAV.about;
   homeLink = NAV.home;
   mentionLegalesLink = NAV.mentionsLegales;
+
+  now = new Date();
 }

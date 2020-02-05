@@ -1,6 +1,7 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { APP_BASE_HREF } from '@angular/common';
+import fr from '@angular/common/locales/fr';
+import { APP_BASE_HREF, registerLocaleData } from '@angular/common';
 import { MatNativeDateModule, MatSliderModule } from '@angular/material';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -17,11 +18,7 @@ import { PushSubscriptionService } from '~/shared/components/push-subscription/s
 import { MessagerieService } from '~/core/services/messagerie/service';
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
 import { HeaderMobileComponent } from '~/core/layouts/header-mobile/component';
-import { MenuMobileService } from '~/core/services/layout/menu-mobile';
-import { MessagesService } from '~/modules/chat/services/messages';
-import { Threads } from '~/modules/chat/services/threads';
 import { FooterMobileComponent } from '~/core/layouts/footer-mobile/component';
-import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { CoreModule } from '~/core/core.module';
 import { SharedModule } from '~/shared/shared.module';
 
@@ -39,9 +36,11 @@ import { WcRoutingModule } from './app-routing.module';
 import { CopyComponent } from './shared/components/copy/component';
 import { SafeHtmlPipe } from './shared/pipes/safeHtmlPipe/pipe';
 import { AutofocusDirective } from './modules/search/directives/input/directive';
-// shares services
+// shared services
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
+
+registerLocaleData(fr);
 
 @NgModule({
   imports: [
@@ -69,21 +68,16 @@ import { getBaseLocation } from './core/services/layout/baseUrl';
     NotFoundComponent,
     CommunitiesComponent,
     CommunityComponent,
-
         // Pipes
     SafeHtmlPipe,
-
-
         // Directives
     AutofocusDirective,
-
         // Layout
     MainComponent,
     MenuComponent,
     HeaderMobileComponent,
     HeaderComponent,
     FooterMobileComponent,
-
         //  tools
     CopyComponent,
   ],

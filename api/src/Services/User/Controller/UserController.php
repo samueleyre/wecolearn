@@ -19,6 +19,7 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
+use PhpParser\Error;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,16 +32,20 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Delete;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserController extends AbstractController
 {
 
     private $userManager;
+    private $encoderService;
 
-    public function __construct(UserManagerInterface $userManager)
+    public function __construct(UserManagerInterface $userManager, EncoderFactoryInterface $encoderService)
     {
         $this->userManager = $userManager;
+        $this->encoderService = $encoderService;
     }
 
 
@@ -97,8 +102,20 @@ class UserController extends AbstractController
                 } else {
                     $user = $changeEmailService->process($user, $email);
                 }
-            } elseif ($password = $request->get('password')) {
-                $user->setPlainPassword($password);
+            } elseif (
+                ($password = $request->get('password')) &&
+                ($newPassword = $request->get('newPassword'))
+            ) {
+
+                $encoder = $this->encoderService->getEncoder($user);
+
+                if (!$encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
+                    return [
+                        'wrong'=> true,
+                    ];
+                }
+
+                $user->setPlainPassword($newPassword);
 
                 try {
                     $this->userManager->updateUser($user);
@@ -111,7 +128,7 @@ class UserController extends AbstractController
                     $ret['duplicate'] = true;
                 } catch (\Exception $e) {
                     //for debugging you can do like this
-                    $ret['error'] = 'error'.$e;
+                    dump($e->getMessage());
                 }
             }
         } catch (\Exception $e) {
@@ -259,7 +276,7 @@ class UserController extends AbstractController
                 if ($res instanceof Token) {
                     $ret['success'] = 'Email envoyé';
                 } else {
-                    $ret['error'] = 'Email non trouvé';
+                    $ret['error'] = 'NOT_FOUND';
                 }
             }
         } catch (\Exception $e) {

@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 
+import { environment } from '../../../../../environments/environment';
+
 
 @Component({
   selector: 'form-pwd-email',
@@ -17,7 +19,7 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 export class SendPasswordConfirmationEmailComponent implements OnInit {
   public newEmail: string;
   public loading = false;
-
+  public pattern;
 
   constructor(
       private router: Router,
@@ -29,6 +31,8 @@ export class SendPasswordConfirmationEmailComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.logout();
+    this.pattern = (environment.production) ?
+      '[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}' : '[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
   }
 
   sendEmail() {
@@ -38,14 +42,11 @@ export class SendPasswordConfirmationEmailComponent implements OnInit {
           (result) => {
             this.loading = false;
             if (result['error']) {
-              this._toastr.error(result['error']);
+              this._toastr.error(`Cet email n'est pas associé à un utilisateur actif.`);
             } else {
-              this._toastr.success('Un email vous a été envoyé pour réinitialiser votre mot de passe.');
-              setTimeout(
-                () => {
-                  this.router.navigate(['/']);
-                },
-                4000); // tslint:disable-line no-magic-numbers
+              this.router.navigate(['/']).then(() => {
+                this._toastr.success('Un email vous a été envoyé pour réinitialiser votre mot de passe.');
+              });
             }
           },
           (error) => {

@@ -2,8 +2,8 @@
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
     <label for="email">Email</label>
     <input type="email" id="email" class="form-control showvalidity" name="email" [(ngModel)]="newEmail"
-           #email="ngModel" required pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"/>
-    <div *ngIf="f.submitted && !email.pristine && !email.valid" class="help-block">Veuillez renseigner un email valide
+           #email="ngModel" required pattern="{{pattern}}"/>
+    <div *ngIf="f.submitted && !email.pristine && !email.valid" class="invalid-feedback">Veuillez renseigner un email valide
     </div>
   </div>
   <div class="form-group text-center">

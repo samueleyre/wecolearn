@@ -12,6 +12,7 @@ use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\User;
 use App\Services\User\Event\TokenWasCreated;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CreateTokenForChangingPasswordService
@@ -20,31 +21,38 @@ class CreateTokenForChangingPasswordService
     private $tokenService;
     private $em;
     private $dispatcher;
+    private $logger;
 
 
     public function __construct(
         TokenService $tokenService,
         EntityManagerInterface $em,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
+        LoggerInterface $logger
     ) {
         $this->tokenService = $tokenService;
         $this->em = $em;
         $this->dispatcher = $dispatcher;
+        $this->logger = $logger;
     }
 
     public function process(string $email)
     {
 
+        $this->logger->debug('email', [$email]);
+
         $user = $this->em->getRepository(User::class)
             ->findOneBy(["email" => $email]);
+
+        $this->logger->debug('user', [$user]);
 
         if ($user) {
             $token = $this->tokenService->setNewToken($user, TokenConstant::$types["CONFIRMEMAILPASSWORD"], true);
 
-            $user->addEmailToken($token);
+            $this->logger->debug('token', [$token]);
 
-            //$userService
-            //    ->patch($user, $user->getId());
+
+            $user->addEmailToken($token);
 
             $this->em->merge($user);
             $this->em->flush();
