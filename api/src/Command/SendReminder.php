@@ -17,7 +17,7 @@ use App\Services\Chat\Service\EmailService;
 
 
 /**
- * @CronJob("0 16 * * *")
+ * @CronJob("*\/60 * * * *")
  * Will be executed every day at 4 pm
  */
 class SendReminder extends Command
