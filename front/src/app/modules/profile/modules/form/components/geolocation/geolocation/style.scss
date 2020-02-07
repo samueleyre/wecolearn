@@ -1,5 +1,16 @@
 @import 'variables';
 
-agm-map {
-  height: 300px;
+.GeoPosition {
+  mat-form-field {
+    width: 100%;
+  }
+  &-actions {
+    margin: 0 0 10px;
+  }
+}
+
+.map {
+  height: 400px;
+  width: 100%;
+  margin: 5px 0;
 }

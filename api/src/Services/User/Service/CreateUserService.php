@@ -48,6 +48,7 @@ class CreateUserService
         $user->setShowProfil(true);
         $user->setEmailConfirmed(false);
         $user->setEmailNotifications(true);
+        $user->setIntensity(5);
         $user->setUsername($user->getEmail()); // todo: remove this someday
         $user = $this->generateUrlService->process($user);
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));

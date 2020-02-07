@@ -10,9 +10,7 @@ export class ProfileFormGeolocationComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Output() onChange = new EventEmitter();
 
-  ngOnInit(): void {
-    //
-  }
+  ngOnInit(): void {}
 
   latitudeChange(latitude) {
     this.parentForm.controls.latitude.setValue(latitude);

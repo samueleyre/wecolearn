@@ -20,6 +20,7 @@ import { SlackTeam } from '~/core/entities/slackTeam/entity';
 import { SlackAccount } from '~/core/entities/slackAccount/entity';
 import { UrlService } from '~/core/services/url';
 import { environment } from '~/../environments/environment';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 
 @Component({
@@ -27,21 +28,17 @@ import { environment } from '~/../environments/environment';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-export class ProfileSettingsComponent implements OnInit {
+export class ProfileSettingsComponent extends DestroyObservable implements OnInit {
   @Input()
   set _user(user) {
     this.user = user;
   }
 
-  public zoom = 4;
   public user: User;
-
   public tags = [];
 
 
   private webPath: string;
-  uploadError: object = {};
-  private tagTypes = ['learn_tags', 'know_tags', 'teach_tags'];
   loading = false;
 
 
@@ -64,6 +61,7 @@ export class ProfileSettingsComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private fb: FormBuilder,
   ) {
+    super();
     this.tagService = tagService;
     this.clientService = clientService;
   }
@@ -86,6 +84,10 @@ export class ProfileSettingsComponent implements OnInit {
   ngOnInit() {
     this.webPath = UrlService.updateUrl('/');
     this.load();
+    this.userForm.valueChanges.subscribe(() => {
+      console.log(this.userForm);
+      this.submit();
+    });
   }
 
   load(): void {

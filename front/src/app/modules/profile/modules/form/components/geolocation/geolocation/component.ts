@@ -1,13 +1,16 @@
 import {
   Component,
-  Injectable,
   Input,
-  Output,
-  EventEmitter, OnInit, ViewChild, ElementRef, NgZone,
+  OnInit,
 } from '@angular/core';
+import * as L from 'leaflet';
+import { filter, switchMap } from 'rxjs/operators';
 
-declare const google: any;
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { merge, Observable } from 'rxjs';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
+import { GeoDataInterface, ProfileGeoService } from '~/modules/profile/services/profile-geo.service';
 
 @Component({
   selector: 'app-geolocation',
@@ -16,81 +19,121 @@ declare const google: any;
 
 })
 export class ProfileGeolocationComponent implements OnInit {
-  @Input() public latitude: number;
-  @Input() public longitude: number;
-  public zoom = 14;
+  @Input() parentForm: FormGroup; // with "latitude" & "longitude" controls
+  private map: L.Map;
+  private marker: L.Marker;
+  public addressCtrl = new FormControl();
 
-  @Output() latitudeChange = new EventEmitter<number>();
-  @Output() longitudeChange = new EventEmitter<number>();
+  private focusDebounceTimer;
+  private selectedAddress: GeoDataInterface;
+  public showMap = false;
 
-  // @ViewChild('search') searchElementRef: ElementRef;
+  public foundAddresses: Observable<GeoDataInterface[]>;
 
   constructor(
-      // private mapsAPILoader: MapsAPILoader,
-      private ngZone: NgZone,
-  ) {}
-
+     private _geoService: ProfileGeoService,
+     private _fb: FormBuilder,
+  ) {
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: '/assets/img/marker-icon-2x.png',
+      iconUrl: '/assets/img/marker-icon.png',
+      shadowUrl: '/assets/img/marker-shadow.png',
+    });
+  }
 
   ngOnInit() {
-    //
+    this.initMap();
+
+    this.foundAddresses = this.addressCtrl.valueChanges.pipe(
+      filter(val => !!val),
+      switchMap(value => this._geoService.findGeoDataByPostCode(value)),
+    );
+
+    merge(
+      this.latitudeControl.valueChanges,
+      this.longitudeControl.valueChanges,
+    ).subscribe((val) => {
+      this.loadMapChanges();
+    });
+
+    // init lat and lon marker
+    this.loadMapChanges();
   }
 
   ngAfterViewInit() {
-    this.load();
+    this.showMap = true;
   }
 
   public setCurrentPosition() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        this.update();
+        this.update(position.coords.latitude, position.coords.longitude);
       });
     }
   }
 
-  private load() {
-    // this.mapsAPILoader.load().then(() => {
-    //   // console.log("got element", <HTMLInputElement>document.getElementById('searchGeolocation'))
-    //
-    //   const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-    //     types: ['address'],
-    //   });
-    //
-    //
-    //   autocomplete.addListener('place_changed', () => {
-    //     this.ngZone.run(() => {
-    //       // get the place result
-    //       const place = autocomplete.getPlace();
-    //
-    //       // verify result
-    //       if (place.geometry === undefined || place.geometry === null) {
-    //         return;
-    //       }
-    //
-    //       // set latitude, longitude and zoom
-    //       this.latitude = place.geometry.location.lat();
-    //       this.longitude = place.geometry.location.lng();
-    //       this.update();
-    //     });
-    //   });
-    // });
+  onAddressSelect(territory: MatAutocompleteSelectedEvent) {
+    clearTimeout(this.focusDebounceTimer);
+    this.selectedAddress = territory.option.value;
+    this.addressCtrl.setValue(territory.option.value.address);
+    this.update(territory.option.value.lat, territory.option.value.lon);
   }
 
-  private update() {
-    this.latitudeChange.emit(this.latitude);
-    this.longitudeChange.emit(this.longitude);
+  public inputLostFocus() {
+    clearTimeout(this.focusDebounceTimer);
+    this.focusDebounceTimer = setTimeout(
+      () => {
+        this.addressCtrl.setValue(this.selectedAddress ? this.selectedAddress.address : '');
+      },
+      300);
   }
 
-    // private ngOnChanges(changes:any) {
-    //     console.log(changes);
-    //     if (!changes.latitude.firstChange || !changes.latitude.firstChange) {
-    //         let newLongitude = changes.longitude.currentValue;
-    //         let newLatitude = changes.longitude.currentValue;
-    //         this.latitude = Number(newLatitude);
-    //         this.longitude = Number(newLongitude);
-    //         // this.load();
-    //     }
-    //
-    // }
+  private loadMap(coordinates: { lat: number, lon: number }) {
+    this.map.setView(
+      [coordinates.lat, coordinates.lon],
+      15,
+    );
+    if (!this.marker) {
+      // init marker
+      this.marker = L.marker(L.latLng(coordinates.lat, coordinates.lon)).addTo(this.map);
+    } else {
+      this.marker.setLatLng(L.latLng(coordinates.lat, coordinates.lon));
+    }
+  }
+
+  private initMap() {
+    this.map = L.map('map', { minZoom: 2, maxZoom: 15, zoomControl: false }).setView(
+      [45, 0],
+      5.5,
+    );
+    L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' },
+      ).addTo(this.map);
+  }
+
+  get latitudeControl(): FormControl {
+    return <FormControl>this.parentForm.get('latitude');
+  }
+
+  get longitudeControl(): FormControl {
+    return <FormControl>this.parentForm.get('longitude');
+  }
+
+  private update(lat: number, lon: number) {
+    this.latitudeControl.setValue(lat);
+    this.longitudeControl.setValue(lon);
+  }
+
+  /**
+   * Detect change of latitude or longitude ( geolocation, api or address search )
+   */
+  private loadMapChanges() {
+    this.loadMap(
+      {
+        lat: this.latitudeControl.value,
+        lon: this.longitudeControl.value,
+      },
+    );
+  }
 }
