@@ -1,11 +1,17 @@
-<div class="form-group center">
-    <div class="input-group">
-        <input id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="Rechercher une adresse" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search >
-    </div>
-    <div class="input-group" style="margin-top: 8px;">
-        <button class="btn btn-outline-dark" type="button" (click)="setCurrentPosition()"> Me géolocaliser <i class="fa fa-map-marker" aria-hidden="true"></i></button>
-    </div>
+<div id="map" class="map"></div>
+<div class="GeoPosition">
+  <mat-form-field appearance="legacy" >
+    <mat-label>Chercher mon adresse</mat-label>
+    <input matInput id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="" [formControl]="addressCtrl" [matAutocomplete]="auto" (focusout)="inputLostFocus()" >
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAddressSelect($event)">
+      <mat-option *ngFor="let address of foundAddresses | async" [value]="address">
+        {{ address.address }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <div class="GeoPosition-actions">
+    <button class="button" type="button" (click)="setCurrentPosition()"> Me géolocaliser</button>
+  </div>
 </div>
-<!--<agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">-->
-<!--    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>-->
-<!--</agm-map>-->
+
+

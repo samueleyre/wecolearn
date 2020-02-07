@@ -18,8 +18,6 @@ import { environment } from '~/../environments/environment';
   styleUrls: ['./style.scss'],
 
 })
-
-
 export class SignupComponent implements OnInit {
   user: User;
   users: User[];

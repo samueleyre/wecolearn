@@ -49,20 +49,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $this->em = $this->container->get('doctrine.orm.entity_manager');
         $this->generateUrlService = $this->container->get('generate_url_service');
         $this->userManager = $this->container->get('fos_user.user_manager');
-//        $this->addCronTab();
         $this->addUsers();
-    }
-
-    private function addCronTab()
-    {
-        $query = "
-                  INSERT INTO cron_job
-                  (`name`, `command`, `schedule`, `description`, `enabled`)
-                  VALUES
-                  ('send Reminder', 'app:sendReminder', '0 16 * * *', 
-                  'Envoie un mail quand le message n\'a pas été lu depuis 2 jours', 1)";
-        $stmp = $this->em->getConnection()->prepare($query);
-        $stmp->execute();
     }
 
     private function addUsers()
@@ -83,16 +70,16 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         //Here we create a User with the Admin role
         $admin = new User();
         $admin->setUsername('admin');
-        $admin->setEmail('admin@wecolearn.com');
+        $admin->setEmail('samuel@wecolearn.com');
         $admin->setRoles(['ROLE_ADMIN']);
-        $admin->setPlainPassword('admin');
+        $admin->setPlainPassword('admin1234');
         $admin->setFirstName('Samuel');
         $admin->setLastName('Eyre');
         $admin = $this->generateUrlService->process($admin);
         $admin->setEmailConfirmed(true);
         $admin->setCreated($date);
         $admin->setBiographie('');
-        $admin->setIntensity(random_int(0, 200));
+        $admin->setIntensity(random_int(0, 45));
         $admin->setLatitude(45.75);
         $admin->setLongitude(4.85);
         $admin->setEnabled(true);
@@ -138,7 +125,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $user = $this->generateUrlService->process($user);
             $user->setCreated($date);
             $user->setBiographie(UserConstant::$BIO);
-            $user->setIntensity(random_int(0, 200));
+            $user->setIntensity(random_int(0, 45));
             $user->setLatitude(45.75);
             $user->setLongitude(4.85);
             $user->setEnabled(true);

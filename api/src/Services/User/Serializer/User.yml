@@ -22,9 +22,9 @@ App\Services\User\Entity\User:
       atmosphere:
         groups: [ input, output, profile, public-profile ]
       latitude:
-        groups: [ input, output, admin-users ]
+        groups: [ input, output, admin-users, profile ]
       longitude:
-        groups: [ input, output, admin-users ]
+        groups: [ input, output, admin-users, profile ]
       tags:
         groups: [ input, output, search, profile, public-profile, admin-users ]
       sentMessages:

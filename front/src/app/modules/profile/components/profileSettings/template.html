@@ -60,8 +60,8 @@
                 <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
-                        <h6 class="center">Mon adresse</h6>
-                        <profile-form-geolocation [parentForm]="userForm" (onChange)="submit()"></profile-form-geolocation>
+                        <h6 class="center">Ma position</h6>
+                        <app-geolocation [parentForm]="userForm"></app-geolocation>
                     </div>
                 </div>
 
@@ -72,19 +72,10 @@
 
 
 
-<!--    <p class="noticeMessage" *ngIf="!(!!this.client.first_name && !!this.client.biographie && !!this.client.learn_tags[0])">Pour rendre-->
-<!--      accessible votre profil il faut remplir votre description de profil et donner au moins une chose-->
-<!--      que vous souhaitez apprendre.</p>-->
-<!--    &lt;!&ndash; Showprofile &ndash;&gt;-->
-<!--    <div id="showProfilContainer">-->
-<!--        <span>Afficher le profil ?&ensp;</span>-->
-<!--        <app-toggler [(active)]="client.show_profil" (change)="submitWithTimeOut()" [disabled]="!(!!this.client.first_name && !!this.client.biographie && !!this.client.learn_tags[0])"></app-toggler>-->
-<!--    </div>-->
-<!--      <p class="help-input">-->
-<!--        Votre profil appaîtra dans les résultats de recherche de WeColearn pour les utilisateurs connectés.-->
-<!--      </p>-->
 
 
+
+<!--   SLACK -->
 
 
 <!--      <div *ngIf="!hasSlackAccount && hasSlack" class="form-group" id="connectSlackAccount">-->

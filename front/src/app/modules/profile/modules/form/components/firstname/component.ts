@@ -10,12 +10,9 @@ export class ProfileFormFirstnameComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Output() onBlur = new EventEmitter();
 
-  ngOnInit(): void {
-    //
-  }
+  ngOnInit(): void {}
 
   blur() {
-    console.log(this.parentForm.controls.first_name.dirty);
     if (this.parentForm.controls.first_name.dirty) {
       this.onBlur.next();
     }

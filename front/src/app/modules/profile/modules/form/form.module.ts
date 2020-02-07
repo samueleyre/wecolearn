@@ -20,6 +20,8 @@ import { ProfileFormImageComponent } from './components/image/component';
 import { ProfileImageModule } from '../profilImage/profileImage.module';
 import { ProfileFormLastnameComponent } from './components/lastname/component';
 import { ProfileFormFirstnameComponent } from './components/firstname/component';
+import {MaterialModule} from "~/shared/modules/material/material.module";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 
 @NgModule({
@@ -48,6 +50,7 @@ import { ProfileFormFirstnameComponent } from './components/firstname/component'
     ProfileFormTeachTagsComponent,
     ProfileFormIntensityComponent,
     ProfileFormGeolocationComponent,
+    ProfileGeolocationComponent,
 
   ],
   imports: [
@@ -61,6 +64,8 @@ import { ProfileFormFirstnameComponent } from './components/firstname/component'
     CloudinaryModule,
     TagInputModule,
     MatSliderModule,
+    MaterialModule,
+    MatAutocompleteModule,
   ],
 })
 export class ProfileFormModule {
