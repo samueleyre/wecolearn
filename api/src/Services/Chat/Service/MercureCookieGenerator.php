@@ -26,7 +26,7 @@ class MercureCookieGenerator
             ->sign(new Sha384(), $this->secret)
             ->getToken();
 
-        $cookie = new Cookie("mercureAuthorization", $token, strtotime('+1 day'), '/', "{$this->domain}");
+        $cookie = new Cookie("mercureAuthorization", $token, strtotime('+5 day'), '/', "{$this->domain}");
 
         return $cookie->__toString();
     }
