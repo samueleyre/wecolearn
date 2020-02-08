@@ -49,6 +49,8 @@ class CreateUserService
         $user->setEmailConfirmed(false);
         $user->setEmailNotifications(true);
         $user->setIntensity(5);
+        $user->setLatitude(45.75);
+        $user->setLongitude(4.85);
         $user->setUsername($user->getEmail()); // todo: remove this someday
         $user = $this->generateUrlService->process($user);
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
