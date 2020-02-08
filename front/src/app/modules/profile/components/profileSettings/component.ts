@@ -11,14 +11,10 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { User } from '~/core/entities/user/entity';
 import { Tag } from '~/core/entities/tag/entity';
-import { Image } from '~/core/entities/image/entity';
 import { ClientService } from '~/core/services/client';
 import { TagService } from '~/core/services/tag';
 import { DomainService } from '~/core/services/domain';
 import { AuthenticationService } from '~/core/services/auth/auth';
-import { SlackTeam } from '~/core/entities/slackTeam/entity';
-import { SlackAccount } from '~/core/entities/slackAccount/entity';
-import { UrlService } from '~/core/services/url';
 import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 
@@ -37,10 +33,7 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
   public user: User;
   public tags = [];
 
-
-  private webPath: string;
   loading = false;
-
 
   private error = {
     slack: '',
@@ -82,10 +75,8 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
 
 
   ngOnInit() {
-    this.webPath = UrlService.updateUrl('/');
     this.load();
     this.userForm.valueChanges.subscribe(() => {
-      console.log(this.userForm);
       this.submit();
     });
   }
@@ -101,7 +92,6 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
     } else {
       subDomain += '.';
     }
-
 
     this.redirectURI = (environment.production) ?
       encodeURIComponent(`https://${subDomain}wecolearn.com/profilsettings`) : encodeURIComponent('http://0.0.0.0:8080/profilsettings');

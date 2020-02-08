@@ -22,7 +22,7 @@ class MercureCookieGenerator
     public function generate(User $user)
     {
         $token = (new Builder())
-            ->set('mercure', ['subscribe'=> ["https://wecolearn.com/message/{$user->getId()}"]])
+            ->set('mercure', ['subscribe'=> ["https://{$this->domain}/message/{$user->getId()}"]])
             ->sign(new Sha384(), $this->secret)
             ->getToken();
 

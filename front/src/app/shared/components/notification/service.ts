@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { Threads } from '~/modules/chat/services/threads';
-import { UrlService } from '~/core/services/url';
-import { NAV } from '~/config/navigation/nav';
 
 import { Permission } from './const';
-import { NotificationInterface } from './interface';
 
 @Injectable({
   providedIn: 'root',

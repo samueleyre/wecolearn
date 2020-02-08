@@ -1,9 +1,8 @@
-import { Component, Input, Injectable, OnInit, HostListener } from '@angular/core';
+import { Component, Input, OnInit, HostListener } from '@angular/core';
 
 import { Image } from '~/core/entities/image/entity';
 import { image } from '~/config/image';
 import { MenuService } from '~/core/services/layout/menu';
-import { UrlService } from '~/core/services/url';
 import { WINDOW } from '~/config/window';
 
 @Component({
@@ -17,16 +16,12 @@ export class ProfilImageComponent implements OnInit {
   @Input() menu = false;
 
   public baseImageName: string = image.default_200px;
-  public webImageBase: string;
   public imageUrl;
 
-  constructor(private menuService: MenuService) {
-    //
-  }
+  constructor(private menuService: MenuService) {}
 
 
   ngOnInit(): void {
-    this.webImageBase = UrlService.updateUrl('/');
     if (this.menu) {
       this.large();
     }

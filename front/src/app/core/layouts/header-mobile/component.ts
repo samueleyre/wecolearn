@@ -15,7 +15,6 @@ import { Thread } from '~/core/entities/thread/entity';
 import { User } from '~/core/entities/user/entity';
 import { DomainService } from '~/core/services/domain';
 import { MenuService } from '~/core/services/layout/menu';
-import { UrlService } from '~/core/services/url';
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 
@@ -26,10 +25,6 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
 })
 export class HeaderMobileComponent extends DestroyObservable implements OnInit, OnDestroy {
   private location: Location;
-  private logoPath: string;
-  private imagePath: string;
-  private webPath: string;
-  private baseUrl: string;
   private alive = true;
   public connected = false;
   public unreadMessagesCount: number;
@@ -56,15 +51,11 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
   ) {
     super();
     this.location = location;
-    this.baseUrl = r;
   }
 
   ngOnInit() {
     this.initReturn();
-    this.webPath = UrlService.updateUrl('/');
-    this.imagePath = this.webPath + 'img/';
     this.subDomain = this.domainService.getSubDomain();
-    this.logoPath = `${this.webPath}logo/${this.subDomain}.png`;
 
     Logged.get().subscribe((logged: boolean) => {
       this.connected = logged;
