@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-import { UrlService } from '~/core/services/url';
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -8,15 +6,5 @@ import { UrlService } from '~/core/services/url';
   styleUrls: ['./style.scss'],
 })
 
-export class AboutComponent implements OnInit {
-  public webPath: string;
-
-  constructor(
-  ) {
-    //
-  }
-
-  ngOnInit() {
-    this.webPath = UrlService.updateUrl('/');
-  }
+export class AboutComponent {
 }

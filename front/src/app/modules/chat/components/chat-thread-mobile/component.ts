@@ -8,7 +8,6 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { takeUntil } from 'rxjs/operators';
 
 import { Thread } from '~/core/entities/thread/entity';
-import { UrlService } from '~/core/services/url';
 import { NAV } from '~/config/navigation/nav';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 
@@ -22,7 +21,6 @@ import { Threads } from '../../services/threads';
 })
 export class ChatThreadMobileComponent extends DestroyObservable implements OnInit {
   selected = false;
-  public webPath: string;
   public _thread: Thread;
 
   @Input('thread')
@@ -35,7 +33,6 @@ export class ChatThreadMobileComponent extends DestroyObservable implements OnIn
   }
 
   ngOnInit(): void {
-    this.webPath = UrlService.updateUrl('/');
     if (this._thread.id) {
       this.load();
     }
