@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '~/core/services/auth/auth';
 
 import { environment } from '~/../environments/environment';
+import { PATTERN } from '~/shared/config/pattern';
 
 
 @Component({
@@ -17,8 +18,7 @@ import { environment } from '~/../environments/environment';
   styleUrls : ['./style.scss'],
 })
 export class AuthOnboardingMobileComponent{
-  pattern = (environment.production) ?
-    '[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}' : '[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
+  pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
 
   public userForm = this.fb.group({
     first_name: null,
