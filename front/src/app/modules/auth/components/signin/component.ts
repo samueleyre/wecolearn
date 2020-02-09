@@ -11,6 +11,7 @@ import { NAV } from '~/config/navigation/nav';
 import { CookieNotificationService } from '~/core/services/cookie-notification.service';
 
 import { environment } from '../../../../../environments/environment';
+import {PATTERN} from "~/shared/config/pattern";
 
 
 @Component({
@@ -46,8 +47,7 @@ export class SigninComponent implements OnInit {
     } else {
       subDomain += '.';
     }
-    this.pattern = (environment.production) ?
-      '[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}' : '[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
+    this.pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 
   login() {
