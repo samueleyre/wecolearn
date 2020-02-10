@@ -77,7 +77,6 @@ export class MessagesService {
     if (!message.message) {
       return;
     }
-    console.log('to update', message);
     const messageToSend = { ...message };
     if ('thread' in messageToSend) {
       delete messageToSend.thread;

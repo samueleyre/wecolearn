@@ -1,34 +1,27 @@
-<section *ngIf="!isMobile">
-
+<section *ngIf="!isMobile" class="SearchPage">
   <div class="container-fluid">
-
     <div class="row">
-
       <div class="col-12">
-
         <div class="dashboard-header">
           <app-searchbar (searchInputChange)="searchInput = $event"></app-searchbar>
         </div>
-
+        <div class="SearchPage-message">
+          <p [innerHTML]="searchMessage"></p>
+        </div>
         <div #cardsContainer id="cardsContainer" *ngIf="cards.length > 0" class="desktop row align-items-stretch"
              infinite-scroll
              [infiniteScrollDistance]="4"
              [infiniteScrollThrottle]="50"
              (scrolled)="onScroll($event)"
              [scrollWindow]="false">
-
           <div *ngIf="!cards[0]" class="emptyCardsMessage col-12">
             <p>Mince, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
               recherche, n'hésitez pas à ajouter des tags dans votre profil ! </p>
           </div>
-
           <div *ngFor="let card of cards" [ngClass]="'col-xl-4 col-lg-6 col-md-8 mb-4'">
-            <app-card  [card]="card"
-            ></app-card>
+            <app-card  [card]="card"></app-card>
           </div>
-
         </div>
-
       </div>
     </div>
   </div>

@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { city } from '~/config/city';
 import { APIService } from '~/core/services/crud/api';
 import { User } from '~/core/entities/user/entity';
+import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 
 import { SEARCH } from '../config/main';
 
@@ -27,6 +28,7 @@ export class SearchService extends APIService<User> {
   currentFoundAddress: any[] = [];
   currentSearch: {} = {};
   public endPoint = '/api/user/match';
+  public searchMetaSubject: BehaviorSubject<SearchMeta> = new BehaviorSubject(null);
 
   constructor(private _http: HttpClient) {
     super(_http);
@@ -38,6 +40,11 @@ export class SearchService extends APIService<User> {
     }
     return 'default';
   }
+
+  get searchMeta(): SearchMeta {
+    return this.searchMetaSubject.value;
+  }
+
   private resetMax():void {
     SearchService.max = SEARCH.default.max;
   }
@@ -78,6 +85,8 @@ export class SearchService extends APIService<User> {
     return this.searchList(filters).pipe(
       map((response: ApiResponseInterface) => {
         this.currentFoundClients.next(response.data.map(val => val[0]));
+        const meta = Object.keys(response.meta).length > 0 ? <SearchMeta>Object.keys(response.meta)[0] : null;
+        this.searchMetaSubject.next(meta);
         this._loading$.next(false);
         this.currentlySearching = false;
         return true;

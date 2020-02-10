@@ -27,7 +27,7 @@ class SearchService
         $first = 0;
         $max = 10;
         $tagType = 0;
-        $foundTag = false; // tag found by name in database with tag type : $tagtype
+        $meta = [];
 
 
         if (is_array($filter)) {
@@ -35,8 +35,8 @@ class SearchService
                 $tagName = $filter["tag"];
                 $tag = $this->em->getRepository(Tag::class)
                     ->findOneBy(["name" => $tagName, "type" => $tagType]);
-                if ($tag) {
-                    $foundTag = true;
+                if (!$tag) {
+                    $meta['tagNotFound'] = true;
                 }
             }
             if (array_key_exists("latitude", $filter) && array_key_exists("longitude", $filter)) {
@@ -81,9 +81,7 @@ class SearchService
 
         return [
             'data'=> $result,
-            'meta'=> [
-                'foundTag' => $foundTag,
-            ]
+            'meta'=> $meta
         ];
     }
 }

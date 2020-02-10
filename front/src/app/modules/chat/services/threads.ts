@@ -54,7 +54,6 @@ export class Threads {
             threadGroups[message.thread.id].lastMessage = message;
           }
           // Count number of messages not read in each thread
-          console.log({ message });
           if (!message.is_read && message.sender.id !== this._clientService.me.id) {
             threadGroups[message.thread.id].countNotRead += 1;
           }
