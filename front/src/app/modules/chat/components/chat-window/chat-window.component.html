@@ -4,7 +4,7 @@
   <section *ngIf="!isMobile">
     <div class="card">
       <div class="card-body msg-container-base">
-        <div *ngIf="currentUser">
+        <div>
           <chat-message
             *ngFor="let message of messages | async; let i = index"
             [clientId]="currentUser.id"

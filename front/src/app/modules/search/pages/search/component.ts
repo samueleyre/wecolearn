@@ -8,6 +8,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import * as _ from 'lodash';
 
 import { User } from '~/core/entities/user/entity';
+import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 
 import { SearchService } from '../../services/search';
 import { SEARCH } from '../../config/main';
@@ -22,8 +23,14 @@ import { SEARCH } from '../../config/main';
   public searchInput = null;
   private lastScrollTop = 0;
   private direction = 'down';
-  @ViewChild('cardsContainer', { static: false }) cardsContainerElementRef: ElementRef;
 
+  public messages = {
+    [SearchMeta.TAGNOTFOUND]: `😢 Malgré nos efforts, nous n'avons trouvé personne
+    qui correspondaient à votre recherche. <br>
+    Peut-être que les profils suivant pourront tout de même vous intéresser ?`,
+  };
+
+  @ViewChild('cardsContainer', { static: false }) cardsContainerElementRef: ElementRef;
 
   constructor(
         private router: Router,
@@ -36,7 +43,6 @@ import { SEARCH } from '../../config/main';
   ngOnInit() {
     this.load();
   }
-
 
   load(): void {
         // todo: if tag and lat/long are in url, get them
@@ -60,6 +66,12 @@ import { SEARCH } from '../../config/main';
     this._searchService.search().subscribe();
   }
 
+  get searchMessage(): string {
+    if (!this._searchService.searchMeta) {
+      return null;
+    }
+    return this.messages[this._searchService.searchMeta];
+  }
 
   onScroll(ev) {
     SearchService.max += SEARCH.scrollLatence;
