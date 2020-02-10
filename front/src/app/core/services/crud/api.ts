@@ -130,7 +130,7 @@ export class APIService<T> {
 
     /* Privates */
 
-  private getUrlParams (filters: {} = {}, slash: string = '') {
+  protected getUrlParams (filters: {} = {}, slash: string = '') {
     let sep = '?';
     let ret = '';
     if (slash !== '') {

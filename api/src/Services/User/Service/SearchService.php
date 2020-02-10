@@ -11,12 +11,10 @@ class SearchService
 {
 
     private $em;
-    private $logger;
 
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->logger = $logger;
     }
 
 
@@ -29,6 +27,7 @@ class SearchService
         $first = 0;
         $max = 10;
         $tagType = 0;
+        $foundTag = false; // tag found by name in database with tag type : $tagtype
 
 
         if (is_array($filter)) {
@@ -36,6 +35,9 @@ class SearchService
                 $tagName = $filter["tag"];
                 $tag = $this->em->getRepository(Tag::class)
                     ->findOneBy(["name" => $tagName, "type" => $tagType]);
+                if ($tag) {
+                    $foundTag = true;
+                }
             }
             if (array_key_exists("latitude", $filter) && array_key_exists("longitude", $filter)) {
                 $latitude = $filter["latitude"];
@@ -61,8 +63,6 @@ class SearchService
             ->getRepository(User::class)
             ->search($user, $tag, $first, $max, $latitude, $longitude, $domain, $searchParameters);
 
-        $this->logger->debug('first result', $result);
-
         // search by user tags & not only learn tags ( types 0, 1, 2 )
         if ($result === []) {
             $searchParameters['onlyLearnTags'] = false;
@@ -70,8 +70,6 @@ class SearchService
                 ->getRepository(User::class)
                 ->search($user, $tag, $first, $max, $latitude, $longitude, $domain, $searchParameters);
         }
-
-        $this->logger->debug('second result', $result);
 
         // search by input tag only
         if ($result === []) {
@@ -81,8 +79,11 @@ class SearchService
                 ->search($user, $tag, $first, $max, $latitude, $longitude, $domain, $searchParameters);
         }
 
-        $this->logger->debug('third result', $result);
-
-        return $result;
+        return [
+            'data'=> $result,
+            'meta'=> [
+                'foundTag' => $foundTag,
+            ]
+        ];
     }
 }

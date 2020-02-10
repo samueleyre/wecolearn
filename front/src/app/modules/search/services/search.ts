@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { finalize, map, tap } from 'rxjs/operators';
 import { Injectable, NgZone } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +9,10 @@ import { User } from '~/core/entities/user/entity';
 
 import { SEARCH } from '../config/main';
 
+interface ApiResponseInterface {
+  meta: any;
+  data: any;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +28,8 @@ export class SearchService extends APIService<User> {
   currentSearch: {} = {};
   public endPoint = '/api/user/match';
 
-  constructor(http: HttpClient) {
-    super(http);
+  constructor(private _http: HttpClient) {
+    super(_http);
   }
 
   get searchType():string {
@@ -46,6 +50,19 @@ export class SearchService extends APIService<User> {
     this.searchInput.next(tag);
   }
 
+  searchList(filters: {} = {}, slash: string = ''): Observable<ApiResponseInterface> {
+    const params = this.getUrlParams(filters, slash);
+    return this._http.get(`${this.endPoint}s${params}`)
+      .pipe(
+        tap((data: ApiResponseInterface) => {
+          this._loaded$.next(true);
+        }),
+        finalize(() => {
+          this._loading$.next(false);
+        }),
+      );
+  }
+
   search(filters: {} = {}): Observable<boolean> {
     if (!filters.hasOwnProperty('max')) {
       this.resetMax();
@@ -58,24 +75,13 @@ export class SearchService extends APIService<User> {
       filters['longitude'] = city.default.longitude;
     }
 
-
-    return this.list(filters).pipe(
-      map((response: any[]) => {
-        this.currentFoundClients.next(response.map(val => val[0]));
+    return this.searchList(filters).pipe(
+      map((response: ApiResponseInterface) => {
+        this.currentFoundClients.next(response.data.map(val => val[0]));
         this._loading$.next(false);
         this.currentlySearching = false;
-        if (this.pauseRedirect) {
-          this.pauseRedirect = false;
-          return false;
-        }
         return true;
       }));
-  }
-
-  cancelChangePageAfterSearch() {
-    if (this.currentlySearching) {
-      this.pauseRedirect = true;
-    }
   }
 
   getCurrentFoundClients(): Observable<any[]> {

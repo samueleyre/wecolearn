@@ -6,9 +6,9 @@ import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
 import { User } from '~/core/entities/user/entity';
+import { ClientService } from '~/core/services/client';
 
 import { MessagesService } from './messages';
-import {ClientService} from "~/core/services/client";
 
 
 @Injectable({
@@ -54,6 +54,7 @@ export class Threads {
             threadGroups[message.thread.id].lastMessage = message;
           }
           // Count number of messages not read in each thread
+          console.log({ message });
           if (!message.is_read && message.sender.id !== this._clientService.me.id) {
             threadGroups[message.thread.id].countNotRead += 1;
           }
@@ -97,9 +98,13 @@ export class Threads {
           }
           if (currentThread) {
             return [new Message(
-              { message: 'Prenez contact avec votre première relation !',
+              {
+                message: 'Prenez contact avec votre première relation !',
                 thread: currentThread,
-                senderId: currentThread.id },
+                sender: {
+                  id: currentThread.id,
+                },
+              },
             )];
           }
           return [];
@@ -112,7 +117,11 @@ export class Threads {
         new Message(
           { message: 'Prenez contact avec votre première relation !' ,
             thread: newThread,
-            senderId: newThread.id }),
+            sender: {
+              id: newThread.id,
+            },
+          },
+        ),
       );
     } else if (!newThread.lastMessage) {
       this.messagesService.addMessage(new Message({ message: '' , thread: newThread, sender: { id: newThread.id } }));
