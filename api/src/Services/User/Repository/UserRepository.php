@@ -6,16 +6,12 @@ use App\Services\User\Entity\User;
 use App\Services\Tag\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Psr\Log\LoggerInterface;
 
 class UserRepository extends ServiceEntityRepository
 {
-    private $logger;
-
-    public function __construct(ManagerRegistry $registry, LoggerInterface $logger)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
-        $this->logger = $logger;
     }
 
     public function search(

@@ -123,7 +123,7 @@ class MessageController extends AbstractController
         $update = new Update(
             'https://wecolearn.com/message',
             $serializedMessage,
-            ["https://{$this->getParameter('domain')}/message/{$friend->getId()}"]
+            ["https://{$this->getParameter('host')}/message/{$friend->getId()}"]
         );
         $bus->dispatch($update);
 
