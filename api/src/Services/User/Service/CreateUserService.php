@@ -3,6 +3,7 @@
 namespace App\Services\User\Service;
 
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
+use App\Services\Domain\Service\AddDomainService;
 use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
 use App\Services\User\Event\UserWasCreated;
@@ -15,20 +16,20 @@ class CreateUserService
 {
     private $userManager;
     private $dispatcher;
-//    private $addDomainService;
+    private $addDomainService;
     private $generateUrlService;
     private $tagService;
 
     public function __construct(
         UserManagerInterface $userManager,
         EventDispatcherInterface $dispatcher,
-        //            AddDomainService $addDomainService,
+        AddDomainService $addDomainService,
         GenerateUrlService $generateUrlService,
         TagService $tagService
     ) {
         $this->userManager = $userManager;
         $this->dispatcher = $dispatcher;
-//        $this->addDomainService = $addDomainService;
+        $this->addDomainService = $addDomainService;
         $this->generateUrlService = $generateUrlService;
         $this->tagService = $tagService;
     }
@@ -38,7 +39,7 @@ class CreateUserService
 
         //todo fix : serialization should be enough.
 //        $user->getImage()->setCreated(new \DateTime());
-//        $user = $this->addDomainService->process($user);
+        $user = $this->addDomainService->process($user);
         $user->setRoles(['ROLE_USER']);
         $user->setPlainPassword($user->getPassword());
         if ($user->getTags()) {
