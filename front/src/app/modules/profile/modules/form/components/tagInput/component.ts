@@ -16,7 +16,7 @@ import { TagService } from '~/core/services/tag';
 })
 export class ProfileTagInputComponent implements OnInit {
   public errorMessages = {
-    notAlphaNumeric: 'Le tag doit être alphanumerique.',
+    notAlphaNumeric: 'Le domaine doit être alphanumerique.',
   };
   public validators = [this.notAlphaNumeric];
   @Input() tags: any;

@@ -8,6 +8,10 @@ mat-horizontal-stepper{
     align-items: center;
     justify-content: center;
     display: flex;
+    flex-direction: column;
+    &-tagHints {
+      margin-top: 10px;
+    }
     :first-child{
       width: 100%
     }

@@ -25,7 +25,7 @@ class GenerateUrlService
 
     private function newUrl(User &$user)
     {
-        $userName = $user->getUsername();
+        $userName = "{$user->getFirstName()}"."{$user->getLastName()}";
         if ($userName === $user->getProfilUrl()) {
             $userName .= rand(0, 9);
         }
