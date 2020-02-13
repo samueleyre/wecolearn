@@ -1,13 +1,12 @@
-
 import {
   Component,
   Injectable,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
-
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
 
@@ -45,6 +44,7 @@ export class AuthOnboardingComponent{
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
+    private _toastr: ToastrService,
   ) {
     //
   }
@@ -56,7 +56,7 @@ export class AuthOnboardingComponent{
       },
       (error) => {
         if (error.error && error.error && error.error.error === 'resource already used') {
-          this.error = 'Cette adresse email est déjà utilisée.';
+          this._toastr.error('Cette adresse email est déjà utilisée.');
           setTimeout(
             () => {
               this.error = null;

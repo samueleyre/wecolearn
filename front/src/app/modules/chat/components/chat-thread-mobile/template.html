@@ -9,8 +9,7 @@
       </span>
     </span>
     <div class="media-content">
-      <small *ngIf="_thread.lastMessage.sender && _thread.id === _thread.lastMessage.sender.id" class="message-preview">{{_thread.lastMessage.message}}</small>
-      <small *ngIf="!_thread.lastMessage.sender || !(_thread.id === _thread.lastMessage.sender.id)" class="message-preview"></small>
+      <small class="message-preview">{{_thread.lastMessage.message}}</small>
     </div>
   </div>
   <a (click)="loadMessages($event)" class="div-link">Select</a>

@@ -11,7 +11,11 @@ mat-horizontal-stepper{
   .card-body{
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     display: flex;
+    &-tagHints {
+      margin-top: 10px;
+    }
     :first-child{
       width: 100%
     }
