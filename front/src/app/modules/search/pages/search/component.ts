@@ -25,9 +25,10 @@ import { SEARCH } from '../../config/main';
   private direction = 'down';
 
   public messages = {
-    [SearchMeta.TAGNOTFOUND]: `😢 Malgré nos efforts, nous n'avons trouvé personne
-    qui correspondaient à votre recherche. <br>
+    [SearchMeta.TAGNOTFOUND]: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. 😢 <br>
     Peut-être que les profils suivant pourront tout de même vous intéresser ?`,
+    noResults: `Mince, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
+    recherche, n'hésitez pas à ajouter des tags dans votre profil !`,
   };
 
   @ViewChild('cardsContainer', { static: false }) cardsContainerElementRef: ElementRef;
@@ -67,10 +68,13 @@ import { SEARCH } from '../../config/main';
   }
 
   get searchMessage(): string {
-    if (!this._searchService.searchMeta) {
-      return null;
+    if (!this.loading && this.cards.length === 0) {
+      return this.messages.noResults;
     }
-    return this.messages[this._searchService.searchMeta];
+    if (this._searchService.searchMeta) {
+      return this.messages[this._searchService.searchMeta];
+    }
+    return null;
   }
 
   onScroll(ev) {
