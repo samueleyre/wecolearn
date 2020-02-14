@@ -33,13 +33,7 @@ export class ProfileGeolocationComponent implements OnInit {
   constructor(
      private _geoService: ProfileGeoService,
      private _fb: FormBuilder,
-  ) {
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl: '/assets/img/marker-icon-2x.png',
-      iconUrl: '/assets/img/marker-icon.png',
-      shadowUrl: '/assets/img/marker-shadow.png',
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.initMap();
