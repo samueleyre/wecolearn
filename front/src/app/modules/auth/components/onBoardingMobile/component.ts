@@ -10,6 +10,7 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
+import { onBoardingSections } from '~/modules/auth/components/onBoarding/onBoarding.const';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { PATTERN } from '~/shared/config/pattern';
 })
 export class AuthOnboardingMobileComponent{
   pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+  public titles = onBoardingSections;
 
   public userForm = this.fb.group({
     first_name: null,

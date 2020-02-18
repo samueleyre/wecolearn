@@ -1,4 +1,4 @@
-<form (keydown.enter)="$event.preventDefault()" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
+<form (keydown.enter)="$event.preventDefault()" (ngSubmit)="submit()" [formGroup]="userForm">
     <mat-horizontal-stepper>
         <ng-template matStepperIcon="profil">
             <i class="fa fa-user"></i>
@@ -9,14 +9,13 @@
         <ng-template matStepperIcon="done">
             <mat-icon>done_all</mat-icon>
         </ng-template>
-      <mat-step label="Apprentissage">
+      <mat-step label="Ville">
         <div class="card">
           <div class="card-header">
-            <h6 class="center">Les domaines dans lesquelles tu souhaites apprendre.</h6>
+            <h6 class="center">{{titles.city.title}}</h6>
           </div>
           <div class="card-body">
-            <profile-form-learntags [parentForm]="userForm"></profile-form-learntags>
-            <small class="card-body-tagHints">♟️ Les echecs, 💻 l'informatique, 🎱 le snooker, 🎺 la trompette, 💃🏾 la polka...   </small>
+            <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
           </div>
           <div class="card-footer">
             <div class="btn-container-first">
@@ -25,10 +24,27 @@
           </div>
         </div>
       </mat-step>
+      <mat-step label="Apprentissage">
+        <div class="card">
+          <div class="card-header">
+            <h6 class="center">{{titles.tags.title}}</h6>
+          </div>
+          <div class="card-body">
+            <profile-form-learntags [parentForm]="userForm"></profile-form-learntags>
+            <small class="card-body-tagHints">♟️ Les echecs, 💻 l'informatique, 🎱 le snooker, 🎺 la trompette, 💃🏾 la polka...   </small>
+          </div>
+          <div class="card-footer">
+            <div class="btn-container">
+              <button type="button" class="btn btn-secondary" matStepperPrevious>< Retour</button>
+              <button type="button" class="btn btn-primary" matStepperNext>Suivant ></button>
+            </div>
+          </div>
+        </div>
+      </mat-step>
       <mat-step label="Projets">
         <div class="card">
           <div class="card-header">
-            <h6 class="center">Ce qui te motive à apprendre dans ces domaines.</h6>
+            <h6 class="center">{{titles.bio.title}}</h6>
           </div>
           <div class="card-body">
             <profile-form-biography [parentForm]="userForm"></profile-form-biography>
@@ -44,7 +60,7 @@
         <mat-step label="Identifiants">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="center">Identifiants</h6>
+                    <h6 class="center">{{titles.ids.title}}</h6>
                 </div>
                 <div class="card-body">
                     <div class="col-12 col-md-6 col-xl-4">

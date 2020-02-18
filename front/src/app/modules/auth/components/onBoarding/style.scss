@@ -9,14 +9,16 @@ mat-horizontal-stepper{
     justify-content: center;
     display: flex;
     flex-direction: column;
-    &-tagHints {
-      margin-top: 10px;
-    }
     :first-child{
       width: 100%
     }
+    &-tagHints {
+      margin-top: 10px;
+    }
   }
 }
+
+
 
 .btn-container-first{
   float: right;

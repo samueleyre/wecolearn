@@ -22,6 +22,8 @@ import { ProfileFormLastnameComponent } from './components/lastname/component';
 import { ProfileFormFirstnameComponent } from './components/firstname/component';
 import {MaterialModule} from "~/shared/modules/material/material.module";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { ProfileFormCityComponent } from './components/profile-form-city/profile-form-city.component';
+import {MatRadioModule} from "@angular/material/radio";
 
 
 @NgModule({
@@ -38,6 +40,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     ProfileFormIntensityComponent,
     ProfileFormGeolocationComponent,
     ProfileGeolocationComponent,
+    ProfileFormCityComponent,
 
   ],
   exports: [
@@ -51,6 +54,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     ProfileFormIntensityComponent,
     ProfileFormGeolocationComponent,
     ProfileGeolocationComponent,
+    ProfileFormCityComponent,
 
   ],
   imports: [
@@ -66,6 +70,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     MatSliderModule,
     MaterialModule,
     MatAutocompleteModule,
+    MatRadioModule,
   ],
 })
 export class ProfileFormModule {
