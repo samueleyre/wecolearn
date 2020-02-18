@@ -29,7 +29,7 @@ class SignUpController extends AbstractController
     "user",
     class="App\Services\User\Entity\User",
     converter="fos_rest.request_body",
-    options={"deserializationContext"={"groups"={"input"} } }
+    options={"deserializationContext"={"groups"={"create"} } }
     )
      * @View( serializerGroups={"profile"})
      */

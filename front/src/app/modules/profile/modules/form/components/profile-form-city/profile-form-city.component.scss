@@ -1,0 +1,11 @@
+.cities {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: auto;
+  height: 175px;
+  width: 200px;
+  mat-radio-button {
+    width: 200px;
+  }
+}

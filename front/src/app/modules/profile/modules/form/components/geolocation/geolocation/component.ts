@@ -40,7 +40,7 @@ export class ProfileGeolocationComponent implements OnInit {
 
     this.foundAddresses = this.addressCtrl.valueChanges.pipe(
       filter(val => !!val),
-      switchMap(value => this._geoService.findGeoDataByPostCode(value)),
+      switchMap(value => this._geoService.findGeoDataByAddress(value)),
     );
 
     merge(

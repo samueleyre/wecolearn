@@ -4,48 +4,46 @@ App\Services\User\Entity\User:
     access_order:     alphabetical
     properties:
       id:
-        groups: [ input, output, search, message, profile, public-profile,  admin-users, thread ]
+        groups: [ input, search, message, profile, public-profile,  admin-users, thread ]
       created:
-        groups: [ input, output, search, profile, admin-users]
+        groups: [ input, search, profile, admin-users]
       firstName:
-        groups: [ input, output, search, message, profile, public-profile, admin-users ]
+        groups: [ input, output, create, search, message, profile, public-profile, admin-users ]
       lastName:
-        groups: [ input, output, search, message, profile, public-profile, admin-users ]
+        groups: [ input, output, create, search, message, profile, public-profile, admin-users ]
       profilUrl:
         groups: [ input, output, search, message, profile, public-profile, admin-users ]
-      password:
-        groups: [ input ]
       biographie:
-        groups: [ input, output, search, profile, public-profile ]
+        groups: [ input, output, create, search, profile, public-profile ]
       intensity:
-        groups: [ input, output, profile, public-profile ]
+        groups: [ input, profile, public-profile ]
       atmosphere:
-        groups: [ input, output, profile, public-profile ]
+        groups: [ input, profile, public-profile ]
       latitude:
-        groups: [ input, output, admin-users, profile ]
+        groups: [ input, create, admin-users, profile ]
       longitude:
-        groups: [ input, output, admin-users, profile ]
+        groups: [ input, create, admin-users, profile ]
       tags:
-        groups: [ input, output, search, profile, public-profile, admin-users ]
+        groups: [ input, create, search, profile, public-profile, admin-users ]
       sentMessages:
-        groups: [ input, output ]
+        groups: [ input ]
         max_depth: 4
       receivedMessages:
-        groups: [ input, output ]
+        groups: [ input ]
         max_depth: 4
       image:
         type: App\Services\User\Entity\Image
         groups: [ input, output, search, message, profile, public-profile ]
       showProfil:
-        groups: [ input, output, profile, admin-users ]
+        groups: [ input, profile, admin-users ]
       emailNotifications:
-        groups: [ input, output, profile, user ]
+        groups: [ input, profile, user ]
       slackAccounts:
-        groups: [ input, output, search ]
+        groups: [ input, search ]
       userNotified:
-        groups: [ input, output ]
+        groups: [ input ]
       notificationSubscribe:
-        groups: [ input, output ]
+        groups: [ input ]
       domains:
         groups: [ admin-users ]
       deleted:
