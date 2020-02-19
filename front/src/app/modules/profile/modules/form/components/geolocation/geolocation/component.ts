@@ -5,18 +5,27 @@ import {
 } from '@angular/core';
 import * as L from 'leaflet';
 import { filter, switchMap } from 'rxjs/operators';
-
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { merge, Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { icon, Marker } from 'leaflet';
 
 import { GeoDataInterface, ProfileGeoService } from '~/modules/profile/services/profile-geo.service';
 
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'assets/img/marker/marker-icon-2x.png',
-  iconUrl: 'assets/img/marker/marker-icon.png',
-  shadowUrl: 'assets/img/marker/marker-shadow.png',
+const iconRetinaUrl = 'assets/img/marker/marker-icon-2x.png';
+const iconUrl = 'assets/img/marker/marker-icon.png';
+const shadowUrl = 'assets/img/marker/marker-shadow.png';
+const iconDefault = icon({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41],
 });
+Marker.prototype.options.icon = iconDefault;
 
 
 @Component({
