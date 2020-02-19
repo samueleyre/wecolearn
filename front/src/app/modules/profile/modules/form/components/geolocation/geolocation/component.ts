@@ -12,6 +12,13 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { GeoDataInterface, ProfileGeoService } from '~/modules/profile/services/profile-geo.service';
 
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'assets/img/marker/marker-icon-2x.png',
+  iconUrl: 'assets/img/marker/marker-icon.png',
+  shadowUrl: 'assets/img/marker/marker-shadow.png',
+});
+
+
 @Component({
   selector: 'app-geolocation',
   templateUrl: 'template.html',
