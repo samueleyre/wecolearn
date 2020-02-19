@@ -1,24 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
-import { environment } from '../../../environments/environment';
+import { navDescriptions, navTitles } from '~/config/navigation/seo.const';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SeoService {
-  constructor(private title: Title, private meta: Meta) { }
+  constructor(private _titleService: Title, private meta: Meta) { }
 
+  public updateSeoTitleAndTags(route) {
+    this._titleService.setTitle(
+      `${route in navTitles ? navTitles[route] : 'Wecolearn'}`,
+    );
 
-  updateTitle(title: string) {
-    this.title.setTitle(title);
+    this.meta.updateTag(
+      {
+        name: 'description',
+        content:
+          `${route in navDescriptions ?
+            navDescriptions[route] :
+            `Mise en relation d'apprenants, pour se motiver à plusieurs !`
+            }`,
+      },
+    );
   }
 
-  updateDescription(desc: string) {
-    this.meta.updateTag({ name: 'description', content: desc });
-  }
-
-  updateIco(domain: string) {
-    document.getElementById('favicon').setAttribute('href', `${environment.publique}/logo/${domain}.ico`);
-  }
+  // updateIco(domain: string) {
+  //   document.getElementById('favicon').setAttribute('href', `${environment.publique}/logo/${domain}.ico`);
+  // }
 }
