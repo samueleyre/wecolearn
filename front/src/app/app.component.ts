@@ -9,10 +9,11 @@ import { MessagesService } from '~/modules/chat/services/messages';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
-import { navTitles } from '~/config/navigation/titles.const';
+import { navTitles } from '~/config/navigation/seo.const';
 
 import { DomainService } from './core/services/domain';
 import { environment } from '../environments/environment';
+import {SeoService} from "~/core/services/seo";
 
 
 @Component({
@@ -26,7 +27,7 @@ export class AppComponent {
       private router: Router,
       private domainService: DomainService,
       private iconService: IconService,
-      private _titleService: Title,
+      private _seoService: SeoService,
       public messagesService: MessagesService,
       public messagerieService: MessagerieService,
   ) {
@@ -35,7 +36,7 @@ export class AppComponent {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.domainService.setSubDomain();
-        this.setTitle(event.urlAfterRedirects);
+        this._seoService.updateSeoTitleAndTags(event.urlAfterRedirects);
       });
 
     this.initMessagerieService();
@@ -77,10 +78,5 @@ export class AppComponent {
       });
   }
 
-  public setTitle(route) {
-    this._titleService.setTitle(
-      `Wecolearn ${route in navTitles ? navTitles[route] : ''}`,
-    );
-  }
 }
 
