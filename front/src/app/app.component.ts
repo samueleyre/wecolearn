@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { filter } from 'rxjs/operators';
 
 import { Logged } from '~/core/services/logged';
 import { IconService } from '~/core/services/icon.service';
@@ -7,6 +9,7 @@ import { MessagesService } from '~/modules/chat/services/messages';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
+import { navTitles } from '~/config/navigation/titles.const';
 
 import { DomainService } from './core/services/domain';
 import { environment } from '../environments/environment';
@@ -23,13 +26,17 @@ export class AppComponent {
       private router: Router,
       private domainService: DomainService,
       private iconService: IconService,
+      private _titleService: Title,
       public messagesService: MessagesService,
       public messagerieService: MessagerieService,
   ) {
     // set subdomain
-    router.events.subscribe((event) => {
-      this.domainService.setSubDomain();
-    });
+    router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.domainService.setSubDomain();
+        this.setTitle(event.urlAfterRedirects);
+      });
 
     this.initMessagerieService();
     this.iconService.init();
@@ -68,6 +75,12 @@ export class AppComponent {
       () => {
         console.log('completed ========');
       });
+  }
+
+  public setTitle(route) {
+    this._titleService.setTitle(
+      `Wecolearn ${route in navTitles ? navTitles[route] : ''}`,
+    );
   }
 }
 

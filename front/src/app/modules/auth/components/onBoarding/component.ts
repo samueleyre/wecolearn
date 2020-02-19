@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
-import {onBoardingSections} from "~/modules/auth/components/onBoarding/onBoarding.const";
+import { onBoardingSections } from '~/modules/auth/components/onBoarding/onBoarding.const';
 
 
 @Component({
@@ -40,7 +40,6 @@ export class AuthOnboardingComponent{
 
   error:string;
   loading = false;
-
 
   constructor(
     private fb: FormBuilder,
