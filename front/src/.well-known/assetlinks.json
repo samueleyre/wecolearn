@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "xyz.appmaker.okluow",
+      "sha256_cert_fingerprints": ["0A:BD:A4:BB:D1:8B:2F:44:46:44:DA:6E:BF:AC:12:56:AB:49:A9:AE:D0:8F:5A:41:D3:9F:AA:6A:EA:53:3C:0B"]
+    }
+  }
+]
