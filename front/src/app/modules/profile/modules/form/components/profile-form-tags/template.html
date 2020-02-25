@@ -1,0 +1,34 @@
+<mat-form-field [formGroup]="parentForm" class="tagsForm">
+  <mat-label>{{title}}</mat-label>
+  <mat-chip-list #chipList>
+    <mat-chip
+      *ngFor="let tag of this.tagsControl.value"
+      [selectable]="false"
+      [removable]="true"
+      (removed)="remove(tag)"
+    >
+      {{ tag.name }}
+      <mat-icon matChipRemove>remove</mat-icon>
+    </mat-chip>
+    <input
+      matInput
+      placeholder="+ ajouter"
+      aria-label="Ajouter un domaine"
+      #tagInput
+      [formControl]="tagCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputAddOnBlur]="false"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    />
+    <mat-error *ngIf="this.tagCtrl.hasError('notAlphaNumeric')">
+      Le domaine doit être alphanumerique.
+    </mat-error>
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onTagSelect($event)">
+    <mat-option *ngFor="let tag of filteredTags" [value]="tag">
+      {{ tag.name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
