@@ -17,6 +17,7 @@ import { DomainService } from '~/core/services/domain';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';
+import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 
 
 @Component({
@@ -162,6 +163,19 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
       ...this.userForm.value.teach_tags,
     ];
   }
+
+  get learnType(): TagTypeEnum {
+    return TagTypeEnum.LEARN;
+  }
+
+  get teachType(): TagTypeEnum {
+    return TagTypeEnum.TEACH;
+  }
+
+  get knowType(): TagTypeEnum {
+    return TagTypeEnum.KNOW;
+  }
+
 
   // setDefaultLatLong() {
   //   this.client['latitude'] = 45.764043; // tslint:disable-line no-magic-numbers

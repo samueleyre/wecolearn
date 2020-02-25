@@ -4,8 +4,8 @@
     <mat-icon *ngIf="loading" matSuffix class="spinner-border spinner-border-sm"></mat-icon>
     <mat-icon *ngIf="!loading" matSuffix class="fas fa-search"></mat-icon>
     <mat-autocomplete (optionSelected)="search()" #auto="matAutocomplete" >
-      <mat-option *ngFor="let option of observableSource | async" [value]="option">
-        {{option}}
+      <mat-option *ngFor="let option of observableSource | async" [value]="option.name">
+        {{option.name}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

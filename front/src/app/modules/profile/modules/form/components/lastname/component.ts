@@ -15,7 +15,6 @@ export class ProfileFormLastnameComponent implements OnInit {
   }
 
   blur() {
-    console.log(this.parentForm.controls.last_name.dirty);
     if (this.parentForm.controls.last_name.dirty) {
       this.onBlur.next();
     }

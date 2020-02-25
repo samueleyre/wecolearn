@@ -4,12 +4,13 @@ import {
   Injectable, Output, EventEmitter, ViewChild, ElementRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { debounceTime, map, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
 
 import { TagService } from '~/core/services/tag';
+import { Tag } from '~/core/entities/tag/entity';
 
 import { SearchService } from '../../services/search';
 
@@ -21,16 +22,14 @@ import { SearchService } from '../../services/search';
 })export class SearchBarComponent implements OnInit {
   public searchInputControl = new FormControl();
   autocompleteDisabled = false;
-  observableSource: Observable<string[]>;
+  observableSource: Observable<Tag[]>;
   @Output() searchInputChange = new EventEmitter();
   @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
   @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
 
-
   constructor(
         protected tagService: TagService,
         private _searchService: SearchService,
-        private router: Router,
     ) {
     this.tagService = tagService;
   }

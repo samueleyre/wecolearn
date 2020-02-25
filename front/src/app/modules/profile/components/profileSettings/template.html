@@ -16,21 +16,20 @@
                     <div class="col-12 col-md-6 order-1 order-md-2" style="text-align: center;">
                         <profile-form-image [parentForm]="userForm" (onChange)="submit()" ></profile-form-image>
                         <br>
-                        <br>
                     </div>
                 </div>
                 <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Ce que je veux apprendre</h6>
-                        <profile-form-learntags [parentForm]="userForm" (onChange)="submit()"></profile-form-learntags>
+                        <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'" [type]="learnType" ></profile-form-tags>
                     </div>
                 </div>
                 <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Mes projets</h6>
-                        <br><br>
+                        <br>
                         <profile-form-biography [parentForm]="userForm" (onBlur)="submit()"></profile-form-biography>
                     </div>
                 </div>
@@ -38,14 +37,14 @@
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Ce que je connais</h6>
-                        <profile-form-knowtags [parentForm]="userForm" (onChange)="submit()"></profile-form-knowtags>
+                        <profile-form-tags [parentForm]="userForm" [fieldName]="'know_tags'" [type]="knowType" ></profile-form-tags>
                     </div>
                 </div>
                 <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Ce que j'ai envie de transmettre</h6>
-                        <profile-form-teachtags [parentForm]="userForm" (onChange)="submit()"></profile-form-teachtags>
+                        <profile-form-tags [parentForm]="userForm" [fieldName]="'teach_tags'" [type]="teachType" ></profile-form-tags>
                     </div>
                 </div>
                 <br><br>
@@ -53,7 +52,7 @@
                     <div class="col-12">
                         <h6 class="center">L'intensité à laquelle je souhaite apprendre</h6>
                         <br><br>
-                        <profile-form-intensity [parentForm]="userForm" (onChange)="submit()"></profile-form-intensity>
+                        <profile-form-intensity [parentForm]="userForm"></profile-form-intensity>
                     </div>
                 </div>
 

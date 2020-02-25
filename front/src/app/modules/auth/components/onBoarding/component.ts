@@ -10,6 +10,7 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
 import { onBoardingSections } from '~/modules/auth/components/onBoarding/onBoarding.const';
+import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 
 
 @Component({
@@ -84,5 +85,9 @@ export class AuthOnboardingComponent{
           this.loading = false;
         },
       );
+  }
+
+  get learnType(): TagTypeEnum {
+    return TagTypeEnum.LEARN;
   }
 }
