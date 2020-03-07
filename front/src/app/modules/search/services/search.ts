@@ -27,7 +27,7 @@ export class SearchService extends APIService<User> {
   currentFoundClients: Subject<any[]> = new Subject<any[]>();
   currentFoundAddress: any[] = [];
   currentSearch: {} = {};
-  public endPoint = '/api/user/match';
+  public endPoint = '/api/user/matchs';
   public searchMetaSubject: BehaviorSubject<SearchMeta> = new BehaviorSubject(null);
 
   constructor(private _http: HttpClient) {
@@ -57,9 +57,8 @@ export class SearchService extends APIService<User> {
     this.searchInput.next(tag);
   }
 
-  searchList(filters: {} = {}, slash: string = ''): Observable<ApiResponseInterface> {
-    const params = this.getUrlParams(filters, slash);
-    return this._http.get(`${this.endPoint}s${params}`)
+  searchList(filters: {} = {}): Observable<ApiResponseInterface> {
+    return this._http.post(this.endPoint, filters)
       .pipe(
         tap((data: ApiResponseInterface) => {
           this._loaded$.next(true);
@@ -77,11 +76,6 @@ export class SearchService extends APIService<User> {
     }
     this._loading$.next(true);
 
-    if (!filters['latitude'] || !filters['longitude']) {
-      filters['latitude'] = city.default.latitude;
-      filters['longitude'] = city.default.longitude;
-    }
-
     return this.searchList(filters).pipe(
       map((response: ApiResponseInterface) => {
         this.currentFoundClients.next(response.data.map(val => val[0]));
@@ -90,7 +84,8 @@ export class SearchService extends APIService<User> {
         this._loading$.next(false);
         this.currentlySearching = false;
         return true;
-      }));
+      }),
+    );
   }
 
   getCurrentFoundClients(): Observable<any[]> {

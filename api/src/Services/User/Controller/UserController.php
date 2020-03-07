@@ -50,7 +50,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Get("user/matchs")
+     * @Post("user/matchs")
      * @View( serializerGroups={"search"})
      */
     public function getUserMatchsAction(
@@ -59,8 +59,8 @@ class UserController extends AbstractController
         DomainService $domainService,
         SearchService $searchService
     ) {
-        $first = $request->query->get('first', 0);
-        $max = $request->query->get('max', 6);
+        $first = $request->get('first', 0);
+        $max = $request->get('max', 6);
 
         $filter = ['first' => $first, 'max' => $max];
 

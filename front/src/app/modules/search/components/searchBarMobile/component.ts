@@ -36,7 +36,6 @@ import { SearchService } from '../../services/search';
     this.tagService = tagService;
   }
 
-
   ngOnInit() {
     this._searchService.getSearchInput().subscribe((tag: string) => {
       this.searchInputControl.setValue(tag);
@@ -47,7 +46,6 @@ import { SearchService } from '../../services/search';
       switchMap(value => this.tagService.findTags(value)),
     );
   }
-
 
   get loading(): boolean {
     return this._searchService.loading;

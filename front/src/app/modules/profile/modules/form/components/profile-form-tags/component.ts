@@ -80,7 +80,7 @@ export class ProfileFormTagsComponent extends DestroyObservable implements OnIni
           tags =>
             tags.find(tag => !tag.name.includes(literal))
             || tags.length === 0 ?
-              [new Tag({ id: null, name: literal.toLocaleLowerCase(), type: this.type }), ...tags]
+              [new Tag({ id: null, name: literal, type: this.type }), ...tags]
               : tags,
         ),
         takeUntil(this.destroy$))
