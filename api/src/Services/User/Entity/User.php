@@ -6,6 +6,7 @@ use App\Services\Chat\Entity\Message;
 use App\Services\Domain\Entity\Domain;
 use App\Services\Tag\Entity\Tag;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 
 class User extends BaseUser
@@ -35,6 +36,7 @@ class User extends BaseUser
     //  USER CONFIG ----------------------------------
     public $showProfil;
     public $emailNotifications;
+    public $newsletter;
     //  public $slackAccounts;
     public $domains;
     private $lastConnexion;
@@ -47,6 +49,11 @@ class User extends BaseUser
         parent::__construct();
         $this->tags = new ArrayCollection();
         $this->created = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->emailToken = new ArrayCollection();
+        $this->sentMessages = new ArrayCollection();
+        $this->receivedMessages = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
+        $this->domains = new ArrayCollection();
     }
 
     public function getId()
@@ -757,5 +764,57 @@ class User extends BaseUser
     public function setSubscriptions(ArrayCollection $subscriptions): void
     {
         $this->subscriptions = $subscriptions;
+    }
+
+    public function getAtmosphere(): ?int
+    {
+        return $this->atmosphere;
+    }
+
+    public function setAtmosphere(?int $atmosphere): self
+    {
+        $this->atmosphere = $atmosphere;
+
+        return $this;
+    }
+
+    public function getNotificationSubscribe(): ?bool
+    {
+        return $this->notificationSubscribe;
+    }
+
+    public function addSubscription(Subscription $subscription): self
+    {
+        if (!$this->subscriptions->contains($subscription)) {
+            $this->subscriptions[] = $subscription;
+            $subscription->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscription(Subscription $subscription): self
+    {
+        if ($this->subscriptions->contains($subscription)) {
+            $this->subscriptions->removeElement($subscription);
+            // set the owning side to null (unless already changed)
+            if ($subscription->getUser() === $this) {
+                $subscription->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNewsletter(): ?bool
+    {
+        return $this->newsletter;
+    }
+
+    public function setNewsletter(bool $newsletter): self
+    {
+        $this->newsletter = $newsletter;
+
+        return $this;
     }
 }

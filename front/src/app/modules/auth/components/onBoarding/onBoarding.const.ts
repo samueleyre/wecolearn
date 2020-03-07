@@ -3,10 +3,10 @@ export const onBoardingSections = {
     title: `Où habites-tu ? 📍`,
   },
   tags: {
-    title: `Dans quels domaines souhaites-tu apprendre ? 📖`,
+    title: `Que souhaites-tu apprendre ? 📖`,
   },
   bio: {
-    title: `Qu'est ce qui te motive à apprendre dans ces domaines ?`,
+    title: `Qu'est ce qui te motive à apprendre ?`,
   },
   ids: {
     title: `Identifiants`,

@@ -3,6 +3,8 @@
 namespace App\Services\Tag\Entity;
 
 use App\Services\User\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class Tag
 {

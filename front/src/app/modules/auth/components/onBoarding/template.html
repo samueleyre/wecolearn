@@ -1,14 +1,15 @@
-<form (keydown.enter)="$event.preventDefault()" (ngSubmit)="submit()" [formGroup]="userForm">
+<div class="Onboarding">
+  <form (keydown.enter)="$event.preventDefault()" (ngSubmit)="submit()" [formGroup]="userForm">
     <mat-horizontal-stepper>
-        <ng-template matStepperIcon="profil">
-            <i class="fa fa-user"></i>
-        </ng-template>
-        <ng-template matStepperIcon="edit">
-            <i class="fa fa-check"></i>
-        </ng-template>
-        <ng-template matStepperIcon="done">
-            <mat-icon>done_all</mat-icon>
-        </ng-template>
+      <ng-template matStepperIcon="profil">
+        <i class="fa fa-user"></i>
+      </ng-template>
+      <ng-template matStepperIcon="edit">
+        <i class="fa fa-check"></i>
+      </ng-template>
+      <ng-template matStepperIcon="done">
+        <mat-icon>done_all</mat-icon>
+      </ng-template>
       <mat-step label="Ville">
         <div class="card">
           <div class="card-header">
@@ -57,41 +58,49 @@
           </div>
         </div>
       </mat-step>
-        <mat-step label="Identifiants">
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="center">{{titles.ids.title}}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="col-12 no-padding">
-                        <mat-form-field appearance="legacy" >
-                          <mat-label>Prénom</mat-label>
-                          <input matInput placeholder="" formControlName="first_name"  >
-                        </mat-form-field>
-                      </div>
-                      <div class="col-12 no-padding">
-                        <mat-form-field appearance="legacy">
-                          <mat-label>Nom</mat-label>
-                          <input matInput placeholder="" formControlName="last_name"  >
-                        </mat-form-field>
-                      </div>
-                        <div class="col-12 no-padding">
-                            <auth-form-email [parentForm]="userForm"></auth-form-email>
-                        </div>
-                        <div class="col-12 no-padding">
-                            <auth-form-password [parentForm]="userForm"></auth-form-password>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="btn-container">
-                        <button type="button" class="btn btn-secondary" matStepperPrevious>< Retour</button>
-                        <button type="submit" class="btn btn-primary" matStepperNext>Créer mon compte</button>
-                    </div>
-                </div>
+      <mat-step label="Identifiants">
+        <div class="card">
+          <div class="card-header">
+            <h6 class="center">{{titles.ids.title}}</h6>
+          </div>
+          <div class="card-body">
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="col-12 no-padding">
+                <mat-form-field appearance="legacy" >
+                  <mat-label>Prénom</mat-label>
+                  <input matInput placeholder="" formControlName="first_name"  >
+                </mat-form-field>
+              </div>
+              <div class="col-12 no-padding">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Nom</mat-label>
+                  <input matInput placeholder="" formControlName="last_name"  >
+                </mat-form-field>
+              </div>
+              <div class="col-12 no-padding">
+                <auth-form-email [parentForm]="userForm"></auth-form-email>
+              </div>
+              <div class="col-12 no-padding">
+                <auth-form-password [parentForm]="userForm"></auth-form-password>
+              </div>
             </div>
-        </mat-step>
-
+            <div class="col-12">
+              <p class="Onboarding-newsletter">
+                <mat-checkbox formControlName="newsletter">J'adhère à la newsletter ( surtout pour les apéros 🍻 & ateliers 🛠️ )</mat-checkbox>
+              </p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <p class="Onboarding-conditions">
+              En cliquant sur "créer mon compte", tu acceptes nos <a href="https://wecolearn.com/doc/mentionslegales">Conditions Générales</a>.
+            </p>
+            <div class="btn-container">
+              <button type="button" class="btn btn-secondary" matStepperPrevious>< Retour</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid" matStepperNext>Créer mon compte</button>
+            </div>
+          </div>
+        </div>
+      </mat-step>
     </mat-horizontal-stepper>
-</form>
+  </form>
+</div>

@@ -1,30 +1,36 @@
-mat-horizontal-stepper{
-  background: none;
-}
-
-.card{
-  min-height: 50vh;
-  .card-body{
-    align-items: center;
-    justify-content: center;
+.Onboarding {
+  mat-horizontal-stepper{
+    background: none;
+  }
+  .card{
+    min-height: 50vh;
+    .card-body{
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      :first-child{
+        width: 100%
+      }
+      &-tagHints {
+        margin-top: 10px;
+      }
+    }
+  }
+  .btn-container-first{
+    float: right;
+  }
+  .btn-container{
     display: flex;
-    flex-direction: column;
-    :first-child{
-      width: 100%
-    }
-    &-tagHints {
-      margin-top: 10px;
-    }
+    justify-content: space-between;
+  }
+
+  &-conditions {
+    text-align: center;
+  }
+  &-newsletter {
+    text-align: center;
+    margin-top: 20px;
   }
 }
 
-
-
-.btn-container-first{
-  float: right;
-}
-
-.btn-container{
-  display: flex;
-  justify-content: space-between;
-}

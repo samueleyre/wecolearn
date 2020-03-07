@@ -1,6 +1,6 @@
 import {
   Component,
-  Injectable,
+  Injectable, OnInit,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,26 +18,21 @@ import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
   templateUrl: 'template.html',
   styleUrls : ['./style.scss'],
 })
-export class AuthOnboardingComponent{
+export class AuthOnboardingComponent {
   pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   public titles = onBoardingSections;
 
   public userForm = this.fb.group({
     first_name: null,
     last_name: null,
-    image: null,
     learn_tags: [],
     biographie: null,
-    know_tags: [],
-    teach_tags: [],
-    intensity: null,
-    slack_accounts: [],
     latitude: null,
     longitude: null,
     email: [null, [Validators.required, Validators.pattern(this.pattern)]],
-    password: [null, [Validators.required]],
+    password: [null, [Validators.required, Validators.minLength(6)]],
+    newsletter: true,
   });
-
 
   error:string;
   loading = false;
