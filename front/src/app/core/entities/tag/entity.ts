@@ -12,7 +12,7 @@ export class Tag {
     type: TagTypeEnum,
     iteration?: number,
   }) {
-    this.name = obj && obj.name ? obj.name : null;
+    this.name = obj && obj.name ? encodeURI(obj.name).toLocaleLowerCase() : null;
     this.type = obj && 'type' in obj ? obj.type : null;
 
     if (obj && obj.id) {
