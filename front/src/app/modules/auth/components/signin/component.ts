@@ -9,9 +9,9 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 import { DomainService } from '~/core/services/domain';
 import { NAV } from '~/config/navigation/nav';
 import { CookieNotificationService } from '~/core/services/cookie-notification.service';
+import { PATTERN } from '~/shared/config/pattern';
 
 import { environment } from '../../../../../environments/environment';
-import {PATTERN} from "~/shared/config/pattern";
 
 
 @Component({

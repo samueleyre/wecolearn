@@ -60,6 +60,7 @@
         </one-to-many>
         <field name="showProfil" type="boolean" column="showProfil"/>
         <field name="emailNotifications" type="boolean" column="emailNotifications"/>
+        <field name="newsletter" type="boolean" column="newsletter"/>
         <field name="notificationSubscribe" column="notificationSubscribe" type="boolean" nullable="true"/>
         <one-to-many field="subscriptions" target-entity="App\Services\User\Entity\Subscription" mapped-by="user" />
         <many-to-many field="domains" target-entity="App\Services\Domain\Entity\Domain" inversed-by="users">

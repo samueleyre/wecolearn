@@ -1,8 +1,11 @@
 <mat-form-field appearance="legacy" [formGroup]="parentForm">
     <mat-label>Mot de passe</mat-label>
     <input matInput placeholder="Mot de passe" formControlName="password" type="password">
-    <mat-error *ngIf="parentForm.controls.email.hasError('required')">
+    <mat-error *ngIf="parentForm.controls.password.hasError('required')">
         Le mot de passe est <strong>obligatoire</strong>
+    </mat-error>
+    <mat-error *ngIf="parentForm.controls.password.hasError('minlength')">
+        Le mot de passe doit faire au moins 6 caractères.
     </mat-error>
 </mat-form-field>
 <password-strength-bar [passwordToCheck]="parentForm.value.password" [barLabel]="'Difficulté du mot de passe'"></password-strength-bar>
