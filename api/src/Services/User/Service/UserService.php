@@ -83,7 +83,8 @@ class UserService
         for ($i = 0; $i < count($parameters); ++$i) {
             $getMethod = 'get'.ucfirst($parameters[$i]);
             $setMethod = 'set'.ucfirst($parameters[$i]);
-            if ($params->$getMethod()) {
+            if ($params->$getMethod() !== null) {
+                dump($getMethod);
                 $oldUser->$setMethod($params->$getMethod());
             }
         }
@@ -96,7 +97,7 @@ class UserService
         // insert or update "slack" accounts
         //    $oldUser->setSlackAccounts($this->patchSlackAccounts($oldUser, $user->getSlackAccounts()));
 
-        $this->em->merge($oldUser);
+        $this->em->persist($oldUser);
 
         $this->em->flush();
 
