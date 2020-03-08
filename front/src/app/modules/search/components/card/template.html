@@ -9,7 +9,7 @@
     <div class="card-container" *ngIf="card.tags"></div>
     <div *ngIf="card.tags">
       <div class="learning">
-        <p class="learning-title">Ce que je veux apprendre</p>
+        <p class="learning-title">Je veux apprendre 📚</p>
         <ul class="learning-tags col-md-12 flex-wrap">
           <li *ngFor="let tag of card.tags | tagPipe: 0: 3">
             <p><a (click)="searchByTag(tag.name)"><span class="badge">{{tag.name}}</span></a></p>

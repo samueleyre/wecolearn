@@ -47,6 +47,7 @@ class CreateUserService
         $user->setShowProfil(true);
         $user->setEmailConfirmed(false);
         $user->setNewMessageNotification(true);
+        $user->setNewMatchNotification(true);
         $user->setIntensity(5);
 
         if (!$user->getLatitude()) {

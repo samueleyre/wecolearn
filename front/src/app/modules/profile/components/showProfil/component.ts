@@ -18,7 +18,7 @@ import { Tag } from '~/core/entities/tag/entity';
 export class ShowProfilSettingsComponent implements OnInit {
   public user: User;
   public disabled = true;
-  public profilDisableInformation = 'Pour pouvoir rendre votre profil ' +
+  public profilDisableInformation = 'Pour pouvoir rendre visible votre profil ' +
     "vous devez remplir votre biographie et ajouter un domaine d'apprentissage";
 
 

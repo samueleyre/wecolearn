@@ -86,7 +86,8 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setEnabled(true);
         $admin->addDomain($domain);
         $admin->setShowProfil(false);
-        $admin->setEmailNotifications(false);
+        $admin->setNewMessageNotification(false);
+        $admin->setNewMatchNotification(false);
         $admin->setNewsletter(false);
         $this->userManager->updateUser($admin);
 
@@ -134,7 +135,8 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $user->addDomain($domain);
             $user->setShowProfil(true);
             $user->setLastLogin($date);
-            $user->setEmailNotifications(true);
+            $user->setNewMessageNotification(true);
+            $user->setNewMatchNotification(true);
             $user->setNewsletter(true);
             array_push($userList, $user);
             $this->manager->persist($domain);
