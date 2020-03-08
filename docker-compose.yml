@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   db:
-    image: mariadb
+    image: mysql:5.7
     restart: always
     ports:
       - "3308:3308"
@@ -12,8 +12,6 @@ services:
       - MYSQL_PASSWORD=inCodeWeTrust
       - TERM=dumb
     volumes:
-      - ./docker/db:/etc/mysql/conf.d
-      - ./docker/:/opt
       - ./db/mysql:/var/lib/mysql
   api:
     build: ./docker/php
