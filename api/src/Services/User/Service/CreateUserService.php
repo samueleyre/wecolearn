@@ -46,7 +46,7 @@ class CreateUserService
         $user->setEnabled(true);
         $user->setShowProfil(true);
         $user->setEmailConfirmed(false);
-        $user->setEmailNotifications(true);
+        $user->setNewMessageNotification(true);
         $user->setIntensity(5);
 
         if (!$user->getLatitude()) {

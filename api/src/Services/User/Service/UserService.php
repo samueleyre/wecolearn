@@ -77,7 +77,7 @@ class UserService
             'longitude',
             'tags',
             'showProfil',
-            'emailNotifications',
+            'newMessageNotification',
         ];
 
         for ($i = 0; $i < count($parameters); ++$i) {

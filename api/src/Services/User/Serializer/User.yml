@@ -36,8 +36,10 @@ App\Services\User\Entity\User:
         groups: [ input, output, search, message, profile, public-profile ]
       showProfil:
         groups: [ input, profile, admin-users ]
-      emailNotifications:
-        groups: [ input, profile, user ]
+      newMessageNotification:
+        groups: [ input, profile ]
+      newsletter:
+        groups: [ input, create ]
       slackAccounts:
         groups: [ input, search ]
       userNotified:

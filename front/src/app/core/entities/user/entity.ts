@@ -30,7 +30,7 @@ export class User {
   public received_messages: Message[];
   public image: Image;
   public show_profil: boolean;
-  public email_notifications: boolean;
+  public new_message_notification: boolean;
   public slack_accounts: SlackAccount[];
   public user_notified: Date;
   public notification_subscribe: boolean | null;
@@ -61,7 +61,7 @@ export class User {
     this.longitude = null;
     this.image = obj && obj.image ? obj.image : new Image();
     this.show_profil = false;
-    this.email_notifications = true;
+    this.new_message_notification = true;
     this.slack_accounts = obj && obj.slack_accounts ? obj.slack_accounts : [];
     this.user_notified = null;
     this.notification_subscribe = false;

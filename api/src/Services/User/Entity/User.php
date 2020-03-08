@@ -35,7 +35,8 @@ class User extends BaseUser
 
     //  USER CONFIG ----------------------------------
     public $showProfil;
-    public $emailNotifications;
+
+    private $newMessageNotification;
     public $newsletter;
     //  public $slackAccounts;
     public $domains;
@@ -384,27 +385,27 @@ class User extends BaseUser
     }
 
     /**
-     * Set emailNotifications.
+     * Set newMessageNotification.
      *
-     * @param bool $emailNotifications
+     * @param bool $newMessageNotification
      *
      * @return User
      */
-    public function setEmailNotifications($emailNotifications)
+    public function setNewMessageNotification($newMessageNotification)
     {
-        $this->emailNotifications = $emailNotifications;
+        $this->newMessageNotification = $newMessageNotification;
 
         return $this;
     }
 
     /**
-     * Get emailNotifications.
+     * Get newMessageNotification.
      *
      * @return bool
      */
-    public function getEmailNotifications()
+    public function getNewMessageNotification()
     {
-        return $this->emailNotifications;
+        return $this->newMessageNotification;
     }
 
     /**

@@ -59,7 +59,7 @@
             </cascade>
         </one-to-many>
         <field name="showProfil" type="boolean" column="showProfil"/>
-        <field name="emailNotifications" type="boolean" column="emailNotifications"/>
+        <field name="newMessageNotification" type="boolean" column="newMessageNotification"/>
         <field name="newsletter" type="boolean" column="newsletter"/>
         <field name="notificationSubscribe" column="notificationSubscribe" type="boolean" nullable="true"/>
         <one-to-many field="subscriptions" target-entity="App\Services\User\Entity\Subscription" mapped-by="user" />

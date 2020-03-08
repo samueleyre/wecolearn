@@ -28,7 +28,7 @@ import { SEARCH } from '../../config/main';
     [SearchMeta.TAGNOTFOUND]: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. 😢 <br>
     Peut-être que les profils suivant pourront tout de même vous intéresser ?`,
     noResults: `Mince, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
-    recherche, n'hésitez pas à ajouter des tags dans votre profil !`,
+    recherche, pensez à ajouter des domaines d'apprentissage dans votre profil !`,
   };
 
   @ViewChild('cardsContainer', { static: false }) cardsContainerElementRef: ElementRef;
