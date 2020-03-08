@@ -61,7 +61,7 @@ export class User {
     this.longitude = null;
     this.image = obj && obj.image ? obj.image : new Image();
     this.show_profil = false;
-    this.new_message_notification = true;
+    this.new_message_notification = null;
     this.slack_accounts = obj && obj.slack_accounts ? obj.slack_accounts : [];
     this.user_notified = null;
     this.notification_subscribe = false;
