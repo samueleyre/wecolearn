@@ -78,6 +78,8 @@ class UserService
             'tags',
             'showProfil',
             'newMessageNotification',
+            'newMatchNotification',
+            'newsletter',
         ];
 
         for ($i = 0; $i < count($parameters); ++$i) {

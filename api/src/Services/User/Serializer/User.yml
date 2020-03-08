@@ -38,8 +38,10 @@ App\Services\User\Entity\User:
         groups: [ input, profile, admin-users ]
       newMessageNotification:
         groups: [ input, profile ]
+      newMatchNotification:
+        groups: [ input, profile ]
       newsletter:
-        groups: [ input, create ]
+        groups: [ input, create, profile ]
       slackAccounts:
         groups: [ input, search ]
       userNotified:

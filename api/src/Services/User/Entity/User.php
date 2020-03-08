@@ -37,6 +37,7 @@ class User extends BaseUser
     public $showProfil;
 
     private $newMessageNotification;
+    private $newMatchNotification;
     public $newsletter;
     //  public $slackAccounts;
     public $domains;
@@ -815,6 +816,18 @@ class User extends BaseUser
     public function setNewsletter(bool $newsletter): self
     {
         $this->newsletter = $newsletter;
+
+        return $this;
+    }
+
+    public function getNewMatchNotification(): ?bool
+    {
+        return $this->newMatchNotification;
+    }
+
+    public function setNewMatchNotification(bool $newMatchNotification): self
+    {
+        $this->newMatchNotification = $newMatchNotification;
 
         return $this;
     }

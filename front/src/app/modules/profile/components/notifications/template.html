@@ -1,9 +1,25 @@
 <hr>
-<div class="form-group" id="notificationSettings">
-    <label> Recevoir des notifications par email</label>
+<div class="form-group notificationSettings">
+    <label>Etre informé des nouveaux messages ( mail )</label>
   <br>
     <app-toggler [(active)]="user['new_message_notification']" (change)="submit()" ></app-toggler>
     <p class="form-text text-muted">
-      Les notifications permettent de vous tenir au courant des nouveaux messages que vous avez reçu d'autres utilisateurs.
     </p>
+</div>
+<hr>
+<div class="form-group notificationSettings">
+  <label>Etre informé des profils intéressants ( mail )</label>
+  <br>
+  <app-toggler [(active)]="user['new_match_notification']" (change)="submit()" ></app-toggler>
+  <p class="form-text text-muted">
+  </p>
+</div>
+<hr>
+<div class="form-group notificationSettings">
+  <label>Abonné à la newsletter</label>
+  <br>
+  <app-toggler [(active)]="user['newsletter']" (change)="submit()" ></app-toggler>
+  <p class="form-text text-muted">
+    Principalement les apéros 🍻 et ateliers 🛠️.
+  </p>
 </div>
