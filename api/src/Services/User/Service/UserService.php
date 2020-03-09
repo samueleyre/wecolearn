@@ -86,7 +86,6 @@ class UserService
             $getMethod = 'get'.ucfirst($parameters[$i]);
             $setMethod = 'set'.ucfirst($parameters[$i]);
             if ($params->$getMethod() !== null) {
-                dump($getMethod);
                 $oldUser->$setMethod($params->$getMethod());
             }
         }
