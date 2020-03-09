@@ -126,11 +126,10 @@ class UserController extends AbstractController
                     // Found the name of duplicate field
                     $ret['duplicate'] = true;
                 } catch (\Exception $e) {
-                    dump($e->getMessage());
+
                 }
             }
         } catch (\Exception $e) {
-            dump($e->getMessage());
             exit();
         }
 
@@ -267,7 +266,6 @@ class UserController extends AbstractController
                 try {
                     $res = $service->process($email);
                 } catch (\Exception $e) {
-                    dump($e->getMessage());
                     exit();
                 }
                 if ($res instanceof Token) {
@@ -277,7 +275,6 @@ class UserController extends AbstractController
                 }
             }
         } catch (\Exception $e) {
-            dump($e->getMessage());
             exit();
         }
 
@@ -314,7 +311,6 @@ class UserController extends AbstractController
                 }
             }
         } catch (\Exception $e) {
-            dump($e->getMessage());
             exit();
         }
 
