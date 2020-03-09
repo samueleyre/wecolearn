@@ -3,6 +3,7 @@
 namespace App\Services\Core\DataFixtures\ORM;
 
 use App\Services\Chat\Entity\Message;
+use App\Services\Core\DataFixtures\ORM\Constant\TagOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\UserConstant;
 use App\Services\Domain\Entity\Domain;
 use App\Services\Tag\Entity\Tag;
@@ -17,7 +18,6 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use const App\Services\Core\DataFixtures\ORM\Constant\TagConstant;
 
 class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterface
 {
@@ -92,9 +92,9 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $this->userManager->updateUser($admin);
 
         // set Learn tags
-        for ($i = 0; $i < count(TagConstant); ++$i) {
+        for ($i = 0; $i < count(TagOrmConstant::$RAND); ++$i) {
             $tag = new Tag();
-            $tag->setName(TagConstant[$i]);
+            $tag->setName(TagOrmConstant::$RAND[$i]);
             $tag->setType(0);
             $tag->setCreated($date);
             $tag->setIteration(random_int(0, 100));
@@ -102,9 +102,9 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         }
 
         // set all types of Tags
-        for ($i = 0; $i < count(TagConstant); ++$i) {
+        for ($i = 0; $i < count(TagOrmConstant::$RAND); ++$i) {
             $tag = new Tag();
-            $tag->setName(TagConstant[$i]);
+            $tag->setName(TagOrmConstant::$RAND[$i]);
             $tag->setType(random_int(1, 2));
             $tag->setCreated($date);
             $tag->setIteration(random_int(0, 100));
@@ -142,11 +142,11 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $this->manager->persist($domain);
 
             // tags
-            $randLearnTag = $tags[random_int(0, count(TagConstant)-1)];
-            $randTag = $tags[random_int(count(TagConstant), count($tags) - 1)];
-            $randTag2 = $tags[random_int(count(TagConstant), count($tags) - 1)];
-            $randTag3 = $tags[random_int(count(TagConstant), count($tags) - 1)];
-            $randTag4 = $tags[random_int(count(TagConstant), count($tags) - 1)];
+            $randLearnTag = $tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
+            $randTag = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
+            $randTag2 = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
+            $randTag3 = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
+            $randTag4 = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
             $randTags = [$randLearnTag, $randTag, $randTag2, $randTag3, $randTag4];
             $user->setTags($this->tagService->beforePatchTags(new ArrayCollection(), new ArrayCollection($randTags)));
 
