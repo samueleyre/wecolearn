@@ -39,8 +39,6 @@ import { TextLimitComponent } from './components/limit/component';
   ],
   imports: [
     CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
     InfiniteScrollModule,
     SearchRouting,
@@ -58,7 +56,6 @@ import { TextLimitComponent } from './components/limit/component';
   ],
   providers: [
     SearchService,
-
   ],
 })
 export class SearchModule {
