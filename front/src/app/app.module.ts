@@ -39,6 +39,7 @@ import { AutofocusDirective } from './modules/search/directives/input/directive'
 // shared services
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
+import {MaterialModule} from "~/shared/modules/material/material.module";
 
 registerLocaleData(fr);
 
@@ -60,6 +61,7 @@ registerLocaleData(fr);
     SearchModule,
     MatSliderModule,
     MatIconModule,
+    MaterialModule,
     // needed here otherwise slider doesn't work
 
   ],

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DocRouting } from '~/modules/doc/doc.routing';
 import { FooterModule } from '~/shared/modules/footer/footer.module';
 
-import { ContainerComponent } from './layouts/main/component';
+import { ContainerComponent } from '../../core/layouts/main/component';
 import { AboutComponent } from './pages/about/component';
 import { MentionsComponent } from './pages/mentionslegales/component';
 import { PeerLearningComponent } from './pages/peerLearning/component';

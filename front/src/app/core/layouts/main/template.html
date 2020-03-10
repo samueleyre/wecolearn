@@ -1,10 +1,13 @@
-<div class="page">
+<section>
   <div class="container-fluid">
     <div class="row">
       <div class="brand">
         <a routerLink="/"><img src="assets/logo/wecolearn-logo-black.svg" alt=""/></a>
       </div>
     </div>
-      <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
+</section>
+<div class="mainContainer-content">
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
+<main-footer></main-footer>

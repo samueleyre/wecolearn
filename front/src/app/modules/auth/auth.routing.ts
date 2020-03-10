@@ -10,18 +10,10 @@ import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/compon
 
 
 const routes: Routes = [
-
-
-  {
-    path: 'auth', component: ContainerComponent,
-    children: [
-            { path: 'subscribe', component: AuthOnboardingPageComponent },
-            { path: 'password/email', component: SendPasswordConfirmationEmailPageComponent },
-            { path: 'password/reset', component: ResetPasswordFormPageComponent },
-            { path: 'confirm', component: ConfirmEmailComponent },
-    ],
-  },
-  { path: 'signin', component: LandingPageComponent },
+  { path: 'subscribe', component: AuthOnboardingPageComponent },
+  { path: 'password/email', component: SendPasswordConfirmationEmailPageComponent },
+  { path: 'password/reset', component: ResetPasswordFormPageComponent },
+  { path: 'confirm', component: ConfirmEmailComponent },
 ];
 
 @NgModule({
