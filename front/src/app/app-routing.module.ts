@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MainComponent } from '~/core/layouts/dashboard/component';
+import { ContainerComponent } from '~/core/layouts/main/component';
+import { LandingPageComponent } from '~/modules/auth/pages/landing/component';
 
 import { AuthGuard } from './core/services/auth/authGuard';
-import { CommunitiesComponent } from './pages/communities/component';
 import { NotFoundComponent } from './pages/notFound/component';
 
 
 const wcRoutes: Routes = [
+  { path: 'signin', component: LandingPageComponent, pathMatch: 'full' },
   { path: '', redirectTo: '/dashboard/search', pathMatch: 'full' },
   {
     path: 'dashboard/profile', component: MainComponent, canActivate: [AuthGuard],
@@ -23,11 +25,15 @@ const wcRoutes: Routes = [
     loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
   },
   {
-    path: 'doc', loadChildren: () => import('./modules/doc/doc.module').then(mod => mod.DocModule),
+    path: 'doc', component: ContainerComponent,
+    loadChildren: () => import('./modules/doc/doc.module').then(mod => mod.DocModule),
   },
-  // { path: 'communities', component: CommunitiesComponent },
-  { path: '404', component: NotFoundComponent },
-  { path: '**', redirectTo: 'dashboard', canActivate: [AuthGuard] },
+  {
+    path: 'auth', component: ContainerComponent,
+    loadChildren: () => import('./modules/auth/auth.module').then(mod => mod.AuthModule),
+  },
+  { path: '404', pathMatch: 'full', component: ContainerComponent, children: [{ path: '', component: NotFoundComponent }] },
+  { path: '**', redirectTo: '404' },
 ];
 
 @NgModule({
@@ -40,3 +46,6 @@ const wcRoutes: Routes = [
 })
 export class WcRoutingModule {
 }
+
+
+// { path: 'communities', component: CommunitiesComponent },
