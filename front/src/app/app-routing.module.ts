@@ -25,6 +25,10 @@ const wcRoutes: Routes = [
     loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
   },
   {
+    path: 'dashboard/search', component: MainComponent, canActivate: [AuthGuard],
+    loadChildren: () => import('./modules/search/search.module').then(mod => mod.SearchModule),
+  },
+  {
     path: 'doc', component: ContainerComponent,
     loadChildren: () => import('./modules/doc/doc.module').then(mod => mod.DocModule),
   },
