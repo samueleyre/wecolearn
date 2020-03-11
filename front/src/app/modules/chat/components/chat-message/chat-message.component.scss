@@ -1,4 +1,4 @@
-@import '../../../../../assets/scss/variables';
+@import 'variables';
 
 
 
@@ -29,6 +29,9 @@
 
   > {
     p {
+      &.message {
+        white-space: pre-wrap;
+      }
       font-size: 1rem;
       margin: 0 0 0.2rem 0;
     }

@@ -20,13 +20,14 @@
           <textarea
             class="form-control" #chatInput id="chatInput"
             placeholder="Ecrivez votre message ici !"
-            (keydown.enter)="onEnter($event)"
+            (keydown)="onEnter($event)"
             [(ngModel)]="draftMessage.message"
             [disabled]="disabled"
+            maxlength="1000"
           ></textarea>
           <span class="input-group-append">
             <button class="btn btn-primary btn-chat btn-lg"
-                    (click)="onEnter($event)"
+                    (click)="sendMessage()"
             ><i title="envoyer" class="fa fa-paper-plane "></i></button>
           </span>
         </div>
