@@ -79,17 +79,25 @@ export class ChatWindowComponent extends DestroyObservable implements OnInit {
         });
   }
 
-  onEnter(event: any): void {
-    if (this.draftMessage.message === null ||
-      this.draftMessage.message === '' ||
-      !this.currentThread.id) {
-      return;
+  onEnter(event: KeyboardEvent): void {
+    if (event.code === 'Enter' && !event.ctrlKey && !event.shiftKey) {
+      this.sendMessage();
+      event.preventDefault();
     }
-    this.sendMessage();
-    event.preventDefault();
+    if (event.code === 'Enter' && event.ctrlKey) {
+      if (this.draftMessage.message === null) this.draftMessage.message = '';
+      else this.draftMessage.message += '\n';
+    }
   }
 
   sendMessage(): void {
+    if (
+      this.draftMessage.message === null
+      || this.draftMessage.message === ''
+      || !this.currentThread.id
+    ) {
+      return;
+    }
     this.disabled = true;
     this.draftMessage.receiver = new User({ id: this.currentThread.id });
     this.draftMessage.is_read = false;
