@@ -1,11 +1,8 @@
 <div class="msg-container" *ngIf="clientId"
      [ngClass]="msgContainerClass">
-
   <div class="messages"
     [ngClass]="msgContainerClass">
     <p class="message">{{message.message}}</p>
     <p class="time">{{message.created | fromNow}}</p>
   </div>
-
-
 </div>

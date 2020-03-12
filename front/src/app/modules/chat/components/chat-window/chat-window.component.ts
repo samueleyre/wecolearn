@@ -48,9 +48,6 @@ export class ChatWindowComponent extends DestroyObservable implements OnInit {
 
   ngOnInit(): void {
     this.messages = this.threadsService.currentThreadMessages.pipe(
-      map(
-        ms => _.uniqBy(ms, m => m.id),
-      ),
       takeUntil(this.destroy$),
     );
     this.draftMessage = new Message();
