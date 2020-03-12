@@ -45,7 +45,6 @@ export class Threads {
 
         // Store the message's thread in our accumulator
         messages.map((message: Message) => {
-          console.log({ message })
           threadGroups[message.thread.id] = threadGroups[String(message.thread.id)] || { ...message.thread };
           // Cache the most recent message for each thread
           if (
@@ -81,8 +80,6 @@ export class Threads {
     this.currentThreadMessages = combineLatest(this.currentThread, this.messagesService.messages)
       .pipe(
         map(([currentThread, messages]) => {
-          console.log({ currentThread });
-          console.log({ messages });
           if (currentThread && messages.length > 0) {
             return _.chain(messages)
               .filter((message: Message) => {
