@@ -6,9 +6,11 @@ import { MatFormFieldModule, MatIconModule, MatInputModule, MatStepperModule } f
 import { ProfileFormModule } from '~/modules/profile/modules/form/form.module';
 import { AuthFormModule } from '~/modules/auth/modules/form/form.module';
 import { PasswordDifficultyModule } from '~/modules/auth/modules/passwordDifficulty/passwordDifficulty.module';
-import { AuthOnboardingMobileComponent } from '~/modules/auth/components/onBoardingMobile/component';
+import { AuthOnboardingMobileComponent } from '~/modules/auth/components/onBoardingComponents/onBoardingMobile/component';
 import { ContainerComponent } from '~/modules/auth/layouts/main/component';
 import { FooterModule } from '~/shared/modules/footer/footer.module';
+import { MaterialModule } from '~/shared/modules/material/material.module';
+import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardingComponents/baseComponent';
 
 import { LandingPartnersComponent } from './components/landing/partners/component';
 import { LandingProcessComponent } from './components/landing/process/component';
@@ -18,7 +20,7 @@ import { SigninMobileComponent } from './components/signinMobile/component';
 import { SignupMobileComponent } from './components/signupMobile/component';
 import { SendPasswordConfirmationEmailMobileComponent } from './components/sendConfirmationEmailMobile/component';
 import { AuthOnboardingPageComponent } from './pages/onBoarding/component';
-import { AuthOnboardingComponent } from './components/onBoarding/component';
+import { AuthOnboardingComponent } from './components/onBoardingComponents/onBoarding/component';
 import { AuthRouting } from './auth.routing';
 import { ConfirmEmailComponent } from './components/confirmEmail/component';
 import { SigninComponent } from './components/signin/component';
@@ -30,7 +32,6 @@ import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/compon
 import { SendPasswordConfirmationEmailComponent } from './components/sendConfirmationEmail/component';
 import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirmationEmail/component';
 import { ResetPasswordFormComponent } from './components/passwordResetForm/component';
-import {MaterialModule} from "~/shared/modules/material/material.module";
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import {MaterialModule} from "~/shared/modules/material/material.module";
     LandingSigninComponent,
     LandingSigninMobileComponent,
     AuthOnboardingComponent,
+    AuthOnboardingBaseComponent,
     AuthOnboardingPageComponent,
     AuthOnboardingMobileComponent,
 

@@ -1,4 +1,5 @@
-<form (keydown.enter)="$event.preventDefault()" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
+<div class="Onboarding">
+  <form (keydown.enter)="$event.preventDefault()" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
     <mat-horizontal-stepper>
         <ng-template matStepperIcon="edit">
             <i class="fa fa-check"></i>
@@ -77,15 +78,24 @@
                             <auth-form-password [parentForm]="userForm"></auth-form-password>
                         </div>
                     </div>
+                    <div class="col-12">
+                      <p class="Onboarding-newsletter">
+                        <mat-checkbox formControlName="newsletter">J'adhère à la newsletter</mat-checkbox>
+                        <small>( surtout pour les apéros 🍻 & ateliers 🛠️ )</small>
+                      </p>
+                    </div>
                 </div>
                 <div class="card-footer">
-                    <div class="btn-container">
+                  <p class="Onboarding-conditions">
+                    En cliquant sur "créer mon compte", tu acceptes nos <a href="https://wecolearn.com/doc/mentionslegales">Conditions Générales</a>.
+                  </p>
+                  <div class="btn-container">
                         <button type="button" class="btn btn-secondary" matStepperPrevious>< Retour</button>
                         <button type="submit" class="btn btn-primary" matStepperNext>Valider</button>
                     </div>
                 </div>
             </div>
         </mat-step>
-
     </mat-horizontal-stepper>
 </form>
+</div>
