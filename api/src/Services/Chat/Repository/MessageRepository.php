@@ -101,18 +101,18 @@ class MessageRepository extends ServiceEntityRepository
 
     public function findUnReadMessages($lastReminder = null)
     {
-        if (null === $lastReminder) { // used if second reminder is sent
-            $lastReminder = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        }
-
-        $date = new \DateTime('- 1 Days', new \DateTimeZone('Europe/Paris'));
+//        if (null === $lastReminder) { // used if second reminder is sent
+//            $lastReminder = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+//        }
+//
+//        $date = new \DateTime('- 1 Days', new \DateTimeZone('Europe/Paris'));
 
         return $this->getEntityManager()->createQueryBuilder()->
         select('message')->
         from(sprintf('%s', 'App\\Services\\Chat\\Entity\\Message'), 'message')->
         where('message.isRead = :isRead')->setParameter('isRead', 0)->
         andWhere('message.lastReminder IS NULL')->
-        andWhere('message.created < :date')->setParameter('date', $date)->
+//        andWhere('message.created < :date')->setParameter('date', $date)->
         orderBy('message.created', 'ASC')->
         getQuery()->
         getResult();
