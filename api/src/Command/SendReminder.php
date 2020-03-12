@@ -4,13 +4,10 @@ namespace App\Command;
 
 use App\Services\Chat\Entity\Message;
 use App\Services\Chat\Service\MessageService;
-use Psr\Log\LoggerInterface;
 use Shapecode\Bundle\CronBundle\Annotation\CronJob;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManager;
 use App\Services\Chat\Constant\EmailConstant;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Services\Chat\Service\EmailService;
@@ -18,7 +15,7 @@ use App\Services\Chat\Service\EmailService;
 
 /**
  * @CronJob("*\/60 * * * *")
- * Will be executed every day at 4 pm
+ * Will be executed every hour
  */
 class SendReminder extends Command
 {
