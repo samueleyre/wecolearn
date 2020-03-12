@@ -122,6 +122,7 @@ export class MessagesService {
     const typeOfMessage = (senderOrReceiver === 'sender') ? 'receivedMessages' : 'sentMessages';
 
     this[typeOfMessage].map((message: Message) => {
+      // new thread
       if (Object.keys(threads).length === 0 || (Object.keys(threads).indexOf(String(message[senderOrReceiver].id)) === -1)) {
         const thread = new Thread({
           id: message[senderOrReceiver].id,
@@ -130,6 +131,8 @@ export class MessagesService {
         });
         threads[message[senderOrReceiver].id] = thread;
         message.thread = thread;
+
+        // thread already created
       } else {
         message.thread = threads[message[senderOrReceiver].id];
       }

@@ -50,7 +50,9 @@ class MessageController extends AbstractController
         $user = $tokenStorage->getToken()->getUser();
 
         return [
-        'received_messages' => $user->getReceivedMessages(),
+        'received_messages' => $user->getReceivedMessages()->filter(function(Message $message) use ($user) {
+            return $message->getReceiver()->getId() !== $user->getId();
+        }),
         'sent_messages' => $user->getSentMessages(),
         ];
     }
