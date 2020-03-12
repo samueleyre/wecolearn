@@ -149,6 +149,10 @@ export class MessagesService {
 
     const sortedMessages = _.sortBy(messagestoBeAdded, (m: Message) => m.created);
 
+    // init messages value
+    this.messages.next(sortedMessages);
+
+    // start action stream
     sortedMessages.forEach((message: Message) => {
       // add message to action stream
       this.addMessage(message);
