@@ -1,4 +1,4 @@
-import { publishReplay, refCount, scan, map, tap } from 'rxjs/operators';
+import { publishReplay, refCount, scan, map, tap, filter } from 'rxjs/operators';
 import { of as observableOf, Subject, Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -70,6 +70,7 @@ export class MessagesService {
 
   // an imperative function call to this action stream
   addMessage(message: Message): void {
+    console.log({ message });
     this.create.next(message);
   }
 
@@ -147,10 +148,12 @@ export class MessagesService {
 
     const messagestoBeAdded = this.sentMessages.concat(this.receivedMessages);
 
-    _.sortBy(messagestoBeAdded, (m: Message) => m.created)
-      .map((message: Message) => {
-        this.addMessage(message);
-      });
+    const sortedMessages = _.sortBy(messagestoBeAdded, (m: Message) => m.created);
+
+    sortedMessages.forEach((message: Message) => {
+      // add message to action stream
+      this.addMessage(message);
+    });
   }
 
   public post(message: Message): Observable<Object> {

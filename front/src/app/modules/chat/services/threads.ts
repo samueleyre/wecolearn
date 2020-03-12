@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import {filter, map, take, tap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
@@ -16,7 +16,7 @@ import { MessagesService } from './messages';
 })
 export class Threads {
   // `orderedThreads` contains a newest-first chronological list of threads
-  public orderedThreads: Observable<Thread[]> = of();
+  public orderedThreads: Observable<Thread[]>;
 
   public orderedThreads$: BehaviorSubject<Thread[]> = new BehaviorSubject<Thread[]>([]);
 
@@ -108,6 +108,16 @@ export class Threads {
           }
           return [];
         }));
+  }
+
+  public setThreadById(id: number): void {
+    this.orderedThreads.pipe(filter(ths => ths.length > 0), take(4)).subscribe((ths) => {
+      const thread = ths.filter(th => th.id === id)[0];
+      if (thread) {
+        this.setCurrentThread(thread);
+      }
+    },
+    );
   }
 
   setCurrentThread(newThread: Thread): void {

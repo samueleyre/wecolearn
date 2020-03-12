@@ -49,6 +49,6 @@ export class ChatThreadMobileComponent extends DestroyObservable implements OnIn
   loadMessages(event: any): void {
     event.preventDefault();
     this.threadsService.setCurrentThread(this._thread);
-    this.router.navigate([NAV.currentDiscussion]);
+    this.router.navigate([`${NAV.currentDiscussion}/${this._thread.id}`]);
   }
 }
