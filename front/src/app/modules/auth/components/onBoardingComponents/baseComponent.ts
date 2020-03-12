@@ -48,7 +48,7 @@ export class AuthOnboardingBaseComponent {
           this.loading = false;
           if (result) {
             // login successful
-            this.router.navigate(['/dashboard/profile']);
+            this.router.navigate(['/dashboard/search']);
           }
         },
         (error) => {
