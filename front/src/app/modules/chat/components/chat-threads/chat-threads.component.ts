@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { delay, takeUntil } from 'rxjs/operators';
+import { delay, takeUntil, tap } from 'rxjs/operators';
 
 import { Thread } from '~/core/entities/thread/entity';
 import { DestroyObservable } from '~/core/components/destroy-observable';

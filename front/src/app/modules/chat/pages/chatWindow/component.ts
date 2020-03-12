@@ -2,21 +2,37 @@ import {
   Component, OnInit,
 } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 
 import { NAV } from '~/config/navigation/nav';
+import { DestroyObservable } from '~/core/components/destroy-observable';
+import { Threads } from '~/modules/chat/services/threads';
 
 @Component({
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 
 })
-export class ChatWindowPageComponent implements OnInit {
+export class ChatWindowPageComponent extends DestroyObservable implements OnInit {
   loading = true;
-  constructor(private _router: Router, private _deviceService: DeviceDetectorService) {
-    if (!this._deviceService.isMobile()) {
-      this._router.navigate([NAV.discussion]);
-    }
+  constructor(
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _deviceService: DeviceDetectorService,
+    private _threadsService: Threads,
+) {
+    super();
+    this._route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params: ParamMap) => {
+        if (params.has('userId')) {
+          this._threadsService.setThreadById(Number(params.get('userId')));
+        }
+        if (!this._deviceService.isMobile()) {
+          this._router.navigate([NAV.discussion]);
+        }
+      });
   }
 
   ngOnInit() {

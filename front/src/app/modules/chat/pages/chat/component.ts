@@ -2,13 +2,15 @@ import {
     Component, OnDestroy,
     OnInit,
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { map, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-import { Thread } from '~/core/entities/thread/entity';
 import { Threads } from '~/modules/chat/services/threads';
-import { MessagerieService } from '~/core/services/messagerie/service';
 import { MessagesService } from '~/modules/chat/services/messages';
+import { DestroyObservable } from '~/core/components/destroy-observable';
+import { NAV } from '~/config/navigation/nav';
 
 @Component({
   templateUrl: 'template.html',
@@ -17,26 +19,30 @@ import { MessagesService } from '~/modules/chat/services/messages';
 })
 
 
-export class ChatPageComponent implements OnInit, OnDestroy {
-  available: boolean;
-  subs: any;
-  threads: BehaviorSubject<Thread[]> =
-    new BehaviorSubject<Thread[]>([]);
-
-  constructor(private _threadsService: Threads,
-              private _messagerieService: MessagerieService,
-              private _messageService: MessagesService,
-              private _deviceService: DeviceDetectorService,
+export class ChatPageComponent extends DestroyObservable implements OnInit, OnDestroy {
+  constructor(
+    private _threadsService: Threads,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _messageService: MessagesService,
+    private _deviceService: DeviceDetectorService,
   ) {
-//
+    super();
   }
 
   ngOnInit() {
-    this.threads = this._threadsService.orderedThreads$;
-
-    this.subs = this._messagerieService.available().subscribe((available) => {
-      this.available = available;
-    });
+    this._route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params: ParamMap) => {
+        if (params.has('userId')) {
+          this._threadsService.setThreadById(Number(params.get('userId')));
+          this._router.navigate(
+            [NAV.discussion], {
+              queryParams: {},
+              queryParamsHandling: 'merge',
+            });
+        }
+      });
   }
 
   get loading(): boolean {
@@ -44,14 +50,10 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   }
 
   get emptyChat(): boolean {
-    return this.threads.value.length === 0;
+    return this._threadsService.orderedThreads$.value.length === 0;
   }
 
   get isMobile(): boolean {
     return this._deviceService.isMobile();
-  }
-
-  ngOnDestroy() {
-    this.subs.unsubscribe();
   }
 }
