@@ -51,7 +51,7 @@ class MessageController extends AbstractController
 
         return [
         'received_messages' => $user->getReceivedMessages()->filter(function(Message $message) use ($user) {
-            return $message->getReceiver()->getId() !== $user->getId();
+            return $message->getSender()->getId() !== $user->getId();
         }),
         'sent_messages' => $user->getSentMessages(),
         ];

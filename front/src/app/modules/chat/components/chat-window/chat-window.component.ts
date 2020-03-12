@@ -7,7 +7,6 @@ import {
 import { Observable } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { map, takeUntil, tap } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { User } from '~/core/entities/user/entity';
 import { ClientService } from '~/core/services/client';
