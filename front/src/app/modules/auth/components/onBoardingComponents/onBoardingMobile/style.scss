@@ -1,0 +1,46 @@
+
+::ng-deep .mat-horizontal-content-container{
+  padding: 0 !important;
+}
+
+.Onboarding {
+  mat-horizontal-stepper{
+    background: none;
+  }
+  .card{
+    min-height: 70vh;
+    .card-body{
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      display: flex;
+      &-tagHints {
+        margin-top: 10px;
+      }
+      :first-child{
+        width: 100%
+      }
+    }
+  }
+
+  .btn-container-first{
+    float: right;
+  }
+
+  .btn-container{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-conditions {
+    text-align: center;
+  }
+  &-newsletter {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+}
+
