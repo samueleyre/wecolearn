@@ -7,6 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { map, takeUntil, tap } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 import { User } from '~/core/entities/user/entity';
 import { ClientService } from '~/core/services/client';
@@ -17,7 +18,6 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
 
 import { MessagesService } from '../../services/messages';
 import { Threads } from '../../services/threads';
-
 
 @Component({
   selector: 'chat-window',
@@ -47,7 +47,12 @@ export class ChatWindowComponent extends DestroyObservable implements OnInit {
   }
 
   ngOnInit(): void {
-    this.messages = this.threadsService.currentThreadMessages.pipe(takeUntil(this.destroy$));
+    this.messages = this.threadsService.currentThreadMessages.pipe(
+      map(
+        ms => _.uniqBy(ms, m => m.id),
+      ),
+      takeUntil(this.destroy$),
+    );
     this.draftMessage = new Message();
 
     this.threadsService.currentThread.subscribe(

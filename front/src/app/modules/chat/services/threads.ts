@@ -85,14 +85,6 @@ export class Threads {
               .filter((message: Message) => {
                 return (message.thread.id === currentThread.id);
               })
-              .map((message: Message) => {
-                // todo: this is a repetition
-                // if (!message.is_read && message.receiver && message.thread.id !== message.receiver.id) {
-                //   message.is_read = true;
-                //   this.messagesService.addMessageToUpdate(message);
-                // }
-                return message;
-              })
               .value();
           }
           if (currentThread) {
