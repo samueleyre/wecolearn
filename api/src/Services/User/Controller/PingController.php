@@ -37,14 +37,18 @@ class PingController extends AbstractController
         $user->setLastConnexion(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
         $this->userManager->updateUser($user);
 
-        /*
-         * Manage cookie for mercureAuthorization
-         */
-        $cookies = $request->cookies;
         $response = new Response(
             $serializer->serialize($user, 'json', SerializationContext::create()->setGroups('profile'))
         );
-        $response->headers->set('set-cookie', $cookieGenerator->generate($user));
+
+        /*
+         * Manage cookie for mercureAuthorization
+         * if cookie is expired generate a new one
+         */
+        if (!$request->cookies->get('mercureAuthorization')) {
+            $response->headers->set('set-cookie', $cookieGenerator->generate($user));
+        }
+        
         return $response;
     }
 }

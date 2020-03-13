@@ -16,7 +16,12 @@ class MercureCookieGenerator
     public function __construct(string $secret, string $domain)
     {
         $this->secret = $secret;
-        $this->domain = $domain;
+
+        if (strpos($domain, 'localhost') !== false) {
+            $this->domain = 'localhost';
+        } else {
+            $this->domain = $domain;
+        }
     }
 
     public function generate(User $user)
@@ -26,7 +31,7 @@ class MercureCookieGenerator
             ->sign(new Sha384(), $this->secret)
             ->getToken();
 
-        $cookie = new Cookie("mercureAuthorization", $token, strtotime('+5 day'), '/', "{$this->domain}");
+        $cookie = new Cookie("mercureAuthorization", $token, strtotime('+1 year'), '/', "{$this->domain}");
 
         return $cookie->__toString();
     }
