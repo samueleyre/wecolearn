@@ -116,7 +116,7 @@
                 },
                 {
                   "replace": "src/robots.txt",
-                  "with": "src/robots-prod.txt"
+                  "with": "src/robots.prod.txt"
                 }
               ],
               "optimization": true,
