@@ -3,10 +3,12 @@
 namespace App\Services\Tag\Service;
 
 use App\Services\Tag\Entity\Tag;
+use App\Services\Tag\Entity\TagDomain;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class TagService
 {
@@ -63,13 +65,21 @@ class TagService
         $tag->setIteration($tag->getIteration() + 1);
     }
 
-    public function patchIteration(int $id, int $iteration)
+    public function patchTag(Tag $tag)
     {
-        $tag = $this->em->getRepository(Tag::class)->find($id);
-        $tag->setIteration($iteration);
-        $this->em->merge($tag);
-        $this->em->flush();
-        return $tag;
+        $iteration = $tag->getIteration();
+        $tagDomain = $this->em->getRepository(TagDomain::class)->find($tag->getTagDomain()->getId());
+        $name = $tag->getName();
+        $oldTag = $this->em->getRepository(Tag::class)->find($tag->getId());
+        if ($oldTag) {
+            $oldTag->setIteration($iteration);
+            $oldTag->setName($name);
+            $oldTag->setTagDomain($tagDomain);
+            $this->em->persist($oldTag);
+            $this->em->flush();
+            return $oldTag;
+        }
+        throw new ResourceNotFoundException('tag not found');
     }
 
     public function delete(int $id)

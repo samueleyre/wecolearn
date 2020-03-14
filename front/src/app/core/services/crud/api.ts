@@ -122,6 +122,12 @@ export class APIService<T> {
     );
   }
 
+  // putAndList(params: any): Observable<T[]> {
+  //   return this.http.put(`${this.endPoint}`, params).pipe(
+  //     switchMap(() => this.list()),
+  //   );
+  // }
+
   deleteAndList(id: any): Observable<T[]> {
     return this.http.delete(`${this.endPoint}/${id}`).pipe(
       switchMap(() => this.list()),

@@ -1,0 +1,19 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Services\Tag\Entity\TagDomain" table="tagDomain" repository-class="App\Services\Tag\Repository\TagDomainRepository">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="name" column="name" type="string"/>
+        <field name="emoji" column="emoji" type="string"/>
+        <field name="created" column="created" type="datetime"/>
+        <one-to-many field="tags" target-entity="App\Services\Tag\Entity\Tag" mapped-by="tagDomain">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

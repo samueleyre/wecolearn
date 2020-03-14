@@ -3,15 +3,17 @@ App\Services\Tag\Entity\Tag:
     access_order:     alphabetical
     properties:
         id:
-          groups: [ input, output, profile, admin-tags ]
+          groups: [ input, output, putTag, profile, admin-tags ]
         name:
-          groups: [ input, output, create, search, profile, public-profile, admin-users, admin-tags ]
+          groups: [ input, output, putTag, create, search, profile, public-profile, admin-users, admin-tags ]
         type:
           groups: [ input, output, create, search, profile, public-profile, admin-users, admin-tags ]
+        tagDomain:
+          groups: [ input, output, putTag, create, search, profile, public-profile, admin-users, admin-tags ]
         created:
           groups: [ admin-tags ]
         iteration:
-          groups: [ input, admin-tags ]
+          groups: [ input, putTag, admin-tags ]
 
 
 

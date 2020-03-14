@@ -1,0 +1,9 @@
+<mat-form-field appearance="outline" class="full-width-dropdown">
+  <mat-label>Domaine</mat-label>
+  <input type="text" matInput [formControl]="tagDomainCtrl" [matAutocomplete]="auto" (focusout)="inputLostFocus()" />
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onTagDomainSelect($event)" [displayWith]="displayFn">
+    <mat-option *ngFor="let tagDomain of filteredTagDomains | async" [value]="tagDomain">
+      {{ tagDomain.name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
