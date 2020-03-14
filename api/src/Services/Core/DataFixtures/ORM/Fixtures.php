@@ -3,10 +3,13 @@
 namespace App\Services\Core\DataFixtures\ORM;
 
 use App\Services\Chat\Entity\Message;
+use App\Services\Core\Constant\TagDomainsConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\TagOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\UserConstant;
 use App\Services\Domain\Entity\Domain;
 use App\Services\Tag\Entity\Tag;
+use App\Services\Tag\Entity\TagDomain;
+use App\Services\Tag\Service\TagDomainService;
 use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\Image;
 use App\Services\User\Entity\Token;
@@ -24,6 +27,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
     private $generateUrlService;
     private $userService;
     private $tagService;
+    private $tagDomainService;
     private $manager;
     private $userManager;
     private $em;
@@ -32,10 +36,12 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
 
     public function __construct(
         TagService $tagService,
-        UserService $userService
+        UserService $userService,
+        TagDomainService $tagDomainService
     ) {
         $this->tagService = $tagService;
         $this->userService = $userService;
+        $this->tagDomainService = $tagDomainService;
     }
 
 
@@ -50,7 +56,21 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $this->em = $this->container->get('doctrine.orm.entity_manager');
         $this->generateUrlService = $this->container->get('generate_url_service');
         $this->userManager = $this->container->get('fos_user.user_manager');
+        $this->addTagDomains();
         $this->addUsers();
+    }
+
+    private function addTagDomains() {
+        $tagDomains = TagDomainsConstant::$LIST;
+
+        foreach ($tagDomains as $tagDomainParam) {
+            $tagDomain = new TagDomain();
+
+            $tagDomain->setName($tagDomainParam['name']);
+            $tagDomain->setEmoji($tagDomainParam['emoji']);
+
+            $this->tagDomainService->create($tagDomain);
+        }
     }
 
     private function addUsers()

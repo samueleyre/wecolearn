@@ -1,16 +1,17 @@
 <form class="CreateEditTagForm" [formGroup]="createEditTagForm">
-  <p *ngIf="!isCreating">{{toFrenchType(tag.type)}} : {{tag.name}}</p>
-  <mat-form-field *ngIf="isCreating" appearance="outline">
+  <mat-form-field appearance="outline">
     <mat-label>Nom</mat-label>
     <input matInput formControlName="name" required />
   </mat-form-field>
 
   <mat-form-field *ngIf="isCreating" appearance="outline">
-    <mat-label>Domaine</mat-label>
+    <mat-label>Type</mat-label>
     <mat-select required formControlName="type">
       <mat-option *ngFor="let type of types" [value]="type">{{ toFrenchType(type) }}</mat-option>
     </mat-select>
   </mat-form-field>
+
+  <app-tag-domain-autocomplete [parentForm]="createEditTagForm"></app-tag-domain-autocomplete>
 
   <mat-form-field *ngIf="!isCreating" appearance="outline">
     <mat-label>Importance</mat-label>

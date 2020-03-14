@@ -2,7 +2,6 @@
 
 namespace App\Services\Tag\Controller;
 
-use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Service\TagService;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -10,6 +9,7 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,14 +34,17 @@ class AdminTagController extends AbstractController
         "tag",
         class="App\Services\Tag\Entity\Tag",
         converter="fos_rest.request_body",
-        options={"deserializationContext"={"groups"={"input"} } }
+        options={"deserializationContext"={"groups"={"putTag"} } }
      )
+     * @View( serializerGroups={"admin-tags"})
      */
     public function patchTagAdminAction(
         Tag $tag,
         TagService $tagService
     ) {
-        return $tagService->patchIteration($tag->getId(), $tag->getIteration());
+
+        // change iteration | name | tagDomain
+        return $tagService->patchTag($tag);
     }
 
     /**

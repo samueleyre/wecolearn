@@ -11,6 +11,9 @@
         <field name="iteration" column="iteration" type="integer"/>
         <field name="created" column="created" type="datetime"/>
         <many-to-many field="users" target-entity="App\Services\User\Entity\User" mapped-by="tags" />
+        <many-to-one field="tagDomain" target-entity="App\Services\Tag\Entity\TagDomain" inversed-by="tag">
+            <join-column name="tagDomainId" on-delete="SET NULL" nullable="true"/>
+        </many-to-one>
         <unique-constraints>
             <unique-constraint columns="name,type" name="name_type_idx" />
         </unique-constraints>

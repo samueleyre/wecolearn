@@ -14,6 +14,7 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 
 import { SearchService } from '../../services/search';
 import { Threads } from '../../../chat/services/threads';
+import {Tag} from "~/core/entities/tag/entity";
 
 
 @Component({
@@ -75,5 +76,9 @@ import { Threads } from '../../../chat/services/threads';
   searchByTag(tag) {
     this.searchService.setSearchInput(tag);
     this.searchService.search({ tag }).subscribe();
+  }
+
+  tagDisplayName(tag: Tag): string {
+    return `${tag.name} ${tag.tag_domain ? tag.tag_domain.emoji : ''}`.trim();
   }
 }

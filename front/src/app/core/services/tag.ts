@@ -17,6 +17,6 @@ export class TagService {
     if (text) {
       filter = `?tagLetters=${text}`;
     }
-    return <Observable<Tag[]>>this.http.get(`/api/findTag${filter}`);
+    return <Observable<Tag[]>>this.http.get(`/api/tag/find${filter}`);
   }
 }

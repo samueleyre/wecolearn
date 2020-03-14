@@ -37,6 +37,7 @@ export class TagFormComponent extends DestroyObservable implements OnInit {
         name: tag.name,
         type: tag.type,
         iteration: tag.iteration,
+        tag_domain: tag.tag_domain,
       });
 
       Object.keys(this.createEditTagForm.controls).forEach((key) => {
@@ -76,7 +77,6 @@ export class TagFormComponent extends DestroyObservable implements OnInit {
     const formVal = { ...this.createEditTagForm.value };
 
     if (!this.isCreating) {
-      delete formVal.name;
       delete formVal.type;
     }
 
@@ -122,6 +122,7 @@ export class TagFormComponent extends DestroyObservable implements OnInit {
     this.createEditTagForm = this._fb.group({
       name: [tag.name, Validators.required],
       iteration: [tag.iteration, Validators.required],
+      tag_domain: [tag.tag_domain],
       type: [tag.type, Validators.required],
     });
 

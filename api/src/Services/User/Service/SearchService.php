@@ -63,6 +63,8 @@ class SearchService
             ->getRepository(User::class)
             ->search($user, $tag, $first, $max, $latitude, $longitude, $domain, $searchParameters);
 
+        // si rien, proposer des apprentissages annexes
+
         // search by user tags & not only learn tags ( types 0, 1, 2 )
         if ($result === []) {
             $searchParameters['onlyLearnTags'] = false;
@@ -83,5 +85,7 @@ class SearchService
             'data'=> $result,
             'meta'=> $meta
         ];
+
+
     }
 }

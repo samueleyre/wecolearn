@@ -3,6 +3,7 @@
 namespace App\Services\Tag\Controller;
 
 use App\Services\Tag\Entity\Tag;
+use App\Services\Tag\Entity\TagDomain;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class TagController extends AbstractController
 {
     /**
-     * @Get("findTag")
+     * @Get("tag/find")
      */
     public function getTagAction(Request $request)
     {
@@ -22,6 +23,24 @@ class TagController extends AbstractController
         $ret = $this->getDoctrine()
                 ->getRepository(Tag::class)
                 ->findAllOrderedByIteration($tagLetters);
+
+        return $ret;
+    }
+
+
+    /**
+     * @Get("tag/domains")
+     */
+    public function getTagDomainsAction(Request $request)
+    {
+        $literal = null;
+        if ($request->get('literal')) {
+            $literal = $request->get('literal');
+        }
+
+        $ret = $this->getDoctrine()
+            ->getRepository(TagDomain::class)
+            ->findByNameLike($literal);
 
         return $ret;
     }

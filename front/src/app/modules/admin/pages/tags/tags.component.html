@@ -2,7 +2,7 @@
   <div class="Tags-list" [hidden]="editTagFormVisible">
     <div class="Tags-list-header">
       <h2>
-        Domaines d'apprentissage
+        Apprentissages
       </h2>
       <form [formGroup]="searchFilters">
         <mat-form-field appearance="outline">
@@ -33,15 +33,15 @@
     class="Tags-add"
   >
     <button mat-flat-button class="large" *ngIf="!editTagFormVisible" (click)="showEditForm()" color="primary">
-      + Ajouter un domaine
+      + Ajouter un apprentissage
     </button>
     <div *ngIf="editTagFormVisible">
       <h2 *ngIf="isCreatingTag">
-        Ajouter un domaine
+        Ajouter un apprentissage
       </h2>
 
       <h2 *ngIf="!isCreatingTag">
-        Modifier un domaine
+        Modifier un apprentissage
       </h2>
 
       <div class="Tags-form">
