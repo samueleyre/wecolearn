@@ -1,0 +1,40 @@
+@import 'variables';
+
+
+table {
+  width: 100%;
+}
+
+.TagDomainsList {
+  &-list {
+    &-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      font-family: 'WorkSans', sans-serif;
+
+      & > * {
+        flex: 1;
+
+        &.TagsList-list-item-role {
+          flex: 0.5;
+        }
+      }
+
+      &-name {
+        font-weight: 600;
+      }
+
+      &-emoji {
+      }
+
+      &-actions {
+        text-align: right;
+
+        & > *:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

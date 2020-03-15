@@ -141,7 +141,7 @@ class Message
      *
      * @return User
      */
-    public function getSender()
+    public function getSender(): User
     {
         return $this->sender;
     }
@@ -165,7 +165,7 @@ class Message
      *
      * @return User
      */
-    public function getReceiver()
+    public function getReceiver(): User
     {
         return $this->receiver;
     }

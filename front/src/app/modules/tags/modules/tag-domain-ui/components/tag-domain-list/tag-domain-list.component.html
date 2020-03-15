@@ -1,0 +1,33 @@
+<table mat-table [dataSource]="tagDomains">
+  <!--      Name -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Nom</th>
+    <td mat-cell *matCellDef="let tagDomain" class="TagDomainsList-list-item-name">
+      {{ tagDomain.name }}
+    </td>
+  </ng-container>
+
+  <!-- Emoji -->
+  <ng-container matColumnDef="emoji">
+    <th mat-header-cell *matHeaderCellDef>Emoji</th>
+    <td mat-cell *matCellDef="let tagDomain" class="TagDomainsList-list-item-emoji">{{ tagDomain.emoji ? tagDomain.emoji : 'NA' }}</td>
+  </ng-container>
+
+  <!-- Actions -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let tagDomain" class="TagDomainsList-list-item-actions">
+      <a class="link" (click)="onEdit(tagDomain)">
+        <mat-icon>edit</mat-icon>
+      </a>
+      <a
+        class="link"
+        (click)="onDelete(tagDomain)"
+      >
+        <mat-icon>delete</mat-icon>
+      </a>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

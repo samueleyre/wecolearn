@@ -7,6 +7,7 @@ use App\Services\Tag\Entity\TagDomain;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class TagDomainService
 {
@@ -30,14 +31,24 @@ class TagDomainService
         return $tagDomain;
     }
 
-    public function getAll()
+    public function patchTagDomain(Tagdomain $tagDomain)
     {
-        return $this->em->getRepository(Tag::class)->findBy([], ['name' => 'ASC']);
+        $name = $tagDomain->getName();
+        $emoji = $tagDomain->getEmoji();
+        $oldTagDomain = $this->em->getRepository(TagDomain::class)->find($tagDomain->getId());
+        if ($oldTagDomain) {
+            $oldTagDomain->setName($name);
+            $oldTagDomain->setEmoji($emoji);
+            $this->em->persist($oldTagDomain);
+            $this->em->flush();
+            return $oldTagDomain;
+        }
+        throw new ResourceNotFoundException('tag domain not found');
     }
 
     public function delete(int $id)
     {
-        $tag = $this->em->getRepository(Tag::class)->find($id);
+        $tag = $this->em->getRepository(TagDomain::class)->find($id);
         $this->em->remove($tag);
         $this->em->flush();
         return new Response();

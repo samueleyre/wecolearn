@@ -1,0 +1,57 @@
+<div class="TagDomains">
+  <div class="TagDomains-list" [hidden]="editTagDomainFormVisible">
+    <div class="TagDomains-list-header">
+      <h2>
+        Domaines d'apprentissage
+      </h2>
+      <form [formGroup]="searchFilters">
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher</mat-label>
+          <input matInput placeholder="Nom, type" formControlName="query" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="TagDomains-list--loading" *ngIf="!loaded">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="TagDomains-list-table">
+      <app-tag-domain-list
+        *ngIf="tagDomainsToShow"
+        [canEditTagDomain]="canEditTagDomain$ | async"
+        [tagDomains]="tagDomainsToShow"
+        (editTagDomain)="showEditForm($event)"
+      ></app-tag-domain-list>
+      <mat-paginator
+        [hidden]="!tagDomainsToShow && !tagDomainsFiltered"
+        [length]="countTagDomains"
+        [pageSize]="PAGE_SIZE"
+      ></mat-paginator>
+    </div>
+  </div>
+  <div
+    class="TagDomains-add"
+  >
+    <button mat-flat-button class="large" *ngIf="!editTagDomainFormVisible" (click)="showEditForm()" color="primary">
+      + Ajouter un domaine d'apprentissage
+    </button>
+    <div *ngIf="editTagDomainFormVisible">
+      <h2 *ngIf="isCreatingTagDomain">
+        Ajouter un domaine d'apprentissage
+      </h2>
+
+      <h2 *ngIf="!isCreatingTagDomain">
+        Modifier un domaine d'apprentissage
+      </h2>
+
+      <div class="TagDomains-form">
+        <app-tag-domain-form
+          [isCreating]="isCreatingTagDomain"
+          [tagDomain]="editedTagDomain"
+          [groupEditable]="true"
+          (onCloseEditTagDomain)="closeTagDomainForm()"
+        ></app-tag-domain-form>
+      </div>
+    </div>
+  </div>
+</div>
