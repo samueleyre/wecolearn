@@ -42,11 +42,15 @@ message:
   prefix:   api
   resource: App\Services\Chat\Controller\MessageController
 
-
 adminTag:
   type:     rest
   prefix:   api
   resource: App\Services\Tag\Controller\AdminTagController
+
+adminTagDomain:
+  type:     rest
+  prefix:   api
+  resource: App\Services\Tag\Controller\AdminTagDomainController
 
 adminDomain:
   type:     rest

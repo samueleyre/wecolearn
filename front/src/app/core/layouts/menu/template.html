@@ -27,7 +27,7 @@
         <i class="fas fa-comment"></i>
         <p>Discussion</p>
         <span class="fa-stack fa-2x" *ngIf="countNotRead$ | async as countNotRead">
-          <i class="sidebar-countUnRead fa-stack-1x">{{countNotRead}}</i>
+          <small class="sidebar-countUnRead fa-stack-1x">{{countNotRead}}</small>
         </span>
       </a>
     </li>
@@ -45,6 +45,12 @@
         <a routerLink="/dashboard/admin/tags" routerLinkActive="is-active">
           <i class="fas fa-tags"></i>
           <p>Apprentissages</p>
+        </a>
+      </li>
+      <li class="sidebar-link">
+        <a routerLink="/dashboard/admin/tag-domains" routerLinkActive="is-active">
+          <i class="fas fa-book"></i>
+          <p>Domaines d'📚</p>
         </a>
       </li>
       <li class="sidebar-link">

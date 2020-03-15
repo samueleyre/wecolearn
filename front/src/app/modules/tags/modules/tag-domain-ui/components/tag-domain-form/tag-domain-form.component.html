@@ -1,0 +1,45 @@
+<form class="CreateEditTagDomainForm" [formGroup]="createEditTagDomainForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Nom</mat-label>
+    <input matInput formControlName="name" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Emoji</mat-label>
+    <input matInput formControlName="emoji" required />
+  </mat-form-field>
+
+  <div>
+    <button
+      *ngIf="isCreating"
+      type="submit"
+      mat-flat-button
+      class="large"
+      (click)="onUpdateTagDomain()"
+      [disabled]="!createEditTagDomainForm.valid"
+      color="primary"
+    >
+      Créer
+    </button>
+    <button
+      *ngIf="!isCreating"
+      type="submit"
+      mat-flat-button
+      class="large"
+      (click)="onUpdateTagDomain()"
+      [disabled]="!createEditTagDomainForm.valid"
+      color="primary"
+    >
+      Mettre à jour
+    </button>
+    <button
+      (click)="onCloseEditTagDomain.emit()"
+      class="CreateEditTagDomainForm-close"
+      type="button"
+      mat-icon-button
+      color="secondary"
+    >
+      Annuler
+    </button>
+  </div>
+</form>

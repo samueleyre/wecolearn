@@ -4,6 +4,7 @@ namespace App\Services\Chat\Repository;
 
 use App\Services\Chat\Entity\Message;
 use App\Services\User\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Psr\Log\LoggerInterface;
@@ -99,7 +100,7 @@ class MessageRepository extends ServiceEntityRepository
         getResult();
     }
 
-    public function findUnReadMessages($lastReminder = null)
+    public function findUnReadMessages($lastReminder = null): ArrayCollection
     {
 //        if (null === $lastReminder) { // used if second reminder is sent
 //            $lastReminder = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
@@ -135,7 +136,7 @@ class MessageRepository extends ServiceEntityRepository
             }
 
             // check if user accepted to receive notifications
-            if (!$receiver->getEmailNotifications()) {
+            if (!$receiver->getNewMessageNotification()) {
                 continue;
             }
 

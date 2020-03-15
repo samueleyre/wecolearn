@@ -3,11 +3,11 @@ App\Services\Tag\Entity\TagDomain:
     access_order:     alphabetical
     properties:
         id:
-          groups: [ input, output, putTag, profile, admin-tags ]
+          groups: [ input, output, putTag, patch-tag-domain, profile, admin-tags ]
         name:
-          groups: [ input, output, search, profile, public-profile, admin-users, admin-tags ]
+          groups: [ input, output, search, patch-tag-domain, profile, public-profile, admin-users, admin-tags ]
         emoji:
-          groups: [ input, output, search, profile, public-profile, admin-users, admin-tags ]
+          groups: [ input, output, search, patch-tag-domain, profile, public-profile, admin-users, admin-tags ]
         created:
           groups: [ admin-tags ]
 
