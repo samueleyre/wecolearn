@@ -100,7 +100,7 @@ class MessageRepository extends ServiceEntityRepository
         getResult();
     }
 
-    public function findUnReadMessages($lastReminder = null): ArrayCollection
+    public function findUnReadMessages($lastReminder = null)
     {
 //        if (null === $lastReminder) { // used if second reminder is sent
 //            $lastReminder = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
