@@ -52,6 +52,16 @@
           (onCloseEditTag)="closeTagForm()"
         ></app-tag-form>
       </div>
-    </div>
+
+      <h2 *ngIf="!isCreatingTag">
+        Fusionner avec un autre apprentissage
+      </h2>
+      <div *ngIf="!isCreatingTag" class="Tags-form">
+        <app-tag-merge-form
+          [tag]="editedTag"
+          (onCloseEditTag)="closeTagForm()"
+        >
+        </app-tag-merge-form>
+      </div>
   </div>
 </div>

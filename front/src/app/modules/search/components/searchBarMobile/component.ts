@@ -9,7 +9,7 @@ import { debounceTime, map } from 'rxjs/operators';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { MatAutocompleteTrigger } from '@angular/material';
 
-import { TagService } from '~/core/services/tag';
+import { TagService } from '~/core/services/tag/tag';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { Tag } from '~/core/entities/tag/entity';
 

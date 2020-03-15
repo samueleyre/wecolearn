@@ -1,0 +1,31 @@
+<form class="TagMergeForm" [formGroup]="tagMergeForm">
+
+  <app-tag-autocomplete
+    [parentForm]="tagMergeForm"
+    [exception]="tag"
+    [contrlKey]="'mergedTag'"></app-tag-autocomplete>
+
+  <div>
+    <button
+      type="submit"
+      mat-flat-button
+      class="large"
+      (click)="onFuseTag()"
+      [disabled]="!tagMergeForm.valid"
+      color="primary"
+    >
+      Fusionner
+    </button>
+    <button
+      (click)="onCloseEditTag.emit()"
+      class="TagMergeForm-close"
+      type="button"
+      mat-icon-button
+      color="secondary"
+    >
+      Annuler
+    </button>
+  </div>
+
+
+</form>

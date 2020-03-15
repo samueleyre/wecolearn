@@ -13,12 +13,14 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
-    public function findAllOrderedByIteration($tagLetters)
+    public function findAllOrderedByIteration(string $tagLetters, int $type = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('tag');
         $qb->from(sprintf('%s', 'App\\Services\\Tag\\Entity\\Tag'), 'tag');
-        $qb->Where('tag.type = 0');
+        if( $type !== null) {
+            $qb->Where('tag.type = :type')->setParameter('type', $type);
+        }
         if ($tagLetters) {
             $qb->andwhere('tag.name LIKE :tagletters')->setParameter('tagletters', '%'.$tagLetters.'%');
         }
