@@ -4,6 +4,7 @@ namespace App\Services\Tag\Service;
 
 use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Entity\TagDomain;
+use App\Services\User\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -80,6 +81,30 @@ class TagService
             return $oldTag;
         }
         throw new ResourceNotFoundException('tag not found');
+    }
+
+    public function merge($params)
+    {
+
+        $oldTag = $this->em->getRepository(Tag::class)->find($params['oldTagId']);
+        $mergedTag = $this->em->getRepository(Tag::class)->find($params['mergedTagId']);
+
+        // get userIds with old tag
+        $users = $oldTag->getUsers();
+
+        // connect those userIds with the mergedTagId
+        foreach ($users as $user) {
+            $mergedTag->addUser($user);
+        }
+
+        $this->em->persist($mergedTag);
+
+        // delete old Tag
+        $this->em->remove($oldTag);
+        $this->em->flush();
+
+        return $mergedTag;
+
     }
 
     public function delete(int $id)

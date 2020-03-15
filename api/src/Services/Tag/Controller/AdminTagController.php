@@ -14,6 +14,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminTagController extends AbstractController
@@ -66,6 +67,24 @@ class AdminTagController extends AbstractController
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
     }
+
+    /**
+     * @Post("admin/tagMerge")
+    )
+     */
+    public function postTagMergeAdminAction(
+        Request $request,
+        TagService $tagService
+    ) {
+
+        return $tagService->merge(
+            [
+                "oldTagId" => $request->get('oldId'),
+                "mergedTagId" => $request->get('mergedId')
+            ]
+        );
+    }
+
 
     /**
      * @Delete("admin/tag/{id}")
