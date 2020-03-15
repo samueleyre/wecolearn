@@ -16,15 +16,18 @@ class TagController extends AbstractController
     public function getTagAction(Request $request)
     {
         $tagLetters = null;
+        $type = null;
         if ($request->get('tagLetters')) {
             $tagLetters = $request->get('tagLetters');
         }
 
-        $ret = $this->getDoctrine()
-                ->getRepository(Tag::class)
-                ->findAllOrderedByIteration($tagLetters);
+        if ($request->query->has('type')) {
+            $type = $request->get('type');
+        }
 
-        return $ret;
+        return $this->getDoctrine()
+                ->getRepository(Tag::class)
+                ->findAllOrderedByIteration($tagLetters, $type);
     }
 
 

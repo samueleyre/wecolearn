@@ -15,7 +15,6 @@ export class TagDomainsService extends APIService<TagDomain>{
   }
 
   findTagDomains(literal: string): Observable<TagDomain[]> {
-    console.log({ literal });
     return this.list({ literal });
   }
 }

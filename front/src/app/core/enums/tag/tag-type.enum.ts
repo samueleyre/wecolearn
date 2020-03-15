@@ -11,3 +11,9 @@ export const tagTypeFR = {
   [TagTypeEnum.KNOW]: 'Connaissance',
   [TagTypeEnum.TEACH]: 'Transmission',
 };
+
+export const tagTypeEmoji = {
+  [TagTypeEnum.LEARN]: '📚',
+  [TagTypeEnum.KNOW]: '🧠',
+  [TagTypeEnum.TEACH]: '👩‍🏫',
+};

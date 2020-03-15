@@ -67,10 +67,6 @@ export class TagDomainFormComponent extends DestroyObservable implements OnInit 
 
     const formVal = { ...this.createEditTagDomainForm.value };
 
-    if (!this.isCreating) {
-      delete formVal.type;
-    }
-
     const errM = (err) => {
       if (err.status === 409) this._toastr.error('Ce domaine d\'apprentissage existe déjà');
       this.isCreatingUpdating = false;
@@ -101,6 +97,7 @@ export class TagDomainFormComponent extends DestroyObservable implements OnInit 
   updateValidators(isCreating: boolean = this.isCreating) {
     if (this.createEditTagDomainForm) {
       this.createEditTagDomainForm.controls['name'].setValidators(isCreating ? Validators.required : null);
+      this.createEditTagDomainForm.controls['emoji'].setValidators(isCreating ? Validators.required : null);
     }
   }
 
@@ -110,7 +107,7 @@ export class TagDomainFormComponent extends DestroyObservable implements OnInit 
   ): void {
     this.createEditTagDomainForm = this._fb.group({
       name: [tag.name, Validators.required],
-      emoji: [tag.emoji],
+      emoji: [tag.emoji, Validators.required],
     });
 
     this.updateValidators(isCreating);

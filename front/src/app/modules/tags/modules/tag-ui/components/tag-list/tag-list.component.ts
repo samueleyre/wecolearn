@@ -32,7 +32,6 @@ export class TagListComponent extends DestroyObservable implements OnInit {
 
   ngAfterViewInit() {}
 
-
   toFrenchType(type: TagTypeEnum): string {
     return tagTypeFR[type];
   }

@@ -78,7 +78,12 @@ import {Tag} from "~/core/entities/tag/entity";
     this.searchService.search({ tag }).subscribe();
   }
 
+  tagDisplayTitle(tag: Tag): string {
+    return `${tag.name} | ${tag.tag_domain ? tag.tag_domain.name : ''}`.trim();
+  }
+
   tagDisplayName(tag: Tag): string {
     return `${tag.name} ${tag.tag_domain ? tag.tag_domain.emoji : ''}`.trim();
   }
+
 }
