@@ -100,10 +100,12 @@ class TagService
 
         // connect those userIds with the mergedTagId
         foreach ($users as $user) {
-            $mergedTag->addUser($user);
-            $user->addTag($mergedTag);
-            $this->em->persist($user);
-            $this->em->flush();
+            if (!$user->getTags()->contains($mergedTag)) {
+                $mergedTag->addUser($user);
+                $user->addTag($mergedTag);
+                $this->em->persist($user);
+                $this->em->flush();
+            }
         }
 
         $this->em->persist($mergedTag);
