@@ -6,7 +6,7 @@ App\Services\User\Entity\User:
       id:
         groups: [ input, search, message, profile, public-profile,  admin-users, thread ]
       created:
-        groups: [ input, search, profile, admin-users]
+        groups: [ input, profile, admin-users]
       firstName:
         groups: [ input, output, create, search, message, profile, public-profile, admin-users ]
       lastName:

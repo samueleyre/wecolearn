@@ -14,30 +14,51 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    /**
+     *  userLearnTags | userKnowTags | userLearnTagDomains | userKnowTagDomains | searchLearnTag
+     * @param $parameters
+     *
+     * @return mixed
+     */
     public function search(
         User $user = null,
-        Tag $tag = null,
+        Tag $searchTag = null,
         $first,
         $max,
         $startLatitude,
         $startLongitude,
         $domain,
-        $parameters
+        $parameters,
+        $maxDistance = 100
     ) {
         if (!$startLatitude || !$startLongitude) {
             $startLatitude = 45.75;
             $startLongitude = 4.85;
         }
 
-        $tags = [];
+        $profileTags = [];
 
-        if ($user && $parameters['withUserTags']) {
-            $tags = $user->getTags();
+        if ($user) {
+            $profileTags = $user->getTags();
+
+            // if only learnTags
+            if ($parameters['userLearnTags'] || $parameters['userLearnTagDomains'] && !($parameters['userKnowTags'] || $parameters['userKnowTagDomains'])) {
+                $profileTags = $profileTags->filter(function (Tag $tag) {
+                    return $tag->getType() === 0;
+                });
+            }
+
+            // if only knowTags
+            else if ($parameters['userKnowTags'] || $parameters['userKnowTagDomains'] && !($parameters['userLearnTags'] || $parameters['userLearnTagDomains'])) {
+                $profileTags = $profileTags->filter(function (Tag $tag) {
+                    return $tag->getType() === 1;
+                });
+            }
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('DISTINCT user');
-
+        $qb->select('user');
+        $qb->addSelect('count(t.id) as commonTags');
         $qb->addSelect(sprintf(' 
       cast(
           round(
@@ -56,32 +77,34 @@ class UserRepository extends ServiceEntityRepository
         }
 
         $qb->Where('user.showProfil = :showProfil')->setParameter('showProfil', 1);
+
+        // not current user
         if ($user) {
             $qb->andWhere('user.id != :userId')->setParameter('userId', $user->getId());
         }
-        if ($tag) {
-            $qb->andWhere(sprintf('t.id=%s', $tag->getId()));
-        }
-        if ($parameters['onlyLearnTags']) {
-            $qb->andWhere('t.type = :number')->setParameter('number', 0);
+
+        if ($searchTag) {
+            $qb->andWhere(sprintf('t.id=%s', $searchTag->getId()));
         }
 
         if ($domain) {
-            $qb->andWhere('d.name = :domainName')->setParameter('domainName', $domain);
+            $qb->andWhere('d.name = :s')->setParameter('s', $domain);
         }
 
-        if (count($tags) > 0) {
-            $condition = sprintf('t.id=%s', $tags[0]->getId());
-            for ($i = 1; $i < count($tags); ++$i) {
-                $condition .= sprintf(' OR t.id=%s', $tags[$i]->getId());
+        // search for same tags from profile
+        if (count($profileTags) > 0) {
+            $condition = sprintf('t.id=%s', $profileTags[0]->getId());
+            for ($i = 1; $i < count($profileTags); ++$i) {
+                $condition .= sprintf(' OR t.id=%s', $profileTags[$i]->getId());
             }
             $qb->andWhere($condition);
         }
 
-        $qb->orderBy('distance', 'ASC');
+        $qb->groupBy('user.id');
+        $qb->orderBy('commonTags', 'DESC');
         $qb->setFirstResult($first);
         $qb->setMaxResults($max);
-        $qb->having('distance < 100');
+        $qb->having('distance < :maxDistance')->setParameter('maxDistance', $maxDistance);
 
         return $qb->getQuery()->getResult();
     }

@@ -3,7 +3,7 @@ App\Services\Tag\Entity\Tag:
     access_order:     alphabetical
     properties:
         id:
-          groups: [ input, output, putTag, profile, admin-tags ]
+          groups: [ input, output, putTag, search, profile, admin-tags ]
         name:
           groups: [ input, output, putTag, create, search, profile, public-profile, admin-users, admin-tags ]
         type:

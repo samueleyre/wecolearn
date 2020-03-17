@@ -46,7 +46,7 @@ class User extends BaseUser
     private $notificationSubscribe = false;
     private $subscriptions;
 
-    public function __construct()
+    public function __construct(array $parameters)
     {
         parent::__construct();
         $this->tags = new ArrayCollection();
@@ -56,6 +56,22 @@ class User extends BaseUser
         $this->receivedMessages = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->domains = new ArrayCollection();
+        if (array_key_exists('id', $parameters)) {
+            $this->id = $parameters['id'];
+        }
+        if (array_key_exists('firstName', $parameters)) {
+            $this->firstName = $parameters['firstName'];
+        }
+        if (array_key_exists('lastName', $parameters)) {
+            $this->lastName = $parameters['lastName'];
+        }
+        if (array_key_exists('biographie', $parameters)) {
+            $this->biographie = $parameters['biographie'];
+        }
+        if (array_key_exists('tags', $parameters)) {
+            $this->tags = new ArrayCollection($parameters['tags']);
+        }
+
     }
 
     public function getId()

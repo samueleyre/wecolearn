@@ -1,10 +1,9 @@
 import {
   Component,
   OnInit,
-  Injectable, Output, EventEmitter, ViewChild, ElementRef,
+  Output, EventEmitter, ViewChild, ElementRef,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { debounceTime, map, switchMap } from 'rxjs/operators';
+import {debounceTime, filter, map, switchMap} from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
@@ -13,7 +12,6 @@ import { TagService } from '~/core/services/tag/tag';
 import { Tag } from '~/core/entities/tag/entity';
 
 import { SearchService } from '../../services/search';
-
 
 @Component({
   selector: 'app-searchbar',
@@ -34,7 +32,6 @@ import { SearchService } from '../../services/search';
     this.tagService = tagService;
   }
 
-
   ngOnInit() {
     this._searchService.getSearchInput().subscribe((tag: string) => {
       this.searchInputControl.setValue(tag);
@@ -43,6 +40,7 @@ import { SearchService } from '../../services/search';
     this.observableSource = this.searchInputControl.valueChanges.pipe(
       // tslint:disable-next-line:no-magic-numbers
       debounceTime(300),
+      filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this.tagService.findTags(value)),
     );
   }
@@ -68,5 +66,9 @@ import { SearchService } from '../../services/search';
 
   hideAutocomplete() {
     this.autocomplete.closePanel();
+  }
+
+  displayAutocomplete(tag: Tag): string {
+    return tag ? tag.name : '';
   }
 }
