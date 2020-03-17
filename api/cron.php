@@ -7,7 +7,7 @@ function build_cron() {
     // Increment redis key every minute
     $inc_job = new \Cron\Job\ShellJob();
     $inc_job->setCommand('php bin/console shapecode:cron:run');
-    $inc_job->setSchedule(new \Cron\Schedule\CrontabSchedule('*/1 * * * *'));
+    $inc_job->setSchedule(new \Cron\Schedule\CrontabSchedule('*/30 * * * *'));
 
     $resolver = new \Cron\Resolver\ArrayResolver();
     $resolver->addJob($inc_job);
