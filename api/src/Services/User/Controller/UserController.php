@@ -4,6 +4,7 @@ namespace App\Services\User\Controller;
 
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\Domain\Service\DomainService;
+use App\Services\Tag\Entity\Tag;
 use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\Subscription;
 use App\Services\User\Entity\Token;
@@ -59,13 +60,18 @@ class UserController extends AbstractController
         DomainService $domainService,
         SearchService $searchService
     ) {
+
+//        first, max, tag
+
         $first = $request->get('first', 0);
         $max = $request->get('max', 6);
 
         $filter = ['first' => $first, 'max' => $max];
 
-        if ($request->get('tag')) {
-            $filter['tag'] = $request->get('tag');
+        $tag = $request->get('tag', ['id'=>null, 'name'=>null]);
+
+        if ($tag['id'] || $tag['name']) {
+            $filter['tag'] = $tag;
         }
 
         $user = $tokenStorage->getToken()->getUser();
