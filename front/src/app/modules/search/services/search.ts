@@ -3,10 +3,10 @@ import { Injectable, NgZone } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { city } from '~/config/city';
 import { APIService } from '~/core/services/crud/api';
 import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
+import { Tag } from '~/core/entities/tag/entity';
 
 import { SEARCH } from '../config/main';
 
@@ -20,8 +20,7 @@ interface ApiResponseInterface {
 })
 export class SearchService extends APIService<User> {
   private currentlySearching = false;
-  private pauseRedirect = false;
-  private searchInput: BehaviorSubject<string> = new BehaviorSubject('');
+  private searchInput: BehaviorSubject<Tag> = new BehaviorSubject(null);
   static max = SEARCH.default.max;
 
   currentFoundClients: Subject<any[]> = new Subject<any[]>();
@@ -49,11 +48,11 @@ export class SearchService extends APIService<User> {
     SearchService.max = SEARCH.default.max;
   }
 
-  getSearchInput(): Observable<string> {
+  getSearchInput(): Observable<Tag> {
     return this.searchInput;
   }
 
-  setSearchInput(tag: string): void {
+  setSearchInput(tag: Tag): void {
     this.searchInput.next(tag);
   }
 

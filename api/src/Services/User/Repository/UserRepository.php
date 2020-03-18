@@ -2,6 +2,7 @@
 
 namespace App\Services\User\Repository;
 
+use App\Services\Tag\Entity\TagDomain;
 use App\Services\User\Entity\User;
 use App\Services\Tag\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -58,7 +59,7 @@ class UserRepository extends ServiceEntityRepository
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('user');
-        $qb->addSelect('count(t.id) as commonTags');
+        $qb->addSelect('count(DISTINCT t.id) as commonTags');
         $qb->addSelect(sprintf(' 
       cast(
           round(
@@ -92,7 +93,12 @@ class UserRepository extends ServiceEntityRepository
         }
 
         // search for same tags from profile
-        if (count($profileTags) > 0) {
+        if (
+            $parameters['userLearnTags'] || $parameters['userKnowTags']
+        ) {
+            if (count($profileTags) === 0) {
+                return [];
+            }
             $condition = sprintf('t.id=%s', $profileTags[0]->getId());
             for ($i = 1; $i < count($profileTags); ++$i) {
                 $condition .= sprintf(' OR t.id=%s', $profileTags[$i]->getId());
@@ -100,8 +106,55 @@ class UserRepository extends ServiceEntityRepository
             $qb->andWhere($condition);
         }
 
+        // search for same domain tags from profile
+        if (
+            count($profileTags) &&
+            ($parameters['userLearnTagDomains'] || $parameters['userKnowTagDomains'])
+        ) {
+            if ($parameters['userLearnTagDomains']) {
+                $qb->andWhere(sprintf('t.type=0'));
+            }
+            if ($parameters['userKnowTagDomains']) {
+                $qb->andWhere(sprintf('t.type=1'));
+            }
+            $qb->addSelect('count( DISTINCT tagDomain.id) as commonTagDomains');
+            $qb->innerJoin('t.tagDomain', 'tagDomain');
+            $profileTagDomains = $profileTags
+                ->map(function(Tag $t) {
+                    return $t->getTagDomain();
+                })
+                ->filter(function($tg) {
+                    return $tg;
+                });
+            if (count($profileTagDomains) === 0) {
+                return [];
+            }
+            $condition = sprintf('tagDomain.id=%s', $profileTagDomains[0]->getId());
+            for ($i = 1; $i < count($profileTagDomains); ++$i) {
+                $condition .= sprintf(' OR tagDomain.id=%s', $profileTagDomains[$i]->getId());
+            }
+            $qb->andWhere($condition);
+
+        }
+
         $qb->groupBy('user.id');
-        $qb->orderBy('commonTags', 'DESC');
+
+        if ($parameters['orderByDistance'] ) {
+            $qb->orderBy('distance', 'ASC');
+        }
+
+        else if (
+            $parameters['userLearnTags'] || $parameters['userKnowTags']
+        ) {
+            $qb->orderBy('commonTags', 'DESC');
+        }
+
+        else if (
+            $parameters['userLearnTagDomains'] || $parameters['userKnowTagDomains']
+        ) {
+            $qb->orderBy('commonTagDomains', 'DESC');
+        }
+
         $qb->setFirstResult($first);
         $qb->setMaxResults($max);
         $qb->having('distance < :maxDistance')->setParameter('maxDistance', $maxDistance);
