@@ -12,7 +12,7 @@
         <p class="learning-title">Je veux apprendre 📚</p>
         <ul class="learning-tags col-md-12 flex-wrap">
           <li *ngFor="let tag of card.tags | tagPipe: 0: 3">
-            <p><a (click)="searchByTag(tag.name)"><span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span></a></p>
+            <p><a (click)="searchByTag(tag)"><span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span></a></p>
           </li>
         </ul>
       </div>

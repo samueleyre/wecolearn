@@ -68,7 +68,8 @@ export class TagsComponent extends DestroyObservable implements OnInit, AfterVie
           const start = Number(page) * this.PAGE_SIZE;
           const end = Number(page) * this.PAGE_SIZE + this.PAGE_SIZE;
           this.tagsFiltered = this.tags.filter(
-            t => `${t.name} ${this.toFrenchType(t.type)}`.toLowerCase().includes(query.toLowerCase()),
+            t => `${t.name} ${this.toFrenchType(t.type)} ${t.tag_domain ? t.tag_domain.name : ''}`.toLowerCase()
+              .includes(query.toLowerCase()),
           );
           return of(this.tagsFiltered.slice(start, end));
         }),

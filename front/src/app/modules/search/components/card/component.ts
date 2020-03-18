@@ -11,10 +11,10 @@ import { ClientService } from '~/core/services/client';
 import { DomainService } from '~/core/services/domain';
 import { chat } from '~/config/chat';
 import { AuthenticationService } from '~/core/services/auth/auth';
+import { Tag } from '~/core/entities/tag/entity';
 
 import { SearchService } from '../../services/search';
 import { Threads } from '../../../chat/services/threads';
-import {Tag} from "~/core/entities/tag/entity";
 
 
 @Component({
@@ -72,7 +72,6 @@ import {Tag} from "~/core/entities/tag/entity";
     // }
   }
 
-
   searchByTag(tag) {
     this.searchService.setSearchInput(tag);
     this.searchService.search({ tag }).subscribe();
@@ -85,5 +84,4 @@ import {Tag} from "~/core/entities/tag/entity";
   tagDisplayName(tag: Tag): string {
     return `${tag.name} ${tag.tag_domain ? tag.tag_domain.emoji : ''}`.trim();
   }
-
 }

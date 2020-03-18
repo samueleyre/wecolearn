@@ -20,7 +20,7 @@ export class Tag {
     this.tag_domain = obj && obj.tag_domain ? obj.tag_domain : null;
     this.type = obj && 'type' in obj ? obj.type : null;
 
-    if (obj && obj.id) {
+    if (obj && 'id' in obj) {
       this.id = obj.id;
     }
 

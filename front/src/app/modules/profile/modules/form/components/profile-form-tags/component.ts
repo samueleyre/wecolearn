@@ -73,7 +73,7 @@ export class ProfileFormTagsComponent extends DestroyObservable implements OnIni
       return;
     }
     this._tagService
-      .findTags(literal)
+      .findTags(literal, this.type)
       .pipe(
         // add tag of search literal if not found in DB
         map(
