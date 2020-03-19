@@ -69,6 +69,7 @@ import { SearchService } from '../../../../core/services/search/search';
       }
     }
     this.searchInputChange.next(this.searchInputControl.value);
+    this.searchService.setSearchInput('tag' in filters ? filters['tag'] : null);
     this.searchService.search(filters).subscribe();
     this.focusOut();
     this.hideAutocomplete();

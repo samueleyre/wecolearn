@@ -1,3 +1,9 @@
 export enum SearchMeta {
-  TAGNOTFOUND = 'tagNotFound',
+  tagNotFound = 'tagNotFound',
+  userLearnTags = 'userLearnTags',
+  userKnowTags = 'userKnowTags',
+  userLearnTagDomains = 'userLearnTagDomains',
+  userKnowTagDomains = 'userKnowTagDomains',
+  searchLearnTag = 'searchLearnTag',
+  orderByDistance = 'orderByDistance',
 }

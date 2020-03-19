@@ -25,10 +25,17 @@ import { SEARCH } from '../../config/main';
   private direction = 'down';
 
   public messages = {
-    [SearchMeta.TAGNOTFOUND]: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. 😢 <br>
-    Peut-être que les profils suivant pourront tout de même vous intéresser ?`,
-    noResults: `Mince, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
+    [SearchMeta.tagNotFound]: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. 😢 <br>
+    Peut-être que les profils suivant pourront aussi vous intéresser ?`,
+    noResults: `Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
     recherche, pensez à ajouter des domaines d'apprentissage dans votre profil !`,
+    noResultsWithSearch: `Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous`,
+    localProfiles: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. 😢 <br>
+    Peut-être que les profils suivant pourront aussi vous intéresser ?`,
+    [SearchMeta.userLearnTags]: 'Nous avons sélectionnés ces profils pour vous.',
+    [SearchMeta.userLearnTagDomains]: 'Nous avons sélectionnés ces profils pour vous.',
+    [SearchMeta.userKnowTags]: 'Nous avons sélectionnés ces profils pour vous.',
+    [SearchMeta.userKnowTagDomains]: 'Nous avons sélectionnés ces profils pour vous.',
   };
 
   @ViewChild('cardsContainer', { static: false }) cardsContainerElementRef: ElementRef;
@@ -69,12 +76,38 @@ import { SEARCH } from '../../config/main';
     this._searchService.search(params).subscribe();
   }
 
-  get searchMessage(): string {
-    if (!this.loading && this.cards.length === 0) {
+  get searchMessage(): string | null {
+    if (this.loading) {
+      return null;
+    }
+
+    let meta = null;
+    if (this._searchService.searchMeta) {
+      meta = this._searchService.searchMeta;
+      console.log({ meta });
+    }
+    if (this.cards.length === 0) {
+      if (this._searchService.searchInputValue) {
+        return this.messages.noResultsWithSearch;
+      }
       return this.messages.noResults;
     }
-    if (this._searchService.searchMeta) {
-      return this.messages[this._searchService.searchMeta];
+    if (meta) {
+      if (meta[SearchMeta.tagNotFound]) {
+        console.log(1);
+        return this.messages[SearchMeta.tagNotFound];
+      }
+      const metaKeys = Object.keys(meta).filter(val => meta[val] === true);
+
+      if (metaKeys.length > 0) {
+        // if got results without using matchin tags
+        if (!this._searchService.searchInputValue && meta[SearchMeta.orderByDistance]) {
+          console.log(2);
+          return this.messages.localProfiles;
+        }
+        // found match !
+        return this.messages[metaKeys[0]];
+      }
     }
     return null;
   }

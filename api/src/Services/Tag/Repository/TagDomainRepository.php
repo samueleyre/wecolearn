@@ -28,9 +28,7 @@ class TagDomainRepository extends ServiceEntityRepository
         if ($literal) {
             $qb->andwhere('t.name LIKE :literal')->setParameter('literal', '%'.$literal.'%');
         }
-        $qb->orderBy('t.name', 'ASC');
         $qb->setMaxResults(5);
-
         return $qb->getQuery()->getResult();
     }
 }
