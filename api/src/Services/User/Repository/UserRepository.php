@@ -126,12 +126,15 @@ class UserRepository extends ServiceEntityRepository
                 ->filter(function($tg) {
                     return $tg;
                 });
+
             if (count($profileTagDomains) === 0) {
                 return [];
             }
             $condition = sprintf('tagDomain.id=%s', $profileTagDomains[0]->getId());
             for ($i = 1; $i < count($profileTagDomains); ++$i) {
-                $condition .= sprintf(' OR tagDomain.id=%s', $profileTagDomains[$i]->getId());
+                if ($profileTagDomains[$i]) { // quick fix related to profileTagDomains auto duplicate nullifying
+                    $condition .= sprintf(' OR tagDomain.id=%s', $profileTagDomains[$i]->getId());
+                }
             }
             $qb->andWhere($condition);
 

@@ -22,7 +22,7 @@ class AdminTagDomainController extends AbstractController
      * @Get("admin/tagDomains")
      * @View( serializerGroups={"admin-tags"})
      */
-    public function getTagDomainssAdminAction() {
+    public function getTagDomainsAdminAction() {
         return $this->getDoctrine()
             ->getRepository(TagDomain::class)
             ->findBy([], ['name'=>'ASC']);
@@ -38,7 +38,7 @@ class AdminTagDomainController extends AbstractController
     )
      * @View( serializerGroups={"admin-tags"})
      */
-    public function patchTagDomainsAdminAction(
+    public function patchTagDomainAdminAction(
         TagDomain $tagDomain,
         TagDomainService $tagDomainService
     ) {
@@ -56,7 +56,7 @@ class AdminTagDomainController extends AbstractController
     options={"deserializationContext"={"groups"={"input"} } }
     )
      */
-    public function postTagAdminAction(
+    public function postTagDomainAdminAction(
         TagDomain $tagDomain,
         TagDomainService $tagDomainService
     ) {
@@ -70,7 +70,7 @@ class AdminTagDomainController extends AbstractController
     /**
      * @Delete("admin/tagDomain/{id}")
      */
-    public function deleteTagAdminAction(
+    public function deleteTagDomainAdminAction(
         int $id,
         TagDomainService $tagDomainService
     ) {

@@ -85,7 +85,6 @@ class AdminTagController extends AbstractController
         );
     }
 
-
     /**
      * @Delete("admin/tag/{id}")
      */

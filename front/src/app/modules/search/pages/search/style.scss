@@ -2,10 +2,29 @@
 @import "extendables";
 
 .SearchPage {
+
+  &-content {
+    &.desktop {
+      @extend %wc-thin-scroll-bar;
+      height: calc(100vh - 60px);
+      overflow: auto;
+    }
+    &.mobile{
+      height: calc(100vh - 109px);
+      padding-top: 10px;
+      overflow: auto;
+    }
+  }
+
+  #cardsContainer{
+    align-items: center;
+    justify-content: flex-start;
+  }
+
   &-message {
     font-style: italic;
     color: #848383;
-    &--mobile {
+    &-mobile {
       margin-top: 5px;
     }
   }
@@ -20,18 +39,4 @@
       background-color: white;
     }
   }
-}
-
-#cardsContainer{
-  &.desktop{
-    @extend %wc-thin-scroll-bar;
-    height: calc(100vh - 143px);
-  }
-  &.mobile{
-    height: calc(100vh - 182px);
-    margin-top: 71px;
-  }
-  align-items: center;
-  justify-content: flex-start;
-  overflow: auto;
 }

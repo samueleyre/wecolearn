@@ -71,13 +71,17 @@ class TagService
     public function patchTag(Tag $tag)
     {
         $iteration = $tag->getIteration();
-        $tagDomain = $this->em->getRepository(TagDomain::class)->find($tag->getTagDomain()->getId());
         $name = $tag->getName();
         $oldTag = $this->em->getRepository(Tag::class)->find($tag->getId());
         if ($oldTag) {
             $oldTag->setIteration($iteration);
             $oldTag->setName($name);
-            $oldTag->setTagDomain($tagDomain);
+
+            if ($tag->getTagDomain()) {
+                $tagDomain = $this->em->getRepository(TagDomain::class)->find($tag->getTagDomain()->getId());
+                $oldTag->setTagDomain($tagDomain);
+            }
+
             $this->em->persist($oldTag);
             $this->em->flush();
             return $oldTag;

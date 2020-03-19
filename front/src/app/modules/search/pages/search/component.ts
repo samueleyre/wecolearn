@@ -38,7 +38,7 @@ import { SEARCH } from '../../config/main';
     [SearchMeta.userKnowTagDomains]: 'Nous avons sélectionnés ces profils pour vous.',
   };
 
-  @ViewChild('cardsContainer', { static: false }) cardsContainerElementRef: ElementRef;
+  @ViewChild('pageContainer', { static: false }) cardsContainerElementRef: ElementRef;
 
   constructor(
         private router: Router,
@@ -54,7 +54,7 @@ import { SEARCH } from '../../config/main';
 
   load(): void {
     this._searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
-      if (this._searchService.searchType !== 'scroll' && this.cardsContainerElementRef) {
+      if (this._searchService.searchType !== 'scroll') {
         // new SEARCH
         this.cardsContainerElementRef.nativeElement.scrollTo(0, 0);
         this.cards = clients;
@@ -84,7 +84,6 @@ import { SEARCH } from '../../config/main';
     let meta = null;
     if (this._searchService.searchMeta) {
       meta = this._searchService.searchMeta;
-      console.log({ meta });
     }
     if (this.cards.length === 0) {
       if (this._searchService.searchInputValue) {
@@ -94,7 +93,6 @@ import { SEARCH } from '../../config/main';
     }
     if (meta) {
       if (meta[SearchMeta.tagNotFound]) {
-        console.log(1);
         return this.messages[SearchMeta.tagNotFound];
       }
       const metaKeys = Object.keys(meta).filter(val => meta[val] === true);
@@ -102,7 +100,6 @@ import { SEARCH } from '../../config/main';
       if (metaKeys.length > 0) {
         // if got results without using matchin tags
         if (!this._searchService.searchInputValue && meta[SearchMeta.orderByDistance]) {
-          console.log(2);
           return this.messages.localProfiles;
         }
         // found match !
