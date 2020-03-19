@@ -17,7 +17,6 @@ import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/se
 import { SearchBarComponent } from '~/modules/search/components/searchBar/searchBarDesktop/component';
 
 import { SearchComponent } from './pages/search/component';
-import { SearchService } from './services/search';
 import { SearchRouting } from './search.routing';
 import { CardComponent } from './components/card/component';
 import { CityBarComponent } from './components/cityBar/component';
@@ -55,7 +54,6 @@ import { TextLimitComponent } from './components/limit/component';
     CloudinaryModule,
   ],
   providers: [
-    SearchService,
   ],
 })
 export class SearchModule {

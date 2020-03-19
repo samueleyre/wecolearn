@@ -8,7 +8,7 @@ import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 import { Tag } from '~/core/entities/tag/entity';
 
-import { SEARCH } from '../config/main';
+import { SEARCH } from '../../../modules/search/config/main';
 
 interface ApiResponseInterface {
   meta: any;
@@ -48,7 +48,11 @@ export class SearchService extends APIService<User> {
     SearchService.max = SEARCH.default.max;
   }
 
-  getSearchInput(): Observable<Tag> {
+  get searchInputValue(): Tag | null {
+    return this.searchInput.value;
+  }
+
+  getSearchInputObs(): Observable<Tag> {
     return this.searchInput;
   }
 

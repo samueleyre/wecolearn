@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { Logged } from '~/core/services/logged';
+import { Logged } from '~/core/services/auth/logged';
 import { AuthenticationService } from '~/core/services/auth/auth';
-import { ClientService } from '~/core/services/client';
+import { ClientService } from '~/core/services/user/client';
 import { MessagesService } from '~/modules/chat/services/messages';
 import { Thread } from '~/core/entities/thread/entity';
 import { User } from '~/core/entities/user/entity';
-import { DomainService } from '~/core/services/domain';
+import { DomainService } from '~/core/services/domain/domain';
 import { MenuService } from '~/core/services/layout/menu';
 import { WcRouterService } from '~/core/services/wc-router.service';
 

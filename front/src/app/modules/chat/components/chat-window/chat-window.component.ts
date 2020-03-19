@@ -9,7 +9,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/client';
+import { ClientService } from '~/core/services/user/client';
 import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';

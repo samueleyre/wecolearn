@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
 
-import { Logged } from '~/core/services/logged';
+import { Logged } from '~/core/services/auth/logged';
 import { IconService } from '~/core/services/icon.service';
 import { MessagesService } from '~/modules/chat/services/messages';
 import { Message } from '~/core/entities/message/entity';
@@ -11,7 +11,7 @@ import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
 import { navTitles } from '~/config/navigation/seo.const';
 
-import { DomainService } from './core/services/domain';
+import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
 import {SeoService} from "~/core/services/seo";
 

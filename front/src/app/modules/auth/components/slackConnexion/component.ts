@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { DomainService } from '~/core/services/domain';
+import { DomainService } from '~/core/services/domain/domain';
 import { environment } from '~/../environments/environment';
 import { TokenService } from '~/core/services/auth/token';
 import { AuthenticationService } from '~/core/services/auth/auth';

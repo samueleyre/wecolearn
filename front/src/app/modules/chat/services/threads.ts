@@ -6,7 +6,7 @@ import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/client';
+import { ClientService } from '~/core/services/user/client';
 
 import { MessagesService } from './messages';
 

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-import { Logged } from '../logged';
+import { Logged } from './logged';
 import { HeaderBag } from './headerBag';
 import { TokenService } from './token';
 import { environment } from '../../../../environments/environment';

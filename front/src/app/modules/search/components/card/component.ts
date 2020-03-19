@@ -7,13 +7,13 @@ import {
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/client';
-import { DomainService } from '~/core/services/domain';
+import { ClientService } from '~/core/services/user/client';
+import { DomainService } from '~/core/services/domain/domain';
 import { chat } from '~/config/chat';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { Tag } from '~/core/entities/tag/entity';
 
-import { SearchService } from '../../services/search';
+import { SearchService } from '../../../../core/services/search/search';
 import { Threads } from '../../../chat/services/threads';
 
 
@@ -39,7 +39,6 @@ import { Threads } from '../../../chat/services/threads';
         private searchService: SearchService,
         private clientService: ClientService,
         private authService: AuthenticationService,
-        public threadsService: Threads,
         private domainService: DomainService,
     ) {
       for (let i = 0; i < this.types.length; i++) { // tslint:disable-line

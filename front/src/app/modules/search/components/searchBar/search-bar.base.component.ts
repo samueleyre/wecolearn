@@ -8,7 +8,7 @@ import { TagService } from '~/core/services/tag/tag';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 
-import { SearchService } from '../../services/search';
+import { SearchService } from '../../../../core/services/search/search';
 
 @Component({
   template: '',
@@ -28,8 +28,19 @@ import { SearchService } from '../../services/search';
   }
 
   ngOnInit() {
-    this.searchService.getSearchInput().subscribe((tag: Tag) => {
+    this.searchService.getSearchInputObs().subscribe((tag: Tag) => {
       this.searchInputControl.setValue(tag);
+      if (typeof this.searchInputControl.value === 'string') {
+        this.searchInputChange.next(
+          new Tag({
+            id: null,
+            name: this.searchInputControl.value,
+            type: TagTypeEnum.LEARN,
+          }),
+        );
+      } else {
+        this.searchInputChange.next(this.searchInputControl.value);
+      }
     });
 
     this.observableSource = this.searchInputControl.valueChanges.pipe(

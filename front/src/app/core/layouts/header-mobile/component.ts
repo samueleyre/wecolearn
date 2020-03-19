@@ -6,14 +6,14 @@ import * as _ from 'lodash';
 import { delay, takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { Logged } from '~/core/services/logged';
+import { Logged } from '~/core/services/auth/logged';
 import { AuthenticationService } from '~/core/services/auth/auth';
-import { ClientService } from '~/core/services/client';
+import { ClientService } from '~/core/services/user/client';
 import { MessagesService } from '~/modules/chat/services/messages';
 import { Threads } from '~/modules/chat/services/threads';
 import { Thread } from '~/core/entities/thread/entity';
 import { User } from '~/core/entities/user/entity';
-import { DomainService } from '~/core/services/domain';
+import { DomainService } from '~/core/services/domain/domain';
 import { MenuService } from '~/core/services/layout/menu';
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 import { DestroyObservable } from '~/core/components/destroy-observable';

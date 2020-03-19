@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DomainService } from '~/core/services/domain';
+import { DomainService } from '~/core/services/domain/domain';
 import { Community } from '~/core/entities/community/entity';
 import { environment } from '~/../environments/environment';
 import { UrlService } from '~/core/services/url';

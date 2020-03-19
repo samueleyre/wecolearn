@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 
-import { SearchService } from '../../services/search';
+import { SearchService } from '../../../../core/services/search/search';
 import { SEARCH } from '../../config/main';
 
 
@@ -38,16 +38,14 @@ import { SEARCH } from '../../config/main';
         private _searchService: SearchService,
         private deviceService: DeviceDetectorService,
   ) {
-    this.detectScrollDown();
   }
 
   ngOnInit() {
     this.load();
+    this.detectScrollDown();
   }
 
   load(): void {
-        // todo: if tag and lat/long are in url, get them
-
     this._searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
       if (this._searchService.searchType !== 'scroll' && this.cardsContainerElementRef) {
         // new SEARCH
@@ -64,7 +62,11 @@ import { SEARCH } from '../../config/main';
     });
 
     // init search on page load
-    this._searchService.search().subscribe();
+    const params = {};
+    if (this._searchService.searchInputValue) {
+      params['tag'] = this._searchService.searchInputValue;
+    }
+    this._searchService.search(params).subscribe();
   }
 
   get searchMessage(): string {

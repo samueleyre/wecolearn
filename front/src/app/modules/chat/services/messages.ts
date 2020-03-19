@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { User } from '~/core/entities/user/entity';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
-import { ClientService } from '~/core/services/client';
+import { ClientService } from '~/core/services/user/client';
 
 type IMessagesOperation = (messages: Message[]) => Message[];
 
