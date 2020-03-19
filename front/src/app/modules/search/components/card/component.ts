@@ -77,7 +77,7 @@ import { Threads } from '../../../chat/services/threads';
   }
 
   tagDisplayTitle(tag: Tag): string {
-    return `${tag.name}${tag.tag_domain ? `| ${tag.tag_domain.name}` : ''}`.trim();
+    return `${tag.name}${tag.tag_domain ? ` | ${tag.tag_domain.name}` : ''}`.trim();
   }
 
   tagDisplayName(tag: Tag): string {

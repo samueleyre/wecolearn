@@ -1,19 +1,18 @@
 <section *ngIf="!isMobile" class="SearchPage">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12">
+      <div #pageContainer class="col-12 desktop SearchPage-content" infinite-scroll
+           [infiniteScrollDistance]="4"
+           [infiniteScrollThrottle]="50"
+           (scrolled)="onScroll($event)"
+           [scrollWindow]="false">
         <div class="SearchPage-header">
           <app-searchbar (searchInputChange)="searchInput = $event"></app-searchbar>
         </div>
         <div class="SearchPage-message">
           <p [innerHTML]="searchMessage"></p>
         </div>
-        <div #cardsContainer id="cardsContainer" *ngIf="cards.length > 0" class="desktop row align-items-stretch"
-             infinite-scroll
-             [infiniteScrollDistance]="4"
-             [infiniteScrollThrottle]="50"
-             (scrolled)="onScroll($event)"
-             [scrollWindow]="false">
+        <div  id="cardsContainer" *ngIf="cards.length > 0" class="desktop row align-items-stretch">
           <div *ngFor="let card of cards" [ngClass]="'col-xl-4 col-lg-6 col-md-8 mb-4'">
             <app-card  [card]="card"></app-card>
           </div>
@@ -26,43 +25,31 @@
 
 
 <section *ngIf="isMobile" class="SearchPage">
-
-  <div class="SearchPage-header-mobile">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
+  <div class="container-fluid">
+    <div class="row">
+      <div #pageContainer class="col-12 mobile SearchPage-content"
+           infinite-scroll
+           [infiniteScrollDistance]="1"
+           [infiniteScrollThrottle]="50"
+           (scrolled)="onScrollMobile($event)"
+           [infiniteScrollDisabled]="!canScroll"
+           [scrollWindow]="false"
+      >
+        <div class="SearchPage-searchBar-mobile">
           <app-searchbar-mobile (searchInputChange)="searchInput = $event"></app-searchbar-mobile>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid">
-
-
-    <div class="row">
-
-      <div class="col-12">
-        <div #cardsContainer id="cardsContainer" *ngIf="cards.length > 0" class="mobile row align-items-stretch"
-             infinite-scroll
-             [infiniteScrollDistance]="1"
-             [infiniteScrollThrottle]="50"
-             (scrolled)="onScrollMobile($event)"
-             [infiniteScrollDisabled]="!canScroll"
-             [scrollWindow]="false"
+        <div class="SearchPage-message SearchPage-message-mobile">
+          <p [innerHTML]="searchMessage"></p>
+        </div>
+        <div  id="cardsContainer" *ngIf="cards.length > 0" class="mobile row align-items-stretch"
         >
-          <div class="col-12 SearchPage-message SearchPage-message--mobile">
-            <p [innerHTML]="searchMessage"></p>
-          </div>
           <div *ngFor="let card of cards" class="col-12">
             <app-card  [card]="card"
             ></app-card>
             <br>
           </div>
-
         </div>
-
         <br><br>
-
       </div>
     </div>
   </div>
