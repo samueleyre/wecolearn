@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Logged } from './logged';
-import { ClientService } from './client';
+import { ClientService } from '../user/client';
 
 
 @Injectable({

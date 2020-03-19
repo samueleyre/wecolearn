@@ -4,7 +4,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { takeUntil } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/client';
+import { ClientService } from '~/core/services/user/client';
 
 
 @Component({

@@ -6,7 +6,7 @@ import {
 import { TagService } from '~/core/services/tag/tag';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
 
-import { SearchService } from '../../../services/search';
+import { SearchService } from '../../../../../core/services/search/search';
 
 @Component({
   selector: 'app-searchbar',

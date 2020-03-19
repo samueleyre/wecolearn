@@ -70,7 +70,10 @@ class UserController extends AbstractController
 
         $tag = $request->get('tag', ['id'=>null, 'name'=>null]);
 
-        if ($tag['id'] || $tag['name']) {
+        if (
+            ( array_key_exists('id', $tag) && $tag['id'] )
+            || ( array_key_exists('id', $tag) && $tag['name'] )
+        ) {
             $filter['tag'] = $tag;
         }
 

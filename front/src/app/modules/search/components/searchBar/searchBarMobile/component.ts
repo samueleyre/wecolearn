@@ -7,7 +7,7 @@ import { TagService } from '~/core/services/tag/tag';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
 
-import { SearchService } from '../../../services/search';
+import { SearchService } from '../../../../../core/services/search/search';
 
 
 @Component({

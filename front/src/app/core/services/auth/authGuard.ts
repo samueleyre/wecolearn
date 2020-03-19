@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, map } from 'rxjs/operators';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
-import { Logged } from '~/core/services/logged';
+import { Logged } from '~/core/services/auth/logged';
 
 import { PingService } from './ping';
 

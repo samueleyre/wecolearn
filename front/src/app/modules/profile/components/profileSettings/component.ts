@@ -11,9 +11,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { User } from '~/core/entities/user/entity';
 import { Tag } from '~/core/entities/tag/entity';
-import { ClientService } from '~/core/services/client';
+import { ClientService } from '~/core/services/user/client';
 import { TagService } from '~/core/services/tag/tag';
-import { DomainService } from '~/core/services/domain';
+import { DomainService } from '~/core/services/domain/domain';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';

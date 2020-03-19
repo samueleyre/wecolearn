@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { User } from '~/core/entities/user/entity';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { NAV } from '~/config/navigation/nav';
+import { Tag } from '~/core/entities/tag/entity';
+import { SearchService } from '~/core/services/search/search';
 
 
 @Component({
@@ -15,14 +17,19 @@ import { NAV } from '~/config/navigation/nav';
   styleUrls : ['./style.scss'],
 })
 export class ProfileComponent extends DestroyObservable {
-  constructor(private _router: Router) {
+  constructor(private _router: Router, private _searchService: SearchService) {
     super();
   }
 
   @Input() user: User;
 
-  searchByTag(tag: string) {
-    // todo: uncomment when implemented
-    // this._router.navigate([NAV.search, tag]);
+  searchByTag(tag: Tag) {
+    const searchTag = { ...tag };
+    if (searchTag.type !== 0) {
+      searchTag.id = null;
+      searchTag.type = 0;
+    }
+    this._searchService.setSearchInput(searchTag);
+    this._router.navigate([NAV.search]);
   }
 }

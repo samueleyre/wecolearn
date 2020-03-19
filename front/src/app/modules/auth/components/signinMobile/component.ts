@@ -5,7 +5,7 @@ import {
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
-import { DomainService } from '~/core/services/domain';
+import { DomainService } from '~/core/services/domain/domain';
 import { NAV } from '~/config/navigation/nav';
 
 import { environment } from '~/../environments/environment';

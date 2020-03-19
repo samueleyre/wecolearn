@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { ClientService } from '~/core/services/client';
+import { ClientService } from '~/core/services/user/client';
 import { User } from '~/core/entities/user/entity';
 
 import { TokenService } from './token';
