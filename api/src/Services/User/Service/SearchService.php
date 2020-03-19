@@ -35,11 +35,12 @@ class SearchService
                     $searchTag = $this->em->getRepository(Tag::class)->find($filter["tag"]['id']);
                     $searchParameters['searchLearnTag'] = true;
                 } else {
-                    $searchTag = $this->em->getRepository(Tag::class)
-                        ->findOneBy(["name" => $filter["tag"]['name'], "type" => 0]);
-                    if (!$searchTag) {
+                    $search = $this->em->getRepository(Tag::class)
+                        ->findByNameLike($filter["tag"]['name'], 0);
+                    if (count($search) === 0) {
                         $meta['tagNotFound'] = true;
                     } else {
+                        $searchTag = $search[0];
                         $searchParameters['searchLearnTag'] = true;
                     }
                 }
@@ -64,7 +65,6 @@ class SearchService
         for($i = 1; $i < 3; $i++) {
             if ($result === []) {
                 $distance = $i === 1 ? 15 : 5;
-                dump($distance);
                 $result = $this->searchRequest(
                     $user,
                     $first,

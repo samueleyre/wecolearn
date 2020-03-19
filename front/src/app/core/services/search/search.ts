@@ -27,7 +27,7 @@ export class SearchService extends APIService<User> {
   currentFoundAddress: any[] = [];
   currentSearch: {} = {};
   public endPoint = '/api/user/matchs';
-  public searchMetaSubject: BehaviorSubject<SearchMeta> = new BehaviorSubject(null);
+  public searchMetaSubject: BehaviorSubject<{ [key in SearchMeta]: boolean }> = new BehaviorSubject(null);
 
   constructor(private _http: HttpClient) {
     super(_http);
@@ -40,7 +40,7 @@ export class SearchService extends APIService<User> {
     return 'default';
   }
 
-  get searchMeta(): SearchMeta {
+  get searchMeta(): { [key in SearchMeta]: boolean } {
     return this.searchMetaSubject.value;
   }
 
@@ -82,8 +82,7 @@ export class SearchService extends APIService<User> {
     return this.searchList(filters).pipe(
       map((response: ApiResponseInterface) => {
         this.currentFoundClients.next(response.data.map(val => val[0]));
-        const meta = Object.keys(response.meta).length > 0 ? <SearchMeta>Object.keys(response.meta)[0] : null;
-        this.searchMetaSubject.next(meta);
+        this.searchMetaSubject.next(response.meta);
         this._loading$.next(false);
         this.currentlySearching = false;
         return true;

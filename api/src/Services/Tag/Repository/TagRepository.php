@@ -31,4 +31,16 @@ class TagRepository extends ServiceEntityRepository
 
         return $ret;
     }
+
+    public function findByNameLike(string $literal, int $type = null)
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb->andwhere('t.name LIKE :literal')->setParameter('literal', '%'.$literal.'%');
+        if ($type) {
+            $qb->andwhere('t.type = :type')->setParameter('type', $type);
+        }
+        $qb->setMaxResults(5);
+
+        return $qb->getQuery()->getResult();
+    }
 }
