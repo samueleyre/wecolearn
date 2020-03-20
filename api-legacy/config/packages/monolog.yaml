@@ -1,8 +1,0 @@
-monolog:
-    handlers:
-        syslog:
-            formatter: monolog.formatter
-            type: syslog
-            level: info
-
-
