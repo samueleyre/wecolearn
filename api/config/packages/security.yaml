@@ -44,7 +44,7 @@ security:
             anonymous: true
 
         findTag:
-            pattern:   ^/api/findTag
+            pattern:   ^/api/tag/find
             stateless: true
             anonymous: true
 
@@ -71,6 +71,6 @@ security:
         - { path: ^/api/signup, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/confirmEmail, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/resetPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/findTag, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/tag/find, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/admin, roles: ROLES_ADMIN }

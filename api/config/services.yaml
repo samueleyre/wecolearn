@@ -94,6 +94,12 @@ services:
         tags:
             - { name: 'kernel.event_subscriber' }
 
+    App\Services\User\Event\NotifyNewUserMatchSubscriber:
+        arguments:
+            $host: '%host%'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
     App\Command\SendReminder:
         arguments:
             $environment: '%environment%'

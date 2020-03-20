@@ -19,8 +19,9 @@
     <p class="title center">Je veux apprendre 📚</p>
     <ul class="tags col-md-12 flex-wrap">
         <li *ngFor="let tag of user.tags | tagPipe: 0:20">
-            <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)"><span
-                    class="badge">{{tag.name}}</span></a></p>
+            <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
+              <span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span>
+            </a></p>
         </li>
     </ul>
 </div>
@@ -29,8 +30,9 @@
     <p class="title center">Je connais 🧠</p>
     <ul class="tags col-md-12 flex-wrap">
         <li *ngFor="let tag of user.tags | tagPipe: 1:20">
-            <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)"><span
-                    class="badge">{{tag.name}}</span></a></p>
+            <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
+              <span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span>
+            </a></p>
         </li>
     </ul>
 </div>

@@ -12,4 +12,5 @@ export const NAV = {
   mentionsLegales: '/doc/mentionslegales',
   cookiePolicy: '/doc/cookie-policy',
   home: '/signin',
+  notFound: '/404',
 };

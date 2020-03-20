@@ -81,13 +81,22 @@ class SearchService
 
         // search by input tag only
         if ($result === []) {
-            $distance = 15;
             $searchParameters['userKnowTags'] = false;
             $searchParameters['userKnowTagDomains'] = false;
             $searchParameters['orderByDistance'] = true;
             $result = $this->em
                 ->getRepository(User::class)
-                ->search($user, $searchTag, $first, $max, $latitude, $longitude, $domain, $searchParameters, $distance);
+                ->search([
+                        'user' => $user,
+                        'searchTag' => $searchTag,
+                        'first' => $first,
+                        'max' => $max,
+                        'latitude' => $latitude,
+                        'longitude' => $longitude,
+                        'domain' => $domain,
+                        'parameters ' => $searchParameters,
+                        'distance' => 15
+                    ]);
         }
 
         $meta = array_merge($searchParameters, $meta);
@@ -127,7 +136,17 @@ class SearchService
         // search by user learn tags ( type 0 )
         $result = $this->em
             ->getRepository(User::class)
-            ->search($user, $searchTag, $first, $max, $latitude, $longitude, $domain, $searchParameters, $distance);
+            ->search([
+                'user' => $user,
+                'searchTag' => $searchTag,
+                'first' => $first,
+                'max' => $max,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'domain' => $domain,
+                'parameters' => $searchParameters,
+                'distance' => $distance
+            ]);
 
         // search by learn tag domains ( type 0 )
         if ($result === []) {
@@ -136,7 +155,17 @@ class SearchService
             $searchParameters['userLearnTagDomains'] = true;
             $result = $this->em
                 ->getRepository(User::class)
-                ->search($user, $searchTag, $first, $max, $latitude, $longitude, $domain, $searchParameters, $distance);
+                ->search([
+                    'user'=>$user,
+                    'searchTag'=>$searchTag,
+                    'first'=>$first,
+                    'max'=>$max,
+                    'latitude'=>$latitude,
+                    'longitude'=>$longitude,
+                    'domain'=>$domain,
+                    'parameters'=>$searchParameters,
+                    'distance'=>$distance
+                ]);
         }
 
         // search by user know tags ( types 1 )
@@ -145,7 +174,17 @@ class SearchService
             $searchParameters['userLearnTagDomains'] = false;
             $result = $this->em
                 ->getRepository(User::class)
-                ->search($user, $searchTag, $first, $max, $latitude, $longitude, $domain, $searchParameters, $distance);
+                ->search([
+                    'user'=>$user,
+                    'searchTag'=>$searchTag,
+                    'first'=>$first,
+                    'max'=>$max,
+                    'latitude'=>$latitude,
+                    'longitude'=>$longitude,
+                    'domain'=>$domain,
+                    'parameters'=>$searchParameters,
+                    'distance'=>$distance
+                ]);
         }
 
         // search by know tag domains ( type 1 )
@@ -154,7 +193,17 @@ class SearchService
             $searchParameters['userKnowTagDomains'] = true;
             $result = $this->em
                 ->getRepository(User::class)
-                ->search($user, $searchTag, $first, $max, $latitude, $longitude, $domain, $searchParameters, $distance);
+                ->search([
+                    'user'=>$user,
+                    'searchTag'=>$searchTag,
+                    'first'=>$first,
+                    'max'=>$max,
+                    'latitude'=>$latitude,
+                    'longitude'=>$longitude,
+                    'domain'=>$domain,
+                    'parameters'=>$searchParameters,
+                    'distance'=>$distance
+                ]);
         }
 
         return $result;
