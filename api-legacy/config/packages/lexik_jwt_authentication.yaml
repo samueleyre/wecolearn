@@ -1,8 +1,0 @@
-lexik_jwt_authentication:
-    secret_key: '%kernel.project_dir%/var/jwt/private.pem'
-    public_key: '%kernel.project_dir%/var/jwt/public.pem'
-    pass_phrase: 'oezjfozjefozi340034808346erg'
-    token_ttl: '%env(JWT_TTL)%'
-    #secret_key:  '%kernel.project_dir%/config/jwt/private.pem'
-    #public_key:  '%kernel.project_dir%/config/jwt/public.pem'
-    #pass_phrase: 'b1otope'

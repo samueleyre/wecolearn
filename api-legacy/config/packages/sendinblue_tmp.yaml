@@ -1,3 +1,0 @@
-sendinblue_api:
-    endpoints: ['smtp']
-    key: '%env(resolve:SENDINBLUE_API)%'
