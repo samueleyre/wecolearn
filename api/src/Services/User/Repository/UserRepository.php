@@ -15,27 +15,69 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+//          User $user = null,
+////        Tag $searchTag = null,
+////        $first = 0,
+////        $max = 15,
+////        $latitude = null,
+////        $longitude = null,
+////        $domain = wecolearn,
+////        $parameters = [ userLearnTags | userKnowTags | userLearnTagDomains | userKnowTagDomains | searchLearnTag ],
+////        $maxDistance = 100
+
     /**
-     *  userLearnTags | userKnowTags | userLearnTagDomains | userKnowTagDomains | searchLearnTag
-     * @param $parameters
-     *
-     * @return mixed
+     * @param $searchParameters
+     * @return array|mixed
      */
     public function search(
-        User $user = null,
-        Tag $searchTag = null,
-        $first,
-        $max,
-        $startLatitude,
-        $startLongitude,
-        $domain,
-        $parameters,
-        $maxDistance = 100
+      $searchParameters
     ) {
-        if (!$startLatitude || !$startLongitude) {
-            $startLatitude = 45.75;
-            $startLongitude = 4.85;
+
+        if (!array_key_exists('latitude', $searchParameters) || !array_key_exists('longitude', $searchParameters)) {
+            $latitude = 45.75;
+            $longitude = 4.85;
+        } else {
+            $latitude = $searchParameters['latitude'];
+            $longitude = $searchParameters['longitude'];
         }
+
+        if (!array_key_exists('domain', $searchParameters)) {
+            $domain = 'wecolearn';
+        } else {
+            $domain = $searchParameters['domain'];
+        }
+
+        if (!array_key_exists('user', $searchParameters)) {
+            $user = null;
+        } else {
+            $user = $searchParameters['user'];
+        }
+
+        if (!array_key_exists('searchTag', $searchParameters)) {
+            $searchTag = null;
+        } else {
+            $searchTag = $searchParameters['searchTag'];
+        }
+
+        if (!array_key_exists('first', $searchParameters)) {
+            $first = 0;
+        } else {
+            $first = $searchParameters['first'];
+        }
+
+        if (!array_key_exists('max', $searchParameters)) {
+            $max = 15;
+        } else {
+            $max = $searchParameters['max'];
+        }
+
+        if (!array_key_exists('maxDistance', $searchParameters)) {
+            $maxDistance = 100;
+        } else {
+            $maxDistance = $searchParameters['maxDistance'];
+        }
+
+        $parameters = $searchParameters['parameters'];
 
         $profileTags = [];
 
@@ -67,7 +109,7 @@ class UserRepository extends ServiceEntityRepository
             pow(69.1 
                 * (%s - user.longitude) 
                 * cos(user.latitude / 57.3), 2)
-          , 2 ) AS decimal(6,2) ) AS distance', $startLatitude, $startLongitude));
+          , 2 ) AS decimal(6,2) ) AS distance', $latitude, $longitude));
 
         $qb->from('App\\Services\\User\\Entity\\User', 'user');
 

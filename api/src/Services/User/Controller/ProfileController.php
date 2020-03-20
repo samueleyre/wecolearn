@@ -13,6 +13,7 @@ use App\Services\Domain\Service\DomainService;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\UserService;
 use FOS\RestBundle\Controller\Annotations\Patch;
+use Hoa\Exception\Exception;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,7 +38,7 @@ class ProfileController extends AbstractController
         if ($user instanceof User) {
             $ret = $user;
         } else {
-            $ret = ['success' => false];
+            throw new \Exception('not found');
         }
 
         return $ret;
