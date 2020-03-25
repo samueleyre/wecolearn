@@ -13,12 +13,15 @@ class EmailService
     private $deliveryAddress;
     private $sendInBlueApi;
     private $data;
+    private $environment;
 
-    public function __construct(EntityManagerInterface $em, $deliveryAddress, $sendInBlueApi)
+
+    public function __construct(EntityManagerInterface $em, $deliveryAddress, $sendInBlueApi, string $environment)
     {
         $this->em = $em;
         $this->deliveryAddress = $deliveryAddress;
         $this->sendInBlueApi = $sendInBlueApi;
+        $this->environment = $environment;
     }
 
     public function getData($templateid, $parameters, $email, $emailSender = null) // should not be called
@@ -43,7 +46,9 @@ class EmailService
         }
 
         $to = [];
-        $to[] = (new SendSmtpEmailTo())->setEmail($email);
+        $to[] = (new SendSmtpEmailTo())->setEmail(
+            $this->environment !== 'prod' ? 'samueleyre@wecolearn.com' : $email
+        );
         $replyTo = (new SendSmtpEmailReplyTo())->setEmail($emailSender);
         $this->data = new SendSmtpEmail();
         $this->data

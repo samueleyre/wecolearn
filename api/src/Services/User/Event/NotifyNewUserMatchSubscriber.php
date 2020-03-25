@@ -67,11 +67,14 @@ class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
           }
 
           $commonTags = $matchingUser->getTags()->filter(function($tag) use ($user) {
-              return $user->getTags()->indexOf($tag) !== -1;
+              $userHasTag = $user->getTags()->filter(function($userTag) use ($tag) {
+                  return $userTag->getId() === $tag->getId() && $tag->getType() === 0;
+              });
+              return count($userHasTag) > 0;
           })->map(function($tag) {
               return $tag->getName();
           })->toArray();
-
+          
           $this->emailService
               ->setData(
                   15,

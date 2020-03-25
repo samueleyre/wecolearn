@@ -33,6 +33,7 @@ services:
         arguments:
             $deliveryAddress: '%delivery_address%'
             $sendInBlueApi: '@sendinblue_api.smtp_endpoint'
+            $environment: '%environment%'
 
     App\Services\Domain\Service\DomainService:
         arguments:
@@ -99,8 +100,4 @@ services:
             $host: '%host%'
         tags:
             - { name: 'kernel.event_subscriber' }
-
-    App\Command\SendReminder:
-        arguments:
-            $environment: '%environment%'
 
