@@ -23,15 +23,13 @@ class SendReminder extends Command
   private $em;
   private $emailService;
   private $messageService ;
-  private $environment;
 
-  public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService, string $environment )
+  public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService )
   {
 
     $this->em = $em;
     $this->emailService = $emailService;
     $this->messageService  = $messageService ;
-    $this->environment = $environment;
     parent::__construct();
 
   }
@@ -65,10 +63,6 @@ class SendReminder extends Command
         endwhile;
 
         $this->messageService->setReminderDate($clientId);
-
-        if ($this->environment !== 'prod') {
-            $client["email"] = "samueleyre@wecolearn.com";
-        }
 
         $this->emailService
           ->setData(EmailConstant::$Ids["MESSAGE_NOTIFS"],

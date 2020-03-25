@@ -94,7 +94,7 @@ class SearchService
                         'latitude' => $latitude,
                         'longitude' => $longitude,
                         'domain' => $domain,
-                        'parameters ' => $searchParameters,
+                        'parameters' => $searchParameters,
                         'distance' => 15
                     ]);
         }
