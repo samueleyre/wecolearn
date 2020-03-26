@@ -25,12 +25,12 @@ import { SEARCH } from '../../config/main';
   private direction = 'down';
 
   public messages = {
-    [SearchMeta.tagNotFound]: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. 😢 <br>
+    [SearchMeta.tagNotFound]: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. <br>
     Peut-être que les profils suivant pourront aussi vous intéresser ?`,
     noResults: `Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
     recherche, pensez à ajouter des domaines d'apprentissage dans votre profil !`,
     noResultsWithSearch: `Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous`,
-    localProfiles: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. 😢 <br>
+    localProfiles: `Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
     Peut-être que les profils suivant pourront aussi vous intéresser ?`,
     [SearchMeta.userLearnTags]: 'Nous avons sélectionnés ces profils pour vous.',
     [SearchMeta.userLearnTagDomains]: 'Nous avons sélectionnés ces profils pour vous.',
@@ -98,7 +98,7 @@ import { SEARCH } from '../../config/main';
       const metaKeys = Object.keys(meta).filter(val => meta[val] === true);
 
       if (metaKeys.length > 0) {
-        // if got results without using matchin tags
+        // if got results without using matching tags
         if (!this._searchService.searchInputValue && meta[SearchMeta.orderByDistance]) {
           return this.messages.localProfiles;
         }
