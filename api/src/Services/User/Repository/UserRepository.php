@@ -149,10 +149,10 @@ class UserRepository extends ServiceEntityRepository
         }
 
         // search for same domain tags from profile
-        if (
-            count($profileTags) &&
-            ($parameters['userLearnTagDomains'] || $parameters['userKnowTagDomains'])
-        ) {
+        if ($parameters['userLearnTagDomains'] || $parameters['userKnowTagDomains']) {
+            if (count($profileTags) === 0) {
+                return [];
+            }
             if ($parameters['userLearnTagDomains']) {
                 $qb->andWhere(sprintf('t.type=0'));
             }
@@ -195,7 +195,8 @@ class UserRepository extends ServiceEntityRepository
         }
 
         else if (
-            $parameters['userLearnTagDomains'] || $parameters['userKnowTagDomains']
+            count($profileTags) &&
+            ($parameters['userLearnTagDomains'] || $parameters['userKnowTagDomains'])
         ) {
             $qb->orderBy('commonTagDomains', 'DESC');
         }
