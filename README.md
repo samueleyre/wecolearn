@@ -16,21 +16,20 @@ make install
 ## Créer la base de donnée
 
 ``
-make database
+make createDatabase
 ``
 
 ## Remplir les fixtures
 
 ``
-make addFixtures
+make loadFixtures
 ``
 
-## Démarrer containers
+## Démarrer back
 
 ``
-make start
+docker-compose up webserver
 ``
-
 
 
 ## Démarrer front 
@@ -50,7 +49,7 @@ make dev
 ``
 
 
-# production
+# Online servers
 
 ## Connect to online database
 
