@@ -6,7 +6,11 @@ install:
 	@docker-compose exec composer bash -c "composer install"
 	@echo "Installation completed"
 
-addFixtures:
+createDatabase:
+	@docker-compose exec api bash -c "php bin/console doctrine:database:create"
+	@docker-compose exec api bash -c "php bin/console doctrine:schema:create"
+
+loadFixtures:
 	@docker-compose exec api bash -c "php bin/console do:fi:lo -v"
 
 runComposer:
