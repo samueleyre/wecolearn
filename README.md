@@ -35,9 +35,8 @@ docker-compose up webserver
 ## Démarrer front 
 
 ``
-make frontServer
+docker-compose up angular
 ``
-
 
 
 ## Debug dev
