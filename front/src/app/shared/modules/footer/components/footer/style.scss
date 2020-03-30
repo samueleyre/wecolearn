@@ -1,3 +1,22 @@
+@import "variables";
+
 hr {
   margin-top: 0;
+}
+
+.networkLink {
+  &:hover {
+    color: $mainYellow;
+  }
+  font-size: 30px;
+  margin-right: 20px;
+}
+
+
+.pageLink {
+  display: block;
+  &.hide {
+    display: none;
+  }
+
 }
