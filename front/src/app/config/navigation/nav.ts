@@ -7,7 +7,7 @@ export const NAV = {
   profileSettings: '/dashboard/profile/settings',
   discussion: '/dashboard/discussion',
   currentDiscussion: '/dashboard/discussion/current',
-  about: '/doc/about',
+  aboutUs: '/doc/about-us',
   peerLearning: '/doc/peer-learning',
   mentionsLegales: '/doc/mentionslegales',
   cookiePolicy: '/doc/cookie-policy',
