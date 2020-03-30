@@ -17,7 +17,7 @@ export class MainFooterComponent {
   meetupLink = SOCIALS.meetupLink;
 
   peerLearningLink = NAV.peerLearning;
-  aboutLink = NAV.about;
+  aboutLink = NAV.aboutUs;
   homeLink = NAV.home;
   mentionLegalesLink = NAV.mentionsLegales;
 
