@@ -1,8 +1,48 @@
 @import 'variables';
 
 
-#imageContainer{
-  margin: auto;
-  padding: 67px;
+section{
+  margin-top: 30px;
+  margin-bottom: 30px;
+  .row {
+    margin-bottom: 70px;
+  }
+
 }
 
+.docBlock {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  width: 100%;
+  &-image {
+    text-align: right;
+    &.alignLeft {
+      text-align: left;
+    }
+    height: 400px;
+    overflow: hidden;
+    width: 50%;
+    min-width: 400px;
+    img {
+      height: 400px;
+      padding: 20px;
+    }
+  }
+  &-text {
+    min-width: 400px;
+    &-title {
+      color: var(--main-color-2);
+      font-size: 34px;
+    }
+    &.alignRight {
+      text-align: right;
+    }
+    width: 50%;
+    padding: 20px;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+  }
+}
