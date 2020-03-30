@@ -7,26 +7,19 @@
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-4">
-              <a href="{{meetupLink}}"><i class="fab fa-meetup"></i></a>
-              &nbsp;&nbsp;
-              <a href="{{faceBookLink}}"><i class="fab fa-facebook-f"></i></a>
-              &nbsp;&nbsp;
-              <a href="{{twitterLink}}"><i class="fab fa-twitter"></i></a>
-              &nbsp;&nbsp;
-              <a href="{{telegramLink}}"><i class="fab fa-telegram-plane"></i></a>
-
+              <a class="networkLink" target="_blank" href="{{meetupLink}}"><i class="fab fa-meetup"></i></a>
+              <a class="networkLink" target="_blank" href="{{faceBookLink}}"><i class="fab fa-facebook-f"></i></a>
+              <a class="networkLink" target="_blank" href="{{twitterLink}}"><i class="fab fa-twitter"></i></a>
+              <a class="networkLink" target="_blank" href="{{telegramLink}}"><i class="fab fa-telegram-plane"></i></a>
                 <br>
-                <p><a href="mailto:contact@wecolearn.com">contact@wecolearn.com</a></p>
+                <br>
+              <p><a href="mailto:contact@wecolearn.com">contact@wecolearn.com</a></p>
             </div>
             <div class="col-4" >
-                <a routerLink="{{homeLink}}">Accueil</a>
-                <br>
-                <a routerLink="{{aboutLink}}">A propos</a>
-                <br>
-                <a routerLink="{{peerLearningLink}}">Pourquoi faire du peer-learning ? </a>
-                <br>
-                <a routerLink="{{mentionLegalesLink}}">Mentions Légales</a>
-
+                <a class="pageLink" routerLink="{{homeLink}}" routerLinkActive="hide">Accueil</a>
+                <a class="pageLink" routerLink="{{aboutLink}}" routerLinkActive="hide">Qui sommes-nous ?</a>
+                <a class="pageLink" routerLink="{{peerLearningLink}}" routerLinkActive="hide">Pourquoi faire du peer-learning ? </a>
+                <a class="pageLink" routerLink="{{mentionLegalesLink}}" routerLinkActive="hide">Mentions Légales</a>
             </div>
         </div>
     </div>
