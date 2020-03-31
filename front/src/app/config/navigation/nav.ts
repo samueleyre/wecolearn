@@ -11,6 +11,7 @@ export const NAV = {
   peerLearning: '/doc/peer-learning',
   mentionsLegales: '/doc/mentionslegales',
   cookiePolicy: '/doc/cookie-policy',
+  manifest: '/doc/manifest',
   home: '/signin',
   notFound: '/404',
 };
