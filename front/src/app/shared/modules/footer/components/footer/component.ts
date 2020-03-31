@@ -20,6 +20,7 @@ export class MainFooterComponent {
   aboutLink = NAV.aboutUs;
   homeLink = NAV.home;
   mentionLegalesLink = NAV.mentionsLegales;
+  manifestLink = NAV.manifest;
 
   now = new Date();
 }
