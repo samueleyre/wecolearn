@@ -2,7 +2,6 @@
 
 namespace App\Services\User\Repository;
 
-use App\Services\Tag\Entity\TagDomain;
 use App\Services\User\Entity\User;
 use App\Services\Tag\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -85,14 +84,20 @@ class UserRepository extends ServiceEntityRepository
             $profileTags = $user->getTags();
 
             // if only learnTags
-            if ($parameters['userLearnTags'] || $parameters['userLearnTagDomains'] && !($parameters['userKnowTags'] || $parameters['userKnowTagDomains'])) {
+            if (
+                ($parameters['userLearnTags'] || $parameters['userLearnTagDomains'])
+                && !($parameters['userKnowTags'] || $parameters['userKnowTagDomains'])
+            ) {
                 $profileTags = $profileTags->filter(function (Tag $tag) {
                     return $tag->getType() === 0;
                 });
             }
 
             // if only knowTags
-            else if ($parameters['userKnowTags'] || $parameters['userKnowTagDomains'] && !($parameters['userLearnTags'] || $parameters['userLearnTagDomains'])) {
+            else if (
+                ($parameters['userKnowTags'] || $parameters['userKnowTagDomains'])
+                && !($parameters['userLearnTags'] || $parameters['userLearnTagDomains'])
+            ) {
                 $profileTags = $profileTags->filter(function (Tag $tag) {
                     return $tag->getType() === 1;
                 });
@@ -141,9 +146,9 @@ class UserRepository extends ServiceEntityRepository
             if (count($profileTags) === 0) {
                 return [];
             }
-            $condition = sprintf('t.id=%s', $profileTags[0]->getId());
+            $condition = sprintf('t.id=%s', $profileTags->first()->getId());
             for ($i = 1; $i < count($profileTags); ++$i) {
-                $condition .= sprintf(' OR t.id=%s', $profileTags[$i]->getId());
+                $condition .= sprintf(' OR t.id=%s', $profileTags->getValues()[$i]->getId());
             }
             $qb->andWhere($condition);
         }
@@ -172,11 +177,9 @@ class UserRepository extends ServiceEntityRepository
             if (count($profileTagDomains) === 0) {
                 return [];
             }
-            $condition = sprintf('tagDomain.id=%s', $profileTagDomains[0]->getId());
+            $condition = sprintf('tagDomain.id=%s', $profileTagDomains->first()->getId());
             for ($i = 1; $i < count($profileTagDomains); ++$i) {
-                if ($profileTagDomains[$i]) { // quick fix related to profileTagDomains auto duplicate nullifying
-                    $condition .= sprintf(' OR tagDomain.id=%s', $profileTagDomains[$i]->getId());
-                }
+                $condition .= sprintf(' OR tagDomain.id=%s', $profileTagDomains->getValues()[$i]->getId());
             }
             $qb->andWhere($condition);
 
