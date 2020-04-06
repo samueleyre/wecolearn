@@ -27,8 +27,8 @@ executer
 
 ## ionic et cordova
 
-`sudo npm install -g cordova`
-`sudo npm install -g @ionic/cli@6.4.0`
+`npm install -g cordova`
+`npm install -g @ionic/cli@6.4.0`
 
 ## configuration du tel: 
 
