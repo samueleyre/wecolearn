@@ -66,7 +66,7 @@ export class HttpApiInterceptor implements HttpInterceptor {
           }
         },
         (err: any) => {
-          console.log('error', err , req);
+          console.log('error', JSON.stringify(err) , JSON.stringify(req));
           if (err instanceof HttpErrorResponse) {
             if (err.error['msg']) {
               this._toastr.error(err.error['msg']);
