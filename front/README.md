@@ -42,3 +42,15 @@ configurer le téléphone en mode debuggage USB
 `npm install`
 
 `ionic cordova run android -c -s -l`
+
+## creation de deux environement
+cordova et cordovadev, cordovadev peut être utilisé si on fait 
+tourner l'application sur un émulateur, cordova pointe sur l'api de production
+pour les lancer 
+
+pour le cordovadev
+`ionic cordova run android -c -s -l`
+
+pour cordovaprod
+`ionic cordova run android -c -s -l --prod`
+
