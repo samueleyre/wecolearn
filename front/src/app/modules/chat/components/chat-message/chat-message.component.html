@@ -2,7 +2,7 @@
      [ngClass]="msgContainerClass">
   <div class="messages"
     [ngClass]="msgContainerClass">
-    <p class="message">{{message.message}}</p>
+    <p class="message" [innerHTML]="message.message | sanitize"></p>
     <p class="time">{{message.created | fromNow}}</p>
   </div>
 </div>
