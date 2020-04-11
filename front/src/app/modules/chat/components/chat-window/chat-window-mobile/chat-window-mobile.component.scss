@@ -1,0 +1,48 @@
+@import 'variables';
+@import 'extendables';
+
+.chat-body-mobile {
+  height: calc(100vh - 60px - 2.5rem);  background: #ffffff;
+  margin: 0;
+  padding: 0 10px 10px;
+  overflow-x: hidden;
+
+  & > div {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    min-height: 100%;
+  }
+}
+
+.chat-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  textarea{
+    height: 2.5rem;
+  }
+  .input-group{
+    border-top: 1px solid rgba(206, 212, 218, 0.09);
+    background-color: #fff;
+    .form-control{
+      border: none !important;
+    }
+  }
+
+  #chatInput {
+    resize: none;
+  }
+
+  .input-group-append a{
+    height: 2.5rem;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+}
+
+
+
+
