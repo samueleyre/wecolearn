@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SafeUrlPipeModule } from '~/shared/modules/safeUrl/safeUrlPipe.module';
+import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
 
 import { ProfilImageComponent } from './components/profilImage/component';
 import { DefaultProfileImageDirective } from './directives/defaultProfileImage';
@@ -19,7 +19,7 @@ import { DefaultProfileImageDirective } from './directives/defaultProfileImage';
   ],
   imports: [
     CommonModule,
-    SafeUrlPipeModule,
+    PipesModule,
 
   ],
   providers: [

@@ -1,37 +1,33 @@
-<div [style.visibility]="loading ? 0 : 1">
-  <section>
-    <div class="card">
-      <div class="card-body msg-container-base">
-        <div>
-          <chat-message
-            *ngFor="let message of messages | async; let i = index"
-            [clientId]="currentUser.id"
-            [message]="message"
-            [previousMessageDate]="( currentMessages && (i) > 0) ? currentMessages[(i - 1)]['created'] : message['created']"
-            [previousMessageIncoming]="!!( currentMessages && (i) > 0 && currentMessages[(i - 1)]['sender'])">
-          </chat-message>
-        </div>
-      </div>
-
-      <div class="card-footer">
-        <div class="input-group">
-          <textarea
-            class="form-control" #chatInput id="chatInput"
-            placeholder="Ecrivez votre message ici !"
-            (keydown)="onEnter($event)"
-            [(ngModel)]="draftMessage.message"
-            [disabled]="disabled"
-            maxlength="1000"
-          ></textarea>
-          <span class="input-group-append">
-            <button class="btn btn-primary btn-chat btn-lg"
-                    (click)="sendMessage()"
-            ><i title="envoyer" class="fa fa-paper-plane "></i></button>
-          </span>
-        </div>
-      </div>
+<div class="chat-window" [style.visibility]="loading ? 'hidden' : 'visible'">
+  <div class="chat-window-messages">
+    <div class="chat-window-messages-wrapper">
+      <chat-message
+        *ngFor="let message of messages | async; let i = index"
+        [clientId]="currentUser.id"
+        [message]="message"
+        [previousMessageDate]="( currentMessages && (i) > 0) ? currentMessages[(i - 1)]['created'] : message['created']"
+        [previousMessageIncoming]="!!( currentMessages && (i) > 0 && currentMessages[(i - 1)]['sender'])">
+      </chat-message>
     </div>
+  </div>
 
-  </section>
+  <div class="chat-window-input">
+    <quill-editor
+      #chatInput
+      placeholder="Ecrire quelque chose..."
+      maxLength="1000"
+      (keydown)="onEnter($event)"
+      [(ngModel)]="draftMessage.message"
+      [disabled]="disabled"
+      trimOnValidation="true"
+    >
+      <div quill-editor-toolbar>
+          <span class="ql-formats">
+            <button class="ql-bold" [title]="'Bold'"></button>
+            <button class="ql-italic" [title]="'Italic'"></button>
+            <button class="ql-link" [title]="'Link'"></button>
+          </span>
+      </div>
+    </quill-editor>
+  </div>
 </div>
-

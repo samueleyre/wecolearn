@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { QuillModule } from 'ngx-quill';
 
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
 import { FromNowPipe } from '~/modules/chat/pipes/fromNowPipe/pipe';
@@ -9,6 +10,7 @@ import { ChatWindowPageComponent } from '~/modules/chat/pages/current-thread-mob
 import { ChatThreadsMobileComponent } from '~/modules/chat/components/chat-threads-mobile/component';
 import { ChatThreadMobileComponent } from '~/modules/chat/components/chat-thread-mobile/component';
 import { ChatMessageMobileComponent } from '~/modules/chat/components/chat-message-mobile/chat-message.component';
+import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
 
 import { ChatMessageComponent } from './components/chat-message/chat-message.component';
 import { ChatThreadComponent } from './components/chat-thread/chat-thread.component';
@@ -45,6 +47,8 @@ import { ChatWindowMobileComponent } from './components/chat-window/chat-window-
     ChatRouting,
     ProfileImageModule,
     DeviceDetectorModule.forRoot(),
+    QuillModule.forRoot(),
+    PipesModule,
   ],
   providers: [
   ],
