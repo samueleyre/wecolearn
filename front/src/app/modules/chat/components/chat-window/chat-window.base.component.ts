@@ -5,7 +5,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
@@ -19,13 +18,9 @@ import { MessagesService } from '../../services/messages';
 import { Threads } from '../../services/threads';
 
 @Component({
-  selector: 'chat-window',
-  templateUrl: './chat-window.component.html',
-  styleUrls: ['./chat-window.component.scss'],
+  template: '',
 })
-
-
-export class ChatWindowComponent extends DestroyObservable implements OnInit {
+export class ChatWindowBaseComponent extends DestroyObservable implements OnInit {
   messages: Observable<any>;
   currentMessages: Message[];
   currentThread: Thread;
@@ -40,7 +35,6 @@ export class ChatWindowComponent extends DestroyObservable implements OnInit {
               public threadsService: Threads,
               public clientService: ClientService,
               public el: ElementRef,
-              private deviceService: DeviceDetectorService,
   ) {
     super();
   }
@@ -130,10 +124,6 @@ export class ChatWindowComponent extends DestroyObservable implements OnInit {
     if (scrollPane) {
       scrollPane.scrollTop = scrollPane.scrollHeight;
     }
-  }
-
-  get isMobile() {
-    return this.deviceService.isMobile();
   }
 
   closeChat(): void {
