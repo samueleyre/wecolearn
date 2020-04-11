@@ -1,8 +1,9 @@
 import {
   Component,
   OnInit,
-  Input,
+  Input, SecurityContext,
 } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { Message } from '~/core/entities/message/entity';
 
@@ -20,9 +21,9 @@ export class ChatMessageComponent implements OnInit {
   @Input() private previousMessageIncoming: boolean;
   @Input() clientId: Number = null;
   public different: Number = 0;
+  public messageSanitized;
 
-  constructor() {
-    //
+  constructor(private sanitized: DomSanitizer) {
   }
 
   ngOnInit(): void {

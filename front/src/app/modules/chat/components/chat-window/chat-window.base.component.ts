@@ -47,6 +47,7 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
 
     this.threadsService.currentThread.subscribe(
       (thread: Thread) => {
+        this.loading = true;
         this.currentThread = thread;
         MenuMobileService.discussingUser.next(thread.name);
 
@@ -76,6 +77,7 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
 
   onEnter(event: KeyboardEvent): void {
     if (event.code === 'Enter' && !event.ctrlKey && !event.shiftKey) {
+      this.draftMessage.message = this.draftMessage.message.replace(/<[^>]*><\/[^>]*>/ig, '');
       this.sendMessage();
       event.preventDefault();
     }
@@ -119,8 +121,7 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
   }
 
   scrollToBottom(): void {
-    const scrollPane: any = this.el
-        .nativeElement.querySelector('.msg-container-base');
+    const scrollPane: any = this.el.nativeElement.querySelector('.chat-window-messages');
     if (scrollPane) {
       scrollPane.scrollTop = scrollPane.scrollHeight;
     }

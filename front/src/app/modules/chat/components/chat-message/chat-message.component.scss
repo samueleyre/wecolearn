@@ -20,7 +20,10 @@
 }
 
 .messages {
-
+  ::ng-deep a {
+    color: $mainYellow;
+    text-decoration: underline;
+  }
   background: white;
   padding: 1rem 2rem;
   margin: 7px 1px;
