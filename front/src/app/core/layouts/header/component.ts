@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     Logged.get().subscribe((logged: boolean) => {
+      console.log('logged');
       this.connected = logged;
       this.clientService.get().subscribe((client: User) => {
         this.currentClient = client;
