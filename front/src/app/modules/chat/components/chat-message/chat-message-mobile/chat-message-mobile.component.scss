@@ -1,0 +1,64 @@
+@import 'variables';
+
+.message {
+  &.firstMessage {
+    padding-top: 1rem;
+  }
+  padding-left: 22px;
+  padding-right: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  &-username {
+    font-size: 13px;
+    font-weight: bold;
+  }
+  &-header {
+    padding: 5px 5px 0;
+    width: 50px;
+  }
+  &-content {
+    max-width: calc(100% - 60px);
+  }
+  &-text {
+    border-radius: 0 6px 6px;
+    white-space: pre-wrap;
+    font-size: 13px;
+    margin: 0 0 0.2rem 0;
+    display: inline-block;
+    padding: 8px 10px;
+    ::ng-deep p {
+      margin-bottom: 0;
+      word-break: break-word;
+    }
+    ::ng-deep a {
+      color: $mainYellow;
+      text-decoration: underline;
+      word-break: break-word;
+    }
+  }
+  &-time {
+    padding-left: 10px;
+    font-size: 11px;
+    color: #9c9c9c;
+  }
+}
+
+
+.base-receive {
+  .message-text {
+    background-color: #f2f2f2;
+  }
+}
+
+.base-sent {
+  .message-text {
+    background-color: var(--main-color-1-light-5);
+    color: white;
+  }
+}
+
+.info-message {
+  .time{
+    display: none;
+  }
+}

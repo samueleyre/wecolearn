@@ -32,6 +32,9 @@
 
   #dropdownParameters-button {
     display: flex;
+    .fa-ellipsis-v {
+      font-size: 25px;
+    }
     &.dropdown-toggle::after {
       margin-top: 13px;
     }

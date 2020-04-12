@@ -87,17 +87,6 @@ export class Threads {
               })
               .value();
           }
-          if (currentThread) {
-            return [new Message(
-              {
-                message: 'Prenez contact avec votre première relation !',
-                thread: currentThread,
-                sender: {
-                  id: currentThread.id,
-                },
-              },
-            )];
-          }
           return [];
         }));
   }
@@ -113,18 +102,7 @@ export class Threads {
   }
 
   setCurrentThread(newThread: Thread): void {
-    if (!this.currentThread.getValue().id) {
-      this.messagesService.addMessage(
-        new Message(
-          { message: 'Prenez contact avec votre première relation !' ,
-            thread: newThread,
-            sender: {
-              id: newThread.id,
-            },
-          },
-        ),
-      );
-    } else if (!newThread.lastMessage) {
+    if (this.currentThread.getValue().id && !newThread.lastMessage) {
       this.messagesService.addMessage(new Message({ message: '' , thread: newThread, sender: { id: newThread.id } }));
     }
     this.currentThread.next(newThread);
