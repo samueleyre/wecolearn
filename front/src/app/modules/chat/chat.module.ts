@@ -20,6 +20,7 @@ import { ChatPageComponent } from './pages/chat/component';
 import { ChatRouting } from './chat.routing';
 import { ChatWindowDesktopComponent } from './components/chat-window/chat-window-desktop/chat-window-desktop.component';
 import { ChatWindowMobileComponent } from './components/chat-window/chat-window-mobile/chat-window-mobile.component';
+import {MaterialModule} from "~/shared/modules/material/material.module";
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { ChatWindowMobileComponent } from './components/chat-window/chat-window-
     DeviceDetectorModule.forRoot(),
     QuillModule.forRoot(),
     PipesModule,
+    MaterialModule,
   ],
   providers: [
   ],
