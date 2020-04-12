@@ -21,7 +21,7 @@ import { Threads } from '../../services/threads';
   template: '',
 })
 export class ChatWindowBaseComponent extends DestroyObservable implements OnInit {
-  messages: Observable<any>;
+  messages$: Observable<any>;
   currentThread: Thread;
   draftMessage: Message;
   currentUser: User = null;
@@ -38,7 +38,7 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
   }
 
   ngOnInit(): void {
-    this.messages = this.threadsService.currentThreadMessages.pipe(
+    this.messages$ = this.threadsService.currentThreadMessages.pipe(
       takeUntil(this.destroy$),
     );
     this.draftMessage = new Message();
@@ -56,7 +56,7 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
 
     this.currentUser = this.clientService.me;
 
-    this.messages
+    this.messages$
       .subscribe(
         (messages: Message[]) => {
           setTimeout(() => {

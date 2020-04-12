@@ -1,13 +1,13 @@
 <div class="chat-window"  #chatWindow [style.visibility]="loading ? 'hidden' : 'visible'">
   <div class="chat-window-messages">
     <div class="chat-window-messages-wrapper">
-      <chat-message
-        *ngFor="let message of messages | async as messaess; let i = index"
+      <app-chat-message-desktop
+        *ngFor="let message of messages$ | async as messages; let i = index"
         [clientId]="currentUser.id"
         [message]="message"
-        [previousMessage]="i > 0 ? messaess[(i - 1)] : null"
+        [previousMessage]="i > 0 ? messages[(i - 1)] : null"
       >
-      </chat-message>
+      </app-chat-message-desktop>
       <div class="space"></div>
     </div>
   </div>
