@@ -46,7 +46,7 @@ class User extends BaseUser
     private $notificationSubscribe = false;
     private $subscriptions;
 
-    public function __construct(array $parameters)
+    public function __construct(array $parameters = [])
     {
         parent::__construct();
         $this->tags = new ArrayCollection();
