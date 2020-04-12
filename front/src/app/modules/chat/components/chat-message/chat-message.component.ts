@@ -3,9 +3,10 @@ import {
   OnInit,
   Input, SecurityContext,
 } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import * as moment from 'moment';
 
 import { Message } from '~/core/entities/message/entity';
+import { CHAT } from '~/modules/chat/config/chat.const';
 
 
 @Component({
@@ -15,21 +16,21 @@ import { Message } from '~/core/entities/message/entity';
 })
 export class ChatMessageComponent implements OnInit {
   @Input() message: Message;
-  incoming = false;
-  public msgContainerClass: string;
-  @Input() private previousMessageDate: Date;
-  @Input() private previousMessageIncoming: boolean;
+  @Input() private previousMessage: Message | null;
   @Input() clientId: Number = null;
-  public different: Number = 0;
-  public messageSanitized;
-
-  constructor(private sanitized: DomSanitizer) {
-  }
+  public msgContainerClass: string;
+  public sameSenderAndRecent = false;
 
   ngOnInit(): void {
-    const different = (new Date(this.message['created']).valueOf() - new Date(this.previousMessageDate).valueOf()) / (24 * 60 * 60 * 1000); // tslint:disable-line no-magic-numbers max-line-length
+    console.log(this.previousMessage);
+    if (this.previousMessage && this.message.sender.id === this.previousMessage.sender.id) {
+      // tslint:disable-next-line:no-magic-numbers
+      this.sameSenderAndRecent = moment(this.message.created)
+        .diff(this.previousMessage.created, 'minute') < CHAT.maxTimeBetweenJoinMessages;
+      console.log(moment(this.message.created).diff(this.previousMessage.created, 'minute'));
+      console.log(this.sameSenderAndRecent);
+    }
 
-    this.different = (different === 0 || (different > 1 || !this.previousMessageIncoming)) ? 1 : 0;
 
     if (this.message.sender && this.message.sender.id === this.clientId) {
       this.msgContainerClass = 'base-receive';
@@ -38,8 +39,5 @@ export class ChatMessageComponent implements OnInit {
     } else {
       this.msgContainerClass = 'info-message';
     }
-
-
-    (this['msgContainerClass'] === 'base-receive') ? this.incoming = true : this.incoming = false;
   }
 }
