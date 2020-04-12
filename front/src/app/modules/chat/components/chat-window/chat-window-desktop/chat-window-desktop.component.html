@@ -1,13 +1,14 @@
-<div class="chat-window" [style.visibility]="loading ? 'hidden' : 'visible'">
+<div class="chat-window"  #chatWindow [style.visibility]="loading ? 'hidden' : 'visible'">
   <div class="chat-window-messages">
     <div class="chat-window-messages-wrapper">
       <chat-message
-        *ngFor="let message of messages | async; let i = index"
+        *ngFor="let message of messages | async as messaess; let i = index"
         [clientId]="currentUser.id"
         [message]="message"
-        [previousMessageDate]="( currentMessages && (i) > 0) ? currentMessages[(i - 1)]['created'] : message['created']"
-        [previousMessageIncoming]="!!( currentMessages && (i) > 0 && currentMessages[(i - 1)]['sender'])">
+        [previousMessage]="i > 0 ? messaess[(i - 1)] : null"
+      >
       </chat-message>
+      <div class="space"></div>
     </div>
   </div>
 
@@ -19,7 +20,7 @@
       (keydown)="onEnter($event)"
       [(ngModel)]="draftMessage.message"
       [disabled]="disabled"
-      trimOnValidation="true"
+      [trimOnValidation]="true"
     >
       <div quill-editor-toolbar>
           <span class="ql-formats">

@@ -6,8 +6,7 @@
           *ngFor="let message of messages | async; let i = index"
           [clientId]="currentUser.id"
           [message]="message"
-          [previousMessageDate]="( currentMessages && (i) > 0) ? currentMessages[(i - 1)]['created'] : message['created']"
-          [previousMessageIncoming]="!!( currentMessages && (i) > 0 && currentMessages[(i - 1)]['sender'])">
+        >
         </chat-message-mobile>
       </div>
     </div>
