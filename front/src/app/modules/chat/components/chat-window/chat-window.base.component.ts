@@ -22,13 +22,11 @@ import { Threads } from '../../services/threads';
 })
 export class ChatWindowBaseComponent extends DestroyObservable implements OnInit {
   messages: Observable<any>;
-  currentMessages: Message[];
   currentThread: Thread;
   draftMessage: Message;
   currentUser: User = null;
   disabled = false;
   loading = true;
-  @ViewChild('chatInput', { static: false }) inputEl: ElementRef;
 
 
   constructor(public messagesService: MessagesService,
@@ -61,29 +59,22 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
     this.messages
       .subscribe(
         (messages: Message[]) => {
-          if (messages.length > 0) {
-            this.currentMessages = messages;
-          }
           setTimeout(() => {
-            if (this.currentThread.id) {
-              this.scrollToBottom();
-              this.loading = false;
-            } else {
-              this.loading = false;
-            }
+            this.scrollToBottom();
+            this.loading = false;
           });
         });
   }
 
   onEnter(event: KeyboardEvent): void {
     if (event.code === 'Enter' && !event.ctrlKey && !event.shiftKey) {
-      this.draftMessage.message = this.draftMessage.message.replace(/<[^>]*><\/[^>]*>/ig, '');
+      this.draftMessage.message = this.draftMessage.message.replace(/<p><br><\/p>/gim, '');
       this.sendMessage();
       event.preventDefault();
     }
     if (event.code === 'Enter' && event.ctrlKey) {
       if (this.draftMessage.message === null) this.draftMessage.message = '';
-      else this.draftMessage.message += '\n';
+      else this.draftMessage.message += '<br>\n';
     }
   }
 
@@ -101,13 +92,19 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
     setTimeout(
       () => {
         this.disabled = false;
-        this.draftMessage.sender = new User({ id: this.currentUser.id });
+        this.draftMessage.sender = new User(
+          {
+            id: this.currentUser.id,
+            first_name: this.currentUser.first_name,
+            last_name: this.currentUser.last_name,
+            image: this.currentUser.image,
+          });
         this.draftMessage.thread = {
           ...this.currentThread,
         };
         this.messagesService.addMessage(this.draftMessage);
         this.draftMessage = new Message();
-        setTimeout(() => this.inputEl.nativeElement.focus(), 0);
+        setTimeout(() => this.input.focus(), 0);
       },
       // tslint:disable-next-line:no-magic-numbers
       400,
@@ -130,5 +127,9 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
   closeChat(): void {
     this.currentThread = new Thread();
     this.threadsService.setCurrentThread(this.currentThread);
+  }
+
+  get input(): HTMLDivElement {
+    return <HTMLDivElement>document.getElementsByClassName('ql-editor')[0];
   }
 }
