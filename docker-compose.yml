@@ -4,7 +4,7 @@ services:
     image: mysql:5.7
     restart: always
     ports:
-      - "3308:3308"
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=inReusableCodeWeTrust
       - MYSQL_DATABASE=symfony
@@ -18,6 +18,7 @@ services:
     volumes:
       - ./api:/application
       - ./logs/symfony:/appliation/var/log:cached
+      - /dev/log:/dev/log
     links:
       - db
       - mercure
