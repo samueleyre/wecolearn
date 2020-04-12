@@ -27,10 +27,23 @@
     padding: 0 22px 22px;
     quill-editor {
       width: 100%;
+      ::ng-deep #emoji-palette {
+        top: -302px !important;
+        left: -2px !important;
+        #tab-panel {
+          overflow-y: auto;
+          height: 220px;
+        }
+      }
       ::ng-deep .ql-toolbar {
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
         background-color: #5e1c5e0a;
+        mat-icon {
+          height: 20px;
+          width: 20px;
+          font-size: 20px;
+        }
       }
       ::ng-deep .ql-container {
         border-bottom-left-radius: 6px;
