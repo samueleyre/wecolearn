@@ -87,6 +87,7 @@ class UserRepository extends ServiceEntityRepository
             if (
                 ($parameters['userLearnTags'] || $parameters['userLearnTagDomains'])
                 && !($parameters['userKnowTags'] || $parameters['userKnowTagDomains'])
+                && $profileTags
             ) {
                 $profileTags = $profileTags->filter(function (Tag $tag) {
                     return $tag->getType() === 0;
@@ -97,6 +98,7 @@ class UserRepository extends ServiceEntityRepository
             else if (
                 ($parameters['userKnowTags'] || $parameters['userKnowTagDomains'])
                 && !($parameters['userLearnTags'] || $parameters['userLearnTagDomains'])
+                && $profileTags
             ) {
                 $profileTags = $profileTags->filter(function (Tag $tag) {
                     return $tag->getType() === 1;
