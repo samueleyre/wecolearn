@@ -9,7 +9,7 @@
       </span>
     </span>
     <div class="media-content">
-      <small class="message-preview">{{_thread.lastMessage.message}}</small>
+      <small class="message-preview">{{_thread.lastMessage.message | removeHtml}}</small>
     </div>
   </div>
   <a (click)="loadMessages($event)" class="div-link">Select</a>

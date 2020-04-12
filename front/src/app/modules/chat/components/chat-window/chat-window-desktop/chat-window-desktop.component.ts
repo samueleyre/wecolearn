@@ -30,7 +30,8 @@ export class ChatWindowDesktopComponent extends ChatWindowBaseComponent implemen
       'emoji-shortname': true,
       'emoji-textarea': false,
       'emoji-toolbar': {
-        buttonIcon: '<mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">sentiment_satisfied</mat-icon>',
+        buttonIcon: '<mat-icon class="mat-icon notranslate material-icons mat-icon-no-color" ' +
+          'role="img" aria-hidden="true">sentiment_satisfied</mat-icon>',
       },
     };
   }

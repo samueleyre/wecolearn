@@ -5,14 +5,15 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { QuillModule } from 'ngx-quill';
 
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
-import { FromNowPipe } from '~/modules/chat/pipes/fromNowPipe/pipe';
-import { ChatWindowPageComponent } from '~/modules/chat/pages/current-thread-mobile/component';
-import { ChatThreadsMobileComponent } from '~/modules/chat/components/chat-threads-mobile/component';
-import { ChatThreadMobileComponent } from '~/modules/chat/components/chat-thread-mobile/component';
-import { ChatMessageMobileComponent } from '~/modules/chat/components/chat-message-mobile/chat-message.component';
 import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
+import { MaterialModule } from '~/shared/modules/material/material.module';
 
-import { ChatMessageComponent } from './components/chat-message/chat-message.component';
+import { FromNowPipe } from './pipes/fromNowPipe/pipe';
+import { ChatWindowPageComponent } from './pages/current-thread-mobile/component';
+import { ChatThreadsMobileComponent } from './components/chat-threads-mobile/component';
+import { ChatThreadMobileComponent } from './components/chat-thread-mobile/component';
+import { ChatMessageMobileComponent } from './components/chat-message/chat-message-mobile/chat-message-mobile.component';
+import { ChatMessageBaseComponent } from './components/chat-message/chat-message.base.component';
 import { ChatThreadComponent } from './components/chat-thread/chat-thread.component';
 import { ChatThreadsComponent } from './components/chat-threads/chat-threads.component';
 import { ChatWindowBaseComponent } from './components/chat-window/chat-window.base.component';
@@ -20,14 +21,15 @@ import { ChatPageComponent } from './pages/chat/component';
 import { ChatRouting } from './chat.routing';
 import { ChatWindowDesktopComponent } from './components/chat-window/chat-window-desktop/chat-window-desktop.component';
 import { ChatWindowMobileComponent } from './components/chat-window/chat-window-mobile/chat-window-mobile.component';
-import {MaterialModule} from "~/shared/modules/material/material.module";
+import { ChatMessageDesktopComponent } from './components/chat-message/chat-message-desktop/chat-message-desktop.component';
 
 
 @NgModule({
 
   declarations: [
     ChatPageComponent,
-    ChatMessageComponent,
+    ChatMessageBaseComponent,
+    ChatMessageDesktopComponent,
     ChatMessageMobileComponent,
     ChatThreadComponent,
     ChatThreadMobileComponent,
@@ -38,6 +40,7 @@ import {MaterialModule} from "~/shared/modules/material/material.module";
     ChatWindowPageComponent,
     ChatWindowDesktopComponent,
     ChatWindowMobileComponent,
+    ChatMessageDesktopComponent,
   ],
   exports: [
 
