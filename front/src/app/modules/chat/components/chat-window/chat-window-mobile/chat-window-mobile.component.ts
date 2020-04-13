@@ -36,6 +36,11 @@ export class ChatWindowMobileComponent extends ChatWindowBaseComponent implement
     };
   }
 
+  scrollToBottom(): void {
+    const scrollPane: any = this.el.nativeElement.querySelector('.chat-window');
+    scrollPane.scrollTop = scrollPane.scrollHeight;
+  }
+
   // get input(): HTMLDivElement {
   //   return this.inputEl.nativeElement;
   // }

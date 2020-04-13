@@ -119,9 +119,7 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
 
   scrollToBottom(): void {
     const scrollPane: any = this.el.nativeElement.querySelector('.chat-window-messages');
-    if (scrollPane) {
-      scrollPane.scrollTop = scrollPane.scrollHeight;
-    }
+    scrollPane.scrollTop = scrollPane.scrollHeight;
   }
 
   closeChat(): void {
