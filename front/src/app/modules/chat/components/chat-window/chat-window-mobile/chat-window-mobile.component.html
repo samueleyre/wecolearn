@@ -19,12 +19,16 @@
       [disabled]="disabled"
       [trimOnValidation]="true"
       [modules]="modules"
+      [customToolbarPosition]="'bottom'"
     >
-      <div quill-editor-toolbar>
+      <div quill-editor-toolbar >
           <span class="ql-formats">
             <button class="ql-bold" [title]="'Bold'"></button>
             <button class="ql-italic" [title]="'Italic'"></button>
             <button class="ql-link" [title]="'Link'"></button>
+          </span>
+          <span class="ql-send">
+            <mat-icon color="primary" (click)="sendMessage()" title="envoyer">send</mat-icon>
           </span>
       </div>
     </quill-editor>
