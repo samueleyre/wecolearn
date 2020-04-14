@@ -13,6 +13,8 @@
         "friendsofsymfony/rest-bundle": "^2.6",
         "friendsofsymfony/user-bundle": "^2.1",
         "jms/serializer-bundle": "3.1.0",
+        "kreait/firebase-bundle": "^2.0",
+        "kreait/firebase-php": "^5.0",
         "lexik/jwt-authentication-bundle": "^2.6",
         "minishlink/web-push": "^5.2",
         "nelmio/cors-bundle": "^1.5",
