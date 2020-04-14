@@ -21,7 +21,7 @@ class PushService
 
     public function __construct(
         EntityManagerInterface $em,
-        SerializerInterface $serializer ,
+        MessageSerializer $serializer,
         $vapidPublic, $vapidPrivate
     ) {
         $this->em = $em;
@@ -70,18 +70,7 @@ class PushService
         $subscriptions = $this->em->getRepository(SubscriptionModel::class )->findByUser( $receiver );
         $ret = [];
 
-        $host = $request->headers->get('origin');
-        $payload = $this->serializer->serialize(
-            [
-                'message' =>
-                    [
-                        'message' => strip_tags($message->message),
-                        'senderName' => $message->sender->firstName,
-                    ],
-                'host' =>  $host
-            ],
-            'json'
-        );
+        $payload = $this->serializer->getPayload($message, $request);
 
         foreach( $subscriptions as $sub ) {
             $ret[]  = [
