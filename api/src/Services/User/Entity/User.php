@@ -45,6 +45,7 @@ class User extends BaseUser
     private $deleted;
     private $notificationSubscribe = false;
     private $subscriptions;
+    private $pushNotificationSubscriptions;
 
     public function __construct(array $parameters = [])
     {
@@ -55,6 +56,8 @@ class User extends BaseUser
         $this->sentMessages = new ArrayCollection();
         $this->receivedMessages = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
+        $this->pushNotificationSubscriptions = new ArrayCollection();
+
         $this->domains = new ArrayCollection();
         if (array_key_exists('id', $parameters)) {
             $this->id = $parameters['id'];
@@ -72,6 +75,30 @@ class User extends BaseUser
             $this->tags = new ArrayCollection($parameters['tags']);
         }
 
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPushNotificationSubscriptions(): ArrayCollection
+    {
+        return $this->pushNotificationSubscriptions;
+    }
+
+    /**
+     * @param ArrayCollection $pushNotificationSubscriptions
+     */
+    public function setPushNotificationSubscriptions(ArrayCollection $pushNotificationSubscriptions): void
+    {
+        $this->pushNotificationSubscriptions = $pushNotificationSubscriptions;
+    }
+
+    public function addPushNotificationSubscription( PushNotificationSubscription $entity ) {
+        $this->pushNotificationSubscriptions->add($entity);
+    }
+
+    public function removePushNotificationSubscription( PushNotificationSubscription $entity ) {
+        $this->pushNotificationSubscriptions->removeElement($entity);
     }
 
     public function getId()

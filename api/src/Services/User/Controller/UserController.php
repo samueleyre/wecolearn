@@ -6,6 +6,7 @@ use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\Domain\Service\DomainService;
 use App\Services\Tag\Entity\Tag;
 use App\Services\User\Constant\TokenConstant;
+use App\Services\User\Entity\PushNotificationSubscription;
 use App\Services\User\Entity\Subscription;
 use App\Services\User\Entity\Token;
 use App\Services\User\Entity\User;
@@ -460,6 +461,38 @@ class UserController extends AbstractController
 
         return ['update' => $update, 'removed' => $removed];
     }
+
+    /**
+     * @Post("/user/notification/check-if-exist-or-add-and-subscribe-notif")
+     */
+    public function checkIfSubscriptionExistOrAddAndSubscribeNotifAction(Request $request, EntityManagerInterface $em, TokenStorageInterface $tokenStorage)
+    {
+        $user = $tokenStorage->getToken()->getUser();
+
+        $data = json_decode($request->getContent(), true);
+
+        $token = $data['id'];
+        $type = $data['type'];
+
+        $subscriptions = $em->getRepository(PushNotificationSubscription::class)->findBy(['user' => $user, 'token' => $token, 'type' => $type]);
+
+        $update = false;
+
+        if (0 === count($subscriptions)) {
+            $subscription = new PushNotificationSubscription();
+            $subscription->setUser($user);
+            $subscription->setToken($token);
+            $subscription->setType($type);
+
+            $em->persist( $subscription );
+            $em->persist( $user );
+
+        }
+
+
+        return ['success' => true ];
+    }
+
 
     /**
      * @Post("/user/notification/unsubscribe")
