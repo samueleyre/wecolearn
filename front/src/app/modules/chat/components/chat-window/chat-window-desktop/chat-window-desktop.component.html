@@ -14,7 +14,7 @@
 
   <div class="chat-window-input">
     <quill-editor
-      #chatInput
+      #message="ngModel"
       placeholder="Ecrire quelque chose..."
       maxLength="1000"
       (keydown)="onEnter($event)"
@@ -27,7 +27,7 @@
           <span class="ql-formats">
             <button class="ql-bold" [title]="'Bold'"></button>
             <button class="ql-italic" [title]="'Italic'"></button>
-            <button class="ql-link" [title]="'Link'"></button>
+<!--            <button class="ql-link" [title]="'Link'"></button>-->
 <!--            <button class="ql-emoji" [title]="'Emoji'"></button>-->
           </span>
       </div>

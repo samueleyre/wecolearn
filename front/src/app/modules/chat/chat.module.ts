@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { QuillModule } from 'ngx-quill';
+import { NgxLinkifyjsModule } from 'ngx-linkifyjs';
 
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
 import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
@@ -54,6 +55,8 @@ import { ChatMessageDesktopComponent } from './components/chat-message/chat-mess
     QuillModule.forRoot(),
     PipesModule,
     MaterialModule,
+    NgxLinkifyjsModule.forRoot(),
+
   ],
   providers: [
   ],

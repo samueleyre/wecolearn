@@ -18,6 +18,7 @@ import { FooterMobileComponent } from '~/core/layouts/footer-mobile/component';
 import { CoreModule } from '~/core/core.module';
 import { SharedModule } from '~/shared/shared.module';
 import { MaterialModule } from '~/shared/modules/material/material.module';
+import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
 
 // local components
 import { MainComponent } from './core/layouts/dashboard/component';
@@ -35,7 +36,6 @@ import { AutofocusDirective } from './modules/search/directives/input/directive'
 // shared services
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
-import {PipesModule} from "~/shared/modules/pipesModule/pipes.module";
 
 registerLocaleData(fr);
 
@@ -56,7 +56,6 @@ registerLocaleData(fr);
     MatIconModule,
     MaterialModule,
     PipesModule,
-
   ],
   declarations: [
     AppComponent,
