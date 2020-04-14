@@ -55,8 +55,13 @@
         max-height: 180px;
         border-bottom-left-radius: 6px;
         border-bottom-right-radius: 6px;
-        &:hover, &:focus {
-          border: 0;
+
+      }
+      &:not(.ng-invalid) {
+        ::ng-deep .ql-editor {
+          &:hover:not(.ng-invalid), &:focus:not(.ng-invalid) {
+            border: 0;
+          }
         }
       }
     }

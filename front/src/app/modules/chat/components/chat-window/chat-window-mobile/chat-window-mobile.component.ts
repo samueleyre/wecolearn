@@ -1,10 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import 'quill-emoji/dist/quill-emoji.js';
 
 import { ChatWindowBaseComponent } from '~/modules/chat/components/chat-window/chat-window.base.component';
 import { MessagesService } from '~/modules/chat/services/messages';
 import { Threads } from '~/modules/chat/services/threads';
 import { ClientService } from '~/core/services/user/client';
-import 'quill-emoji/dist/quill-emoji.js';
+import {NgxLinkifyjsService} from "ngx-linkifyjs";
 
 @Component({
   selector: 'app-chat-window-mobile',
@@ -12,7 +13,6 @@ import 'quill-emoji/dist/quill-emoji.js';
   styleUrls: ['./chat-window-mobile.component.scss'],
 })
 export class ChatWindowMobileComponent extends ChatWindowBaseComponent implements OnInit {
-  // @ViewChild('chatInput', { static: false }) inputEl: ElementRef;
   public modules = {};
 
   constructor(
@@ -20,8 +20,9 @@ export class ChatWindowMobileComponent extends ChatWindowBaseComponent implement
     public threadsService: Threads,
     public clientService: ClientService,
     public el: ElementRef,
+    private _linkifyService: NgxLinkifyjsService,
   ) {
-    super(messagesService, threadsService, clientService, el);
+    super(messagesService, threadsService, clientService, el, _linkifyService);
   }
 
   ngOnInit(): void {
@@ -40,8 +41,4 @@ export class ChatWindowMobileComponent extends ChatWindowBaseComponent implement
     const scrollPane: any = this.el.nativeElement.querySelector('.chat-window');
     scrollPane.scrollTop = scrollPane.scrollHeight;
   }
-
-  // get input(): HTMLDivElement {
-  //   return this.inputEl.nativeElement;
-  // }
 }
