@@ -5,6 +5,7 @@ namespace App\Services\Chat\Controller;
 use App\Services\Chat\Entity\Message;
 use App\Services\Chat\Service\BrockerService;
 use App\Services\Chat\Service\MessageService;
+use App\Services\Chat\Service\NotificationService;
 use App\Services\Chat\Service\PushService;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\UserService;
@@ -98,8 +99,10 @@ class MessageController extends AbstractController
         TokenStorageInterface $tokenStorage,
         MessageService $messageService,
         MessageBusInterface $bus,
+        NotificationService $notificationService,
         PushService $pushMessage,
         SerializerInterface $serializer
+
     ) {
 
         $user = $tokenStorage->getToken()->getUser();
@@ -118,6 +121,9 @@ class MessageController extends AbstractController
 
         ## SEND IT TO SERVICE WORKER BY WEB PUSH
         $pushMessage->process($friend, $message, $request );
+
+        ## SEND NOTIFICATION TO MOBILE.
+        //$notificationService->process( $friend, $message, $request );
 
         $serializedMessage = $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('message'));
 

@@ -98,6 +98,7 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
+apply from: "../cordova-plugin-fcm/starter-FCMPlugin.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras1 = file('build-extras.gradle').exists()
@@ -293,6 +294,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: '*.jar')
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
+    implementation "com.google.firebase:firebase-core:11.8.0"
+    implementation "com.google.firebase:firebase-messaging:11.8.0"
     implementation "com.android.support:support-annotations:27.+"
     // SUB-PROJECT DEPENDENCIES END
 }

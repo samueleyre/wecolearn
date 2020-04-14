@@ -64,6 +64,12 @@
         <field name="newsletter" type="boolean" column="newsletter"/>
         <field name="notificationSubscribe" column="notificationSubscribe" type="boolean" nullable="true"/>
         <one-to-many field="subscriptions" target-entity="App\Services\User\Entity\Subscription" mapped-by="user" />
+        <one-to-many field="pushNotificationSubscriptions" target-entity="App\Services\User\Entity\PushNotificationSubscription" mapped-by="user" >
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+            </cascade>
+        </one-to-many>
         <many-to-many field="domains" target-entity="App\Services\Domain\Entity\Domain" inversed-by="users">
             <cascade>
                 <cascade-persist/>

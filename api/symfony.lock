@@ -123,8 +123,14 @@
     "fgrosse/phpasn1": {
         "version": "v2.1.1"
     },
+    "fig/http-message-util": {
+        "version": "1.1.4"
+    },
     "fig/link-util": {
         "version": "1.0.0"
+    },
+    "firebase/php-jwt": {
+        "version": "v5.2.0"
     },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
@@ -152,6 +158,24 @@
     },
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
+    },
+    "giggsey/libphonenumber-for-php": {
+        "version": "8.12.1"
+    },
+    "giggsey/locale": {
+        "version": "1.8"
+    },
+    "google/auth": {
+        "version": "v1.8.0"
+    },
+    "google/cloud-core": {
+        "version": "v1.36.1"
+    },
+    "google/cloud-storage": {
+        "version": "v1.20.1"
+    },
+    "google/crc32": {
+        "version": "v0.1.0"
     },
     "guzzlehttp/guzzle": {
         "version": "6.5.2"
@@ -224,6 +248,18 @@
             "config/packages/prod/jms_serializer.yaml"
         ]
     },
+    "kreait/clock": {
+        "version": "1.0.1"
+    },
+    "kreait/firebase-bundle": {
+        "version": "2.0.0"
+    },
+    "kreait/firebase-php": {
+        "version": "5.1.0"
+    },
+    "kreait/firebase-tokens": {
+        "version": "1.10.0"
+    },
     "lcobucci/jwt": {
         "version": "3.3.1"
     },
@@ -247,6 +283,9 @@
     },
     "mtdowling/cron-expression": {
         "version": "v1.2.3"
+    },
+    "mtdowling/jmespath.php": {
+        "version": "2.5.0"
     },
     "namshi/jose": {
         "version": "7.2.3"
@@ -279,7 +318,7 @@
         "version": "v1.12.2"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -308,8 +347,17 @@
     "psr/log": {
         "version": "1.1.1"
     },
+    "psr/simple-cache": {
+        "version": "1.0.1"
+    },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "riverline/multipart-parser": {
+        "version": "2.0.8"
+    },
+    "rize/uri-template": {
+        "version": "0.3.2"
     },
     "sendinblue/api-bundle": {
         "version": "1.4.0"
