@@ -1,7 +1,7 @@
 {
-  "name": "app",
+  "name": "wecolearn",
   "integrations": {
-    "cordova": {}
+    "capacitor": {}
   },
   "type": "angular"
 }
