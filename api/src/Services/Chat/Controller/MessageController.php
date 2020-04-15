@@ -123,7 +123,7 @@ class MessageController extends AbstractController
         $pushMessage->process($friend, $message, $request );
 
         ## SEND NOTIFICATION TO MOBILE.
-        //$notificationService->process( $friend, $message, $request );
+        $notificationService->process( $friend, $message, $request );
 
         $serializedMessage = $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('message'));
 

@@ -474,7 +474,7 @@ class UserController extends AbstractController
         $token = $data['id'];
         $type = $data['type'];
 
-        syslog(LOG_ERR, sprintf("########### SUBSCRIPTION WITH token : %s . ########################",$token))
+        syslog(LOG_ERR, sprintf("########### SUBSCRIPTION WITH token : %s . ########################",$token));
 
         $subscriptions = $em->getRepository(PushNotificationSubscription::class)->findBy(['user' => $user, 'token' => $token, 'type' => $type]);
 
