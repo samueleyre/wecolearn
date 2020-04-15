@@ -25,9 +25,9 @@ executer
 
 `source ~/.bashrc` pour rendre ses modification actives dans la fenêtre courante
 
-## ionic et cordova
+## ionic et capacitor
 
-`npm install -g cordova`
+
 `npm install -g @ionic/cli@6.4.0`
 
 ## configuration du tel: 
@@ -37,9 +37,17 @@ configurer le téléphone en mode debuggage USB
 `adb devices` doit indiquer un message de la forme suivante
 `5031649995040505	device`
 
-## lancement de l'application
+## compilation de l'application
 
-`npm install`
+`ng build --configuration=capacitor`
+
+## Synchronisation du code avec le mobile
+
+`npx cap sync`
+
+## lancement de android studio
+
+`npx cap open android`
 
 `ionic cordova run android -c -s -l`
 
