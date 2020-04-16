@@ -235,11 +235,8 @@
             "staging": {
               "browserTarget": "app:build:staging"
             },
-            "cordova" : {
-              "browserTarget": "app:build:cordova"
-            },
-            "cordovadev" : {
-              "browserTarget": "app:build:cordovadev"
+            "capacitor": {
+              "browserTarget": "app:build:capacitor"
             }
           }
         },
