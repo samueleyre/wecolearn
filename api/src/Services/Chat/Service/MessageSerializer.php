@@ -18,14 +18,7 @@ class MessageSerializer
     public function getPayload( Message $message , Request $request ) {
         $host = $request->headers->get('origin');
         return $this->serializer->serialize(
-            [
-                'message' =>
-                    [
-                        'message' => $message->message,
-                        'senderName' => $message->sender->firstName,
-                    ],
-                'host' =>  $host
-            ],
+            $message,
             'json'
         );
     }
