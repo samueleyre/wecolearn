@@ -47,6 +47,7 @@ class NotificationService
                     'body' => $this->serializer->getPayload($message, $request),
                     'icon' => 'stock_ticker_update',
                     'color' => '#f45342',
+                    'sound' => 'default',
                 ],
             ]);
             $notification = $notification->withAndroidConfig($config);
