@@ -5,37 +5,42 @@ import { Threads } from '~/modules/chat/services/threads';
 
 import { Permission } from './const';
 
+import {
+  Plugins,
+  PushNotification,
+  PushNotificationToken,
+  PushNotificationActionPerformed, NotificationPermissionResponse
+} from '@capacitor/core';
+
+const { PushNotifications } = Plugins;
+
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
-  public permission: Permission;
+  public permission: NotificationPermissionResponse;
 
   constructor(
       private router: Router,
       private _threadsService: Threads,
-  ) {
-    this.permission = this.isSupported() ? 'default' : 'denied';
-  }
+  ) {}
 
   public isSupported(): boolean {
     return 'Notification' in window;
   }
 
   public async requestPermission(): Promise<void> {
+    console.log( 'request permission ########################################');
     return new Promise((resolve, reject) => {
-      if ('Notification' in window) {
-        Notification.requestPermission().then((status) => {
-          this.permission = status;
-          if (status === 'granted') {
-            resolve();
-          } else {
-            reject();
-          }
-        });
-      } else {
-        reject();
-      }
+      PushNotifications.requestPermission().then((status) => {
+        this.permission = status;
+        if (status.granted) {
+          PushNotifications.register();
+          resolve();
+        } else {
+          reject();
+        }
+      });
     });
   }
 

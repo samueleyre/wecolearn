@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '~/../environments/environment';
 import { Platform } from '@ionic/angular';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,8 +14,10 @@ export class PushSubscriptionService {
   }
 
   public async process(): Promise<any> {
+
+    console.log( '####### processs ##########');
     return new Promise((resolve , reject) => {
-      if ('serviceWorker' in navigator ) {
+      if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready.then((reg) => {
           reg.pushManager.getSubscription().then(
             (pushSub) => {
@@ -54,26 +57,8 @@ export class PushSubscriptionService {
             });
         }); // no rejection possible.
       } else {
-        this.platform.ready().then(() => {
-          if (this.platform.is('android') || this.platform.is('ios')) {
-            FCMPlugin.getToken(
-              (pushRegistrationId: any) => {
-                console.log('Push registration ID: ' + pushRegistrationId);
-                const platform = this.platform.is('android') ? 'android' : 'ios';
-                this.checkIfExistOrAddAndSubscribeNotif({ id : pushRegistrationId , type: platform });
-              },
-              (err: any) => {
-                reject('no token available');
-              });
-          } else {
-            reject('platform is neither ios nor android');
-          }
-        }, () => {
-          reject('error while platform ready');
-        })
+        reject( 'no service worker');
 
-
-        reject('service worker unavailable');
       }
     });
   }
@@ -83,7 +68,7 @@ export class PushSubscriptionService {
     return this.http.post('/api/user/notification/check-if-exist-or-add-and-subscribe', sub);
   }
 
-  private checkIfExistOrAddAndSubscribeNotif(sub) {
+  public checkIfExistOrAddAndSubscribeNotif(sub) {
     return this.http.post('/api/user/notification/check-if-exist-or-add-and-subscribe-notif', sub);
   }
 
