@@ -43,7 +43,7 @@ class NotificationService
                 'ttl' => '3600s',
                 'priority' => 'normal',
                 'notification' => [
-                    'title' => 'Mesenger message',
+                    'title' => 'Vous avez un message',
                     'body' => $this->serializer->getPayload($message, $request),
                     'icon' => 'stock_ticker_update',
                     'color' => '#f45342',
