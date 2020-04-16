@@ -4,6 +4,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { NotificationService } from '~/shared/components/notification/service';
 import { PushSubscriptionService } from '~/shared/components/push-subscription/service';
 
+import {
+  Plugins,
+  PushNotification,
+  PushNotificationToken,
+  PushNotificationActionPerformed } from '@capacitor/core';
+
+const { PushNotifications } = Plugins;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +28,23 @@ export class MessagerieService {
 
   public init(): Observable<boolean> {
     return new Observable((subscriber) => {
+
+      PushNotifications.addListener('registration', (token: PushNotificationToken) => {
+        console.log('####### registration #######: token = ' + token.value);
+        this._pushSubscriptionService.checkIfExistOrAddAndSubscribeNotif({ id : token.value , type: 'android' }).subscribe(() =>{
+
+          // tslint:disable-next-line:no-multi-spaces
+        },                                                                                        () => {
+
+        });
+      });
+
+      PushNotifications.addListener('registrationError',
+        (error: any) => {
+
+        }
+      );
+
       this._notificationService.requestPermission().then(() => {
         this._pushSubscriptionService.process()
           .then(() => {

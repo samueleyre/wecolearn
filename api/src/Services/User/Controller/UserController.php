@@ -480,6 +480,8 @@ class UserController extends AbstractController
 
         $update = false;
 
+        syslog(LOG_ERR , count($subscriptions));
+
         if (0 === count($subscriptions)) {
             $subscription = new PushNotificationSubscription();
             $subscription->setUser($user);
@@ -488,6 +490,7 @@ class UserController extends AbstractController
 
             $em->persist( $subscription );
             $em->persist( $user );
+            $em->flush();
 
         }
 

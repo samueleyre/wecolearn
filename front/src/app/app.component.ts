@@ -18,6 +18,15 @@ import { NAV } from '~/config/navigation/nav';
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
 
+import {
+  Plugins,
+  PushNotification,
+  PushNotificationToken,
+  PushNotificationActionPerformed } from '@capacitor/core';
+import { registerWebPlugin } from '@capacitor/core';
+
+const { PushNotifications } = Plugins;
+
 
 @Component({
   selector: 'app-wecolearn',
@@ -44,6 +53,9 @@ export class AppComponent {
         this.domainService.setSubDomain();
         this._seoService.updateSeoTitleAndTags(event.urlAfterRedirects);
       });
+
+
+
 
     this.initMessagerieService();
     this.iconService.init();
@@ -79,6 +91,12 @@ export class AppComponent {
               this.messagesService.addMessage(message);
             });
           };
+
+          PushNotifications.addListener('pushNotificationReceived',
+            (notification: PushNotification) => {
+              alert('Push received: ' + JSON.stringify(notification));
+            }
+          );
 
           subs = this.messagerieService.init().subscribe(
             (available) => {
