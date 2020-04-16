@@ -94,7 +94,13 @@ export class AppComponent {
 
           PushNotifications.addListener('pushNotificationReceived',
             (notification: PushNotification) => {
-              alert('Push received: ' + JSON.stringify(notification));
+              const message = new Message(JSON.parse(notification.body));
+              message.thread = new Thread({
+                id: message.sender.id,
+                name: message.sender.first_name,
+                image: message.sender.image,
+              });
+              this.messagesService.addMessage(message);
             }
           );
 
