@@ -12,11 +12,11 @@ import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
 import { navTitles } from '~/config/navigation/seo.const';
 import { SeoService } from '~/core/services/seo';
-import { Threads } from '~/modules/chat/services/threads';
 import { NAV } from '~/config/navigation/nav';
 
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
+import {SeoService} from "~/core/services/seo";
 
 import {
   Plugins,
@@ -93,24 +93,32 @@ export class AppComponent {
             });
           };
 
-          PushNotifications.addListener('pushNotificationReceived',
-            (notification: PushNotification) => {
-              const message = new Message(JSON.parse(notification.body));
-              message.thread = new Thread({
-                id: message.sender.id,
-                name: message.sender.first_name,
-                image: message.sender.image,
-              });
-              this.messagesService.addMessage(message);
-            }
-          );
+          try {
+            PushNotifications.addListener('pushNotificationReceived',
+                                          (notification: PushNotification) => {
+                console.log('nottification receiveed ######## ' + JSON.stringify(notification));
+                this._zone.run(() => {
+                  const message = new Message(JSON.parse(notification.body));
+                  message.thread = new Thread({
+                    id: message.sender.id,
+                    name: message.sender.first_name,
+                    image: message.sender.image,
+                  });
+                  this.messagesService.addMessage(message);
+                });
+              },
+            );
 
-          PushNotifications.addListener('pushNotificationActionPerformed',
-            (notification: PushNotificationActionPerformed) => {
-              console.log('########notif####### action performed', JSON.stringify(notification));
-              this.router.navigateByUrl('/dashboard/discussion');
-            }
-          );
+            PushNotifications.addListener('pushNotificationActionPerformed',
+                                          (notification: PushNotificationActionPerformed) => {
+                console.log('########notif####### action performed' + JSON.stringify(notification));
+                this._zone.run(() => {
+                  this.router.navigateByUrl('/dashboard/discussion');
+                });
+              });
+          } catch (error) {
+            console.log(error);
+          }
 
           subs = this.messagerieService.init().subscribe(
             (available) => {
@@ -128,5 +136,6 @@ export class AppComponent {
         console.log('completed ========');
       });
   }
+
 }
 
