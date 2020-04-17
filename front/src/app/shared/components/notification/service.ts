@@ -32,15 +32,22 @@ export class NotificationService {
   public async requestPermission(): Promise<void> {
     console.log( 'request permission ########################################');
     return new Promise((resolve, reject) => {
-      PushNotifications.requestPermission().then((status) => {
-        this.permission = status;
-        if (status.granted) {
-          PushNotifications.register();
-          resolve();
-        } else {
+      try {
+        PushNotifications.requestPermission().then((status) => {
+          this.permission = status;
+          if (status.granted) {
+            PushNotifications.register();
+            resolve();
+          } else {
+            reject();
+          }
+          // tslint:disable-next-line:no-multi-spaces
+        },                                         () => {
           reject();
-        }
-      });
+        });
+      } catch (error) {
+        reject();
+      }
     });
   }
 
