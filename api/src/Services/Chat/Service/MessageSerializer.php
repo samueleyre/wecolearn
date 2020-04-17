@@ -5,6 +5,7 @@ namespace App\Services\Chat\Service;
 
 
 use App\Services\Chat\Entity\Message;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,10 +17,12 @@ class MessageSerializer
     }
 
     public function getPayload( Message $message , Request $request ) {
-        $host = $request->headers->get('origin');
-        return $this->serializer->serialize(
+        $ret = $this->serializer->serialize(
             $message,
-            'json'
+            'json',
+            SerializationContext::create()->setGroups(['notif'])
         );
+        syslog( LOG_ERR, $ret );
+        return $ret;
     }
 }

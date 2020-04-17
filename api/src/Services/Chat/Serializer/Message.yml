@@ -4,19 +4,19 @@ App\Services\Chat\Entity\Message:
     enable_max_depth: true
     properties:
         id:
-          groups: [ input, output, message ]
+          groups: [ input, output, message , notif]
         message:
-          groups: [ input, output, message ]
+          groups: [ input, output, message , notif]
         created:
-          groups: [ output, message ]
+          groups: [ output, message, notif ]
         receiver:
-          groups: [ input, output, message ]
+          groups: [ input, output, message , notif ]
           max_depth: 4
         sender:
-          groups: [ input, output, message ]
+          groups: [ input, output, message , notif ]
           max_depth: 4
         isRead:
-          groups: [ input, output, message ]
+          groups: [ input, output, message , notif ]
 
 
 
