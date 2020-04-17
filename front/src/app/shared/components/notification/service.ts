@@ -32,6 +32,8 @@ export class NotificationService {
   public async requestPermission(): Promise<void> {
     console.log( 'request permission ########################################');
     return new Promise((resolve, reject) => {
+
+
       try {
         PushNotifications.requestPermission().then((status) => {
           this.permission = status;

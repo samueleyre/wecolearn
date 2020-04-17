@@ -93,6 +93,7 @@ export class AppComponent {
             });
           };
 
+
           try {
             PushNotifications.addListener('pushNotificationReceived',
                                           (notification: PushNotification) => {
@@ -119,6 +120,7 @@ export class AppComponent {
           } catch (error) {
             console.log(error);
           }
+
 
           subs = this.messagerieService.init().subscribe(
             (available) => {
