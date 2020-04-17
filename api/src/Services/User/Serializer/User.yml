@@ -4,11 +4,11 @@ App\Services\User\Entity\User:
     access_order:     alphabetical
     properties:
       id:
-        groups: [ input, search, message, profile, public-profile,  admin-users, thread ]
+        groups: [ input, search, message, profile, public-profile,  admin-users, thread , notif]
       created:
         groups: [ input, profile, admin-users]
       firstName:
-        groups: [ input, output, create, search, message, profile, public-profile, admin-users ]
+        groups: [ input, output, create, search, message, profile, public-profile, admin-users, notif ]
       lastName:
         groups: [ input, output, create, search, message, profile, public-profile, admin-users ]
       profilUrl:
@@ -33,7 +33,7 @@ App\Services\User\Entity\User:
         max_depth: 4
       image:
         type: App\Services\User\Entity\Image
-        groups: [ input, output, search, message, profile, public-profile ]
+        groups: [ input, output, search, message, profile, public-profile, notif ]
       showProfil:
         groups: [ input, profile, admin-users ]
       newMessageNotification:
