@@ -24,6 +24,7 @@ import {
   PushNotificationToken,
   PushNotificationActionPerformed } from '@capacitor/core';
 import { registerWebPlugin } from '@capacitor/core';
+import {Image} from "~/core/entities/image/entity";
 
 const { PushNotifications } = Plugins;
 
@@ -101,6 +102,13 @@ export class AppComponent {
                 image: message.sender.image,
               });
               this.messagesService.addMessage(message);
+            }
+          );
+
+          PushNotifications.addListener('pushNotificationActionPerformed',
+            (notification: PushNotificationActionPerformed) => {
+              console.log('########notif####### action performed', JSON.stringify(notification));
+              this.router.navigateByUrl('/dashboard/discussion');
             }
           );
 
