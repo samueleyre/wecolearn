@@ -46,6 +46,7 @@ export class AppComponent {
       private _threadService: Threads,
       public messagesService: MessagesService,
       public messagerieService: MessagerieService,
+
   ) {
     // set subdomain
     router.events
@@ -115,6 +116,13 @@ export class AppComponent {
                 console.log('########notif####### action performed' + JSON.stringify(notification));
                 this._zone.run(() => {
                   this.router.navigateByUrl('/dashboard/discussion');
+                  const message = new Message(JSON.parse(notification.notification.data.message));
+                  message.thread = new Thread({
+                    id: message.sender.id,
+                    name: message.sender.first_name,
+                    image: message.sender.image,
+                  });
+                  this.messagesService.addMessage(message);
                 });
               });
           } catch (error) {
@@ -138,6 +146,5 @@ export class AppComponent {
         console.log('completed ========');
       });
   }
-
 }
 
