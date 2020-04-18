@@ -15,6 +15,7 @@ services:
       - ./db/mysql:/var/lib/mysql
   api:
     build: ./docker/php
+    tty: true
     volumes:
       - ./api:/application
       - ./logs/symfony:/appliation/var/log:cached
