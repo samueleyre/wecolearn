@@ -105,7 +105,6 @@ export class MessagesService {
             this.currentClient = user;
             this.http.get('/api/messages').subscribe(
               (array: any) => {
-                console.log( array );
                 this.sentMessages = Object.values(array.sent_messages);
                 this.receivedMessages = Object.values(array.received_messages);
                 this.generateMessages();
