@@ -38,13 +38,14 @@ class NotificationService
             $deviceToken = $sub->getToken();
 
             $notification = CloudMessage::withTarget('token', $deviceToken);
+            $notification->withData(['message' => $this->serializer->getPayload($message, $request)]);
 
             $config = Messaging\AndroidConfig::fromArray([
                 'ttl' => '3600s',
                 'priority' => 'normal',
                 'notification' => [
-                    'title' => 'Vous avez un message',
-                    'body' => $this->serializer->getPayload($message, $request),
+                    'title' => 'Wecolearn',
+                    'body' => 'Vous avez un nouveau message',
                     'icon' => 'stock_ticker_update',
                     'color' => '#f45342',
                     'sound' => 'default',
