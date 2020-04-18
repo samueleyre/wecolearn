@@ -23,5 +23,5 @@ jobs:
           username: ${{ secrets.ionicServer_user }}
           password: ${{ secrets.ionicServer_password }}
           port: ${{ secrets.ionicServer_port }}
-          script: cd src/wecolearn; git fetch origin; git reset --hard origin/master; docker-compsose exec api bash -c "php bin/console do:sc:up -f"
+          script: cd src/wecolearn; git fetch origin; git reset --hard origin/ionic; docker-compsose exec api bash -c "php bin/console do:sc:up -f"
 "
