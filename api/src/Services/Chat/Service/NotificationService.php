@@ -45,8 +45,8 @@ class NotificationService
                 'notification' => [
                     'title' => 'Wecolearn',
                     'body' => 'Vous avez un message',
-                    'icon' => 'stock_ticker_update',
-                    'color' => '#f45342',
+                    //'icon' => 'stock_ticker_update',
+                    'color' => '#f7eb43',
                     'sound' => 'default',
 
                 ],
