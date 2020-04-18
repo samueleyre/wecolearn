@@ -49,8 +49,9 @@ class NotificationService
                     'icon' => 'stock_ticker_update',
                     'color' => '#f45342',
                     'sound' => 'default',
-                    'data'  => ['message' => $p ]
+
                 ],
+                'data'  => ['message' => $p ]
             ]);
             $notification = $notification->withAndroidConfig($config);
             $this->sender->send($notification);
