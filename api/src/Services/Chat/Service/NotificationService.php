@@ -38,7 +38,7 @@ class NotificationService
             $deviceToken = $sub->getToken();
 
             $notification = CloudMessage::withTarget('token', $deviceToken);
-            $notification->withData(['message' => $this->serializer->getPayload($message, $request)]);
+            $notification->withData(['message' => $p = $this->serializer->getPayload($message, $request)]);
 
             $config = Messaging\AndroidConfig::fromArray([
                 'ttl' => '3600s',
@@ -49,6 +49,7 @@ class NotificationService
                     'icon' => 'stock_ticker_update',
                     'color' => '#f45342',
                     'sound' => 'default',
+                    'data'  => ['message' => $p ]
                 ],
             ]);
             $notification = $notification->withAndroidConfig($config);
