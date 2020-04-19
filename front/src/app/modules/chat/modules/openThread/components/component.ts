@@ -18,7 +18,6 @@ export class OpenThreadComponent {
 
   openThread() {
     const thread = new Thread({ id: this.user.id, name: this.user.first_name, image: this.user.image });
-    this._threadsService.setCurrentThread(thread);
-    this._wcRouter.navigateToCurrentDiscussion();
+    this._wcRouter.navigateToCurrentDiscussion(this._threadsService.setCurrentThread(thread));
   }
 }

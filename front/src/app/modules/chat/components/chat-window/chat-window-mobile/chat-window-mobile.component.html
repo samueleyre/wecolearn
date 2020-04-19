@@ -11,7 +11,7 @@
   </div>
   <div class="chat-window-footer">
     <quill-editor
-      placeholder="Ecrire quelque chose..."
+      [placeholder]="placeHolder"
       maxLength="1000"
       [(ngModel)]="draftMessage.message"
       #message="ngModel"
