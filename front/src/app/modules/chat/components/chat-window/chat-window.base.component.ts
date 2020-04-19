@@ -116,15 +116,15 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
     this.sendMessage(
       new Message({ ...this.draftMessage, message }),
     );
+    this.input.focus();
+    this.draftMessage = new Message();
   }
 
   private sendMessage(message: Message): void {
-    this.disabled = true;
     message.receiver = new User({ id: this.currentThread.id });
     message.is_read = false;
     setTimeout(
       () => {
-        this.disabled = false;
         message.sender = new User(
           {
             id: this.currentUser.id,
@@ -136,8 +136,6 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
           ...this.currentThread,
         };
         this.messagesService.addMessage(message);
-        this.draftMessage = new Message();
-        setTimeout(() => this.input.focus(), 0);
       },
       // tslint:disable-next-line:no-magic-numbers
       400,
