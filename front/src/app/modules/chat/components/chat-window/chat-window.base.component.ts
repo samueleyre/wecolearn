@@ -4,7 +4,7 @@ import {
   OnInit, ViewChild,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { NgxLinkifyjsService, NgxLinkifyOptions } from 'ngx-linkifyjs';
 import * as _ from 'lodash';
 import { NgModel } from '@angular/forms';
@@ -48,6 +48,8 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
 
   ngOnInit(): void {
     this.messages$ = this.threadsService.currentThreadMessages.pipe(
+      // filter bot messages ( id === -1 )
+      map((messages: Message[]) => messages.filter(message => message.id !== -1)),
       takeUntil(this.destroy$),
     );
     this.draftMessage = new Message();
@@ -97,7 +99,6 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
   }
 
   onSendTrigger(): void {
-    console.log(this.messageModel);
     if (!this.messageModel.valid) {
       return;
     }
@@ -107,7 +108,6 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
       message = message.replace(CHAT.spaceRegex, '');
       foundBreak = CHAT.spaceRegex.exec(message);
     }
-    console.log(message.length);
 
     if (message === '') {
       return;
@@ -158,6 +158,10 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
   closeChat(): void {
     this.currentThread = new Thread();
     this.threadsService.setCurrentThread(this.currentThread);
+  }
+
+  get placeHolder(): string {
+    return `Ecrire quelque chose à ${this.currentThread.name}`;
   }
 
   get input(): HTMLDivElement {

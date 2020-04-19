@@ -15,7 +15,7 @@
   <div class="chat-window-input">
     <quill-editor
       #message="ngModel"
-      placeholder="Ecrire quelque chose..."
+      [placeholder]="placeHolder"
       maxLength="1000"
       (keydown)="onEnter($event)"
       [(ngModel)]="draftMessage.message"

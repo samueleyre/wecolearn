@@ -101,11 +101,17 @@ export class Threads {
     );
   }
 
-  setCurrentThread(newThread: Thread): void {
-    if (this.currentThread.getValue().id && !newThread.lastMessage) {
-      this.messagesService.addMessage(new Message({ message: '' , thread: newThread, sender: { id: newThread.id } }));
+  setCurrentThread(thread: Thread): void {
+    // new thread
+    if (!this.threadExists(thread.id)) {
+      this.messagesService.addMessage(new Message({ thread, id: -1, message: '' , sender: { id: -1 } }));
     }
-    this.currentThread.next(newThread);
+
+    this.currentThread.next(thread);
+  }
+
+  private threadExists(threadId): boolean {
+    return !!this.orderedThreads$.getValue().find(thread => thread.id === threadId);
   }
 
   resetThreads(): void {
