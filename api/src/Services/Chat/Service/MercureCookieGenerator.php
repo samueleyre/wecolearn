@@ -40,5 +40,4 @@ class MercureCookieGenerator
             strpos($this->domain, 'localhost') !== false ? 'localhost' : 'wecolearn.com'
         );
     }
-
 }
