@@ -46,7 +46,18 @@ class PingController extends AbstractController
          * if cookie is expired generate a new one
          */
         if (!$request->cookies->get('mercureAuthorization')) {
-            $response->headers->set('set-cookie', $cookieGenerator->generate($user));
+            $response->headers->set('set-cookie', $cookieGenerator->generate($user)->__toString());
+        } else {
+            /*
+             * If cookie not correct, make a new one
+             * todo: move this to a login listener
+             */
+            $currentCookie = $request->cookies->get('mercureAuthorization');
+            $shouldBe = $cookieGenerator->generate($user);
+            if ($currentCookie !== $shouldBe->getValue()) {
+                $response->headers->set('set-cookie', $shouldBe->__toString());
+            }
+
         }
         
         return $response;
