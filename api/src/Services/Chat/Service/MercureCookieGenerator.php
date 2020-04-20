@@ -36,8 +36,10 @@ class MercureCookieGenerator
             "mercureAuthorization",
             $token,
             strtotime('+1 year'),
-            '/'
-//            strpos($this->domain, 'localhost') !== false ? 'localhost' : $this->domain // port not accepted for cookie domain
+            '/',
+            strpos($this->domain, 'localhost') !== false ?
+                'localhost' : strpos($this->domain, 'wecolearn') !== false ?
+                'wecolearn.com' : 'localhost'
         );
     }
 
