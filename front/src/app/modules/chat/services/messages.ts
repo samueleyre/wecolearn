@@ -1,5 +1,5 @@
 import { publishReplay, refCount, scan, map, tap, filter } from 'rxjs/operators';
-import { of as observableOf, Subject, Observable, of, BehaviorSubject } from 'rxjs';
+import {of as observableOf, Subject, Observable, of, BehaviorSubject, pipe} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
@@ -33,7 +33,7 @@ export class MessagesService {
 
   // action streams
   create: Subject<Message> = new Subject<Message>();
-  markThreadAsRead: Subject<any> = new Subject<any>();
+  markThreadAsRead: Subject<Thread> = new Subject<Thread>();
 
   get loading(): boolean {
     return this._loading$.value;
@@ -60,7 +60,7 @@ export class MessagesService {
     // `markThreadAsRead` takes a Thread and then puts an operation on the `updates` stream to mark the Messages as read
     this.markThreadAsRead.pipe(
       map((thread: Thread) => (messages: Message[]) => messages.map((message: Message) => {
-        if (message.thread.id === thread.id && !message.is_read && message.sender && message.sender.id !== this.currentClient.id) {
+        if (message.sender.id === thread.id && !message.is_read) {
           message.is_read = true;
           this.addMessageToUpdate(message);
         }

@@ -61,9 +61,9 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
         MenuMobileService.discussingUser.next(thread.name);
 
         // mark threads as read when seen by user
+        this.messagesService.markThreadAsRead.next(thread);
         this.messagesService.pushUpdatedMessages().subscribe();
       });
-
 
     this.currentUser = this.clientService.me;
 

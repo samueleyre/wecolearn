@@ -1,7 +1,8 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, NgZone, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { Logged } from '~/core/services/auth/logged';
 import { IconService } from '~/core/services/icon.service';
@@ -10,10 +11,12 @@ import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
 import { navTitles } from '~/config/navigation/seo.const';
+import { SeoService } from '~/core/services/seo';
+import { Threads } from '~/modules/chat/services/threads';
+import { NAV } from '~/config/navigation/nav';
 
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
-import {SeoService} from "~/core/services/seo";
 
 
 @Component({
@@ -26,8 +29,11 @@ export class AppComponent {
   constructor(
       private router: Router,
       private domainService: DomainService,
+      private _deviceService: DeviceDetectorService,
       private iconService: IconService,
       private _seoService: SeoService,
+      private _zone: NgZone,
+      private _threadService: Threads,
       public messagesService: MessagesService,
       public messagerieService: MessagerieService,
   ) {
@@ -49,6 +55,8 @@ export class AppComponent {
       (logged) => {
         let subs: any = { unsubscribe : null };
         if (logged && !oldLog) {
+          // todo : move this to a dedicated service
+
           // subscribe to notifications
           const url = `${environment.mercureUrl}?topic=https://wecolearn.com/message`;
           new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
@@ -58,7 +66,18 @@ export class AppComponent {
               name: message.sender.first_name,
               image: message.sender.image,
             });
-            this.messagesService.addMessage(message);
+            this._zone.run(() => {
+              if (
+                this._threadService.currentThread.getValue().id === message.sender.id
+                && (
+                  this.router.url === NAV.currentDiscussion && this._deviceService.isMobile()
+                  || this.router.url === NAV.discussion && this._deviceService.isDesktop()
+                )
+              ) {
+                message.is_read = true;
+              }
+              this.messagesService.addMessage(message);
+            });
           };
 
           subs = this.messagerieService.init().subscribe(
@@ -77,6 +96,5 @@ export class AppComponent {
         console.log('completed ========');
       });
   }
-
 }
 

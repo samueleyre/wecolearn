@@ -37,9 +37,7 @@ class MercureCookieGenerator
             $token,
             strtotime('+1 year'),
             '/',
-            strpos($this->domain, 'localhost') !== false ?
-                'localhost' : strpos($this->domain, 'wecolearn') !== false ?
-                'wecolearn.com' : 'localhost'
+            strpos($this->domain, 'localhost') !== false ? 'localhost' : 'wecolearn.com'
         );
     }
 
