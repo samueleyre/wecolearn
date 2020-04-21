@@ -75,7 +75,7 @@ class PushService
             [
                 'message' =>
                     [
-                        'message' => $message->message,
+                        'message' => strip_tags($message->message),
                         'senderName' => $message->sender->firstName,
                     ],
                 'host' =>  $host

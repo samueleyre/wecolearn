@@ -36,7 +36,6 @@ export class Threads {
     this.currentThread.subscribe(this.messagesService.markThreadAsRead);
   }
 
-
   private initThreadsConstructor(): void {
     // `threads` is a observable that contains the most up to date list of threads
     this.orderedThreads = this.messagesService.messages.pipe(
