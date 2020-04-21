@@ -103,7 +103,7 @@ export class Threads {
   setCurrentThread(thread: Thread): void {
     // new thread
     if (!this.threadExists(thread.id)) {
-      this.messagesService.addMessage(new Message({ thread, id: -1, message: '' , sender: { id: -1 } }));
+      this.messagesService.addMessage(new Message({ thread, id: -1, message: '' , sender: { id: -1 }, is_read: true }));
     }
 
     this.currentThread.next(thread);
