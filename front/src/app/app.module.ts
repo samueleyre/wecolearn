@@ -12,15 +12,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthModule } from '~/modules/auth/auth.module';
 import { SearchModule } from '~/modules/search/search.module';
 // shared modules
-import { SafeUrlPipeModule } from '~/shared/modules/safeUrl/safeUrlPipe.module';
-import { CleanService } from '~/core/services/crud/cleanService';
-import { PushSubscriptionService } from '~/shared/components/push-subscription/service';
-import { MessagerieService } from '~/core/services/messagerie/service';
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
 import { HeaderMobileComponent } from '~/core/layouts/header-mobile/component';
 import { FooterMobileComponent } from '~/core/layouts/footer-mobile/component';
 import { CoreModule } from '~/core/core.module';
 import { SharedModule } from '~/shared/shared.module';
+import { MaterialModule } from '~/shared/modules/material/material.module';
+import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
 
 // local components
 import { MainComponent } from './core/layouts/dashboard/component';
@@ -34,12 +32,10 @@ import { CommunityComponent } from './pages/communities/community/component';
 import { WcRoutingModule } from './app-routing.module';
 // shared components
 import { CopyComponent } from './shared/components/copy/component';
-import { SafeHtmlPipe } from './shared/pipes/safeHtmlPipe/pipe';
 import { AutofocusDirective } from './modules/search/directives/input/directive';
 // shared services
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
-import {MaterialModule} from "~/shared/modules/material/material.module";
 
 registerLocaleData(fr);
 
@@ -54,33 +50,27 @@ registerLocaleData(fr);
     MatNativeDateModule,
     WcRoutingModule,
     DeviceDetectorModule.forRoot(),
-    // shared modules
-    SafeUrlPipeModule,
-    // feature modules
     AuthModule,
     SearchModule,
     MatSliderModule,
     MatIconModule,
     MaterialModule,
-    // needed here otherwise slider doesn't work
-
+    PipesModule,
   ],
   declarations: [
     AppComponent,
     NotFoundComponent,
     CommunitiesComponent,
     CommunityComponent,
-        // Pipes
-    SafeHtmlPipe,
-        // Directives
+    // Directives
     AutofocusDirective,
-        // Layout
+    // Layout
     MainComponent,
     MenuComponent,
     HeaderMobileComponent,
     HeaderComponent,
     FooterMobileComponent,
-        //  tools
+    //  tools
     CopyComponent,
   ],
   providers: [
@@ -98,6 +88,7 @@ registerLocaleData(fr);
   bootstrap: [
     AppComponent,
   ],
+  exports: [],
 })
 export class AppModule {
 }

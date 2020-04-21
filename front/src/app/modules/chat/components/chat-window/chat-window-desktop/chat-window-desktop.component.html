@@ -1,0 +1,36 @@
+<div class="chat-window"  #chatWindow [style.visibility]="loading ? 'hidden' : 'visible'">
+  <div class="chat-window-messages">
+    <div class="chat-window-messages-wrapper">
+      <app-chat-message-desktop
+        *ngFor="let message of messages$ | async as messages; let i = index"
+        [clientId]="currentUser.id"
+        [message]="message"
+        [previousMessage]="i > 0 ? messages[(i - 1)] : null"
+      >
+      </app-chat-message-desktop>
+      <div class="space"></div>
+    </div>
+  </div>
+
+  <div class="chat-window-input">
+    <quill-editor
+      #message="ngModel"
+      [placeholder]="placeHolder"
+      maxLength="1000"
+      (keydown)="onEnter($event)"
+      [(ngModel)]="draftMessage.message"
+      [disabled]="disabled"
+      [trimOnValidation]="true"
+      [modules]="modules"
+    >
+      <div quill-editor-toolbar>
+          <span class="ql-formats">
+            <button class="ql-bold" [title]="'Bold'"></button>
+            <button class="ql-italic" [title]="'Italic'"></button>
+<!--            <button class="ql-link" [title]="'Link'"></button>-->
+<!--            <button class="ql-emoji" [title]="'Emoji'"></button>-->
+          </span>
+      </div>
+    </quill-editor>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="chat-window" [style.visibility]="loading ? 'hidden' : 'visible'">
+  <div class="chat-window-messages">
+    <chat-message-mobile
+      *ngFor="let message of messages$ | async as messages; let i = index"
+      [clientId]="currentUser.id"
+      [message]="message"
+      [previousMessage]="i > 0 ? messages[(i - 1)] : null"
+    >
+    </chat-message-mobile>
+    <div class="space"></div>
+  </div>
+  <div class="chat-window-footer">
+    <quill-editor
+      [placeholder]="placeHolder"
+      maxLength="1000"
+      [(ngModel)]="draftMessage.message"
+      #message="ngModel"
+      [disabled]="disabled"
+      [trimOnValidation]="true"
+      [modules]="modules"
+      [customToolbarPosition]="'bottom'"
+    >
+      <div quill-editor-toolbar >
+          <span class="ql-formats">
+            <button class="ql-bold" [title]="'Bold'"></button>
+            <button class="ql-italic" [title]="'Italic'"></button>
+<!--            <button class="ql-link" [title]="'Link'"></button>-->
+          </span>
+          <span class="ql-send">
+            <mat-icon color="primary" (click)="onSendTrigger()" title="envoyer">send</mat-icon>
+          </span>
+      </div>
+    </quill-editor>
+  </div>
+</div>
+

@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TagPipeModule } from '~/shared/modules/tagPipes/tagPipe.module';
 import { CloudinaryModule } from '~/shared/modules/cloudinary/pipes/cloudinary.module';
 import { OpenThreadModule } from '~/modules/chat/modules/openThread/openThread.module';
 import { PasswordDifficultyModule } from '~/modules/auth/modules/passwordDifficulty/passwordDifficulty.module';
 import { ShowProfilSettingsComponent } from '~/modules/profile/components/showProfil/component';
 import { MaterialModule } from '~/shared/modules/material/material.module';
+import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
 
 import { ProfileComponent } from './components/profile/component';
 import { ProfilePageComponent } from './pages/profile/component';
@@ -43,7 +43,7 @@ import { ProfileImageModule } from './modules/profilImage/profileImage.module';
     ProfileImageModule,
     ProfileRouting,
     FormsModule,
-    TagPipeModule,
+    PipesModule,
     CloudinaryModule,
     OpenThreadModule,
     ProfileFormModule,

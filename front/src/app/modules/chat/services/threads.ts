@@ -36,7 +36,6 @@ export class Threads {
     this.currentThread.subscribe(this.messagesService.markThreadAsRead);
   }
 
-
   private initThreadsConstructor(): void {
     // `threads` is a observable that contains the most up to date list of threads
     this.orderedThreads = this.messagesService.messages.pipe(
@@ -87,17 +86,6 @@ export class Threads {
               })
               .value();
           }
-          if (currentThread) {
-            return [new Message(
-              {
-                message: 'Prenez contact avec votre première relation !',
-                thread: currentThread,
-                sender: {
-                  id: currentThread.id,
-                },
-              },
-            )];
-          }
           return [];
         }));
   }
@@ -112,22 +100,17 @@ export class Threads {
     );
   }
 
-  setCurrentThread(newThread: Thread): void {
-    if (!this.currentThread.getValue().id) {
-      this.messagesService.addMessage(
-        new Message(
-          { message: 'Prenez contact avec votre première relation !' ,
-            thread: newThread,
-            sender: {
-              id: newThread.id,
-            },
-          },
-        ),
-      );
-    } else if (!newThread.lastMessage) {
-      this.messagesService.addMessage(new Message({ message: '' , thread: newThread, sender: { id: newThread.id } }));
+  setCurrentThread(thread: Thread): void {
+    // new thread
+    if (!this.threadExists(thread.id)) {
+      this.messagesService.addMessage(new Message({ thread, id: -1, message: '' , sender: { id: -1 } }));
     }
-    this.currentThread.next(newThread);
+
+    this.currentThread.next(thread);
+  }
+
+  private threadExists(threadId): boolean {
+    return !!this.orderedThreads$.getValue().find(thread => thread.id === threadId);
   }
 
   resetThreads(): void {

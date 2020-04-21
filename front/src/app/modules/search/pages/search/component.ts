@@ -32,10 +32,10 @@ import { SEARCH } from '../../config/main';
     noResultsWithSearch: `Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous`,
     localProfiles: `Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
     Peut-être que les profils suivant pourront aussi vous intéresser ?`,
-    [SearchMeta.userLearnTags]: 'Nous avons sélectionnés ces profils pour vous.',
-    [SearchMeta.userLearnTagDomains]: 'Nous avons sélectionnés ces profils pour vous.',
-    [SearchMeta.userKnowTags]: 'Nous avons sélectionnés ces profils pour vous.',
-    [SearchMeta.userKnowTagDomains]: 'Nous avons sélectionnés ces profils pour vous.',
+    [SearchMeta.userLearnTags]: 'Nous avons sélectionné ces profils autour de chez vous.',
+    [SearchMeta.userLearnTagDomains]: 'Nous avons sélectionné ces profils autour de chez vous.',
+    [SearchMeta.userKnowTags]: 'Nous avons sélectionné ces profils autour de chez vous.',
+    [SearchMeta.userKnowTagDomains]: 'Nous avons sélectionné ces profils autour de chez vous.',
   };
 
   @ViewChild('pageContainer', { static: false }) cardsContainerElementRef: ElementRef;

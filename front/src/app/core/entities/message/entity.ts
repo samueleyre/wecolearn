@@ -20,7 +20,7 @@ export class Message {
     this.is_read = obj && obj.is_read || false;
     this.created = obj && obj.created || new Date();
     this.sender = obj && obj.sender || null;
-    this.message = obj && obj.message || null;
+    this.message = obj && obj.message || '';
     this.receiver = obj && obj.receiver || null;
     this.thread = obj && obj.thread || null;
   }
