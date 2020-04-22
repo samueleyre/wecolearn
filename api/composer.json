@@ -99,6 +99,11 @@
         "symfony": {
             "allow-contrib": false,
             "require": "4.3.*"
+        },
+        "paas": {
+            "php-config": [
+                "date.timezone=Europe/Paris"
+            ]
         }
     }
 }
