@@ -11,10 +11,10 @@
   </div>
   <p><a href="" routerLink="/auth/password/email"> Mot de passe oublié?</a></p>
   <div class="form-buttons d-flex justify-content-between">
-    <button type="button" class="btn btn-primary ml-auto mr-3" [routerLink]="subscribeLink">
+    <button type="button" id="signupButton" class="btn btn-primary ml-auto mr-3" [routerLink]="subscribeLink">
       S'inscrire
     </button>
-    <button type="submit" [disabled]="loading" class="btn btn-secondary ">
+    <button type="submit" id="signinButton" [disabled]="loading" class="btn btn-secondary ">
       <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Connexion
     </button>

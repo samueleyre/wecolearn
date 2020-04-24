@@ -13,7 +13,6 @@ export class CookieNotificationService {
   notifyCookie() {
     setTimeout(() => {
       if (!localStorage.getItem('cookieseen')) {
-        console.log('should show notification');
         this._toastr.info(
           `Nous avons recours à l'utilisation de cookies afin de vous permettre une meilleure navigation.`
           + ` Le fait de continuer signifie que vous acceptez <a href="${NAV.cookiePolicy}">l'utilisation de ces cookies.</a>`,

@@ -44,23 +44,13 @@
                 "output": "/"
               },
               {
-                "glob": "sw.js",
+                "glob": "sw.dev.js",
                 "input": "src",
                 "output": "/"
               },
               {
                 "glob": "workbox-sw.js",
                 "input": "node_modules/workbox-sw/build",
-                "output": "/workbox"
-              },
-              {
-                "glob": "workbox-routing.prod.js",
-                "input": "node_modules/workbox-routing/build",
-                "output": "/workbox"
-              },
-              {
-                "glob": "workbox-strategies.prod.js",
-                "input": "node_modules/workbox-strategies/build",
                 "output": "/workbox"
               },
               {
@@ -78,22 +68,13 @@
                 "input": "node_modules/workbox-core/build",
                 "output": "/workbox"
               },
-              {
-                "glob": "workbox-core.prod.js",
-                "input": "node_modules/workbox-core/build",
-                "output": "/workbox"
-              },
+
               {
                 "glob": "workbox-precaching.dev.js",
                 "input": "node_modules/workbox-precaching/build",
                 "output": "/workbox"
-              },
-              {
-                "glob": "workbox-precaching.prod.js",
-                "input": "node_modules/workbox-precaching/build",
-                "output": "/workbox"
               }
-            ],
+              ],
             "styles": [
               "src/assets/css/reset.css",
               "node_modules/normalize.css/normalize.css",
@@ -128,6 +109,52 @@
                   "with": "src/robots.prod.txt"
                 }
               ],
+              "assets": [
+                "src/assets",
+                "src/robots.txt",
+                "src/sitemap.xml",
+                "src/.well-known",
+                {
+                  "glob": "_redirects",
+                  "input": "src",
+                  "output": "/"
+                },
+                {
+                  "glob": "manifest.json",
+                  "input": "src",
+                  "output": "/"
+                },
+                {
+                  "glob": "sw.js",
+                  "input": "src",
+                  "output": "/"
+                },
+                {
+                  "glob": "workbox-sw.js",
+                  "input": "node_modules/workbox-sw/build",
+                  "output": "/workbox"
+                },
+                {
+                  "glob": "workbox-routing.prod.js",
+                  "input": "node_modules/workbox-routing/build",
+                  "output": "/workbox"
+                },
+                {
+                  "glob": "workbox-strategies.prod.js",
+                  "input": "node_modules/workbox-strategies/build",
+                  "output": "/workbox"
+                },
+                {
+                  "glob": "workbox-core.prod.js",
+                  "input": "node_modules/workbox-core/build",
+                  "output": "/workbox"
+                },
+                {
+                  "glob": "workbox-precaching.prod.js",
+                  "input": "node_modules/workbox-precaching/build",
+                  "output": "/workbox"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -152,28 +179,50 @@
                   "with": "src/environments/environment.staging.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": false,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
+              "assets": [
+                "src/assets",
+                "src/robots.txt",
+                "src/sitemap.xml",
+                "src/.well-known",
                 {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            },
-            "local": {
-              "fileReplacements": [
+                  "glob": "_redirects",
+                  "input": "src",
+                  "output": "/"
+                },
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.local.ts"
+                  "glob": "manifest.json",
+                  "input": "src",
+                  "output": "/"
+                },
+                {
+                  "glob": "sw.js",
+                  "input": "src",
+                  "output": "/"
+                },
+                {
+                  "glob": "workbox-sw.js",
+                  "input": "node_modules/workbox-sw/build",
+                  "output": "/workbox"
+                },
+                {
+                  "glob": "workbox-routing.prod.js",
+                  "input": "node_modules/workbox-routing/build",
+                  "output": "/workbox"
+                },
+                {
+                  "glob": "workbox-strategies.prod.js",
+                  "input": "node_modules/workbox-strategies/build",
+                  "output": "/workbox"
+                },
+                {
+                  "glob": "workbox-core.prod.js",
+                  "input": "node_modules/workbox-core/build",
+                  "output": "/workbox"
+                },
+                {
+                  "glob": "workbox-precaching.prod.js",
+                  "input": "node_modules/workbox-precaching/build",
+                  "output": "/workbox"
                 }
               ],
               "optimization": true,
