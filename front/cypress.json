@@ -1,0 +1,11 @@
+{
+  "baseUrl": "http://localhost:4200",
+  "modifyObstructiveCode": false,
+  "pageLoadTimeout": 60000,
+  "viewportWidth": 1200,
+  "viewportHeight": 800,
+  "projectId": "xxxx",
+  "env": {
+    "ENV_NAME": "default"
+  }
+}
