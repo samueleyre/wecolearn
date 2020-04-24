@@ -9,7 +9,11 @@
     "serve": "ng serve --aot --host 0.0.0.0 && node scripts/precacheAndBuild.js",
     "build:debug": "ng build --aot --watch && node scripts/precacheAndBuild.js",
     "serve:build": "lite-server --baseDir=dist/front",
-    "resources": "cordova-res android --skip-config --copy"
+    "resources": "cordova-res android --skip-config --copy",
+    "test:e2e:debug": "yarn run cypress run --env ENV_NAME=local --spec cypress/integration/*.e2e.ts",
+    "test:e2e": "yarn run cypress run --spec cypress/integration/*.e2e.ts",
+    "open:cypress:debug": "yarn run cypress open --env ENV_NAME=local",
+    "open:cypress": "yarn run cypress open"
   },
   "private": true,
   "dependencies": {
@@ -74,10 +78,13 @@
     "@capacitor/cli": "2.0.0",
     "@ionic/angular-toolkit": "^2.1.1",
     "@ionic/ng-toolkit": "^1.1.0",
+    "@cypress/webpack-preprocessor": "^4.1.0",
     "@types/leaflet": "^1.5.8",
     "@types/lodash": "4.14.123",
     "@types/node": "11.13.4",
     "codelyzer": "~5.0.0",
+    "cypress": "^4.4.1",
+    "ts-loader": "^6.0.4",
     "ts-node": "~8.0.3",
     "tslint": "~5.15.0",
     "tslint-config-airbnb": "^5.11.1",
