@@ -3,7 +3,7 @@ importScripts('workbox/workbox-sw.js');
 const VERSION = 'v7';
 
 workbox.setConfig({
-    debug: false,
+    debug: true,
     modulePathPrefix: 'workbox/'
 });
 
