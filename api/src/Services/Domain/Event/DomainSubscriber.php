@@ -40,10 +40,10 @@ class DomainSubscriber implements EventSubscriberInterface
     public function onKernelResponse(FilterResponseEvent $event ) {
         $response = $event->getResponse();
 
-        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,Origin,Accept,Access-Control-Allow-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Origin,accept, x-custom-auth, content-type, authorization, x-pagination');
-        $response->headers->set('Access-Control-Allow-Methods','GET, OPTIONS, POST, PUT, PATCH, DELETE' );
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        $response->headers->set('Access-Control-Allow-Credentials', 'true');
+        //$response->headers->set('Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,Origin,Accept,Access-Control-Allow-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Origin,accept, x-custom-auth, content-type, authorization, x-pagination');
+        //$response->headers->set('Access-Control-Allow-Methods','GET, OPTIONS, POST, PUT, PATCH, DELETE' );
+        //$response->headers->set('Access-Control-Allow-Origin', '*');
+        //$response->headers->set('Access-Control-Allow-Credentials', 'true');
 
         $event->setResponse($response);
     }

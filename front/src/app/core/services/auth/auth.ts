@@ -33,6 +33,7 @@ export class AuthenticationService {
   }
 
   get isAdmin(): boolean {
+    console.log( this.user, 'user' );
     return this.user.roles.includes(UserRoleEnum.ADMIN);
   }
 
