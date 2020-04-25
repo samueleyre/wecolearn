@@ -5,7 +5,7 @@ import { TestsInterface } from './tests.interface';
  */
 export const CI_CONFIG = {
   e2e: <TestsInterface>{
-    signup: true,
+    signup: false,
     signin: true,
   },
 };

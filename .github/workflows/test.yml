@@ -21,6 +21,6 @@ jobs:
       - name: Install scalingo CLI
         run : curl -O https://cli-dl.scalingo.com/install && bash install
       - name: Load fixtures
-        run : scalingo login --api-token ${{ secrets.scalingo_staging_token }}; scalingo -a wecolearn-api-staging run php bin/console
+        run : scalingo login --api-token ${{ secrets.scalingo_staging_token }}; scalingo -a wecolearn-api-staging run php bin/console do:fi:lo -v --no-interaction
       - name: Run tests
-        run : cd front; yarn add cypress; yarn add @cypress/webpack-preprocessor; yarn run CYPRESS_BASE_URL=https://staging.wecolearn.com cypress run --env ENV_NAME=staging --spec cypress/integration/e2e.ts;
+        run : cd front; yarn add cypress; yarn add @cypress/webpack-preprocessor; CYPRESS_BASE_URL=https://staging.wecolearn.com $(npm bin)/cypress run --env ENV_NAME=staging --spec cypress/integration/e2e.ts
