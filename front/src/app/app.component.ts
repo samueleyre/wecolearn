@@ -99,7 +99,7 @@ export class AppComponent {
                                           (notification: PushNotification) => {
                 console.log('nottification receiveed ######## ' + JSON.stringify(notification));
                 this._zone.run(() => {
-                  const message = new Message(JSON.parse(notification.body));
+                  const message = new Message(JSON.parse(notification.data.message));
                   message.thread = new Thread({
                     id: message.sender.id,
                     name: message.sender.first_name,
