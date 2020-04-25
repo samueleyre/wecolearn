@@ -18,16 +18,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_KEY }}
-          name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Install scalingo CLI
         run : curl -O https://cli-dl.scalingo.com/install && bash install
       - name: Load fixtures
         run : scalingo login --api-token ${{ secrets.scalingo_staging_token }}; scalingo -a wecolearn-api-staging run php bin/console
       - name: Run tests
-        run : cd front; yarn add cypress; yarn add @cypress/webpack-preprocessor; yarn test:e2e;
+        run : cd front; yarn add cypress; yarn add @cypress/webpack-preprocessor; yarn run CYPRESS_BASE_URL=https://staging.wecolearn.com cypress run --env ENV_NAME=staging --spec cypress/integration/e2e.ts;
