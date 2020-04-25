@@ -24,6 +24,7 @@ import {
   PushNotificationActionPerformed } from '@capacitor/core';
 import { registerWebPlugin } from '@capacitor/core';
 import {Image} from "~/core/entities/image/entity";
+import {Platform} from "@ionic/angular";
 
 const { PushNotifications } = Plugins;
 
@@ -45,6 +46,7 @@ export class AppComponent {
       private _threadService: Threads,
       public messagesService: MessagesService,
       public messagerieService: MessagerieService,
+      private platform: Platform,
 
   ) {
     // set subdomain
@@ -71,28 +73,29 @@ export class AppComponent {
           // todo : move this to a dedicated service
 
           // subscribe to notifications
-          const url = `${environment.mercureUrl}?topic=https://wecolearn.com/message`;
-          new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
-            const message = new Message(JSON.parse(evt.data));
-            message.thread = new Thread({
-              id: message.sender.id,
-              name: message.sender.first_name,
-              image: message.sender.image,
-            });
-            this._zone.run(() => {
-              if (
-                this._threadService.currentThread.getValue().id === message.sender.id
-                && (
-                  this.router.url === NAV.currentDiscussion && this._deviceService.isMobile()
-                  || this.router.url === NAV.discussion && this._deviceService.isDesktop()
-                )
-              ) {
-                message.is_read = true;
-              }
-              this.messagesService.addMessage(message);
-            });
-          };
-
+          if (!this.platform.is('android')) {
+            const url = `${environment.mercureUrl}?topic=https://wecolearn.com/message`;
+            new EventSource(encodeURI(url), {withCredentials: true}).onmessage = (evt: MessageEvent) => {
+              const message = new Message(JSON.parse(evt.data));
+              message.thread = new Thread({
+                id: message.sender.id,
+                name: message.sender.first_name,
+                image: message.sender.image,
+              });
+              this._zone.run(() => {
+                if (
+                  this._threadService.currentThread.getValue().id === message.sender.id
+                  && (
+                    this.router.url === NAV.currentDiscussion && this._deviceService.isMobile()
+                    || this.router.url === NAV.discussion && this._deviceService.isDesktop()
+                  )
+                ) {
+                  message.is_read = true;
+                }
+                this.messagesService.addMessage(message);
+              });
+            };
+          }
 
           try {
             PushNotifications.addListener('pushNotificationReceived',
