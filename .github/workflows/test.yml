@@ -28,6 +28,6 @@ jobs:
       - name: Install scalingo CLI
         run : curl -O https://cli-dl.scalingo.com/install && bash install
       - name: Load fixtures
-        run : scalingo login --api-token {{ secrets.scalingo_staging_token }}; scalingo -a wecolearn-api-staging run php bin/console
+        run : scalingo login --api-token ${{ secrets.scalingo_staging_token }}; scalingo -a wecolearn-api-staging run php bin/console
       - name: Run tests
         run : cd front; yarn add cypress; yarn add @cypress/webpack-preprocessor; yarn test:e2e;
