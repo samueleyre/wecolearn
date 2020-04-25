@@ -1,26 +1,17 @@
 name: tests before merge
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
-  push:
-    branches: [ testing-actions ]
+  pull_request:
+    branches: [ master]
 
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  test:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Install scalingo CLI
         run : curl -O https://cli-dl.scalingo.com/install && bash install
-      - name: Load fixtures
+      - name: Load fixtures on staging
         run : scalingo login --api-token ${{ secrets.scalingo_staging_token }}; scalingo -a wecolearn-api-staging run php bin/console do:fi:lo -v --no-interaction
-      - name: Run tests
-        run : cd front; yarn add cypress; yarn add @cypress/webpack-preprocessor; CYPRESS_BASE_URL=https://staging.wecolearn.com $(npm bin)/cypress run --env ENV_NAME=staging --spec cypress/integration/e2e.ts
+      - name: Run tests on staging front
+        run : cd front; yarn add cypress; yarn add @cypress/webpack-preprocessor; CYPRESS_BASE_URL=https://staging.wecolearn.com $(npm bin)/cypress run --env ENV_NAME=staging --spec cypress/integration/e2e.ts --config video=false
