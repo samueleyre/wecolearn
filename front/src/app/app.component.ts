@@ -11,12 +11,11 @@ import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
 import { navTitles } from '~/config/navigation/seo.const';
-import { SeoService } from '~/core/services/seo';
 import { NAV } from '~/config/navigation/nav';
-
+import { Threads } from '~/modules/chat/services/threads';
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
-import {SeoService} from "~/core/services/seo";
+import {SeoService} from '~/core/services/seo';
 
 import {
   Plugins,
