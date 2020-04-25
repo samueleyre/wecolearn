@@ -66,7 +66,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
             }
             */
             $response = new JsonResponse( $ret, $statusCode );
-            $response->headers->set( 'Access-Control-Allow-Origin', '*');
+            //$response->headers->set( 'Access-Control-Allow-Origin', '*');
             $event->setResponse( $response );
         //}
 
