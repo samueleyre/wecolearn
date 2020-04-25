@@ -11,7 +11,7 @@ createDatabase:
 	@docker-compose exec api bash -c "php bin/console doctrine:schema:create"
 
 loadFixtures:
-	@docker-compose exec api bash -c "php bin/console do:fi:lo -v"
+	@docker-compose exec api bash -c "php bin/console do:fi:lo -v --no-interaction; "
 
 runComposer:
 	@docker-compose run composer bash
@@ -29,3 +29,7 @@ fixPermissions:
 
 clearCache:
 	@docker-compose exec api bash -c "php bin/console cache:clear"
+
+test:
+	@make loadFixtures
+	cd front; yarn test:e2e
