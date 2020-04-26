@@ -54,9 +54,6 @@ export class MessagerieService {
         );
       }
 
-
-
-      /*
       this._notificationService.requestPermission().then(() => {
         this._pushSubscriptionService.process()
           .then(() => {
@@ -69,8 +66,6 @@ export class MessagerieService {
       },                                                 (error ) => {
         console.log(error);
       });
-    */
-
     });
   }
 
