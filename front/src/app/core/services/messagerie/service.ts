@@ -9,6 +9,7 @@ import {
   PushNotification,
   PushNotificationToken,
   PushNotificationActionPerformed } from '@capacitor/core';
+import {Platform} from "@ionic/angular";
 
 const { PushNotifications } = Plugins;
 
@@ -19,6 +20,7 @@ export class MessagerieService {
   public constructor(
     private _notificationService: NotificationService,
     private _pushSubscriptionService: PushSubscriptionService,
+    private _platform: Platform,
   ) {
 
   }
@@ -29,23 +31,28 @@ export class MessagerieService {
   public init(): Observable<boolean> {
     return new Observable((subscriber) => {
 
+      if (this._platform.is('android')) {
 
-      PushNotifications.addListener('registration', (token: PushNotificationToken) => {
-        console.log('####### registration #######: token = ' + token.value);
-        this._pushSubscriptionService.checkIfExistOrAddAndSubscribeNotif({ id : token.value , type: 'android' }).subscribe(() =>{
+        PushNotifications.addListener('registration', (token: PushNotificationToken) => {
+          console.log('####### registration #######: token = ' + token.value);
+          this._pushSubscriptionService.checkIfExistOrAddAndSubscribeNotif({
+            id: token.value,
+            type: 'android'
+          }).subscribe(() => {
 
-          // tslint:disable-next-line:no-multi-spaces
-        },                                                                                        () => {
+            // tslint:disable-next-line:no-multi-spaces
+          }, () => {
 
+          });
         });
-      });
 
 
-      PushNotifications.addListener('registrationError',
-        (error: any) => {
+        PushNotifications.addListener('registrationError',
+          (error: any) => {
 
-        }
-      );
+          }
+        );
+      }
 
 
 
