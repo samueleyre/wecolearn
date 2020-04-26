@@ -97,38 +97,40 @@ export class AppComponent {
             };
           }
 
-          try {
-            PushNotifications.addListener('pushNotificationReceived',
-                                          (notification: PushNotification) => {
-                console.log('nottification receiveed ######## ' + JSON.stringify(notification));
-                this._zone.run(() => {
-                  const message = new Message(JSON.parse(notification.data.message));
-                  message.thread = new Thread({
-                    id: message.sender.id,
-                    name: message.sender.first_name,
-                    image: message.sender.image,
+          if (this.platform.is('android')) {
+            try {
+              PushNotifications.addListener('pushNotificationReceived',
+                (notification: PushNotification) => {
+                  console.log('nottification receiveed ######## ' + JSON.stringify(notification));
+                  this._zone.run(() => {
+                    const message = new Message(JSON.parse(notification.data.message));
+                    message.thread = new Thread({
+                      id: message.sender.id,
+                      name: message.sender.first_name,
+                      image: message.sender.image,
+                    });
+                    this.messagesService.addMessage(message);
                   });
-                  this.messagesService.addMessage(message);
-                });
-              },
-            );
+                },
+              );
 
-            PushNotifications.addListener('pushNotificationActionPerformed',
-                                          (notification: PushNotificationActionPerformed) => {
-                console.log('########notif####### action performed' + JSON.stringify(notification));
-                this._zone.run(() => {
-                  this.router.navigateByUrl('/dashboard/discussion');
-                  const message = new Message(JSON.parse(notification.notification.data.message));
-                  message.thread = new Thread({
-                    id: message.sender.id,
-                    name: message.sender.first_name,
-                    image: message.sender.image,
+              PushNotifications.addListener('pushNotificationActionPerformed',
+                (notification: PushNotificationActionPerformed) => {
+                  console.log('########notif####### action performed' + JSON.stringify(notification));
+                  this._zone.run(() => {
+                    this.router.navigateByUrl('/dashboard/discussion');
+                    const message = new Message(JSON.parse(notification.notification.data.message));
+                    message.thread = new Thread({
+                      id: message.sender.id,
+                      name: message.sender.first_name,
+                      image: message.sender.image,
+                    });
+                    this.messagesService.addMessage(message);
                   });
-                  this.messagesService.addMessage(message);
                 });
-              });
-          } catch (error) {
-            console.log(error);
+            } catch (error) {
+              console.log(error);
+            }
           }
 
 
