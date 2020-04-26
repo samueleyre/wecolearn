@@ -1,10 +1,6 @@
 ## Dépendances
 
-docker
-
-docker-compose ( avec sudo )
-
-Make
+docker, docker-compose ( avec sudo ), Make
 
 ### Installation back et front
 
@@ -54,7 +50,9 @@ voir [front/README.md](https://github.com/samueleyre/wecolearn/blob/dev/front/RE
 Problème de cache ou de droits ?   
 
 ``
-make dev
+make fixPermissions
+make clearCache
+``
 ``
 
 
