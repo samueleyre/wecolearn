@@ -10,8 +10,8 @@
     "build:debug": "ng build --aot --watch && node scripts/precacheAndBuild.js",
     "serve:build": "lite-server --baseDir=dist/front",
     "resources": "cordova-res android --skip-config --copy",
-    "test:e2e:debug": "yarn run cypress run --env ENV_NAME=local --spec cypress/integration/*.e2e.ts",
-    "test:e2e": "yarn run cypress run --spec cypress/integration/*.e2e.ts",
+    "test:e2e:debug": "yarn run cypress run --env ENV_NAME=local --spec cypress/integration/*e2e.ts",
+    "test:e2e": "yarn run cypress run --spec cypress/integration/*e2e.ts",
     "open:cypress:debug": "yarn run cypress open --env ENV_NAME=local",
     "open:cypress": "yarn run cypress open"
   },
