@@ -3,14 +3,14 @@ App\Services\User\Entity\Image:
     access_order:     alphabetical
     properties:
         id:
-          groups: [ input, output, notif ]
+          groups: [ input, output ]
         version:
-          groups: [ output, search, profile, public-profile, message, notif]
+          groups: [ output, search, profile, public-profile, message]
         publicId:
-          groups: [ output, search, profile, public-profile, message , notif]
+          groups: [ output, search, profile, public-profile, message ]
         created:
           groups: [ output]
         filename:
-          groups: [ input, notif ]
+          groups: [ input ]
 
 
