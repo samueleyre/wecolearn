@@ -44,9 +44,9 @@ make test
 `
 
 ### Version mobile
-`
-voir front/READ.ME
-`
+
+voir [front/README.md](https://github.com/samueleyre/wecolearn/blob/dev/front/README.md)
+
 
 
 ## Debug dev
