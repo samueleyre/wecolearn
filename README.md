@@ -50,9 +50,8 @@ voir [front/README.md](https://github.com/samueleyre/wecolearn/blob/dev/front/RE
 Problème de cache ou de droits ?   
 
 ``
-make fixPermissions
+make fixPermissions;
 make clearCache
-``
 ``
 
 
