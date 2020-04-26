@@ -1,10 +1,10 @@
-name: dev server for Ionic
+name: dev server for android
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-    branches: [ ionic ]
+    branches: [ dev ]
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -23,4 +23,4 @@ jobs:
           username: ${{ secrets.ionicServer_user }}
           password: ${{ secrets.ionicServer_password }}
           port: ${{ secrets.ionicServer_port }}
-          script: cd src/wecolearn; git fetch origin; git reset --hard origin/ionic; docker-compose exec -T api bash -c "php bin/console do:sc:up -f"
+          script: cd src/wecolearn; git fetch origin; git reset --hard origin/dev; docker-compose exec -T api bash -c "php bin/console do:sc:up -f"
