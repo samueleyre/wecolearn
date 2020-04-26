@@ -76,7 +76,6 @@
     "@types/lodash": "4.14.123",
     "@types/node": "11.13.4",
     "codelyzer": "~5.0.0",
-    "git-pre-commit": "^2.1.4",
     "ts-node": "~8.0.3",
     "tslint": "~5.15.0",
     "tslint-config-airbnb": "^5.11.1",
