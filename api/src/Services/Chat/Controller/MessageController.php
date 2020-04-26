@@ -4,6 +4,7 @@ namespace App\Services\Chat\Controller;
 
 use App\Services\Chat\Entity\Message;
 use App\Services\Chat\Service\BrockerService;
+use App\Services\Chat\Service\MessageSerializer;
 use App\Services\Chat\Service\MessageService;
 use App\Services\Chat\Service\NotificationService;
 use App\Services\Chat\Service\PushService;
@@ -101,7 +102,7 @@ class MessageController extends AbstractController
         MessageBusInterface $bus,
         NotificationService $notificationService,
         PushService $pushMessage,
-        SerializerInterface $serializer
+        MessageSerializer $messageSerializer
 
     ) {
 
@@ -122,15 +123,13 @@ class MessageController extends AbstractController
         ## SEND IT TO SERVICE WORKER BY WEB PUSH
         $pushMessage->process($friend, $message, $request );
 
-        ## SEND NOTIFICATION TO MOBILE.
+        ## SEND NOTIFICATION TO MOBILE
         $notificationService->process( $friend, $message, $request );
 
-        $serializedMessage = $serializer->serialize($message, 'json', SerializationContext::create()->setGroups('message'));
-
-        ## SEND IT BY MERCURE PROTOCOLE
+        ## SEND IT BY MERCURE PROTOCOLE FOR WEB
         $update = new Update(
             'https://wecolearn.com/message',
-            $serializedMessage,
+            $messageSerializer->getPayload($message, $request),
             ["https://{$this->getParameter('host')}/message/{$friend->getId()}"]
         );
         $bus->dispatch($update);

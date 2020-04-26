@@ -20,7 +20,7 @@ class MessageSerializer
         $ret = $this->serializer->serialize(
             $message,
             'json',
-            SerializationContext::create()->setGroups(['notif'])
+            SerializationContext::create()->setGroups(['message'])
         );
         syslog( LOG_ERR, $ret );
         return $ret;
