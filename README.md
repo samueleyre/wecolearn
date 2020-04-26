@@ -1,4 +1,4 @@
-# Dépendances
+## Dépendances
 
 docker
 
@@ -6,37 +6,47 @@ docker-compose ( avec sudo )
 
 Make
 
-## Installation back et front
+### Installation back et front
 
 ``
 make install
 ``
 
 
-## Créer la base de donnée
+### Créer la base de donnée
 
 ``
 make createDatabase
 ``
 
-## Remplir les fixtures
+### Remplir les fixtures
 
 ``
 make loadFixtures
 ``
 
-## Démarrer back
+### Démarrer back
 
 ``
 docker-compose up webserver
 ``
 
 
-## Démarrer front 
+### Démarrer front 
 
 ``
 docker-compose up angular
 ``
+
+### Lancer les tests e2e
+`
+make test
+`
+
+### Version mobile
+`
+voir front/READ.ME
+`
 
 
 ## Debug dev
@@ -45,19 +55,6 @@ Problème de cache ou de droits ?
 
 ``
 make dev
-``
-
-
-# Online servers
-
-## Connect to online database
-
-``
-scalingo -a wecolearn-api-prod db-tunnel SCALINGO_MYSQL_URL
-``
-
-``
-scalingo -a wecolearn-api-staging db-tunnel SCALINGO_MYSQL_URL
 ``
 
 
