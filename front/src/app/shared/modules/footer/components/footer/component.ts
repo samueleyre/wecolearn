@@ -15,6 +15,7 @@ export class MainFooterComponent {
   twitterLink = SOCIALS.twitterLink;
   telegramLink = SOCIALS.telegramLink;
   meetupLink = SOCIALS.meetupLink;
+  blogLink = SOCIALS.blogLink;
 
   peerLearningLink = NAV.peerLearning;
   aboutLink = NAV.aboutUs;
