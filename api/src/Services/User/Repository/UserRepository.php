@@ -127,7 +127,8 @@ class UserRepository extends ServiceEntityRepository
         }
 
         $qb->Where('user.showProfil = :showProfil')->setParameter('showProfil', 1);
-        $qb->andWhere('user.deleted is NOT NULL');
+
+        $qb->andWhere('user.deleted IS NULL');
 
         // not current user
         if ($user) {
