@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Platform } from '@ionic/angular';
 
 import { environment } from '~/../environments/environment';
-import { Platform } from '@ionic/angular';
 
 
 @Injectable({
@@ -14,8 +14,7 @@ export class PushSubscriptionService {
   }
 
   public async process(): Promise<any> {
-
-    console.log( '####### processs ##########');
+    console.log('####### processs ##########');
     return new Promise((resolve , reject) => {
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready.then((reg) => {
@@ -57,8 +56,7 @@ export class PushSubscriptionService {
             });
         }); // no rejection possible.
       } else {
-        reject( 'no service worker');
-
+        reject('no service worker');
       }
     });
   }
