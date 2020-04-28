@@ -1,7 +1,10 @@
 <mat-form-field appearance="legacy" [formGroup]="parentForm">
   <mat-label>Email</mat-label>
-  <input matInput type="email" placeholder="Email" formControlName="email">
-  <mat-error *ngIf="parentForm.controls.email.hasError('email') && !parentForm.controls.email.hasError('required')">
+  <input id="emailInput" matInput type="email" placeholder="Email" formControlName="email">
+  <mat-error *ngIf="parentForm.controls.email.hasError('duplicate')">
+    Cette adresse email est déjà utilisée.
+  </mat-error>
+  <mat-error *ngIf="parentForm.controls.email.hasError('pattern') && !parentForm.controls.email.hasError('required')">
     L'email n'est pas valide
   </mat-error>
   <mat-error *ngIf="parentForm.controls.email.hasError('required')">

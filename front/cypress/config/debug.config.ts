@@ -8,7 +8,7 @@ import { TestsInterface } from './tests.interface';
  */
 export const DEBUG_CONFIG = {
   e2e: <TestsInterface>{
-    signup: false,
+    signup: true,
     signin: true,
   },
 };

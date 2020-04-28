@@ -6,10 +6,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-export class AuthFormEmailComponent implements OnInit {
+export class AuthFormEmailComponent {
   @Input() parentForm: FormGroup;
-
-  ngOnInit(): void {
-    //
-  }
+  @Input() error: string = null;
 }
