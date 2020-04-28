@@ -3,6 +3,7 @@
 namespace App\Services\User\Event;
 
 use App\Services\Chat\Service\EmailService;
+use App\Services\Tag\Constant\TagConstant;
 use App\Services\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -68,7 +69,7 @@ class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
 
           $commonTags = $matchingUser->getTags()->filter(function($tag) use ($user) {
               $userHasTag = $user->getTags()->filter(function($userTag) use ($tag) {
-                  return $userTag->getId() === $tag->getId() && $tag->getType() === 0;
+                  return $userTag->getId() === $tag->getId() && $tag->getType() === TagConstant::$types['learning'];
               });
               return count($userHasTag) > 0;
           })->map(function($tag) {

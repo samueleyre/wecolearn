@@ -3,7 +3,7 @@
 namespace App\Services\User\Entity;
 
 
-
+// Service worker notification subscription
 class Subscription
 {
     private $id;
