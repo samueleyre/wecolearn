@@ -4,6 +4,7 @@ import { cypress_login } from '../support/reusables/auth/cypress_login';
 import { USER_CONFIG } from '../config/user.config';
 import { cypress_signup } from '../support/reusables/auth/cypress_signup';
 import { closeCookiePolicy } from '../support/reusables/popins/cookiePolicy.cypress';
+import {cypress_logout} from "../support/reusables/auth/cypress_logout";
 
 // <reference types="Cypress" />
 
@@ -56,6 +57,7 @@ context('E2E', () => {
   if (config.signup) {
     describe('signup', () => {
       cypress_signup(USER_CONFIG);
+      cypress_logout();
     });
   }
 

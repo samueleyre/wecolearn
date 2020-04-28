@@ -3,12 +3,13 @@ import {
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable, throwError } from 'rxjs';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { PATTERN } from '~/shared/config/pattern';
 import { onBoardingSections } from '~/modules/auth/components/onBoardingComponents/onBoarding.const';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
-
 import { environment } from '~/../environments/environment';
 
 
@@ -16,7 +17,8 @@ import { environment } from '~/../environments/environment';
   template: 'empty',
 })
 export class AuthOnboardingBaseComponent {
-  pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+  public selectedIndex = 0;
+  private pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   public titles = onBoardingSections;
 
   public userForm = this.fb.group({
@@ -55,6 +57,48 @@ export class AuthOnboardingBaseComponent {
           this.loading = false;
         },
       );
+  }
+
+  setSelection($event:StepperSelectionEvent) {
+    this.selectedIndex = $event.selectedIndex;
+    if ($event.selectedIndex === onBoardingSections.tags.index) {
+      setTimeout(() => {
+        this.tagInput.focus();
+      },         500);
+    }
+    if ($event.selectedIndex === onBoardingSections.bio.index) {
+      setTimeout(() => {
+        this.bioInput.focus();
+      },         500);
+    }
+    if ($event.selectedIndex === onBoardingSections.ids.index) {
+      setTimeout(() => {
+        this.firstnameInput.focus();
+      },         500);
+    }
+  }
+
+  get tagInput(): HTMLDivElement {
+    return <HTMLDivElement>document.getElementsByClassName('mat-chip-input')[0];
+  }
+
+  get bioInput(): HTMLTextAreaElement {
+    return <HTMLTextAreaElement>document.getElementsByTagName('textarea')[0];
+  }
+
+  get firstnameInput(): HTMLInputElement {
+    return <HTMLInputElement>document.getElementById('firstNameInput');
+  }
+
+  public get emailControl() {
+    return this.userForm.get('email');
+  }
+
+  get signUp(): Observable<any> {
+    if (this.selectedIndex !== onBoardingSections.ids.index) {
+      return throwError(true);
+    }
+    return this.authenticationService.signUp({ tags: this.userForm.value.learn_tags, ...this.userForm.value });
   }
 
   get learnType(): TagTypeEnum {

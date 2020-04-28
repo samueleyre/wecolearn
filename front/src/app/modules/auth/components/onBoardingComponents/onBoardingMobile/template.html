@@ -1,6 +1,6 @@
 <div class="Onboarding">
   <form (keydown.enter)="$event.preventDefault()" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
-    <mat-horizontal-stepper>
+    <mat-horizontal-stepper (selectionChange)="setSelection($event)">
         <ng-template matStepperIcon="edit">
             <i class="fa fa-check"></i>
         </ng-template>
@@ -61,7 +61,7 @@
                         <div class="col-12 no-padding">
                           <mat-form-field appearance="legacy" >
                             <mat-label>Prénom</mat-label>
-                            <input matInput placeholder="" formControlName="first_name"  >
+                            <input id="firstNameInput" matInput placeholder="" formControlName="first_name"  >
                           </mat-form-field>
                         </div>
                         <div class="col-12 no-padding">
@@ -70,9 +70,8 @@
                             <input matInput placeholder="" formControlName="last_name"  >
                           </mat-form-field>
                         </div>
-                        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
                         <div class="col-12 no-padding">
-                            <auth-form-email [parentForm]="userForm"></auth-form-email>
+                            <auth-form-email [parentForm]="userForm" [error]="error"></auth-form-email>
                         </div>
                         <div class="col-12 no-padding">
                             <auth-form-password [parentForm]="userForm"></auth-form-password>
@@ -91,7 +90,7 @@
                   </p>
                   <div class="btn-container">
                         <button type="button" class="btn btn-secondary" matStepperPrevious>< Retour</button>
-                        <button type="submit" class="btn btn-primary" matStepperNext>Valider</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid" matStepperNext>Valider</button>
                     </div>
                 </div>
             </div>

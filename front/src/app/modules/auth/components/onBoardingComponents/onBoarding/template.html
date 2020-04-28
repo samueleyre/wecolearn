@@ -1,6 +1,6 @@
 <div class="Onboarding">
-  <form (keydown.enter)="$event.preventDefault()" (ngSubmit)="submit()" [formGroup]="userForm">
-    <mat-horizontal-stepper>
+  <form (ngSubmit)="submit()" [formGroup]="userForm">
+    <mat-horizontal-stepper (selectionChange)="setSelection($event)">
       <ng-template matStepperIcon="profil">
         <i class="fa fa-user"></i>
       </ng-template>
@@ -10,8 +10,8 @@
       <ng-template matStepperIcon="done">
         <mat-icon>done_all</mat-icon>
       </ng-template>
-      <mat-step label="Ville">
-        <div class="card">
+      <mat-step label="Ville" >
+        <div class="card" id="cityStep">
           <div class="card-header">
             <h6 class="center">{{titles.city.title}}</h6>
           </div>
@@ -25,8 +25,8 @@
           </div>
         </div>
       </mat-step>
-      <mat-step label="Apprentissage">
-        <div class="card">
+      <mat-step label="Apprentissage" >
+        <div class="card" id="learningStep">
           <div class="card-header">
             <h6 class="center">{{titles.tags.title}}</h6>
           </div>
@@ -42,8 +42,8 @@
           </div>
         </div>
       </mat-step>
-      <mat-step label="Projets">
-        <div class="card">
+      <mat-step label="Projets" >
+        <div class="card" id="projectStep">
           <div class="card-header">
             <h6 class="center">{{titles.bio.title}}</h6>
           </div>
@@ -58,8 +58,8 @@
           </div>
         </div>
       </mat-step>
-      <mat-step label="Identifiants">
-        <div class="card">
+      <mat-step label="Identifiants"  >
+        <div class="card" id="idStep">
           <div class="card-header">
             <h6 class="center">{{titles.ids.title}}</h6>
           </div>
@@ -68,13 +68,13 @@
               <div class="col-12 no-padding">
                 <mat-form-field appearance="legacy" >
                   <mat-label>Prénom</mat-label>
-                  <input matInput placeholder="" formControlName="first_name"  >
+                  <input id="firstNameInput" matInput placeholder="" formControlName="first_name"  >
                 </mat-form-field>
               </div>
               <div class="col-12 no-padding">
                 <mat-form-field appearance="legacy">
                   <mat-label>Nom</mat-label>
-                  <input matInput placeholder="" formControlName="last_name"  >
+                  <input id="lastNameInput" matInput placeholder="" formControlName="last_name"  >
                 </mat-form-field>
               </div>
               <div class="col-12 no-padding">

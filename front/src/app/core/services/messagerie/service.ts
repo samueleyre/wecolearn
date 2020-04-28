@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-import { NotificationService } from '~/shared/components/notification/service';
-import { PushSubscriptionService } from '~/shared/components/push-subscription/service';
-
 import {
   Plugins,
   PushNotification,
   PushNotificationToken,
   PushNotificationActionPerformed } from '@capacitor/core';
-import {Platform} from "@ionic/angular";
+import { Platform } from '@ionic/angular';
+
+import { NotificationService } from '~/shared/components/notification/service';
+import { PushSubscriptionService } from '~/shared/components/push-subscription/service';
 
 const { PushNotifications } = Plugins;
 
@@ -30,27 +29,24 @@ export class MessagerieService {
 
   public init(): Observable<boolean> {
     return new Observable((subscriber) => {
-
       if (this._platform.is('android')) {
-
         PushNotifications.addListener('registration', (token: PushNotificationToken) => {
           console.log('####### registration #######: token = ' + token.value);
           this._pushSubscriptionService.checkIfExistOrAddAndSubscribeNotif({
             id: token.value,
-            type: 'android'
+            type: 'android',
           }).subscribe(() => {
-
             // tslint:disable-next-line:no-multi-spaces
-          }, () => {
+          },           () => {
 
           });
         });
 
 
         PushNotifications.addListener('registrationError',
-          (error: any) => {
+                                      (error: any) => {
 
-          }
+                                      },
         );
       }
 
@@ -62,8 +58,8 @@ export class MessagerieService {
             // tslint:disable-next-line:no-multi-spaces
           },    (error) => {
             console.log(error);
-        });
-      },                                                 (error ) => {
+          });
+      },                                                 (error) => {
         console.log(error);
       });
     });

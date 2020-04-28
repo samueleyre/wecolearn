@@ -6,7 +6,7 @@
 
     <div class="container">
         <div class="row justify-content-between">
-            <div class="col-4">
+            <div class="col-12 col-md-4">
               <a class="networkLink" target="_blank" href="{{meetupLink}}"><i class="fab fa-meetup"></i></a>
               <a class="networkLink" target="_blank" href="{{faceBookLink}}"><i class="fab fa-facebook-f"></i></a>
               <a class="networkLink" target="_blank" href="{{twitterLink}}"><i class="fab fa-twitter"></i></a>
@@ -15,7 +15,7 @@
                 <br>
               <p><a href="mailto:contact@wecolearn.com">contact@wecolearn.com</a></p>
             </div>
-            <div class="col-4" >
+            <div class="col-12 col-md-4" >
                 <a class="pageLink" routerLink="{{homeLink}}" routerLinkActive="hide">Accueil</a>
                 <a class="pageLink" href="{{blogLink}}" >Actualités</a>
                 <a class="pageLink" routerLink="{{manifestLink}}" routerLinkActive="hide">Manifeste</a>
@@ -26,8 +26,7 @@
         </div>
     </div>
 
-
-    <div class="center">
+    <div class="copyright">
       © <span>{{ now | date: 'yyyy' }}</span> - Wecolearn
     </div>
     <br>

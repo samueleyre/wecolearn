@@ -25,18 +25,15 @@ export class AuthOnboardingComponent extends AuthOnboardingBaseComponent{
   }
 
   submit() {
-    this._authenticationService.signUp({ tags: this.userForm.value.learn_tags, ...this.userForm.value }).subscribe(
-      (response) => {
+    // only if on last index
+    this.signUp.subscribe(
+      () => {
         this.login();
       },
       (error) => {
-        if (error.error && error.error && error.error.error === 'resource already used') {
+        if (error.error && error.error.error && error.error.error === 'resource already used') {
           this._toastr.error('Cette adresse email est déjà utilisée.');
-          setTimeout(
-            () => {
-              this.error = null;
-            },
-            5000); // tslint:disable-line no-magic-numbers
+          this.emailControl.setErrors({ duplicate:true });
         }
       },
     );
