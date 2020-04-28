@@ -419,6 +419,7 @@ class UserController extends AbstractController
 //    }
 
     /**
+     * for service worker
      * @Post("/user/notification/check-if-exist-or-add-and-subscribe")
      */
     public function checkIfSubscriptionExistOrAddAndSubscribeAction(Request $request, EntityManagerInterface $em, TokenStorageInterface $tokenStorage)
@@ -463,6 +464,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * for android
      * @Post("/user/notification/check-if-exist-or-add-and-subscribe-notif")
      */
     public function checkIfSubscriptionExistOrAddAndSubscribeNotifAction(Request $request, EntityManagerInterface $em, TokenStorageInterface $tokenStorage)
@@ -473,6 +475,10 @@ class UserController extends AbstractController
 
         $token = $data['id'];
         $type = $data['type'];
+
+        if ($type === 'android') {
+            $type = TokenConstant::$types['ANDROID_NOTIFICATION_SUBSCRIPTION'];
+        }
 
         syslog(LOG_ERR, sprintf("########### SUBSCRIPTION WITH token : %s . ########################",$token));
 
@@ -499,16 +505,16 @@ class UserController extends AbstractController
     }
 
 
-    /**
-     * @Post("/user/notification/unsubscribe")
-     */
-    public function notificationUnsubscribeAction(EntityManagerInterface $em, TokenStorageInterface $tokenStorage)
-    {
-        $user = $tokenStorage->getToken()->getUser();
-        $user->setNotificationSubscribe(false);
-        $em->merge($user);
-        $em->flush();
-
-        return [];
-    }
+//    /**
+//     * @Post("/user/notification/unsubscribe")
+//     */
+//    public function notificationUnsubscribeAction(EntityManagerInterface $em, TokenStorageInterface $tokenStorage)
+//    {
+//        $user = $tokenStorage->getToken()->getUser();
+//        $user->setNotificationSubscribe(false);
+//        $em->merge($user);
+//        $em->flush();
+//
+//        return [];
+//    }
 }
