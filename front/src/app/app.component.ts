@@ -1,8 +1,12 @@
 import { Component, NgZone, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import {
+  Plugins,
+  PushNotification,
+  PushNotificationActionPerformed } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 
 import { Logged } from '~/core/services/auth/logged';
 import { IconService } from '~/core/services/icon.service';
@@ -10,21 +14,12 @@ import { MessagesService } from '~/modules/chat/services/messages';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
-import { navTitles } from '~/config/navigation/seo.const';
 import { NAV } from '~/config/navigation/nav';
 import { Threads } from '~/modules/chat/services/threads';
+import { SeoService } from '~/core/services/seo';
+
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
-import {SeoService} from '~/core/services/seo';
-
-import {
-  Plugins,
-  PushNotification,
-  PushNotificationToken,
-  PushNotificationActionPerformed } from '@capacitor/core';
-import { registerWebPlugin } from '@capacitor/core';
-import {Image} from "~/core/entities/image/entity";
-import {Platform} from "@ionic/angular";
 
 const { PushNotifications } = Plugins;
 
@@ -58,8 +53,6 @@ export class AppComponent {
       });
 
 
-
-
     this.initMessagerieService();
     this.iconService.init();
   }
@@ -72,10 +65,10 @@ export class AppComponent {
         if (logged && !oldLog) {
           // todo : move this to a dedicated service
 
-          // subscribe to notifications
-          if (!this.platform.is('android')) {
+          // subscribe to mercure updates
+          if (!environment.android) {
             const url = `${environment.mercureUrl}?topic=https://wecolearn.com/message`;
-            new EventSource(encodeURI(url), {withCredentials: true}).onmessage = (evt: MessageEvent) => {
+            new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
               const message = new Message(JSON.parse(evt.data));
               message.thread = new Thread({
                 id: message.sender.id,
@@ -97,11 +90,13 @@ export class AppComponent {
             };
           }
 
-          if (this.platform.is('android')) {
+          // subscribe to android notifications
+          if (environment.android) {
             try {
-              PushNotifications.addListener('pushNotificationReceived',
+              PushNotifications.addListener(
+                'pushNotificationReceived',
                 (notification: PushNotification) => {
-                  console.log('nottification receiveed ######## ' + JSON.stringify(notification));
+                  console.log('notification received ######## ' + JSON.stringify(notification));
                   this._zone.run(() => {
                     const message = new Message(JSON.parse(notification.data.message));
                     message.thread = new Thread({
@@ -114,7 +109,8 @@ export class AppComponent {
                 },
               );
 
-              PushNotifications.addListener('pushNotificationActionPerformed',
+              PushNotifications.addListener(
+                'pushNotificationActionPerformed',
                 (notification: PushNotificationActionPerformed) => {
                   console.log('########notif####### action performed' + JSON.stringify(notification));
                   this._zone.run(() => {
