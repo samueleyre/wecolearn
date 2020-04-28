@@ -10,6 +10,8 @@ import { Platform } from '@ionic/angular';
 import { NotificationService } from '~/shared/components/notification/service';
 import { PushSubscriptionService } from '~/shared/components/push-subscription/service';
 
+import { environment } from '../../../../environments/environment.capacitor';
+
 const { PushNotifications } = Plugins;
 
 @Injectable({
@@ -29,7 +31,7 @@ export class MessagerieService {
 
   public init(): Observable<boolean> {
     return new Observable((subscriber) => {
-      if (this._platform.is('android')) {
+      if (environment.android) {
         PushNotifications.addListener('registration', (token: PushNotificationToken) => {
           console.log('####### registration #######: token = ' + token.value);
           this._pushSubscriptionService.checkIfExistOrAddAndSubscribeNotif({
@@ -50,8 +52,9 @@ export class MessagerieService {
         );
       }
 
-      this._notificationService.requestPermission().then(() => {
-        this._pushSubscriptionService.process()
+      this._notificationService.requestPermission().then(
+        () => {
+          this._pushSubscriptionService.process()
           .then(() => {
             subscriber.next(true);
             this._type.next('push');
@@ -59,9 +62,10 @@ export class MessagerieService {
           },    (error) => {
             console.log(error);
           });
-      },                                                 (error) => {
-        console.log(error);
-      });
+        },
+        (error) => {
+          console.log(error);
+        });
     });
   }
 

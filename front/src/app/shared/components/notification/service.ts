@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import {
+  Plugins, NotificationPermissionResponse,
+} from '@capacitor/core';
 
 import { Threads } from '~/modules/chat/services/threads';
 
 import { Permission } from './const';
-
-import {
-  Plugins,
-  PushNotification,
-  PushNotificationToken,
-  PushNotificationActionPerformed, NotificationPermissionResponse
-} from '@capacitor/core';
+import { environment } from '../../../../environments/environment';
 
 const { PushNotifications } = Plugins;
 
@@ -18,36 +15,57 @@ const { PushNotifications } = Plugins;
   providedIn: 'root',
 })
 export class NotificationService {
-  public permission: NotificationPermissionResponse;
+  public mobileNativePermission: NotificationPermissionResponse;
+  public navPermission: Permission;
+
 
   constructor(
       private router: Router,
       private _threadsService: Threads,
-  ) {}
+  ) {
+    this.navPermission = this.isSupported ? 'default' : 'denied';
+  }
 
-  public isSupported(): boolean {
+  public get isSupported(): boolean {
     return 'Notification' in window;
   }
 
   public async requestPermission(): Promise<void> {
-    console.log( 'request permission ########################################');
+    // console.log('request permission ########################################');
     return new Promise((resolve, reject) => {
-
-
       try {
-        PushNotifications.requestPermission().then((status) => {
-          this.permission = status;
-          if (status.granted) {
-            PushNotifications.register();
-            resolve();
-          } else {
-            reject();
+        if (environment.android) {
+          // push notifications on mobile
+          PushNotifications.requestPermission().then(
+            (status) => {
+              console.log({ status });
+              this.mobileNativePermission = status;
+              if (status.granted) {
+                PushNotifications.register();
+                resolve();
+              } else {
+                reject();
+              }
+            },
+            () => {
+              console.log('rejected');
+              reject();
+            });
+        } else {
+          // push notifications on navigator
+          if (this.isSupported) {
+            Notification.requestPermission().then((status) => {
+              this.navPermission = status;
+              if (status === 'granted') {
+                resolve();
+              } else {
+                reject();
+              }
+            });
           }
-          // tslint:disable-next-line:no-multi-spaces
-        },                                         () => {
-          reject();
-        });
+        }
       } catch (error) {
+        console.log({ error });
         reject();
       }
     });
