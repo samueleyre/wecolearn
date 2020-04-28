@@ -3,7 +3,7 @@
 
 namespace App\Services\User\Entity;
 
-
+// android notification subscription
 class PushNotificationSubscription
 {
 
