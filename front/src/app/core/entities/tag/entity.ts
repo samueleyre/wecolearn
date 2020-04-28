@@ -10,7 +10,7 @@ export class Tag {
   public iteration?: number;
 
   constructor(obj?: {
-    id: number | null,
+    id?: number | null,
     name: string | null,
     tag_domain?: TagDomain | null,
     type: TagTypeEnum,

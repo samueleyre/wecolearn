@@ -1,5 +1,5 @@
 import {
-  Component,
+  Component, OnInit,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,18 +22,13 @@ export class AuthOnboardingMobileComponent extends AuthOnboardingBaseComponent {
   }
 
   submit() {
-    this._authenticationService.signUp({ tags: this.userForm.value.learn_tags, ...this.userForm.value }).subscribe(
+    this.signUp.subscribe(
       (response) => {
         this.login();
       },
       (error) => {
-        if (error.error && error.error && error.error.error === 'resource already used') {
-          this.error = 'Cette adresse email est déjà utilisée.';
-          setTimeout(
-            () => {
-              this.error = null;
-            },
-            5000); // tslint:disable-line no-magic-numbers
+        if (error.error && error.error.error && error.error.error === 'resource already used') {
+          this.emailControl.setErrors({ duplicate:true });
         }
       },
     );
