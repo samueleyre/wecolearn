@@ -1,0 +1,25 @@
+@import 'variables';
+@import "extendables";
+
+.SearchPage {
+
+  &-content {
+    height: calc(100vh - 109px);
+    padding-top: 10px;
+    overflow: auto;
+  }
+
+  &-cardsContainer{
+    justify-content: center;
+    &-card {
+      width: 300px;
+      margin: 20px 30px;
+    }
+  }
+
+  &-message {
+    font-style: italic;
+    color: #393939;;
+    margin-top: 5px;
+  }
+}

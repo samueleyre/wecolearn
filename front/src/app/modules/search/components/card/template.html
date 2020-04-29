@@ -1,8 +1,7 @@
 <div class="card">
-  <!--<img class="card-img-top" src="https://www.stevensegallery.com/600/400" alt="Card image cap"> todo: add upload of background image-->
   <div class="card-img-top"></div>
   <div class="profil-img">
-    <img defaultProfileImage src="{{card.image | cloudinaryImagePipe}}" />
+    <img alt="image de {{card.first_name}}" defaultProfileImage src="{{card.image | cloudinaryImagePipe}}" />
   </div>
   <div class="card-header">
     <h5 class="card-title"><a routerLink="/dashboard/profile/{{card.profil_url}}"><strong>{{card.first_name}} </strong> {{card.last_name}}</a></h5>

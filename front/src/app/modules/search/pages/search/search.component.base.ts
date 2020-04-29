@@ -15,9 +15,8 @@ import { SEARCH } from '../../config/main';
 
 
 @Component({
-  templateUrl: 'template.html',
-  styleUrls: ['./style.scss'],
-})export class SearchComponent implements OnInit {
+  template: '',
+})export class SearchComponentBase implements OnInit {
   public cards: any[] = [];
   public scrolling;
   public searchInput = null;
@@ -41,9 +40,8 @@ import { SEARCH } from '../../config/main';
   @ViewChild('pageContainer', { static: false }) cardsContainerElementRef: ElementRef;
 
   constructor(
-        private router: Router,
-        private _searchService: SearchService,
-        private deviceService: DeviceDetectorService,
+    private router: Router,
+    private searchService: SearchService,
   ) {
   }
 
@@ -53,8 +51,8 @@ import { SEARCH } from '../../config/main';
   }
 
   load(): void {
-    this._searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
-      if (this._searchService.searchType !== 'scroll') {
+    this.searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
+      if (this.searchService.searchType !== 'scroll') {
         // new SEARCH
         this.cardsContainerElementRef.nativeElement.scrollTo(0, 0);
         this.cards = clients;
@@ -70,10 +68,10 @@ import { SEARCH } from '../../config/main';
 
     // init search on page load
     const params = {};
-    if (this._searchService.searchInputValue) {
-      params['tag'] = this._searchService.searchInputValue;
+    if (this.searchService.searchInputValue) {
+      params['tag'] = this.searchService.searchInputValue;
     }
-    this._searchService.search(params).subscribe();
+    this.searchService.search(params).subscribe();
   }
 
   get searchMessage(): string | null {
@@ -82,11 +80,11 @@ import { SEARCH } from '../../config/main';
     }
 
     let meta = null;
-    if (this._searchService.searchMeta) {
-      meta = this._searchService.searchMeta;
+    if (this.searchService.searchMeta) {
+      meta = this.searchService.searchMeta;
     }
     if (this.cards.length === 0) {
-      if (this._searchService.searchInputValue) {
+      if (this.searchService.searchInputValue) {
         return this.messages.noResultsWithSearch;
       }
       return this.messages.noResults;
@@ -99,7 +97,7 @@ import { SEARCH } from '../../config/main';
 
       if (metaKeys.length > 0) {
         // if got results without using matching tags
-        if (!this._searchService.searchInputValue && meta[SearchMeta.orderByDistance]) {
+        if (!this.searchService.searchInputValue && meta[SearchMeta.orderByDistance]) {
           return this.messages.localProfiles;
         }
         // found match !
@@ -114,18 +112,13 @@ import { SEARCH } from '../../config/main';
     this.search({ max: SearchService.max });
   }
 
-  onScrollMobile(ev) {
-    this.timeOutScroll();
-    SearchService.max += SEARCH.scrollLatence;
-    this.search({ max: SearchService.max });
-  }
-
   timeOutScroll() {
     this.scrolling = true;
-    setTimeout(() => {
-      this.scrolling = false;
-    },
-               SEARCH.scrollTimeOut);
+    setTimeout(
+      () => {
+        this.scrolling = false;
+      },
+      SEARCH.scrollTimeOut);
   }
 
   search(filters: {}) {
@@ -137,15 +130,11 @@ import { SEARCH } from '../../config/main';
       };
     }
 
-    this._searchService.search(filledFilters).subscribe();
+    this.searchService.search(filledFilters).subscribe();
   }
 
   get loading(): boolean {
-    return this._searchService.loading;
-  }
-
-  get isMobile() {
-    return this.deviceService.isMobile();
+    return this.searchService.loading;
   }
 
   get canScroll() {
