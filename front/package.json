@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "scripts": {
     "ng": "ng",
+    "lint": "ng lint",
     "build": "ng build --aot --configuration=$NODE_ENV && node scripts/precacheAndBuild.js",
     "build:prod": "ng build --aot --prod && node scripts/precacheAndBuild.js",
-    "lint": "ng lint",
     "serve": "ng serve --aot --host 0.0.0.0 && node scripts/precacheAndBuild.js",
     "build:debug": "ng build --aot --watch && node scripts/precacheAndBuild.js",
     "serve:build": "lite-server --baseDir=dist/front",

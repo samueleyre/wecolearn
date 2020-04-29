@@ -14,7 +14,7 @@ const buildSW = () => {
     }).then(({count, size, warnings}) => {
         // Optionally, log any warnings and details.
         warnings.forEach(console.warn);
-        if (process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== 'production') {
           console.log(`${count} files will be precached, totaling ${size} bytes.`);
         }
     });
