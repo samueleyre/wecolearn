@@ -92,16 +92,11 @@
                 {
                   "replace": "src/robots.txt",
                   "with": "src/robots.prod.txt"
-                },
-                {
-                  "replace": "src/sw.js",
-                  "with": "src/sw.prod.js"
                 }
               ],
               "assets": [
                 "src/assets",
                 "src/robots.txt",
-                "src/sw.js",
                 "src/sw.base.js",
                 "src/manifest.json",
                 "src/sitemap.xml",
@@ -155,16 +150,11 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.staging.ts"
-                },
-                {
-                  "replace": "src/sw.js",
-                  "with": "src/sw.prod.js"
                 }
               ],
               "assets": [
                 "src/assets",
                 "src/robots.txt",
-                "src/sw.js",
                 "src/sw.base.js",
                 "src/manifest.json",
                 "src/sitemap.xml",

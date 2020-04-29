@@ -4,7 +4,7 @@ const workboxBuild = require('workbox-build');
 const buildSW = () => {
     // This will return a Promise
     return workboxBuild.injectManifest({
-        swSrc: 'src/sw.js',
+        swSrc: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging' ? 'src/sw.prod.js' : 'src/sw.js',
         swDest: 'dist/front/sw.js',
         globDirectory: 'dist/front',
         globPatterns: [
