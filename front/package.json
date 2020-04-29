@@ -6,7 +6,7 @@
     "lint": "ng lint",
     "build": "ng build --aot --configuration=$NODE_ENV && node scripts/precacheAndBuild.js",
     "build:prod": "ng build --aot --prod && node scripts/precacheAndBuild.js",
-    "serve": "ng serve --aot --host 0.0.0.0 && node scripts/precacheAndBuild.js",
+    "serve": "ng serve --aot --host 0.0.0.0",
     "build:debug": "ng build --aot --watch && node scripts/precacheAndBuild.js",
     "serve:build": "lite-server --baseDir=dist/front",
     "resources": "cordova-res android --skip-config --copy",
