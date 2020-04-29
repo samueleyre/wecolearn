@@ -26,28 +26,13 @@
             "assets": [
               "src/assets",
               "src/robots.txt",
+              "src/sw.js",
+              "src/sw.base.js",
+              "src/sitemap.xml",
+              "src/manifest.json",
               "src/sitemap.xml",
               "src/.well-known",
-              {
-                "glob" : "index.no-sw.html",
-                "input" : "src",
-                "output": "/"
-              },
-              {
-                "glob": "_redirects",
-                "input": "src",
-                "output": "/"
-              },
-              {
-                "glob": "manifest.json",
-                "input": "src",
-                "output": "/"
-              },
-              {
-                "glob": "sw.dev.js",
-                "input": "src",
-                "output": "/"
-              },
+              "src/_redirects",
               {
                 "glob": "workbox-sw.js",
                 "input": "node_modules/workbox-sw/build",
@@ -107,28 +92,21 @@
                 {
                   "replace": "src/robots.txt",
                   "with": "src/robots.prod.txt"
+                },
+                {
+                  "replace": "src/sw.js",
+                  "with": "src/sw.prod.js"
                 }
               ],
               "assets": [
                 "src/assets",
                 "src/robots.txt",
+                "src/sw.js",
+                "src/sw.base.js",
+                "src/manifest.json",
                 "src/sitemap.xml",
                 "src/.well-known",
-                {
-                  "glob": "_redirects",
-                  "input": "src",
-                  "output": "/"
-                },
-                {
-                  "glob": "manifest.json",
-                  "input": "src",
-                  "output": "/"
-                },
-                {
-                  "glob": "sw.js",
-                  "input": "src",
-                  "output": "/"
-                },
+                "src/_redirects",
                 {
                   "glob": "workbox-sw.js",
                   "input": "node_modules/workbox-sw/build",
@@ -177,28 +155,21 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.staging.ts"
+                },
+                {
+                  "replace": "src/sw.js",
+                  "with": "src/sw.prod.js"
                 }
               ],
               "assets": [
                 "src/assets",
                 "src/robots.txt",
+                "src/sw.js",
+                "src/sw.base.js",
+                "src/manifest.json",
                 "src/sitemap.xml",
                 "src/.well-known",
-                {
-                  "glob": "_redirects",
-                  "input": "src",
-                  "output": "/"
-                },
-                {
-                  "glob": "manifest.json",
-                  "input": "src",
-                  "output": "/"
-                },
-                {
-                  "glob": "sw.js",
-                  "input": "src",
-                  "output": "/"
-                },
+                "src/_redirects",
                 {
                   "glob": "workbox-sw.js",
                   "input": "node_modules/workbox-sw/build",
@@ -242,16 +213,25 @@
                 }
               ]
             },
-            "capacitor": {
+            "android-dev": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.capacitor.ts"
+                  "with": "src/environments/environment.android-dev.ts"
                 },
                 {
-                  "replace": "src/index.html",
-                  "with": "src/index.no-sw.html"
+                  "replace": "src/assets/js/registerSW.js",
+                  "with": "src/assets/js/registerSW.android.js"
                 }
+              ],
+              "assets": [
+                "src/assets",
+                "src/robots.txt",
+                "src/sitemap.xml",
+                "src/manifest.json",
+                "src/sitemap.xml",
+                "src/.well-known",
+                "src/_redirects"
               ],
               "optimization": false,
               "outputHashing": "none",
@@ -262,6 +242,43 @@
               "extractLicenses": true,
               "vendorChunk": true,
               "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "android-prod": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.android-prod.ts"
+                },
+                {
+                  "replace": "src/assets/js/registerSW.js",
+                  "with": "src/assets/js/registerSW.android.js"
+                }
+              ],
+              "assets": [
+                "src/assets",
+                "src/robots.txt",
+                "src/sitemap.xml",
+                "src/manifest.json",
+                "src/sitemap.xml",
+                "src/.well-known",
+                "src/_redirects"
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -284,8 +301,11 @@
             "staging": {
               "browserTarget": "app:build:staging"
             },
-            "capacitor": {
-              "browserTarget": "app:build:capacitor"
+            "android-dev": {
+              "browserTarget": "app:build:android-dev"
+            },
+            "android-production": {
+              "browserTarget": "app:build:android-production"
             }
           }
         },

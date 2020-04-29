@@ -1,7 +1,7 @@
 importScripts('workbox/workbox-sw.js', 'sw.base.js');
 
 workbox.setConfig({
-    debug: true,
+    debug: false,
     modulePathPrefix: 'workbox/'
 });
 
