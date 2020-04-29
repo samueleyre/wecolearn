@@ -5,7 +5,7 @@
     <input matInput id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="" [formControl]="addressCtrl" [matAutocomplete]="auto" (focusout)="inputLostFocus()" >
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAddressSelect($event)">
       <mat-option *ngFor="let address of foundAddresses | async" [value]="address">
-        {{ address.address }}
+        {{ address.city }}, {{address.country}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
