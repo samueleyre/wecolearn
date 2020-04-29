@@ -8,6 +8,6 @@ import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
 export class RemoveHtmlPipe implements PipeTransform {
   constructor(private sanitized: DomSanitizer) {}
   transform(str: string) {
-    return str.replace( /(<([^>]+)>)/ig, '');
+    return str.replace(/(<([^>]+)>)/ig, '');
   }
 }

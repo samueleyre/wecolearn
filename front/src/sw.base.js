@@ -1,20 +1,8 @@
-importScripts('workbox/workbox-sw.js');
-
 const VERSION = 'v7';
-
-workbox.setConfig({
-    debug: true,
-    modulePathPrefix: 'workbox/'
-});
-
-if(workbox) {
-    console.log('INFO Workbox loaded');
-}
 
 //workbox.skipWaiting();
 //workbox.clientsClaim();
 
-workbox.precaching.precacheAndRoute([]);
 
 /*
 workbox.routing.registerRoute(
@@ -64,10 +52,7 @@ workbox.routing.registerRoute(
     new workbox.strategies.CacheFirst()
 );
 */
-workbox.routing.registerRoute(
-    new RegExp('/$'),
-    new workbox.strategies.CacheFirst()
-);
+
 
 
 self.addEventListener('push', async function(e) {
@@ -106,8 +91,6 @@ var openNewWindow = ( e ) => {
     });
 }
 
-
-
 var sendMessageIfWindowIsVisible = ( e ) => {
     return new Promise( (resolve , reject ) => {
         clients.matchAll({
@@ -127,31 +110,26 @@ var sendMessageIfWindowIsVisible = ( e ) => {
             const data = e.data.json();
 
             if( clientIsVisible ) {
-                  //broadcast message
+                // this case is managed with mercure event stream
+            } else {
+                // notify user if window is closed
+                const options = {
+                    body: data.message.replace( /(<([^>]+)>)/ig, ''),
+                    icon: 'assets/logo/wecolearn.png',
+                    vibrate: [100, 50, 100],
+                    data: {
+                        dateOfArrival: Date.now(),
+                        primaryKey: 1
+                    },
+                    tag : data.host
+                };
 
-                // todo : useful ?
-                  // const channel = new BroadcastChannel('sw-messages');
-                  // channel.postMessage(JSON.stringify(data.message));
-                  // resolve( true );
-                } else {
-                    var body = data.message.message;
-                    var options = {
-                        body: body,
-                        icon: 'assets/logo/wecolearn.png',
-                        vibrate: [100, 50, 100],
-                        data: {
-                            dateOfArrival: Date.now(),
-                            primaryKey: 1
-                        },
-                        tag : data.host
-                    };
-
-                    self.registration.showNotification(data.message.senderName, options ).then(( onNotif ) => {
-                        // const channel = new BroadcastChannel('sw-messages');
-                        // channel.postMessage(JSON.stringify(data.message));
-                        resolve( onNotif );
-                    })
-                }
+                self.registration.showNotification(data.sender.first_name, options ).then(( onNotif ) => {
+                    // const channel = new BroadcastChannel('sw-messages');
+                    // channel.postMessage(JSON.stringify(data.message));
+                    resolve( onNotif );
+                })
+            }
         });
 
     });

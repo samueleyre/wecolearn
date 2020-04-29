@@ -92,6 +92,7 @@ export class AppComponent {
 
           // subscribe to android notifications
           if (environment.android) {
+            console.log('should not show');
             try {
               PushNotifications.addListener(
                 'pushNotificationReceived',
