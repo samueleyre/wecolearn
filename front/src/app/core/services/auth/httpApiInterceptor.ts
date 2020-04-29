@@ -38,7 +38,7 @@ export class HttpApiInterceptor implements HttpInterceptor {
         return next.handle(req);
       }
       if (this.APIMETHODS.indexOf(req.method) !== -1 &&
-        !(req.method === 'GET' && req.url.substring(0, 4) === 'http')) {
+        !(req.url.substring(0, 4) === 'http')) {
         update['url'] = `${this.api}${req.url}`;
 
         const httpHeaders = {};

@@ -1,7 +1,7 @@
 export const environment = {
   origin : 'http://localhost:8080',
   publique : 'http://localhost:4200',
-  mapApiKey :  'AIzaSyAkTAUCcqkD4lbTeQdM5nQIn0Vy5voUQF8',
+  mapApiKey :  '916b1cc2e5766358f98ec6ee40d66d5f',
   production : false,
   android : false,
   mercureUrl : 'http://localhost:3000/.well-known/mercure',

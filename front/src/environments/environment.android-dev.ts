@@ -2,7 +2,7 @@
 export const environment = {
   origin : 'http://flibus.team:8080',
   publique : 'http://localhost:4200',
-  mapApiKey :  'AIzaSyAkTAUCcqkD4lbTeQdM5nQIn0Vy5voUQF8',
+  mapApiKey :  '916b1cc2e5766358f98ec6ee40d66d5f',
   production : false,
   android : true,
   mercureUrl : 'http://flibus.team:3000/.well-known/mercure',

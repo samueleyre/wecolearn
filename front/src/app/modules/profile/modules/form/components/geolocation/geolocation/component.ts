@@ -4,7 +4,7 @@ import {
   OnInit,
 } from '@angular/core';
 import * as L from 'leaflet';
-import { filter, switchMap } from 'rxjs/operators';
+import {debounceTime, filter, switchMap} from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { merge, Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -55,8 +55,9 @@ export class ProfileGeolocationComponent implements OnInit {
     this.initMap();
 
     this.foundAddresses = this.addressCtrl.valueChanges.pipe(
-      filter(val => !!val),
-      switchMap(value => this._geoService.findGeoDataByAddress(value)),
+      debounceTime(300),
+      filter(val => !!val && val.length > 2),
+      switchMap(value => this._geoService.findGeoDataByCityName(value)),
     );
 
     merge(

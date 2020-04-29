@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgModel } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, switchMap, throttle, throttleTime } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { GeoDataInterface, ProfileGeoService } from '~/modules/profile/services/profile-geo.service';
@@ -61,7 +61,8 @@ export class ProfileFormCityComponent implements OnInit {
 
   ngOnInit() {
     this.foundCities = this.cityCtrl.valueChanges.pipe(
-      filter(val => !!val),
+      debounceTime(300),
+      filter(val => !!val && val.length > 3),
       switchMap(value => this._geoService.findGeoDataByCityName(value)),
     );
   }
