@@ -98,7 +98,8 @@ export class AuthOnboardingBaseComponent {
     if (this.selectedIndex !== onBoardingSections.ids.index) {
       return throwError(true);
     }
-    return this.authenticationService.signUp({ tags: this.userForm.value.learn_tags, ...this.userForm.value });
+    const tags = this.userForm.value.learn_tags ? this.userForm.value.learn_tags : []; // bug of null tags parameter
+    return this.authenticationService.signUp({ tags, ...this.userForm.value });
   }
 
   get learnType(): TagTypeEnum {
