@@ -1,0 +1,20 @@
+<section class="SearchPage">
+  <div #pageContainer class="SearchPage-content" infinite-scroll
+       [infiniteScrollDistance]="4"
+       [infiniteScrollThrottle]="50"
+       (scrolled)="onScroll($event)"
+       [scrollWindow]="false">
+    <div class="SearchPage-header">
+      <app-searchbar (searchInputChange)="searchInput = $event"></app-searchbar>
+    </div>
+    <div class="SearchPage-message">
+      <p [innerHTML]="searchMessage"></p>
+    </div>
+    <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer">
+      <div *ngFor="let card of cards" class="SearchPage-cardsContainer-card">
+        <app-card  [card]="card"></app-card>
+      </div>
+    </div>
+  </div>
+</section>
+
