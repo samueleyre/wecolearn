@@ -7,5 +7,7 @@ export const CI_CONFIG = {
   e2e: <TestsInterface>{
     signup: true,
     signin: true,
+    contactFirstMatch: true,
+    sendMessage: true,
   },
 };
