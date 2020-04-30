@@ -5,6 +5,7 @@ namespace App\Services\Core\DataFixtures\ORM\Constant;
 class TagOrmConstant
 {
     public static $RAND = [
+        "polka",
         "echecs",
         "javascript",
         "piano",
