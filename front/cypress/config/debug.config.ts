@@ -10,5 +10,7 @@ export const DEBUG_CONFIG = {
   e2e: <TestsInterface>{
     signup: true,
     signin: true,
+    contactFirstMatch: true,
+    sendMessage: true,
   },
 };

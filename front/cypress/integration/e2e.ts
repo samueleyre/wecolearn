@@ -4,7 +4,9 @@ import { cypress_login } from '../support/reusables/auth/cypress_login';
 import { USER_CONFIG } from '../config/user.config';
 import { cypress_signup } from '../support/reusables/auth/cypress_signup';
 import { closeCookiePolicy } from '../support/reusables/popins/cookiePolicy.cypress';
-import {cypress_logout} from "../support/reusables/auth/cypress_logout";
+import { cypress_logout } from '../support/reusables/auth/cypress_logout';
+import { cypress_sendMessage } from '../support/reusables/chat/cypress_sendMessage';
+import { cypress_contactUser } from '../support/reusables/search/cypress_contactUser';
 
 // <reference types="Cypress" />
 
@@ -26,7 +28,6 @@ context('E2E', () => {
 
   // @ts-ignore
   Cypress.LocalStorage.clear = function (keys, ls, rs) {
-
     // do something with the keys here
     if (keys.length === 0) {
       if (!localStorage.getItem('cookieseen')) {
@@ -65,5 +66,18 @@ context('E2E', () => {
     describe('signin', () => {
       cypress_login(USER_CONFIG);
     });
+
+
+    if (config.contactFirstMatch) {
+      describe('contact first match', () => {
+        cypress_contactUser(1);
+      });
+    }
+
+    if (config.sendMessage) {
+      describe('send message', () => {
+        cypress_sendMessage();
+      });
+    }
   }
 });
