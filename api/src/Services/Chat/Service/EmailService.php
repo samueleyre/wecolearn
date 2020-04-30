@@ -60,14 +60,10 @@ class EmailService
         return $this;
     }
 
-    public function sendEmail($data = null)
+    public function sendEmail()
     {
-        if (null === $data) { // should be useless after refactoring
-            $data = $this->data;
-        }
-
         return $this
       ->sendInBlueApi
-      ->sendTransacEmail($data);
+      ->sendTransacEmail($this->data);
     }
 }
