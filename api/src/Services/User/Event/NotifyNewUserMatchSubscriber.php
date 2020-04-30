@@ -5,6 +5,7 @@ namespace App\Services\User\Event;
 use App\Services\Chat\Service\EmailService;
 use App\Services\Tag\Constant\TagConstant;
 use App\Services\User\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -75,7 +76,7 @@ class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
           })->map(function($tag) {
               return $tag->getName();
           })->toArray();
-          
+
           $this->emailService
               ->setData(
                   15,
@@ -84,7 +85,7 @@ class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
                       "FIRSTNAME" => $matchingUser->getFirstName(),
                       "MATCH_FIRSTNAME"=> $user->getFirstName(),
                       "MATCH_PROFIL_URL"=> $user->getProfilUrl(),
-                      "TAGS"=> $commonTags,
+                      "TAGS"=> array_values($commonTags), // reindex array with array_values
                   ],
                   $matchingUser->getEmail()
               )
