@@ -29,3 +29,7 @@ fixPermissions:
 
 clearCache:
 	@docker-compose exec api bash -c "php bin/console cache:clear"
+
+test:
+	@make loadFixtures
+	cd front; yarn test:e2e
