@@ -10,6 +10,6 @@ export function cypress_login(loginData: { email: string; password: string }) {
 
     cy.get('#signinButton').click();
 
-    cy.wait(1000);
+    cy.wait(3000);
   });
 }

@@ -26,5 +26,6 @@ export function cypress_signup(newUser: { first_name: string, last_name: string,
     cy.get('#emailInput').type(newUser.email);
     cy.get('#passwordInput').type(newUser.password);
     cy.get('#idStep .btn-primary').click();
+    cy.wait(3000);
   });
 }
