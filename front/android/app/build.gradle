@@ -6,7 +6,7 @@ android {
         applicationId "com.wecolearn.studio"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 5
+        versionCode 7
         versionName "1.00"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
