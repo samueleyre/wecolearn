@@ -1,8 +1,0 @@
-{
-  "appId": "com.wecolearn.studio",
-  "appName": "wecolearn",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "dist/front",
-  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh"
-}

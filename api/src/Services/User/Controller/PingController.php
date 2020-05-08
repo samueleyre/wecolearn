@@ -52,7 +52,7 @@ class PingController extends AbstractController
         } else {
             /*
              * If cookie not correct, make a new one
-             * todo: move this to a login listener
+             * todo: move this to a login listener ?
              */
             $currentCookie = $request->cookies->get('mercureAuthorization');
             $shouldBe = $cookieGenerator->generate($user);
