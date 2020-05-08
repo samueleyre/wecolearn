@@ -3,6 +3,7 @@ import { debounceTime, filter, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 import { TagService } from '~/core/services/tag/tag';
 import { Tag } from '~/core/entities/tag/entity';
@@ -19,6 +20,7 @@ import { SearchService } from '../../../../core/services/search/search';
   @Output() searchInputChange = new EventEmitter();
   @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
   @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
+  @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
 
   constructor(
         private tagService: TagService,
@@ -73,6 +75,19 @@ import { SearchService } from '../../../../core/services/search/search';
     this.searchService.search(filters).subscribe();
     this.focusOut();
     this.hideAutocomplete();
+  }
+
+  get searchBarHasValue(): boolean {
+    return !!this.searchInputControl.value;
+  }
+
+  resetSearchBar(): void {
+    this.searchInputControl.setValue(null);
+  }
+
+  onFilterClick(event) {
+    event.stopPropagation();
+    this.trigger.openMenu();
   }
 
   focusOut() {
