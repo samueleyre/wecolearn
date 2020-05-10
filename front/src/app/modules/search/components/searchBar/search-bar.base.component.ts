@@ -14,14 +14,8 @@ import { SearchService } from '../../../../core/services/search/search';
 @Component({
   template: '',
 })export class SearchBarBaseComponent implements OnInit {
-  public searchInputControl = new FormControl();
-  autocompleteDisabled = false;
-  observableSource: Observable<Tag[]>;
-  @Output() searchInputChange = new EventEmitter();
-  @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
-  @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
-  @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
-
+  public globalMode;
+  public useProfileTagsMode;
   constructor(
         private tagService: TagService,
         private searchService: SearchService,
@@ -29,7 +23,35 @@ import { SearchService } from '../../../../core/services/search/search';
     this.tagService = tagService;
   }
 
+  get loading(): boolean {
+    return this.searchService.loading;
+  }
+
+  get searchBarHasValue(): boolean {
+    return !!this.searchInputControl.value;
+  }
+
+  public searchInputControl = new FormControl();
+  public autocompleteDisabled = false;
+  public observableSource: Observable<Tag[]>;
+  @Output() searchInputChange = new EventEmitter();
+  @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
+  @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
+  @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
+
+  public setUseProfileMode(bool) {
+    this.searchService.setUseProfileTagsMode(bool);
+  }
+
+  public setGlobalMode(val) {
+    this.searchService.setGlobalMode(val);
+  }
+
+
   ngOnInit() {
+    this.globalMode = this.searchService.globalMode;
+    this.useProfileTagsMode = this.searchService.useProfileTagsMode;
+
     this.searchService.getSearchInputObs().subscribe((tag: Tag) => {
       this.searchInputControl.setValue(tag);
       if (typeof this.searchInputControl.value === 'string') {
@@ -53,10 +75,6 @@ import { SearchService } from '../../../../core/services/search/search';
     );
   }
 
-  get loading(): boolean {
-    return this.searchService.loading;
-  }
-
   search() {
     const filters = {};
     if (this.searchInputControl) {
@@ -66,7 +84,7 @@ import { SearchService } from '../../../../core/services/search/search';
           name: this.searchInputControl.value,
           type: TagTypeEnum.LEARN,
         });
-      } else {
+      } else if (this.searchInputControl.value) {
         filters['tag'] = this.searchInputControl.value;
       }
     }
@@ -75,10 +93,6 @@ import { SearchService } from '../../../../core/services/search/search';
     this.searchService.search(filters).subscribe();
     this.focusOut();
     this.hideAutocomplete();
-  }
-
-  get searchBarHasValue(): boolean {
-    return !!this.searchInputControl.value;
   }
 
   resetSearchBar(): void {
@@ -91,7 +105,13 @@ import { SearchService } from '../../../../core/services/search/search';
   }
 
   focusOut() {
-    this.searchBarField.nativeElement.blur();
+    // this.searchBarField.nativeElement.blur(); // is this useful on mobile ?
+  }
+
+  focusInput() {
+    setTimeout(() => {
+      this.searchBarField.nativeElement.focus();
+    });
   }
 
   hideAutocomplete() {

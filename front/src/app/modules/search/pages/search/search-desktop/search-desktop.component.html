@@ -1,5 +1,5 @@
 <section class="SearchPage">
-  <mat-progress-bar [ngStyle]="{ opacity: loading ? 1 : 0 }" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar [class.hide]="!loading" mode="indeterminate"></mat-progress-bar>
   <div #pageContainer class="SearchPage-content" infinite-scroll
        [infiniteScrollDistance]="4"
        [infiniteScrollThrottle]="50"
