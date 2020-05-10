@@ -22,7 +22,8 @@ export class SearchService extends APIService<User> {
   private currentlySearching = false;
   private searchInput: BehaviorSubject<Tag> = new BehaviorSubject(null);
   static max = SEARCH.default.max;
-
+  public globalMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public useProfileTagsMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   currentFoundClients: Subject<any[]> = new Subject<any[]>();
   currentFoundAddress: any[] = [];
   currentSearch: {} = {};
@@ -31,6 +32,7 @@ export class SearchService extends APIService<User> {
 
   constructor(private _http: HttpClient) {
     super(_http);
+    console.log('constructing service');
   }
 
   get searchType():string {
@@ -77,6 +79,8 @@ export class SearchService extends APIService<User> {
       this.resetMax();
       filters['max'] = SEARCH.default.max;
     }
+    filters['global'] = this.globalMode;
+    filters['useProfileTags'] = this.useProfileTagsMode;
     this._loading$.next(true);
 
     return this.searchList(filters).pipe(
@@ -104,5 +108,21 @@ export class SearchService extends APIService<User> {
 
   removeSearchParameter(key: string) {
     delete this.currentSearch[key];
+  }
+
+  get globalMode() {
+    return this.globalMode$.getValue();
+  }
+
+  get useProfileTagsMode() {
+    return this.useProfileTagsMode$.getValue();
+  }
+
+  setGlobalMode(isGlobal: boolean) {
+    this.globalMode$.next(isGlobal);
+  }
+
+  setUseProfileTagsMode(bool) {
+    this.useProfileTagsMode$.next(bool);
   }
 }

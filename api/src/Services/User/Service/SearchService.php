@@ -28,6 +28,16 @@ class SearchService
         $first = 0;
         $max = 10;
         $meta = [];
+        $searchParameters = [
+            'userLearnTags'=>true,
+            'userKnowTags'=>false,
+            'userLearnTagDomains'=>false,
+            'userKnowTagDomains'=>false,
+            'searchLearnTag'=>false,
+            'orderByDistance'=>false,
+        ];
+        $global = false;
+        $useProfileTags = true;
 
         if (is_array($filter)) {
             if (array_key_exists("tag", $filter)) {
@@ -49,54 +59,66 @@ class SearchService
                 $latitude = $filter["latitude"];
                 $longitude = $filter["longitude"];
             } else {
-                $latitude = ($user && null !== $user->getLatitude()) ? $user->getLatitude() : 45.75;
-                $longitude = ($user && null !== $user->getLongitude()) ? $user->getLongitude() : 4.85;
+                $latitude = ($user && null !== $user->getLatitude()) ? $user->getLatitude() : 45.75; // should not be useful
+                $longitude = ($user && null !== $user->getLongitude()) ? $user->getLongitude() : 4.85; // should not be useful
             }
 
             if (array_key_exists('first', $filter) && array_key_exists('max', $filter)) {
                 $first = $filter['first'];
                 $max = $filter['max'];
             }
+
+            if (array_key_exists('global', $filter)) {
+                $global = $filter['global'];
+            }
+
+            if (array_key_exists('useProfileTags', $filter)) {
+                $useProfileTags = $filter['useProfileTags'];
+            }
         }
 
         $result = [];
 
-//        search 5km then 15km
-        for($i = 1; $i < 3; $i++) {
-            if ($result === []) {
-                $distance = $i === 1 ? 15 : 5;
-                $result = $this->searchRequest(
-                    $user,
-                    $first,
-                    $max,
-                    $domain,
-                    $searchParameters,
-                    $searchTag,
-                    $latitude,
-                    $longitude,
-                    $distance
-                );
+        $distances = $global ? [-1] : [5, 15]; // -1 for infinite
+        if ($useProfileTags) {
+            foreach($distances as $distance) {
+                if ($result === []) {
+                    $result = $this->searchRequest(
+                        $user,
+                        $first,
+                        $max,
+                        $domain,
+                        $searchTag,
+                        $latitude,
+                        $longitude,
+                        $distance,
+                        $searchParameters
+                    );
+                }
             }
         }
 
         // search by input tag only
         if ($result === []) {
+            $searchParameters['userLearnTags'] = false;
+            $searchParameters['userLearnTagDomains'] = false;
             $searchParameters['userKnowTags'] = false;
             $searchParameters['userKnowTagDomains'] = false;
+            $searchParameters['searchLearnTag'] = true;
             $searchParameters['orderByDistance'] = true;
             $result = $this->em
                 ->getRepository(User::class)
                 ->search([
-                        'user' => $user,
-                        'searchTag' => $searchTag,
-                        'first' => $first,
-                        'max' => $max,
-                        'latitude' => $latitude,
-                        'longitude' => $longitude,
-                        'domain' => $domain,
-                        'parameters' => $searchParameters,
-                        'distance' => 15
-                    ]);
+                    'user' => $user,
+                    'searchTag' => $searchTag,
+                    'first' => $first,
+                    'max' => $max,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'domain' => $domain,
+                    'parameters' => $searchParameters,
+                    'distance' => $global ? -1 : 15
+                ]);
         }
 
         $meta = array_merge($searchParameters, $meta);
@@ -117,42 +139,42 @@ class SearchService
         $first,
         $max,
         $domain,
-        &$searchParameters,
         $searchTag,
         $latitude,
         $longitude,
-        $distance
-    ) {
-
-        $searchParameters = [
+        $distance,
+        &$searchParameters = [
             'userLearnTags'=>true,
             'userKnowTags'=>false,
             'userLearnTagDomains'=>false,
             'userKnowTagDomains'=>false,
             'searchLearnTag'=>false,
             'orderByDistance'=>false,
-        ];
+        ]
+    ) {
 
-        // search by user learn tags ( type 0 )
-        $result = $this->em
-            ->getRepository(User::class)
-            ->search([
-                'user' => $user,
-                'searchTag' => $searchTag,
-                'first' => $first,
-                'max' => $max,
-                'latitude' => $latitude,
-                'longitude' => $longitude,
-                'domain' => $domain,
-                'parameters' => $searchParameters,
-                'distance' => $distance
-            ]);
-
+        if ($searchParameters['userLearnTags']) {
+            // search by user learn tags ( type 0 )
+            $result = $this->em
+                ->getRepository(User::class)
+                ->search([
+                    'user' => $user,
+                    'searchTag' => $searchTag,
+                    'first' => $first,
+                    'max' => $max,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'domain' => $domain,
+                    'parameters' => $searchParameters,
+                    'distance' => $distance
+                ]);
+            if ($result === []) {
+                $searchParameters['userLearnTags'] = false;
+                $searchParameters['userLearnTagDomains'] = true;
+            }
+        }
         // search by learn tag domains ( type 0 )
-        if ($result === []) {
-            $searchParameters['userLearnTags'] = false;
-            $searchParameters['userKnowTags'] = false;
-            $searchParameters['userLearnTagDomains'] = true;
+        if ($searchParameters['userLearnTagDomains']) {
             $result = $this->em
                 ->getRepository(User::class)
                 ->search([
@@ -166,43 +188,47 @@ class SearchService
                     'parameters'=>$searchParameters,
                     'distance'=>$distance
                 ]);
+            if ($result === []) {
+                $searchParameters['userLearnTagDomains'] = false;
+                $searchParameters['userKnowTags'] = true;
+            }
         }
 
         // search by user know tags ( types 1 )
-        if ($result === []) {
-            $searchParameters['userKnowTags'] = true;
-            $searchParameters['userLearnTagDomains'] = false;
+        if ($searchParameters['userKnowTags']) {
             $result = $this->em
                 ->getRepository(User::class)
                 ->search([
-                    'user'=>$user,
-                    'searchTag'=>$searchTag,
-                    'first'=>$first,
-                    'max'=>$max,
-                    'latitude'=>$latitude,
-                    'longitude'=>$longitude,
-                    'domain'=>$domain,
-                    'parameters'=>$searchParameters,
-                    'distance'=>$distance
+                    'user' => $user,
+                    'searchTag' => $searchTag,
+                    'first' => $first,
+                    'max' => $max,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'domain' => $domain,
+                    'parameters' => $searchParameters,
+                    'distance' => $distance
                 ]);
+            if ($result === []) {
+                $searchParameters['userLearnTagDomains'] = false;
+                $searchParameters['userKnowTagDomains'] = true;
+            }
         }
 
         // search by know tag domains ( type 1 )
-        if ($result === []) {
-            $searchParameters['userLearnTagDomains'] = false;
-            $searchParameters['userKnowTagDomains'] = true;
+        if ($searchParameters['userKnowTagDomains']) {
             $result = $this->em
                 ->getRepository(User::class)
                 ->search([
-                    'user'=>$user,
-                    'searchTag'=>$searchTag,
-                    'first'=>$first,
-                    'max'=>$max,
-                    'latitude'=>$latitude,
-                    'longitude'=>$longitude,
-                    'domain'=>$domain,
-                    'parameters'=>$searchParameters,
-                    'distance'=>$distance
+                    'user' => $user,
+                    'searchTag' => $searchTag,
+                    'first' => $first,
+                    'max' => $max,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'domain' => $domain,
+                    'parameters' => $searchParameters,
+                    'distance' => $distance
                 ]);
         }
 
