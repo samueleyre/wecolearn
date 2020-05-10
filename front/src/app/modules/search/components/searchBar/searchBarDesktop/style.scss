@@ -1,14 +1,27 @@
 @import 'variables';
 
-
-.fa-search{
-  color: #cccccc;
-}
-
-form {
+.SearchBar {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &-option {
+    padding:8px;
+    background-color: #ffc600;
+    color: #310c31;
+  }
+
+  mat-form-field {
+    width: 400px;
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
+  & > button {
+    margin-left: 20px;
+  }
+  margin-bottom: 20px;
 }
 
-mat-form-field {
-  width: 400px;
-}

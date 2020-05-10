@@ -3,9 +3,15 @@
 
 .SearchPage {
 
+  mat-progress-bar {
+    &.hide {
+      opacity: 0;
+    }
+  }
+
   &-content {
     @extend %wc-thin-scroll-bar;
-    max-height: calc(100vh - 60px);
+    max-height: calc(100vh - 64px);
     overflow: auto;
     padding: 0 30px;
   }
@@ -26,6 +32,7 @@
     margin-left: 30px;
     opacity: 1;
     transition: ease 1s;
+    min-height: calc(24px + 1rem);
     &.hide {
       opacity: 0;
       transition: ease 1s;
