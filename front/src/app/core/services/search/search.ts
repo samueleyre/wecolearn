@@ -22,9 +22,10 @@ export class SearchService extends APIService<User> {
   private currentlySearching = false;
   private searchInput: BehaviorSubject<Tag> = new BehaviorSubject(null);
   static max = SEARCH.default.max;
+  static first = 0;
   public globalMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public useProfileTagsMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  currentFoundClients: Subject<any[]> = new Subject<any[]>();
+  currentFoundMatchs$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   currentFoundAddress: any[] = [];
   currentSearch: {} = {};
   public endPoint = '/api/user/matchs';
@@ -36,7 +37,7 @@ export class SearchService extends APIService<User> {
   }
 
   get searchType():string {
-    if (SearchService.max !== SEARCH.default.max) {
+    if (SearchService.first > 0) {
       return 'scroll';
     }
     return 'default';
@@ -46,8 +47,8 @@ export class SearchService extends APIService<User> {
     return this.searchMetaSubject.value;
   }
 
-  private resetMax():void {
-    SearchService.max = SEARCH.default.max;
+  private resetSearch():void {
+    SearchService.first = 0;
   }
 
   get searchInputValue(): Tag | null {
@@ -75,18 +76,29 @@ export class SearchService extends APIService<User> {
   }
 
   search(filters: {} = {}): Observable<boolean> {
-    if (!filters.hasOwnProperty('max')) {
-      this.resetMax();
-      filters['max'] = SEARCH.default.max;
+    if (!filters.hasOwnProperty('first')) {
+      this.resetSearch();
     }
+    filters['max'] = SEARCH.default.max;
     filters['global'] = this.globalMode;
     filters['useProfileTags'] = this.useProfileTagsMode;
+    if (SearchService.first > 0) {
+      // scroll search
+      // keep same type of search
+      filters['userLearnTags'] = this.searchMeta.userLearnTags;
+      filters['userLearnTagDomains'] = this.searchMeta.userLearnTagDomains;
+      filters['userKnowTags'] = this.searchMeta.userKnowTags;
+      filters['userKnowTagDomains'] = this.searchMeta.userKnowTagDomains;
+    }
     this._loading$.next(true);
 
     return this.searchList(filters).pipe(
       map((response: ApiResponseInterface) => {
-        this.currentFoundClients.next(response.data.map(val => val[0]));
-        this.searchMetaSubject.next(response.meta);
+        if (SearchService.first === 0) {
+          // new search
+          this.searchMetaSubject.next(response.meta);
+        }
+        this.currentFoundMatchs$.next(response.data.map(val => val[0]));
         this._loading$.next(false);
         this.currentlySearching = false;
         return true;
@@ -95,7 +107,7 @@ export class SearchService extends APIService<User> {
   }
 
   getCurrentFoundClients(): Observable<any[]> {
-    return this.currentFoundClients.asObservable();
+    return this.currentFoundMatchs$.asObservable();
   }
 
   getCurrentFoundAddress(): any[] {

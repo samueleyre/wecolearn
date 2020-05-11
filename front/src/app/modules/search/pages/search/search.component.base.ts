@@ -1,10 +1,9 @@
 import {
   Component,
   OnInit,
-  ViewChild, ElementRef,
+  ViewChild, ElementRef, AfterViewInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import * as _ from 'lodash';
 
 import { User } from '~/core/entities/user/entity';
@@ -16,7 +15,7 @@ import { SEARCH } from '../../config/main';
 
 @Component({
   template: '',
-})export class SearchComponentBase implements OnInit {
+})export class SearchComponentBase implements OnInit, AfterViewInit {
   public cards: any[] = [];
   public scrolling;
   public searchInput = null;
@@ -46,23 +45,24 @@ import { SEARCH } from '../../config/main';
   }
 
   ngOnInit() {
-    this.load();
     this.detectScrollDown();
   }
 
+  ngAfterViewInit() {
+    this.load();
+  }
+
   load(): void {
-    this.searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
+    this.searchService.getCurrentFoundClients().subscribe((users: User[]) => {
       if (this.searchService.searchType !== 'scroll') {
         // new SEARCH
         this.cardsContainerElementRef.nativeElement.scrollTo(0, 0);
-        this.cards = clients;
+        this.cards = users;
       } else {
         // SCROLL SEARCH
-        if (clients.length > SearchService.max) {
-          this.cards = _.uniqBy(this.cards.concat(clients.slice(SearchService.max - SEARCH.default.max)), 'id');
-        } else {
-          this.cards = clients;
-        }
+        users.forEach((user) => {
+          this.cards.push(user);
+        });
       }
     });
 
@@ -108,8 +108,13 @@ import { SEARCH } from '../../config/main';
   }
 
   onScroll(ev) {
-    SearchService.max += SEARCH.scrollLatence;
-    this.search({ max: SearchService.max });
+    if (this.cards.length < SEARCH.default.max) {
+      return;
+    }
+    SearchService.first += SEARCH.default.max;
+    this.search({
+      first: SearchService.first,
+    });
   }
 
   timeOutScroll() {
@@ -129,7 +134,6 @@ import { SEARCH } from '../../config/main';
         tag: this.searchInput,
       };
     }
-
     this.searchService.search(filledFilters).subscribe();
   }
 
