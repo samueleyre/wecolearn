@@ -72,6 +72,9 @@ h1, h2, h3, h4, h5 {
 
 button{
   cursor: pointer;
+  &:focus {
+    outline: none;
+  }
 }
 
 
@@ -102,7 +105,7 @@ button{
 
 .ql-editor p{
   font-size: 1rem;
-  //color: $mainOrange;
+  //color: $primaryColor;
 }
 
 .ng-invalid:not(form) .ql-editor  {
@@ -204,7 +207,7 @@ button.close{
 
 .bloc-title{
   @extend .page-bloc-title;
-  background-color: $mainYellow;
+  background-color: $secondaryColor;
 }
 
 /*SEARCH BAR*/
@@ -277,7 +280,7 @@ button.close{
   color: #495057;
   background-color: #fff;
   border-right: 1px solid !important;
-  border-color: $mainOrange !important;
+  border-color: $primaryColor !important;
   outline: 0;
   /*box-shadow: 0 0 0 0.2rem rgba(254, 94, 56, 0.13);*/
   box-shadow: none !important;

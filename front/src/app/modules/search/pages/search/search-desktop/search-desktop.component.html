@@ -1,5 +1,6 @@
 <section class="SearchPage">
   <mat-progress-bar [class.hide]="!loading" mode="indeterminate"></mat-progress-bar>
+
   <div #pageContainer class="SearchPage-content" infinite-scroll
        [infiniteScrollDistance]="4"
        [infiniteScrollThrottle]="50"
@@ -7,9 +8,10 @@
        [scrollWindow]="false">
     <div class="SearchPage-header">
       <app-searchbar (searchInputChange)="searchInput = $event"></app-searchbar>
+      <p class="SearchPage-explorationModeMessage" *ngIf="explorationMode">Mode exploration</p>
     </div>
     <div class="SearchPage-message" [class.hide]="loading">
-      <p [innerHTML]="searchMessage"></p>
+      <p [innerHTML]="searchMessage | safeHtml"></p>
     </div>
     <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer">
       <div *ngFor="let card of cards" class="SearchPage-cardsContainer-card">

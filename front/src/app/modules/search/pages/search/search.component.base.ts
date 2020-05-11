@@ -23,17 +23,18 @@ import { SEARCH } from '../../config/main';
   private direction = 'down';
 
   public messages = {
-    [SearchMeta.tagNotFound]: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. <br>
-    Peut-être que les profils suivant pourront aussi vous intéresser ?`,
-    noResults: `Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
-    recherche, pensez à ajouter des domaines d'apprentissage dans votre profil !`,
-    noResultsWithSearch: `Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous`,
-    localProfiles: `Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
-    Peut-être que les profils suivant pourront aussi vous intéresser ?`,
-    [SearchMeta.userLearnTags]: 'Nous avons sélectionné ces profils autour de chez vous.',
-    [SearchMeta.userLearnTagDomains]: 'Nous avons sélectionné ces profils autour de chez vous.',
-    [SearchMeta.userKnowTags]: 'Nous avons sélectionné ces profils autour de chez vous.',
-    [SearchMeta.userKnowTagDomains]: 'Nous avons sélectionné ces profils autour de chez vous.',
+    [SearchMeta.tagNotFound]: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. <br>
+    Peut-être que les profils suivant pourront aussi vous intéresser ?</i>`,
+    noResults: `<i>Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
+    recherche, pensez à ajouter des domaines d'apprentissage dans votre profil !</i>`,
+    noResultsWithSearch: `<i>Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous</i>`,
+    localProfiles: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
+    Peut-être que les profils suivant pourront aussi vous intéresser ?</i>`,
+    [SearchMeta.userLearnTags]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
+    [SearchMeta.userLearnTagDomains]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
+    [SearchMeta.userKnowTags]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
+    [SearchMeta.userKnowTagDomains]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
+    globalMode: `<i>Nous avons sélectionné ces profils pour vous.</i>`,
   };
 
   @ViewChild('pageContainer', { static: false }) cardsContainerElementRef: ElementRef;
@@ -74,15 +75,17 @@ import { SEARCH } from '../../config/main';
     this.searchService.search(params).subscribe();
   }
 
+  get explorationMode() {
+    return !this.searchService.useProfileTagsMode;
+  }
+
   get searchMessage(): string | null {
     if (this.loading) {
       return null;
     }
 
-    let meta = null;
-    if (this.searchService.searchMeta) {
-      meta = this.searchService.searchMeta;
-    }
+    const meta = this.searchService.searchMeta;
+
     if (this.cards.length === 0) {
       if (this.searchService.searchInputValue) {
         return this.messages.noResultsWithSearch;
@@ -93,7 +96,11 @@ import { SEARCH } from '../../config/main';
       if (meta[SearchMeta.tagNotFound]) {
         return this.messages[SearchMeta.tagNotFound];
       }
-      const metaKeys = Object.keys(meta).filter(val => meta[val] === true);
+      const metaKeys = Object.keys(meta).filter(
+        val =>
+          Object.keys(this.messages).indexOf(val) !== -1 &&
+          meta[val] === true,
+      );
 
       if (metaKeys.length > 0) {
         // if got results without using matching tags
@@ -101,6 +108,9 @@ import { SEARCH } from '../../config/main';
           return this.messages.localProfiles;
         }
         // found match !
+        if (this.searchService.globalMode) {
+          return this.messages.globalMode;
+        }
         return this.messages[metaKeys[0]];
       }
     }
