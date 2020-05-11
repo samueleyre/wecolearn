@@ -24,6 +24,5 @@ export class FooterMobileComponent implements OnInit {
   ngOnInit() {
     this.countNotRead$ = this._threadsService.orderedThreads
       .pipe(map(threads => threads.reduce((count, thread) => (count + thread.countNotRead), 0)));
-    //
   }
 }
