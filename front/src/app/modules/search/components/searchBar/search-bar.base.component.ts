@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { debounceTime, filter, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { MatMenuTrigger } from '@angular/material/menu';
 
@@ -33,7 +33,7 @@ import { SearchService } from '../../../../core/services/search/search';
 
   public searchInputControl = new FormControl();
   public autocompleteDisabled = false;
-  public observableSource: Observable<Tag[]>;
+  public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
   @Output() searchInputChange = new EventEmitter();
   @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
   @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
@@ -67,12 +67,14 @@ import { SearchService } from '../../../../core/services/search/search';
       }
     });
 
-    this.observableSource = this.searchInputControl.valueChanges.pipe(
+    this.searchInputControl.valueChanges.pipe(
       // tslint:disable-next-line:no-magic-numbers
       debounceTime(300),
       filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this.tagService.findTags(value)),
-    );
+    ).subscribe((tags) => {
+      this.foundAutocompleteTags$.next(tags);
+    });
   }
 
   search() {
@@ -112,6 +114,10 @@ import { SearchService } from '../../../../core/services/search/search';
     setTimeout(() => {
       this.searchBarField.nativeElement.focus();
     });
+  }
+
+  onInputBlur() {
+    this.foundAutocompleteTags$.next([]);
   }
 
   hideAutocomplete() {

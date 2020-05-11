@@ -38,11 +38,11 @@
       .badge{
         border: solid 1px grey;
         background-color: white;
-        color: $mainOrange;
+        color: $primaryColor;
       }
     }
     .client-name{
-      color: $mainOrange;
+      color: $primaryColor;
     }
     .dropdown-toggle::after{
       display: none;

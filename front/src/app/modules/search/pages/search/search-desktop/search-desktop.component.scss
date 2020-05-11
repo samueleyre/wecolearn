@@ -26,13 +26,23 @@
     }
   }
 
+  &-explorationModeMessage {
+    font-size: small;
+    margin-bottom: 0;
+    color: var(--main-color-1-light-15);
+  }
+
   &-message {
-    font-style: italic;
+    display: flex;
+    align-items: flex-end;
     color: #393939;;
     margin-left: 30px;
     opacity: 1;
     transition: ease 1s;
     min-height: calc(24px + 1rem);
+    p {
+      margin-bottom: 0;
+    }
     &.hide {
       opacity: 0;
       transition: ease 1s;
@@ -40,6 +50,6 @@
   }
 
   &-header{
-    margin: 30px 0 0 30px;
+    margin: 30px 0 20px 30px;
   }
 }
