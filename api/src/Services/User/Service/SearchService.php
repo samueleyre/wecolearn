@@ -19,25 +19,16 @@ class SearchService
     }
 
 
-    public function search(User $user = null, $filter = null, $domain = "wecolearn")
+    public function search($searchParameters, $filter, User $user = null, $domain = "wecolearn")
     {
 
         $searchTag = null;
         $latitude = null;
         $longitude = null;
-        $first = 0;
-        $max = 10;
-        $meta = [];
-        $searchParameters = [
-            'userLearnTags'=>true,
-            'userKnowTags'=>false,
-            'userLearnTagDomains'=>false,
-            'userKnowTagDomains'=>false,
-            'searchLearnTag'=>false,
-            'orderByDistance'=>false,
-        ];
-        $global = false;
-        $useProfileTags = true;
+        $searchParameters['searchLearnTag'] = false;
+        $searchParameters['orderByDistance'] = false;
+
+        $retMeta = [];
 
         if (is_array($filter)) {
             if (array_key_exists("tag", $filter)) {
@@ -48,7 +39,7 @@ class SearchService
                     $search = $this->em->getRepository(Tag::class)
                         ->findByNameLike($filter["tag"]['name'], 0);
                     if (count($search) === 0) {
-                        $meta['tagNotFound'] = true;
+                        $retMeta['tagNotFound'] = true;
                     } else {
                         $searchTag = $search[0];
                         $searchParameters['searchLearnTag'] = true;
@@ -62,31 +53,17 @@ class SearchService
                 $latitude = ($user && null !== $user->getLatitude()) ? $user->getLatitude() : 45.75; // should not be useful
                 $longitude = ($user && null !== $user->getLongitude()) ? $user->getLongitude() : 4.85; // should not be useful
             }
-
-            if (array_key_exists('first', $filter) && array_key_exists('max', $filter)) {
-                $first = $filter['first'];
-                $max = $filter['max'];
-            }
-
-            if (array_key_exists('global', $filter)) {
-                $global = $filter['global'];
-            }
-
-            if (array_key_exists('useProfileTags', $filter)) {
-                $useProfileTags = $filter['useProfileTags'];
-            }
         }
 
         $result = [];
 
-        $distances = $global ? [-1] : [5, 15]; // -1 for infinite
-        if ($useProfileTags) {
+        $distances = $searchParameters['global'] ? [-1] : [5, 15]; // -1 for infinite
+        if ($searchParameters['useProfileTags']) {
             foreach($distances as $distance) {
                 if ($result === []) {
                     $result = $this->searchRequest(
                         $user,
-                        $first,
-                        $max,
+                        $filter,
                         $domain,
                         $searchTag,
                         $latitude,
@@ -111,17 +88,17 @@ class SearchService
                 ->search([
                     'user' => $user,
                     'searchTag' => $searchTag,
-                    'first' => $first,
-                    'max' => $max,
+                    'first' => $filter['first'],
+                    'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
                     'domain' => $domain,
                     'parameters' => $searchParameters,
-                    'distance' => $global ? -1 : 15
+                    'distance' => $searchParameters['global'] ? -1 : 15
                 ]);
         }
 
-        $meta = array_merge($searchParameters, $meta);
+        $retMeta = array_merge($searchParameters, $retMeta);
 
         $result = array_map(function($res) {
             unset($res['distance']);
@@ -130,27 +107,19 @@ class SearchService
 
         return [
             'data'=> $result,
-            'meta'=> $meta
+            'meta'=> $retMeta
         ];
     }
 
     private function searchRequest(
         $user,
-        $first,
-        $max,
+        $filter,
         $domain,
         $searchTag,
         $latitude,
         $longitude,
         $distance,
-        &$searchParameters = [
-            'userLearnTags'=>true,
-            'userKnowTags'=>false,
-            'userLearnTagDomains'=>false,
-            'userKnowTagDomains'=>false,
-            'searchLearnTag'=>false,
-            'orderByDistance'=>false,
-        ]
+        &$searchParameters
     ) {
 
         if ($searchParameters['userLearnTags']) {
@@ -160,15 +129,16 @@ class SearchService
                 ->search([
                     'user' => $user,
                     'searchTag' => $searchTag,
-                    'first' => $first,
-                    'max' => $max,
+                    'first' => $filter['first'],
+                    'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
                     'domain' => $domain,
                     'parameters' => $searchParameters,
                     'distance' => $distance
                 ]);
-            if ($result === []) {
+            if ($result === [] && $filter['first'] === 0) {
+                // first search
                 $searchParameters['userLearnTags'] = false;
                 $searchParameters['userLearnTagDomains'] = true;
             }
@@ -180,15 +150,16 @@ class SearchService
                 ->search([
                     'user'=>$user,
                     'searchTag'=>$searchTag,
-                    'first'=>$first,
-                    'max'=>$max,
+                    'first' => $filter['first'],
+                    'max' => $filter['max'],
                     'latitude'=>$latitude,
                     'longitude'=>$longitude,
                     'domain'=>$domain,
                     'parameters'=>$searchParameters,
                     'distance'=>$distance
                 ]);
-            if ($result === []) {
+            if ($result === [] && $filter['first'] === 0) {
+                // first search
                 $searchParameters['userLearnTagDomains'] = false;
                 $searchParameters['userKnowTags'] = true;
             }
@@ -201,15 +172,16 @@ class SearchService
                 ->search([
                     'user' => $user,
                     'searchTag' => $searchTag,
-                    'first' => $first,
-                    'max' => $max,
+                    'first' => $filter['first'],
+                    'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
                     'domain' => $domain,
                     'parameters' => $searchParameters,
                     'distance' => $distance
                 ]);
-            if ($result === []) {
+            if ($result === [] && $filter['first'] === 0) {
+                // first search
                 $searchParameters['userLearnTagDomains'] = false;
                 $searchParameters['userKnowTagDomains'] = true;
             }
@@ -222,8 +194,8 @@ class SearchService
                 ->search([
                     'user' => $user,
                     'searchTag' => $searchTag,
-                    'first' => $first,
-                    'max' => $max,
+                    'first' => $filter['first'],
+                    'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
                     'domain' => $domain,
