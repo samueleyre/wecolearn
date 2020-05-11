@@ -29,5 +29,6 @@ import { SearchService } from '../../../../../core/services/search/search';
 
   onBlur() {
     this._footerMobileService.searchFocusState.next(false);
+    super.onInputBlur();
   }
 }
