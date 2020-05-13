@@ -36,6 +36,7 @@ import { AutofocusDirective } from './modules/search/directives/input/directive'
 // shared services
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 registerLocaleData(fr);
 
@@ -56,6 +57,7 @@ registerLocaleData(fr);
     MatIconModule,
     MaterialModule,
     PipesModule,
+    MatToolbarModule,
   ],
   declarations: [
     AppComponent,

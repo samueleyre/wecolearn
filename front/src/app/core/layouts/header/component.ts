@@ -44,16 +44,16 @@ export class HeaderComponent implements OnInit {
       this.connected = logged;
       this.clientService.get().subscribe((client: User) => {
         this.currentClient = client;
-        if (logged) {
-          this.loadMessages();
-        }
+        // if (logged) {
+          // this.loadMessages();
+        // }
       });
     });
   }
 
-  loadMessages() {
-    this.messagesService.init();
-  }
+  // loadMessages() {
+  //   this.messagesService.init();
+  // }
 
   preventDefault(e: any) {
     e.preventDefault();

@@ -25,8 +25,8 @@ import { SEARCH } from '../../config/main';
   public messages = {
     [SearchMeta.tagNotFound]: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. <br>
     Peut-être que les profils suivant pourront aussi vous intéresser ?</i>`,
-    noResults: `<i>Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
-    recherche, pensez à ajouter des domaines d'apprentissage dans votre profil !</i>`,
+    noResults: `<i>Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... <br>Pour étendre le champs de
+    recherche, ajoutez des domaines d'apprentissage dans votre profil !</i>`,
     noResultsWithSearch: `<i>Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous</i>`,
     localProfiles: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
     Peut-être que les profils suivant pourront aussi vous intéresser ?</i>`,

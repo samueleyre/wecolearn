@@ -1,4 +1,4 @@
-@import '../../../../../assets/scss/variables';
+@import 'variables';
 
 
 .card{
@@ -10,7 +10,7 @@
 .card-img-top{
   height: 100px; // 200px when bg upload ready
   object-fit: cover;
-  background-color: #ffc600;
+  //background-color: #ffc600;
 }
 .profil-img {
   width: 130px;
@@ -26,9 +26,9 @@
   object-fit: cover;
 }
 
-
 .card-header {
   padding: 65px 0 0 0;
+  background-color: white;
 }
 .card-title{
   padding: 20px;
@@ -88,7 +88,8 @@
 }
 
 .card-footer{
-  background-color: rgb(255, 255, 255)
+  background-color: rgb(255, 255, 255);
+  border-top: none;
 }
 
 

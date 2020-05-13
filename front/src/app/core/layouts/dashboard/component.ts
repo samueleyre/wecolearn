@@ -14,8 +14,9 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
 })
 
 export class MainComponent extends DestroyObservable implements OnInit {
-  showFooter = true;
-  searchFocusState = false;
+  public showFooter = true;
+  public showMobileHeader = true;
+  public searchFocusState = false;
 
   constructor(
     private deviceService: DeviceDetectorService,
@@ -30,16 +31,13 @@ export class MainComponent extends DestroyObservable implements OnInit {
       this.searchFocusState = value;
     });
 
-    this.initFooter();
+    this.initMobile();
   }
 
-  // ---- MOBILE -----
-  private initFooter() {
+  private initMobile() {
     // onload
     if (this.router.url) {
-      this.showFooter = MenuMobileService.showFooter(this.router.url);
-    } else {
-      console.log('Current route not found');
+      this.setNavigation(this.router.url);
     }
 
     // on redirect
@@ -47,9 +45,14 @@ export class MainComponent extends DestroyObservable implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((e) => {
         if (e instanceof NavigationEnd) {
-          this.showFooter = MenuMobileService.showFooter(e.url);
+          this.setNavigation(e.url);
         }
       });
+  }
+
+  private setNavigation(path: string) {
+    this.showFooter = MenuMobileService.showFooter(path);
+    this.showMobileHeader = MenuMobileService.showHeader(path);
   }
 
   get isMobile() {

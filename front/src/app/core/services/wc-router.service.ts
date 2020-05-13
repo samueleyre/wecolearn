@@ -10,9 +10,9 @@ import { NAV } from '~/config/navigation/nav';
 export class WcRouterService {
   constructor(private _deviceService: DeviceDetectorService, private _router: Router) { }
 
-  public navigateToCurrentDiscussion(callback): void {
+  public navigateToCurrentDiscussion(userId, callback): void {
     this._deviceService.isMobile()
-      ? this._router.navigate([NAV.currentDiscussion]).then(callback)
+      ? this._router.navigate([`${NAV.currentDiscussion}/${userId}`])
       : this._router.navigate([NAV.discussion]).then(callback);
   }
 }

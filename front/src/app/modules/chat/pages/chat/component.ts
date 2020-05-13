@@ -15,9 +15,7 @@ import { NAV } from '~/config/navigation/nav';
 @Component({
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-
 })
-
 
 export class ChatPageComponent extends DestroyObservable implements OnInit, OnDestroy {
   constructor(

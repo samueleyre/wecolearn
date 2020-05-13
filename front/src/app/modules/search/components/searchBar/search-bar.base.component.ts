@@ -93,7 +93,6 @@ import { SearchService } from '../../../../core/services/search/search';
     this.searchInputChange.next(this.searchInputControl.value);
     this.searchService.setSearchInput('tag' in filters ? filters['tag'] : null);
     this.searchService.search(filters).subscribe();
-    this.focusOut();
     this.hideAutocomplete();
   }
 
@@ -107,7 +106,7 @@ import { SearchService } from '../../../../core/services/search/search';
   }
 
   focusOut() {
-    // this.searchBarField.nativeElement.blur(); // is this useful on mobile ?
+    this.searchBarField.nativeElement.blur();
   }
 
   focusInput() {

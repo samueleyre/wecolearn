@@ -1,29 +1,25 @@
 <section class="SearchPage">
-  <div class="container-fluid">
-    <div class="row">
-      <div #pageContainer class="col-12 mobile SearchPage-content"
-           infinite-scroll
-           [infiniteScrollDistance]="1"
-           [infiniteScrollThrottle]="50"
-           (scrolled)="onScroll($event)"
-           [infiniteScrollDisabled]="!canScroll"
-           [scrollWindow]="false"
-      >
-        <div class="SearchPage-searchBar-mobile">
-          <app-searchbar-mobile (searchInputChange)="searchInput = $event"></app-searchbar-mobile>
-        </div>
-        <div class="SearchPage-message SearchPage-message-mobile">
-          <p [innerHTML]="searchMessage"></p>
-        </div>
-        <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer mobile row align-items-stretch"
-        >
-          <div *ngFor="let card of cards" class="col-12">
-            <app-card  [card]="card"
-            ></app-card>
-            <br>
-          </div>
-        </div>
-        <br><br>
+  <mat-progress-bar [class.hide]="!loading" mode="indeterminate"></mat-progress-bar>
+  <div #pageContainer class="SearchPage-content"
+       infinite-scroll
+       [infiniteScrollDistance]="1"
+       [infiniteScrollThrottle]="50"
+       (scrolled)="onScroll($event)"
+       [infiniteScrollDisabled]="!canScroll"
+       [scrollWindow]="false"
+  >
+    <div class="SearchPage-searchBar">
+      <app-searchbar-mobile (searchInputChange)="searchInput = $event"></app-searchbar-mobile>
+    </div>
+    <div [class.hide]="loading" class="SearchPage-message">
+      <p [innerHTML]="searchMessage"></p>
+    </div>
+    <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer align-items-stretch"
+    >
+      <div *ngFor="let card of cards">
+        <app-card  [card]="card"
+        ></app-card>
+        <br>
       </div>
     </div>
   </div>
