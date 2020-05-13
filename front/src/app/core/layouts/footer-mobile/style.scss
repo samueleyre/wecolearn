@@ -1,17 +1,25 @@
 @import 'variables';
 
 
+.space {
+  height: 60px;
+}
+
 .button-container{
   display: flex;
   align-items: flex-end;
   width: 100%;
   background-color: $primaryColor;
-  .footer-link{
-    width: 50%;
-    text-align: center;
+  .footer-link {
+    width: 100%;
     padding: 11px 0;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
     &:hover, &.is-active {
+      padding-bottom: 7px;
       color: #ffc600;
       box-sizing: border-box;
       border-bottom: 4px solid #ffc600;

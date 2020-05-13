@@ -19,7 +19,7 @@ import { Threads } from '../../services/threads';
   templateUrl: './template.html',
   styleUrls: ['./style.scss'],
 })
-export class ChatThreadMobileComponent extends DestroyObservable implements OnInit {
+export class ChatThreadMobileComponent extends DestroyObservable {
   selected = false;
   public _thread: Thread;
 
@@ -28,22 +28,8 @@ export class ChatThreadMobileComponent extends DestroyObservable implements OnIn
     this._thread = value;
   }
 
-  constructor(public threadsService: Threads, private router: Router, private deviceService: DeviceDetectorService) {
+  constructor(public threadsService: Threads, private router: Router) {
     super();
-  }
-
-  ngOnInit(): void {
-    if (this._thread.id) {
-      this.load();
-    }
-  }
-
-  load(): void {
-    this.threadsService.currentThread
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((currentThread: Thread) => {
-        this.selected = currentThread && this._thread && (currentThread.id === this._thread.id);
-      });
   }
 
   loadMessages(event: any): void {

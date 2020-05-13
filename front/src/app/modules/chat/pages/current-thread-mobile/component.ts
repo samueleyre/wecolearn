@@ -27,6 +27,7 @@ export class ChatWindowPageComponent extends DestroyObservable implements OnInit
       .pipe(takeUntil(this.destroy$))
       .subscribe((params: ParamMap) => {
         if (params.has('userId')) {
+          console.log('has id');
           this._threadsService.setThreadById(Number(params.get('userId')));
         }
         if (!this._deviceService.isMobile()) {
