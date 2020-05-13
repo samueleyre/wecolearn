@@ -64,6 +64,7 @@ export class AppComponent {
         let subs: any = { unsubscribe : null };
         if (logged && !oldLog) {
           // todo : move this to a dedicated service
+          this.messagesService.init();
 
           // subscribe to mercure updates
           if (!environment.android) {

@@ -23,6 +23,11 @@ import { SearchService } from '../../../../../core/services/search/search';
     super(_tagService, _searchService);
   }
 
+  search() {
+    super.search();
+    super.focusOut();
+  }
+
   onFocus() {
     this._footerMobileService.searchFocusState.next(true);
   }

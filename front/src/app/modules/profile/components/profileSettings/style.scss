@@ -1,5 +1,11 @@
 @import 'variables';
 
+form {
+  @media (max-width: $smScreen) {
+    margin: 0 15px;
+  }
+}
+
 
 .fieldContainer{
   border: #ececec solid 1px;
@@ -13,7 +19,7 @@
 
 
 .label-form{
-  font-family: 'ralewaymedium';
+  font-family: 'ralewaymedium', sans-serif;
   font-size:20px;
 }
 
@@ -32,7 +38,7 @@
 }
 //rocket chat
 .value-span {
-  font-family: 'ralewayregular';
+  font-family: 'ralewayregular', sans-serif;
   font-size:16px;
 }
 
