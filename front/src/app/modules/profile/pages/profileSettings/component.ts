@@ -1,32 +1,20 @@
-import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-import { User } from '~/core/entities/user/entity';
-import { ProfileService } from '~/modules/profile/services/profile';
-
+import { ProfileService } from '~/core/services/user/profile';
 
 @Component({
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-})export class ProfileSettingsPageComponent implements OnInit, OnDestroy {
-  user$: Observable<User>;
+})
+export class ProfileSettingsPageComponent implements OnDestroy {
   private readonly onDestroy = new Subject<void>();
 
-
-  constructor(private _profileService: ProfileService, private deviceService: DeviceDetectorService) {
-
-  }
-
-  ngOnInit(): void {
-    this.user$ = this._profileService.get();
-    this.user$.pipe(takeUntil(this.onDestroy)).subscribe();
-  }
-
+  constructor(private _profileService: ProfileService, private _deviceService: DeviceDetectorService) {}
 
   get isMobile() {
-    return this.deviceService.isMobile();
+    return this._deviceService.isMobile();
   }
 
   ngOnDestroy(): void {

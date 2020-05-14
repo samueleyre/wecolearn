@@ -1,5 +1,5 @@
 
-<form class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm" >
+<form *ngIf="loaded" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm" >
     <br>
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -7,10 +7,10 @@
                 <div class="row">
                     <div class="col-12 col-md-6 order-2 order-md-1">
                         <div class="col-12 no-padding">
-                            <profile-form-firstname [parentForm]="userForm" (onBlur)="submit()" ></profile-form-firstname>
+                            <profile-form-firstname [parentForm]="userForm" ></profile-form-firstname>
                         </div>
                         <div class="col-12 no-padding">
-                            <profile-form-lastname [parentForm]="userForm" (onBlur)="submit()" ></profile-form-lastname>
+                            <profile-form-lastname [parentForm]="userForm"></profile-form-lastname>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 order-1 order-md-2" style="text-align: center;">
@@ -30,7 +30,7 @@
                     <div class="col-12">
                         <h6 class="center">Mes projets 🚀</h6>
                         <br>
-                        <profile-form-biography [parentForm]="userForm" (onBlur)="submit()"></profile-form-biography>
+                        <profile-form-biography [parentForm]="userForm"></profile-form-biography>
                     </div>
                 </div>
                 <br><br>

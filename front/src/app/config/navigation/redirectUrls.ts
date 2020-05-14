@@ -6,5 +6,8 @@ export const REDIRECT_URLS = {
     chat : [
       /dashboard\/discussion/,
     ],
+    search : [
+      /dashboard\/profile\//,
+    ],
   },
 };

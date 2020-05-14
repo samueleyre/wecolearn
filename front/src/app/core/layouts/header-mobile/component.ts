@@ -31,7 +31,6 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
   ngOnInit() {
     this.initReturn();
     this.discussingUser$ = MenuMobileService.discussingUser.pipe(
-      tap(val => console.log(val)),
       takeUntil(this.destroy$),
     );
   }
