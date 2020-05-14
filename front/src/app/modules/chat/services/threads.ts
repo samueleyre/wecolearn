@@ -37,7 +37,6 @@ export class Threads {
       // mark all the messages that it contains as read
       this.messagesService.markThreadAsRead.next(thread);
 
-      console.log('ok', thread);
       // set current chating user
       MenuMobileService.discussingUser.next(thread.name);
     });
@@ -108,7 +107,6 @@ export class Threads {
   }
 
   setCurrentThread(thread: Thread): void {
-    console.log('set thread', thread.id);
     // new thread
     if (!this.threadExists(thread.id)) {
       this.messagesService.addMessage(new Message({ thread, id: -1, message: '' , sender: { id: -1 }, is_read: true }));

@@ -45,6 +45,7 @@ export class APIService<T> {
 
   get(filters: {} = {}, slash: string = ''): Observable<T> {
     const params = this.getUrlParams(filters, slash);
+    this._loading$.next(true);
     return this.http.get(`${this.endPoint}${params}`)
       .pipe(
         tap((data: T) => {
@@ -59,6 +60,7 @@ export class APIService<T> {
 
   list(filters: {} = {}, slash: string = ''): Observable<T[]> {
     const params = this.getUrlParams(filters, slash);
+    this._loading$.next(true);
     return this.http.get(`${this.endPoint}s${params}`)
       .pipe(
         tap((data: T[]) => {
@@ -72,6 +74,7 @@ export class APIService<T> {
   }
 
   patch(entity: T): Observable<T> {
+    this._loading$.next(true);
     return this.http.patch(`${this.endPoint}`, entity)
       .pipe(
         tap((data: T) => {
@@ -85,6 +88,7 @@ export class APIService<T> {
   }
 
   post(entity: T): Observable<T> {
+    this._loading$.next(true);
     return this.http.post(`${this.endPoint}`, entity)
       .pipe(
         tap((data: T) => {
@@ -98,6 +102,7 @@ export class APIService<T> {
   }
 
   delete(id: number): Observable<void> {
+    this._loading$.next(true);
     return <any>this.http.delete(`${this.endPoint}/${id}`)
       .pipe(
         tap((data: T) => {
@@ -111,12 +116,14 @@ export class APIService<T> {
   }
 
   postAndList(entity: any): Observable<T[]> {
+    this._loading$.next(true);
     return this.http.post(`${this.endPoint}`, entity).pipe(
       switchMap(() => this.list()),
     );
   }
 
   patchAndList(entity: any): Observable<T[]> {
+    this._loading$.next(true);
     return this.http.patch(`${this.endPoint}`, entity).pipe(
       switchMap(() => this.list()),
     );
@@ -129,6 +136,7 @@ export class APIService<T> {
   // }
 
   deleteAndList(id: any): Observable<T[]> {
+    this._loading$.next(true);
     return this.http.delete(`${this.endPoint}/${id}`).pipe(
       switchMap(() => this.list()),
     );

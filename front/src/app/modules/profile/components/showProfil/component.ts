@@ -4,6 +4,7 @@ import {
   Injectable,
 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { User } from '~/core/entities/user/entity';
 import { ClientService } from '~/core/services/user/client';
@@ -22,7 +23,10 @@ export class ShowProfilSettingsComponent implements OnInit {
     "vous devez remplir votre biographie et ajouter un domaine d'apprentissage";
 
 
-  constructor(private clientService: ClientService, private _toastr: ToastrService) {
+  constructor(private clientService: ClientService,
+              private _toastr: ToastrService,
+              private _deviceService: DeviceDetectorService,
+  ) {
     this.user = new User();
   }
 
@@ -36,6 +40,10 @@ export class ShowProfilSettingsComponent implements OnInit {
       this.user = client;
       this.disabled = !(!!client.first_name && !!client.biographie && !!client.tags.filter((tag:Tag) => tag.type === 0)[0]);
     });
+  }
+
+  get isMobile() {
+    return this._deviceService.isMobile();
   }
 
   submit() {

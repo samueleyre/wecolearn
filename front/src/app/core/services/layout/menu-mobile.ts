@@ -52,6 +52,9 @@ export class MenuMobileService {
       if (REDIRECT_URLS.returnUrls.profile.some(rx => rx.test(url))) {
         return NAV.profile;
       }
+      if (REDIRECT_URLS.returnUrls.search.some(rx => rx.test(url))) {
+        return NAV.search;
+      }
     }
     // on page redirect
     if (MenuMobileService.beforeRedirectionUrl && [NAV.discussion, NAV.search].indexOf(MenuMobileService.beforeRedirectionUrl) !== -1) {
