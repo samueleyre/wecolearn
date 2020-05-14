@@ -9,7 +9,11 @@ import { User } from '~/core/entities/user/entity';
 export class UsernamePipe implements PipeTransform {
   constructor() {}
   transform(user: User) {
-    return `${user.first_name[0].toLocaleUpperCase() + user.first_name.slice(1)}
-    ${user.last_name[0].toLocaleUpperCase() + user.last_name.slice(1)}`;
+    let ret = `${user.first_name[0].toLocaleUpperCase() + user.first_name.slice(1)}`;
+    if (user.last_name) {
+      ret += ` ${user.last_name[0].toLocaleUpperCase() + user.last_name.slice(1)}`;
+    }
+    return ret;
+
   }
 }
