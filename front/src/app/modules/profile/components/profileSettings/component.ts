@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import {debounceTime, distinct, filter, takeUntil} from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { Tag } from '~/core/entities/tag/entity';
@@ -18,6 +20,8 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { FooterMobileService } from '~/core/services/layout/footer-mobile';
+import { ProfileService } from '~/core/services/user/profile';
 
 
 @Component({
@@ -26,12 +30,6 @@ import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
   styleUrls: ['./style.scss'],
 })
 export class ProfileSettingsComponent extends DestroyObservable implements OnInit {
-  @Input()
-  set _user(user) {
-    this.user = user;
-  }
-
-  public user: User;
   public tags = [];
 
   loading = false;
@@ -46,18 +44,19 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
   rocketChatId: string;
 
   constructor(
-        protected clientService: ClientService,
-        protected tagService: TagService,
+        private clientService: ClientService,
+        private tagService: TagService,
         private activatedRoute: ActivatedRoute,
         protected http: HttpClient,
         @Inject(APP_BASE_HREF) r: string,
         private domainService: DomainService,
         private authenticationService: AuthenticationService,
         private fb: FormBuilder,
+        private _footerMobileService: FooterMobileService,
+        private _deviceService: DeviceDetectorService,
+        private _profileService: ProfileService,
   ) {
     super();
-    this.tagService = tagService;
-    this.clientService = clientService;
   }
 
   public userForm = this.fb.group({
@@ -77,9 +76,31 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
 
   ngOnInit() {
     this.load();
-    this.userForm.valueChanges.subscribe(() => {
-      this.submit();
-    });
+
+    this.userForm.valueChanges
+      .pipe(
+        debounceTime(1000),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
+        this.submit();
+      });
+
+    // update data
+    this._profileService.get().subscribe();
+
+    // mobile only
+    if (this._deviceService.isMobile()) {
+      // @ts-ignore
+      for (const input of document.querySelectorAll('input, textarea')) {
+        input.addEventListener('focus', () => {
+          this._footerMobileService.searchFocusState.next(true);
+        });
+        input.addEventListener('blur', () => {
+          this._footerMobileService.searchFocusState.next(false);
+        });
+      }
+    }
   }
 
   load(): void {
@@ -97,18 +118,28 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
     this.redirectURI = (environment.production) ?
       encodeURIComponent(`https://${subDomain}wecolearn.com/profilsettings`) : encodeURIComponent('http://0.0.0.0:8080/profilsettings');
 
+    this._profileService.entity$
+      .pipe(
+        filter(val => !!val),
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user) => {
+        this.setProfileFormData(user);
+      });
+
     // this.activatedRoute.queryParams.subscribe((params: Params) => {
     //   if (params && params['code']) {
     //     this.slackConnect(params['code'], this.redirectURI);
     //   }
     // });
-    if (this.user) {
-      this.setClient(this.user);
-    }
   }
 
-  setClient(user: User) {
-    this.userForm.patchValue(user);
+  get loaded() {
+    return this._profileService.entity;
+  }
+
+  setProfileFormData(user: User) {
+    this.userForm.patchValue(user, { emitEvent: false });
     this.setTags(user);
 
     // if (!this.client['latitude']) {
@@ -120,9 +151,9 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
   }
 
   setTags(user: User) {
-    this.userForm.controls.learn_tags.setValue(user.tags.filter((tag: Tag) => tag.type === 0));
-    this.userForm.controls.know_tags.setValue(user.tags.filter((tag: Tag) => tag.type === 1));
-    this.userForm.controls.teach_tags.setValue(user.tags.filter((tag: Tag) => tag.type === 2));
+    this.userForm.controls.learn_tags.setValue(user.tags.filter((tag: Tag) => tag.type === 0), { emitEvent: false });
+    this.userForm.controls.know_tags.setValue(user.tags.filter((tag: Tag) => tag.type === 1), { emitEvent: false });
+    this.userForm.controls.teach_tags.setValue(user.tags.filter((tag: Tag) => tag.type === 2), { emitEvent: false });
   }
 
   // slackConnect(code: string, redirectUri: string) {
@@ -146,13 +177,11 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
   submit() {
     this.joinTags();
     this.clientService.patch({ tags: this.tags, ...this.userForm.value }).subscribe(
-            (client: User) => {
-              //
-            },
-            (error) => {
-              console.log(error);
-            },
-        );
+      (user: User) => {},
+      (error) => {
+        console.log(error);
+      },
+    );
   }
 
 

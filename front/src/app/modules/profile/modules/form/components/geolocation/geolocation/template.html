@@ -1,7 +1,7 @@
 <!--<div id="map" class="map"></div>-->
 <div class="GeoPosition">
   <mat-form-field appearance="legacy" >
-    <mat-label>Chercher mon adresse</mat-label>
+    <mat-label>Chercher ma ville</mat-label>
     <input matInput id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="" [formControl]="addressCtrl" [matAutocomplete]="auto" (focusout)="inputLostFocus()" >
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAddressSelect($event)">
       <mat-option *ngFor="let address of foundAddresses | async" [value]="address">
