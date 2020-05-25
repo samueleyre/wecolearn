@@ -19,6 +19,7 @@ import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { PASSWORD } from '~/core/const/validators.const';
 import { passwordMatchValidator } from '~/modules/auth/validators/password-match.validator';
+import { AuthenticationService } from '~/core/services/auth/auth';
 
 
 @Component({
@@ -27,8 +28,21 @@ import { passwordMatchValidator } from '~/modules/auth/validators/password-match
   styleUrls: ['./style.scss'],
 })
 export class SettingsComponent extends DestroyObservable implements OnInit {
-  @Input() user: User;
+  constructor(
+    private profileService: ProfileService,
+    private activatedRoute: ActivatedRoute,
+    private _dialog: DialogService,
+    @Inject(APP_BASE_HREF) r: string,
+    private router: Router,
+    private _toastr: ToastrService,
+    private _fb: FormBuilder,
+    private _authenticationService: AuthenticationService,
+  ) {
+    super();
+    this.initEditable();
+  }
 
+  @Input() user: User;
 
   public newemail: string;
   public editing: object = {};
@@ -45,19 +59,6 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
 
   get passwordVerification() {
     return this.newPasswordForm.get('password_verification');
-  }
-
-  constructor(
-      private profileService: ProfileService,
-      private activatedRoute: ActivatedRoute,
-      private _dialog: DialogService,
-      @Inject(APP_BASE_HREF) r: string,
-      private router: Router,
-      private _toastr: ToastrService,
-      private _fb: FormBuilder,
-  ) {
-    super();
-    this.initEditable();
   }
 
   ngOnInit() {
@@ -174,6 +175,10 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
       },
       { validator: passwordMatchValidator },
     );
+  }
+
+  public logOut() {
+    this._authenticationService.logout(true);
   }
 
   /**

@@ -1,12 +1,12 @@
 <mat-menu #appMenu="matMenu" xPosition="before" >
   <div mat-menu-item (click) = "$event.stopPropagation();">
-    <mat-checkbox [ngModel]="globalMode" (ngModelChange)="setGlobalMode($event)">
-      recherche globale
+    <mat-checkbox [ngModel]="!useProfileTagsMode" (ngModelChange)="setUseProfileMode(!$event)">
+      <span [matTooltip]="'Ne pas prendre en compte les domaines d\'apprentissages de votre profile'">mode exploration ✨</span>
     </mat-checkbox>
   </div>
   <div mat-menu-item (click) = "$event.stopPropagation();">
-    <mat-checkbox [ngModel]="!useProfileTagsMode" (ngModelChange)="setUseProfileMode(!$event)">
-      mode exploration
+    <mat-checkbox [ngModel]="globalMode" (ngModelChange)="setGlobalMode($event)">
+      <span [matTooltip]="'Sur toute la planète !'">recherche globale 🌏</span>
     </mat-checkbox>
   </div>
 </mat-menu>
