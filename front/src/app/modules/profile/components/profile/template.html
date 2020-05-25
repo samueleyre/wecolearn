@@ -1,47 +1,47 @@
-<div class="container-fluid">
+<div class="Profile">
+  <div class="Profile-header container-fluid">
     <div class="row justify-content-center align-items-center center">
-        <div class="col-12 col-md-4">
-            <img defaultProfileImage [src]="user.image | cloudinaryImagePipe"
-                 style="width: 120px; height: 120px"/>
-        </div>
-        <div class="col-12 col-md-4">
-            <h4 class="justify-content-center" style="display: flex;"><br>{{user.first_name}} {{user.last_name}}
-                <br><br></h4>
-        </div>
-        <div class="col-12 col-md-4">
-            <open-thread [user]="user"></open-thread>
-        </div>
+      <div class="col-12 col-md-4">
+        <img defaultProfileImage [src]="user.image | cloudinaryImagePipe"
+             style="width: 120px; height: 120px"/>
+      </div>
+      <div class="col-12 col-md-4">
+        <h4 class="justify-content-center" style="display: flex;">{{user.first_name}} {{user.last_name}}</h4>
+      </div>
+      <div class="col-12 col-md-4">
+        <open-thread [user]="user"></open-thread>
+      </div>
 
     </div>
-</div>
-<br><br>
-<div class="tags-container" *ngIf="(user.tags | tagPipe: 0:20).length > 0">
+  </div>
+  <div class="Profile-tagsContainer" *ngIf="(user.tags | tagPipe: 0:20).length > 0">
     <p class="title center">Je veux apprendre 📚</p>
     <ul class="tags col-md-12 flex-wrap">
-        <li *ngFor="let tag of user.tags | tagPipe: 0:20">
-            <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
-              <span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span>
-            </a></p>
-        </li>
+      <li *ngFor="let tag of user.tags | tagPipe: 0:20">
+        <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
+          <span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span>
+        </a></p>
+      </li>
     </ul>
-</div>
-<div class="tags-container" style="border-top: 1px solid #ffffff17;"
-     *ngIf="(user.tags | tagPipe: 1:20).length > 0">
+  </div>
+  <div class="Profile-tagsContainer" style="border-top: 1px solid #ffffff17;"
+           *ngIf="(user.tags | tagPipe: 1:20).length > 0">
     <p class="title center">Je connais 🧠</p>
     <ul class="tags col-md-12 flex-wrap">
-        <li *ngFor="let tag of user.tags | tagPipe: 1:20">
-            <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
-              <span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span>
-            </a></p>
-        </li>
+      <li *ngFor="let tag of user.tags | tagPipe: 1:20">
+        <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
+          <span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span>
+        </a></p>
+      </li>
     </ul>
-</div>
-<div class="container-fluid bio-container">
+  </div>
+  <div class="container-fluid bio-container">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
-            <br><br>
-            <p class="text-justify" style="white-space: pre-line;">{{ user.biographie }}</p>
-            <br><br>
-        </div>
+      <div class="col-12 col-md-8">
+        <br><br>
+        <p class="text-justify" style="white-space: pre-line;">{{ user.biographie }}</p>
+        <br><br>
+      </div>
     </div>
+  </div>
 </div>

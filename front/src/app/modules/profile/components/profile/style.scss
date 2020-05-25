@@ -1,44 +1,59 @@
 @import 'variables';
 @import "extendables";
 
-button {
-  background-color: #ffc600;
-  color: #310c31 !important;
-  font-weight: bold;
-}
 
-img {
-  border-radius: 50%;
-  object-fit: cover;
-}
+.Profile {
 
-.tags-container {
-  background-color: #310c31;
-  padding: 20px 0 0 0;
-
-  .title {
-    padding: 0 20px 0 20px;
-    color: #fff !important;
+  &-header {
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
-  .tags {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    justify-content: center;
+  button {
+    background-color: #ffc600;
+    color: #310c31 !important;
+    font-weight: bold;
+  }
 
-    li {
-      border: 2px;
-      font-size: 18px;
-      padding: 5px;
+  img {
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-      .badge {
-        padding: 8px;
-        background-color: #ffc600;
-        color: #310c31;
-        font-size: 1.2rem;
+  &-tagsContainer {
+    background-color: #310c31;
+    padding: 20px 0 0 0;
+
+    .title {
+      padding: 0 20px 0 20px;
+      color: #fff !important;
+    }
+
+    .tags {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      justify-content: center;
+
+      li {
+        border: 2px;
+        font-size: 18px;
+        padding: 5px;
+
+        .badge {
+          padding: 8px;
+          background-color: #ffc600;
+          color: #310c31;
+          font-size: 1.2rem;
+        }
       }
     }
   }
+
+
+
+
 }
+
+
