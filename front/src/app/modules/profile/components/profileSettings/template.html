@@ -18,14 +18,14 @@
                         <br>
                     </div>
                 </div>
-                <br><br>
+
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Je veux apprendre 📚</h6>
                         <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'" [type]="learnType" ></profile-form-tags>
                     </div>
                 </div>
-                <br><br>
+
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Mes projets 🚀</h6>
@@ -33,37 +33,30 @@
                         <profile-form-biography [parentForm]="userForm"></profile-form-biography>
                     </div>
                 </div>
-                <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Je connais 🧠</h6>
                         <profile-form-tags [parentForm]="userForm" [fieldName]="'know_tags'" [type]="knowType" ></profile-form-tags>
                     </div>
                 </div>
-                <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">J'ai envie de transmettre 👩‍🏫</h6>
                         <profile-form-tags [parentForm]="userForm" [fieldName]="'teach_tags'" [type]="teachType" ></profile-form-tags>
                     </div>
                 </div>
-                <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">L'intensité à laquelle je souhaite apprendre</h6>
-                        <br><br>
                         <profile-form-intensity [parentForm]="userForm"></profile-form-intensity>
                     </div>
                 </div>
-
-                <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Ma position</h6>
                         <app-geolocation [parentForm]="userForm"></app-geolocation>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

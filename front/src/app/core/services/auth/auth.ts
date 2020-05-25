@@ -8,10 +8,10 @@ import { ToastrService } from 'ngx-toastr';
 import { NAV } from '~/config/navigation/nav';
 import { User } from '~/core/entities/user/entity';
 import { UserRoleEnum } from '~/core/enums/user/user-role.enum';
+import { ClientService } from '~/core/services/user/client';
 
 import { TokenService } from './token';
 import { Logged } from './logged';
-import {ClientService} from "~/core/services/user/client";
 
 
 @Injectable({
@@ -88,7 +88,6 @@ export class AuthenticationService {
   checkPasswordToken(token: string) {
     return this.http.get(`/api/resetPassword/token?token=${token}`);
   }
-
 
   logout(returnHome = false) {
     // clear token remove user from local storage to log user out

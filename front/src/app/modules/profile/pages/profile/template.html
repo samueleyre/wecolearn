@@ -1,14 +1,11 @@
-<section *ngIf="!isMobile">
+<section *ngIf="!isMobile" class="ProfilePage-desktop">
     <div class="container" *ngIf="user$ | async as user">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10">
-                <br><br>
-                <a routerLink="/dashboard/search"><i class="fas fa-chevron-left"></i>&nbsp;<span>retour</span></a>
+                <a routerLink="/dashboard/search" class="ProfilePage-desktop-returnLink"><i class="fas fa-chevron-left"></i><span>retour</span></a>
                 <div class="card">
-                    <br><br>
                     <profile [user]="user"></profile>
                 </div>
-                <br><br><br>
             </div>
         </div>
     </div>
