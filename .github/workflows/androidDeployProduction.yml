@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: cd front && yarn install --save-dev
       - name: build angular
-        run: front/node_modules/@angular/cli/bin/ng build --configuration=android-prod
+        run: cd front && node_modules/@angular/cli/bin/ng build --configuration=android-prod
 
 
       # build bundle
