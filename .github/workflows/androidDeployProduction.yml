@@ -1,0 +1,55 @@
+name: deploy production on android
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ android-deploy ]
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+
+      # build angular
+      - name: install angular cli
+        run: npm install -g @angular/cli
+      - name: build angular
+        run: cd front && ng build --configuration=android-prod
+
+
+      # build bundle
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: :app:bundleRelease
+          gradle-executable: front/android/gradlew
+
+      # sign
+      - uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: front/android/app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+          alias: ${{ secrets.ANDROID_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          signedReleaseFile: front/android/app/release/app-release.aab
+
+      # deploy
+      - uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+          packageName: com.wecolearn.studio
+          releaseFile: front/android/app/release/app-release.aab
+          track: beta
+          userFraction: 1
+          whatsNewDirectory: front/android/app/distribution/whatsnew
