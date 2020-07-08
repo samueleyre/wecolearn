@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: cd front && npm install
       - name: build angular
-        run: ng build --configuration=android-prod && cd ..
+        run: cd front && ng build --configuration=android-prod
 
 
       # build bundle
