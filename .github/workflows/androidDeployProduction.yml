@@ -19,10 +19,14 @@ jobs:
       - uses: actions/checkout@v2
 
       # build angular
-      - name: install angular cli
-        run: npm install @angular/cli
+      - name: Use Node.js 12.8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.8
+      - name: Install dependencies
+        run: cd front && npm install
       - name: build angular
-        run: cd front && ng build --configuration=android-prod
+        run: ng build --configuration=android-prod && cd ..
 
 
       # build bundle
