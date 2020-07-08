@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 
 import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
+import { Tag } from '~/core/entities/tag/entity';
 
 import { SearchService } from '../../../../core/services/search/search';
 import { SEARCH } from '../../config/main';
@@ -145,6 +146,10 @@ import { SEARCH } from '../../config/main';
       };
     }
     this.searchService.search(filledFilters).subscribe();
+  }
+
+  currentSearchTags(): Tag | null {
+    return this.searchService.searchInputValue;
   }
 
   get loading(): boolean {

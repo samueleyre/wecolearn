@@ -110,10 +110,9 @@
 <emailNotificationSettings></emailNotificationSettings>
 <hr>
 <div>
-  <button (click)="logout()">Me déconnecter</button>
+  <button mat-button (click)="logOut()"><mat-icon>exit_to_app</mat-icon> Me déconnecter</button>
 </div>
 <hr>
-<label>Supprimer mon compte</label>
 <div>
-  <button (click)="deleteAccount()">Supprimer mon compte</button>
+  <button mat-button color="warn" (click)="deleteAccount()">Supprimer mon compte</button>
 </div>
