@@ -20,7 +20,7 @@ jobs:
 
       # build angular
       - name: install angular cli
-        run: npm install -g @angular/cli
+        run: npm install @angular/cli
       - name: build angular
         run: cd front && ng build --configuration=android-prod
 
