@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: 12.8
       - name: Install dependencies
-        run: cd front && npm install
+        run: cd front && yarn install --save-dev
       - name: build angular
         run: cd front && ng build --configuration=android-prod
 
