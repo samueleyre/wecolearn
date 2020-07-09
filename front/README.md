@@ -43,6 +43,11 @@ configurer le téléphone en mode debuggage USB
 
 Remplacer $ENV par dev ou prod
 
+## Installer les dépendances
+
+`ionic capacitor update`
+
+
 ## Synchronisation du code avec le mobile
 
 `npx cap sync`
