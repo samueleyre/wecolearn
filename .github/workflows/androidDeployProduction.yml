@@ -37,6 +37,8 @@ jobs:
         with:
           arguments: :app:bundleRelease
           gradle-executable: front/android/gradlew
+          build-root-directory: front/android
+          wrapper-directory: front/android/gradle/wrapper
 
       # sign
       - uses: r0adkll/sign-android-release@v1
