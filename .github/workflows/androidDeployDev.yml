@@ -1,10 +1,10 @@
-name: release production on playstore
+name: release staging on playstore
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ android-deploy ]
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -42,20 +42,34 @@ jobs:
           build-root-directory: front/android
           wrapper-directory: front/android/gradle/wrapper
 
-      # sign
-      - uses: r0adkll/sign-android-release@v1
+      # commit changes
+      - name: Commit new android version
+        uses: EndBug/add-and-commit@v4
         with:
-          releaseDirectory: front/android/app/build/outputs/bundle/release
-          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
-          alias: ${{ secrets.ANDROID_ALIAS }}
-          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          author_name: wecolearn
+          author_email: contact@wecolearn.com
+          message: "new android version"
+          add: "front/android/app/version.properties"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # deploy
-      - uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
-          packageName: com.wecolearn.studio
-          releaseFile: front/android/app/build/outputs/bundle/release/app-release.aab
-          track: beta
-          whatsNewDirectory: front/android/app/whatsnew
+#
+#      # sign
+#      - uses: r0adkll/sign-android-release@v1
+#        with:
+#          releaseDirectory: front/android/app/build/outputs/bundle/release
+#          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+#          alias: ${{ secrets.ANDROID_ALIAS }}
+#          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+#          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+#
+#      # deploy
+#      - uses: r0adkll/upload-google-play@v1
+#        with:
+#          serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+#          packageName: com.wecolearn.studio
+#          releaseFile: front/android/app/build/outputs/bundle/release/app-release.aab
+#          track: internal
+#          whatsNewDirectory: front/android/app/whatsnew
+
+
