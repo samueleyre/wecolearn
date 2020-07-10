@@ -58,5 +58,4 @@ jobs:
           packageName: com.wecolearn.studio
           releaseFile: front/android/app/release/app-release.aab
           track: beta
-          userFraction: 1
           whatsNewDirectory: front/android/app/distribution/whatsnew
