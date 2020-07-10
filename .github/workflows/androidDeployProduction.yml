@@ -54,7 +54,7 @@ jobs:
       # deploy
       - uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+          serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
           packageName: com.wecolearn.studio
           releaseFile: front/android/app/release/app-release.aab
           track: beta
