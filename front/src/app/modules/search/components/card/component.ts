@@ -55,11 +55,15 @@ import { SearchService } from '../../../../core/services/search/search';
     this.subDomain = this.domainService.getSubDomain();
     this.slackSubDomain = this.domainService.getSlackSubDomain();
     this.rocketChatDomain = this.domainService.getRocketChatDomain();
-    const foundTag = this.card.tags.find(tag => this.isSearchTag(tag));
     this.tags = [
-      foundTag,
       ...this.card.tags.filter(tag => !this.isSearchTag(tag)),
     ];
+
+    const foundTag = this.card.tags.find(tag => this.isSearchTag(tag));
+
+    if (foundTag) {
+      this.tags.unshift(foundTag);
+    }
 
     // todo: repare slack
     // for (let i = 0; i < this.types.length; i++) { // tslint:disable-line

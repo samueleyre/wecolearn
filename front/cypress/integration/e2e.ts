@@ -57,7 +57,13 @@ context('E2E', () => {
 
   if (config.signup) {
     describe('signup', () => {
-      cypress_signup(USER_CONFIG);
+      const user = {
+        ...USER_CONFIG,
+      };
+
+      user.email = `contact+${new Date().toLocaleDateString()}@wecolearn.com`;
+
+      cypress_signup(user);
       cypress_logout();
     });
   }
