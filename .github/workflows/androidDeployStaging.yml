@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: cd front && yarn install --save-dev
       - name: build angular
-        run: cd front && node_modules/@angular/cli/bin/ng build --configuration=android-prod
+        run: cd front && node_modules/@angular/cli/bin/ng build --configuration=android-staging
 
 
       # build bundle
@@ -53,23 +53,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-#
-#      # sign
-#      - uses: r0adkll/sign-android-release@v1
-#        with:
-#          releaseDirectory: front/android/app/build/outputs/bundle/release
-#          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
-#          alias: ${{ secrets.ANDROID_ALIAS }}
-#          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
-#          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
-#
-#      # deploy
-#      - uses: r0adkll/upload-google-play@v1
-#        with:
-#          serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
-#          packageName: com.wecolearn.studio
-#          releaseFile: front/android/app/build/outputs/bundle/release/app-release.aab
-#          track: internal
-#          whatsNewDirectory: front/android/app/whatsnew
+      # sign
+      - uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: front/android/app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+          alias: ${{ secrets.ANDROID_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      # deploy
+      - uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+          packageName: com.wecolearn.studio
+          releaseFile: front/android/app/build/outputs/bundle/release/app-release.aab
+          track: internal
+          whatsNewDirectory: front/android/app/whatsnew
 
 
