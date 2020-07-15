@@ -1,7 +1,7 @@
 // android staging
 export const environment = {
   origin : 'https://api-staging.wecolearn.com',
-  publique : 'http://staging.wecolearn.com',
+  publique : 'https://staging.wecolearn.com',
   mapApiKey :  '916b1cc2e5766358f98ec6ee40d66d5f',
   production : true,
   android : true,
