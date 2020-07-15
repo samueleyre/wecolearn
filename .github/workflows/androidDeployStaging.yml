@@ -4,8 +4,7 @@ name: release staging on playstore
 # events but only for the master branch
 on:
   push:
-    branches: [ android-deploy ]
-
+    branches: [ staging ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
