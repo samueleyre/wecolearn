@@ -33,7 +33,6 @@ export class SearchService extends APIService<User> {
 
   constructor(private _http: HttpClient) {
     super(_http);
-    console.log('constructing service');
   }
 
   get searchType():string {
