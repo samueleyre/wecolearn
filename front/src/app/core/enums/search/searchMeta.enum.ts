@@ -1,5 +1,6 @@
 export enum SearchMeta {
   tagNotFound = 'tagNotFound',
+  useProfileTags = 'useProfileTags',
   userLearnTags = 'userLearnTags',
   userKnowTags = 'userKnowTags',
   userLearnTagDomains = 'userLearnTagDomains',

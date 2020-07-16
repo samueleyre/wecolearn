@@ -28,7 +28,12 @@ import { SearchService } from '../../../../core/services/search/search';
   }
 
   get searchBarHasValue(): boolean {
-    return !!this.searchInputControl.value;
+    if (typeof this.searchInputControl.value === 'string') {
+      return !!this.searchInputControl.value;
+    }
+    if (this.searchInputControl.value && typeof this.searchInputControl.value === 'object') {
+      return !!this.searchInputControl.value.name;
+    }
   }
 
   public searchInputControl = new FormControl();
