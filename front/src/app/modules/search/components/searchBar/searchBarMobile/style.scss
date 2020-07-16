@@ -16,6 +16,12 @@
       margin-bottom: 0;
       padding-bottom: 0;
     }
+    ::ng-deep {
+      .mat-form-field-suffix {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
   }
 
 }

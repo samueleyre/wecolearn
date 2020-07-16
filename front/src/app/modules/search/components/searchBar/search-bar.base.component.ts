@@ -116,7 +116,9 @@ import { SearchService } from '../../../../core/services/search/search';
   }
 
   onInputBlur() {
-    this.foundAutocompleteTags$.next([]);
+    if (!this.searchBarHasValue) {
+      this.foundAutocompleteTags$.next([]);
+    }
   }
 
   hideAutocomplete() {

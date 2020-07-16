@@ -14,6 +14,9 @@
 <div class="SearchBar" >
   <mat-form-field color="accent" appearance="outline">
     <input #searchBar type="text" matInput placeholder="Recherche" (keyup.enter)="search()" [disabled]="loading" [formControl]="searchInputControl" [matAutocomplete]="auto" [matAutocompleteDisabled]="autocompleteDisabled" (focus)="onFocus()" (blur)="onBlur()">
+    <button *ngIf="searchBarHasValue" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar()">
+      <mat-icon>close</mat-icon>
+    </button>
     <button matSuffix color="accent" mat-button [matMenuTriggerFor]="appMenu" (menuClosed)="focusInput()" mat-icon-button >
       <mat-icon (click)="onFilterClick($event)" matSuffix>filter_list</mat-icon>
     </button>
