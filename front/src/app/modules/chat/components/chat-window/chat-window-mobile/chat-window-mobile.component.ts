@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import 'quill-emoji/dist/quill-emoji.js';
+import { NgxLinkifyjsService } from 'ngx-linkifyjs';
 
 import { ChatWindowBaseComponent } from '~/modules/chat/components/chat-window/chat-window.base.component';
 import { MessagesService } from '~/modules/chat/services/messages';
 import { Threads } from '~/modules/chat/services/threads';
 import { ClientService } from '~/core/services/user/client';
-import {NgxLinkifyjsService} from "ngx-linkifyjs";
 
 @Component({
   selector: 'app-chat-window-mobile',

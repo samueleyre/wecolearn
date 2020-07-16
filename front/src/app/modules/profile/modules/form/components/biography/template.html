@@ -1,6 +1,7 @@
 <mat-form-field appearance="legacy" [formGroup]="parentForm" style="width: 100%">
-  <mat-label></mat-label>
-  <textarea matInput placeholder="Je veux devenir champion aux échecs et me reconvertir en informatique..." id="biographie"
-                    class="form-control" rows="10" formControlName="biographie"  name="biographie"
+  <mat-label>Description</mat-label>
+  <textarea appHideMenuMobileOnFocus matInput cdkTextareaAutosize placeholder="Je veux devenir champion aux échecs et me reconvertir en informatique..." id="biographie"
+            cdkAutosizeMinRows="5"
+            cdkAutosizeMaxRows="5" formControlName="biographie"  name="biographie"
               (blur)="blur()"></textarea>
 </mat-form-field>

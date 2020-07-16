@@ -13,7 +13,7 @@
 
 <div class="SearchBar" >
   <mat-form-field color="accent" appearance="outline">
-    <input #searchBar type="text" matInput placeholder="Recherche" (keyup.enter)="search()" [disabled]="loading" [formControl]="searchInputControl" [matAutocomplete]="auto" [matAutocompleteDisabled]="autocompleteDisabled" (focus)="onFocus()" (blur)="onBlur()">
+    <input #searchBar appHideMenuMobileOnFocus type="text" matInput placeholder="Recherche" (keyup.enter)="search()" [disabled]="loading" [formControl]="searchInputControl" [matAutocomplete]="auto" [matAutocompleteDisabled]="autocompleteDisabled" (blur)="onBlur()">
     <button *ngIf="searchBarHasValue" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar()">
       <mat-icon>close</mat-icon>
     </button>

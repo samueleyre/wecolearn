@@ -27,7 +27,7 @@ export class MainComponent extends DestroyObservable implements OnInit {
   }
 
   ngOnInit() {
-    this.footerMobileService.searchFocusState.asObservable().subscribe((value:boolean) => {
+    this.footerMobileService.inputFocusState.asObservable().subscribe((value:boolean) => {
       this.searchFocusState = value;
     });
 

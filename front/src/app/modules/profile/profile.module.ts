@@ -8,6 +8,7 @@ import { PasswordDifficultyModule } from '~/modules/auth/modules/passwordDifficu
 import { ShowProfilSettingsComponent } from '~/modules/profile/components/showProfil/component';
 import { MaterialModule } from '~/shared/modules/material/material.module';
 import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
+import { SharedModule } from '~/shared/shared.module';
 
 import { ProfileComponent } from './components/profile/component';
 import { ProfilePageComponent } from './pages/profile/component';

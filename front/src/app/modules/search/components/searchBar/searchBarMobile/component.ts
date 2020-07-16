@@ -28,12 +28,7 @@ import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/se
     super.focusOut();
   }
 
-  onFocus() {
-    this._footerMobileService.searchFocusState.next(true);
-  }
-
   onBlur() {
-    this._footerMobileService.searchFocusState.next(false);
     super.onInputBlur();
   }
 }
