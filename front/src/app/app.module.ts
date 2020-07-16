@@ -7,6 +7,7 @@ import { BsDropdownModule } from 'ngx-bootstrap';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 // feature modules
 import { AuthModule } from '~/modules/auth/auth.module';
@@ -36,7 +37,6 @@ import { AutofocusDirective } from './modules/search/directives/input/directive'
 // shared services
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
-import {MatToolbarModule} from "@angular/material/toolbar";
 
 registerLocaleData(fr);
 
@@ -72,8 +72,7 @@ registerLocaleData(fr);
     HeaderMobileComponent,
     HeaderComponent,
     FooterMobileComponent,
-    //  tools
-    CopyComponent,
+
   ],
   providers: [
     {

@@ -75,6 +75,7 @@ class UserService
             'intensity',
             'latitude',
             'longitude',
+            'city',
             'tags',
             'showProfil',
             'newMessageNotification',

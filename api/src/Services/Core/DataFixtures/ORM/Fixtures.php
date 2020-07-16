@@ -103,6 +103,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setIntensity(random_int(0, 45));
         $admin->setLatitude(45.75);
         $admin->setLongitude(4.85);
+        $admin->setCity('Lyon');
         $admin->setEnabled(true);
         $admin->addDomain($domain);
         $admin->setShowProfil(false);
@@ -151,6 +152,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $user->setIntensity(random_int(0, 45));
             $user->setLatitude(45.75);
             $user->setLongitude(4.85);
+            $user->setCity('Lyon');
             $user->setEnabled(true);
             $user->addDomain($domain);
             $user->setShowProfil(true);
