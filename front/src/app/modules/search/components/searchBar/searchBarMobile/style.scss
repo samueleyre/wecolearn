@@ -1,13 +1,21 @@
 @import 'variables';
 
-.fa-search{
-  color: #cccccc;
-}
-
-form {
+.SearchBar {
   width: 100%;
-}
 
-mat-form-field {
-  width: 100%;
+  &-option {
+    padding:8px;
+    background-color: #ffc600;
+    color: #310c31;
+  }
+
+
+  mat-form-field {
+    width: 100%;
+    ::ng-deep .mat-form-field-wrapper {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
 }

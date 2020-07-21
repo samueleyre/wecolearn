@@ -7,6 +7,7 @@ import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
 import { User } from '~/core/entities/user/entity';
 import { ClientService } from '~/core/services/user/client';
+import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 
 import { MessagesService } from './messages';
 
@@ -32,8 +33,13 @@ export class Threads {
 
     this.initCurrentThreadsConstuctor();
 
-    // when currently selected front is selected, mark all the messages that it contains as read
-    this.currentThread.subscribe(this.messagesService.markThreadAsRead);
+    this.currentThread.subscribe((thread) => {
+      // mark all the messages that it contains as read
+      this.messagesService.markThreadAsRead.next(thread);
+
+      // set current chating user
+      MenuMobileService.discussingUser.next(thread.name);
+    });
   }
 
   private initThreadsConstructor(): void {

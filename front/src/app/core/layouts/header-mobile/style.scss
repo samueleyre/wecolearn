@@ -1,50 +1,13 @@
 @import 'variables';
 
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
 
-.navbar{
-  background-color: #ececec;
-  min-height: 60px;
-  padding: 0;
+a {
+  display: flex;
+}
 
-  .navbar-brand{
-    padding-left: 15px;
-  }
-
-  .discussingUser{
-    text-align: center;
-    width: 100%;
-    color: $mainOrange;
-    font-family: 'Raleway', sans-serif;
-    font-size: 1.2rem;
-  }
-
-  .navbar-nav .nav-link {
-    color: #585858 !important;
-    font-size: 1rem;
-  }
-  .navbar-nav .nav-link span {
-    font-size: 14px;
-  }
-  .navbar-nav .nav-link:hover {
-    color: #310c31 !important;
-  }
-
-
-  #dropdownParameters-button {
-    display: flex;
-    .fa-ellipsis-v {
-      font-size: 25px;
-    }
-    &.dropdown-toggle::after {
-      margin-top: 13px;
-    }
-  }
-
-  .dropdown-menu-right{
-    li i.fas{
-        padding: 0px 13px;
-    }
-  }
-
-
+.discussingUser {
+  margin-right: 40px;
 }

@@ -1,5 +1,5 @@
 
-<form class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm" >
+<form *ngIf="loaded" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm" >
     <br>
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -7,10 +7,10 @@
                 <div class="row">
                     <div class="col-12 col-md-6 order-2 order-md-1">
                         <div class="col-12 no-padding">
-                            <profile-form-firstname [parentForm]="userForm" (onBlur)="submit()" ></profile-form-firstname>
+                            <profile-form-firstname [parentForm]="userForm" ></profile-form-firstname>
                         </div>
                         <div class="col-12 no-padding">
-                            <profile-form-lastname [parentForm]="userForm" (onBlur)="submit()" ></profile-form-lastname>
+                            <profile-form-lastname [parentForm]="userForm"></profile-form-lastname>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 order-1 order-md-2" style="text-align: center;">
@@ -18,52 +18,45 @@
                         <br>
                     </div>
                 </div>
-                <br><br>
+
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Je veux apprendre 📚</h6>
                         <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'" [type]="learnType" ></profile-form-tags>
                     </div>
                 </div>
-                <br><br>
+
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Mes projets 🚀</h6>
                         <br>
-                        <profile-form-biography [parentForm]="userForm" (onBlur)="submit()"></profile-form-biography>
+                        <profile-form-biography [parentForm]="userForm"></profile-form-biography>
                     </div>
                 </div>
-                <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Je connais 🧠</h6>
                         <profile-form-tags [parentForm]="userForm" [fieldName]="'know_tags'" [type]="knowType" ></profile-form-tags>
                     </div>
                 </div>
-                <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">J'ai envie de transmettre 👩‍🏫</h6>
                         <profile-form-tags [parentForm]="userForm" [fieldName]="'teach_tags'" [type]="teachType" ></profile-form-tags>
                     </div>
                 </div>
-                <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">L'intensité à laquelle je souhaite apprendre</h6>
-                        <br><br>
                         <profile-form-intensity [parentForm]="userForm"></profile-form-intensity>
                     </div>
                 </div>
-
-                <br><br>
                 <div class="row fieldContainer">
                     <div class="col-12">
                         <h6 class="center">Ma position</h6>
                         <app-geolocation [parentForm]="userForm"></app-geolocation>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

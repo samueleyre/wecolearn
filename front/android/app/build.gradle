@@ -2,14 +2,31 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    defaultConfig {
+    def versionPropsFile = file('version.properties')
+
+    if (versionPropsFile.canRead()) {
+
+      Properties versionProps = new Properties()
+
+      versionProps.load(new FileInputStream(versionPropsFile))
+      def code = versionProps['versionCode'].toInteger() + 1
+      def name = versionProps['versionName']
+      versionProps['versionCode']=code.toString()
+      versionProps.store(versionPropsFile.newWriter(), null)
+
+      defaultConfig {
         applicationId "com.wecolearn.studio"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionName name
+        versionCode code
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+      }
     }
+    else {
+      throw new GradleException("Could not read version.properties!")
+    }
+
     buildTypes {
         release {
             minifyEnabled false

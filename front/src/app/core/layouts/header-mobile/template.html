@@ -1,24 +1,12 @@
-<nav class="navbar navbar-expand navbar-light sticky-top">
-  <a class="navbar-brand" *ngIf="showReturn" [routerLink]="returnLink"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-  <a class="navbar-brand" *ngIf="!showReturn" routerLink="/dashboard/search"><img width="65px" src="assets/logo/wecolearn-w.svg" alt=""></a>
-  <div *ngIf="showDiscussionUser" class="discussingUser">
-    <div *ngIf="discussingUser$ | async as threadName" ><span>{{threadName}}</span></div>
-  </div>
-  <ul class="nav navbar-nav ml-auto">
-    <li dropdown id="parameters" class="btn-group nav-item d-inline-block">
-      <a class="nav-link" id="dropdownParameters-button" dropdownToggle
-         aria-controls="dropdownParameters-menu">
-        <i class="fas fa-ellipsis-v">&nbsp;&nbsp;&nbsp;</i>
-      </a>
-      <ul *dropdownMenu aria-labelledby="dropdownParameters-button" id="dropdownParameters-menu"
-          class="dropdown-menu  dropdown-menu-right" role="menu">
-        <li role="menuitem"><a class="nav-link dropdown-item" routerLink="/dashboard/profile"><i class="fas fa-user"></i>Profil</a></li>
-        <li role="menuitem"><a class="nav-link dropdown-item" routerLink="/dashboard/profile/settings"><i class="fas fa-cog"></i>Paramètres</a></li>
-        <li role="menuitem"><a id="signOutAction" class="nav-link dropdown-item" (click)="logOut()"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-
-
-
+<mat-toolbar>
+  <mat-toolbar-row>
+    <a *ngIf="showReturn" [routerLink]="returnLink"><mat-icon aria-hidden="true">arrow_back</mat-icon></a>
+    <img *ngIf="!showReturn" width="50px" src="assets/logo/wecolearn-w.svg" alt="">
+    <span class="toolbar-spacer"></span>
+    <div *ngIf="showDiscussionUser" class="discussingUser">
+      <div *ngIf="discussingUser$ | async as threadName" ><span>{{threadName}}</span></div>
+    </div>
+    <span class="toolbar-spacer"></span>
+    <a *ngIf="showSettings" routerLink="/dashboard/profile/settings"><mat-icon aria-hidden="true" aria-label="Paramètres">settings</mat-icon></a>
+  </mat-toolbar-row>
+</mat-toolbar>

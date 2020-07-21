@@ -203,11 +203,11 @@
                 }
               ]
             },
-            "android-dev": {
+            "android-staging": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.android-dev.ts"
+                  "with": "src/environments/environment.android-staging.ts"
                 },
                 {
                   "replace": "src/assets/js/registerSW.js",
@@ -291,8 +291,8 @@
             "staging": {
               "browserTarget": "app:build:staging"
             },
-            "android-dev": {
-              "browserTarget": "app:build:android-dev"
+            "android-staging": {
+              "browserTarget": "app:build:android-staging"
             },
             "android-production": {
               "browserTarget": "app:build:android-production"

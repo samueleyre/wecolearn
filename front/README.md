@@ -39,7 +39,14 @@ configurer le téléphone en mode debuggage USB
 
 ## compilation de l'application
 
-`ng build --configuration=capacitor`
+`ng build --configuration=android-$ENV`
+
+Remplacer $ENV par staging ou prod
+
+## Installer les dépendances
+
+`ionic capacitor update`
+
 
 ## Synchronisation du code avec le mobile
 

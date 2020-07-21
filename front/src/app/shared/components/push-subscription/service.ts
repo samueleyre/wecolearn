@@ -14,7 +14,6 @@ export class PushSubscriptionService {
   }
 
   public async process(): Promise<any> {
-    console.log('####### processs ##########');
     return new Promise((resolve , reject) => {
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready.then((reg) => {

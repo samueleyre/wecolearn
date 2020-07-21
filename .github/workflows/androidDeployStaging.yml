@@ -1,0 +1,73 @@
+name: release staging on playstore
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ staging ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+
+      # build angular
+      - name: Use Node.js 12.8
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.8
+      - name: Install dependencies
+        run: cd front && yarn install --save-dev
+      - name: build angular
+        run: cd front && node_modules/@angular/cli/bin/ng build --configuration=android-staging
+
+
+      # build bundle
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Install capacitor plugins
+        run : cd front && ./node_modules/@ionic/cli/bin/ionic capacitor update
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: :app:bundleRelease
+          gradle-executable: front/android/gradlew
+          build-root-directory: front/android
+          wrapper-directory: front/android/gradle/wrapper
+
+      # commit changes
+      - name: Commit new android version
+        uses: EndBug/add-and-commit@v4
+        with:
+          author_name: wecolearn
+          author_email: contact@wecolearn.com
+          message: "new android version"
+          add: "front/android/app/version.properties"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # sign
+      - uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: front/android/app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+          alias: ${{ secrets.ANDROID_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      # deploy
+      - uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+          packageName: com.wecolearn.studio
+          releaseFile: front/android/app/build/outputs/bundle/release/app-release.aab
+          track: internal
+          whatsNewDirectory: front/android/app/whatsnew
+
+

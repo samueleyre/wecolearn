@@ -1,22 +1,11 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { APP_BASE_HREF, Location } from '@angular/common';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import * as _ from 'lodash';
-import { delay, takeUntil } from 'rxjs/operators';
+import { delay, takeUntil, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { Logged } from '~/core/services/auth/logged';
-import { AuthenticationService } from '~/core/services/auth/auth';
-import { ClientService } from '~/core/services/user/client';
-import { MessagesService } from '~/modules/chat/services/messages';
-import { Threads } from '~/modules/chat/services/threads';
-import { Thread } from '~/core/entities/thread/entity';
-import { User } from '~/core/entities/user/entity';
-import { DomainService } from '~/core/services/domain/domain';
-import { MenuService } from '~/core/services/layout/menu';
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 import { DestroyObservable } from '~/core/components/destroy-observable';
+import { NAV } from '~/config/navigation/nav';
 
 @Component({
   selector: 'dash-header-mobile',
@@ -24,63 +13,32 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
   styleUrls: ['./style.scss'],
 })
 export class HeaderMobileComponent extends DestroyObservable implements OnInit, OnDestroy {
-  private location: Location;
-  private alive = true;
   public connected = false;
-  public unreadMessagesCount: number;
-  public notifications: Thread[];
-  public currentClient: User = new User();
-  private collapseClass = 'collapse';
-  private subDomain: string = null;
   public showReturn = false;
-  showDiscussionUser = false;
+  public showDiscussionUser = false;
   public returnLink: string;
-  discussingUser$:Observable<string>;
+  public showSettings = false;
+  public discussingUser$:Observable<string>;
 
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              location: Location,
-              @Inject(APP_BASE_HREF) r: string,
-              public messagesService: MessagesService,
-              public threadsService: Threads,
-              public clientService: ClientService,
-              private authenticationService: AuthenticationService,
-              private domainService: DomainService,
-              private menuMobileService: MenuMobileService,
+  constructor(
+    private router: Router,
+    private menuMobileService: MenuMobileService,
   ) {
     super();
-    this.location = location;
   }
 
   ngOnInit() {
     this.initReturn();
-    this.subDomain = this.domainService.getSubDomain();
-
-    Logged.get().subscribe((logged: boolean) => {
-      this.connected = logged;
-      this.clientService.get().subscribe((client: User) => {
-        this.currentClient = client;
-        if (logged) {
-          this.loadMessages();
-        }
-      });
-    });
     this.discussingUser$ = MenuMobileService.discussingUser.pipe(
-      delay(0),
       takeUntil(this.destroy$),
     );
   }
 
-
   private initReturn() {
     // onload
     if (this.router.url) {
-      this.showReturn = this.menuMobileService.showReturn(this.router.url);
-      this.returnLink = MenuMobileService.getReturnLink(this.router.url);
-      this.showDiscussionUser = MenuMobileService.showDiscussionUser(this.router.url);
-    } else {
-      console.log('Current route not found');
+      this.setNavigation(this.router.url);
     }
 
     // on redirect
@@ -88,55 +46,15 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
       .pipe(takeUntil(this.destroy$))
       .subscribe((e) => {
         if (e instanceof NavigationEnd) {
-          this.showReturn = this.menuMobileService.showReturn(e.urlAfterRedirects);
-          this.showDiscussionUser = MenuMobileService.showDiscussionUser(e.urlAfterRedirects);
-          this.returnLink = MenuMobileService.getReturnLink();
+          this.setNavigation(e.urlAfterRedirects);
         }
       });
   }
 
-  loadMessages() {
-    this.messagesService.init();
-
-    this.threadsService.orderedThreads.subscribe((currentThreads: Thread[]) => {
-      this.notifications = [];
-
-      _.map(currentThreads, (currentThread: Thread) => {
-        const messageIsFromUser: boolean = currentThread.lastMessage.sender &&
-            this.currentClient &&
-            (currentThread.lastMessage.sender.id === this.currentClient.id);
-
-        if (!currentThread.lastMessage.is_read && !messageIsFromUser && currentThread.lastMessage.sender) {
-          this.notifications.push(currentThread);
-        }
-      });
-
-      this.unreadMessagesCount = (this.notifications.length > 0) ? this.notifications.length : null;
-    });
-  }
-
-  preventDefault(e: any) {
-    e.preventDefault();
-  }
-
-  /**
-   * Open discussion && update ddb
-   */
-  // activateNotification(thread: Thread): void {
-  //   this.threadsService.setCurrentThread(thread);
-  //   this.messagesService.pushUpdatedMessages().subscribe(() => {
-  //     this.router.navigate([NAV.search]);
-  //   });
-  // }
-
-  collapse() {
-    (this.collapseClass === 'collapse') ? this.collapseClass = null : this.collapseClass = 'collapse';
-  }
-
-  logOut() {
-    this.authenticationService.logout(true);
-  }
-  toggle() {
-    MenuService.displayToggle();
+  setNavigation(path: string) {
+    this.showReturn = this.menuMobileService.showReturn(path);
+    this.returnLink = MenuMobileService.getReturnLink(path);
+    this.showDiscussionUser = MenuMobileService.showDiscussionUser(path);
+    this.showSettings = path === NAV.profile;
   }
 }

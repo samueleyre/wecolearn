@@ -62,12 +62,21 @@ class UserController extends AbstractController
         SearchService $searchService
     ) {
 
-//        first, max, tag
+//        first, max, tag, global, useProfileTags
 
-        $first = $request->get('first', 0);
-        $max = $request->get('max', 6);
+        $filter = [
+            'first' => $request->get('first', 0),
+            'max' => $request->get('max', 12),
+        ];
 
-        $filter = ['first' => $first, 'max' => $max];
+        $searchParameters = [
+            'global' => $request->get('global', false),
+            'useProfileTags' => $request->get('useProfileTags', true),
+            'userLearnTags' => $request->get('userLearnTags', true),
+            'userLearnTagDomains' => $request->get('userLearnTagDomains', false),
+            'userKnowTags' => $request->get('userKnowTags', false),
+            'userKnowTagDomains' => $request->get('userKnowTagDomains', false),
+        ];
 
         $tag = $request->get('tag', ['id'=>null, 'name'=>null]);
 
@@ -83,7 +92,7 @@ class UserController extends AbstractController
         $domain = $domainService->getSubDomain();
 
         return $searchService
-            ->search($user, $filter, $domain);
+            ->search($searchParameters, $filter, $user, $domain);
     }
 
     /**

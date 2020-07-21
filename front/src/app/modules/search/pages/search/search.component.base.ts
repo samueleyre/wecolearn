@@ -1,14 +1,14 @@
 import {
   Component,
   OnInit,
-  ViewChild, ElementRef,
+  ViewChild, ElementRef, AfterViewInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import * as _ from 'lodash';
 
 import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
+import { Tag } from '~/core/entities/tag/entity';
 
 import { SearchService } from '../../../../core/services/search/search';
 import { SEARCH } from '../../config/main';
@@ -16,7 +16,7 @@ import { SEARCH } from '../../config/main';
 
 @Component({
   template: '',
-})export class SearchComponentBase implements OnInit {
+})export class SearchComponentBase implements OnInit, AfterViewInit {
   public cards: any[] = [];
   public scrolling;
   public searchInput = null;
@@ -24,17 +24,18 @@ import { SEARCH } from '../../config/main';
   private direction = 'down';
 
   public messages = {
-    [SearchMeta.tagNotFound]: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. <br>
-    Peut-être que les profils suivant pourront aussi vous intéresser ?`,
-    noResults: `Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... Pour étendre le champs de
-    recherche, pensez à ajouter des domaines d'apprentissage dans votre profil !`,
-    noResultsWithSearch: `Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous`,
-    localProfiles: `Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
-    Peut-être que les profils suivant pourront aussi vous intéresser ?`,
-    [SearchMeta.userLearnTags]: 'Nous avons sélectionné ces profils autour de chez vous.',
-    [SearchMeta.userLearnTagDomains]: 'Nous avons sélectionné ces profils autour de chez vous.',
-    [SearchMeta.userKnowTags]: 'Nous avons sélectionné ces profils autour de chez vous.',
-    [SearchMeta.userKnowTagDomains]: 'Nous avons sélectionné ces profils autour de chez vous.',
+    [SearchMeta.tagNotFound]: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. <br>
+    Peut-être que les profils suivant pourront aussi vous intéresser ?</i>`,
+    noResults: `<i>Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... <br>Pour étendre le champs de
+    recherche, ajoutez des domaines d'apprentissage dans votre profil !</i>`,
+    noResultsWithSearch: `<i>Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous</i>`,
+    localProfiles: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
+    Peut-être que les profils suivant pourront aussi vous intéresser ?</i>`,
+    [SearchMeta.userLearnTags]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
+    [SearchMeta.userLearnTagDomains]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
+    [SearchMeta.userKnowTags]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
+    [SearchMeta.userKnowTagDomains]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
+    globalMode: `<i>Nous avons sélectionné ces profils pour vous.</i>`,
   };
 
   @ViewChild('pageContainer', { static: false }) cardsContainerElementRef: ElementRef;
@@ -46,23 +47,24 @@ import { SEARCH } from '../../config/main';
   }
 
   ngOnInit() {
-    this.load();
     this.detectScrollDown();
   }
 
+  ngAfterViewInit() {
+    this.load();
+  }
+
   load(): void {
-    this.searchService.getCurrentFoundClients().subscribe((clients: User[]) => {
+    this.searchService.getCurrentFoundClients().subscribe((users: User[]) => {
       if (this.searchService.searchType !== 'scroll') {
         // new SEARCH
         this.cardsContainerElementRef.nativeElement.scrollTo(0, 0);
-        this.cards = clients;
+        this.cards = users;
       } else {
         // SCROLL SEARCH
-        if (clients.length > SearchService.max) {
-          this.cards = _.uniqBy(this.cards.concat(clients.slice(SearchService.max - SEARCH.default.max)), 'id');
-        } else {
-          this.cards = clients;
-        }
+        users.forEach((user) => {
+          this.cards.push(user);
+        });
       }
     });
 
@@ -74,15 +76,17 @@ import { SEARCH } from '../../config/main';
     this.searchService.search(params).subscribe();
   }
 
+  get explorationMode() {
+    return !this.searchService.useProfileTagsMode;
+  }
+
   get searchMessage(): string | null {
     if (this.loading) {
       return null;
     }
 
-    let meta = null;
-    if (this.searchService.searchMeta) {
-      meta = this.searchService.searchMeta;
-    }
+    const meta = this.searchService.searchMeta;
+
     if (this.cards.length === 0) {
       if (this.searchService.searchInputValue) {
         return this.messages.noResultsWithSearch;
@@ -93,7 +97,11 @@ import { SEARCH } from '../../config/main';
       if (meta[SearchMeta.tagNotFound]) {
         return this.messages[SearchMeta.tagNotFound];
       }
-      const metaKeys = Object.keys(meta).filter(val => meta[val] === true);
+      const metaKeys = Object.keys(meta).filter(
+        val =>
+          Object.keys(this.messages).indexOf(val) !== -1 &&
+          meta[val] === true,
+      );
 
       if (metaKeys.length > 0) {
         // if got results without using matching tags
@@ -101,6 +109,9 @@ import { SEARCH } from '../../config/main';
           return this.messages.localProfiles;
         }
         // found match !
+        if (this.searchService.globalMode) {
+          return this.messages.globalMode;
+        }
         return this.messages[metaKeys[0]];
       }
     }
@@ -108,8 +119,13 @@ import { SEARCH } from '../../config/main';
   }
 
   onScroll(ev) {
-    SearchService.max += SEARCH.scrollLatence;
-    this.search({ max: SearchService.max });
+    if (this.cards.length < SEARCH.default.max) {
+      return;
+    }
+    SearchService.first += SEARCH.default.max;
+    this.search({
+      first: SearchService.first,
+    });
   }
 
   timeOutScroll() {
@@ -129,8 +145,11 @@ import { SEARCH } from '../../config/main';
         tag: this.searchInput,
       };
     }
-
     this.searchService.search(filledFilters).subscribe();
+  }
+
+  currentSearchTags(): Tag | null {
+    return this.searchService.searchInputValue;
   }
 
   get loading(): boolean {

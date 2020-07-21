@@ -1,8 +1,9 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { debounceTime, filter, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 import { TagService } from '~/core/services/tag/tag';
 import { Tag } from '~/core/entities/tag/entity';
@@ -13,13 +14,8 @@ import { SearchService } from '../../../../core/services/search/search';
 @Component({
   template: '',
 })export class SearchBarBaseComponent implements OnInit {
-  public searchInputControl = new FormControl();
-  autocompleteDisabled = false;
-  observableSource: Observable<Tag[]>;
-  @Output() searchInputChange = new EventEmitter();
-  @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
-  @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
-
+  public globalMode;
+  public useProfileTagsMode;
   constructor(
         private tagService: TagService,
         private searchService: SearchService,
@@ -27,7 +23,35 @@ import { SearchService } from '../../../../core/services/search/search';
     this.tagService = tagService;
   }
 
+  get loading(): boolean {
+    return this.searchService.loading;
+  }
+
+  get searchBarHasValue(): boolean {
+    return !!this.searchInputControl.value;
+  }
+
+  public searchInputControl = new FormControl();
+  public autocompleteDisabled = false;
+  public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
+  @Output() searchInputChange = new EventEmitter();
+  @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
+  @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
+  @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
+
+  public setUseProfileMode(bool) {
+    this.searchService.setUseProfileTagsMode(bool);
+  }
+
+  public setGlobalMode(val) {
+    this.searchService.setGlobalMode(val);
+  }
+
+
   ngOnInit() {
+    this.globalMode = this.searchService.globalMode;
+    this.useProfileTagsMode = this.searchService.useProfileTagsMode;
+
     this.searchService.getSearchInputObs().subscribe((tag: Tag) => {
       this.searchInputControl.setValue(tag);
       if (typeof this.searchInputControl.value === 'string') {
@@ -43,16 +67,14 @@ import { SearchService } from '../../../../core/services/search/search';
       }
     });
 
-    this.observableSource = this.searchInputControl.valueChanges.pipe(
+    this.searchInputControl.valueChanges.pipe(
       // tslint:disable-next-line:no-magic-numbers
       debounceTime(300),
       filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this.tagService.findTags(value)),
-    );
-  }
-
-  get loading(): boolean {
-    return this.searchService.loading;
+    ).subscribe((tags) => {
+      this.foundAutocompleteTags$.next(tags);
+    });
   }
 
   search() {
@@ -64,19 +86,37 @@ import { SearchService } from '../../../../core/services/search/search';
           name: this.searchInputControl.value,
           type: TagTypeEnum.LEARN,
         });
-      } else {
+      } else if (this.searchInputControl.value) {
         filters['tag'] = this.searchInputControl.value;
       }
     }
     this.searchInputChange.next(this.searchInputControl.value);
     this.searchService.setSearchInput('tag' in filters ? filters['tag'] : null);
     this.searchService.search(filters).subscribe();
-    this.focusOut();
     this.hideAutocomplete();
+  }
+
+  resetSearchBar(): void {
+    this.searchInputControl.setValue(null);
+  }
+
+  onFilterClick(event) {
+    event.stopPropagation();
+    this.trigger.openMenu();
   }
 
   focusOut() {
     this.searchBarField.nativeElement.blur();
+  }
+
+  focusInput() {
+    setTimeout(() => {
+      this.searchBarField.nativeElement.focus();
+    });
+  }
+
+  onInputBlur() {
+    this.foundAutocompleteTags$.next([]);
   }
 
   hideAutocomplete() {

@@ -7,6 +7,6 @@
 </div>
 
 
-<dash-header-mobile *ngIf="isMobile"></dash-header-mobile>
+<dash-header-mobile *ngIf="isMobile && showMobileHeader"></dash-header-mobile>
 <router-outlet *ngIf="isMobile"></router-outlet>
 <dash-footer-mobile *ngIf="isMobile && showFooter && !searchFocusState"></dash-footer-mobile>

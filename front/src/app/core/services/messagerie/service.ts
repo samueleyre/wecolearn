@@ -32,7 +32,6 @@ export class MessagerieService {
   public init(): Observable<boolean> {
     return new Observable((subscriber) => {
       if (environment.android) {
-        console.log('should not show');
         PushNotifications.addListener('registration', (token: PushNotificationToken) => {
           console.log('####### registration #######: token = ' + token.value);
           this._pushSubscriptionService.checkIfExistOrAddAndSubscribeNotif({

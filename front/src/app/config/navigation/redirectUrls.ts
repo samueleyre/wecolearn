@@ -1,10 +1,13 @@
 export const REDIRECT_URLS = {
   returnUrls : {
-    search : [
-      /dashboard\/profile/,
+    profile : [
+      /dashboard\/profile\/settings/,
     ],
     chat : [
       /dashboard\/discussion/,
+    ],
+    search : [
+      /dashboard\/profile\//,
     ],
   },
 };

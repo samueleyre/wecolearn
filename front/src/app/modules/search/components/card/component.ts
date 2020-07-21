@@ -14,7 +14,6 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 import { Tag } from '~/core/entities/tag/entity';
 
 import { SearchService } from '../../../../core/services/search/search';
-import { Threads } from '../../../chat/services/threads';
 
 
 @Component({
@@ -23,6 +22,9 @@ import { Threads } from '../../../chat/services/threads';
   styleUrls: ['./style.scss'],
 })export class CardComponent implements OnInit {
   @Input() card: User;
+  @Input() searchTag: Tag;
+
+  public tags: Tag[] = [];
 
   private currentClient: User;
   private cardSlackId: Object = {};
@@ -53,7 +55,15 @@ import { Threads } from '../../../chat/services/threads';
     this.subDomain = this.domainService.getSubDomain();
     this.slackSubDomain = this.domainService.getSlackSubDomain();
     this.rocketChatDomain = this.domainService.getRocketChatDomain();
+    this.tags = [
+      ...this.card.tags.filter(tag => !this.isSearchTag(tag)),
+    ];
 
+    const foundTag = this.card.tags.find(tag => this.isSearchTag(tag));
+
+    if (foundTag) {
+      this.tags.unshift(foundTag);
+    }
 
     // todo: repare slack
     // for (let i = 0; i < this.types.length; i++) { // tslint:disable-line
@@ -69,6 +79,10 @@ import { Threads } from '../../../chat/services/threads';
     //       );
     //   }
     // }
+  }
+
+  isSearchTag(tag: Tag) {
+    return this.searchTag && this.searchTag.id && this.searchTag.id === tag.id;
   }
 
   searchByTag(tag) {

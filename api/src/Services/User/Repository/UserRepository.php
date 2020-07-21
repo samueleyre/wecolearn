@@ -22,7 +22,7 @@ class UserRepository extends ServiceEntityRepository
 ////        $longitude = null,
 ////        $domain = wecolearn,
 ////        $parameters = [ userLearnTags | userKnowTags | userLearnTagDomains | userKnowTagDomains | searchLearnTag ],
-////        $maxDistance = 100
+////        $distance = 100
 
     /**
      * @param $searchParameters
@@ -70,10 +70,10 @@ class UserRepository extends ServiceEntityRepository
             $max = $searchParameters['max'];
         }
 
-        if (!array_key_exists('maxDistance', $searchParameters)) {
+        if (!array_key_exists('distance', $searchParameters)) {
             $maxDistance = 100;
         } else {
-            $maxDistance = $searchParameters['maxDistance'];
+            $maxDistance = $searchParameters['distance'];
         }
 
         $parameters = $searchParameters['parameters'];
@@ -210,7 +210,9 @@ class UserRepository extends ServiceEntityRepository
 
         $qb->setFirstResult($first);
         $qb->setMaxResults($max);
-        $qb->having('distance < :maxDistance')->setParameter('maxDistance', $maxDistance);
+        if ($maxDistance !== -1) {
+            $qb->having('distance < :maxDistance')->setParameter('maxDistance', $maxDistance);
+        }
 
         return $qb->getQuery()->getResult();
     }

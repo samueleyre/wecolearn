@@ -109,7 +109,10 @@
 <showProfilSettings></showProfilSettings>
 <emailNotificationSettings></emailNotificationSettings>
 <hr>
-<label>Supprimer mon compte</label>
 <div>
-  <button (click)="deleteAccount()">Supprimer</button>
+  <button mat-button (click)="logOut()"><mat-icon>exit_to_app</mat-icon> Me déconnecter</button>
+</div>
+<hr>
+<div>
+  <button mat-button color="warn" (click)="deleteAccount()">Supprimer mon compte</button>
 </div>

@@ -24,6 +24,7 @@ import { CityBarComponent } from './components/cityBar/component';
 import { TextLimitComponent } from './components/limit/component';
 import { SearchMobileComponent } from './pages/search/search-mobile/search-mobile.component';
 import { SearchDesktopComponent } from './pages/search/search-desktop/search-desktop.component';
+import {MaterialModule} from "~/shared/modules/material/material.module";
 
 @NgModule({
 
@@ -58,6 +59,7 @@ import { SearchDesktopComponent } from './pages/search/search-desktop/search-des
     MatInputModule,
     MatIconModule,
     CloudinaryModule,
+    MaterialModule,
   ],
   providers: [
   ],

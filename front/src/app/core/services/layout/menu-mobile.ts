@@ -8,6 +8,7 @@ import { FOOTER_URLS } from '~/config/navigation/footerUrls';
 import { NAV } from '~/config/navigation/nav';
 import { REDIRECT_URLS } from '~/config/navigation/redirectUrls';
 import { User } from '~/core/entities/user/entity';
+import {HEADER_URLS} from "~/config/navigation/headerUrls";
 
 
 @Injectable({
@@ -34,8 +35,12 @@ export class MenuMobileService {
     return FOOTER_URLS.indexOf(url) !== -1;
   }
 
+  static showHeader(url: string) {
+    return HEADER_URLS.some(rx => rx.test(url));
+  }
+
   static showDiscussionUser(url: string) {
-    return url === NAV.currentDiscussion;
+    return [/dashboard\/discussion\/current/].some(rx => rx.test(url));
   }
 
   static getReturnLink(url?: string) {
@@ -43,6 +48,9 @@ export class MenuMobileService {
     if (url) {
       if (REDIRECT_URLS.returnUrls.chat.some(rx => rx.test(url))) {
         return NAV.discussion;
+      }
+      if (REDIRECT_URLS.returnUrls.profile.some(rx => rx.test(url))) {
+        return NAV.profile;
       }
       if (REDIRECT_URLS.returnUrls.search.some(rx => rx.test(url))) {
         return NAV.search;
