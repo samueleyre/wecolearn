@@ -1,7 +1,7 @@
 export const environment = {
   origin: 'https://api.wecolearn.com',
   publique : 'https://wecolearn.com',
-  mapApiKey : '82c133b5616c6ac65b28885ef3b89daa',
+  mapApiKey : '47ceb39d75a40212d73909cb79aa3ab3',
   production : true,
   android : true,
   mercureUrl : 'https://mercure.wecolearn.com/hub',
