@@ -71,6 +71,7 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
     slack_accounts: [],
     latitude: null,
     longitude: null,
+    city: null,
   });
 
 
@@ -88,19 +89,6 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
 
     // update data
     this._profileService.get().subscribe();
-
-    // mobile only
-    if (this._deviceService.isMobile()) {
-      // @ts-ignore
-      for (const input of document.querySelectorAll('input, textarea')) {
-        input.addEventListener('focus', () => {
-          this._footerMobileService.searchFocusState.next(true);
-        });
-        input.addEventListener('blur', () => {
-          this._footerMobileService.searchFocusState.next(false);
-        });
-      }
-    }
   }
 
   load(): void {

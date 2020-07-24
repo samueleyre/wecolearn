@@ -21,6 +21,7 @@ export class User {
   public atmosphere: number;
   public latitude: number;
   public longitude: number;
+  public city: string;
   public learn_tags: string[];
   public know_tags: string[];
   public teach_tags: string[];
@@ -61,6 +62,7 @@ export class User {
     this.received_messages = null;
     this.latitude = null;
     this.longitude = null;
+    this.city = null;
     this.image = obj && obj.image ? obj.image : new Image();
     this.show_profil = null;
     this.new_message_notification = null;

@@ -8,7 +8,7 @@ import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
-import { ConfirmDialogComponent } from '~/core/components/dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '~/core/components/dialog/confirm-dialog.component'
 
 @NgModule({
   declarations: [

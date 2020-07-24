@@ -6,5 +6,5 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class FooterMobileService {
-  searchFocusState: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  inputFocusState: BehaviorSubject<boolean> = new BehaviorSubject(false);
 }

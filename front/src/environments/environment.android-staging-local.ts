@@ -1,8 +1,8 @@
 // android staging
 export const environment = {
   origin : 'https://api-staging.wecolearn.com',
-  publique : 'https://staging.wecolearn.com',
-  mapApiKey :  '47ceb39d75a40212d73909cb79aa3ab3',
+  publique : 'https://localhost:4200',
+  mapApiKey :  '916b1cc2e5766358f98ec6ee40d66d5f',
   production : true,
   android : true,
   mercureUrl : 'https://mercure-staging.wecolearn.com/hub',

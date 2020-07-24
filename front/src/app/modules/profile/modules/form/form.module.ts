@@ -19,6 +19,7 @@ import { ProfileImageModule } from '../profilImage/profileImage.module';
 import { ProfileFormLastnameComponent } from './components/lastname/component';
 import { ProfileFormFirstnameComponent } from './components/firstname/component';
 import { ProfileFormCityComponent } from './components/profile-form-city/profile-form-city.component';
+import {SharedModule} from "~/shared/shared.module";
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { ProfileFormCityComponent } from './components/profile-form-city/profile
   ],
   imports: [
     CommonModule,
+    SharedModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,

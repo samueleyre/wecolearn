@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Logged } from '~/core/services/auth/logged';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { ClientService } from '~/core/services/user/client';
-import { MessagesService } from '~/modules/chat/services/messages';
+import { MessagesService } from '~/core/services/chat/messages';
 import { Thread } from '~/core/entities/thread/entity';
 import { User } from '~/core/entities/user/entity';
 import { DomainService } from '~/core/services/domain/domain';
