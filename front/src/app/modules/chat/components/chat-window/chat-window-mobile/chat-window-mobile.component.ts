@@ -3,8 +3,8 @@ import 'quill-emoji/dist/quill-emoji.js';
 import { NgxLinkifyjsService } from 'ngx-linkifyjs';
 
 import { ChatWindowBaseComponent } from '~/modules/chat/components/chat-window/chat-window.base.component';
-import { MessagesService } from '~/modules/chat/services/messages';
-import { Threads } from '~/modules/chat/services/threads';
+import { MessagesService } from '~/core/services/chat/messages';
+import { Threads } from '~/core/services/chat/threads';
 import { ClientService } from '~/core/services/user/client';
 
 @Component({

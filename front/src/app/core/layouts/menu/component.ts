@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from '~/core/entities/user/entity';
 import { MenuService } from '~/core/services/layout/menu';
 import { AuthenticationService } from '~/core/services/auth/auth';
-import { Threads } from '~/modules/chat/services/threads';
+import { Threads } from '~/core/services/chat/threads';
 
 
 @Component({

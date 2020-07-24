@@ -10,12 +10,12 @@ import { Platform } from '@ionic/angular';
 
 import { Logged } from '~/core/services/auth/logged';
 import { IconService } from '~/core/services/icon.service';
-import { MessagesService } from '~/modules/chat/services/messages';
+import { MessagesService } from '~/core/services/chat/messages';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
 import { NAV } from '~/config/navigation/nav';
-import { Threads } from '~/modules/chat/services/threads';
+import { Threads } from '~/core/services/chat/threads';
 import { SeoService } from '~/core/services/seo';
 
 import { DomainService } from './core/services/domain/domain';

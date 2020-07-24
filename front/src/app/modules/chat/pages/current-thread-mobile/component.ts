@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NAV } from '~/config/navigation/nav';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { Threads } from '~/modules/chat/services/threads';
+import { Threads } from '~/core/services/chat/threads';
 
 @Component({
   templateUrl: 'template.html',

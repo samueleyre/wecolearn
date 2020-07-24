@@ -4,7 +4,7 @@ import {
   Plugins, NotificationPermissionResponse,
 } from '@capacitor/core';
 
-import { Threads } from '~/modules/chat/services/threads';
+import { Threads } from '~/core/services/chat/threads';
 
 import { Permission } from './const';
 import { environment } from '../../../../environments/environment';
