@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { User } from '~/core/entities/user/entity';
 import { Thread } from '~/core/entities/thread/entity';
-import { Threads } from '~/modules/chat/services/threads';
+import { Threads } from '~/core/services/chat/threads';
 import { WcRouterService } from '~/core/services/wc-router.service';
 
 @Component({

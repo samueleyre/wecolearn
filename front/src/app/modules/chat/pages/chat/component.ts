@@ -7,8 +7,8 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { Threads } from '~/modules/chat/services/threads';
-import { MessagesService } from '~/modules/chat/services/messages';
+import { Threads } from '~/core/services/chat/threads';
+import { MessagesService } from '~/core/services/chat/messages';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { NAV } from '~/config/navigation/nav';
 

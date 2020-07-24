@@ -17,8 +17,8 @@ import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { CHAT } from '~/modules/chat/config/chat.const';
 
-import { MessagesService } from '../../services/messages';
-import { Threads } from '../../services/threads';
+import { MessagesService } from '../../../../core/services/chat/messages';
+import { Threads } from '../../../../core/services/chat/threads';
 
 @Component({
   template: '',

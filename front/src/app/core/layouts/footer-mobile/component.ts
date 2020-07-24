@@ -2,7 +2,7 @@ import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { Threads } from '~/modules/chat/services/threads';
+import { Threads } from '~/core/services/chat/threads';
 
 @Component({
   selector: 'dash-footer-mobile',

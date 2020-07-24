@@ -5,7 +5,7 @@ import { delay, takeUntil } from 'rxjs/operators';
 import { Thread } from '~/core/entities/thread/entity';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 
-import { Threads } from '../../services/threads';
+import { Threads } from '../../../../core/services/chat/threads';
 
 @Component({
   selector: 'chat-threads-mobile',
