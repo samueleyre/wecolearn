@@ -51,7 +51,7 @@ export class ShowProfilSettingsComponent implements OnInit {
       () => {
         this.clientService.patch(this.user).subscribe(
           (entity: User) => {
-            this._toastr.success('Modification prise en compte !');
+            this._toastr.success('Modification prise en compte');
           },
           (error) => {
             console.log(error);
