@@ -21,6 +21,7 @@ import {
   MatSlideToggleModule,
   MatDialogModule,
 } from '@angular/material';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [],
@@ -47,6 +48,7 @@ import {
     MatDatepickerModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatToolbarModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -71,6 +73,7 @@ import {
     MatDatepickerModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatToolbarModule,
   ],
   providers: [MatDatepickerModule],
 })
