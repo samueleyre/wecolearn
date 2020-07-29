@@ -4,9 +4,7 @@ namespace App\Services\User\Service;
 
 use App\Services\Tag\Entity\Tag;
 use App\Services\User\Entity\User;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 
 class SearchService
 {
@@ -154,6 +152,8 @@ class SearchService
         $distance,
         &$searchParameters
     ) {
+
+        $result = [];
 
         if ($searchParameters['userLearnTags']) {
             // search by user learn tags ( type 0 )
