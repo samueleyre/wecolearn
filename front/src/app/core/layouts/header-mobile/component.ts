@@ -52,7 +52,7 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
   }
 
   setNavigation(path: string) {
-    this.showReturn = this.menuMobileService.showReturn(path);
+    this.showReturn = this.menuMobileService.urlHasReturnButton(path);
     this.returnLink = MenuMobileService.getReturnLink(path);
     this.showDiscussionUser = MenuMobileService.showDiscussionUser(path);
     this.showSettings = path === NAV.profile;

@@ -13,20 +13,26 @@ const wcRoutes: Routes = [
   { path: 'signin', component: LandingPageComponent, pathMatch: 'full' },
   { path: '', redirectTo: '/dashboard/search', pathMatch: 'full' },
   {
-    path: 'dashboard/profile', component: MainComponent, canActivate: [AuthGuard],
-    loadChildren: () => import('./modules/profile/profile.module').then(mod => mod.ProfileModule),
-  },
-  {
-    path: 'dashboard/discussion', component: MainComponent, canActivate: [AuthGuard],
-    loadChildren: () => import('./modules/chat/chat.module').then(mod => mod.ChatModule),
-  },
-  {
-    path: 'dashboard/admin', component: MainComponent, canActivate: [AuthGuard],
-    loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
-  },
-  {
-    path: 'dashboard/search', component: MainComponent, canActivate: [AuthGuard],
-    loadChildren: () => import('./modules/search/search.module').then(mod => mod.SearchModule),
+    path: 'dashboard', component: MainComponent, canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'profile',
+        loadChildren: () => import('./modules/profile/profile.module').then(mod => mod.ProfileModule),
+      },
+      {
+        path: 'search',
+        loadChildren: () => import('./modules/search/search.module').then(mod => mod.SearchModule),
+      },
+      {
+        path: 'discussion',
+        loadChildren: () => import('./modules/chat/chat.module').then(mod => mod.ChatModule),
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
+      },
+
+    ],
   },
   {
     path: 'doc', component: ContainerComponent,

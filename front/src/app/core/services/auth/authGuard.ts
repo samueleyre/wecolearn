@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of as observableOf } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 import { catchError, map } from 'rxjs/operators';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { Logged } from '~/core/services/auth/logged';
+import { ToastService } from '~/core/services/toast.service';
 
 import { PingService } from './ping';
 
@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
   constructor(private _router: Router,
               private _pingService: PingService,
               private _authService: AuthenticationService,
-              private _toastr: ToastrService) {
+              private _toastr: ToastService) {
   }
 
   // todo: use different layouts for this

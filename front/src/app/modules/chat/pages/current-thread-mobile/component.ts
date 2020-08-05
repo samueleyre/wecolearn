@@ -12,7 +12,6 @@ import { Threads } from '~/core/services/chat/threads';
 @Component({
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-
 })
 export class ChatWindowPageComponent extends DestroyObservable implements OnInit {
   loading = true;

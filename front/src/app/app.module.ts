@@ -4,6 +4,7 @@ import { APP_BASE_HREF, registerLocaleData } from '@angular/common';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { IonicModule } from '@ionic/angular';
 
 // shared modules
 import { CoreModule } from '~/core/core.module';
@@ -12,10 +13,8 @@ import { MaterialModule } from '~/shared/modules/material/material.module';
 // local components
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './pages/notFound/component';
-
 // local modules
 import { WcRoutingModule } from './app-routing.module';
-
 // shared services
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
@@ -29,6 +28,7 @@ registerLocaleData(fr);
     WcRoutingModule,
     DeviceDetectorModule.forRoot(),
     MaterialModule,
+    IonicModule.forRoot(),
   ],
   declarations: [
     AppComponent,

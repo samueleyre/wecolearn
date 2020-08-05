@@ -4,9 +4,9 @@ import {
    } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
+import { ToastService } from '~/core/services/toast.service';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class ConfirmEmailComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private activatedRoute: ActivatedRoute,
         private http: HttpClient,
-        private _toastr: ToastrService,
+        private _toastr: ToastService,
 ) { }
 
   ngOnInit() {

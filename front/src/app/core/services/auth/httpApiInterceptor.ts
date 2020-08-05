@@ -6,7 +6,8 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+
+import { ToastService } from '~/core/services/toast.service';
 
 import { Logged } from './logged';
 import { HeaderBag } from './headerBag';
@@ -26,7 +27,7 @@ export class HttpApiInterceptor implements HttpInterceptor {
     private router: Router,
     public headerBag: HeaderBag,
     private tokenService: TokenService,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
   ) {
   }
 

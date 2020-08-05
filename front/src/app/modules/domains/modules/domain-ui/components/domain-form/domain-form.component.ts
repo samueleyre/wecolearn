@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 
 import { AdminDomainService } from '~/modules/domains/services/admin-domain.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { Domain } from '~/core/entities/domain/domain';
+import { ToastService } from '~/core/services/toast.service';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
   createEditDomainForm: FormGroup;
   isCreatingUpdating = false;
 
-  constructor(private _fb: FormBuilder, private _domainService: AdminDomainService, private _toastr: ToastrService) {
+  constructor(private _fb: FormBuilder, private _domainService: AdminDomainService, private _toastr: ToastService) {
     super();
   }
 

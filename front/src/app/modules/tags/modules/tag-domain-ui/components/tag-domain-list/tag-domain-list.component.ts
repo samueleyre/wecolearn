@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
 
 import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { AdminTagDomainService } from '~/modules/tags/services/admin-tag-domain.service';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
+import { ToastService } from '~/core/services/toast.service';
 
 @Component({
   selector: 'app-tag-domain-list',
@@ -21,7 +21,7 @@ export class TagDomainListComponent extends DestroyObservable implements OnInit 
 
   constructor(
     public tagService: AdminTagDomainService,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
     private _dialogService: DialogService,
   ) {
     super();

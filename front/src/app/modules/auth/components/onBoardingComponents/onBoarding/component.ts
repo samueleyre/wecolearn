@@ -3,10 +3,10 @@ import {
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardingComponents/baseComponent';
+import { ToastService } from '~/core/services/toast.service';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class AuthOnboardingComponent extends AuthOnboardingBaseComponent{
     private _fb: FormBuilder,
     private _authenticationService: AuthenticationService,
     private _router: Router,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
   ) {
     super(_fb, _authenticationService, _router);
   }

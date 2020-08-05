@@ -14,6 +14,5 @@ export class UsernamePipe implements PipeTransform {
       ret += ` ${user.last_name[0].toLocaleUpperCase() + user.last_name.slice(1)}`;
     }
     return ret;
-
   }
 }
