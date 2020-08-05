@@ -13,6 +13,7 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
 import { NAV } from '~/config/navigation/nav';
 
 @Component({
+  selector: 'app-chat',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })

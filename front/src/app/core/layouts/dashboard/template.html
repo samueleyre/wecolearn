@@ -10,7 +10,7 @@
   <dash-header-mobile ></dash-header-mobile>
 </ion-header>
 <ion-content *ngIf="isMobile">
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
   <div class="space"></div>
 </ion-content>
 <ion-footer *ngIf="showMobileFooter | async" class="ion-no-border">

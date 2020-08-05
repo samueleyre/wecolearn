@@ -5,6 +5,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { ProfileService } from '~/core/services/user/profile';
 
 @Component({
+  selector: 'app-profil-settings',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })

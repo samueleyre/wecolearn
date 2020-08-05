@@ -25,7 +25,7 @@ import { ProfileService } from '~/core/services/user/profile';
 
 
 @Component({
-  selector: 'profile-settings',
+  selector: 'app-profile-settings',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
