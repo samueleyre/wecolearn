@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 
 import { AdminTagDomainService } from '~/modules/tags/services/admin-tag-domain.service';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
 import { DestroyObservable } from '~/core/components/destroy-observable';
+import { ToastService } from '~/core/services/toast.service';
 
 @Component({
   selector: 'app-tag-domain-form',
@@ -21,7 +21,7 @@ export class TagDomainFormComponent extends DestroyObservable implements OnInit 
   createEditTagDomainForm: FormGroup;
   isCreatingUpdating = false;
 
-  constructor(private _fb: FormBuilder, private _tagService: AdminTagDomainService, private _toastr: ToastrService) {
+  constructor(private _fb: FormBuilder, private _tagService: AdminTagDomainService, private _toastr: ToastService) {
     super();
   }
 

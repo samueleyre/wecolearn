@@ -1,5 +1,15 @@
-@import '../../../../assets/scss/variables';
+@import 'variables';
 
+
+ion-footer {
+  position: fixed;
+  bottom: 0;
+}
+
+.space {
+  // size of footer
+  height: 90px;
+}
 
 #page-content-wrapper {
   width: 100%;

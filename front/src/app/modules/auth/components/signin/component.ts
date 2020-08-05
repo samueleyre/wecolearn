@@ -3,13 +3,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { DomainService } from '~/core/services/domain/domain';
 import { NAV } from '~/config/navigation/nav';
 import { CookieNotificationService } from '~/core/services/cookie-notification.service';
 import { PATTERN } from '~/shared/config/pattern';
+import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../environments/environment';
 
@@ -33,7 +33,7 @@ export class SigninComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private domainService: DomainService,
     private cookieNotification: CookieNotificationService,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
   ) {
   }
 

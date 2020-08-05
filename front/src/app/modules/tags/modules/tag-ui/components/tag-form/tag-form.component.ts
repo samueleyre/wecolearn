@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 
 import { Tag } from '~/core/entities/tag/entity';
 import { AdminTagService } from '~/modules/tags/services/admin-tag.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagTypeEnum, tagTypeFR, tagTypes } from '~/core/enums/tag/tag-type.enum';
+import { ToastService } from '~/core/services/toast.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class TagFormComponent extends DestroyObservable implements OnInit {
   isCreatingUpdating = false;
   types = tagTypes;
 
-  constructor(private _fb: FormBuilder, private _tagService: AdminTagService, private _toastr: ToastrService) {
+  constructor(private _fb: FormBuilder, private _tagService: AdminTagService, private _toastr: ToastService) {
     super();
   }
 

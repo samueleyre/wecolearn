@@ -53,7 +53,7 @@ export class SignupComponent implements OnInit {
   submit(f: NgForm) {
     this.authenticationService.signUp(this.user).subscribe(
       (response) => {
-        console.log( response );
+        console.log(response);
         if (response === 'duplicate') {
           this.error = 'L\'adresse email est déjà utilisé.';
           setTimeout(

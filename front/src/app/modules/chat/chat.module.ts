@@ -23,6 +23,7 @@ import { ChatRouting } from './chat.routing';
 import { ChatWindowDesktopComponent } from './components/chat-window/chat-window-desktop/chat-window-desktop.component';
 import { ChatWindowMobileComponent } from './components/chat-window/chat-window-mobile/chat-window-mobile.component';
 import { ChatMessageDesktopComponent } from './components/chat-message/chat-message-desktop/chat-message-desktop.component';
+import {IonicModule} from "@ionic/angular";
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { ChatMessageDesktopComponent } from './components/chat-message/chat-mess
     PipesModule,
     MaterialModule,
     NgxLinkifyjsModule.forRoot(),
+    IonicModule,
 
   ],
   providers: [

@@ -3,9 +3,9 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
+import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../environments/environment';
 
@@ -24,7 +24,7 @@ export class SendPasswordConfirmationEmailComponent implements OnInit {
   constructor(
       private router: Router,
       private authenticationService: AuthenticationService,
-      private _toastr: ToastrService,
+      private _toastr: ToastService,
   ) {
   }
 

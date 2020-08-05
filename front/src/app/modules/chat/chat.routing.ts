@@ -7,10 +7,12 @@ import { ChatPageComponent } from './pages/chat/component';
 
 
 const routes: Routes = [
-      { path: ':userId', component: ChatPageComponent },
-      { path: '', component: ChatPageComponent, pathMatch: 'full' },
-      { path: 'current/:userId', component: ChatWindowPageComponent },
+  { path: '', component: ChatPageComponent, pathMatch: 'full' },
+  { path: ':userId', component: ChatPageComponent },
+  { path: 'current/:userId', component: ChatWindowPageComponent, pathMatch: 'full' },
 ];
+
+
 
 @NgModule({
   imports: [

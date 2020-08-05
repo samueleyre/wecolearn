@@ -3,12 +3,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { PASSWORD } from '~/core/const/validators.const';
 import { passwordMatchValidator } from '~/modules/auth/validators/password-match.validator';
+import { ToastService } from '~/core/services/toast.service';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class ResetPasswordFormComponent implements OnInit {
       private router: Router,
       private authenticationService: AuthenticationService,
       private activatedRoute: ActivatedRoute,
-      private _toastr: ToastrService,
+      private _toastr: ToastService,
       private _fb: FormBuilder,
   ) {
   }

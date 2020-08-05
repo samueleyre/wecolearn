@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
 
 import { Tag } from '~/core/entities/tag/entity';
@@ -7,6 +6,7 @@ import { AdminTagService } from '~/modules/tags/services/admin-tag.service';
 import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagTypeEnum, tagTypeFR } from '~/core/enums/tag/tag-type.enum';
+import { ToastService } from '~/core/services/toast.service';
 
 @Component({
   selector: 'app-tag-list',
@@ -22,7 +22,7 @@ export class TagListComponent extends DestroyObservable implements OnInit {
 
   constructor(
     public tagService: AdminTagService,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
     private _dialogService: DialogService,
   ) {
     super();

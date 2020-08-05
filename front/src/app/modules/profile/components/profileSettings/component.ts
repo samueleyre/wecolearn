@@ -9,7 +9,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import {debounceTime, distinct, filter, takeUntil} from 'rxjs/operators';
+import { debounceTime, distinct, filter, takeUntil } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { Tag } from '~/core/entities/tag/entity';
