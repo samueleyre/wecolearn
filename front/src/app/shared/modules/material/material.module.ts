@@ -20,6 +20,7 @@ import {
   MatChipsModule,
   MatSlideToggleModule,
   MatDialogModule,
+  MatFormFieldModule,
 } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -33,6 +34,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
@@ -58,6 +60,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
