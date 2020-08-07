@@ -4,6 +4,7 @@ import {
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
+  selector: 'app-search',
   templateUrl: 'search.component.html',
 })export class SearchComponent {
   constructor(

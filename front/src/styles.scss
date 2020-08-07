@@ -120,20 +120,6 @@ button{
   outline: 0;
 }
 
-/*form*/
-
-
-
-// input.ng-invalid.showvalidity  {
-//   border-left: 5px solid #a94442; /* red */
-// }
-// form input.showvalidity.ng-valid.ng-dirty, .ng-valid .ql-editor {
-//   border-left: 5px solid #1ca900; /* green */
-// }
-
-
-
-
 /*modal*/
 
 @media (min-width: 576px) {
@@ -333,14 +319,6 @@ password-strength-bar{
   margin-bottom: 1rem;
 }
 
-
 .slackIcon{
   max-height: 27px;
-}
-
-//crisp-client
-@media (max-width : $smScreen) {
-  .crisp-client{
-    display: none !important;
-  }
 }

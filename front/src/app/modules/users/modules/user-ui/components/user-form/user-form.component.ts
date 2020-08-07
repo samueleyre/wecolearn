@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 
 import { User } from '~/core/entities/user/entity';
 import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 import { USER_ROLES, USER_ROLES_FR, UserRoleEnum } from '~/core/enums/user/user-role.enum';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { PATTERN } from '~/shared/config/pattern';
+import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../../../environments/environment';
 
@@ -27,7 +27,7 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
 
   public roles = USER_ROLES;
 
-  constructor(private _fb: FormBuilder, private _userService: AdminUsersService, private _toastr: ToastrService) {
+  constructor(private _fb: FormBuilder, private _userService: AdminUsersService, private _toastr: ToastService) {
     super();
   }
 

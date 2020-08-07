@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 
 import { AdminTagService } from '~/modules/tags/services/admin-tag.service';
 import { Tag } from '~/core/entities/tag/entity';
+import { ToastService } from '~/core/services/toast.service';
 
 @Component({
   selector: 'app-tag-merge-form',
@@ -19,7 +19,7 @@ export class TagMergeFormComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _tagService: AdminTagService,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
   ) { }
 
   ngOnInit() {

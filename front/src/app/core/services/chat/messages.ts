@@ -1,5 +1,5 @@
 import { publishReplay, refCount, scan, map, tap, filter } from 'rxjs/operators';
-import {of as observableOf, Subject, Observable, of, BehaviorSubject, pipe} from 'rxjs';
+import { of as observableOf, Subject, Observable, of, BehaviorSubject, pipe } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';

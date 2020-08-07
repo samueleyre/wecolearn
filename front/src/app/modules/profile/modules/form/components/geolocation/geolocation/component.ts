@@ -12,6 +12,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { GeoDataInterface, ProfileGeoService } from '~/modules/profile/services/profile-geo.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
+import {ToastService} from "~/core/services/toast.service";
 
 // const iconRetinaUrl = 'assets/img/marker/marker-icon-2x.png';
 // const iconUrl = 'assets/img/marker/marker-icon.png';
@@ -50,6 +51,7 @@ export class ProfileGeolocationComponent extends DestroyObservable implements On
   constructor(
      private _geoService: ProfileGeoService,
      private _fb: FormBuilder,
+     private _toast: ToastService,
   ) {
     super();
   }
@@ -89,6 +91,7 @@ export class ProfileGeolocationComponent extends DestroyObservable implements On
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.update(position.coords.latitude, position.coords.longitude, ' ');
+        this._toast.success('Localisation mise à jour.');
       });
     }
   }

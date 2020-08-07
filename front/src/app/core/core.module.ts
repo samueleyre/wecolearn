@@ -14,6 +14,7 @@ import { HeaderComponent } from '~/core/layouts/header/component';
 import { FooterMobileComponent } from '~/core/layouts/footer-mobile/component';
 import { SharedModule } from '~/shared/shared.module';
 import { MaterialModule } from '~/shared/modules/material/material.module';
+import {IonicModule} from "@ionic/angular";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MaterialModule } from '~/shared/modules/material/material.module';
     ToastrModule.forRoot(),
     MaterialModule,
     SharedModule,
+    IonicModule,
   ],
   entryComponents: [ConfirmDialogComponent],
 

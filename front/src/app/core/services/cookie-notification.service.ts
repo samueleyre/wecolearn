@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 
 import { NAV } from '~/config/navigation/nav';
+import { ToastService } from '~/core/services/toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CookieNotificationService {
-  constructor(private _toastr: ToastrService) {
+  constructor(private _toastr: ToastService) {
   }
 
   notifyCookie() {

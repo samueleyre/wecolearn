@@ -21,6 +21,7 @@ import { ProfileRouting } from './profile.routing';
 import { ToggleComponent } from './components/toggle/component';
 import { EmailNotificationSettingsComponent } from './components/notifications/component';
 import { ProfileImageModule } from './modules/profilImage/profileImage.module';
+import {IonicModule} from "@ionic/angular";
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { ProfileImageModule } from './modules/profilImage/profileImage.module';
     ReactiveFormsModule,
     PasswordDifficultyModule,
     MaterialModule,
+    IonicModule,
   ],
 })
 export class ProfileModule {

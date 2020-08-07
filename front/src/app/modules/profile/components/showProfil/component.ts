@@ -3,12 +3,12 @@ import {
   OnInit,
   Injectable,
 } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { User } from '~/core/entities/user/entity';
 import { ClientService } from '~/core/services/user/client';
 import { Tag } from '~/core/entities/tag/entity';
+import { ToastService } from '~/core/services/toast.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class ShowProfilSettingsComponent implements OnInit {
 
 
   constructor(private clientService: ClientService,
-              private _toastr: ToastrService,
+              private _toastr: ToastService,
               private _deviceService: DeviceDetectorService,
   ) {
     this.user = new User();

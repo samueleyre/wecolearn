@@ -3,10 +3,10 @@ import {
   OnInit,
   Injectable,
 } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 
 import { User } from '~/core/entities/user/entity';
 import { ClientService } from '~/core/services/user/client';
+import { ToastService } from '~/core/services/toast.service';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { ClientService } from '~/core/services/user/client';
 export class EmailNotificationSettingsComponent implements OnInit {
   public user;
 
-  constructor(private clientService: ClientService, private toastr: ToastrService) {
+  constructor(private clientService: ClientService, private toastr: ToastService) {
     this.user = new User();
   }
 

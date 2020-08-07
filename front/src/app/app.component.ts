@@ -17,6 +17,7 @@ import { MessagerieService } from '~/core/services/messagerie/service';
 import { NAV } from '~/config/navigation/nav';
 import { Threads } from '~/core/services/chat/threads';
 import { SeoService } from '~/core/services/seo';
+import { ToastService } from '~/core/services/toast.service';
 
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
@@ -41,8 +42,6 @@ export class AppComponent {
       private _threadService: Threads,
       public messagesService: MessagesService,
       public messagerieService: MessagerieService,
-      private platform: Platform,
-
   ) {
     // set subdomain
     router.events

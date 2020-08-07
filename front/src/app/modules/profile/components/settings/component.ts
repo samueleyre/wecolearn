@@ -7,7 +7,6 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -20,6 +19,7 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
 import { PASSWORD } from '~/core/const/validators.const';
 import { passwordMatchValidator } from '~/modules/auth/validators/password-match.validator';
 import { AuthenticationService } from '~/core/services/auth/auth';
+import { ToastService } from '~/core/services/toast.service';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
     private _dialog: DialogService,
     @Inject(APP_BASE_HREF) r: string,
     private router: Router,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
     private _fb: FormBuilder,
     private _authenticationService: AuthenticationService,
   ) {
