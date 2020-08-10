@@ -7,10 +7,10 @@
 </div>
 
 <ion-header *ngIf="showMobileHeader | async">
-  <dash-header-mobile ></dash-header-mobile>
+  <app-header-mobile ></app-header-mobile>
 </ion-header>
 <router-outlet *ngIf="isMobile" (activate)="onActivate($event)"></router-outlet>
 <div *ngIf="isMobile" class="space"></div>
 <ion-footer *ngIf="showMobileFooter | async" class="ion-no-border">
-  <dash-footer-mobile></dash-footer-mobile>
+  <app-footer-mobile></app-footer-mobile>
 </ion-footer>

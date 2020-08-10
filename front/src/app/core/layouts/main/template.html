@@ -1,4 +1,4 @@
-<section>
+<section *ngIf="!isAndroid">
   <div class="container-fluid">
     <div class="row">
       <div class="brand">
@@ -7,7 +7,18 @@
     </div>
   </div>
 </section>
-<div class="mainContainer-content">
+
+
+<div class="mainContainer-content" *ngIf="!isAndroid">
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
-<main-footer></main-footer>
+<main-footer *ngIf="!isAndroid"></main-footer>
+
+<ion-header *ngIf="isAndroid">
+  <app-header-mobile></app-header-mobile>
+</ion-header>
+<!--<div *ngIf="isAndroid" class="header-space"></div>-->
+<router-outlet *ngIf="isAndroid" (activate)="onActivate($event)"></router-outlet>
+<!--<ion-footer *ngIf="showMobileOnBoardingFooter | async">-->
+<!--  <app-footer-mobile-onboarding ></app-footer-mobile-onboarding>-->
+<!--</ion-footer>-->

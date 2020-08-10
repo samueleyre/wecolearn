@@ -59,7 +59,6 @@ import { ResetPasswordFormComponent } from './components/passwordResetForm/compo
     AuthOnboardingBaseComponent,
     AuthOnboardingPageComponent,
     AuthOnboardingMobileComponent,
-
   ],
   exports: [
   ],

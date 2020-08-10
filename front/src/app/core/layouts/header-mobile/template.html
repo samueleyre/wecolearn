@@ -6,6 +6,9 @@
     <div *ngIf="showDiscussionUser" class="discussingUser">
       <div *ngIf="discussingUser$ | async as threadName" ><span>{{threadName}}</span></div>
     </div>
+    <div *ngIf="title" class="title">
+      <span>{{title}}</span>
+    </div>
     <span class="toolbar-spacer"></span>
     <a *ngIf="showSettings" routerLink="/dashboard/profile/settings"><mat-icon aria-hidden="true" aria-label="Paramètres">settings</mat-icon></a>
   </mat-toolbar-row>

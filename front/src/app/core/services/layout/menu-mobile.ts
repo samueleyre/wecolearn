@@ -7,6 +7,7 @@ import { RETURN_URLS } from '~/config/navigation/returnUrls';
 import { NAV } from '~/config/navigation/nav';
 import { REDIRECT_URLS } from '~/config/navigation/redirectUrls';
 import { HEADER_URLS } from '~/config/navigation/headerUrls';
+import { HEADER_TITLE_URLS } from '~/config/navigation/headerTitleUrls';
 
 
 @Injectable({
@@ -75,5 +76,10 @@ export class MenuMobileService {
 
   urlHasHeader(url: string) {
     return HEADER_URLS.some(rx => rx.test(url));
+  }
+
+  getUrlTitle(url: string): string | null {
+    const val = Object.keys(HEADER_TITLE_URLS).find(rx => new RegExp(rx).test(url));
+    return val ? HEADER_TITLE_URLS[val] : null;
   }
 }
