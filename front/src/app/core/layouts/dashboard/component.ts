@@ -38,6 +38,8 @@ export class MainComponent extends DestroyObservable implements OnInit {
       takeUntil(this.destroy$),
     );
 
+
+
     this.showMobileHeader = this.menuMobileService.showHeader.asObservable().pipe(
       map(urlWithHeader =>
          this.deviceService.isMobile() && urlWithHeader,

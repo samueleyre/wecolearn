@@ -46,6 +46,5 @@ import { IonicContainerComponent } from './layouts/ionic-container/ionic-contain
     FooterModule,
   ],
   entryComponents: [ConfirmDialogComponent],
-
 })
 export class CoreModule {}

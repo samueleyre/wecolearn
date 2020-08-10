@@ -11,12 +11,13 @@ import { PATTERN } from '~/shared/config/pattern';
 import { onBoardingSections } from '~/modules/auth/components/onBoardingComponents/onBoarding.const';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { environment } from '~/../environments/environment';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 
 @Component({
   template: 'empty',
 })
-export class AuthOnboardingBaseComponent {
+export class AuthOnboardingBaseComponent extends DestroyObservable {
   public selectedIndex = 0;
   private pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   public titles = onBoardingSections;
@@ -40,7 +41,9 @@ export class AuthOnboardingBaseComponent {
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
-  ) {}
+  ) {
+    super();
+  }
 
   login() {
     this.loading = true;
@@ -60,6 +63,7 @@ export class AuthOnboardingBaseComponent {
   }
 
   setSelection($event:StepperSelectionEvent) {
+    console.log('change', $event);
     this.selectedIndex = $event.selectedIndex;
     if ($event.selectedIndex === onBoardingSections.tags.index) {
       setTimeout(() => {

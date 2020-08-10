@@ -6,3 +6,13 @@ img {
 .mainContainer-content {
   min-height: calc(100vh - 65px - 197px);
 }
+
+ion-footer {
+  position: fixed;
+  bottom: 0;
+}
+
+.header-space {
+  // size of header
+  height: 56px;
+}

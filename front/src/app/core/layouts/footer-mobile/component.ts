@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Threads } from '~/core/services/chat/threads';
 
 @Component({
-  selector: 'dash-footer-mobile',
+  selector: 'app-footer-mobile',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
