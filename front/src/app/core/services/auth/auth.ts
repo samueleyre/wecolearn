@@ -17,27 +17,11 @@ import { Logged } from './logged';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private _user$: BehaviorSubject<User> = new BehaviorSubject(null);
-
   constructor(private http: HttpClient,
               private tokenService: TokenService,
               private router: Router,
               private _toastr: ToastService,
-  ) {
-
-  }
-
-  get user(): User {
-    return this._user$.value;
-  }
-
-  get isAdmin(): boolean {
-    return this.user.roles.includes(UserRoleEnum.ADMIN);
-  }
-
-  setUser(user: User) {
-    this._user$.next(user);
-  }
+  ) {}
 
   signUp(user: User): Observable<any> {
     return this.http.post('/api/signup', user);
@@ -52,13 +36,13 @@ export class AuthenticationService {
     return this.http.get(`/api/login_check/slack?code=${code}&redirect_uri=${redirectUri}`).pipe(
         map((response: Response) => (this.loginResponse(response)) ? response : false));
   }
-
-  /**
-   * connects user account to his slack account
-   */
-  slackConnect(code: string, redirectUri: string): Observable<any> {
-    return this.http.get(`/api/client/slack?code=${code}&redirect_uri=${redirectUri}`);
-  }
+  //
+  // /**
+  //  * connects user account to his slack account
+  //  */
+  // slackConnect(code: string, redirectUri: string): Observable<any> {
+  //   return this.http.get(`/api/client/slack?code=${code}&redirect_uri=${redirectUri}`);
+  // }
 
   // todo: manage erros via api.service
   loginResponse(response: Response) {

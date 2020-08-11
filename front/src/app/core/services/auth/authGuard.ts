@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { Logged } from '~/core/services/auth/logged';
 import { ToastService } from '~/core/services/toast.service';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 import { PingService } from './ping';
 
@@ -15,7 +16,7 @@ import { PingService } from './ping';
 export class AuthGuard implements CanActivate {
   constructor(private _router: Router,
               private _pingService: PingService,
-              private _authService: AuthenticationService,
+              private _profileService: ProfileService,
               private _toastr: ToastService) {
   }
 
@@ -23,7 +24,7 @@ export class AuthGuard implements CanActivate {
   private OPENROUTES = ['/subscribe', '/password/email', '/password/reset'];
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this._pingService.ping(state.url).pipe(
+    return this._pingService.ping().pipe(
       catchError((error: Response) => {
         let status = 500;
         if (error.status === 401 || error.status === 403) { // unauthorized or forbidden //
@@ -42,14 +43,10 @@ export class AuthGuard implements CanActivate {
         }
         Logged.set(true);
 
-        // set user profile
-        const user = <any>response; // User entity needs more work
-        this._authService.setUser(user);
-
         if (state.url === '/') {
           this._router.navigate(['/dashboard/search']);
         }
-        if ('admin' in route.data && !this._authService.isAdmin) {
+        if ('admin' in route.data && !this._profileService.isAdmin) {
           this._router.navigate(['/']).then(() => {
             this._toastr.error('Vous n\'êtes pas autorisé à accéder à cette page.');
           });

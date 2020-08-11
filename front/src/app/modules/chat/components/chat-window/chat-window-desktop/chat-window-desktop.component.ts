@@ -3,9 +3,10 @@ import 'quill-emoji/dist/quill-emoji.js';
 import { NgxLinkifyjsService } from 'ngx-linkifyjs';
 
 import { ChatWindowBaseComponent } from '~/modules/chat/components/chat-window/chat-window.base.component';
-import { MessagesService } from '~/core/services/chat/messages';
-import { Threads } from '~/core/services/chat/threads';
-import { ClientService } from '~/core/services/user/client';
+import { MessagesService } from '~/core/services/chat/messages.service';
+import { ThreadsService } from '~/core/services/chat/threads.service';
+import { UserService } from '~/core/services/user/user.service';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 
 @Component({
@@ -18,13 +19,13 @@ export class ChatWindowDesktopComponent extends ChatWindowBaseComponent implemen
 
   constructor(
     public messagesService: MessagesService,
-    public threadsService: Threads,
-    public clientService: ClientService,
+    public threadsService: ThreadsService,
+    public profileService: ProfileService,
     public el: ElementRef,
     private _linkifyService: NgxLinkifyjsService,
 
   ) {
-    super(messagesService, threadsService, clientService, el, _linkifyService);
+    super(messagesService, threadsService, profileService, el, _linkifyService);
   }
 
   ngOnInit(): void {

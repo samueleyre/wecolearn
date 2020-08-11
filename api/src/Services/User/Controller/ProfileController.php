@@ -25,26 +25,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class ProfileController extends AbstractController
 {
     /**
-     * @Get("profile/{profileUrl}")
-     * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"public-profile"})
-     **/
-    public function getPublicProfileAction(string $profileUrl)
-    {
-        $user = $this
-            ->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneByProfilUrl($profileUrl);
-
-        if ($user instanceof User) {
-            $ret = $user;
-        } else {
-            throw new \Exception('not found');
-        }
-
-        return $ret;
-    }
-
-    /**
      * @Get("profile")
      * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"profile"})
      **/

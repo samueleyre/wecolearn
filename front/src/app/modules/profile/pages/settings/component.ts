@@ -4,8 +4,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { takeUntil } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/user/client';
-
+import { ProfileService } from '~/core/services/user/profile.service';
 
 @Component({
   templateUrl: 'template.html',
@@ -14,19 +13,15 @@ import { ClientService } from '~/core/services/user/client';
   user$: Observable<User>;
   private readonly onDestroy = new Subject<void>();
 
-
-  constructor(private clientService: ClientService, private deviceService: DeviceDetectorService) {
-
-  }
+  constructor(private _profileService: ProfileService, private _deviceService: DeviceDetectorService) {}
 
   ngOnInit(): void {
-    this.user$ = this.clientService.get();
+    this.user$ = this._profileService.get();
     this.user$.pipe(takeUntil(this.onDestroy)).subscribe();
   }
 
-
   get isMobile() {
-    return this.deviceService.isMobile();
+    return this._deviceService.isMobile();
   }
 
   ngOnDestroy(): void {
