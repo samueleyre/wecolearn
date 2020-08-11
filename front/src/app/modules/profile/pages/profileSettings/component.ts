@@ -2,8 +2,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-import { ProfileService } from '~/core/services/user/profile';
-
 @Component({
   selector: 'app-profil-settings',
   templateUrl: 'template.html',
@@ -12,7 +10,7 @@ import { ProfileService } from '~/core/services/user/profile';
 export class ProfileSettingsPageComponent implements OnDestroy {
   private readonly onDestroy = new Subject<void>();
 
-  constructor(private _profileService: ProfileService, private _deviceService: DeviceDetectorService) {}
+  constructor(private _deviceService: DeviceDetectorService) {}
 
   get isMobile() {
     return this._deviceService.isMobile();

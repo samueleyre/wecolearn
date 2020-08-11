@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 import { User } from '~/core/entities/user/entity';
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
-import { ProfileService } from '~/core/services/user/profile';
+import { ProfileService } from '~/core/services/user/profile.service';
 import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { PASSWORD } from '~/core/const/validators.const';

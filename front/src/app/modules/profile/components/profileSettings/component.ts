@@ -13,7 +13,7 @@ import { debounceTime, distinct, filter, takeUntil } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { Tag } from '~/core/entities/tag/entity';
-import { ClientService } from '~/core/services/user/client';
+import { UserService } from '~/core/services/user/user.service';
 import { TagService } from '~/core/services/tag/tag';
 import { DomainService } from '~/core/services/domain/domain';
 import { AuthenticationService } from '~/core/services/auth/auth';
@@ -21,7 +21,7 @@ import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
-import { ProfileService } from '~/core/services/user/profile';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 
 @Component({
@@ -32,27 +32,21 @@ import { ProfileService } from '~/core/services/user/profile';
 export class ProfileSettingsComponent extends DestroyObservable implements OnInit {
   public tags = [];
 
-  loading = false;
+  // loading = false;
+  // private error = {
+  //   slack: '',
+  // };
 
-  private error = {
-    slack: '',
-  };
-  private redirectURI: string;
-  hasSlack: boolean;
-  hasRocketChat: boolean;
-  hasSlackAccount = false;
-  rocketChatId: string;
+  // private redirectURI: string;
+  // hasSlack: boolean;
+  // hasRocketChat: boolean;
+  // hasSlackAccount = false;
+  // rocketChatId: string;
 
   constructor(
-        private clientService: ClientService,
-        private tagService: TagService,
-        private activatedRoute: ActivatedRoute,
-        protected http: HttpClient,
         @Inject(APP_BASE_HREF) r: string,
         private domainService: DomainService,
-        private authenticationService: AuthenticationService,
         private fb: FormBuilder,
-        private _footerMobileService: FooterMobileService,
         private _deviceService: DeviceDetectorService,
         private _profileService: ProfileService,
   ) {
@@ -92,19 +86,19 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
   }
 
   load(): void {
-    let subDomain = this.domainService.getSubDomain();
-    this.hasSlack = this.domainService.hasSlack();
-    this.hasRocketChat = this.domainService.hasRocketChat();
+    // let subDomain = this.domainService.getSubDomain();
+    // this.hasSlack = this.domainService.hasSlack();
+    // this.hasRocketChat = this.domainService.hasRocketChat();
 
-    // TODO : set as enum
-    if (subDomain === 'wecolearn') {
-      subDomain = '';
-    } else {
-      subDomain += '.';
-    }
+    // // TODO : set as enum
+    // if (subDomain === 'wecolearn') {
+    //   subDomain = '';
+    // } else {
+    //   subDomain += '.';
+    // }
 
-    this.redirectURI = (environment.production) ?
-      encodeURIComponent(`https://${subDomain}wecolearn.com/profilsettings`) : encodeURIComponent('http://0.0.0.0:8080/profilsettings');
+    // this.redirectURI = (environment.production) ?
+    //   encodeURIComponent(`https://${subDomain}wecolearn.com/profilsettings`) : encodeURIComponent('http://0.0.0.0:8080/profilsettings');
 
     this._profileService.entity$
       .pipe(
@@ -164,7 +158,7 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
 
   submit() {
     this.joinTags();
-    this.clientService.patch({ tags: this.tags, ...this.userForm.value }).subscribe(
+    this._profileService.patch({ tags: this.tags, ...this.userForm.value }).subscribe(
       (user: User) => {},
       (error) => {
         console.log(error);

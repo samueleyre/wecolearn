@@ -1,17 +1,23 @@
 @import 'variables';
 
-ion-content {
-  background-color: $mainBgColor;
-}
+//ion-content {
+//  background-color: $mainBgColor;
+//}
 
 ion-footer {
   position: fixed;
   bottom: 0;
 }
 
+ion-header {
+  position: fixed;
+  top: 0;
+}
+
+
 .space {
-  // size of footer
-  height: 90px;
+  // size of footer & header
+  height: 56px;
 }
 
 #page-content-wrapper {

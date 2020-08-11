@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { User } from '~/core/entities/user/entity';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
-import { ClientService } from '~/core/services/user/client';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 type IMessagesOperation = (messages: Message[]) => Message[];
 
@@ -39,7 +39,7 @@ export class MessagesService {
     return this._loading$.value;
   }
 
-  constructor(public clientService: ClientService, protected http: HttpClient) {
+  constructor(public profileService: ProfileService, protected http: HttpClient) {
     this.updates.pipe(
         // watch the updates and accumulate operations on the messages
         scan((messages: Message[], operation: IMessagesOperation) => operation(messages), []),
@@ -98,7 +98,7 @@ export class MessagesService {
 
   private getMessages(): void {
     this._loading$.next(true);
-    this.clientService.get()
+    this.profileService.get()
       .subscribe(
         (user: User) => {
           if (user && null === this.currentClient.id) {
