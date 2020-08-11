@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { FOOTER_URLS } from '~/config/navigation/footerUrls';
+import {DASHBOARD_FOOTER_URLS, MAIN_FOOTER_URLS} from '~/config/navigation/footerUrls';
 import { NAV } from '~/config/navigation/nav';
 
 
@@ -13,6 +13,7 @@ export class FooterMobileService {
   inputFocusState: BehaviorSubject<boolean> = new BehaviorSubject(false);
   showFooter: BehaviorSubject<boolean> = new BehaviorSubject(false);
   showOnboardingFooter: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  showMainFooter: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(router: Router) {
     // onload
@@ -30,13 +31,18 @@ export class FooterMobileService {
   }
 
   private setNavigation(path: string) {
-    this.showFooter.next(this.urlHasFooter(path));
+    this.showFooter.next(this.urlHasDashboardFooter(path));
     this.showOnboardingFooter.next(
       NAV.signup.indexOf(path) !== -1,
     );
+    this.showMainFooter.next(this.urlHasMainFooter(path));
   }
 
-  urlHasFooter(url: string): boolean {
-    return FOOTER_URLS.indexOf(url) !== -1;
+  urlHasDashboardFooter(url: string): boolean {
+    return DASHBOARD_FOOTER_URLS.indexOf(url) !== -1;
+  }
+
+  urlHasMainFooter(url: string): boolean {
+    return MAIN_FOOTER_URLS.indexOf(url) !== -1;
   }
 }

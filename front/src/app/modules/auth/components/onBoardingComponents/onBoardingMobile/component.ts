@@ -10,7 +10,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardingComponents/baseComponent';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
-import {NAV} from "~/config/navigation/nav";
+import { NAV } from '~/config/navigation/nav';
 
 @Component({
   selector: 'profile-onboarding-mobile',
