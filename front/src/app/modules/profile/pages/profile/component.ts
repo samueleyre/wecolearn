@@ -10,8 +10,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { User } from '~/core/entities/user/entity';
 import { NAV } from '~/config/navigation/nav';
+import { ProfileService } from '~/core/services/user/profile';
 
-import { ProfileService } from '../../../../core/services/user/profile';
 
 @Component({
   templateUrl: 'template.html',

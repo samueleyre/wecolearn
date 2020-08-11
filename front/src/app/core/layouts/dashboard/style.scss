@@ -9,9 +9,15 @@ ion-footer {
   bottom: 0;
 }
 
+ion-header {
+  position: fixed;
+  top: 0;
+}
+
+
 .space {
-  // size of footer
-  height: 90px;
+  // size of footer & header
+  height: 70px;
 }
 
 #page-content-wrapper {
