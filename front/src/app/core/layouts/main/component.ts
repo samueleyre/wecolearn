@@ -46,7 +46,7 @@ export class ContainerComponent extends DestroyObservable implements OnInit{
   }
 
   onActivate(event) {
-    window.scroll(0, 0);
+    document.getElementsByTagName('ion-content')[0].scrollToTop();
   }
 
   get isAndroid() {
