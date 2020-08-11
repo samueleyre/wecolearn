@@ -9,8 +9,9 @@
 <ion-header *ngIf="showMobileHeader | async">
   <app-header-mobile ></app-header-mobile>
 </ion-header>
+<div *ngIf="showMobileHeader | async" class="space"></div>
 <router-outlet *ngIf="isMobile" (activate)="onActivate($event)"></router-outlet>
-<div *ngIf="isMobile" class="space"></div>
+<div *ngIf="showMobileFooter | async" class="space"></div>
 <ion-footer *ngIf="showMobileFooter | async" class="ion-no-border">
   <app-footer-mobile></app-footer-mobile>
 </ion-footer>

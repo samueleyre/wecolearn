@@ -75,7 +75,7 @@ export class MenuMobileService {
   }
 
   urlHasHeader(url: string) {
-    return HEADER_URLS.some(rx => rx.test(url));
+    return HEADER_URLS.some(rx => new RegExp(rx).test(url));
   }
 
   getUrlTitle(url: string): string | null {
