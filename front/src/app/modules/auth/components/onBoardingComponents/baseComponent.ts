@@ -63,7 +63,6 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
   }
 
   setSelection($event:StepperSelectionEvent) {
-    console.log('change', $event);
     this.selectedIndex = $event.selectedIndex;
     if ($event.selectedIndex === onBoardingSections.tags.index) {
       setTimeout(() => {

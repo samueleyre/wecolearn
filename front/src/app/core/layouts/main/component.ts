@@ -15,6 +15,7 @@ import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 
 export class ContainerComponent extends DestroyObservable implements OnInit{
   public showMobileOnBoardingFooter: Observable<boolean>;
+  public showMainFooter: Observable<boolean>;
 
   constructor(
     private _footerMobileService: FooterMobileService,
@@ -35,6 +36,13 @@ export class ContainerComponent extends DestroyObservable implements OnInit{
       distinctUntilChanged(),
       takeUntil(this.destroy$),
     );
+
+    this.showMainFooter = this._footerMobileService.showMainFooter.asObservable()
+      .pipe(
+        map(
+          val => !this.isAndroid && val || !this._deviceService.isMobile(),
+        ),
+      );
   }
 
   onActivate(event) {
