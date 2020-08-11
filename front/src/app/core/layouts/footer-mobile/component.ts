@@ -2,7 +2,7 @@ import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { Threads } from '~/core/services/chat/threads';
+import { ThreadsService } from '~/core/services/chat/threads.service';
 
 @Component({
   selector: 'app-footer-mobile',
@@ -17,7 +17,7 @@ export class FooterMobileComponent implements OnInit {
   public countNotRead$: Observable<number>;
 
   constructor(
-    private _threadsService: Threads,
+    private _threadsService: ThreadsService,
   ) {
   }
 

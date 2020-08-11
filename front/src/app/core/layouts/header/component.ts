@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { Logged } from '~/core/services/auth/logged';
 import { AuthenticationService } from '~/core/services/auth/auth';
-import { ClientService } from '~/core/services/user/client';
 import { User } from '~/core/entities/user/entity';
 import { NAV } from '~/config/navigation/nav';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 @Component({
   selector: 'dash-header',
@@ -16,20 +16,20 @@ export class HeaderComponent implements OnInit {
   public navLinks = NAV;
 
   constructor(
-    public clientService: ClientService,
-    private authenticationService: AuthenticationService,
+    private _profileService: ProfileService,
+    private _authenticationService: AuthenticationService,
   ) {
   }
 
   ngOnInit() {
     Logged.get().subscribe((logged: boolean) => {
-      this.clientService.get().subscribe((client: User) => {
+      this._profileService.get().subscribe((client: User) => {
         this.currentUser = client;
       });
     });
   }
 
   logOut() {
-    this.authenticationService.logout(true);
+    this._authenticationService.logout(true);
   }
 }

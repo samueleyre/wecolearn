@@ -7,8 +7,8 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { Threads } from '~/core/services/chat/threads';
-import { MessagesService } from '~/core/services/chat/messages';
+import { ThreadsService } from '~/core/services/chat/threads.service';
+import { MessagesService } from '~/core/services/chat/messages.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { NAV } from '~/config/navigation/nav';
 
@@ -20,7 +20,7 @@ import { NAV } from '~/config/navigation/nav';
 
 export class ChatPageComponent extends DestroyObservable implements OnInit, OnDestroy {
   constructor(
-    private _threadsService: Threads,
+    private _threadsService: ThreadsService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _messageService: MessagesService,

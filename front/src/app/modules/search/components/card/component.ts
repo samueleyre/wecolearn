@@ -7,13 +7,11 @@ import {
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/user/client';
 import { DomainService } from '~/core/services/domain/domain';
 import { chat } from '~/config/chat';
-import { AuthenticationService } from '~/core/services/auth/auth';
 import { Tag } from '~/core/entities/tag/entity';
-
-import { SearchService } from '../../../../core/services/search/search';
+import { ProfileService } from '~/core/services/user/profile.service';
+import { SearchService } from '~/core/services/search/search';
 
 
 @Component({
@@ -26,7 +24,7 @@ import { SearchService } from '../../../../core/services/search/search';
 
   public tags: Tag[] = [];
 
-  private currentClient: User;
+  private currentUser: User;
   private cardSlackId: Object = {};
   public showSlack: Object = {};
   private subDomain: string = null;
@@ -39,8 +37,7 @@ import { SearchService } from '../../../../core/services/search/search';
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private searchService: SearchService,
-        private clientService: ClientService,
-        private authService: AuthenticationService,
+        private _profileService: ProfileService,
         private domainService: DomainService,
     ) {
       for (let i = 0; i < this.types.length; i++) { // tslint:disable-line
@@ -50,7 +47,7 @@ import { SearchService } from '../../../../core/services/search/search';
   }
 
   ngOnInit() {
-    this.currentClient = this.authService.user;
+    this.currentUser = this._profileService.profile;
 
     this.subDomain = this.domainService.getSubDomain();
     this.slackSubDomain = this.domainService.getSlackSubDomain();

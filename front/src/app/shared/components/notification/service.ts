@@ -4,7 +4,7 @@ import {
   Plugins, NotificationPermissionResponse,
 } from '@capacitor/core';
 
-import { Threads } from '~/core/services/chat/threads';
+import { ThreadsService } from '~/core/services/chat/threads.service';
 
 import { Permission } from './const';
 import { environment } from '../../../../environments/environment';
@@ -21,7 +21,7 @@ export class NotificationService {
 
   constructor(
       private router: Router,
-      private _threadsService: Threads,
+      private _threadsService: ThreadsService,
   ) {
     this.navPermission = this.isSupported ? 'default' : 'denied';
   }

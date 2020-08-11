@@ -3,7 +3,7 @@
     <label> Rendre visible mon profil
       <mat-icon *ngIf="!isMobile" [matTooltip]="profilDisableInformation">info</mat-icon>
     </label>
-    <app-toggler [(active)]="user.show_profil" (change)="submit()"  [disabled]="disabled"></app-toggler>
+    <app-toggler [(active)]="user.show_profil" (change)="submit()"  [disabled]="isDisabled"></app-toggler>
     <p class="form-text text-muted">
         Ceci vous permet d'être visible et ainsi pouvoir être contacté par d'autres utilisateurs.
     </p>
