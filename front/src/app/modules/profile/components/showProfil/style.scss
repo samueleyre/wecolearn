@@ -1,6 +1,18 @@
 @import 'variables';
 
 
+.mat-error {
+  font-size: 13px;
+}
+
+.alert-outline {
+  border: solid 1px red;
+  border-radius: 3px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
 #notificationSettings{
   label{
     display: flex;
@@ -10,90 +22,5 @@
     padding-top: 5px;
     padding-right: 7px;
   }
-
-
-
 }
-//toggle switch
-$TgWidth: 70px;
-$TgHeight: 0.5*$TgWidth;
-$TgLeft: 0.1*$TgHeight;
-$TgButtDimameter: 0.8*$TgHeight;
-$TgTransform: $TgWidth - 2*$TgLeft - $TgButtDimameter;
-
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: $TgWidth;
-  height: $TgHeight;
-  margin-bottom: 0;
-  margin-top: 0.5rem;
-}
-
-.switch input {display:none;}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--main-color-1-dark-5);
-  -webkit-transition: .4s;
-  transition: .4s;
-  &.active{
-    background-color: var(--main-color-2-dark-5);
-  }
-}
-
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: $TgButtDimameter;
-  width: $TgButtDimameter;
-  left: $TgLeft;
-  bottom: 0.1*$TgHeight;
-  background-color: #cdcdcd;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked {
-  & + .slider:before {
-    -webkit-transform: translateX($TgTransform);
-    -ms-transform: translateX($TgTransform);
-    transform: translateX($TgTransform);
-  }
-
-  & + .slider > span {
-    padding-left: 0.15*$TgWidth;
-  }
-
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-}
-
-
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-  line-height: $TgHeight;
-  & > span{
-    padding-left: 0.5*$TgWidth;
-    color: #ffffff;
-    font-size: 0.9em;
-    font-weight: bold;
-  }
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
 

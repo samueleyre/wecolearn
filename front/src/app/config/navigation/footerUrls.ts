@@ -9,3 +9,9 @@ export const MAIN_FOOTER_URLS = [
   NAV.peerLearning,
   NAV.notFound,
 ];
+
+// no scroll on ioncontent
+export const ION_CONTENT_NO_SCROLL_URLS = [
+  NAV.search,
+  NAV.currentDiscussion,
+];

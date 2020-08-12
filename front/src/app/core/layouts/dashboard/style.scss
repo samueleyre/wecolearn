@@ -15,9 +15,14 @@ ion-header {
 }
 
 
-.space {
-  // size of footer & header
+.header-space {
+  // size of header
   height: 56px;
+}
+
+.footer-space {
+  // size of footer
+  height: 46px;
 }
 
 #page-content-wrapper {

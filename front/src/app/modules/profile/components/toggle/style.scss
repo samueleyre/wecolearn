@@ -67,6 +67,10 @@ $TgTransform: $TgWidth - 2*$TgLeft - $TgButtDimameter;
       background-color: var(--main-color-2-dark-5);
     }
 
+    &.disabled {
+      background-color: grey;
+    }
+
 
     /* Rounded sliders */
     &.round {
