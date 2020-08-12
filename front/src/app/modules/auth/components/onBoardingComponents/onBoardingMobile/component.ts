@@ -19,6 +19,7 @@ import { NAV } from '~/config/navigation/nav';
 })
 export class AuthOnboardingMobileComponent extends AuthOnboardingBaseComponent implements OnInit {
   private formTabSelection = new BehaviorSubject(0);
+  public formTabSelection$: Observable<number>;
   public showMobileOnBoardingFooter: Observable<boolean>;
 
   constructor(
@@ -31,15 +32,7 @@ export class AuthOnboardingMobileComponent extends AuthOnboardingBaseComponent i
   }
 
   ngOnInit() {
-    const formTabSelection$ = this.formTabSelection.asObservable();
-    formTabSelection$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-      (val) => {
-        this.selectedIndex = val;
-      },
-    );
-
+    this.formTabSelection$ = this.formTabSelection.asObservable();
     this.showMobileOnBoardingFooter = this._footerMobileService.inputFocusState.asObservable().pipe(map(val => !val));
   }
 
@@ -49,9 +42,12 @@ export class AuthOnboardingMobileComponent extends AuthOnboardingBaseComponent i
 
   setSelection($event: StepperSelectionEvent) {
     if ($event.selectedIndex !== this.selectedIndex) {
-      this.selectedIndex = $event.selectedIndex;
+      this.formTabSelection.next($event.selectedIndex);
     }
-    super.setSelection($event);
+  }
+
+  get selectedIndex() {
+    return this.formTabSelection.getValue();
   }
 
   nextPage() {

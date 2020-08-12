@@ -18,7 +18,6 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
   template: 'empty',
 })
 export class AuthOnboardingBaseComponent extends DestroyObservable {
-  public selectedIndex = 0;
   private pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   public titles = onBoardingSections;
 
@@ -62,25 +61,6 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
       );
   }
 
-  setSelection($event:StepperSelectionEvent) {
-    this.selectedIndex = $event.selectedIndex;
-    if ($event.selectedIndex === onBoardingSections.tags.index) {
-      setTimeout(() => {
-        this.tagInput.focus();
-      },         500);
-    }
-    if ($event.selectedIndex === onBoardingSections.bio.index) {
-      setTimeout(() => {
-        this.bioInput.focus();
-      },         500);
-    }
-    if ($event.selectedIndex === onBoardingSections.ids.index) {
-      setTimeout(() => {
-        this.firstnameInput.focus();
-      },         500);
-    }
-  }
-
   get tagInput(): HTMLDivElement {
     return <HTMLDivElement>document.getElementsByClassName('mat-chip-input')[0];
   }
@@ -98,9 +78,6 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
   }
 
   get signUp(): Observable<any> {
-    if (this.selectedIndex !== onBoardingSections.ids.index) {
-      return throwError(true);
-    }
     const tags = this.userForm.value.learn_tags ? this.userForm.value.learn_tags : []; // bug of null tags parameter
     return this.authenticationService.signUp({ tags, ...this.userForm.value });
   }

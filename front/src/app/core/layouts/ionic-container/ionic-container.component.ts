@@ -25,7 +25,6 @@ export class IonicContainerComponent extends DestroyObservable implements OnInit
       map(urlWithHeader =>
         this.deviceService.isMobile() && urlWithHeader,
       ),
-      tap(v => console.log({ v })),
       distinctUntilChanged(),
       takeUntil(this.destroy$),
     );
