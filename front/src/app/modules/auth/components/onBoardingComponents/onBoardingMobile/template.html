@@ -1,6 +1,6 @@
 <div class="Onboarding">
   <form (keydown.enter)="$event.preventDefault()" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
-    <mat-horizontal-stepper [selectedIndex]="selectedIndex" (selectionChange)="setSelection($event)">
+    <mat-horizontal-stepper [selectedIndex]="formTabSelection$ | async" (selectionChange)="setSelection($event)">
         <ng-template matStepperIcon="edit">
             <i class="fa fa-check"></i>
         </ng-template>
@@ -95,7 +95,7 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="hasValidationButton">
-      <ion-button (click)="nextPage()" [disabled]="!userForm.valid">
+      <ion-button (click)="submit()" [disabled]="!userForm.valid">
         <ion-label>valider</ion-label>
         <mat-icon>chevron_right</mat-icon>
       </ion-button>
