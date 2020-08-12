@@ -9,6 +9,7 @@ import { User } from '~/core/entities/user/entity';
 import { Tag } from '~/core/entities/tag/entity';
 import { ToastService } from '~/core/services/toast.service';
 import { ProfileService } from '~/core/services/user/profile.service';
+import { NAV } from '~/config/navigation/nav';
 
 
 @Component({
@@ -17,10 +18,6 @@ import { ProfileService } from '~/core/services/user/profile.service';
   styleUrls: ['./style.scss'],
 })
 export class ShowProfilSettingsComponent {
-  public profilDisableInformation = 'Pour pouvoir rendre visible votre profil ' +
-    "vous devez remplir votre biographie et ajouter un domaine d'apprentissage";
-
-
   constructor(private _profileService: ProfileService,
               private _toastr: ToastService,
               private _deviceService: DeviceDetectorService,
@@ -29,11 +26,19 @@ export class ShowProfilSettingsComponent {
   @Input() user: User;
 
   get isDisabled(): boolean {
-    return !(!!this.user.first_name && !!this.user.biographie && !!this.user.tags.filter((tag:Tag) => tag.type === 0)[0]);
+    return !(
+      !!this.user.first_name &&
+      !!this.user.biographie &&
+      !!this.user.tags.filter((tag:Tag) => tag.type === 0)[0]
+    ) && !this.user.show_profil;
   }
 
   get isMobile() {
     return this._deviceService.isMobile();
+  }
+
+  get nav() {
+    return NAV;
   }
 
   submit() {

@@ -1,4 +1,4 @@
 <label class="switch">
   <input type="checkbox" [(ngModel)]="active" (click)="toggle()" [disabled]="disabled">
-  <span class="slider round" [ngClass]="active ? 'active' : ''"><span>{{active ? 'OUI' : 'NON'}}</span></span>
+  <span class="slider round" [class.disabled]="disabled" [class.active]="active"><span>{{active ? 'OUI' : 'NON'}}</span></span>
 </label>
