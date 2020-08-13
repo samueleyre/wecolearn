@@ -10,10 +10,14 @@
     "build:debug": "ng build --aot --watch && node scripts/precacheAndBuild.js",
     "serve:build": "lite-server --baseDir=dist/front",
     "resources": "cordova-res android --skip-config --copy",
-    "test:e2e:debug": "yarn run cypress run --env ENV_NAME=local --spec cypress/integration/*e2e.ts",
-    "test:e2e": "yarn run cypress run --spec cypress/integration/*e2e.ts",
-    "open:cypress:debug": "yarn run cypress open --env ENV_NAME=local",
-    "open:cypress": "yarn run cypress open"
+    "test:e2e:local": "$(npm bin)/cypress run --env ENV_NAME=local --spec cypress/integration/*e2e.ts",
+    "test:e2e": "$(npm bin)/cypress run --spec cypress/integration/*e2e.ts",
+    "open:cypress:local": "$(npm bin)/cypress open --env ENV_NAME=local",
+    "open:cypress": "$(npm bin)/cypress open",
+    "test:e2e:mobile:local": "$(npm bin)/cypress run --env ENV_NAME=local,USER_AGENT=mobile --spec cypress/integration/*e2e.mobile.ts",
+    "test:e2e:mobile": "$(npm bin)/cypress run --env USER_AGENT=mobile --spec cypress/integration/*e2e.mobile.ts",
+    "open:cypress:mobile:local": "$(npm bin)/cypress open --env ENV_NAME=local,USER_AGENT=mobile",
+    "open:cypress:mobile": "$(npm bin)/cypress --env USER_AGENT=mobile open"
   },
   "private": true,
   "dependencies": {

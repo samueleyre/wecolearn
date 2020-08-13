@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-light sticky-top">
   <div class="nav navbar-nav ml-auto">
-    <a class="nav-link dropdown-toggle" [matMenuTriggerFor]="menu" aria-label="Menu">
+    <a class="nav-link dropdown-toggle" id="parameters" [matMenuTriggerFor]="menu" aria-label="Menu">
       <wc-profil-image [image]="currentUser.image" [style]="{width: '30px', height: '30px'}"></wc-profil-image>
     </a>
   </div>
@@ -15,7 +15,7 @@
     <mat-icon>settings</mat-icon>
     Paramètres
   </button>
-  <button mat-menu-item (click)="logOut()">
+  <button id="signOutButton" mat-menu-item (click)="logOut()">
     <mat-icon>logout</mat-icon>
     Déconnexion
   </button>

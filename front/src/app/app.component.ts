@@ -6,7 +6,6 @@ import {
   Plugins,
   PushNotification,
   PushNotificationActionPerformed } from '@capacitor/core';
-import { Platform } from '@ionic/angular';
 
 import { Logged } from '~/core/services/auth/logged';
 import { IconService } from '~/core/services/icon.service';
@@ -17,7 +16,6 @@ import { MessagerieService } from '~/core/services/messagerie/service';
 import { NAV } from '~/config/navigation/nav';
 import { ThreadsService } from '~/core/services/chat/threads.service';
 import { SeoService } from '~/core/services/seo';
-import { ToastService } from '~/core/services/toast.service';
 
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
