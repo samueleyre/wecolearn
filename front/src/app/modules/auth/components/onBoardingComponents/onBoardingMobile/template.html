@@ -52,7 +52,7 @@
                         <div class="col-12 no-padding">
                           <mat-form-field appearance="legacy">
                             <mat-label>Nom</mat-label>
-                            <input matInput placeholder="" formControlName="last_name"  >
+                            <input id="lastNameInput" matInput placeholder="" formControlName="last_name"  >
                           </mat-form-field>
                         </div>
                         <div class="col-12 no-padding">
@@ -83,19 +83,19 @@
 <ion-footer *ngIf="showMobileOnBoardingFooter | async">
   <ion-toolbar>
     <ion-buttons slot="start" *ngIf="hasPrevious">
-      <ion-button (click)="previousPage()">
+      <ion-button id="previous" (click)="previousPage()">
         <mat-icon>chevron_left</mat-icon>
         <ion-label>Précédant</ion-label>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="hasNext">
-      <ion-button (click)="nextPage()">
+      <ion-button id="next" (click)="nextPage()">
         <ion-label>Suivant</ion-label>
         <mat-icon>chevron_right</mat-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="hasValidationButton">
-      <ion-button (click)="submit()" [disabled]="!userForm.valid">
+      <ion-button id="validate" (click)="submit()" [disabled]="!userForm.valid">
         <ion-label>valider</ion-label>
         <mat-icon>chevron_right</mat-icon>
       </ion-button>

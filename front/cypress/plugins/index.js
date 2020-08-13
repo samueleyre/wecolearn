@@ -13,9 +13,19 @@
 
 const wp = require('@cypress/webpack-preprocessor');
 
-module.exports = (on) => {
+module.exports = (on, config) => {
   const options = {
     webpackOptions: require('../webpack.config'),
   };
   on('file:preprocessor', wp(options));
+
+  let userAgent = null;
+  if (config.env.USER_AGENT === 'mobile') {
+    userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1'
+  }
+
+  return {
+    ...config,
+    userAgent,
+  };
 };

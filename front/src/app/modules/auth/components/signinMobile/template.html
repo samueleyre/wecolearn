@@ -11,12 +11,12 @@
   </div>
   <p><a href="" routerLink="/auth/password/email"> Mot de passe oublié?</a></p>
   <div class="form-buttons">
-    <button type="submit" [disabled]="loading" class="btn btn-secondary btn-block">
+    <button type="submit" id="signinButton" [disabled]="loading" class="btn btn-secondary btn-block">
       <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Connexion
     </button>
     <br>
-    <button type="button" class="btn btn-primary btn-block" [routerLink]="subscribeLink">
+    <button type="button" id="signupButton" class="btn btn-primary btn-block" [routerLink]="subscribeLink">
       S'inscrire
     </button>
 

@@ -3,11 +3,11 @@ import { DEBUG_CONFIG } from '../config/debug.config';
 import { CI_CONFIG } from '../config/ci.config';
 import { cypress_login } from '../support/reusables/auth/cypress_login';
 import { USER_CONFIG } from '../config/user.config';
-import { cypress_signup } from '../support/reusables/auth/cypress_signup';
-import { closeCookiePolicy } from '../support/reusables/popins/cookiePolicy.cypress';
-import { cypress_logout } from '../support/reusables/auth/cypress_logout';
-import { cypress_sendMessage } from '../support/reusables/chat/cypress_sendMessage';
+import { cypress_signup_mobile } from '../support/reusables/auth/cypress_signup';
+import { cypress_logout_mobile } from '../support/reusables/auth/cypress_logout';
+import { cypress_sendMessage_mobile } from '../support/reusables/chat/cypress_sendMessage';
 import { cypress_contactUser } from '../support/reusables/search/cypress_contactUser';
+import { cypress_navToSearchTab_mobile } from '../support/reusables/nav/nav.cypress';
 
 
 const isLocal = Cypress.env('ENV_NAME') && Cypress.env('ENV_NAME') === 'local';
@@ -19,23 +19,7 @@ const config = isLocal ? DEBUG_CONFIG.e2e : CI_CONFIG.e2e;
 
  */
 
-context('E2E', () => {
-  const clear = Cypress.LocalStorage.clear;
-
-
-  // @ts-ignore
-  Cypress.LocalStorage.clear = function (keys, ls, rs) {
-    if (keys.length === 0) {
-      if (!localStorage.getItem('cookieseen')) {
-        // tslint:disable-next-line:no-invalid-this
-        return clear.apply(this);
-      }
-    } else {
-      // tslint:disable-next-line:no-invalid-this
-      return clear.apply(this, [keys, ls, rs]);
-    }
-  };
-
+context('E2E - mobile', () => {
   Cypress.on('window:before:load', (win) => {
     win.indexedDB.deleteDatabase('ngStorage');
   });
@@ -43,23 +27,24 @@ context('E2E', () => {
     whitelist: ['mercureAuthorization'],
   });
 
-
   before(() => {
+    // tslint:disable-next-line:no-magic-numbers
     cy.clearCookie('mercureAuthorization');
-    cy.clearLocalStorage('cookieseen');
   });
 
-  closeCookiePolicy();
+  beforeEach(() => {
+    cy.viewport(375, 667);
+  });
 
   const user = {
     ...USER_CONFIG,
-    email: `contact+${new Date().toLocaleDateString()}@wecolearn.com`,
+    email: `contact+mobile-${new Date().toLocaleDateString()}@wecolearn.com`,
   };
 
   if (config.signup) {
     describe('signup', () => {
-      cypress_signup(user);
-      cypress_logout();
+      cypress_signup_mobile(user);
+      cypress_logout_mobile();
     });
   }
 
@@ -70,13 +55,14 @@ context('E2E', () => {
 
     if (config.contactFirstMatch) {
       describe('contact first match', () => {
+        cypress_navToSearchTab_mobile();
         cypress_contactUser(1);
       });
     }
 
     if (config.sendMessage) {
       describe('send message', () => {
-        cypress_sendMessage();
+        cypress_sendMessage_mobile();
       });
     }
   }

@@ -32,4 +32,6 @@ clearCache:
 
 test:
 	@make loadFixtures
-	cd front; yarn test:e2e
+	cd front; yarn test:e2e; cd ..
+	@make loadFixtures
+	cd front; yarn test:e2e:mobile

@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { DomainService } from '~/core/services/domain/domain';
@@ -38,8 +39,10 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit() {
-    // reset login status
+    // manage cookie notif
     this.cookieNotification.notifyCookie();
+
+    // reset login status
     this.authenticationService.logout();
     let subDomain = this.domainService.getSubDomain();
     if (subDomain === 'wecolearn') {
