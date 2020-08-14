@@ -1,12 +1,13 @@
-import { enableProdMode, LOCALE_ID } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import 'hammerjs';
 
 import { AppModule } from '~/app.module';
+import { EnvEnum } from '~/core/enums/env.enum';
 
 import { environment } from './environments/environment';
 
-if (environment.production) {
+if (environment.env === EnvEnum.PRODUCTION || environment.env === EnvEnum.STAGING) {
   enableProdMode();
 }
 

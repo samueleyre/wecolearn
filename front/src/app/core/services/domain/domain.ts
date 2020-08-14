@@ -5,6 +5,7 @@ import { subdomains } from '~/config/domain';
 import { rocketchats, slacks, slacksSubDomains, rocketChatDomains } from '~/config/slack';
 
 import { environment } from '../../../../environments/environment';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class DomainService {
 
   setSubDomain() {
     let subdomain = null;
-    if (environment.production) {
+    if (environment.env === EnvEnum.PRODUCTION || environment.env === EnvEnum.STAGING) {
       const location = window.location.href;
       const regex = /(?:http[s]*\:\/\/)*(.*?)\.(?=[^\/]*\..{2,5})/i;
 

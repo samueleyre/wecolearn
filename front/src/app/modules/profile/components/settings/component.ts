@@ -20,6 +20,7 @@ import { PASSWORD } from '~/core/const/validators.const';
 import { passwordMatchValidator } from '~/modules/auth/validators/password-match.validator';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { ToastService } from '~/core/services/toast.service';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -62,7 +63,7 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
   }
 
   ngOnInit() {
-    this.pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+    this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
     this.newemail = this.user.email;
     this.initPasswordForm();
   }

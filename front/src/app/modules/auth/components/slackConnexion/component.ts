@@ -9,6 +9,7 @@ import { DomainService } from '~/core/services/domain/domain';
 import { environment } from '~/../environments/environment';
 import { TokenService } from '~/core/services/auth/token';
 import { AuthenticationService } from '~/core/services/auth/auth';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -41,7 +42,7 @@ export class SlackConnexionComponent implements OnInit {
       subDomain += '.';
     }
 
-    this.redirectURI = (environment.production) ?
+    this.redirectURI = (environment.env === EnvEnum.PRODUCTION || environment.env === EnvEnum.STAGING) ?
         encodeURIComponent(`https://${subDomain}wecolearn.com/login`) : encodeURIComponent('http://0.0.0.0:8080/login');
 
     this.activatedRoute.queryParams.subscribe((params: Params) => {

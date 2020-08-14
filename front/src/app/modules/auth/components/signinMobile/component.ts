@@ -10,6 +10,7 @@ import { NAV } from '~/config/navigation/nav';
 
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -43,7 +44,7 @@ export class SigninMobileComponent implements OnInit {
     } else {
       subDomain += '.';
     }
-    this.pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+    this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 
   login() {
