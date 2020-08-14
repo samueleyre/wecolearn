@@ -7,6 +7,9 @@
   &-header {
     padding-top: 20px;
     padding-bottom: 20px;
+    &-name {
+      padding: 10px 0;
+    }
   }
 
   button {
@@ -43,9 +46,11 @@
 
         .badge {
           padding: 8px;
-          background-color: #ffc600;
-          color: #310c31;
-          font-size: 1.2rem;
+          //background-color: #ffc600;
+          //color: #310c31;
+          font-size: 1.1rem;
+          color: #ffc600;
+          border: solid 0.5px;
         }
       }
     }
