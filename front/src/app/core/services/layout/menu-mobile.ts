@@ -29,7 +29,7 @@ export class MenuMobileService {
     router.events
       .subscribe((e) => {
         if (e instanceof NavigationEnd) {
-          this.setNavigation(e.url);
+          this.setNavigation(e.urlAfterRedirects);
         }
       });
 

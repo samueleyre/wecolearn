@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 
-import {DASHBOARD_FOOTER_URLS, ION_CONTENT_NO_SCROLL_URLS, MAIN_FOOTER_URLS} from '~/config/navigation/footerUrls';
+import { DASHBOARD_FOOTER_URLS, ION_CONTENT_NO_SCROLL_URLS, MAIN_FOOTER_URLS } from '~/config/navigation/footerUrls';
 import { NAV } from '~/config/navigation/nav';
 
 
@@ -26,7 +26,7 @@ export class FooterMobileService {
     router.events
       .subscribe((e) => {
         if (e instanceof NavigationEnd) {
-          this.setChanges(e.url);
+          this.setChanges(e.urlAfterRedirects);
         }
       });
   }

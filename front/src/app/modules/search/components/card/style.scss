@@ -27,7 +27,7 @@
 }
 
 .card-header {
-  padding: 65px 0 0 0;
+  padding: 65px 0 20px 0;
   background-color: white;
 }
 .card-title{
@@ -77,8 +77,10 @@
 
 .badge {
   padding:8px;
-  background-color: #ffc600;
-  color: #310c31;
+  //background-color: #ffc600;
+  //color: #310c31;
+  color: #ffc600;
+  border: solid 0.5px;
 }
 
 .card-body {
