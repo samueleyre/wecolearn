@@ -12,13 +12,14 @@ import { onBoardingSections } from '~/modules/auth/components/onBoardingComponen
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
   template: 'empty',
 })
 export class AuthOnboardingBaseComponent extends DestroyObservable {
-  private pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+  private pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   public titles = onBoardingSections;
 
   public userForm = this.fb.group({

@@ -9,6 +9,7 @@ import { PATTERN } from '~/shared/config/pattern';
 import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../../../environments/environment';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 @Component({
   selector: 'app-user-form',
@@ -123,7 +124,7 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
     isCreating: boolean = this.isCreating,
     user: User = this.user,
   ): void {
-    const pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+    const pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
     this.createEditUserForm = this._fb.group({
       first_name: [user.first_name, Validators.required],
       last_name: [user.last_name, Validators.required],

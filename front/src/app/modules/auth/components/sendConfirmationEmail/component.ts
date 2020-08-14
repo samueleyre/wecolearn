@@ -8,6 +8,8 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../environments/environment';
+import {PATTERN} from "~/shared/config/pattern";
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -31,8 +33,7 @@ export class SendPasswordConfirmationEmailComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.logout();
-    this.pattern = (environment.production) ?
-      '[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}' : '[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
+    this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 
   sendEmail() {

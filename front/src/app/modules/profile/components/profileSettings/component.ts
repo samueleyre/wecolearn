@@ -97,7 +97,7 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
     //   subDomain += '.';
     // }
 
-    // this.redirectURI = (environment.production) ?
+    // this.redirectURI = (environment.env === EnvEnum.PRODUCTION || environment.env === EnvEnum.STAGING) ?
     //   encodeURIComponent(`https://${subDomain}wecolearn.com/profilsettings`) : encodeURIComponent('http://0.0.0.0:8080/profilsettings');
 
     this._profileService.entity$

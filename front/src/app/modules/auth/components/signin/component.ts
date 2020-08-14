@@ -13,6 +13,7 @@ import { PATTERN } from '~/shared/config/pattern';
 import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../environments/environment';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -50,7 +51,7 @@ export class SigninComponent implements OnInit {
     } else {
       subDomain += '.';
     }
-    this.pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+    this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 
   login() {

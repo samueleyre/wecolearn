@@ -11,6 +11,8 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 import { DomainService } from '~/core/services/domain/domain';
 import { environment } from '~/../environments/environment';
 import { ERRORS } from '~/config/errors';
+import {PATTERN} from "~/shared/config/pattern";
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -42,14 +44,13 @@ export class SignupMobileComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.logout();
-    let subDomain = this.domainService.getSubDomain();
-    if (subDomain === 'wecolearn') {
-      subDomain = '';
-    } else {
-      subDomain += '.';
-    }
-    this.pattern = (environment.production) ?
-        '[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}' : '[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
+    // let subDomain = this.domainService.getSubDomain();
+    // if (subDomain === 'wecolearn') {
+    //   subDomain = '';
+    // } else {
+    //   subDomain += '.';
+    // }
+    this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 
 
