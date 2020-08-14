@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { NAV } from '~/config/navigation/nav';
+import { ToastService } from '~/core/services/toast.service';
+
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CookieNotificationService {
-  constructor(private _toastr: ToastrService) {
+  constructor(private _toastr: ToastService, private _deviceService: DeviceDetectorService) {
   }
 
-  notifyCookie() {
+  notifyCookie(): void {
+    if (environment.android || this._deviceService.isMobile()) {
+      return;
+    }
     setTimeout(() => {
       if (!localStorage.getItem('cookieseen')) {
         this._toastr.info(

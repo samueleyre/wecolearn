@@ -4,9 +4,7 @@ namespace App\Services\User\Service;
 
 use App\Services\Tag\Entity\Tag;
 use App\Services\User\Entity\User;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 
 class SearchService
 {
@@ -58,6 +56,10 @@ class SearchService
         $result = [];
 
         $distances = $searchParameters['global'] ? [-1] : [5, 15]; // -1 for infinite
+
+//      ---------------SEARCH ----------------
+
+        // search by common tags and by several distances
         if ($searchParameters['useProfileTags']) {
             foreach($distances as $distance) {
                 if ($result === []) {
@@ -76,13 +78,42 @@ class SearchService
         }
 
         // search by input tag only
-        if ($result === []) {
+        if ($result === [] && $searchTag) {
+            $searchParameters['useProfileTags'] = false;
             $searchParameters['userLearnTags'] = false;
             $searchParameters['userLearnTagDomains'] = false;
             $searchParameters['userKnowTags'] = false;
             $searchParameters['userKnowTagDomains'] = false;
+
             $searchParameters['searchLearnTag'] = true;
             $searchParameters['orderByDistance'] = true;
+
+            $result = $this->em
+                ->getRepository(User::class)
+                ->search([
+                    'user' => $user,
+                    'searchTag' => $searchTag,
+                    'first' => $filter['first'],
+                    'max' => $filter['max'],
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'domain' => $domain,
+                    'parameters' => $searchParameters,
+                    'distance' => $searchParameters['global'] ? -1 : 15
+                ]);
+        }
+
+        // search by all tags
+        if ($result === []) {
+            $searchParameters['useProfileTags'] = false;
+            $searchParameters['userLearnTags'] = false;
+            $searchParameters['userLearnTagDomains'] = false;
+            $searchParameters['userKnowTags'] = false;
+            $searchParameters['userKnowTagDomains'] = false;
+            $searchParameters['searchLearnTag'] = false;
+
+            $searchParameters['orderByDistance'] = true;
+
             $result = $this->em
                 ->getRepository(User::class)
                 ->search([
@@ -121,6 +152,8 @@ class SearchService
         $distance,
         &$searchParameters
     ) {
+
+        $result = [];
 
         if ($searchParameters['userLearnTags']) {
             // search by user learn tags ( type 0 )

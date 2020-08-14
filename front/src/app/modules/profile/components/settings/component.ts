@@ -7,19 +7,20 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { User } from '~/core/entities/user/entity';
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
-import { ProfileService } from '~/core/services/user/profile';
+import { ProfileService } from '~/core/services/user/profile.service';
 import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { PASSWORD } from '~/core/const/validators.const';
 import { passwordMatchValidator } from '~/modules/auth/validators/password-match.validator';
 import { AuthenticationService } from '~/core/services/auth/auth';
+import { ToastService } from '~/core/services/toast.service';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -34,7 +35,7 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
     private _dialog: DialogService,
     @Inject(APP_BASE_HREF) r: string,
     private router: Router,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
     private _fb: FormBuilder,
     private _authenticationService: AuthenticationService,
   ) {
@@ -62,7 +63,7 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
   }
 
   ngOnInit() {
-    this.pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+    this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
     this.newemail = this.user.email;
     this.initPasswordForm();
   }

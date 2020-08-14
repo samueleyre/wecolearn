@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 
 import { User } from '~/core/entities/user/entity';
 import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 import { USER_ROLES, USER_ROLES_FR, UserRoleEnum } from '~/core/enums/user/user-role.enum';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { PATTERN } from '~/shared/config/pattern';
+import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../../../environments/environment';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 @Component({
   selector: 'app-user-form',
@@ -27,7 +28,7 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
 
   public roles = USER_ROLES;
 
-  constructor(private _fb: FormBuilder, private _userService: AdminUsersService, private _toastr: ToastrService) {
+  constructor(private _fb: FormBuilder, private _userService: AdminUsersService, private _toastr: ToastService) {
     super();
   }
 
@@ -123,7 +124,7 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
     isCreating: boolean = this.isCreating,
     user: User = this.user,
   ): void {
-    const pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+    const pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
     this.createEditUserForm = this._fb.group({
       first_name: [user.first_name, Validators.required],
       last_name: [user.last_name, Validators.required],

@@ -2,15 +2,15 @@
 <div class="GeoPosition">
   <mat-form-field appearance="legacy" >
     <mat-label>Chercher ma ville</mat-label>
-    <input matInput id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="" [formControl]="addressCtrl" [matAutocomplete]="auto" (focusout)="inputLostFocus()" >
+    <input appHideMenuMobileOnFocus matInput id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="" [formControl]="addressCtrl" [matAutocomplete]="auto" type="search" autocomplete="anyrandomstring" >
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAddressSelect($event)">
-      <mat-option *ngFor="let address of foundAddresses | async" [value]="address">
+      <mat-option *ngFor="let address of foundAddresses$.value" [value]="address">
         {{ address.city }}, {{address.country}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
   <div class="GeoPosition-actions">
-    <button class="button" type="button" (click)="setCurrentPosition()"> Me géolocaliser</button>
+    <button mat-button class="btn btn-primary" type="button" (click)="setCurrentPosition()"> Me géolocaliser</button>
   </div>
 </div>
 

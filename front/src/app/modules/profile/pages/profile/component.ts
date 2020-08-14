@@ -10,8 +10,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { User } from '~/core/entities/user/entity';
 import { NAV } from '~/config/navigation/nav';
+import { UserService } from '~/core/services/user/user.service';
 
-import { ProfileService } from '../../../../core/services/user/profile';
 
 @Component({
   templateUrl: 'template.html',
@@ -21,7 +21,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   public user$: Observable<User>;
   private readonly onDestroy = new Subject<void>();
 
-  constructor(private profileService: ProfileService,
+  constructor(private userService: UserService,
               private route: ActivatedRoute,
               private router: Router,
               private deviceService: DeviceDetectorService,
@@ -30,7 +30,8 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.user$ = this.profileService.get({}, params.get('profileUrl'));
+      console.log('is it here');
+      this.user$ = this.userService.get({}, params.get('profileUrl'));
       this.user$.pipe(
         takeUntil(this.onDestroy),
       ).subscribe(

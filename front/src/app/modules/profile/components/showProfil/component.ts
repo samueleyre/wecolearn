@@ -1,14 +1,15 @@
 import {
   Component,
   OnInit,
-  Injectable,
+  Injectable, Input,
 } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/user/client';
 import { Tag } from '~/core/entities/tag/entity';
+import { ToastService } from '~/core/services/toast.service';
+import { ProfileService } from '~/core/services/user/profile.service';
+import { NAV } from '~/config/navigation/nav';
 
 
 @Component({
@@ -16,42 +17,36 @@ import { Tag } from '~/core/entities/tag/entity';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-export class ShowProfilSettingsComponent implements OnInit {
-  public user: User;
-  public disabled = true;
-  public profilDisableInformation = 'Pour pouvoir rendre visible votre profil ' +
-    "vous devez remplir votre biographie et ajouter un domaine d'apprentissage";
-
-
-  constructor(private clientService: ClientService,
-              private _toastr: ToastrService,
+export class ShowProfilSettingsComponent {
+  constructor(private _profileService: ProfileService,
+              private _toastr: ToastService,
               private _deviceService: DeviceDetectorService,
-  ) {
-    this.user = new User();
-  }
+  ) {}
 
+  @Input() user: User;
 
-  ngOnInit() {
-    this.load();
-  }
-
-  load(): void {
-    this.clientService.get().subscribe((client: User) => {
-      this.user = client;
-      this.disabled = !(!!client.first_name && !!client.biographie && !!client.tags.filter((tag:Tag) => tag.type === 0)[0]);
-    });
+  get isDisabled(): boolean {
+    return !(
+      !!this.user.first_name &&
+      !!this.user.biographie &&
+      !!this.user.tags.filter((tag:Tag) => tag.type === 0)[0]
+    ) && !this.user.show_profil;
   }
 
   get isMobile() {
     return this._deviceService.isMobile();
   }
 
+  get nav() {
+    return NAV;
+  }
+
   submit() {
     setTimeout(
       () => {
-        this.clientService.patch(this.user).subscribe(
+        this._profileService.patch(this.user).subscribe(
           (entity: User) => {
-            this._toastr.success('Modification prise en compte !');
+            this._toastr.success('Modification prise en compte');
           },
           (error) => {
             console.log(error);

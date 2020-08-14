@@ -1,30 +1,30 @@
-<div class="container-fluid" *ngIf="!loading && !isMobile">
-    <div class="row" *ngIf="!(emptyChat)">
-        <div class="col-2 no-padding">
-            <chat-threads></chat-threads>
-        </div>
-        <div class="col-10 no-padding">
-            <app-chat-window-desktop></app-chat-window-desktop>
-        </div>
+<div class="container-fluid desktop" *ngIf="!loading && !isMobile">
+  <div class="row" *ngIf="!(emptyChat)">
+    <div class="col-2 no-padding threads-column">
+      <chat-threads></chat-threads>
     </div>
-    <div class="row" *ngIf="emptyChat">
-        <div class="col-12 center">
-            <br><br><br>
-            Vous n'avez pas encore commencé de discussion.
-        </div>
+    <div class="col-10 no-padding">
+      <app-chat-window-desktop></app-chat-window-desktop>
     </div>
+  </div>
+  <div class="row" *ngIf="emptyChat">
+    <div class="col-12 center">
+      <br><br><br>
+      Vous n'avez pas encore commencé de discussion.
+    </div>
+  </div>
 </div>
 
-<div class="container-fluid" *ngIf="!loading && isMobile">
-    <div class="row" *ngIf="!(emptyChat)">
-        <div class="col-12 no-padding">
-            <chat-threads-mobile></chat-threads-mobile>
-        </div>
+<section *ngIf="!loading && isMobile" class="container-fluid">
+  <div class="row" *ngIf="!(emptyChat)">
+    <div class="col-12 no-padding">
+      <chat-threads-mobile></chat-threads-mobile>
     </div>
-    <div class="row" *ngIf="emptyChat">
-        <div class="col-12 center">
-            <br><br><br>
-            Vous n'avez pas encore commencé de discussion.
-        </div>
+  </div>
+  <div class="row" *ngIf="emptyChat">
+    <div class="col-12 center">
+      <br><br><br>
+      Vous n'avez pas encore commencé de discussion.
     </div>
-</div>
+  </div>
+</section>

@@ -50,6 +50,25 @@ class UserController extends AbstractController
         $this->encoderService = $encoderService;
     }
 
+    /**
+     * @Get("user/{profileUrl}")
+     * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"public-profile"})
+     **/
+    public function getPublicProfileAction(string $profileUrl)
+    {
+        $user = $this
+            ->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneByProfilUrl($profileUrl);
+
+        if ($user instanceof User) {
+            $ret = $user;
+        } else {
+            throw new \Exception('not found');
+        }
+
+        return $ret;
+    }
 
     /**
      * @Post("user/matchs")

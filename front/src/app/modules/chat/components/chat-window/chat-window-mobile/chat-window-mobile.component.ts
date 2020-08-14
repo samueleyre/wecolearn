@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import 'quill-emoji/dist/quill-emoji.js';
+import { NgxLinkifyjsService } from 'ngx-linkifyjs';
 
 import { ChatWindowBaseComponent } from '~/modules/chat/components/chat-window/chat-window.base.component';
-import { MessagesService } from '~/modules/chat/services/messages';
-import { Threads } from '~/modules/chat/services/threads';
-import { ClientService } from '~/core/services/user/client';
-import {NgxLinkifyjsService} from "ngx-linkifyjs";
+import { MessagesService } from '~/core/services/chat/messages.service';
+import { ThreadsService } from '~/core/services/chat/threads.service';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 @Component({
   selector: 'app-chat-window-mobile',
@@ -17,12 +17,12 @@ export class ChatWindowMobileComponent extends ChatWindowBaseComponent implement
 
   constructor(
     public messagesService: MessagesService,
-    public threadsService: Threads,
-    public clientService: ClientService,
+    public threadsService: ThreadsService,
+    public profileService: ProfileService,
     public el: ElementRef,
     private _linkifyService: NgxLinkifyjsService,
   ) {
-    super(messagesService, threadsService, clientService, el, _linkifyService);
+    super(messagesService, threadsService, profileService, el, _linkifyService);
   }
 
   ngOnInit(): void {

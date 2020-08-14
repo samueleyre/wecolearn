@@ -6,16 +6,16 @@ import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/user/client';
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';
+import { ProfileService } from '~/core/services/user/profile.service';
 
-import { MessagesService } from './messages';
+import { MessagesService } from './messages.service';
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class Threads {
+export class ThreadsService {
   // `orderedThreads` contains a newest-first chronological list of threads
   public orderedThreads: Observable<Thread[]>;
 
@@ -28,7 +28,7 @@ export class Threads {
   // selected thread
   currentThreadMessages: Observable<Message[]>;
 
-  constructor(public messagesService: MessagesService, private _clientService: ClientService) {
+  constructor(public messagesService: MessagesService, private _profileService: ProfileService) {
     this.initThreadsConstructor();
 
     this.initCurrentThreadsConstuctor();
@@ -59,7 +59,7 @@ export class Threads {
             threadGroups[message.thread.id].lastMessage = message;
           }
           // Count number of messages not read in each thread
-          if (!message.is_read && message.sender.id !== this._clientService.me.id) {
+          if (!message.is_read && message.sender.id !== this._profileService.profile.id) {
             threadGroups[message.thread.id].countNotRead += 1;
           }
         });

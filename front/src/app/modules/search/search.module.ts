@@ -7,6 +7,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule, MatOptionModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
+import { IonicModule } from '@ionic/angular';
 
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
 import { OpenThreadModule } from '~/modules/chat/modules/openThread/openThread.module';
@@ -17,6 +18,8 @@ import { SearchBarComponent } from '~/modules/search/components/searchBar/search
 import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
 import { SearchComponent } from '~/modules/search/pages/search/search.component';
 import { SearchComponentBase } from '~/modules/search/pages/search/search.component.base';
+import { MaterialModule } from '~/shared/modules/material/material.module';
+import { SharedModule } from '~/shared/shared.module';
 
 import { SearchRouting } from './search.routing';
 import { CardComponent } from './components/card/component';
@@ -24,7 +27,6 @@ import { CityBarComponent } from './components/cityBar/component';
 import { TextLimitComponent } from './components/limit/component';
 import { SearchMobileComponent } from './pages/search/search-mobile/search-mobile.component';
 import { SearchDesktopComponent } from './pages/search/search-desktop/search-desktop.component';
-import {MaterialModule} from "~/shared/modules/material/material.module";
 
 @NgModule({
 
@@ -60,6 +62,8 @@ import {MaterialModule} from "~/shared/modules/material/material.module";
     MatIconModule,
     CloudinaryModule,
     MaterialModule,
+    SharedModule,
+    IonicModule,
   ],
   providers: [
   ],

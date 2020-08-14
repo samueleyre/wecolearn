@@ -10,6 +10,8 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 import { DomainService } from '~/core/services/domain/domain';
 
 import { environment } from '~/../environments/environment';
+import { PATTERN } from '~/shared/config/pattern';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -39,21 +41,20 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.logout();
-    let subDomain = this.domainService.getSubDomain();
-    if (subDomain === 'wecolearn') {
-      subDomain = '';
-    } else {
-      subDomain += '.';
-    }
-    this.pattern = (environment.production) ?
-        '[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}' : '[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
+    // let subDomain = this.domainService.getSubDomain();
+    // if (subDomain === 'wecolearn') {
+    //   subDomain = '';
+    // } else {
+    //   subDomain += '.';
+    // }
+    this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 
 
   submit(f: NgForm) {
     this.authenticationService.signUp(this.user).subscribe(
       (response) => {
-        console.log( response );
+        console.log(response);
         if (response === 'duplicate') {
           this.error = 'L\'adresse email est déjà utilisé.';
           setTimeout(

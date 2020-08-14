@@ -1,3 +1,4 @@
+// <reference types="Cypress" />
 import { DEBUG_CONFIG } from '../config/debug.config';
 import { CI_CONFIG } from '../config/ci.config';
 import { cypress_login } from '../support/reusables/auth/cypress_login';
@@ -8,17 +9,13 @@ import { cypress_logout } from '../support/reusables/auth/cypress_logout';
 import { cypress_sendMessage } from '../support/reusables/chat/cypress_sendMessage';
 import { cypress_contactUser } from '../support/reusables/search/cypress_contactUser';
 
-// <reference types="Cypress" />
 
 const isLocal = Cypress.env('ENV_NAME') && Cypress.env('ENV_NAME') === 'local';
 const config = isLocal ? DEBUG_CONFIG.e2e : CI_CONFIG.e2e;
 
 /*
 
-  E2E requires users for registry, operator and territory :
-
-  samuel@wecolearn.com / admin1234
-
+ load fixtures before running tests
 
  */
 
@@ -28,7 +25,6 @@ context('E2E', () => {
 
   // @ts-ignore
   Cypress.LocalStorage.clear = function (keys, ls, rs) {
-    // do something with the keys here
     if (keys.length === 0) {
       if (!localStorage.getItem('cookieseen')) {
         // tslint:disable-next-line:no-invalid-this
@@ -55,14 +51,13 @@ context('E2E', () => {
 
   closeCookiePolicy();
 
+  const user = {
+    ...USER_CONFIG,
+    email: `contact+${new Date().toLocaleDateString()}@wecolearn.com`,
+  };
+
   if (config.signup) {
     describe('signup', () => {
-      const user = {
-        ...USER_CONFIG,
-      };
-
-      user.email = `contact+${new Date().toLocaleDateString()}@wecolearn.com`;
-
       cypress_signup(user);
       cypress_logout();
     });
@@ -70,9 +65,8 @@ context('E2E', () => {
 
   if (config.signin) {
     describe('signin', () => {
-      cypress_login(USER_CONFIG);
+      cypress_login(user);
     });
-
 
     if (config.contactFirstMatch) {
       describe('contact first match', () => {

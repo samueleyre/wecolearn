@@ -1,5 +1,29 @@
-@import '../../../../assets/scss/variables';
+@import 'variables';
 
+//ion-content {
+//  background-color: $mainBgColor;
+//}
+
+ion-footer {
+  position: fixed;
+  bottom: 0;
+}
+
+ion-header {
+  position: fixed;
+  top: 0;
+}
+
+
+.header-space {
+  // size of header
+  height: 56px;
+}
+
+.footer-space {
+  // size of footer
+  height: 46px;
+}
 
 #page-content-wrapper {
   width: 100%;

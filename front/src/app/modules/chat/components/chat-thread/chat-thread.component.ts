@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Thread } from '~/core/entities/thread/entity';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 
-import { Threads } from '../../services/threads';
+import { ThreadsService } from '../../../../core/services/chat/threads.service';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class ChatThreadComponent extends DestroyObservable implements OnInit {
   }
 
 
-  constructor(public threadsService: Threads, private router: Router, private deviceService: DeviceDetectorService) {
+  constructor(public threadsService: ThreadsService, private router: Router, private deviceService: DeviceDetectorService) {
     super();
   }
 

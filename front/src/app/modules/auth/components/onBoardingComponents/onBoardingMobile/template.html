@@ -1,6 +1,6 @@
 <div class="Onboarding">
   <form (keydown.enter)="$event.preventDefault()" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
-    <mat-horizontal-stepper (selectionChange)="setSelection($event)">
+    <mat-horizontal-stepper [selectedIndex]="formTabSelection$ | async" (selectionChange)="setSelection($event)">
         <ng-template matStepperIcon="edit">
             <i class="fa fa-check"></i>
         </ng-template>
@@ -12,11 +12,7 @@
             <div class="card-body">
               <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
             </div>
-            <div class="card-footer">
-              <div class="btn-container-first">
-                <button type="button" class="btn btn-primary" matStepperNext>Suivant ></button>
-              </div>
-            </div>
+
           </div>
         </mat-step>
         <mat-step>
@@ -28,11 +24,6 @@
                     <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'" [type]="learnType" ></profile-form-tags>
                     <small class="card-body-tagHints">♟️ Les echecs, 💻 l'informatique, 🎱 le snooker, 🎺 la trompette, 💃🏾 la polka...   </small>
                 </div>
-                <div class="card-footer">
-                    <div class="btn-container-first">
-                        <button type="button" class="btn btn-primary" matStepperNext>Suivant ></button>
-                    </div>
-                </div>
             </div>
         </mat-step>
         <mat-step>
@@ -42,12 +33,6 @@
                 </div>
                 <div class="card-body">
                     <profile-form-biography [parentForm]="userForm"></profile-form-biography>
-                </div>
-                <div class="card-footer">
-                    <div class="btn-container">
-                        <button type="button" class="btn btn-secondary" matStepperPrevious>< Retour</button>
-                        <button type="button" class="btn btn-primary" matStepperNext>Suivant ></button>
-                    </div>
                 </div>
             </div>
         </mat-step>
@@ -67,7 +52,7 @@
                         <div class="col-12 no-padding">
                           <mat-form-field appearance="legacy">
                             <mat-label>Nom</mat-label>
-                            <input matInput placeholder="" formControlName="last_name"  >
+                            <input id="lastNameInput" matInput placeholder="" formControlName="last_name"  >
                           </mat-form-field>
                         </div>
                         <div class="col-12 no-padding">
@@ -86,15 +71,34 @@
                 </div>
                 <div class="card-footer">
                   <p class="Onboarding-conditions">
-                    En cliquant sur "créer mon compte", tu acceptes nos <a href="https://wecolearn.com/doc/mentionslegales">Conditions Générales</a>.
+                    En cliquant sur "valider", tu acceptes nos <a [routerLink]="nav.mentionsLegales" >Conditions Générales</a>.
                   </p>
-                  <div class="btn-container">
-                        <button type="button" class="btn btn-secondary" matStepperPrevious>< Retour</button>
-                        <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid" matStepperNext>Valider</button>
-                    </div>
                 </div>
             </div>
         </mat-step>
     </mat-horizontal-stepper>
 </form>
 </div>
+<div class="spaceForFooter"></div>
+<ion-footer *ngIf="showMobileOnBoardingFooter | async">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="hasPrevious">
+      <ion-button id="previous" (click)="previousPage()">
+        <mat-icon>chevron_left</mat-icon>
+        <ion-label>Précédant</ion-label>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="hasNext">
+      <ion-button id="next" (click)="nextPage()">
+        <ion-label>Suivant</ion-label>
+        <mat-icon>chevron_right</mat-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="hasValidationButton">
+      <ion-button id="validate" (click)="submit()" [disabled]="!userForm.valid">
+        <ion-label>valider</ion-label>
+        <mat-icon>chevron_right</mat-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

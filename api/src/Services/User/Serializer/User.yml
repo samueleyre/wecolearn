@@ -23,6 +23,8 @@ App\Services\User\Entity\User:
         groups: [ input, create, admin-users, profile ]
       longitude:
         groups: [ input, create, admin-users, profile ]
+      city:
+        groups: [ input, create, admin-users, profile ]
       tags:
         groups: [ input, create, search, profile, public-profile, admin-users ]
       sentMessages:

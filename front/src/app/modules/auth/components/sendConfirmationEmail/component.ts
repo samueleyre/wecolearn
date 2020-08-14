@@ -3,11 +3,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
+import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../environments/environment';
+import {PATTERN} from "~/shared/config/pattern";
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -24,15 +26,14 @@ export class SendPasswordConfirmationEmailComponent implements OnInit {
   constructor(
       private router: Router,
       private authenticationService: AuthenticationService,
-      private _toastr: ToastrService,
+      private _toastr: ToastService,
   ) {
   }
 
 
   ngOnInit() {
     this.authenticationService.logout();
-    this.pattern = (environment.production) ?
-      '[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}' : '[a-zA-Z0-9.+-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
+    this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 
   sendEmail() {

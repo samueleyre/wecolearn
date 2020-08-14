@@ -1,13 +1,10 @@
-<div class="space"></div>
-<nav class="navbar fixed-bottom navbar-light bg-light no-padding">
-  <div class="button-container">
-    <a class="footer-link" routerLink="/dashboard/profile" routerLinkActive="is-active"><mat-icon aria-hidden="true">face</mat-icon></a>
-    <a class="footer-link" routerLink="/dashboard/search" routerLinkActive="is-active"><mat-icon aria-hidden="true">search</mat-icon></a>
-    <a class="footer-link" routerLink="/dashboard/discussion" routerLinkActive="is-active">
-      <mat-icon>chat</mat-icon>
-      <span class="" *ngIf="countNotRead$ | async as countNotRead">
-          {{countNotRead}}
-      </span>
-    </a>
-  </div>
-</nav>
+<div class="button-container">
+  <a class="footer-link" id="profileTab" routerLink="/dashboard/profile" routerLinkActive="is-active"><mat-icon aria-hidden="true">face</mat-icon></a>
+  <a class="footer-link" id="searchTab" routerLink="/dashboard/search" routerLinkActive="is-active"><mat-icon aria-hidden="true">search</mat-icon></a>
+  <a class="footer-link" id="chatTab" routerLink="/dashboard/discussion" routerLinkActive="is-active">
+    <mat-icon>chat</mat-icon>
+    <span class="" *ngIf="countNotRead$ | async as countNotRead">
+        {{countNotRead}}
+    </span>
+  </a>
+</div>

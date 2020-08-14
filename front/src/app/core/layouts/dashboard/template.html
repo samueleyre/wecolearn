@@ -6,7 +6,12 @@
   </div>
 </div>
 
-
-<dash-header-mobile *ngIf="isMobile && showMobileHeader"></dash-header-mobile>
-<router-outlet *ngIf="isMobile"></router-outlet>
-<dash-footer-mobile *ngIf="isMobile && showFooter && !searchFocusState"></dash-footer-mobile>
+<ion-header *ngIf="showMobileHeader | async">
+  <app-header-mobile ></app-header-mobile>
+</ion-header>
+<div *ngIf="showMobileHeader | async" class="header-space"></div>
+<router-outlet *ngIf="isMobile" (activate)="onActivate($event)"></router-outlet>
+<div *ngIf="showMobileFooter | async" class="footer-space"></div>
+<ion-footer *ngIf="showMobileFooter | async" class="ion-no-border">
+  <app-footer-mobile></app-footer-mobile>
+</ion-footer>

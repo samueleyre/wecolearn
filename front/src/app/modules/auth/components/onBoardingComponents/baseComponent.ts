@@ -11,14 +11,15 @@ import { PATTERN } from '~/shared/config/pattern';
 import { onBoardingSections } from '~/modules/auth/components/onBoardingComponents/onBoarding.const';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { environment } from '~/../environments/environment';
+import { DestroyObservable } from '~/core/components/destroy-observable';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
   template: 'empty',
 })
-export class AuthOnboardingBaseComponent {
-  public selectedIndex = 0;
-  private pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+export class AuthOnboardingBaseComponent extends DestroyObservable {
+  private pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   public titles = onBoardingSections;
 
   public userForm = this.fb.group({
@@ -40,7 +41,9 @@ export class AuthOnboardingBaseComponent {
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
-  ) {}
+  ) {
+    super();
+  }
 
   login() {
     this.loading = true;
@@ -57,25 +60,6 @@ export class AuthOnboardingBaseComponent {
           this.loading = false;
         },
       );
-  }
-
-  setSelection($event:StepperSelectionEvent) {
-    this.selectedIndex = $event.selectedIndex;
-    if ($event.selectedIndex === onBoardingSections.tags.index) {
-      setTimeout(() => {
-        this.tagInput.focus();
-      },         500);
-    }
-    if ($event.selectedIndex === onBoardingSections.bio.index) {
-      setTimeout(() => {
-        this.bioInput.focus();
-      },         500);
-    }
-    if ($event.selectedIndex === onBoardingSections.ids.index) {
-      setTimeout(() => {
-        this.firstnameInput.focus();
-      },         500);
-    }
   }
 
   get tagInput(): HTMLDivElement {
@@ -95,9 +79,6 @@ export class AuthOnboardingBaseComponent {
   }
 
   get signUp(): Observable<any> {
-    if (this.selectedIndex !== onBoardingSections.ids.index) {
-      return throwError(true);
-    }
     const tags = this.userForm.value.learn_tags ? this.userForm.value.learn_tags : []; // bug of null tags parameter
     return this.authenticationService.signUp({ tags, ...this.userForm.value });
   }

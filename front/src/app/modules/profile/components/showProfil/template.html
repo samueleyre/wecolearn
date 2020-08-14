@@ -1,9 +1,14 @@
 <hr>
 <div class="form-group" id="notificationSettings">
-    <label> Rendre visible mon profil
-      <mat-icon *ngIf="!isMobile" [matTooltip]="profilDisableInformation">info</mat-icon>
-    </label>
-    <app-toggler [(active)]="user.show_profil" (change)="submit()"  [disabled]="disabled"></app-toggler>
+    <label> Rendre visible mon profil</label>
+    <app-toggler [(active)]="user.show_profil" (change)="submit()"  [disabled]="isDisabled"></app-toggler>
+    <div class="alert-outline" *ngIf="isDisabled">
+      <p class="mat-error">
+        Pour pouvoir rendre visible votre profil vous devez remplir votre biographie et ajouter un domaine d'apprentissage.
+      </p>
+      <button class="btn btn-primary btn-sm" [routerLink]="nav.profile">Remplir mon profil</button>
+    </div>
+
     <p class="form-text text-muted">
         Ceci vous permet d'être visible et ainsi pouvoir être contacté par d'autres utilisateurs.
     </p>

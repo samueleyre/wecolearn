@@ -11,6 +11,7 @@ export class MenuService {
   constructor() {}
 
   static displayToggle() {
+    console.log('click');
     MenuService.menuDisplay.next(!MenuService.menuDisplay.getValue());
   }
 

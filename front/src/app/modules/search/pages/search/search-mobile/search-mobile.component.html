@@ -1,4 +1,4 @@
-<section class="SearchPage">
+<div class="SearchPage">
   <mat-progress-bar [class.hide]="!loading" mode="indeterminate"></mat-progress-bar>
   <div #pageContainer class="SearchPage-content"
        infinite-scroll
@@ -14,13 +14,11 @@
     <div [class.hide]="loading" class="SearchPage-message">
       <p [innerHTML]="searchMessage"></p>
     </div>
-    <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer align-items-stretch"
-    >
-      <div *ngFor="let card of cards">
-        <app-card  [card]="card"
-        ></app-card>
+    <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer align-items-stretch">
+      <div class="SearchPage-cardsContainer-card" *ngFor="let card of cards">
+        <app-card [card]="card"></app-card>
         <br>
       </div>
     </div>
   </div>
-</section>
+</div>

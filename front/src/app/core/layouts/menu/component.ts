@@ -4,9 +4,8 @@ import { Observable } from 'rxjs';
 
 import { User } from '~/core/entities/user/entity';
 import { MenuService } from '~/core/services/layout/menu';
-import { AuthenticationService } from '~/core/services/auth/auth';
-import { Threads } from '~/modules/chat/services/threads';
-
+import { ThreadsService } from '~/core/services/chat/threads.service';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 @Component({
   selector: 'dash-menu',
@@ -19,16 +18,16 @@ export class MenuComponent implements OnInit {
 
 
   constructor(
-      private authService: AuthenticationService, private menuService: MenuService, private _threadsService: Threads,
+      private _profileService: ProfileService, private menuService: MenuService, private _threadsService: ThreadsService,
   ) {}
 
   ngOnInit() {
-    this.me = this.authService.user;
+    this.me = this._profileService.profile;
     this.countNotRead$ = this._threadsService.orderedThreads
       .pipe(map(threads => threads.reduce((count, thread) => (count + thread.countNotRead), 0)));
   }
 
   get isAdmin(): boolean {
-    return this.authService.isAdmin;
+    return this._profileService.isAdmin;
   }
 }

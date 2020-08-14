@@ -1,16 +1,18 @@
 import {
   Component,
-  Input,
+  Input, OnDestroy,
   OnInit,
 } from '@angular/core';
 import * as L from 'leaflet';
-import { debounceTime, filter, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { merge, Observable } from 'rxjs';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 // import { icon, Marker } from 'leaflet';
 
 import { GeoDataInterface, ProfileGeoService } from '~/modules/profile/services/profile-geo.service';
+import { DestroyObservable } from '~/core/components/destroy-observable';
+import {ToastService} from "~/core/services/toast.service";
 
 // const iconRetinaUrl = 'assets/img/marker/marker-icon-2x.png';
 // const iconUrl = 'assets/img/marker/marker-icon.png';
@@ -34,8 +36,8 @@ import { GeoDataInterface, ProfileGeoService } from '~/modules/profile/services/
   styleUrls : ['./style.scss'],
 
 })
-export class ProfileGeolocationComponent implements OnInit {
-  @Input() parentForm: FormGroup; // with "latitude" & "longitude" controls
+export class ProfileGeolocationComponent extends DestroyObservable implements OnInit {
+  @Input() parentForm: FormGroup; // with "latitude" & "longitude" & "city" controls
   // private map: L.Map;
   // private marker: L.Marker;
   public addressCtrl = new FormControl();
@@ -44,20 +46,29 @@ export class ProfileGeolocationComponent implements OnInit {
   private selectedAddress: GeoDataInterface;
   public showMap = false;
 
-  public foundAddresses: Observable<GeoDataInterface[]>;
+  public foundAddresses$: BehaviorSubject<GeoDataInterface[]> = new BehaviorSubject([]);
 
   constructor(
      private _geoService: ProfileGeoService,
      private _fb: FormBuilder,
-  ) {}
+     private _toast: ToastService,
+  ) {
+    super();
+  }
 
   ngOnInit() {
     // this.initMap();
 
-    this.foundAddresses = this.addressCtrl.valueChanges.pipe(
-      debounceTime(300),
-      filter(val => !!val && val.length > 2),
-      switchMap(value => this._geoService.findGeoDataByCityName(value)),
+    this.addressCtrl.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        debounceTime(300),
+        filter(val => !!val && val.length > 2),
+        switchMap(value => this._geoService.findGeoDataByCityName(value)),
+      )
+      .subscribe(((val) => {
+        this.foundAddresses$.next(val);
+      }),
     );
 
     // merge(
@@ -73,12 +84,14 @@ export class ProfileGeolocationComponent implements OnInit {
 
   ngAfterViewInit() {
     this.showMap = true;
+    this.addressCtrl.setValue(this.cityControl.value);
   }
 
   public setCurrentPosition() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.update(position.coords.latitude, position.coords.longitude);
+        this.update(position.coords.latitude, position.coords.longitude, ' ');
+        this._toast.success('Localisation mise à jour.');
       });
     }
   }
@@ -86,17 +99,11 @@ export class ProfileGeolocationComponent implements OnInit {
   onAddressSelect(territory: MatAutocompleteSelectedEvent) {
     clearTimeout(this.focusDebounceTimer);
     this.selectedAddress = territory.option.value;
-    this.addressCtrl.setValue(territory.option.value.address);
-    this.update(territory.option.value.lat, territory.option.value.lon);
-  }
+    this.addressCtrl.setValue(territory.option.value.city);
+    this.update(territory.option.value.lat, territory.option.value.lon, territory.option.value.city);
 
-  public inputLostFocus() {
-    clearTimeout(this.focusDebounceTimer);
-    this.focusDebounceTimer = setTimeout(
-      () => {
-        this.addressCtrl.setValue(this.selectedAddress ? this.selectedAddress.address : '');
-      },
-      300);
+    // reset autocomplete items
+    this.foundAddresses$.next([]);
   }
 
   // private loadMap(coordinates: { lat: number, lon: number }) {
@@ -131,9 +138,15 @@ export class ProfileGeolocationComponent implements OnInit {
     return <FormControl>this.parentForm.get('longitude');
   }
 
-  private update(lat: number, lon: number) {
+  get cityControl(): FormControl {
+    return <FormControl>this.parentForm.get('city');
+  }
+
+
+  private update(lat: number, lon: number, city: string) {
     this.latitudeControl.setValue(lat);
     this.longitudeControl.setValue(lon);
+    this.cityControl.setValue(city);
   }
 
   // /**

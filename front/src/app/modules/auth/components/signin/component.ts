@@ -3,15 +3,17 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { DomainService } from '~/core/services/domain/domain';
 import { NAV } from '~/config/navigation/nav';
 import { CookieNotificationService } from '~/core/services/cookie-notification.service';
 import { PATTERN } from '~/shared/config/pattern';
+import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../environments/environment';
+import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
@@ -33,13 +35,15 @@ export class SigninComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private domainService: DomainService,
     private cookieNotification: CookieNotificationService,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
   ) {
   }
 
   ngOnInit() {
-    // reset login status
+    // manage cookie notif
     this.cookieNotification.notifyCookie();
+
+    // reset login status
     this.authenticationService.logout();
     let subDomain = this.domainService.getSubDomain();
     if (subDomain === 'wecolearn') {
@@ -47,7 +51,7 @@ export class SigninComponent implements OnInit {
     } else {
       subDomain += '.';
     }
-    this.pattern = (environment.production) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
+    this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 
   login() {

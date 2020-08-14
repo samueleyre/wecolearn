@@ -5,7 +5,7 @@ import { delay, takeUntil, tap } from 'rxjs/operators';
 import { Thread } from '~/core/entities/thread/entity';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 
-import { Threads } from '../../services/threads';
+import { ThreadsService } from '../../../../core/services/chat/threads.service';
 
 @Component({
   selector: 'chat-threads',
@@ -15,7 +15,7 @@ import { Threads } from '../../services/threads';
 export class ChatThreadsComponent extends DestroyObservable {
   threads$: Observable<Thread[]>;
 
-  constructor(public threadsService: Threads) {
+  constructor(public threadsService: ThreadsService) {
     super();
   }
 

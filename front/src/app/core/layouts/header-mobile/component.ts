@@ -8,7 +8,7 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
 import { NAV } from '~/config/navigation/nav';
 
 @Component({
-  selector: 'dash-header-mobile',
+  selector: 'app-header-mobile',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
@@ -18,6 +18,7 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
   public showDiscussionUser = false;
   public returnLink: string;
   public showSettings = false;
+  public title: string = null;
   public discussingUser$:Observable<string>;
 
 
@@ -52,9 +53,12 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
   }
 
   setNavigation(path: string) {
-    this.showReturn = this.menuMobileService.showReturn(path);
+    this.showReturn = this.menuMobileService.urlHasReturnButton(path);
     this.returnLink = MenuMobileService.getReturnLink(path);
     this.showDiscussionUser = MenuMobileService.showDiscussionUser(path);
     this.showSettings = path === NAV.profile;
+    this.title = this.menuMobileService.getUrlTitle(path) ;
   }
+
+
 }

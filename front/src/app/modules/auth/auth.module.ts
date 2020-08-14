@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatIconModule, MatInputModule, MatStepperModule } from '@angular/material';
+import { IonicModule } from '@ionic/angular';
 
 import { ProfileFormModule } from '~/modules/profile/modules/form/form.module';
 import { AuthFormModule } from '~/modules/auth/modules/form/form.module';
 import { PasswordDifficultyModule } from '~/modules/auth/modules/passwordDifficulty/passwordDifficulty.module';
 import { AuthOnboardingMobileComponent } from '~/modules/auth/components/onBoardingComponents/onBoardingMobile/component';
-import { ContainerComponent } from '~/modules/auth/layouts/main/component';
-import { FooterModule } from '~/shared/modules/footer/footer.module';
 import { MaterialModule } from '~/shared/modules/material/material.module';
 import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardingComponents/baseComponent';
+import { FooterModule } from '~/shared/modules/footer/footer.module';
 
 import { LandingPartnersComponent } from './components/landing/partners/component';
 import { LandingProcessComponent } from './components/landing/process/component';
@@ -48,7 +47,6 @@ import { ResetPasswordFormComponent } from './components/passwordResetForm/compo
     SlackConnexionComponent,
     SignupComponent,
     SignupMobileComponent,
-    ContainerComponent,
     ResetPasswordFormComponent,
     SendPasswordConfirmationEmailComponent,
     ConfirmEmailComponent,
@@ -61,7 +59,6 @@ import { ResetPasswordFormComponent } from './components/passwordResetForm/compo
     AuthOnboardingBaseComponent,
     AuthOnboardingPageComponent,
     AuthOnboardingMobileComponent,
-
   ],
   exports: [
   ],
@@ -69,16 +66,13 @@ import { ResetPasswordFormComponent } from './components/passwordResetForm/compo
     CommonModule,
     FormsModule,
     AuthRouting,
-    MatStepperModule,
     ProfileFormModule,
     ReactiveFormsModule,
     AuthFormModule,
     PasswordDifficultyModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    FooterModule,
     MaterialModule,
+    FooterModule,
+    IonicModule,
   ],
 })
 export class AuthModule {

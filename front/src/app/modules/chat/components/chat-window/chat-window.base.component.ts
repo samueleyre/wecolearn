@@ -10,15 +10,14 @@ import * as _ from 'lodash';
 import { NgModel } from '@angular/forms';
 
 import { User } from '~/core/entities/user/entity';
-import { ClientService } from '~/core/services/user/client';
 import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
-import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { CHAT } from '~/modules/chat/config/chat.const';
+import { ProfileService } from '~/core/services/user/profile.service';
+import { MessagesService } from '~/core/services/chat/messages.service';
+import { ThreadsService } from '~/core/services/chat/threads.service';
 
-import { MessagesService } from '../../services/messages';
-import { Threads } from '../../services/threads';
 
 @Component({
   template: '',
@@ -38,8 +37,8 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
     };
 
   constructor(public messagesService: MessagesService,
-              public threadsService: Threads,
-              public clientService: ClientService,
+              public threadsService: ThreadsService,
+              public profileService: ProfileService,
               public el: ElementRef,
               private linkifyService: NgxLinkifyjsService,
   ) {
@@ -64,7 +63,7 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
         this.messagesService.pushUpdatedMessages().subscribe();
       });
 
-    this.currentUser = this.clientService.me;
+    this.currentUser = this.profileService.profile;
 
     this.messages$
       .subscribe(

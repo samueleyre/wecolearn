@@ -6,16 +6,15 @@ import {
   Plugins,
   PushNotification,
   PushNotificationActionPerformed } from '@capacitor/core';
-import { Platform } from '@ionic/angular';
 
 import { Logged } from '~/core/services/auth/logged';
 import { IconService } from '~/core/services/icon.service';
-import { MessagesService } from '~/modules/chat/services/messages';
+import { MessagesService } from '~/core/services/chat/messages.service';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
 import { NAV } from '~/config/navigation/nav';
-import { Threads } from '~/modules/chat/services/threads';
+import { ThreadsService } from '~/core/services/chat/threads.service';
 import { SeoService } from '~/core/services/seo';
 
 import { DomainService } from './core/services/domain/domain';
@@ -38,11 +37,9 @@ export class AppComponent {
       private iconService: IconService,
       private _seoService: SeoService,
       private _zone: NgZone,
-      private _threadService: Threads,
+      private _threadService: ThreadsService,
       public messagesService: MessagesService,
       public messagerieService: MessagerieService,
-      private platform: Platform,
-
   ) {
     // set subdomain
     router.events

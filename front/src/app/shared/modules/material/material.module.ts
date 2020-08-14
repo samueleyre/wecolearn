@@ -20,7 +20,9 @@ import {
   MatChipsModule,
   MatSlideToggleModule,
   MatDialogModule,
+  MatFormFieldModule,
 } from '@angular/material';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [],
@@ -32,6 +34,7 @@ import {
     MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
@@ -47,6 +50,7 @@ import {
     MatDatepickerModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatToolbarModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -56,6 +60,7 @@ import {
     MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
@@ -71,6 +76,7 @@ import {
     MatDatepickerModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatToolbarModule,
   ],
   providers: [MatDatepickerModule],
 })

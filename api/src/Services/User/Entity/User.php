@@ -28,6 +28,7 @@ class User extends BaseUser
     public $atmosphere;
     public $latitude;
     public $longitude;
+    public $city;
     public $image;
     public $tags;
     public $sentMessages;
@@ -378,6 +379,30 @@ class User extends BaseUser
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * Set city.
+     *
+     * @param float $city
+     *
+     * @return User
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city.
+     *
+     * @return float
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 
     /**

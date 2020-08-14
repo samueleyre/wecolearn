@@ -4,13 +4,12 @@ import {
   ViewChild, ElementRef, AfterViewInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import * as _ from 'lodash';
 
 import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 import { Tag } from '~/core/entities/tag/entity';
+import { SearchService } from '~/core/services/search/search';
 
-import { SearchService } from '../../../../core/services/search/search';
 import { SEARCH } from '../../config/main';
 
 
@@ -29,13 +28,11 @@ import { SEARCH } from '../../config/main';
     noResults: `<i>Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... <br>Pour étendre le champs de
     recherche, ajoutez des domaines d'apprentissage dans votre profil !</i>`,
     noResultsWithSearch: `<i>Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous</i>`,
-    localProfiles: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
+    notRelevantProfiles: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
     Peut-être que les profils suivant pourront aussi vous intéresser ?</i>`,
-    [SearchMeta.userLearnTags]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
-    [SearchMeta.userLearnTagDomains]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
-    [SearchMeta.userKnowTags]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
-    [SearchMeta.userKnowTagDomains]: '<i>Nous avons sélectionné ces profils autour de chez vous.</i>',
-    globalMode: `<i>Nous avons sélectionné ces profils pour vous.</i>`,
+    foundMatchingResults: '<i>Profils autour de chez vous.</i>',
+    foundSearchTagResults: '<i>Profils intéressés par cet apprentissage.</i>',
+    globalMode: `<i>Profils sélectionnés pour vous.</i>`,
   };
 
   @ViewChild('pageContainer', { static: false }) cardsContainerElementRef: ElementRef;
@@ -94,25 +91,39 @@ import { SEARCH } from '../../config/main';
       return this.messages.noResults;
     }
     if (meta) {
+      // tag not found
       if (meta[SearchMeta.tagNotFound]) {
         return this.messages[SearchMeta.tagNotFound];
       }
-      const metaKeys = Object.keys(meta).filter(
-        val =>
-          Object.keys(this.messages).indexOf(val) !== -1 &&
-          meta[val] === true,
-      );
 
-      if (metaKeys.length > 0) {
-        // if got results without using matching tags
-        if (!this.searchService.searchInputValue && meta[SearchMeta.orderByDistance]) {
-          return this.messages.localProfiles;
-        }
-        // found match !
-        if (this.searchService.globalMode) {
-          return this.messages.globalMode;
-        }
-        return this.messages[metaKeys[0]];
+      // if found match with matching tags in global mode
+      if (this.searchService.globalMode && meta[SearchMeta.useProfileTags]) {
+        return this.messages.globalMode;
+      }
+
+      // if found match in global Mode without matching tags
+      if (this.searchService.globalMode) {
+        return this.messages.notRelevantProfiles;
+      }
+
+      // if got results with search tag and matching tags
+      if (meta[SearchMeta.useProfileTags] && meta[SearchMeta.searchLearnTag]) {
+        return this.messages.foundSearchTagResults;
+      }
+
+      // if got results with search tag but not matching tags
+      if (meta[SearchMeta.searchLearnTag] && !meta[SearchMeta.useProfileTags]) {
+        return this.messages.foundSearchTagResults;
+      }
+
+      // if got results with matching tags
+      if (meta[SearchMeta.useProfileTags]) {
+        return this.messages.foundMatchingResults;
+      }
+
+      // if got results without using matching tags
+      if (!meta[SearchMeta.useProfileTags]) {
+        return this.messages.notRelevantProfiles;
       }
     }
     return null;

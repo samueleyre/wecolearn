@@ -11,7 +11,7 @@ import { Thread } from '~/core/entities/thread/entity';
 import { NAV } from '~/config/navigation/nav';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 
-import { Threads } from '../../services/threads';
+import { ThreadsService } from '../../../../core/services/chat/threads.service';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class ChatThreadMobileComponent extends DestroyObservable {
     this._thread = value;
   }
 
-  constructor(public threadsService: Threads, private router: Router) {
+  constructor(public threadsService: ThreadsService, private router: Router) {
     super();
   }
 

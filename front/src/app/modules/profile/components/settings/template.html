@@ -106,11 +106,11 @@
   </fieldset>
 </form>
 
-<showProfilSettings></showProfilSettings>
-<emailNotificationSettings></emailNotificationSettings>
+<showProfilSettings [user]="user"></showProfilSettings>
+<emailNotificationSettings [user]="user"></emailNotificationSettings>
 <hr>
 <div>
-  <button mat-button (click)="logOut()"><mat-icon>exit_to_app</mat-icon> Me déconnecter</button>
+  <button mat-button id="signOutButton" (click)="logOut()"><mat-icon>exit_to_app</mat-icon> Me déconnecter</button>
 </div>
 <hr>
 <div>

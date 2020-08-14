@@ -12,6 +12,7 @@ import { ProfileFormGeolocationComponent } from '~/modules/profile/modules/form/
 import { ProfileGeolocationComponent } from '~/modules/profile/modules/form/components/geolocation/geolocation/component';
 import { UploadModule } from '~/modules/profile/modules/form/modules/upload/module';
 import { MaterialModule } from '~/shared/modules/material/material.module';
+import { SharedModule } from '~/shared/shared.module';
 
 import { ProfileFormTagsComponent } from './components/profile-form-tags/component';
 import { ProfileFormImageComponent } from './components/image/component';
@@ -48,6 +49,7 @@ import { ProfileFormCityComponent } from './components/profile-form-city/profile
   ],
   imports: [
     CommonModule,
+    SharedModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,

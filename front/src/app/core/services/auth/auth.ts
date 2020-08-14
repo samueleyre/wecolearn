@@ -3,12 +3,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 import { NAV } from '~/config/navigation/nav';
 import { User } from '~/core/entities/user/entity';
 import { UserRoleEnum } from '~/core/enums/user/user-role.enum';
-import { ClientService } from '~/core/services/user/client';
+import { ToastService } from '~/core/services/toast.service';
 
 import { TokenService } from './token';
 import { Logged } from './logged';
@@ -18,27 +17,11 @@ import { Logged } from './logged';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private _user$: BehaviorSubject<User> = new BehaviorSubject(null);
-
   constructor(private http: HttpClient,
               private tokenService: TokenService,
               private router: Router,
-              private _toastr: ToastrService,
-  ) {
-
-  }
-
-  get user(): User {
-    return this._user$.value;
-  }
-
-  get isAdmin(): boolean {
-    return this.user.roles.includes(UserRoleEnum.ADMIN);
-  }
-
-  setUser(user: User) {
-    this._user$.next(user);
-  }
+              private _toastr: ToastService,
+  ) {}
 
   signUp(user: User): Observable<any> {
     return this.http.post('/api/signup', user);
@@ -53,13 +36,13 @@ export class AuthenticationService {
     return this.http.get(`/api/login_check/slack?code=${code}&redirect_uri=${redirectUri}`).pipe(
         map((response: Response) => (this.loginResponse(response)) ? response : false));
   }
-
-  /**
-   * connects user account to his slack account
-   */
-  slackConnect(code: string, redirectUri: string): Observable<any> {
-    return this.http.get(`/api/client/slack?code=${code}&redirect_uri=${redirectUri}`);
-  }
+  //
+  // /**
+  //  * connects user account to his slack account
+  //  */
+  // slackConnect(code: string, redirectUri: string): Observable<any> {
+  //   return this.http.get(`/api/client/slack?code=${code}&redirect_uri=${redirectUri}`);
+  // }
 
   // todo: manage erros via api.service
   loginResponse(response: Response) {

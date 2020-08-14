@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
 
 import { USER_ROLES_FR, UserRoleEnum } from '~/core/enums/user/user-role.enum';
@@ -8,6 +7,7 @@ import { DialogService } from '~/core/services/dialog.service';
 import { User } from '~/core/entities/user/entity';
 import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { ToastService } from '~/core/services/toast.service';
 
 @Component({
   selector: 'app-users-list',
@@ -23,7 +23,7 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
 
   constructor(
     public userService: AdminUsersService,
-    private _toastr: ToastrService,
+    private _toastr: ToastService,
     private dialogService: DialogService,
   ) {
     super();

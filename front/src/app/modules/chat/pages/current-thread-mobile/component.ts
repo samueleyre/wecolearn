@@ -7,12 +7,11 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NAV } from '~/config/navigation/nav';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { Threads } from '~/modules/chat/services/threads';
+import { ThreadsService } from '~/core/services/chat/threads.service';
 
 @Component({
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
-
 })
 export class ChatWindowPageComponent extends DestroyObservable implements OnInit {
   loading = true;
@@ -20,7 +19,7 @@ export class ChatWindowPageComponent extends DestroyObservable implements OnInit
     private _route: ActivatedRoute,
     private _router: Router,
     private _deviceService: DeviceDetectorService,
-    private _threadsService: Threads,
+    private _threadsService: ThreadsService,
 ) {
     super();
     this._route.paramMap
