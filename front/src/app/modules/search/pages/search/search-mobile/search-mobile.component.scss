@@ -24,12 +24,8 @@
     overflow: auto;
   }
 
-  &-cardsContainer{
-    justify-content: center;
-    &-card {
-      width: 300px;
+  &-cardsContainer-card {
       margin: 20px 30px;
-    }
   }
 
   &-message {
