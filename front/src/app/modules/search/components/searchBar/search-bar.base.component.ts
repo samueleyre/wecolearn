@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { debounceTime, filter, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, skipWhile, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
@@ -8,18 +8,21 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { TagService } from '~/core/services/tag/tag';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 import { SearchService } from '../../../../core/services/search/search';
 
 @Component({
   template: '',
-})export class SearchBarBaseComponent implements OnInit {
+})export class SearchBarBaseComponent extends DestroyObservable implements OnInit {
+  public searchBarActive = new BehaviorSubject(false);
   public globalMode;
   public useProfileTagsMode;
   constructor(
         private tagService: TagService,
         private searchService: SearchService,
     ) {
+    super();
     this.tagService = tagService;
   }
 
@@ -57,19 +60,9 @@ import { SearchService } from '../../../../core/services/search/search';
     this.globalMode = this.searchService.globalMode;
     this.useProfileTagsMode = this.searchService.useProfileTagsMode;
 
-    this.searchService.getSearchInputObs().subscribe((tag: Tag) => {
-      this.searchInputControl.setValue(tag);
-      if (typeof this.searchInputControl.value === 'string') {
-        this.searchInputChange.next(
-          new Tag({
-            id: null,
-            name: this.searchInputControl.value,
-            type: TagTypeEnum.LEARN,
-          }),
-        );
-      } else {
-        this.searchInputChange.next(this.searchInputControl.value);
-      }
+    this.searchService.getSearchInputObs().subscribe((tag?: Tag) => {
+      console.log('searchvalue', tag);
+      this.searchInputControl.setValue(tag ? tag.name : null);
     });
 
     this.searchInputControl.valueChanges.pipe(
@@ -78,31 +71,35 @@ import { SearchService } from '../../../../core/services/search/search';
       filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this.tagService.findTags(value)),
     ).subscribe((tags) => {
-      this.foundAutocompleteTags$.next(tags);
+      if (this.searchBarActive.getValue()) { // todo: only on mobile !
+        this.foundAutocompleteTags$.next(tags);
+      }
     });
   }
 
-  search() {
-    const filters = {};
-    if (this.searchInputControl) {
-      if (typeof this.searchInputControl.value === 'string') {
-        filters['tag'] = new Tag({
-          id: null,
-          name: this.searchInputControl.value,
-          type: TagTypeEnum.LEARN,
-        });
-      } else if (this.searchInputControl.value) {
-        filters['tag'] = this.searchInputControl.value;
-      }
+  searchWithString(): void {
+    if (this.searchInputControl.value) {
+      this.search(new Tag({
+        id: null,
+        name: this.searchInputControl.value,
+        type: TagTypeEnum.LEARN,
+      }));
     }
-    this.searchInputChange.next(this.searchInputControl.value);
-    this.searchService.setSearchInput('tag' in filters ? filters['tag'] : null);
-    this.searchService.search(filters).subscribe();
-    this.hideAutocomplete();
   }
 
-  resetSearchBar(): void {
+  search(tag?: Tag) {
+    const filters = {};
+    if (tag) {
+      filters['tag'] = tag;
+    }
+    this.foundAutocompleteTags$.next([]);
+    this.searchService.setSearchInput('tag' in filters ? filters['tag'] : null);
+    this.searchService.search(filters).subscribe();
+  }
+
+  resetSearchBar(event): void {
     this.searchInputControl.setValue(null);
+    this.foundAutocompleteTags$.next([]);
   }
 
   onFilterClick(event) {
@@ -124,10 +121,6 @@ import { SearchService } from '../../../../core/services/search/search';
     if (!this.searchBarHasValue) {
       this.foundAutocompleteTags$.next([]);
     }
-  }
-
-  hideAutocomplete() {
-    this.autocomplete.closePanel();
   }
 
   displayAutocomplete(tag: Tag): string {

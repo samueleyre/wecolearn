@@ -134,7 +134,7 @@ import { SEARCH } from '../../config/main';
       return;
     }
     SearchService.first += SEARCH.default.max;
-    this.search({
+    this.searchOnScroll({
       first: SearchService.first,
     });
   }
@@ -148,12 +148,12 @@ import { SEARCH } from '../../config/main';
       SEARCH.scrollTimeOut);
   }
 
-  search(filters: {}) {
+  searchOnScroll(filters: {}) {
     let filledFilters = filters;
-    if (this.searchInput) {
+    if (this.searchService.searchInputValue) {
       filledFilters = {
         ...filters,
-        tag: this.searchInput,
+        tag: this.searchService.searchInputValue,
       };
     }
     this.searchService.search(filledFilters).subscribe();
