@@ -14,7 +14,7 @@
 <div class="SearchBar">
     <mat-form-field color="accent" appearance="outline">
       <input #searchBar type="text" matInput placeholder="Rechercher des profils par apprentissage" (keyup.enter)="search()" [disabled]="loading" [formControl]="searchInputControl" [matAutocomplete]="auto" [matAutocompleteDisabled]="autocompleteDisabled" (blur)="onInputBlur()">
-      <button *ngIf="searchBarHasValue" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar()">
+      <button *ngIf="searchBarHasValue" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar($event)">
         <mat-icon>close</mat-icon>
       </button>
       <mat-icon *ngIf="!searchBarHasValue" matSuffix>search</mat-icon>
