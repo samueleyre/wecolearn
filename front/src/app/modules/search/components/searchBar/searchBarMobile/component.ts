@@ -31,6 +31,15 @@ import { Tag } from '~/core/entities/tag/entity';
     });
   }
 
+  ngOnInit() {
+    super.ngOnInit();
+    this.foundAutocompleteTagsObservable.subscribe((tags) => {
+      if (this.searchBarActive.getValue()) {
+        this.foundAutocompleteTags$.next(tags);
+      }
+    });
+  }
+
   activateSearchBar(): void {
     this.searchBarActive.next(true);
   }
