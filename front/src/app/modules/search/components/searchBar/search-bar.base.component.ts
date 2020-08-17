@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { debounceTime, filter, skipWhile, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { MatMenuTrigger } from '@angular/material/menu';
 
@@ -73,18 +73,6 @@ import { SearchService } from '../../../../core/services/search/search';
     );
   }
 
-  searchWithString(): void {
-    let tag = null;
-    if (this.searchInputControl.value) {
-      tag = new Tag({
-        id: null,
-        name: this.searchInputControl.value,
-        type: TagTypeEnum.LEARN,
-      });
-    }
-    this.search(tag);
-  }
-
   search(tag?: Tag) {
     const filters = {};
     if (tag) {
@@ -121,7 +109,7 @@ import { SearchService } from '../../../../core/services/search/search';
     }
   }
 
-  displayAutocomplete(tag: Tag): string {
-    return tag ? tag.name : '';
-  }
+  // displayAutocomplete(tag: Tag): string {
+  //   return tag ? tag.name : '';
+  // }
 }
