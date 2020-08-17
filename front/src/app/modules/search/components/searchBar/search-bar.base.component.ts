@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { debounceTime, filter, skipWhile, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { MatMenuTrigger } from '@angular/material/menu';
 
@@ -18,6 +18,11 @@ import { SearchService } from '../../../../core/services/search/search';
   public searchBarActive = new BehaviorSubject(false);
   public globalMode;
   public useProfileTagsMode;
+  public foundAutocompleteTagsObservable: Observable<Tag[]>;
+  public searchInputControl = new FormControl();
+  public autocompleteDisabled = false;
+  public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
+
   constructor(
         private tagService: TagService,
         private searchService: SearchService,
@@ -39,10 +44,6 @@ import { SearchService } from '../../../../core/services/search/search';
     }
   }
 
-  public searchInputControl = new FormControl();
-  public autocompleteDisabled = false;
-  public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
-  @Output() searchInputChange = new EventEmitter();
   @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
   @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
   @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
@@ -61,30 +62,27 @@ import { SearchService } from '../../../../core/services/search/search';
     this.useProfileTagsMode = this.searchService.useProfileTagsMode;
 
     this.searchService.getSearchInputObs().subscribe((tag?: Tag) => {
-      console.log('searchvalue', tag);
       this.searchInputControl.setValue(tag ? tag.name : null);
     });
 
-    this.searchInputControl.valueChanges.pipe(
+    this.foundAutocompleteTagsObservable = this.searchInputControl.valueChanges.pipe(
       // tslint:disable-next-line:no-magic-numbers
       debounceTime(300),
       filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this.tagService.findTags(value)),
-    ).subscribe((tags) => {
-      if (this.searchBarActive.getValue()) { // todo: only on mobile !
-        this.foundAutocompleteTags$.next(tags);
-      }
-    });
+    );
   }
 
   searchWithString(): void {
+    let tag = null;
     if (this.searchInputControl.value) {
-      this.search(new Tag({
+      tag = new Tag({
         id: null,
         name: this.searchInputControl.value,
         type: TagTypeEnum.LEARN,
-      }));
+      });
     }
+    this.search(tag);
   }
 
   search(tag?: Tag) {

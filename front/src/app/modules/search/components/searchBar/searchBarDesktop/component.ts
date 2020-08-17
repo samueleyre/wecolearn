@@ -2,12 +2,10 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { TagService } from '~/core/services/tag/tag';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
-import { Tag } from '~/core/entities/tag/entity';
-import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
-
 import { SearchService } from '~/core/services/search/search';
 
 @Component({
@@ -22,21 +20,15 @@ import { SearchService } from '~/core/services/search/search';
     super(_tagService, _searchService);
   }
 
-  search(): void {
-    let tag = null;
-    if (this.searchInputControl) {
-      if (typeof this.searchInputControl.value === 'string') {
-        tag = new Tag({
-          id: null,
-          name: this.searchInputControl.value,
-          type: TagTypeEnum.LEARN,
-        });
-      } else if (this.searchInputControl.value) {
-        tag = this.searchInputControl.value;
-      }
-    }
-    this.searchInputChange.next(this.searchInputControl.value);
-    super.search(tag);
+  ngOnInit() {
+    super.ngOnInit();
+    this.foundAutocompleteTagsObservable.subscribe((tags) => {
+      this.foundAutocompleteTags$.next(tags);
+    });
+  }
+
+  selectOption($event: MatAutocompleteSelectedEvent): void {
+    super.search($event.option.value);
     this.hideAutocomplete();
   }
 
