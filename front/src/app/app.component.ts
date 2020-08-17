@@ -112,8 +112,8 @@ export class AppComponent {
                 (notification: PushNotificationActionPerformed) => {
                   console.log('########notif####### action performed' + JSON.stringify(notification));
                   this._zone.run(() => {
-                    this.router.navigateByUrl('/dashboard/discussion');
                     const message = new Message(JSON.parse(notification.notification.data.message));
+                    this.router.navigateByUrl(`/dashboard/discussion/current/${message.sender.id}`);
                     message.thread = new Thread({
                       id: message.sender.id,
                       name: message.sender.first_name,
