@@ -36,7 +36,7 @@ class TagRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('t');
         $qb->andwhere('t.name LIKE :literal')->setParameter('literal', '%'.$literal.'%');
-        if ($type) {
+        if ($type !== null) {
             $qb->andwhere('t.type = :type')->setParameter('type', $type);
         }
         $qb->setMaxResults(5);
