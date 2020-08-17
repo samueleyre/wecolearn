@@ -101,7 +101,7 @@ class UserController extends AbstractController
 
         if (
             ( array_key_exists('id', $tag) && $tag['id'] )
-            || ( array_key_exists('id', $tag) && $tag['name'] )
+            || ( array_key_exists('name', $tag) && $tag['name'] )
         ) {
             $filter['tag'] = $tag;
         }
