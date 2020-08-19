@@ -1,13 +1,14 @@
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { NAV } from '~/config/navigation/nav';
 import { User } from '~/core/entities/user/entity';
-import { UserRoleEnum } from '~/core/enums/user/user-role.enum';
 import { ToastService } from '~/core/services/toast.service';
+import { MessagesService } from '~/core/services/chat/messages.service';
+import { ThreadsService } from '~/core/services/chat/threads.service';
 
 import { TokenService } from './token';
 import { Logged } from './logged';
@@ -21,6 +22,8 @@ export class AuthenticationService {
               private tokenService: TokenService,
               private router: Router,
               private _toastr: ToastService,
+              private _messageService: MessagesService,
+              private _threadsService: ThreadsService,
   ) {}
 
   signUp(user: User): Observable<any> {
@@ -77,6 +80,9 @@ export class AuthenticationService {
     this.resetLogin();
     if (returnHome) {
       this.router.navigate([NAV.home]).then(() => {
+        // reset cache from services
+        this._messageService.reset();
+        this._threadsService.reset();
         this._toastr.success('Vous avez bien été déconnecté.');
       });
     }

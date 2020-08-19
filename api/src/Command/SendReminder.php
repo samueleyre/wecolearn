@@ -43,7 +43,7 @@ class SendReminder extends Command
 
     protected function execute (InputInterface $input, OutputInterface $output) {
 
-//      get messages sent at least yesterday, not yet read and not yet notified.
+//      get messages sent at a hour ago, not yet read and not yet notified.
       $MessagesSortedClients = $this->em
         ->getRepository(Message::class)
         ->getUnReadMessagesByUser();
