@@ -28,7 +28,7 @@ export class ChatThreadComponent extends DestroyObservable implements OnInit {
   }
 
 
-  constructor(public threadsService: ThreadsService, private router: Router, private deviceService: DeviceDetectorService) {
+  constructor(public threadsService: ThreadsService) {
     super();
   }
 
