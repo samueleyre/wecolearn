@@ -1,9 +1,9 @@
 import {
     Component,
     OnInit,
-    Injectable,
     Input,
 } from '@angular/core';
+import * as _ from 'lodash';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { User } from '~/core/entities/user/entity';
@@ -24,14 +24,12 @@ import { SearchService } from '~/core/services/search/search';
 
   public tags: Tag[] = [];
 
-  private currentUser: User;
   private cardSlackId: Object = {};
   public showSlack: Object = {};
   private subDomain: string = null;
   private slackSubDomain: string = null;
   private rocketChatDomain: string = null;
   private types = chat.types;
-
 
   constructor(
         private activatedRoute: ActivatedRoute,
@@ -47,20 +45,19 @@ import { SearchService } from '~/core/services/search/search';
   }
 
   ngOnInit() {
-    this.currentUser = this._profileService.profile;
-
     this.subDomain = this.domainService.getSubDomain();
     this.slackSubDomain = this.domainService.getSlackSubDomain();
     this.rocketChatDomain = this.domainService.getRocketChatDomain();
-    this.tags = [
-      ...this.card.tags.filter(tag => !this.isSearchTag(tag)),
-    ];
 
     const foundTag = this.card.tags.find(tag => this.isSearchTag(tag));
 
-    if (foundTag) {
-      this.tags.unshift(foundTag);
-    }
+    this.tags = _.uniqBy(
+      [
+        ...foundTag ? [foundTag] : [],
+        ...this.card.tags.filter(tag => this.isProfileTag(tag)),
+        ...this.card.tags.filter(tag => !this.isSearchTag(tag) && !this.isProfileTag(tag)),
+      ],
+      'id');
 
     // todo: repare slack
     // for (let i = 0; i < this.types.length; i++) { // tslint:disable-line
@@ -80,6 +77,10 @@ import { SearchService } from '~/core/services/search/search';
 
   isSearchTag(tag: Tag) {
     return this.searchTag && this.searchTag.id && this.searchTag.id === tag.id;
+  }
+
+  isProfileTag(tag: Tag): boolean {
+    return !!this._profileService.profile.tags.find((t => t.id === tag.id));
   }
 
   searchByTag(tag) {
