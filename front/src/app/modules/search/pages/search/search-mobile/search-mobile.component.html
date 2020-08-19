@@ -17,7 +17,7 @@
       </div>
       <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer align-items-stretch">
         <div class="SearchPage-cardsContainer-card" *ngFor="let card of cards">
-          <app-card [card]="card"></app-card>
+          <app-card [card]="card" [searchTag]="currentSearchTag"></app-card>
           <br>
         </div>
       </div>

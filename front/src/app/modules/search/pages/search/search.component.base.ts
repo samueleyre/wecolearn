@@ -159,7 +159,7 @@ import { SEARCH } from '../../config/main';
     this.searchService.search(filledFilters).subscribe();
   }
 
-  get currentSearchTags(): Tag | null {
+  get currentSearchTag(): Tag | null {
     return this.searchService.searchInputValue;
   }
 
