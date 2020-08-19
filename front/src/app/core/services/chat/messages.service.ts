@@ -104,25 +104,6 @@ export class MessagesService {
         this.generateMessages();
         this._loading$.next(false);
       });
-
-      // this.profileService.get().pipe(take(1))
-      // .subscribe(
-      //   (user: User) => {
-      //     console.log({ user });
-      //     if (user && null === this.currentClient.id) {
-      //       this.currentClient = user;
-      //       this.http.get('/api/messages').subscribe(
-      //         (array: any) => {
-      //           this.sentMessages = Object.values(array.sent_messages);
-      //           this.receivedMessages = Object.values(array.received_messages);
-      //           this.generateMessages();
-      //           this._loading$.next(false);
-      //         },
-      //       );
-      //     } else {
-      //       this._loading$.next(false);
-      //     }
-      //   });
   }
 
   private generateThreadAndAddMessage(senderOrReceiver: string) {
