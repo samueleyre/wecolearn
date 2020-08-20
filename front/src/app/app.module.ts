@@ -5,6 +5,7 @@ import { BsDropdownModule } from 'ngx-bootstrap';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { IonicModule } from '@ionic/angular';
+import { Network } from '@ionic-native/network/ngx';
 
 // shared modules
 import { CoreModule } from '~/core/core.module';
@@ -35,6 +36,7 @@ registerLocaleData(fr);
     NotFoundComponent,
   ],
   providers: [
+    Network,
     {
       provide: APP_BASE_HREF,
       useFactory: getBaseLocation,
