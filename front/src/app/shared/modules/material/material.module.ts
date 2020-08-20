@@ -21,6 +21,7 @@ import {
   MatSlideToggleModule,
   MatDialogModule,
   MatFormFieldModule,
+  MatSnackBarModule,
 } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -51,6 +52,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSlideToggleModule,
     MatDialogModule,
     MatToolbarModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -77,6 +79,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSlideToggleModule,
     MatDialogModule,
     MatToolbarModule,
+    MatSnackBarModule,
   ],
   providers: [MatDatepickerModule],
 })
