@@ -7,9 +7,9 @@ use App\Services\Chat\Entity\Message;
 use App\Services\User\Entity\PushNotificationSubscription;
 use App\Services\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use JMS\Serializer\SerializerInterface;
 use Kreait\Firebase\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -53,7 +53,13 @@ class NotificationService
                 'data'  => ['message' => $this->serializer->getPayload($message, $request)]
             ]);
             $notification = $notification->withAndroidConfig($config);
-            $this->sender->send($notification);
+
+            try {
+                $this->sender->send($notification);
+            }
+            catch (Exception $e) {
+                syslog(LOG_ERR, `could not send notif of message via firebase to android to ${$notification->getId()}`);
+            }
         }
     }
 }
