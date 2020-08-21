@@ -19,6 +19,7 @@ class TagDomain
     private $id;
     private $name;
     private $emoji;
+    private $hexcolor;
     private $tags;
     private $created;
 
@@ -95,6 +96,18 @@ class TagDomain
     public function setEmoji(string $emoji): self
     {
         $this->emoji = $emoji;
+
+        return $this;
+    }
+
+    public function getHexcolor(): ?string
+    {
+        return $this->hexcolor;
+    }
+
+    public function setHexcolor(string $hexcolor): self
+    {
+        $this->hexcolor = $hexcolor;
 
         return $this;
     }

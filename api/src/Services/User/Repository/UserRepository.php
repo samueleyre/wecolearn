@@ -16,6 +16,7 @@ class UserRepository extends ServiceEntityRepository
 
 //          User $user = null,
 ////        Tag $searchTag = null,
+////        TagDomain $searchTagDomain = null,
 ////        $first = 0,
 ////        $max = 15,
 ////        $latitude = null,
@@ -56,6 +57,12 @@ class UserRepository extends ServiceEntityRepository
             $searchTag = null;
         } else {
             $searchTag = $searchParameters['searchTag'];
+        }
+
+        if (!array_key_exists('searchTagDomain', $searchParameters)) {
+            $searchTagDomain = null;
+        } else {
+            $searchTagDomain = $searchParameters['searchTagDomain'];
         }
 
         if (!array_key_exists('first', $searchParameters)) {
@@ -122,6 +129,10 @@ class UserRepository extends ServiceEntityRepository
 
         $qb->innerJoin('user.tags', 't');
 
+        if ($searchTagDomain) {
+            $qb->innerJoin('t.tagDomain', 'tagDomain');
+        }
+
         if ($domain) {
             $qb->innerJoin('user.domains', 'd');
         }
@@ -137,6 +148,10 @@ class UserRepository extends ServiceEntityRepository
 
         if ($searchTag) {
             $qb->andWhere(sprintf('t.id=%s', $searchTag->getId()));
+        }
+
+        if ($searchTagDomain) {
+            $qb->andWhere(sprintf('tagDomain.id=%s', $searchTagDomain->getId()));
         }
 
         if ($domain) {

@@ -31,7 +31,7 @@ export class ProfileComponent extends DestroyObservable {
       searchTag.id = null;
       searchTag.type = 0;
     }
-    this._searchService.setSearchInput(searchTag);
+    this._searchService.setSearchInputAsTag(searchTag);
     this._router.navigate([NAV.search]);
   }
 

@@ -31,3 +31,34 @@
   }
 
 }
+
+.tagDomains {
+  &-container {
+    margin-top: 25px;
+  }
+  &-title {
+    margin-left: 10px;
+  }
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  &-box {
+    border: solid 2px $secondaryColor;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    //height: 75px;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-emoji {
+      font-size: 28px;
+    }
+    &-name {
+      font-size: 16px;
+      font-family: ralewaybold, OpenSansSerif, sans-serif;
+    }
+  }
+}

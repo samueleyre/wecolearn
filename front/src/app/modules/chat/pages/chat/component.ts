@@ -4,8 +4,7 @@ import {
 } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { map, takeUntil } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ThreadsService } from '~/core/services/chat/threads.service';
 import { MessagesService } from '~/core/services/chat/messages.service';
@@ -23,7 +22,7 @@ export class ChatPageComponent extends DestroyObservable implements OnInit, OnDe
     private _threadsService: ThreadsService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _messageService: MessagesService,
+    private _messagesService: MessagesService,
     private _deviceService: DeviceDetectorService,
   ) {
     super();
@@ -45,7 +44,7 @@ export class ChatPageComponent extends DestroyObservable implements OnInit, OnDe
   }
 
   get loading(): boolean {
-    return this._messageService.loading;
+    return this._messagesService.loading;
   }
 
   get emptyChat(): boolean {

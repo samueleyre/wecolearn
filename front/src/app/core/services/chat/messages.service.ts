@@ -1,11 +1,9 @@
-import { publishReplay, refCount, scan, map, tap, filter } from 'rxjs/operators';
+import { publishReplay, refCount, scan, map, tap, filter, take } from 'rxjs/operators';
 import { of as observableOf, Subject, Observable, of, BehaviorSubject, pipe } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 
-
-import { User } from '~/core/entities/user/entity';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { ProfileService } from '~/core/services/user/profile.service';
@@ -25,7 +23,7 @@ export class MessagesService {
   // `updates` receives _operations_ to be applied to our `messages`
   public updates: Subject<any> = new Subject<any>();
 
-  public currentClient: User = new User();
+  // public currentClient: User = new User();
   private sentMessages: Message[];
   private receivedMessages: Message[];
 
@@ -98,23 +96,14 @@ export class MessagesService {
 
   private getMessages(): void {
     this._loading$.next(true);
-    this.profileService.get()
-      .subscribe(
-        (user: User) => {
-          if (user && null === this.currentClient.id) {
-            this.currentClient = user;
-            this.http.get('/api/messages').subscribe(
-              (array: any) => {
-                this.sentMessages = Object.values(array.sent_messages);
-                this.receivedMessages = Object.values(array.received_messages);
-                this.generateMessages();
-                this._loading$.next(false);
-              },
-            );
-          } else {
-            this._loading$.next(false);
-          }
-        });
+    this.http.get('/api/messages').subscribe(
+      (array: any) => {
+        this.reset();
+        this.sentMessages = Object.values(array.sent_messages);
+        this.receivedMessages = Object.values(array.received_messages);
+        this.generateMessages();
+        this._loading$.next(false);
+      });
   }
 
   private generateThreadAndAddMessage(senderOrReceiver: string) {
@@ -168,6 +157,13 @@ export class MessagesService {
 
   public patch(message: Message): Observable<Object> {
     return this.http.patch(`/api/message`, message);
+  }
+
+  public reset(): void {
+    this.updates = new Subject<any>();
+    this.messages.next([]);
+    this.create = new Subject<Message>();
+    this.markThreadAsRead = new Subject<Thread>();
   }
 }
 

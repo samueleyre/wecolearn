@@ -11,17 +11,8 @@ import { NAV } from '~/config/navigation/nav';
 })
 
 export class MainFooterComponent {
-  faceBookLink = SOCIALS.faceBookLink;
-  twitterLink = SOCIALS.twitterLink;
-  telegramLink = SOCIALS.telegramLink;
-  meetupLink = SOCIALS.meetupLink;
-  blogLink = SOCIALS.blogLink;
-
-  peerLearningLink = NAV.peerLearning;
-  aboutLink = NAV.aboutUs;
-  homeLink = NAV.home;
-  mentionLegalesLink = NAV.mentionsLegales;
-  manifestLink = NAV.manifest;
+  public navLinks = NAV;
+  public socialLinks = SOCIALS;
 
   now = new Date();
 }

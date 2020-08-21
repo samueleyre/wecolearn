@@ -1,16 +1,3 @@
-<mat-menu #appMenu="matMenu" xPosition="before" >
-  <div mat-menu-item (click) = "$event.stopPropagation();">
-    <mat-checkbox [ngModel]="!useProfileTagsMode" (ngModelChange)="setUseProfileMode(!$event)">
-      <span [matTooltip]="'Ne pas prendre en compte les domaines d\'apprentissages de votre profile'">mode exploration ✨</span>
-    </mat-checkbox>
-  </div>
-  <div mat-menu-item (click) = "$event.stopPropagation();">
-    <mat-checkbox [ngModel]="globalMode" (ngModelChange)="setGlobalMode($event)">
-      <span [matTooltip]="'Sur toute la planète !'">recherche globale 🌏</span>
-    </mat-checkbox>
-  </div>
-</mat-menu>
-
 <div class="SearchBar">
     <mat-form-field color="accent" appearance="outline">
       <input #searchBar type="text" matInput placeholder="Rechercher des profils par apprentissage" (keyup.enter)="searchWithString()" [disabled]="loading" [formControl]="searchInputControl" [matAutocomplete]="auto" [matAutocompleteDisabled]="autocompleteDisabled" (blur)="onInputBlur()">
@@ -24,7 +11,9 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-    <button color="accent" mat-button [matMenuTriggerFor]="appMenu" (menuClosed)="focusInput()" mat-icon-button >
-      <mat-icon (click)="onFilterClick($event)" matSuffix>filter_list</mat-icon>
-    </button>
+  <div class="SearchBar-globalMode">
+    <mat-checkbox [ngModel]="globalMode" (ngModelChange)="setGlobalMode($event)">
+      <span [matTooltip]="'Sur toute la planète !'">recherche globale 🌏</span>
+    </mat-checkbox>
+  </div>
 </div>

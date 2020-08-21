@@ -6,5 +6,6 @@ export enum SearchMeta {
   userLearnTagDomains = 'userLearnTagDomains',
   userKnowTagDomains = 'userKnowTagDomains',
   searchLearnTag = 'searchLearnTag',
+  searchByLearnTagDomain = 'searchByLearnTagDomain',
   orderByDistance = 'orderByDistance',
 }

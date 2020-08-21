@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { debounceTime, distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, pairwise, startWith, takeUntil } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Network } from '@ionic-native/network/ngx';
 
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { DestroyObservable } from '~/core/components/destroy-observable';
+import { OnlineService } from '~/core/services/online.service';
+import { NoConnectionToastComponent } from '~/shared/components/no-connection-toast/no-connection-toast.component';
+
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-layout',
@@ -18,42 +24,65 @@ export class MainComponent extends DestroyObservable implements OnInit {
   public showMobileHeader: Observable<boolean>;
 
   constructor(
-    private deviceService: DeviceDetectorService,
-    public footerMobileService: FooterMobileService,
-    public menuMobileService: MenuMobileService,
+    private _deviceService: DeviceDetectorService,
+    private _footerMobileService: FooterMobileService,
+    private _menuMobileService: MenuMobileService,
+    private _mobileOnlineService: OnlineService,
+    private _snackBar: MatSnackBar,
+    private _network: Network,
   ) {
     super();
   }
 
   ngOnInit() {
     this.showMobileFooter = combineLatest([
-        this.footerMobileService.inputFocusState.asObservable(),
-        this.footerMobileService.showFooter.asObservable(),
+        this._footerMobileService.inputFocusState.asObservable(),
+        this._footerMobileService.showFooter.asObservable(),
       ],
     ).pipe(
       map(([inputFocused, urlWithFooter]) =>
-        this.deviceService.isMobile() && !inputFocused && urlWithFooter,
+        this._deviceService.isMobile() && !inputFocused && urlWithFooter,
       ),
       distinctUntilChanged(),
       takeUntil(this.destroy$),
     );
 
-
-
-    this.showMobileHeader = this.menuMobileService.showHeader.asObservable().pipe(
+    this.showMobileHeader = this._menuMobileService.showHeader.asObservable().pipe(
       map(urlWithHeader =>
-         this.deviceService.isMobile() && urlWithHeader,
+        this._deviceService.isMobile() && urlWithHeader,
       ),
       distinctUntilChanged(),
       takeUntil(this.destroy$),
     );
+
+    if (environment.android) {
+      this.initOnlineNotif();
+    }
   }
 
   get isMobile(): boolean {
-    return this.deviceService.isMobile();
+    return this._deviceService.isMobile();
   }
 
   onActivate(event) {
     document.getElementsByTagName('ion-content')[0].scrollToTop();
+  }
+
+  private initOnlineNotif(): void {
+    this._mobileOnlineService.isOnlineObservable().pipe(
+      startWith(true),
+      pairwise(),
+      takeUntil(this.destroy$)).subscribe(
+      ([previouslyOnline, currentlyOnline]: [boolean, boolean]) => {
+        if (!currentlyOnline) {
+            // offline
+          this._snackBar.openFromComponent(NoConnectionToastComponent);
+        }
+
+        if (currentlyOnline && !previouslyOnline) {
+            // online again
+          this._snackBar.dismiss();
+        }
+      });
   }
 }

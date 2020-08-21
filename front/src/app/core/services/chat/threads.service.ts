@@ -119,10 +119,9 @@ export class ThreadsService {
     return !!this.orderedThreads$.getValue().find(thread => thread.id === threadId);
   }
 
-  resetThreads(): void {
-    this.orderedThreads = of();
-    this.orderedThreads$ = new BehaviorSubject<Thread[]>([]);
-    this.messagesService.currentClient = new User();
+  reset(): void {
+    this.orderedThreads$.next([]);
+    this.currentThread.next(new Thread());
   }
 }
 

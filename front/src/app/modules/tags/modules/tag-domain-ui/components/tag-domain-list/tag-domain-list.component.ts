@@ -17,7 +17,7 @@ export class TagDomainListComponent extends DestroyObservable implements OnInit 
   @Input() canEditTagDomain = false;
   @Output() editTagDomain = new EventEmitter<TagDomain>();
 
-  displayedColumns: string[] = ['name', 'emoji', 'actions'];
+  displayedColumns: string[] = ['name', 'emoji', 'hexcolor', 'actions'];
 
   constructor(
     public tagService: AdminTagDomainService,

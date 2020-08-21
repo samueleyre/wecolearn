@@ -14,7 +14,7 @@ export class TagDomainsService extends APIService<TagDomain>{
     super(_http);
   }
 
-  findTagDomains(literal: string): Observable<TagDomain[]> {
-    return this.list({ literal });
+  findTagDomains(literal?: string): Observable<TagDomain[]> {
+    return this.list({ literal: literal ? literal : null });
   }
 }

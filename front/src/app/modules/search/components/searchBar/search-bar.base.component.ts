@@ -9,6 +9,7 @@ import { TagService } from '~/core/services/tag/tag';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { DestroyObservable } from '~/core/components/destroy-observable';
+import { TagDomain } from '~/core/entities/tag/TagDomain';
 
 import { SearchService } from '../../../../core/services/search/search';
 
@@ -54,6 +55,7 @@ import { SearchService } from '../../../../core/services/search/search';
 
   public setGlobalMode(val) {
     this.searchService.setGlobalMode(val);
+    this.searchService.searchAgainWithSamefilters();
   }
 
 
@@ -61,8 +63,8 @@ import { SearchService } from '../../../../core/services/search/search';
     this.globalMode = this.searchService.globalMode;
     this.useProfileTagsMode = this.searchService.useProfileTagsMode;
 
-    this.searchService.getSearchInputObs().subscribe((tag?: Tag) => {
-      this.searchInputControl.setValue(tag ? tag.name : null);
+    this.searchService.getSearchInputObs().subscribe((val?: Tag | TagDomain) => {
+      this.searchInputControl.setValue(val ? val.name : null);
     });
 
     this.foundAutocompleteTagsObservable = this.searchInputControl.valueChanges.pipe(
@@ -79,7 +81,19 @@ import { SearchService } from '../../../../core/services/search/search';
       filters['tag'] = tag;
     }
     this.foundAutocompleteTags$.next([]);
-    this.searchService.setSearchInput('tag' in filters ? filters['tag'] : null);
+    this.searchService.setSearchInputAsTag('tag' in filters ? filters['tag'] : null);
+    this.searchService.search(filters).subscribe();
+  }
+
+  searchByTagDomain(tagDomain: TagDomain) {
+    const filters = {
+      useProfileTags: false, // don't search using profile tags
+    };
+    if (tagDomain) {
+      filters['tagDomain'] = tagDomain;
+    }
+    this.foundAutocompleteTags$.next([]);
+    this.searchService.setSearchInputAsTagDomain('tagDomain' in filters ? filters['tagDomain'] : null);
     this.searchService.search(filters).subscribe();
   }
 

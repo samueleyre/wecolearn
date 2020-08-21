@@ -2,14 +2,14 @@ import {
   Component, EventEmitter,
   OnInit, Output,
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { TagService } from '~/core/services/tag/tag';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { SearchService } from '~/core/services/search/search';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
 import { Tag } from '~/core/entities/tag/entity';
+import { TagDomain } from '~/core/entities/tag/TagDomain';
+import { TagDomainsService } from '~/core/services/tag/tag-domains.service';
 
 
 @Component({
@@ -21,6 +21,7 @@ import { Tag } from '~/core/entities/tag/entity';
 
   constructor(
         private _tagService: TagService,
+        private _tagDomainsService: TagDomainsService,
         private _searchService: SearchService,
         private _footerMobileService: FooterMobileService,
     ) {
@@ -32,12 +33,21 @@ import { Tag } from '~/core/entities/tag/entity';
   }
 
   ngOnInit() {
+    this.initTagDomains();
     super.ngOnInit();
     this.foundAutocompleteTagsObservable.subscribe((tags) => {
       if (this.searchBarActive.getValue()) {
         this.foundAutocompleteTags$.next(tags);
       }
     });
+  }
+
+  private initTagDomains(): void {
+    this._tagDomainsService.findTagDomains().subscribe();
+  }
+
+  get tagDomains$() {
+    return this._tagDomainsService.entities$;
   }
 
   activateSearchBar(): void {
@@ -50,12 +60,18 @@ import { Tag } from '~/core/entities/tag/entity';
     super.focusOut();
   }
 
+  searchByTagDomain(tagDomain: TagDomain) {
+    this.searchBarActive.next(false);
+    super.searchByTagDomain(tagDomain);
+    super.focusOut();
+  }
+
   resetSearchBar(event):void {
     if (this.isActive) {
       super.resetSearchBar(event);
     } else {
       event.stopPropagation();
-      this._searchService.setSearchInput(null);
+      this._searchService.setSearchInputAsTag(null);
       this.search();
       super.resetSearchBar(event);
     }
@@ -63,6 +79,10 @@ import { Tag } from '~/core/entities/tag/entity';
 
   get isActive(): boolean {
     return this.searchBarActive.getValue();
+  }
+
+  get inputIsEmpty(): boolean {
+    return this.searchInputControl.value === null || this.searchInputControl.value === "";
   }
 
   deactivateSearchBar() {
