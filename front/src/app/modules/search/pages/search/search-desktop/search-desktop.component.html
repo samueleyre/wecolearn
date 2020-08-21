@@ -1,17 +1,16 @@
 <section class="SearchPage">
   <mat-progress-bar [class.hide]="!loading" mode="indeterminate"></mat-progress-bar>
-
+  <div class="SearchPage-header">
+    <div class="SearchPage-searchBar">
+      <app-searchbar></app-searchbar>
+    </div>
+    <p class="SearchPage-explorationModeMessage" *ngIf="explorationMode">Mode exploration</p>
+  </div>
   <div #pageContainer class="SearchPage-content" infinite-scroll
        [infiniteScrollDistance]="4"
        [infiniteScrollThrottle]="50"
        (scrolled)="onScroll($event)"
        [scrollWindow]="false">
-    <div class="SearchPage-header">
-      <div class="SearchPage-searchBar">
-        <app-searchbar></app-searchbar>
-      </div>
-      <p class="SearchPage-explorationModeMessage" *ngIf="explorationMode">Mode exploration</p>
-    </div>
     <div class="SearchPage-message" [class.hide]="loading">
       <p [innerHTML]="searchMessage | safeHtml"></p>
     </div>
