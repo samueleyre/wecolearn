@@ -166,16 +166,7 @@ import { SEARCH } from '../../config/main';
   }
 
   searchOnScroll(filters: {}) {
-    let filledFilters = filters;
-    const val = this.searchService.searchInputValue;
-    if (this.searchService.searchInputValue) {
-      filledFilters = {
-        ...filters,
-        tag: (val instanceof Tag) ? val : null,
-        tagDomain: (val instanceof TagDomain) ? val : null,
-      };
-    }
-    this.searchService.search(filledFilters).subscribe();
+    this.searchService.searchAgainWithSamefilters(filters);
   }
 
   get currentSearchTag(): Tag | null {

@@ -113,6 +113,19 @@ export class SearchService extends APIService<User> {
     );
   }
 
+  searchAgainWithSamefilters(filters = {}) {
+    let filledFilters = filters;
+    const val = this.searchInputValue;
+    if (this.searchInputValue) {
+      filledFilters = {
+        ...filters,
+        tag: (val instanceof Tag) ? val : null,
+        tagDomain: (val instanceof TagDomain) ? val : null,
+      };
+    }
+    this.search(filledFilters).subscribe();
+  }
+
   getCurrentFoundClients(): Observable<any[]> {
     return this.currentFoundMatchs$.asObservable();
   }
