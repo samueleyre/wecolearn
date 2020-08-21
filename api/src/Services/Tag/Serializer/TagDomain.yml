@@ -8,6 +8,8 @@ App\Services\Tag\Entity\TagDomain:
           groups: [ input, output, search, patch-tag-domain, profile, public-profile, admin-users, admin-tags ]
         emoji:
           groups: [ input, output, search, patch-tag-domain, profile, public-profile, admin-users, admin-tags ]
+        hexcolor:
+          groups: [ input, output, search, patch-tag-domain, admin-tags ]
         created:
           groups: [ admin-tags ]
 

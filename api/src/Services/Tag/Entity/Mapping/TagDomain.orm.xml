@@ -6,7 +6,8 @@
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
-        <field name="name" column="name" type="string"/>
+        <field name="name" column="name" length="255" type="string"/>
+        <field name="hexcolor" column="hexcolor" length="20" type="string"/>
         <field name="emoji" column="emoji" type="string"/>
         <field name="created" column="created" type="datetime"/>
         <one-to-many field="tags" target-entity="App\Services\Tag\Entity\Tag" mapped-by="tagDomain">

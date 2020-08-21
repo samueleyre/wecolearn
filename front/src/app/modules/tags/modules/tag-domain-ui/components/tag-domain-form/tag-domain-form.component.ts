@@ -33,6 +33,7 @@ export class TagDomainFormComponent extends DestroyObservable implements OnInit 
       this.createEditTagDomainForm.setValue({
         name: tag.name,
         emoji: tag.emoji,
+        hexcolor: tag.hexcolor,
       });
 
       Object.keys(this.createEditTagDomainForm.controls).forEach((key) => {
@@ -98,6 +99,7 @@ export class TagDomainFormComponent extends DestroyObservable implements OnInit 
     if (this.createEditTagDomainForm) {
       this.createEditTagDomainForm.controls['name'].setValidators(isCreating ? Validators.required : null);
       this.createEditTagDomainForm.controls['emoji'].setValidators(isCreating ? Validators.required : null);
+      this.createEditTagDomainForm.controls['hexcolor'].setValidators(isCreating ? Validators.required : null);
     }
   }
 
@@ -108,6 +110,7 @@ export class TagDomainFormComponent extends DestroyObservable implements OnInit 
     this.createEditTagDomainForm = this._fb.group({
       name: [tag.name, Validators.required],
       emoji: [tag.emoji, Validators.required],
+      hexcolor: [tag.hexcolor, Validators.required],
     });
 
     this.updateValidators(isCreating);

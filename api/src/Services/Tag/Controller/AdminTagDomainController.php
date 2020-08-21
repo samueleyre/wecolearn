@@ -43,7 +43,7 @@ class AdminTagDomainController extends AbstractController
         TagDomainService $tagDomainService
     ) {
 
-        // change name | emoji
+        // change name | emoji | hexcolor
         return $tagDomainService->patchTagDomain($tagDomain);
     }
 

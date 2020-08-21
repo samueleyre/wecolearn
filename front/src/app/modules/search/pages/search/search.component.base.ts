@@ -180,8 +180,6 @@ import { SEARCH } from '../../config/main';
 
   get currentSearchTag(): Tag | null {
     const val = this.searchService.searchInputValue;
-    console.log({ val });
-    console.log((val instanceof Tag));
     return (val instanceof Tag) ? val : null;
   }
 
