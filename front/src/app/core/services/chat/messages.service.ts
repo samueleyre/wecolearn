@@ -38,14 +38,18 @@ export class MessagesService {
   }
 
   constructor(public profileService: ProfileService, protected http: HttpClient) {
+    this.init();
+  }
+
+  private init() {
     this.updates.pipe(
-        // watch the updates and accumulate operations on the messages
-        scan((messages: Message[], operation: IMessagesOperation) => operation(messages), []),
+      // watch the updates and accumulate operations on the messages
+      scan((messages: Message[], operation: IMessagesOperation) => operation(messages), []),
 
       // make sure we can share the most recent list of messages across anyone
       // who's interested in subscribing and cache the last known list of messages
-        publishReplay(1),
-        refCount(),
+      publishReplay(1),
+      refCount(),
     ).subscribe(
       (messages) => {
         this.messages.next(messages);
@@ -90,7 +94,7 @@ export class MessagesService {
     return observableOf(null);
   }
 
-  public init(): void {
+  public initMessages(): void {
     this.getMessages();
   }
 
@@ -160,10 +164,11 @@ export class MessagesService {
   }
 
   public reset(): void {
-    this.updates = new Subject<any>();
     this.messages.next([]);
+    this.updates = new Subject<any>();
     this.create = new Subject<Message>();
     this.markThreadAsRead = new Subject<Thread>();
+    this.init();
   }
 }
 

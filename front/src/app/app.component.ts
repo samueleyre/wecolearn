@@ -60,7 +60,7 @@ export class AppComponent {
         let subs: any = { unsubscribe : null };
         if (logged) {
           // get all messages every time logged or app is reloaded
-          this.messagesService.init();
+          this.messagesService.initMessages();
 
           // subscribe to mercure updates
           if (!environment.android) {
