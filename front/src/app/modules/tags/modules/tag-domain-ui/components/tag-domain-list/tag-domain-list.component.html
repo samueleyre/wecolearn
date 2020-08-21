@@ -13,6 +13,17 @@
     <td mat-cell *matCellDef="let tagDomain" class="TagDomainsList-list-item-emoji">{{ tagDomain.emoji ? tagDomain.emoji : 'NA' }}</td>
   </ng-container>
 
+  <!-- HEXCOLOR -->
+  <ng-container matColumnDef="hexcolor">
+    <th mat-header-cell *matHeaderCellDef>Couleur</th>
+    <td mat-cell *matCellDef="let tagDomain" class="TagDomainsList-list-item-color">
+      <div class="TagDomainsList-list-item-color-container">
+        <div class="TagDomainsList-list-item-color-box" [style.backgroundColor]="tagDomain.hexcolor ? tagDomain.hexcolor : null"></div>
+        {{ tagDomain.hexcolor ? tagDomain.hexcolor : 'NA' }}
+      </div>
+    </td>
+  </ng-container>
+
   <!-- Actions -->
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef></th>

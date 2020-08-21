@@ -2,14 +2,19 @@ export class TagDomain {
   public id: number;
   public name: string;
   public emoji: string;
+  public hexcolor: string;
 
   constructor(obj?: {
     id: number,
     name: string,
     emoji: string,
+    hexcolor?: string,
   }) {
-    this.name = obj && obj.name ? obj.name : null;
-    this.emoji = obj && obj.emoji ? obj.emoji : null;
-    this.id = obj && obj.id ? obj.id : null;
+    if (obj) {
+      this.name = 'name' in obj ? obj.name : null;
+      this.emoji = 'emoji' in obj ? obj.emoji : null;
+      this.hexcolor = 'hexcolor' in obj ? obj.hexcolor : null;
+      this.id = 'id' in obj ? obj.id : null;
+    }
   }
 }

@@ -12,7 +12,7 @@
 <div class="tagDomains-container" *ngIf="isActive && inputIsEmpty">
   <h6 class="tagDomains-title">Catégories</h6>
   <div class="tagDomains" >
-    <div class="tagDomains-box" (click)="searchByTagDomain(option)" *ngFor="let option of tagDomains$ | async">
+    <div class="tagDomains-box" [style.borderColor]="option.hexcolor ? option.hexcolor : null" (click)="searchByTagDomain(option)" *ngFor="let option of tagDomains$ | async">
       <span class="tagDomains-box-emoji">{{option.emoji}}</span>
       <span class="tagDomains-box-name">{{option.name}}</span>
     </div>

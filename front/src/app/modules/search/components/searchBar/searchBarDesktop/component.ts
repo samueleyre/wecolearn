@@ -7,8 +7,8 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { TagService } from '~/core/services/tag/tag';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
 import { SearchService } from '~/core/services/search/search';
-import {Tag} from "~/core/entities/tag/entity";
-import {TagTypeEnum} from "~/core/enums/tag/tag-type.enum";
+import { Tag } from '~/core/entities/tag/entity';
+import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 
 @Component({
   selector: 'app-searchbar',

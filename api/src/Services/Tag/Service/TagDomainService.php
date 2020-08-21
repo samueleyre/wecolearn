@@ -35,10 +35,12 @@ class TagDomainService
     {
         $name = $tagDomain->getName();
         $emoji = $tagDomain->getEmoji();
+        $hexcolor = $tagDomain->getHexcolor();
         $oldTagDomain = $this->em->getRepository(TagDomain::class)->find($tagDomain->getId());
         if ($oldTagDomain) {
             $oldTagDomain->setName($name);
             $oldTagDomain->setEmoji($emoji);
+            $oldTagDomain->setHexcolor($hexcolor);
             $this->em->persist($oldTagDomain);
             $this->em->flush();
             return $oldTagDomain;

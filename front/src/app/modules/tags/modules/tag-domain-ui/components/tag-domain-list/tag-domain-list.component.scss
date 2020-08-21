@@ -28,6 +28,18 @@ table {
       &-emoji {
       }
 
+      &-color {
+        &-container {
+          display: flex;
+          align-items: center;
+        }
+        &-box {
+          width: 15px;
+          height: 15px;
+          margin: 10px;
+        }
+      }
+
       &-actions {
         text-align: right;
 
