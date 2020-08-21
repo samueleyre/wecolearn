@@ -84,7 +84,7 @@ import { SearchService } from '~/core/services/search/search';
   }
 
   searchByTag(tag) {
-    this.searchService.setSearchInput(tag);
+    this.searchService.setSearchInputAsTag(tag);
     this.searchService.search({ tag }).subscribe();
   }
 
