@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { debounceTime, filter, skipWhile, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, skipWhile, switchMap, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { MatMenuTrigger } from '@angular/material/menu';
 
@@ -23,6 +23,7 @@ import { SearchService } from '../../../../core/services/search/search';
   public searchInputControl = new FormControl();
   public autocompleteDisabled = false;
   public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
+  public inputChangeByUser$ = new Subject<string>();
 
   constructor(
         private tagService: TagService,
@@ -37,12 +38,12 @@ import { SearchService } from '../../../../core/services/search/search';
   }
 
   get searchBarHasValue(): boolean {
-    if (typeof this.searchInputControl.value === 'string') {
-      return !!this.searchInputControl.value;
-    }
-    if (this.searchInputControl.value && typeof this.searchInputControl.value === 'object') {
-      return !!this.searchInputControl.value.name;
-    }
+    // if (typeof this.searchInputControl.value === 'string') {
+    return !!this.searchInputControl.value;
+    // }
+    // if (this.searchInputControl.value && typeof this.searchInputControl.value === 'object') {
+    //   return !!this.searchInputControl.value.name;
+    // }
   }
 
   @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
@@ -67,12 +68,16 @@ import { SearchService } from '../../../../core/services/search/search';
       this.searchInputControl.setValue(val ? val.name : null);
     });
 
-    this.foundAutocompleteTagsObservable = this.searchInputControl.valueChanges.pipe(
+    this.foundAutocompleteTagsObservable = this.inputChangeByUser$.asObservable().pipe(
       // tslint:disable-next-line:no-magic-numbers
       debounceTime(300),
       filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this.tagService.findTags(value)),
     );
+  }
+
+  inputChangeByUser($event) {
+    this.inputChangeByUser$.next($event.target.value);
   }
 
   search(tag?: Tag) {
