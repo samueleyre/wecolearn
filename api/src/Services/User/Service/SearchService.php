@@ -3,6 +3,7 @@
 namespace App\Services\User\Service;
 
 use App\Services\Tag\Entity\Tag;
+use App\Services\Tag\Entity\TagDomain;
 use App\Services\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -21,9 +22,11 @@ class SearchService
     {
 
         $searchTag = null;
+        $searchTagDomain = null;
         $latitude = null;
         $longitude = null;
         $searchParameters['searchLearnTag'] = false;
+        $searchParameters['searchByLearnTagDomain'] = false;
         $searchParameters['orderByDistance'] = false;
 
         $retMeta = [];
@@ -42,6 +45,11 @@ class SearchService
                         $searchTag = $search[0];
                         $searchParameters['searchLearnTag'] = true;
                     }
+                }
+            } else if (array_key_exists("tagDomain", $filter)) {
+                if ($filter["tagDomain"]["id"]) {
+                    $searchTagDomain = $this->em->getRepository(TagDomain::class)->find($filter["tagDomain"]['id']);
+                    $searchParameters['searchByLearnTagDomain'] = true;
                 }
             }
             if (array_key_exists("latitude", $filter) && array_key_exists("longitude", $filter)) {
@@ -78,14 +86,13 @@ class SearchService
         }
 
         // search by input tag only
-        if ($result === [] && $searchTag) {
+        if ($result === [] && $searchParameters['searchLearnTag']) {
             $searchParameters['useProfileTags'] = false;
             $searchParameters['userLearnTags'] = false;
             $searchParameters['userLearnTagDomains'] = false;
             $searchParameters['userKnowTags'] = false;
             $searchParameters['userKnowTagDomains'] = false;
 
-            $searchParameters['searchLearnTag'] = true;
             $searchParameters['orderByDistance'] = true;
 
             $result = $this->em
@@ -93,6 +100,31 @@ class SearchService
                 ->search([
                     'user' => $user,
                     'searchTag' => $searchTag,
+                    'first' => $filter['first'],
+                    'max' => $filter['max'],
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'domain' => $domain,
+                    'parameters' => $searchParameters,
+                    'distance' => $searchParameters['global'] ? -1 : 15
+                ]);
+        }
+
+        // search by selected tag domain only
+        if ($result === [] && $searchParameters['searchByLearnTagDomain']) {
+            $searchParameters['useProfileTags'] = false;
+            $searchParameters['userLearnTags'] = false;
+            $searchParameters['userLearnTagDomains'] = false;
+            $searchParameters['userKnowTags'] = false;
+            $searchParameters['userKnowTagDomains'] = false;
+
+            $searchParameters['orderByDistance'] = true;
+
+            $result = $this->em
+                ->getRepository(User::class)
+                ->search([
+                    'user' => $user,
+                    'searchTagDomain' => $searchTagDomain,
                     'first' => $filter['first'],
                     'max' => $filter['max'],
                     'latitude' => $latitude,
@@ -111,6 +143,7 @@ class SearchService
             $searchParameters['userKnowTags'] = false;
             $searchParameters['userKnowTagDomains'] = false;
             $searchParameters['searchLearnTag'] = false;
+            $searchParameters['searchByLearnTagDomain'] = false;
 
             $searchParameters['orderByDistance'] = true;
 

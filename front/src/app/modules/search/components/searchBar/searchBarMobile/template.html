@@ -1,4 +1,4 @@
-  <div class="SearchBar" >
+<div class="SearchBar" >
   <mat-icon *ngIf="isActive" (click)="deactivateSearchBar()" class="SearchBar-returnIcon">arrow_back</mat-icon>
   <mat-form-field color="accent" appearance="outline">
     <input #searchBar type="text" matInput placeholder="Recherche" [disabled]="loading" [formControl]="searchInputControl" (focus)="activateSearchBar()">
@@ -8,7 +8,18 @@
   </mat-form-field>
 </div>
 
-<ion-list *ngIf="isActive">
+
+<div class="tagDomains-container" *ngIf="isActive && inputIsEmpty">
+  <h6 class="tagDomains-title">Catégories</h6>
+  <div class="tagDomains" >
+    <div class="tagDomains-box" (click)="searchByTagDomain(option)" *ngFor="let option of tagDomains$ | async">
+      <span class="tagDomains-box-emoji">{{option.emoji}}</span>
+      <span class="tagDomains-box-name">{{option.name}}</span>
+    </div>
+  </div>
+</div>
+
+<ion-list *ngIf="isActive && !inputIsEmpty">
   <ion-item (click)="search(option)" *ngFor="let option of foundAutocompleteTags$ | async">
     {{option.name}}
   </ion-item>

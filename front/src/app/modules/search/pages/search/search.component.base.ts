@@ -9,6 +9,7 @@ import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 import { Tag } from '~/core/entities/tag/entity';
 import { SearchService } from '~/core/services/search/search';
+import { TagDomain } from '~/core/entities/tag/TagDomain';
 
 import { SEARCH } from '../../config/main';
 
@@ -23,16 +24,17 @@ import { SEARCH } from '../../config/main';
   private direction = 'down';
 
   public messages = {
-    [SearchMeta.tagNotFound]: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. <br>
-    Peut-être que les profils suivant pourront aussi vous intéresser ?</i>`,
-    noResults: `<i>Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... <br>Pour étendre le champs de
-    recherche, ajoutez des domaines d'apprentissage dans votre profil !</i>`,
-    noResultsWithSearch: `<i>Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous</i>`,
-    notRelevantProfiles: `<i>Malgré nos efforts, nous n'avons trouvé personne correspondant à vos domaines d'apprentissage. <br>
-    Peut-être que les profils suivant pourront aussi vous intéresser ?</i>`,
-    foundMatchingResults: '<i>Profils autour de chez vous.</i>',
-    foundSearchTagResults: '<i>Profils intéressés par cet apprentissage.</i>',
-    globalMode: `<i>Profils sélectionnés pour vous.</i>`,
+    [SearchMeta.tagNotFound]: `Malgré nos efforts, nous n'avons trouvé personne correspondant à votre recherche. <br>
+    Peut-être que les profils suivant pourront aussi vous intéresser ?`,
+    noResults: `Zut, nous n'avons pas trouvé de profils qui correspondent à vos critères... <br>Pour étendre le champs de
+    recherche, ajoutez des domaines d'apprentissage dans votre profil !`,
+    noResultsWithSearch: `Nous n’avons trouvé personne intéressé par cet apprentissage autour de chez vous`,
+    notRelevantProfiles: `Malgré nos efforts, nous n'avons trouvé personne correspondant à ces domaines d'apprentissage. <br>
+    Peut-être que les profils suivant pourront aussi vous intéresser ?`,
+    foundMatchingResults: 'Profils autour de chez vous.',
+    foundSearchTagResults: 'Profils intéressés par cet apprentissage.',
+    globalMode: `Profils sélectionnés pour vous.`,
+    foundResultsWithSearchTagDomain: `Profils intéressés par ce domaine d'apprentissage`,
   };
 
   @ViewChild('pageContainer', { static: false }) cardsContainerElementRef: ElementRef;
@@ -68,7 +70,17 @@ import { SEARCH } from '../../config/main';
     // init search on page load
     const params = {};
     if (this.searchService.searchInputValue) {
-      params['tag'] = this.searchService.searchInputValue;
+      const val = this.searchService.searchInputValue;
+      if (val instanceof Tag) {
+        params['tag'] = val;
+      }
+    }
+    if (this.searchService.searchInputValue) {
+      const val = this.searchService.searchInputValue;
+      if (val instanceof TagDomain) {
+        params['tagDomain'] = val;
+        params[SearchMeta.useProfileTags] = false;
+      }
     }
     this.searchService.search(params).subscribe();
   }
@@ -116,6 +128,11 @@ import { SEARCH } from '../../config/main';
         return this.messages.foundSearchTagResults;
       }
 
+      // if got results with a input tag domaine
+      if (meta[SearchMeta.searchByLearnTagDomain]) {
+        return this.messages.foundResultsWithSearchTagDomain;
+      }
+
       // if got results with matching tags
       if (meta[SearchMeta.useProfileTags]) {
         return this.messages.foundMatchingResults;
@@ -150,17 +167,22 @@ import { SEARCH } from '../../config/main';
 
   searchOnScroll(filters: {}) {
     let filledFilters = filters;
+    const val = this.searchService.searchInputValue;
     if (this.searchService.searchInputValue) {
       filledFilters = {
         ...filters,
-        tag: this.searchService.searchInputValue,
+        tag: (val instanceof Tag) ? val : null,
+        tagDomain: (val instanceof TagDomain) ? val : null,
       };
     }
     this.searchService.search(filledFilters).subscribe();
   }
 
   get currentSearchTag(): Tag | null {
-    return this.searchService.searchInputValue;
+    const val = this.searchService.searchInputValue;
+    console.log({ val });
+    console.log((val instanceof Tag));
+    return (val instanceof Tag) ? val : null;
   }
 
   get loading(): boolean {

@@ -6,7 +6,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
-import { TagDomainsService } from '~/modules/tags/services/tag-domains.service';
+import { TagDomainsService } from '~/core/services/tag/tag-domains.service';
 
 @Component({
   selector: 'app-tag-domain-autocomplete',

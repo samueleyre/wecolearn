@@ -7,6 +7,7 @@ import { APIService } from '~/core/services/crud/api';
 import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 import { Tag } from '~/core/entities/tag/entity';
+import { TagDomain } from '~/core/entities/tag/TagDomain';
 
 import { SEARCH } from '../../../modules/search/config/main';
 
@@ -20,7 +21,7 @@ interface ApiResponseInterface {
 })
 export class SearchService extends APIService<User> {
   private currentlySearching = false;
-  private searchInput: BehaviorSubject<Tag> = new BehaviorSubject(null);
+  private searchInput: BehaviorSubject<Tag | TagDomain> = new BehaviorSubject(null);
   static max = SEARCH.default.max;
   static first = 0;
   public globalMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -50,16 +51,20 @@ export class SearchService extends APIService<User> {
     SearchService.first = 0;
   }
 
-  get searchInputValue(): Tag | null {
+  get searchInputValue(): Tag | TagDomain | null {
     return this.searchInput.value;
   }
 
-  getSearchInputObs(): Observable<Tag> {
+  getSearchInputObs(): Observable<Tag | TagDomain> {
     return this.searchInput;
   }
 
-  setSearchInput(tag: Tag): void {
-    this.searchInput.next(tag);
+  setSearchInputAsTag(tag: Tag): void {
+    this.searchInput.next(new Tag(tag));
+  }
+
+  setSearchInputAsTagDomain(tagDomain: TagDomain): void {
+    this.searchInput.next(new TagDomain(tagDomain));
   }
 
   searchList(filters: {} = {}): Observable<ApiResponseInterface> {
@@ -80,14 +85,17 @@ export class SearchService extends APIService<User> {
     }
     filters['max'] = SEARCH.default.max;
     filters['global'] = this.globalMode;
-    filters['useProfileTags'] = this.useProfileTagsMode;
     if (SearchService.first > 0) {
       // scroll search
       // keep same type of search
-      filters['userLearnTags'] = this.searchMeta.userLearnTags;
-      filters['userLearnTagDomains'] = this.searchMeta.userLearnTagDomains;
-      filters['userKnowTags'] = this.searchMeta.userKnowTags;
-      filters['userKnowTagDomains'] = this.searchMeta.userKnowTagDomains;
+      filters[SearchMeta.useProfileTags] = this.searchMeta.useProfileTags;
+      filters[SearchMeta.userLearnTags] = this.searchMeta.userLearnTags;
+      filters[SearchMeta.userLearnTagDomains] = this.searchMeta.userLearnTagDomains;
+      filters[SearchMeta.userKnowTags] = this.searchMeta.userKnowTags;
+      filters[SearchMeta.userKnowTagDomains] = this.searchMeta.userKnowTagDomains;
+    } else {
+      filters[SearchMeta.useProfileTags] = SearchMeta.useProfileTags in filters ?
+        filters[SearchMeta.useProfileTags] : this.useProfileTagsMode;
     }
     this._loading$.next(true);
 
