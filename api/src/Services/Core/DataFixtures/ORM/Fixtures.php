@@ -68,6 +68,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
 
             $tagDomain->setName($tagDomainParam['name']);
             $tagDomain->setEmoji($tagDomainParam['emoji']);
+            $tagDomain->setHexcolor('#ebb434');
 
             $this->tagDomainService->create($tagDomain);
         }
