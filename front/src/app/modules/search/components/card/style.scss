@@ -76,11 +76,15 @@
 }
 
 .badge {
+  &:not(.isSearchTag) {
+    color: #ffc600;
+  }
   padding:8px;
-  //background-color: #ffc600;
-  //color: #310c31;
-  color: #ffc600;
   border: solid 0.5px;
+  &.isSearchTag, &.isProfileTag {
+    color: white;
+    border-color: white;
+  }
 }
 
 .card-body {

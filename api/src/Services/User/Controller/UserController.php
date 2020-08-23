@@ -81,7 +81,8 @@ class UserController extends AbstractController
         SearchService $searchService
     ) {
 
-//        first, max, tag, global, useProfileTags
+        // parameters :
+        // first, max, tag, tag_domain, global, useProfileTags, userLearnTags, userLearnTagDomains, userKnowTags, userKnowTagDomains
 
         $filter = [
             'first' => $request->get('first', 0),
@@ -98,12 +99,15 @@ class UserController extends AbstractController
         ];
 
         $tag = $request->get('tag', ['id'=>null, 'name'=>null]);
+        $tagDomain = $request->get('tagDomain', null);
 
         if (
             ( array_key_exists('id', $tag) && $tag['id'] )
-            || ( array_key_exists('id', $tag) && $tag['name'] )
+            || ( array_key_exists('name', $tag) && $tag['name'] )
         ) {
             $filter['tag'] = $tag;
+        } else if ($tagDomain) {
+            $filter['tagDomain'] = $tagDomain;
         }
 
         $user = $tokenStorage->getToken()->getUser();

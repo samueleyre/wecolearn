@@ -35,6 +35,9 @@
     color: #393939;;
     margin-top: 30px;
     transition: opacity ease 1s;
+    p {
+      font-style: italic;
+    }
     &.hide {
       opacity: 0;
       transition: opacity ease 1s;

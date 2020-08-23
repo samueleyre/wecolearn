@@ -1380,6 +1380,13 @@
   dependencies:
     "@types/cordova" latest
 
+"@ionic-native/network@^5.28.0":
+  version "5.28.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/network/-/network-5.28.0.tgz#b714589bc7b6d9c920856c58a1b55ce3c9ca2f45"
+  integrity sha512-tkYCJd9R2t2gTo+0Ds2zyOgDjggbL7lZFWJ/MN7K3KIuSLRLvfsob0IC9hblY3giwP1kPTBi62KhjcBXtotHQg==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic-native/splash-screen@^5.0.0":
   version "5.24.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-5.24.0.tgz#4c37dcd92a993a22b43d76af259d4ac4faffde55"
@@ -4245,6 +4252,11 @@ copy-webpack-plugin@5.1.1:
     schema-utils "^1.0.0"
     serialize-javascript "^2.1.2"
     webpack-log "^2.0.0"
+
+cordova-plugin-network-information@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-network-information/-/cordova-plugin-network-information-2.0.2.tgz#f48a92cbd7cccb63cb0a5e5a00030001b8ac4fea"
+  integrity sha512-NwO3qDBNL/vJxUxBTPNOA1HvkDf9eTeGH8JSZiwy1jq2W2mJKQEDBwqWkaEQS19Yd/MQTiw0cykxg5D7u4J6cQ==
 
 cordova-res@^0.13.0:
   version "0.13.0"

@@ -9,16 +9,18 @@
        [scrollWindow]="false"
   >
     <div class="SearchPage-searchBar">
-      <app-searchbar-mobile (searchInputChange)="searchInput = $event"></app-searchbar-mobile>
+      <app-searchbar-mobile (isActifEmitter)="searchBarIsActive = $event"></app-searchbar-mobile>
     </div>
-    <div [class.hide]="loading" class="SearchPage-message">
-      <p [innerHTML]="searchMessage"></p>
-    </div>
-    <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer align-items-stretch">
-      <div class="SearchPage-cardsContainer-card" *ngFor="let card of cards">
-        <app-card [card]="card"></app-card>
-        <br>
+    <ng-container *ngIf="!searchBarIsActive">
+      <div [class.hide]="loading" class="SearchPage-message">
+        <p [innerHTML]="searchMessage"></p>
       </div>
-    </div>
+      <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer align-items-stretch">
+        <div class="SearchPage-cardsContainer-card" *ngFor="let card of cards">
+          <app-card [card]="card" [searchTag]="currentSearchTag"></app-card>
+          <br>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

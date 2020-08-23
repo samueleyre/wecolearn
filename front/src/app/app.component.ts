@@ -1,6 +1,6 @@
 import { Component, NgZone, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import {
   Plugins,
@@ -55,13 +55,12 @@ export class AppComponent {
   }
 
   private initMessagerieService() {
-    let oldLog = false;
-    Logged.get().subscribe(
+    Logged.get().pipe(distinctUntilChanged()).subscribe(
       (logged) => {
         let subs: any = { unsubscribe : null };
-        if (logged && !oldLog) {
-          // todo : move this to a dedicated service
-          this.messagesService.init();
+        if (logged) {
+          // get all messages every time logged or app is reloaded
+          this.messagesService.initMessages();
 
           // subscribe to mercure updates
           if (!environment.android) {
@@ -112,8 +111,8 @@ export class AppComponent {
                 (notification: PushNotificationActionPerformed) => {
                   console.log('########notif####### action performed' + JSON.stringify(notification));
                   this._zone.run(() => {
-                    this.router.navigateByUrl('/dashboard/discussion');
                     const message = new Message(JSON.parse(notification.notification.data.message));
+                    this.router.navigateByUrl(`/dashboard/discussion/current/${message.sender.id}`);
                     message.thread = new Thread({
                       id: message.sender.id,
                       name: message.sender.first_name,
@@ -135,7 +134,6 @@ export class AppComponent {
         } else if (!logged && typeof subs.unsubscribe === 'function') {
           subs.unsubscribe();
         }
-        oldLog = logged;
       },
       (error) => {
         console.log('error', error);

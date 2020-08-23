@@ -9,6 +9,11 @@
     <input matInput formControlName="emoji" required />
   </mat-form-field>
 
+  <mat-form-field appearance="outline">
+    <mat-label>Couleur HEX</mat-label>
+    <input matInput formControlName="hexcolor" required />
+  </mat-form-field>
+
   <div>
     <button
       *ngIf="isCreating"

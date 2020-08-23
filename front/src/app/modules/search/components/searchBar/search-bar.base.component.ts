@@ -1,25 +1,35 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { debounceTime, filter, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, skipWhile, switchMap, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 import { TagService } from '~/core/services/tag/tag';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { DestroyObservable } from '~/core/components/destroy-observable';
+import { TagDomain } from '~/core/entities/tag/TagDomain';
 
 import { SearchService } from '../../../../core/services/search/search';
 
 @Component({
   template: '',
-})export class SearchBarBaseComponent implements OnInit {
+})export class SearchBarBaseComponent extends DestroyObservable implements OnInit {
+  public searchBarActive = new BehaviorSubject(false);
   public globalMode;
   public useProfileTagsMode;
+  public foundAutocompleteTagsObservable: Observable<Tag[]>;
+  public searchInputControl = new FormControl();
+  public autocompleteDisabled = false;
+  public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
+  public inputChangeByUser$ = new Subject<string>();
+
   constructor(
         private tagService: TagService,
         private searchService: SearchService,
     ) {
+    super();
     this.tagService = tagService;
   }
 
@@ -28,18 +38,14 @@ import { SearchService } from '../../../../core/services/search/search';
   }
 
   get searchBarHasValue(): boolean {
-    if (typeof this.searchInputControl.value === 'string') {
-      return !!this.searchInputControl.value;
-    }
-    if (this.searchInputControl.value && typeof this.searchInputControl.value === 'object') {
-      return !!this.searchInputControl.value.name;
-    }
+    // if (typeof this.searchInputControl.value === 'string') {
+    return !!this.searchInputControl.value;
+    // }
+    // if (this.searchInputControl.value && typeof this.searchInputControl.value === 'object') {
+    //   return !!this.searchInputControl.value.name;
+    // }
   }
 
-  public searchInputControl = new FormControl();
-  public autocompleteDisabled = false;
-  public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
-  @Output() searchInputChange = new EventEmitter();
   @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
   @ViewChild(MatAutocompleteTrigger, { static: true }) autocomplete: MatAutocompleteTrigger;
   @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
@@ -50,6 +56,7 @@ import { SearchService } from '../../../../core/services/search/search';
 
   public setGlobalMode(val) {
     this.searchService.setGlobalMode(val);
+    this.searchService.searchAgainWithSamefilters();
   }
 
 
@@ -57,52 +64,47 @@ import { SearchService } from '../../../../core/services/search/search';
     this.globalMode = this.searchService.globalMode;
     this.useProfileTagsMode = this.searchService.useProfileTagsMode;
 
-    this.searchService.getSearchInputObs().subscribe((tag: Tag) => {
-      this.searchInputControl.setValue(tag);
-      if (typeof this.searchInputControl.value === 'string') {
-        this.searchInputChange.next(
-          new Tag({
-            id: null,
-            name: this.searchInputControl.value,
-            type: TagTypeEnum.LEARN,
-          }),
-        );
-      } else {
-        this.searchInputChange.next(this.searchInputControl.value);
-      }
+    this.searchService.getSearchInputObs().subscribe((val?: Tag | TagDomain) => {
+      this.searchInputControl.setValue(val ? val.name : null);
     });
 
-    this.searchInputControl.valueChanges.pipe(
+    this.foundAutocompleteTagsObservable = this.inputChangeByUser$.asObservable().pipe(
       // tslint:disable-next-line:no-magic-numbers
       debounceTime(300),
       filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this.tagService.findTags(value)),
-    ).subscribe((tags) => {
-      this.foundAutocompleteTags$.next(tags);
-    });
+    );
   }
 
-  search() {
+  inputChangeByUser($event) {
+    this.inputChangeByUser$.next($event.target.value);
+  }
+
+  search(tag?: Tag) {
     const filters = {};
-    if (this.searchInputControl) {
-      if (typeof this.searchInputControl.value === 'string') {
-        filters['tag'] = new Tag({
-          id: null,
-          name: this.searchInputControl.value,
-          type: TagTypeEnum.LEARN,
-        });
-      } else if (this.searchInputControl.value) {
-        filters['tag'] = this.searchInputControl.value;
-      }
+    if (tag) {
+      filters['tag'] = tag;
     }
-    this.searchInputChange.next(this.searchInputControl.value);
-    this.searchService.setSearchInput('tag' in filters ? filters['tag'] : null);
+    this.foundAutocompleteTags$.next([]);
+    this.searchService.setSearchInputAsTag('tag' in filters ? filters['tag'] : null);
     this.searchService.search(filters).subscribe();
-    this.hideAutocomplete();
   }
 
-  resetSearchBar(): void {
+  searchByTagDomain(tagDomain: TagDomain) {
+    const filters = {
+      useProfileTags: false, // don't search using profile tags
+    };
+    if (tagDomain) {
+      filters['tagDomain'] = tagDomain;
+    }
+    this.foundAutocompleteTags$.next([]);
+    this.searchService.setSearchInputAsTagDomain('tagDomain' in filters ? filters['tagDomain'] : null);
+    this.searchService.search(filters).subscribe();
+  }
+
+  resetSearchBar(event): void {
     this.searchInputControl.setValue(null);
+    this.foundAutocompleteTags$.next([]);
   }
 
   onFilterClick(event) {
@@ -126,11 +128,7 @@ import { SearchService } from '../../../../core/services/search/search';
     }
   }
 
-  hideAutocomplete() {
-    this.autocomplete.closePanel();
-  }
-
-  displayAutocomplete(tag: Tag): string {
-    return tag ? tag.name : '';
-  }
+  // displayAutocomplete(tag: Tag): string {
+  //   return tag ? tag.name : '';
+  // }
 }

@@ -68,6 +68,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
 
             $tagDomain->setName($tagDomainParam['name']);
             $tagDomain->setEmoji($tagDomainParam['emoji']);
+            $tagDomain->setHexcolor('#ebb434');
 
             $this->tagDomainService->create($tagDomain);
         }
@@ -165,11 +166,13 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
 
             // tags
             $randLearnTag = $tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
+            $randLearnTag2 = $tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
+            $randLearnTag3 = $tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
             $randTag = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
             $randTag2 = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
             $randTag3 = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
             $randTag4 = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
-            $randTags = [$randLearnTag, $randTag, $randTag2, $randTag3, $randTag4];
+            $randTags = [$randLearnTag, $randLearnTag2, $randLearnTag3, $randTag, $randTag2, $randTag3, $randTag4];
             $user->setTags($this->tagService->beforePatchTags(new ArrayCollection(), new ArrayCollection($randTags)));
 
             // default image

@@ -10,6 +10,8 @@ import { SearchService } from '~/core/services/search/search';
   styleUrls: ['./search-mobile.component.scss'],
 })
 export class SearchMobileComponent extends SearchComponentBase implements OnInit {
+  searchBarIsActive = false;
+
   constructor(
     private _router: Router,
     private _searchService: SearchService,
