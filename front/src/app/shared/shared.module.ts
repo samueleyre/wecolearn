@@ -12,12 +12,14 @@ import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
 import { ConfirmDialogComponent } from '~/core/components/dialog/confirm-dialog.component';
 
 import { NoConnectionToastComponent } from './components/no-connection-toast/no-connection-toast.component';
+import { AndroidLinkComponent } from './components/android-link/android-link.component';
 
 @NgModule({
   declarations: [
     CopyComponent,
     HideMenuMobileOnFocusDirective,
     NoConnectionToastComponent,
+    AndroidLinkComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +36,7 @@ import { NoConnectionToastComponent } from './components/no-connection-toast/no-
     ProfileImageModule,
     CopyComponent,
     HideMenuMobileOnFocusDirective,
+    AndroidLinkComponent,
     // NoConnectionToastComponent,
   ],
   entryComponents: [NoConnectionToastComponent],

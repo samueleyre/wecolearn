@@ -31,6 +31,7 @@ import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/compon
 import { SendPasswordConfirmationEmailComponent } from './components/sendConfirmationEmail/component';
 import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirmationEmail/component';
 import { ResetPasswordFormComponent } from './components/passwordResetForm/component';
+import {SharedModule} from "~/shared/shared.module";
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { ResetPasswordFormComponent } from './components/passwordResetForm/compo
     MaterialModule,
     FooterModule,
     IonicModule,
+    SharedModule,
   ],
 })
 export class AuthModule {
