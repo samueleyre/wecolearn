@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { LINKS } from '~/config/links';
 
@@ -9,4 +9,5 @@ import { LINKS } from '~/config/links';
 })
 export class AndroidLinkComponent {
   public androidLink = LINKS.android;
+  @Input() text = 'Application Android';
 }

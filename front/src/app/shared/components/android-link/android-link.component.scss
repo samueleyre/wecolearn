@@ -2,7 +2,7 @@
 
 
 .androidLink {
-  width: 206px;
+  //width: 206px;
   text-decoration: none;
   display: flex;
   justify-content: space-evenly;
@@ -16,6 +16,7 @@
   span {
     font: $titleFont;
     font-weight: bold;
+    padding-right: 5px;
   }
   &:hover {
     color: black;
