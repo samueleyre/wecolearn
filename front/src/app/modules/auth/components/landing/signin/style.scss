@@ -4,15 +4,17 @@
 
 
 .landing-page {
-
-  .brand {
-    width: 200px;
+  &-header {
     margin-top: 30px;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .brand {
+      width: 200px;
+    }
   }
 
   .landing-description {
-
     .slogan {
       font-size: 35px;
       font-family: "ralewayblack";
@@ -21,18 +23,14 @@
       color: white;
       padding: 20px;
     }
-
     .resume {
       font-family: "ralewaymedium";
       font-size: 15px;
       margin-top: 40px;
-
       strong {
         font-family: "ralewaybold";
       }
     }
-
-
   }
 
   .landing-picture-background {
