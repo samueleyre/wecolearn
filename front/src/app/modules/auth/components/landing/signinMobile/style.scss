@@ -1,0 +1,18 @@
+.SigninMobile {
+  &-application {
+    display: flex;
+    align-items: center;
+    border-bottom: solid grey 1px;
+    background-color: #eeeeee;
+    justify-content: space-between;
+    padding: 15px 15px;
+    margin-bottom: 5px;
+  }
+  &-signingContainer {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .brand {
+    margin-bottom: 45px;
+  }
+}
