@@ -2,6 +2,7 @@ import { finalize, map, tap } from 'rxjs/operators';
 import { Injectable, NgZone } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import * as _ from 'lodash';
 
 import { APIService } from '~/core/services/crud/api';
 import { User } from '~/core/entities/user/entity';
@@ -104,8 +105,18 @@ export class SearchService extends APIService<User> {
         if (SearchService.first === 0) {
           // new search
           this.searchMetaSubject.next(response.meta);
+          this.currentFoundMatchs$.next(response.data.map(val => val[0]));
+        } else {
+          // scroll search
+          this.currentFoundMatchs$.next(
+            _.uniqBy(
+              [
+                ...this.currentFoundMatchs$.getValue(),
+                ...response.data.map(val => val[0]),
+              ],
+              'id'),
+          );
         }
-        this.currentFoundMatchs$.next(response.data.map(val => val[0]));
         this._loading$.next(false);
         this.currentlySearching = false;
         return true;
@@ -126,7 +137,7 @@ export class SearchService extends APIService<User> {
     this.search(filledFilters).subscribe();
   }
 
-  getCurrentFoundClients(): Observable<any[]> {
+  getCurrentFoundMatchs(): Observable<any[]> {
     return this.currentFoundMatchs$.asObservable();
   }
 

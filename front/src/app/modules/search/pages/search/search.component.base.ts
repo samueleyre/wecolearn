@@ -54,14 +54,16 @@ import { SEARCH } from '../../config/main';
   }
 
   load(): void {
-    this.searchService.getCurrentFoundClients().subscribe((users: User[]) => {
+    this.searchService.getCurrentFoundMatchs().subscribe((users: User[]) => {
       if (this.searchService.searchType !== 'scroll') {
         // new SEARCH
         this.cardsContainerElementRef.nativeElement.scrollTo(0, 0);
         this.cards = users;
       } else {
         // SCROLL SEARCH
-        users.forEach((user) => {
+        console.log({ users });
+        users.filter(user => this.cards.findIndex(card => card.id === user.id) === -1).forEach((user) => {
+          console.log({ user });
           this.cards.push(user);
         });
       }
