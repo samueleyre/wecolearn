@@ -35,30 +35,29 @@ class NotificationService
 
         foreach( $subscriptions as $sub ) {
 
+            $deviceToken = $sub->getToken();
+
+            $notification = CloudMessage::withTarget('token', $deviceToken);
+
+            $config = Messaging\AndroidConfig::fromArray([
+                'ttl' => '3600s',
+                'priority' => 'normal',
+                'notification' => [
+                    'title' => 'Wecolearn',
+                    'body' => 'Vous avez un message',
+                    'icon' => 'ic_stat_icon',
+                    'color' => '#f7eb43',
+                    'sound' => 'default',
+
+                ],
+                'data'  => ['message' => $this->serializer->getPayload($message, $request)]
+            ]);
+            $notification = $notification->withAndroidConfig($config);
+
             try {
-
-                $deviceToken = $sub->getToken();
-
-                $notification = CloudMessage::withTarget('token', $deviceToken);
-
-                $config = Messaging\AndroidConfig::fromArray([
-                    'ttl' => '3600s',
-                    'priority' => 'normal',
-                    'notification' => [
-                        'title' => 'Wecolearn',
-                        'body' => 'Vous avez un message',
-                        'icon' => 'ic_stat_icon',
-                        'color' => '#f7eb43',
-                        'sound' => 'default',
-
-                    ],
-                    'data'  => ['message' => $this->serializer->getPayload($message, $request)]
-                ]);
-                $notification = $notification->withAndroidConfig($config);
-
                 $this->sender->send($notification);
             }
-            catch (Exception $e) {
+            catch (\Error $e) {
                 syslog(LOG_ERR, `could not send notif of message via firebase to android to ${$notification->getId()}`);
             }
         }
