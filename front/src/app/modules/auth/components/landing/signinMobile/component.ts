@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { environment } from '~/../environments/environment';
+
 
 @Component({
   selector: 'landing-signin-mobile',
@@ -7,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./style.scss'],
 })
 
-export class LandingSigninMobileComponent implements OnInit {
-  ngOnInit() {
-    //
+export class LandingSigninMobileComponent {
+  public get isAndroid() {
+    return environment.android;
   }
 }
