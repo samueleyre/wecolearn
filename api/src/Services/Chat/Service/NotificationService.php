@@ -58,10 +58,10 @@ class NotificationService
                 $this->sender->send($notification);
             }
             catch (\Error $e) {
-                syslog(LOG_ERR, `could not send notif of message via firebase to android to ${$to->getId()}`);
+                syslog(LOG_ERR, `could not send notif of message via firebase to android`);
             }
             catch (\Exception $e) {
-                syslog(LOG_ERR, `could not send notif of message via firebase to android to ${$to->getId()}`);
+                syslog(LOG_ERR, `could not send notif of message via firebase to android`);
             }
         }
     }
