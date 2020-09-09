@@ -36,9 +36,9 @@ export class TagListComponent extends DestroyObservable implements OnInit {
     return tagTypeFR[type];
   }
 
-  tagDisplayName(tag: Tag): string {
-    return `${tag.name} ${tag.tag_domain ? tag.tag_domain.emoji : ''}`.trim();
-  }
+  // tagDisplayName(tag: Tag): string {
+  //   return `${tag.name} ${tag.tag_domain ? tag.tag_domain.emoji : ''}`.trim();
+  // }
 
   onDelete(tag: Tag) {
     this._dialogService

@@ -1,6 +1,6 @@
 export const FOUNDERS_SOCIALS = {
   samuel : {
-    twitterLink : 'https://twitter.com/samueleyre',
+    twitterLink : 'https://twitter.com/eyresamuel',
     linkedinLink: 'https://www.linkedin.com/in/samueleyre/',
   },
   alexandre : {
