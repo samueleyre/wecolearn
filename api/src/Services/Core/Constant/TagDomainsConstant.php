@@ -7,51 +7,51 @@ class TagDomainsConstant
     public static $LIST= [
         [
             "name"=>"Dance",
-            "emoji"=>"🕺🏻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Programmation",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Art",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Musique",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Science",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Design",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Langues",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Nature",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Fabrication",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Philosophie",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Gouvernance",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
         [
             "name"=>"Anthropologie",
-            "emoji"=>"👩‍💻",
+            "emoji"=>"1F5FF",
         ],
 
     ];

@@ -15,22 +15,26 @@
     </div>
   </div>
   <div class="Profile-tagsContainer" *ngIf="(user.tags | tagPipe: 0:20).length > 0">
-    <p class="title center">Je veux apprendre 📚</p>
+    <p class="title center">Je veux apprendre</p>
     <ul class="tags col-md-12 flex-wrap">
       <li *ngFor="let tag of user.tags | tagPipe: 0:20">
         <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
-          <span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span>
+          <span class="badge" [title]="tagDisplayTitle(tag)">
+            {{ tag.name }} <app-emoji *ngIf="tag.tag_domain" [emojiName]="tag.tag_domain.emoji"></app-emoji>
+          </span>
         </a></p>
       </li>
     </ul>
   </div>
   <div class="Profile-tagsContainer" style="border-top: 1px solid #ffffff17;"
            *ngIf="(user.tags | tagPipe: 1:20).length > 0">
-    <p class="title center">Je connais 🧠</p>
+    <p class="title center">Je connais</p>
     <ul class="tags col-md-12 flex-wrap">
       <li *ngFor="let tag of user.tags | tagPipe: 1:20">
         <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
-          <span class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span>
+          <span class="badge" [title]="tagDisplayTitle(tag)">
+            {{ tag.name }} <app-emoji *ngIf="tag.tag_domain" [emojiName]="tag.tag_domain.emoji"></app-emoji>
+          </span>
         </a></p>
       </li>
     </ul>

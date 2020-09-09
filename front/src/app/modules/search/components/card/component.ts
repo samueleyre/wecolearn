@@ -92,7 +92,7 @@ import { SearchService } from '~/core/services/search/search';
     return `${tag.name}${tag.tag_domain ? ` | ${tag.tag_domain.name}` : ''}`.trim();
   }
 
-  tagDisplayName(tag: Tag): string {
-    return `${tag.name} ${tag.tag_domain ? tag.tag_domain.emoji : ''}`.trim();
-  }
+  // tagDisplayName(tag: Tag): string {
+  //   return `${tag.name} ${tag.tag_domain ? tag.tag_domain.emoji : ''}`.trim();
+  // }
 }

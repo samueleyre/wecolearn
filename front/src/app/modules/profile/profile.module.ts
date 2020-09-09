@@ -54,6 +54,7 @@ import {IonicModule} from "@ionic/angular";
     PasswordDifficultyModule,
     MaterialModule,
     IonicModule,
+    SharedModule,
   ],
 })
 export class ProfileModule {

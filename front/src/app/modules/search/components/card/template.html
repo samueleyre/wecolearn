@@ -8,10 +8,14 @@
     <div class="card-container" *ngIf="card.tags"></div>
     <div *ngIf="card.tags">
       <div class="learning">
-        <p class="learning-title">Je veux apprendre 📚</p>
+        <p class="learning-title">Je veux apprendre</p>
         <ul class="learning-tags col-md-12 flex-wrap">
           <li *ngFor="let tag of tags | tagPipe: 0: 3">
-            <p><a (click)="searchByTag(tag)"><span [class.isProfileTag]="isProfileTag(tag)" [class.isSearchTag]="isSearchTag(tag)" class="badge" [title]="tagDisplayTitle(tag)">{{tagDisplayName(tag)}}</span></a></p>
+            <p><a (click)="searchByTag(tag)">
+              <span [class.isProfileTag]="isProfileTag(tag)" [class.isSearchTag]="isSearchTag(tag)" class="badge" [title]="tagDisplayTitle(tag)">
+                {{ tag.name }} <app-emoji *ngIf="tag.tag_domain" [emojiName]="tag.tag_domain.emoji"></app-emoji>
+              </span>
+            </a></p>
           </li>
         </ul>
       </div>
