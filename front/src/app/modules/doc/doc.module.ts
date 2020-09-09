@@ -9,6 +9,7 @@ import { PeerLearningComponent } from './pages/peerLearning/component';
 import { CookiePolicyComponent } from './pages/cookie-policy/cookie-policy.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { ManifestComponent } from './pages/manifest/manifest.component';
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ManifestComponent } from './pages/manifest/manifest.component';
     CommonModule,
     DocRouting,
     FooterModule,
+    MatIconModule,
   ],
 })
 export class DocModule {
