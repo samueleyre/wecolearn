@@ -1,1 +1,1 @@
-<img width="29px" *ngIf="emojiName" src="assets/emoji/{{emojiName}}.svg" alt="{{emojiName}}">
+<img *ngIf="emojiName && !isEmoji(emojiName)" width="29px" src="assets/emoji/{{emojiName}}.svg" alt="{{emojiName}}">
