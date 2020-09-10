@@ -3,7 +3,7 @@
     <wc-profil-image [image]="message.sender.image" [style]="{width: '45px', height: '45px', borderRadius: '50px' }"></wc-profil-image>
   </div>
   <div class="message-content" >
-    <span class="message-username">{{message.sender | username}}</span>
+    <span class="message-username"><a routerLink="/dashboard/profile/{{message.sender.profil_url}}">{{message.sender | username}}</a></span>
     <span class="message-time">{{message.created | fromNow}}</span>
     <div class="message-textWrapper" [ngClass]="msgContainerClass">
       <div class="message-text" [innerHTML]="message.message | sanitize"></div>
