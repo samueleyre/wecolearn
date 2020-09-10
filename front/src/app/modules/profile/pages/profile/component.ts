@@ -11,6 +11,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { User } from '~/core/entities/user/entity';
 import { NAV } from '~/config/navigation/nav';
 import { UserService } from '~/core/services/user/user.service';
+import { WcRouterService } from '~/core/services/wc-router.service';
 
 
 @Component({
@@ -25,12 +26,12 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private router: Router,
               private deviceService: DeviceDetectorService,
+              private _wcRouter: WcRouterService,
   ) {
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      console.log('is it here');
       this.user$ = this.userService.get({}, params.get('profileUrl'));
       this.user$.pipe(
         takeUntil(this.onDestroy),
@@ -45,6 +46,10 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
 
   get isMobile() {
     return this.deviceService.isMobile();
+  }
+
+  get returnLink() {
+    return this._wcRouter.getReturnLink(NAV.search);
   }
 
   ngOnDestroy(): void {
