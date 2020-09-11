@@ -31,4 +31,20 @@ class TagDomainRepository extends ServiceEntityRepository
         $qb->setMaxResults(5);
         return $qb->getQuery()->getResult();
     }
+
+    /**
+    * @return TagDomain[] Returns an array of TagDomain objects
+    */
+    public function getPopular($limit)
+    {
+        $qb = $this->createQueryBuilder('td');
+        $qb->join('td.tags ', 't');
+        $qb->andwhere('t.type = 0');
+        $qb->orderBy('t.iteration', 'DESC');
+        $qb->setMaxResults($limit);
+        return $qb->getQuery()->getResult();
+    }
+
+
+
 }

@@ -2,6 +2,7 @@ import {
   Component, EventEmitter,
   OnInit, Output,
 } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 import { TagService } from '~/core/services/tag/tag';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
@@ -43,11 +44,14 @@ import { TagDomainsService } from '~/core/services/tag/tag-domains.service';
   }
 
   private initTagDomains(): void {
-    this._tagDomainsService.findTagDomains().subscribe();
+    this._tagDomainsService.getPopularDomains().subscribe();
   }
 
+  /**
+   * 6 first popular domains
+   */
   get tagDomains$() {
-    return this._tagDomainsService.entities$;
+    return this._tagDomainsService.entities$.pipe(map(val => val.slice(0, 6)));
   }
 
   activateSearchBar(): void {
@@ -82,7 +86,7 @@ import { TagDomainsService } from '~/core/services/tag/tag-domains.service';
   }
 
   get inputIsEmpty(): boolean {
-    return this.searchInputControl.value === null || this.searchInputControl.value === "";
+    return this.searchInputControl.value === null || this.searchInputControl.value === '';
   }
 
   deactivateSearchBar() {
