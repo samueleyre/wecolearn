@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { NAV } from '~/config/navigation/nav';
+import { WcRouterService } from '~/core/services/wc-router.service';
 
 @Component({
   selector: 'app-header-mobile',
@@ -25,6 +26,7 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
   constructor(
     private router: Router,
     private menuMobileService: MenuMobileService,
+    private _wcRouter: WcRouterService,
   ) {
     super();
   }
@@ -54,11 +56,14 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
 
   setNavigation(path: string) {
     this.showReturn = this.menuMobileService.urlHasReturnButton(path);
-    this.returnLink = MenuMobileService.getReturnLink(path);
+
+    // get return link, if profile page go te previous page
+    this.returnLink = (/dashboard\/profile\//.test(path)) ?
+      this._wcRouter.getReturnLink(NAV.search)
+      : MenuMobileService.getReturnLink(path);
+
     this.showDiscussionUser = MenuMobileService.showDiscussionUser(path);
     this.showSettings = path === NAV.profile;
     this.title = this.menuMobileService.getUrlTitle(path) ;
   }
-
-
 }
