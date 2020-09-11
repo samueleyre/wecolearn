@@ -56,9 +56,7 @@ import { SearchService } from '../../../../core/services/search/search';
 
   public setGlobalMode(val) {
     this.searchService.setGlobalMode(val);
-    this.searchService.searchAgainWithSamefilters();
   }
-
 
   ngOnInit() {
     this.globalMode = this.searchService.globalMode;

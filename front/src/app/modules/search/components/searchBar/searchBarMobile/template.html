@@ -8,8 +8,22 @@
   </mat-form-field>
 </div>
 
+
+<div class="Actions-container" [hidden]="!(isActive)">
+  <ion-list>
+    <ion-item>
+      <ion-label>Recherche globale 🌏</ion-label>
+      <ion-toggle [checked]="globalMode"
+                  (ionChange)="setGlobalMode($event.detail.checked)"
+      ></ion-toggle>
+    </ion-item>
+  </ion-list>
+</div>
+
+
+
 <div class="tagDomains-container" *ngIf="isActive && inputIsEmpty">
-  <h6 class="tagDomains-title">Catégories</h6>
+  <h6 class="tagDomains-title">Catégories populaires</h6>
   <div class="tagDomains" >
     <div class="tagDomains-box" [style.borderColor]="option.hexcolor ? option.hexcolor : null" (click)="searchByTagDomain(option)" *ngFor="let option of tagDomains$ | async">
       <span class="tagDomains-box-emoji">

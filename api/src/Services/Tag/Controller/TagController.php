@@ -48,6 +48,20 @@ class TagController extends AbstractController
         return $ret;
     }
 
+    /**
+     * @Get("tag/domains-popular")
+     */
+    public function getTagPopularDomainsAction()
+    {
+//      todo:  add cache to this request !
+
+        $ret = $this->getDoctrine()
+            ->getRepository(TagDomain::class)
+            ->getPopular(8);
+
+        return $ret;
+    }
+
 
 
 }
