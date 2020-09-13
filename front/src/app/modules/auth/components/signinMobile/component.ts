@@ -10,7 +10,7 @@ import { NAV } from '~/config/navigation/nav';
 
 import { environment } from '~/../environments/environment';
 import { PATTERN } from '~/shared/config/pattern';
-import {EnvEnum} from "~/core/enums/env.enum";
+import { EnvEnum } from '~/core/enums/env.enum';
 
 
 @Component({

@@ -9,19 +9,17 @@
     <div *ngIf="card.tags">
       <div class="learning">
         <p class="learning-title">Je veux apprendre</p>
-        <ul class="learning-tags col-md-12 flex-wrap">
-          <li *ngFor="let tag of tags | tagPipe: 0: 3">
-            <p><a (click)="searchByTag(tag)">
-              <span [class.isProfileTag]="isProfileTag(tag)" [class.isSearchTag]="isSearchTag(tag)" class="badge" [title]="tagDisplayTitle(tag)">
-                {{ tag.name }} <app-emoji *ngIf="tag.tag_domain" [emojiName]="tag.tag_domain.emoji"></app-emoji>
-              </span>
-            </a></p>
-          </li>
-        </ul>
+        <div class="learning-tags">
+          <div class="learning-tags-badgeContainer" *ngFor="let tag of tags | tagPipe: 0: 3" (click)="searchByTag(tag)">
+            <span [class.isProfileTag]="isProfileTag(tag)" [class.isSearchTag]="isSearchTag(tag)" class="badge" [title]="tagDisplayTitle(tag)">
+              {{ tag.name }} <app-emoji *ngIf="tag.tag_domain" [emojiName]="tag.tag_domain.emoji"></app-emoji>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
-      <text-limit [text]="card.biographie" [classes]="'card-text'" [id]="card.profil_url"></text-limit>
+      <text-limit [text]="getBio(card.biographie)" [classes]="'card-text'" [id]="card.profil_url"></text-limit>
     </div>
     <div class="card-footer">
       <div class="card-btn">
