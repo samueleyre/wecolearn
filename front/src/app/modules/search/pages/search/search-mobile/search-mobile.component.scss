@@ -35,6 +35,11 @@
     color: #393939;;
     margin-top: 30px;
     transition: opacity ease 1s;
+    &-btn {
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
     p {
       font-style: italic;
     }

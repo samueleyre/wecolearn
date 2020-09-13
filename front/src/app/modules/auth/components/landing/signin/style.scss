@@ -1,8 +1,5 @@
 @import 'variables';
 
-
-
-
 .landing-page {
   &-header {
     margin-top: 30px;
@@ -17,18 +14,18 @@
   .landing-description {
     .slogan {
       font-size: 35px;
-      font-family: "ralewayblack";
-      background-color: #211D1E;
+      font-family: $bigTitleFont;
+      background-color: $primaryColor;
       border-left: 20px solid #ffc600;
       color: white;
       padding: 20px;
     }
     .resume {
-      font-family: "ralewaymedium";
+      font-family: $mainFont;
       font-size: 15px;
       margin-top: 40px;
       strong {
-        font-family: "ralewaybold";
+        font-family: $titleFont;
       }
     }
   }

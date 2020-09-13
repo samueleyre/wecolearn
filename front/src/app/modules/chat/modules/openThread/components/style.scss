@@ -1,5 +1,9 @@
-.btn{
-  background-color: #ffc600;
-  color: #310c31 !important;
+.openThread-buttonContent {
+  display: flex;
+  align-items: center;
   font-weight: bold;
+  mat-icon {
+    margin-left: 10px;
+  }
 }
+

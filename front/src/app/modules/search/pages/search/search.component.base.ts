@@ -10,6 +10,8 @@ import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 import { Tag } from '~/core/entities/tag/entity';
 import { SearchService } from '~/core/services/search/search';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
+import { NAV } from '~/config/navigation/nav';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 import { SEARCH } from '../../config/main';
 
@@ -20,6 +22,7 @@ import { SEARCH } from '../../config/main';
   public cards: any[] = [];
   public scrolling;
   public searchInput = null;
+  public nav = NAV;
   private lastScrollTop = 0;
   private direction = 'down';
 
@@ -42,6 +45,7 @@ import { SEARCH } from '../../config/main';
   constructor(
     private router: Router,
     private searchService: SearchService,
+    private profileService: ProfileService,
   ) {
   }
 
@@ -61,9 +65,7 @@ import { SEARCH } from '../../config/main';
         this.cards = users;
       } else {
         // SCROLL SEARCH
-        console.log({ users });
         users.filter(user => this.cards.findIndex(card => card.id === user.id) === -1).forEach((user) => {
-          console.log({ user });
           this.cards.push(user);
         });
       }
@@ -91,6 +93,10 @@ import { SEARCH } from '../../config/main';
     return !this.searchService.useProfileTagsMode;
   }
 
+  get profileComplete(): boolean {
+    return this.profileService.profile.tags.length !== 0;
+  }
+
   get searchMessage(): string | null {
     if (this.loading) {
       return null;
@@ -104,11 +110,19 @@ import { SEARCH } from '../../config/main';
       }
       return this.messages.noResults;
     }
+
     if (meta) {
       // tag not found
       if (meta[SearchMeta.tagNotFound]) {
         return this.messages[SearchMeta.tagNotFound];
       }
+
+      // if (
+      //   this.profileService.profile.tags.length === 0
+      //   && !(meta[SearchMeta.searchLearnTag] || meta[SearchMeta.searchByLearnTagDomain])
+      // ) {
+      //   return this.messages.profileIncomplete;
+      // }
 
       // if found match with matching tags in global mode
       if (this.searchService.globalMode && meta[SearchMeta.useProfileTags]) {

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { OpenThreadComponent } from '~/modules/chat/modules/openThread/components/component';
+import { MaterialModule } from '~/shared/modules/material/material.module';
 
 
 @NgModule({
@@ -11,7 +12,9 @@ import { OpenThreadComponent } from '~/modules/chat/modules/openThread/component
   exports: [
     OpenThreadComponent,
   ],
-  imports: [],
+  imports: [
+    MaterialModule,
+  ],
   providers: [],
 })
 export class OpenThreadModule {
