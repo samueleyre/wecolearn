@@ -12,6 +12,7 @@ import { chat } from '~/config/chat';
 import { Tag } from '~/core/entities/tag/entity';
 import { ProfileService } from '~/core/services/user/profile.service';
 import { SearchService } from '~/core/services/search/search';
+import {BIO} from "~/config/bio.const";
 
 
 @Component({
@@ -90,6 +91,13 @@ import { SearchService } from '~/core/services/search/search';
 
   tagDisplayTitle(tag: Tag): string {
     return `${tag.name}${tag.tag_domain ? ` | ${tag.tag_domain.name}` : ''}`.trim();
+  }
+
+  getBio(bio): string {
+    if (bio) {
+      return bio;
+    }
+    return BIO.default;
   }
 
   // tagDisplayName(tag: Tag): string {
