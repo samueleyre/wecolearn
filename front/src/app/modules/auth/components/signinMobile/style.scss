@@ -1,6 +1,14 @@
 form {
   margin-top: 30px;
-
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    button {
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 5px 10px;
+    }
+  }
   input {
     transition: .2s;
 
