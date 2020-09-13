@@ -12,7 +12,11 @@
        (scrolled)="onScroll($event)"
        [scrollWindow]="false">
     <div class="SearchPage-message" [class.hide]="loading">
-      <p [innerHTML]="searchMessage | safeHtml"></p>
+      <p *ngIf="profileComplete" [innerHTML]="searchMessage | safeHtml"></p>
+      <ng-container *ngIf="!profileComplete">
+        <p>Dites nous ce vous avez envie d'apprendre pour être mis en relation avec les bonnes personnes !</p>
+        <button mat-raised-button color="primary" class="SearchPage-message-btn" [routerLink]="nav.profile">Compléter mon profil</button>
+      </ng-container>
     </div>
     <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer">
       <div *ngFor="let card of cards" class="SearchPage-cardsContainer-card">

@@ -13,7 +13,11 @@
     </div>
     <ng-container *ngIf="!searchBarIsActive">
       <div [class.hide]="loading" class="SearchPage-message">
-        <p [innerHTML]="searchMessage"></p>
+        <p *ngIf="profileComplete" [innerHTML]="searchMessage"></p>
+        <ng-container *ngIf="!profileComplete">
+          <p>Dites nous ce vous avez envie d'apprendre pour être mis en relation avec les bonnes personnes !</p>
+          <button mat-raised-button color="primary" class="SearchPage-message-btn" [routerLink]="nav.profile">Compléter mon profil</button>
+        </ng-container>
       </div>
       <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer align-items-stretch">
         <div class="SearchPage-cardsContainer-card" *ngFor="let card of cards">
