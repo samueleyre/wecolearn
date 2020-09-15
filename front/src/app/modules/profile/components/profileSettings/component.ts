@@ -13,16 +13,11 @@ import { debounceTime, distinct, filter, takeUntil } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { Tag } from '~/core/entities/tag/entity';
-import { UserService } from '~/core/services/user/user.service';
-import { TagService } from '~/core/services/tag/tag';
 import { DomainService } from '~/core/services/domain/domain';
-import { AuthenticationService } from '~/core/services/auth/auth';
-import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
-import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { ProfileService } from '~/core/services/user/profile.service';
-
+import { ToastService } from '~/core/services/toast.service';
 
 @Component({
   selector: 'app-profile-settings',
@@ -49,6 +44,7 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
         private fb: FormBuilder,
         private _deviceService: DeviceDetectorService,
         private _profileService: ProfileService,
+        private _toastService: ToastService,
   ) {
     super();
   }
@@ -78,6 +74,7 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
         takeUntil(this.destroy$),
       )
       .subscribe(() => {
+        this._toastService.success('Modification prise en compte.', null, { timeOut: 1000 });
         this.submit();
       });
 
