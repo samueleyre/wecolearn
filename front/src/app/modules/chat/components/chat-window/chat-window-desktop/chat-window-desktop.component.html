@@ -1,6 +1,14 @@
 <div class="chat-window"  #chatWindow [style.visibility]="loading ? 'hidden' : 'visible'">
   <div class="chat-window-messages">
     <div class="chat-window-messages-wrapper">
+      <div class="chat-window-messages-wrapper-firstMessage-container"*ngIf="( messages$ | async ).length === 0">
+        <div class="chat-window-messages-wrapper-firstMessage">
+          <span>
+            C'est votre premier message à <b>{{ currentThread.name }}</b>. <br>
+            Commencez par dire bonjour et ensuite présentez lui votre projet d'apprentissage !
+          </span>
+        </div>
+      </div>
       <app-chat-message-desktop
         *ngFor="let message of messages$ | async as messages; let i = index"
         [clientId]="currentUser.id"
