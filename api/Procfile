@@ -1,2 +1,2 @@
-postdeploy: "php bin/console --no-interaction do:migrations:migrate; php bin/console shapecode:cron:scan; php bin/console shapecode:cron:run"
+postdeploy: "php bin/console"
 clock: "php cron.php"
