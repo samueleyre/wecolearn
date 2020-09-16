@@ -74,13 +74,18 @@ export class AppComponent {
               });
               this._zone.run(() => {
                 if (
+                  // on the current thread
                   this._threadService.currentThread.getValue().id === message.sender.id
                   && (
-                    this.router.url === NAV.currentDiscussion && this._deviceService.isMobile()
+                    // mobile
+                    new RegExp(NAV.currentDiscussion).test(this.router.url) && this._deviceService.isMobile()
+                    // desktop
                     || this.router.url === NAV.discussion && this._deviceService.isDesktop()
                   )
                 ) {
                   message.is_read = true;
+                  this.messagesService.addMessageToUpdate(message);
+                  this.messagesService.pushUpdatedMessages().subscribe();
                 }
                 this.messagesService.addMessage(message);
               });
