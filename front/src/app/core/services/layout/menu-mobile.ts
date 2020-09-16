@@ -43,19 +43,19 @@ export class MenuMobileService {
   }
 
   static showDiscussionUser(url: string) {
-    return [/dashboard\/discussion\/current/].some(rx => rx.test(url));
+    return [/dashboard\/discussion\/current/].some(rx => new RegExp(rx).test(url));
   }
 
   static getReturnLink(url?: string) {
     // on page load
     if (url) {
-      if (REDIRECT_URLS.returnUrls.chat.some(rx => rx.test(url))) {
+      if (REDIRECT_URLS.returnUrls.chat.some(rx => new RegExp(rx).test(url))) {
         return NAV.discussion;
       }
-      if (REDIRECT_URLS.returnUrls.profile.some(rx => rx.test(url))) {
+      if (REDIRECT_URLS.returnUrls.profile.some(rx => new RegExp(rx).test(url))) {
         return NAV.profile;
       }
-      if (REDIRECT_URLS.returnUrls.search.some(rx => rx.test(url))) {
+      if (REDIRECT_URLS.returnUrls.search.some(rx => new RegExp(rx).test(url))) {
         return NAV.search;
       }
     }
@@ -71,7 +71,7 @@ export class MenuMobileService {
   }
 
   urlHasReturnButton(url: string) {
-    return RETURN_URLS.some(rx => rx.test(url));
+    return RETURN_URLS.some(rx => new RegExp(rx).test(url));
   }
 
   urlHasHeader(url: string) {
