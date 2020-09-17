@@ -13,6 +13,7 @@ import { ConfirmDialogComponent } from '~/core/components/dialog/confirm-dialog.
 
 import { NoConnectionToastComponent } from './components/no-connection-toast/no-connection-toast.component';
 import { AndroidLinkComponent } from './components/android-link/android-link.component';
+import { EmojiComponent } from './components/emoji/emoji.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AndroidLinkComponent } from './components/android-link/android-link.com
     HideMenuMobileOnFocusDirective,
     NoConnectionToastComponent,
     AndroidLinkComponent,
+    EmojiComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { AndroidLinkComponent } from './components/android-link/android-link.com
     CommonModule,
     ProfileImageModule,
     CopyComponent,
+    EmojiComponent,
     HideMenuMobileOnFocusDirective,
     AndroidLinkComponent,
     // NoConnectionToastComponent,

@@ -1,1 +1,6 @@
-<button class="btn" [style]="style" (click)="openThread()"><i class="fas fa-comment"></i>&nbsp; Discuter</button>
+<button mat-raised-button color="primary" [style]="style" (click)="openThread()">
+  <div class="openThread-buttonContent">
+    Discuter
+    <mat-icon>chat</mat-icon>
+  </div>
+</button>

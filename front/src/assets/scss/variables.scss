@@ -17,11 +17,28 @@ html{
   --main-color-2-dark-15: #e0a200;
 }
 
+:root {
+  --ion-color-primary: #501B4A;
+  --ion-color-primary-rgb: 80,27,74;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #461841;
+  --ion-color-primary-tint: #62325c;
+
+  --ion-color-secondary: #ffc52d;
+  --ion-color-secondary-rgb: 255,197,45;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0,0,0;
+  --ion-color-secondary-shade: #e0ad28;
+  --ion-color-secondary-tint: #ffcb42;
+}
+
 $primaryColor : var(--main-color-1);
 $secondaryColor: var(--main-color-2);
 
 $mainFont: ralewayregular, OpenSansSerif, sans-serif;
 $titleFont: ralewaybold, OpenSansSerif, sans-serif;
+$bigTitleFont: ralewayblack, OpenSansSerif, sans-serif;
 
 $learnColor : var(--main-color-1);
 $knowColor : var(--main-color-2);

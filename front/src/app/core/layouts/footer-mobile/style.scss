@@ -1,9 +1,5 @@
 @import 'variables';
 
-//.space {
-//  height: 60px;
-//}
-
 .button-container{
   display: flex;
   align-items: flex-end;
@@ -22,6 +18,9 @@
       color: #ffc600;
       box-sizing: border-box;
       border-bottom: 4px solid #ffc600;
+    }
+    mat-icon {
+      font-size: 22px;;
     }
   }
 }

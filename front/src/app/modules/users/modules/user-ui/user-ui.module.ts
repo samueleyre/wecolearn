@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { UsersListComponent } from './components/users-list/users-list.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [UsersListComponent, UserFormComponent],
@@ -26,6 +27,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
+    RouterModule,
   ],
 })
 export class UserUiModule { }

@@ -8,12 +8,21 @@ export class TextLimitComponent implements OnInit {
   @Input() text: string;
   @Input() classes: string;
   @Input() id: string;
-  displayText = '';
+
+  private _slice = 100;
+  public displayText = '';
 
   ngOnInit() {
     if (this.text) {
-      const newText = this.text.slice(0, 100);
-      this.displayText = (newText.length !== this.text.length) ? newText : this.text;
+      this.displayText = this.textToBig ? this.extract : this.text;
     }
+  }
+
+  get textToBig() {
+    return this.extract.length !== this.text.length;
+  }
+
+  get extract(): string {
+    return this.text.slice(0, this._slice);
   }
 }

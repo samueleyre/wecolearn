@@ -3,14 +3,13 @@ import {
   Input,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { User } from '~/core/entities/user/entity';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { NAV } from '~/config/navigation/nav';
 import { Tag } from '~/core/entities/tag/entity';
 import { SearchService } from '~/core/services/search/search';
-import { FooterMobileService } from '~/core/services/layout/footer-mobile';
+import { BIO } from '~/config/bio.const';
 
 
 @Component({
@@ -39,7 +38,10 @@ export class ProfileComponent extends DestroyObservable {
     return `${tag.name}${tag.tag_domain ? ` | ${tag.tag_domain.name}` : ''}`.trim();
   }
 
-  tagDisplayName(tag: Tag): string {
-    return `${tag.name} ${tag.tag_domain ? tag.tag_domain.emoji : ''}`.trim();
+  getBio(bio): string {
+    if (bio) {
+      return bio;
+    }
+    return BIO.default;
   }
 }

@@ -50,4 +50,9 @@ import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
   hideAutocomplete() {
     this.autocomplete.closePanel();
   }
+
+  public setGlobalMode(val) {
+    super.setGlobalMode(val);
+    this._searchService.searchAgainWithSamefilters();
+  }
 }
