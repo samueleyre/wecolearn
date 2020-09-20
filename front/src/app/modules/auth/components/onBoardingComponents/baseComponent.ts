@@ -29,6 +29,7 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
     biographie: null,
     latitude: null,
     longitude: null,
+    city: null,
     email: [null, [Validators.required, Validators.pattern(this.pattern)]],
     password: [null, [Validators.required, Validators.minLength(6)]],
     newsletter: true,
