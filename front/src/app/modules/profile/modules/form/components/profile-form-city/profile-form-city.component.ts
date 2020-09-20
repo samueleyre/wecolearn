@@ -11,6 +11,7 @@ interface CityInterface {
   position: {
     lat: number,
     lon: number,
+    city: string,
   };
 }
 
@@ -36,6 +37,7 @@ export class ProfileFormCityComponent implements OnInit {
       position: {
         lat: 45.75,
         lon: 4.85,
+        city: 'Lyon',
       },
     },
     {
@@ -43,6 +45,7 @@ export class ProfileFormCityComponent implements OnInit {
       position: {
         lat: 15,
         lon: 16,
+        city: 'Lyon',
       },
     },
     {
@@ -50,6 +53,7 @@ export class ProfileFormCityComponent implements OnInit {
       position: {
         lat: null,
         lon: null,
+        city: null,
       },
     },
 
@@ -74,6 +78,7 @@ export class ProfileFormCityComponent implements OnInit {
     this.updateParentForm({
       lat: city.option.value.lat,
       lon: city.option.value.lon,
+      city: city.option.value.city,
     });
   }
 
@@ -95,8 +100,9 @@ export class ProfileFormCityComponent implements OnInit {
     this.updateParentForm(val.position);
   }
 
-  updateParentForm(val: {lat: number, lon: number}) {
+  updateParentForm(val: CityInterface['position']) {
     this.parentForm.get('latitude').setValue(val.lat);
     this.parentForm.get('longitude').setValue(val.lon);
+    this.parentForm.get('city').setValue(val.city);
   }
 }

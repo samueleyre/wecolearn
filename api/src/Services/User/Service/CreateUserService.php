@@ -54,6 +54,7 @@ class CreateUserService
             // set lyon if missing
             $user->setLatitude(45.75);
             $user->setLongitude(4.85);
+            $user->setCity('Lyon');
         }
 
         $user->setUsername($user->getEmail()); // todo: remove this someday

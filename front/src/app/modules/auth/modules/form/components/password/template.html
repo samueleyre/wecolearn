@@ -1,6 +1,6 @@
 <mat-form-field appearance="legacy" [formGroup]="parentForm">
     <mat-label>Mot de passe</mat-label>
-    <input id="passwordInput" matInput placeholder="Mot de passe" formControlName="password" type="password">
+    <input appHideMenuMobileOnFocus id="passwordInput" matInput placeholder="Mot de passe" formControlName="password" type="password">
     <mat-error *ngIf="parentForm.controls.password.hasError('required')">
         Le mot de passe est <strong>obligatoire</strong>
     </mat-error>
