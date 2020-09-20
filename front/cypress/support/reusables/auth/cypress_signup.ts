@@ -37,7 +37,7 @@ export function cypress_signup_mobile(newUser: { first_name: string, last_name: 
   });
 
   it('choose city', () => {
-    cy.get('mat-radio-button:first-child').click();
+    cy.get('mat-radio-button:first-child label').click();
     cy.get('#next').click();
   });
 
@@ -55,8 +55,8 @@ export function cypress_signup_mobile(newUser: { first_name: string, last_name: 
     cy.get('#firstNameInput').type(newUser.first_name);
     cy.get('#lastNameInput').type(newUser.last_name);
     cy.get('#emailInput').type(newUser.email);
-    cy.get('#passwordInput').type(newUser.password);
+    cy.get('#passwordInput').type(newUser.password).blur();
     cy.get('#validate').click();
-    cy.wait(3000);
+    cy.wait(6000);
   });
 }
