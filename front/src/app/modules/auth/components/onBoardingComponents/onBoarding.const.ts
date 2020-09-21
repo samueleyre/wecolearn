@@ -1,11 +1,11 @@
 export const onBoardingSections = {
   city: {
     index: 0,
-    title: `Où habites-tu ? 📍`,
+    title: `Où habites-tu ?`,
   },
   tags: {
     index: 1,
-    title: `Que souhaites-tu apprendre ? 📖`,
+    title: `Que souhaites-tu apprendre ?`,
   },
   bio: {
     index: 2,

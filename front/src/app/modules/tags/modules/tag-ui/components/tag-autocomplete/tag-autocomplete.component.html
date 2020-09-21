@@ -3,7 +3,7 @@
   <input type="text" matInput required [formControl]="tagCtrl" [matAutocomplete]="auto" (focusout)="inputLostFocus()" />
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onTagSelect($event)" [displayWith]="displayFn">
     <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-      {{ tag.name }} {{toEmojiType(tag.type)}}
+      {{ tag.name }} <app-emoji [emojiName]="toEmojiType(tag.type)"></app-emoji>
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
