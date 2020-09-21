@@ -13,7 +13,7 @@
       <mat-step label="Ville" >
         <div class="card" id="cityStep">
           <div class="card-header">
-            <h6 class="center">{{titles.city.title}}</h6>
+            <h6 class="center">{{titles.city.title}} <app-emoji [emojiName]="'1F3E1'"></app-emoji></h6>
           </div>
           <div class="card-body">
             <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
@@ -28,7 +28,7 @@
       <mat-step label="Apprentissage" >
         <div class="card" id="learningStep">
           <div class="card-header">
-            <h6 class="center">{{titles.tags.title}}</h6>
+            <h6 class="center">{{titles.tags.title}} <app-emoji [emojiName]="'1F4C8'"></app-emoji></h6>
           </div>
           <div class="card-body">
             <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'" [type]="learnType" ></profile-form-tags>
