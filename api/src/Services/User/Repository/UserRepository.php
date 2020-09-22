@@ -240,4 +240,17 @@ class UserRepository extends ServiceEntityRepository
         ->getQuery()->getResult();
 
     }
+
+    /**
+     * @return User[]
+     */
+    public function getNewUsers() {
+
+        $twoDaysEarlier = new \DateTime('- 2 Days', new \DateTimeZone('Europe/Paris'));
+
+        return $this->createQueryBuilder('user')
+        ->where('user.created > :date')->setParameter('date', $twoDaysEarlier)
+        ->getQuery()->getResult();
+
+    }
 }

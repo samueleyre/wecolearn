@@ -20,14 +20,18 @@ class NotificationService
     private $serializer;
     private $em;
 
-    public function __construct(Messaging $sender, MessageSerializer $serializer , EntityManagerInterface $em ) {
+    public function __construct(
+        Messaging $sender,
+        MessageSerializer $serializer ,
+        EntityManagerInterface $em
+    ) {
         $this->sender = $sender;
         $this->serializer = $serializer;
         $this->em = $em;
     }
 
 
-    public function processMessage(User $to, Message $message, Request $request  ) {
+    public function processMessage(User $to, Message $message ) {
 
         $deviceToken = null;
 
@@ -50,7 +54,7 @@ class NotificationService
                     'sound' => 'default',
 
                 ],
-                'data'  => ['message' => $this->serializer->getMessagePayload($message, $request)]
+                'data'  => ['message' => $this->serializer->getMessagePayload($message)]
             ]);
             $notification = $notification->withAndroidConfig($config);
 
