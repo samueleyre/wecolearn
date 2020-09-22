@@ -514,6 +514,7 @@ class UserController extends AbstractController
 
         syslog(LOG_ERR, sprintf("########### SUBSCRIPTION WITH token : %s . ########################",$token));
 
+        // get subscriptions with same token
         $subscriptions = $em->getRepository(PushNotificationSubscription::class)->findBy(['user' => $user, 'token' => $token, 'type' => $type]);
 
         $update = false;
@@ -521,6 +522,11 @@ class UserController extends AbstractController
         syslog(LOG_ERR , count($subscriptions));
 
         if (0 === count($subscriptions)) {
+            $oldSubscriptions = $em->getRepository(PushNotificationSubscription::class)->findBy(['user' => $user, 'type' => $type]);
+            foreach ($oldSubscriptions as $oldSubscription) {
+                $em->remove($oldSubscription);
+            }
+            
             $subscription = new PushNotificationSubscription();
             $subscription->setUser($user);
             $subscription->setToken($token);
