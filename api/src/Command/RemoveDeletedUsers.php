@@ -46,7 +46,7 @@ class RemoveDeletedUsers extends Command
         foreach ($deletedUsers as $deletedUser) {
             $id = $deletedUser->getId();
             $this->em->remove($deletedUser);
-            syslog(LOG_INFO, `deleted user $id`);
+            syslog(LOG_INFO, "deleted user $id");
         }
 
         $this->em->flush();
