@@ -16,10 +16,10 @@ import { MessagerieService } from '~/core/services/messagerie/service';
 import { NAV } from '~/config/navigation/nav';
 import { ThreadsService } from '~/core/services/chat/threads.service';
 import { SeoService } from '~/core/services/seo';
+import { User } from '~/core/entities/user/entity';
 
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
-import {User} from "~/core/entities/user/entity";
 
 const { PushNotifications } = Plugins;
 
