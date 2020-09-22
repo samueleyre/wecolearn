@@ -65,6 +65,8 @@
         <field name="showProfil" type="boolean" column="showProfil"/>
         <field name="newMessageNotification" type="boolean" column="newMessageNotification"/>
         <field name="newMatchNotification" type="boolean" column="newMatchNotification"/>
+        <field name="newMessageEmail" type="boolean" column="newMessageEmail"/>
+        <field name="newMatchEmail" type="boolean" column="newMatchEmail"/>
         <field name="newsletter" type="boolean" column="newsletter"/>
         <field name="notificationSubscribe" column="notificationSubscribe" type="boolean" nullable="true"/>
         <one-to-many field="subscriptions" target-entity="App\Services\User\Entity\Subscription" mapped-by="user">

@@ -19,6 +19,7 @@ import { SeoService } from '~/core/services/seo';
 
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
+import {User} from "~/core/entities/user/entity";
 
 const { PushNotifications } = Plugins;
 
@@ -99,15 +100,19 @@ export class AppComponent {
                 'pushNotificationReceived',
                 (notification: PushNotification) => {
                   console.log('notification received ######## ' + JSON.stringify(notification));
-                  this._zone.run(() => {
-                    const message = new Message(JSON.parse(notification.data.message));
-                    message.thread = new Thread({
-                      id: message.sender.id,
-                      name: message.sender.first_name,
-                      image: message.sender.image,
+
+                  // if message
+                  if ('message' in notification.data) {
+                    this._zone.run(() => {
+                      const message = new Message(JSON.parse(notification.data.message));
+                      message.thread = new Thread({
+                        id: message.sender.id,
+                        name: message.sender.first_name,
+                        image: message.sender.image,
+                      });
+                      this.messagesService.addMessage(message);
                     });
-                    this.messagesService.addMessage(message);
-                  });
+                  }
                 },
               );
 
@@ -115,16 +120,28 @@ export class AppComponent {
                 'pushNotificationActionPerformed',
                 (notification: PushNotificationActionPerformed) => {
                   console.log('########notif####### action performed' + JSON.stringify(notification));
-                  this._zone.run(() => {
-                    const message = new Message(JSON.parse(notification.notification.data.message));
-                    this.router.navigateByUrl(`/dashboard/discussion/current/${message.sender.id}`);
-                    message.thread = new Thread({
-                      id: message.sender.id,
-                      name: message.sender.first_name,
-                      image: message.sender.image,
+
+                  // if message
+                  if ('message' in notification.notification.data) {
+                    this._zone.run(() => {
+                      const message = new Message(JSON.parse(notification.notification.data.message));
+                      this.router.navigateByUrl(`/dashboard/discussion/current/${message.sender.id}`);
+                      message.thread = new Thread({
+                        id: message.sender.id,
+                        name: message.sender.first_name,
+                        image: message.sender.image,
+                      });
+                      this.messagesService.addMessage(message);
                     });
-                    this.messagesService.addMessage(message);
-                  });
+                  }
+
+                  // if new match
+                  if ('user' in notification.notification.data) {
+                    this._zone.run(() => {
+                      const user = new User(JSON.parse(notification.notification.data.user));
+                      this.router.navigateByUrl(`/dashboard/profile/${user.profil_url}`);
+                    });
+                  }
                 });
             } catch (error) {
               console.log(error);

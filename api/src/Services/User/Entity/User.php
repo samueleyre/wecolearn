@@ -22,7 +22,7 @@ class User extends BaseUser
     // for client header notifications
     private $userUpdated;
     // for client web and email notifications
-    private $userNotified;
+    private $userNotified; // not used anymore !
     public $biographie;
     public $intensity;
     public $atmosphere;
@@ -37,8 +37,14 @@ class User extends BaseUser
     //  USER CONFIG ----------------------------------
     public $showProfil;
 
+    // subscribe to notifications
     private $newMessageNotification;
     private $newMatchNotification;
+
+    // subscribe to emails
+    private $newMessageEmail;
+    private $newMatchEmail;
+
     public $newsletter;
     //  public $slackAccounts;
     public $domains;
@@ -478,6 +484,30 @@ class User extends BaseUser
     }
 
     /**
+     * Set newMessageEmail.
+     *
+     * @param bool $newMessageEmail
+     *
+     * @return User
+     */
+    public function setNewMessageEmail($newMessageEmail)
+    {
+        $this->newMessageEmail = $newMessageEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get newMessageEmail.
+     *
+     * @return bool
+     */
+    public function getNewMessageEmail()
+    {
+        return $this->newMessageEmail;
+    }
+
+    /**
      * Set image.
      *
      * @param Image $image
@@ -896,6 +926,18 @@ class User extends BaseUser
     public function setNewMatchNotification(bool $newMatchNotification): self
     {
         $this->newMatchNotification = $newMatchNotification;
+
+        return $this;
+    }
+
+    public function getNewMatchEmail(): ?bool
+    {
+        return $this->newMatchEmail;
+    }
+
+    public function setNewMatchEmail(bool $newMatchEmail): self
+    {
+        $this->newMatchEmail = $newMatchEmail;
 
         return $this;
     }

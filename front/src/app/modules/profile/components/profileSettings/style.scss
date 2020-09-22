@@ -1,6 +1,12 @@
 @import 'variables';
 
-form {
+.ProfileSettingsForm {
+  &-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   @media (max-width: $smScreen) {
     margin: 0 15px;
   }

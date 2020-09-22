@@ -48,6 +48,8 @@ class CreateUserService
         $user->setEmailConfirmed(false);
         $user->setNewMessageNotification(true);
         $user->setNewMatchNotification(true);
+        $user->setNewMessageEmail(true);
+        $user->setNewMatchEmail(true);
         $user->setIntensity(5);
 
         if (!$user->getLatitude()) {

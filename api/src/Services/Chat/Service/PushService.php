@@ -70,7 +70,7 @@ class PushService
         $subscriptions = $this->em->getRepository(SubscriptionModel::class )->findByUser( $receiver );
         $ret = [];
 
-        $payload = $this->serializer->getPayload($message, $request);
+        $payload = $this->serializer->getMessagePayload($message, $request);
 
         foreach( $subscriptions as $sub ) {
             $ret[]  = [

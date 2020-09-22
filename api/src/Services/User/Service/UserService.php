@@ -80,6 +80,8 @@ class UserService
             'showProfil',
             'newMessageNotification',
             'newMatchNotification',
+            'newMessageEmail',
+            'newMatchEmail',
             'newsletter',
         ];
 
