@@ -1,10 +1,15 @@
 @import 'variables';
 
-.notificationSettings{
-  & > span{
-    align-self: center;
-    padding-top: 5px;
-    padding-right: 7px;
+.notifications{
+  &-title {
+    margin-top: 50px;
+  }
+  &-element {
+    & > span{
+      align-self: center;
+      padding-top: 5px;
+      padding-right: 7px;
+    }
   }
 }
 

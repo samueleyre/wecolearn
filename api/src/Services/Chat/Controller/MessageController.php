@@ -124,12 +124,12 @@ class MessageController extends AbstractController
         $pushMessage->process($friend, $message, $request );
 
         ## SEND NOTIFICATION TO MOBILE
-        $notificationService->process( $friend, $message, $request );
+        $notificationService->processMessage( $friend, $message, $request );
 
         ## SEND IT BY MERCURE PROTOCOLE FOR WEB
         $update = new Update(
             'https://wecolearn.com/message',
-            $messageSerializer->getPayload($message, $request),
+            $messageSerializer->getMessagePayload($message, $request),
             ["https://{$this->getParameter('host')}/message/{$friend->getId()}"]
         );
         $bus->dispatch($update);

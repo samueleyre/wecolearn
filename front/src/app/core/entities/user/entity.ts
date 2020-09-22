@@ -33,6 +33,8 @@ export class User {
   public show_profil: boolean;
   public new_message_notification: boolean;
   public new_mail_notification: boolean;
+  public new_message_email: boolean;
+  public new_mail_email: boolean;
   public newsletter: boolean;
   public slack_accounts: SlackAccount[];
   public user_notified: Date;
@@ -67,6 +69,8 @@ export class User {
     this.show_profil = null;
     this.new_message_notification = null;
     this.new_mail_notification = null;
+    this.new_message_email = null;
+    this.new_mail_email = null;
     this.newsletter = null;
     this.slack_accounts = obj && obj.slack_accounts ? obj.slack_accounts : [];
     this.user_notified = null;

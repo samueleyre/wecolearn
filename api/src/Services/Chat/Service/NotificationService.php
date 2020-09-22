@@ -27,7 +27,7 @@ class NotificationService
     }
 
 
-    public function process( User $to, Message $message, Request $request  ) {
+    public function processMessage(User $to, Message $message, Request $request  ) {
 
         $deviceToken = null;
 
@@ -50,7 +50,7 @@ class NotificationService
                     'sound' => 'default',
 
                 ],
-                'data'  => ['message' => $this->serializer->getPayload($message, $request)]
+                'data'  => ['message' => $this->serializer->getMessagePayload($message, $request)]
             ]);
             $notification = $notification->withAndroidConfig($config);
 
@@ -62,6 +62,45 @@ class NotificationService
             }
             catch (\Exception $e) {
                 syslog(LOG_ERR, `could not send notif of message via firebase to android`);
+            }
+        }
+    }
+
+    public function processNewMatchingProfil(User $to, User $match, Request $request  ) {
+
+        $deviceToken = null;
+
+        $subscriptions = $this->em->getRepository(PushNotificationSubscription::class)->findByUser( $to );
+
+        foreach( $subscriptions as $sub ) {
+
+            $deviceToken = $sub->getToken();
+
+            $notification = CloudMessage::withTarget('token', $deviceToken);
+
+            $config = Messaging\AndroidConfig::fromArray([
+                'ttl' => '3600s',
+                'priority' => 'normal',
+                'notification' => [
+                    'title' => 'Wecolearn',
+                    'body' => 'Nouveau profil !',
+                    'icon' => 'ic_stat_icon',
+                    'color' => '#f7eb43',
+                    'sound' => 'default',
+
+                ],
+                'data'  => ['user' => $this->serializer->getMatchPayload($match)]
+            ]);
+            $notification = $notification->withAndroidConfig($config);
+
+            try {
+                $this->sender->send($notification);
+            }
+            catch (\Error $e) {
+                syslog(LOG_ERR, `could not send notif of new match via firebase to android`);
+            }
+            catch (\Exception $e) {
+                syslog(LOG_ERR, `could not send notif of new match via firebase to android`);
             }
         }
     }
