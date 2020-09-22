@@ -136,7 +136,7 @@ class MessageRepository extends ServiceEntityRepository
             }
 
             // check if user accepted to receive notifications
-            if (!$receiver->getNewMessageNotification()) {
+            if (!$receiver->getNewMessageEmail()) {
                 continue;
             }
 

@@ -30,6 +30,7 @@
             <cascade>
                 <cascade-persist/>
                 <cascade-merge/>
+                <cascade-remove/>
             </cascade>
             <join-column on-delete="SET NULL" name="imageId" nullable="true"/>
         </one-to-one>
@@ -51,24 +52,35 @@
             <cascade>
                 <cascade-persist/>
                 <cascade-merge/>
+                <cascade-remove/>
             </cascade>
         </one-to-many>
         <one-to-many field="receivedMessages" target-entity="App\Services\Chat\Entity\Message" mapped-by="receiver">
             <cascade>
                 <cascade-persist/>
                 <cascade-merge/>
+                <cascade-remove/>
             </cascade>
         </one-to-many>
         <field name="showProfil" type="boolean" column="showProfil"/>
         <field name="newMessageNotification" type="boolean" column="newMessageNotification"/>
         <field name="newMatchNotification" type="boolean" column="newMatchNotification"/>
+        <field name="newMessageEmail" type="boolean" column="newMessageEmail"/>
+        <field name="newMatchEmail" type="boolean" column="newMatchEmail"/>
         <field name="newsletter" type="boolean" column="newsletter"/>
         <field name="notificationSubscribe" column="notificationSubscribe" type="boolean" nullable="true"/>
-        <one-to-many field="subscriptions" target-entity="App\Services\User\Entity\Subscription" mapped-by="user" />
+        <one-to-many field="subscriptions" target-entity="App\Services\User\Entity\Subscription" mapped-by="user">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
         <one-to-many field="pushNotificationSubscriptions" target-entity="App\Services\User\Entity\PushNotificationSubscription" mapped-by="user" >
             <cascade>
                 <cascade-persist/>
                 <cascade-merge/>
+                <cascade-remove/>
             </cascade>
         </one-to-many>
         <many-to-many field="domains" target-entity="App\Services\Domain\Entity\Domain" inversed-by="users">

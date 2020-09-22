@@ -3,7 +3,7 @@
   <div *ngIf="showCityFields" >
     <mat-form-field appearance="legacy" >
       <mat-label>Chercher ma ville</mat-label>
-      <input matInput id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="" [formControl]="cityCtrl" [matAutocomplete]="auto" (focusout)="inputLostFocus()" >
+      <input appHideMenuMobileOnFocus matInput id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="" [formControl]="cityCtrl" [matAutocomplete]="auto" (focusout)="inputLostFocus()" >
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCitySelect($event)">
         <mat-option *ngFor="let city of foundCities | async" [value]="city">
           {{ city.city }}, {{city.country}}

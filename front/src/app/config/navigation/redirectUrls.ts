@@ -1,13 +1,15 @@
+import { NAV } from '~/config/navigation/nav';
+
 export const REDIRECT_URLS = {
   returnUrls : {
     profile : [
-      /dashboard\/profile\/settings/,
+      NAV.profileSettings,
     ],
     chat : [
-      /dashboard\/discussion/,
+      NAV.discussion,
     ],
     search : [
-      /dashboard\/profile\//,
+      'dashboard/profile/',
     ],
   },
 };

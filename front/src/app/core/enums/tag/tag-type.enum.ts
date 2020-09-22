@@ -13,7 +13,7 @@ export const tagTypeFR = {
 };
 
 export const tagTypeEmoji = {
-  [TagTypeEnum.LEARN]: '📚',
-  [TagTypeEnum.KNOW]: '🧠',
-  [TagTypeEnum.TEACH]: '👩‍🏫',
+  [TagTypeEnum.LEARN]: '1F4C8',
+  [TagTypeEnum.KNOW]: 'E319',
+  [TagTypeEnum.TEACH]: '1F9D1-200D-1F3EB',
 };
