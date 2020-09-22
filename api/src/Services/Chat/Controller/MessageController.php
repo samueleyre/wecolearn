@@ -20,6 +20,7 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\View;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -98,12 +99,7 @@ class MessageController extends AbstractController
         Request $request,
         Message $message,
         TokenStorageInterface $tokenStorage,
-        MessageService $messageService,
-        MessageBusInterface $bus,
-        NotificationService $notificationService,
-        PushService $pushMessage,
-        MessageSerializer $messageSerializer
-
+        MessageService $messageService
     ) {
 
         $user = $tokenStorage->getToken()->getUser();
@@ -114,27 +110,10 @@ class MessageController extends AbstractController
 
         $message->setReceiver($friend);
         $message->setSender($user);
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        $message->setCreated($date);
 
-        ## SAVE MESSAGE IN DB
-        $messageService->postMessage($message);
+        $messageService->processNewMessage($message);
 
-        ## SEND IT TO SERVICE WORKER BY WEB PUSH
-        $pushMessage->process($friend, $message, $request );
-
-        ## SEND NOTIFICATION TO MOBILE
-        $notificationService->processMessage( $friend, $message, $request );
-
-        ## SEND IT BY MERCURE PROTOCOLE FOR WEB
-        $update = new Update(
-            'https://wecolearn.com/message',
-            $messageSerializer->getMessagePayload($message, $request),
-            ["https://{$this->getParameter('host')}/message/{$friend->getId()}"]
-        );
-        $bus->dispatch($update);
-
-        return;
+        return new Response();
     }
 
     /**

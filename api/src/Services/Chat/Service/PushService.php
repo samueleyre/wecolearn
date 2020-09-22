@@ -30,7 +30,7 @@ class PushService
         $this->vapidPublic = $vapidPublic;
     }
 
-    public function process(User $to, Message $message, Request $request)
+    public function process(User $to, Message $message)
     {
         $auth = [
             'VAPID' => [
@@ -40,7 +40,7 @@ class PushService
             ],
         ];
         $webPush = new WebPush($auth);
-        foreach ($subs = $this->getSubscriptions($to, $message, $request ) as $notification) {
+        foreach ($subs = $this->getSubscriptions($to, $message ) as $notification) {
             $webPush->sendNotification(
                 $notification['subscription'],
                 $notification['payload']
@@ -65,12 +65,12 @@ class PushService
         return true;
     }
 
-    private function getSubscriptions(User $receiver, Message $message, Request $request)
+    private function getSubscriptions(User $receiver, Message $message)
     {
         $subscriptions = $this->em->getRepository(SubscriptionModel::class )->findByUser( $receiver );
         $ret = [];
 
-        $payload = $this->serializer->getMessagePayload($message, $request);
+        $payload = $this->serializer->getMessagePayload($message);
 
         foreach( $subscriptions as $sub ) {
             $ret[]  = [

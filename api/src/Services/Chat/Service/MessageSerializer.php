@@ -17,7 +17,7 @@ class MessageSerializer
         $this->serializer = $serializer;
     }
 
-    public function getMessagePayload(Message $message , Request $request ) {
+    public function getMessagePayload(Message $message ) {
         $ret = $this->serializer->serialize(
             $message,
             'json',
