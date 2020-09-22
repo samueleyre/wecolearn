@@ -66,7 +66,7 @@ class NotificationService
         }
     }
 
-    public function processNewMatchingProfil(User $to, User $match, Request $request  ) {
+    public function processNewMatchingProfil(User $to, User $match) {
 
         $deviceToken = null;
 
