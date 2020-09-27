@@ -97,6 +97,7 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
+        <field name="oldEmail" type="string" nullable="true" />
         <field name="lastConnexion" type="datetime" nullable="true" column="lastConnexion"/>
         <field name="deleted" type="datetime" nullable="true" />
     </entity>

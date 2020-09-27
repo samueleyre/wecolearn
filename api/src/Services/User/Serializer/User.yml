@@ -56,6 +56,8 @@ App\Services\User\Entity\User:
         groups: [ input ]
       domains:
         groups: [ admin-users ]
+      emailConfirmed:
+        groups: [ profile ]
       deleted:
         groups: [ admin-users ]
 

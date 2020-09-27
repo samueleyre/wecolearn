@@ -2,8 +2,7 @@
 
 namespace App\Services\User\Event;
 
-use App\Services\Chat\Service\EmailService;
-use App\Services\Domain\Service\DomainService;
+use App\Services\Shared\Service\EmailService;
 use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Service\TokenService;
 use Symfony\Component\DependencyInjection\ContainerInterface;

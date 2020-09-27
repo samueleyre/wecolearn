@@ -2,7 +2,7 @@
 
 namespace App\Services\User\Event;
 
-use App\Services\Chat\Service\EmailService;
+use App\Services\Shared\Service\EmailService;
 use App\Services\Chat\Service\NotificationService;
 use App\Services\Tag\Constant\TagConstant;
 use App\Services\User\Entity\User;

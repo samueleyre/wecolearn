@@ -29,10 +29,11 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    App\Services\Chat\Service\EmailService:
+    App\Services\Shared\Service\EmailService:
         arguments:
             $deliveryAddress: '%delivery_address%'
-            $sendInBlueApi: '@sendinblue_api.smtp_endpoint'
+            $sendInBlueApiSmtp: '@sendinblue_api.smtp_endpoint'
+            $sendInBlueApiContacts: '@sendinblue_api.contacts_endpoint'
             $environment: '%environment%'
 
     App\Services\Domain\Service\DomainService:
@@ -43,12 +44,6 @@ services:
     App\Services\Shared\Service\UploadService:
         arguments:
             $uploader: '@speicher210_cloudinary.uploader'
-
-    App\Services\User\Service\UserService:
-        public: true
-        arguments:
-            $client_id: '%client_id%'
-            $client_secret: '%client_secret%'
 
     generate_url_service:
         public: true
@@ -82,6 +77,18 @@ services:
     App\Services\User\Event\TokenWasCreatedSubscriber:
         arguments:
             $host: '%host%'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Services\User\Event\AddContactNewsletterSubscriber:
+        arguments:
+            $environment: '%environment%'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Services\User\Event\UpdateContactNewsletterSubscriber:
+        arguments:
+            $environment: '%environment%'
         tags:
             - { name: 'kernel.event_subscriber' }
 

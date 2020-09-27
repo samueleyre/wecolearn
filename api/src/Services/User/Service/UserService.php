@@ -5,10 +5,12 @@ namespace App\Services\User\Service;
 use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
 use App\Services\Tag\Entity\Tag;
+use App\Services\User\Event\NewsletterWasChanged;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Tests\Test\Constraint\ResponseHeaderSameTest;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -17,31 +19,20 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class UserService
 {
     public $em;
-    public $container;
-    private $clientId; // for slack
-    private $clientSecret; // for slack
-//    private $domainService;
     private $securityStorage;
     private $tagService;
-    private $logger;
+    private $dispatcher;
 
     public function __construct(
         EntityManagerInterface $em,
-        ContainerInterface $container,
-        //                                 DomainService $domainService,
-        $client_id,
-        $client_secret,
         TokenStorageInterface $securityStorage,
         TagService $tagService,
-        LoggerInterface $logger
+        EventDispatcherInterface $dispatcher
     ) {
         $this->em = $em;
-        $this->clientId = $container->getParameter('client_id');
-        $this->clientSecret = $container->getParameter('client_secret');
-//    $this->domainService = $domainService;
         $this->securityStorage = $securityStorage;
         $this->tagService = $tagService;
-        $this->logger = $logger;
+        $this->dispatcher = $dispatcher;
     }
 
 
@@ -60,11 +51,13 @@ class UserService
 
         // todo: separate in different methods
         if (null !== $id) {
-            $oldUser = $this->findById($id);
+            $patchedUser = $this->findById($id);
         } else {
             // we get it from security storage to avoid modifying other clients
-            $oldUser = $this->securityStorage->getToken()->getUser();
+            $patchedUser = $this->securityStorage->getToken()->getUser();
         }
+
+        $oldValueForNewsletter = $patchedUser->getNewsletter();
 
         $parameters = [
             'emailConfirmed',
@@ -89,23 +82,28 @@ class UserService
             $getMethod = 'get'.ucfirst($parameters[$i]);
             $setMethod = 'set'.ucfirst($parameters[$i]);
             if ($params->$getMethod() !== null) {
-                $oldUser->$setMethod($params->$getMethod());
+                $patchedUser->$setMethod($params->$getMethod());
             }
         }
 
         // insert or update new tags in database
         if ($params->getTags()) {
-            $oldUser->setTags($this->tagService->beforePatchTags($oldUser->getTags(), $params->getTags()));
+            $patchedUser->setTags($this->tagService->beforePatchTags($patchedUser->getTags(), $params->getTags()));
         }
 
         // insert or update "slack" accounts
-        //    $oldUser->setSlackAccounts($this->patchSlackAccounts($oldUser, $user->getSlackAccounts()));
+        //    $patchedUser->setSlackAccounts($this->patchSlackAccounts($patchedUser, $user->getSlackAccounts()));
 
-        $this->em->persist($oldUser);
-
+        $this->em->persist($patchedUser);
         $this->em->flush();
 
-        return $oldUser;
+        if ($params->getNewsletter() !== null) {
+            if ($oldValueForNewsletter !== $params->getNewsletter()) {
+                $this->dispatcher->dispatch(new NewsletterWasChanged($patchedUser),NewsletterWasChanged::NAME);
+            }
+        }
+
+        return $patchedUser;
     }
 
     public function delete(int $id)

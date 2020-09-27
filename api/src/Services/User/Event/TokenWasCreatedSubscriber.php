@@ -2,7 +2,7 @@
 
 namespace App\Services\User\Event;
 
-use App\Services\Chat\Service\EmailService;
+use App\Services\Shared\Service\EmailService;
 use App\Services\Domain\Service\DomainService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,12 +24,10 @@ class TokenWasCreatedSubscriber implements EventSubscriberInterface
     public function __construct(
         EmailService $emailService,
         DomainService $domainService,
-        LoggerInterface $logger,
         string $host
     ) {
         $this->emailService = $emailService;
         $this->domainService = $domainService;
-        $this->logger = $logger;
         $this->host = $host;
     }
 
