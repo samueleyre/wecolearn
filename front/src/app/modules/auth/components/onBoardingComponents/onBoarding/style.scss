@@ -2,6 +2,9 @@
   mat-horizontal-stepper{
     background: none;
   }
+  button {
+    font-weight: bold;
+  }
   .card{
     min-height: 50vh;
     .card-body{
@@ -9,10 +12,22 @@
       justify-content: center;
       display: flex;
       flex-direction: column;
-      :first-child{
+      > :first-child{
         width: 100%
       }
       &-tagHints {
+        font-size: 19px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap;
+        app-emoji {
+          width: 30px;
+        }
+        span {
+          margin-right: 8px;
+        }
         margin-top: 10px;
       }
     }
