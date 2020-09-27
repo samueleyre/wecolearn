@@ -38,7 +38,7 @@ ion-footer {
         }
         margin-top: 10px;
       }
-      :first-child{
+      > :first-child{
         width: 100%
       }
     }
