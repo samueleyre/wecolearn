@@ -20,7 +20,7 @@ class ChangeEmailService
 
     public function process(User $user, string $email)
     {
-
+        $user->setOldEmail($user->getEmail());
         $user->setEmail($email);
         $user->setEmailConfirmed(false);
         $this->userService->patch($user);

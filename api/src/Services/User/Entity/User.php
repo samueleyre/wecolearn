@@ -53,6 +53,7 @@ class User extends BaseUser
     private $notificationSubscribe = false;
     private $subscriptions;
     private $pushNotificationSubscriptions;
+    private $oldEmail;
 
     public function __construct(array $parameters = [])
     {
@@ -80,6 +81,9 @@ class User extends BaseUser
         }
         if (array_key_exists('tags', $parameters)) {
             $this->tags = new ArrayCollection($parameters['tags']);
+        }
+        if (array_key_exists('oldEMail', $parameters)) {
+            $this->oldEMail = new ArrayCollection($parameters['oldEMail']);
         }
 
     }
@@ -938,6 +942,18 @@ class User extends BaseUser
     public function setNewMatchEmail(bool $newMatchEmail): self
     {
         $this->newMatchEmail = $newMatchEmail;
+
+        return $this;
+    }
+
+    public function getOldEmail(): ?string
+    {
+        return $this->oldEmail;
+    }
+
+    public function setOldEmail(string $oldEmail): self
+    {
+        $this->oldEmail = $oldEmail;
 
         return $this;
     }
