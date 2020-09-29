@@ -2,6 +2,7 @@
 export function cypress_signup(newUser: { first_name: string, last_name: string, email: string; password: string }) {
   it('go to signup page', () => {
     cy.visit('/');
+    cy.wait(2000); // prevent recurring bug
     cy.get('#signupButton').click();
   });
 
@@ -33,6 +34,7 @@ export function cypress_signup(newUser: { first_name: string, last_name: string,
 export function cypress_signup_mobile(newUser: { first_name: string, last_name: string, email: string; password: string }) {
   it('go to signup page', () => {
     cy.visit('/');
+    cy.wait(2000); // prevent recurring bug
     cy.get('#signupButton').click();
   });
 
