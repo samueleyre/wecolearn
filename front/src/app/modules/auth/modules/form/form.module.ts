@@ -6,6 +6,7 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { PasswordDifficultyModule } from '../passwordDifficulty/passwordDifficulty.module';
 import { AuthFormEmailComponent } from './components/email/component';
 import { AuthFormPasswordComponent } from './components/password/component';
+import {SharedModule} from "~/shared/shared.module";
 
 @NgModule({
 
@@ -24,6 +25,7 @@ import { AuthFormPasswordComponent } from './components/password/component';
     MatFormFieldModule,
     MatInputModule,
     PasswordDifficultyModule,
+    SharedModule,
   ],
 })
 export class AuthFormModule {

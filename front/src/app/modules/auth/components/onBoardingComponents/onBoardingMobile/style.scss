@@ -24,9 +24,21 @@ ion-footer {
       flex-direction: column;
       display: flex;
       &-tagHints {
+        font-size: 19px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap;
+        app-emoji {
+          width: 30px;
+        }
+        span {
+          margin-right: 8px;
+        }
         margin-top: 10px;
       }
-      :first-child{
+      > :first-child{
         width: 100%
       }
     }

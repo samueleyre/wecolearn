@@ -14,24 +14,25 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-//          User $user = null,
-////        Tag $searchTag = null,
-////        TagDomain $searchTagDomain = null,
-////        $first = 0,
-////        $max = 15,
-////        $latitude = null,
-////        $longitude = null,
-////        $domain = wecolearn,
-////        $parameters = [ userLearnTags | userKnowTags | userLearnTagDomains | userKnowTagDomains | searchLearnTag ],
-////        $distance = 100
+//         User $user = null,
+//        Tag $searchTag = null,
+//        TagDomain $searchTagDomain = null,
+//        $first = 0,
+//        $max = 15,
+//        $latitude = null,
+//        $longitude = null,
+//        $domain = wecolearn,
+//        $parameters = [ userLearnTags | userKnowTags | userLearnTagDomains | userKnowTagDomains | searchLearnTag ],
+//        $distance = 100
 
     /**
      * @param $searchParameters
      * @return array|mixed
      */
     public function search(
-      $searchParameters
-    ) {
+        $searchParameters
+    )
+    {
 
         if (!array_key_exists('latitude', $searchParameters) || !array_key_exists('longitude', $searchParameters)) {
             $latitude = 45.75;
@@ -99,9 +100,7 @@ class UserRepository extends ServiceEntityRepository
                 $profileTags = $profileTags->filter(function (Tag $tag) {
                     return $tag->getType() === 0;
                 });
-            }
-
-            // if only knowTags
+            } // if only knowTags
             else if (
                 ($parameters['userKnowTags'] || $parameters['userKnowTagDomains'])
                 && !($parameters['userLearnTags'] || $parameters['userLearnTagDomains'])
@@ -186,10 +185,10 @@ class UserRepository extends ServiceEntityRepository
             $qb->addSelect('count( DISTINCT tagDomain.id) as commonTagDomains');
             $qb->innerJoin('t.tagDomain', 'tagDomain');
             $profileTagDomains = $profileTags
-                ->map(function(Tag $t) {
+                ->map(function (Tag $t) {
                     return $t->getTagDomain();
                 })
-                ->filter(function($tg) {
+                ->filter(function ($tg) {
                     return $tg;
                 });
 
@@ -206,17 +205,13 @@ class UserRepository extends ServiceEntityRepository
 
         $qb->groupBy('user.id');
 
-        if ($parameters['orderByDistance'] ) {
+        if ($parameters['orderByDistance']) {
             $qb->orderBy('distance', 'ASC');
-        }
-
-        else if (
+        } else if (
             $parameters['userLearnTags'] || $parameters['userKnowTags']
         ) {
             $qb->orderBy('commonTags', 'DESC');
-        }
-
-        else if (
+        } else if (
             count($profileTags) &&
             ($parameters['userLearnTagDomains'] || $parameters['userKnowTagDomains'])
         ) {
@@ -230,5 +225,32 @@ class UserRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getDeletedUsers() {
+
+        $thirtyDaysEarlier = new \DateTime('- 30 Days', new \DateTimeZone('Europe/Paris'));
+
+        return $this->createQueryBuilder('user')
+        ->where('user.deleted IS NOT null')
+        ->andWhere('user.deleted < :date')->setParameter('date', $thirtyDaysEarlier)
+        ->getQuery()->getResult();
+
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getNewUsers() {
+
+        $twoDaysEarlier = new \DateTime('- 2 Days', new \DateTimeZone('Europe/Paris'));
+
+        return $this->createQueryBuilder('user')
+        ->where('user.created > :date')->setParameter('date', $twoDaysEarlier)
+        ->getQuery()->getResult();
+
     }
 }

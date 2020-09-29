@@ -16,6 +16,7 @@ import { MessagerieService } from '~/core/services/messagerie/service';
 import { NAV } from '~/config/navigation/nav';
 import { ThreadsService } from '~/core/services/chat/threads.service';
 import { SeoService } from '~/core/services/seo';
+import { User } from '~/core/entities/user/entity';
 
 import { DomainService } from './core/services/domain/domain';
 import { environment } from '../environments/environment';
@@ -74,13 +75,18 @@ export class AppComponent {
               });
               this._zone.run(() => {
                 if (
+                  // on the current thread
                   this._threadService.currentThread.getValue().id === message.sender.id
                   && (
-                    this.router.url === NAV.currentDiscussion && this._deviceService.isMobile()
+                    // mobile
+                    new RegExp(NAV.currentDiscussion).test(this.router.url) && this._deviceService.isMobile()
+                    // desktop
                     || this.router.url === NAV.discussion && this._deviceService.isDesktop()
                   )
                 ) {
                   message.is_read = true;
+                  this.messagesService.addMessageToUpdate(message);
+                  this.messagesService.pushUpdatedMessages().subscribe();
                 }
                 this.messagesService.addMessage(message);
               });
@@ -94,15 +100,19 @@ export class AppComponent {
                 'pushNotificationReceived',
                 (notification: PushNotification) => {
                   console.log('notification received ######## ' + JSON.stringify(notification));
-                  this._zone.run(() => {
-                    const message = new Message(JSON.parse(notification.data.message));
-                    message.thread = new Thread({
-                      id: message.sender.id,
-                      name: message.sender.first_name,
-                      image: message.sender.image,
+
+                  // if message
+                  if ('message' in notification.data) {
+                    this._zone.run(() => {
+                      const message = new Message(JSON.parse(notification.data.message));
+                      message.thread = new Thread({
+                        id: message.sender.id,
+                        name: message.sender.first_name,
+                        image: message.sender.image,
+                      });
+                      this.messagesService.addMessage(message);
                     });
-                    this.messagesService.addMessage(message);
-                  });
+                  }
                 },
               );
 
@@ -110,16 +120,28 @@ export class AppComponent {
                 'pushNotificationActionPerformed',
                 (notification: PushNotificationActionPerformed) => {
                   console.log('########notif####### action performed' + JSON.stringify(notification));
-                  this._zone.run(() => {
-                    const message = new Message(JSON.parse(notification.notification.data.message));
-                    this.router.navigateByUrl(`/dashboard/discussion/current/${message.sender.id}`);
-                    message.thread = new Thread({
-                      id: message.sender.id,
-                      name: message.sender.first_name,
-                      image: message.sender.image,
+
+                  // if message
+                  if ('message' in notification.notification.data) {
+                    this._zone.run(() => {
+                      const message = new Message(JSON.parse(notification.notification.data.message));
+                      this.router.navigateByUrl(`/dashboard/discussion/current/${message.sender.id}`);
+                      message.thread = new Thread({
+                        id: message.sender.id,
+                        name: message.sender.first_name,
+                        image: message.sender.image,
+                      });
+                      this.messagesService.addMessage(message);
                     });
-                    this.messagesService.addMessage(message);
-                  });
+                  }
+
+                  // if new match
+                  if ('user' in notification.notification.data) {
+                    this._zone.run(() => {
+                      const user = new User(JSON.parse(notification.notification.data.user));
+                      this.router.navigateByUrl(`/dashboard/profile/${user.profil_url}`);
+                    });
+                  }
                 });
             } catch (error) {
               console.log(error);

@@ -48,12 +48,15 @@ class CreateUserService
         $user->setEmailConfirmed(false);
         $user->setNewMessageNotification(true);
         $user->setNewMatchNotification(true);
+        $user->setNewMessageEmail(true);
+        $user->setNewMatchEmail(true);
         $user->setIntensity(5);
 
         if (!$user->getLatitude()) {
             // set lyon if missing
             $user->setLatitude(45.75);
             $user->setLongitude(4.85);
+            $user->setCity('Lyon');
         }
 
         $user->setUsername($user->getEmail()); // todo: remove this someday

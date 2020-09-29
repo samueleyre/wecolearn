@@ -1,21 +1,44 @@
-<hr>
-<div class="form-group notificationSettings">
-    <label>Etre informé des nouveaux messages ( mail )</label>
-  <br>
+<ng-container *ngIf="isAndroid">
+  <h4 class="notifications-title">Notifications</h4>
+
+  <hr>
+  <div class="form-group notifications-element">
+    <label>Nouveaux messages</label>
+    <br>
     <app-toggler [(active)]="user['new_message_notification']" (change)="submit()" ></app-toggler>
+    <p class="form-text text-muted">
+    </p>
+  </div>
+
+  <hr>
+  <div class="form-group notifications-element">
+    <label>Nouveaux profils</label>
+    <br>
+    <app-toggler [(active)]="user['new_match_notification']" (change)="submit()" ></app-toggler>
+    <p class="form-text text-muted">
+    </p>
+  </div>
+</ng-container>
+
+<h4 class="notifications-title">Emails</h4>
+<hr>
+<div class="form-group notifications-element">
+    <label>Nouveaux messages</label>
+  <br>
+    <app-toggler [(active)]="user['new_message_email']" (change)="submit()" ></app-toggler>
     <p class="form-text text-muted">
     </p>
 </div>
 <hr>
-<div class="form-group notificationSettings">
-  <label>Etre informé des profils intéressants ( mail )</label>
+<div class="form-group notifications-element">
+  <label>Nouveaux profils</label>
   <br>
-  <app-toggler [(active)]="user['new_match_notification']" (change)="submit()" ></app-toggler>
+  <app-toggler [(active)]="user['new_match_email']" (change)="submit()" ></app-toggler>
   <p class="form-text text-muted">
   </p>
 </div>
 <hr>
-<div class="form-group notificationSettings">
+<div class="form-group notifications-element">
   <label>Abonné à la newsletter</label>
   <br>
   <app-toggler [(active)]="user['newsletter']" (change)="submit()" ></app-toggler>

@@ -33,7 +33,7 @@ export class MessagerieService {
     return new Observable((subscriber) => {
       if (environment.android) {
         PushNotifications.addListener('registration', (token: PushNotificationToken) => {
-          console.log('####### registration #######: token = ' + token.value);
+          // console.log('####### registration #######: token = ' + token.value);
           this._pushSubscriptionService.checkIfExistOrAddAndSubscribeNotif({
             id: token.value,
             type: 'android',

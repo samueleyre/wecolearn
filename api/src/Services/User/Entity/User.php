@@ -22,7 +22,7 @@ class User extends BaseUser
     // for client header notifications
     private $userUpdated;
     // for client web and email notifications
-    private $userNotified;
+    private $userNotified; // not used anymore !
     public $biographie;
     public $intensity;
     public $atmosphere;
@@ -37,8 +37,14 @@ class User extends BaseUser
     //  USER CONFIG ----------------------------------
     public $showProfil;
 
+    // subscribe to notifications
     private $newMessageNotification;
     private $newMatchNotification;
+
+    // subscribe to emails
+    private $newMessageEmail;
+    private $newMatchEmail;
+
     public $newsletter;
     //  public $slackAccounts;
     public $domains;
@@ -47,6 +53,7 @@ class User extends BaseUser
     private $notificationSubscribe = false;
     private $subscriptions;
     private $pushNotificationSubscriptions;
+    private $oldEmail;
 
     public function __construct(array $parameters = [])
     {
@@ -74,6 +81,9 @@ class User extends BaseUser
         }
         if (array_key_exists('tags', $parameters)) {
             $this->tags = new ArrayCollection($parameters['tags']);
+        }
+        if (array_key_exists('oldEMail', $parameters)) {
+            $this->oldEMail = new ArrayCollection($parameters['oldEMail']);
         }
 
     }
@@ -475,6 +485,30 @@ class User extends BaseUser
     public function getNewMessageNotification()
     {
         return $this->newMessageNotification;
+    }
+
+    /**
+     * Set newMessageEmail.
+     *
+     * @param bool $newMessageEmail
+     *
+     * @return User
+     */
+    public function setNewMessageEmail($newMessageEmail)
+    {
+        $this->newMessageEmail = $newMessageEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get newMessageEmail.
+     *
+     * @return bool
+     */
+    public function getNewMessageEmail()
+    {
+        return $this->newMessageEmail;
     }
 
     /**
@@ -896,6 +930,30 @@ class User extends BaseUser
     public function setNewMatchNotification(bool $newMatchNotification): self
     {
         $this->newMatchNotification = $newMatchNotification;
+
+        return $this;
+    }
+
+    public function getNewMatchEmail(): ?bool
+    {
+        return $this->newMatchEmail;
+    }
+
+    public function setNewMatchEmail(bool $newMatchEmail): self
+    {
+        $this->newMatchEmail = $newMatchEmail;
+
+        return $this;
+    }
+
+    public function getOldEmail(): ?string
+    {
+        return $this->oldEmail;
+    }
+
+    public function setOldEmail(string $oldEmail): self
+    {
+        $this->oldEmail = $oldEmail;
 
         return $this;
     }

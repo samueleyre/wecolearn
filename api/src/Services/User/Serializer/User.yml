@@ -4,15 +4,15 @@ App\Services\User\Entity\User:
     access_order:     alphabetical
     properties:
       id:
-        groups: [ input, search, message, profile, public-profile,  admin-users, thread ]
+        groups: [ input, user, search, message, profile, public-profile,  admin-users, thread ]
       created:
         groups: [ input, profile, admin-users]
       firstName:
-        groups: [ input, output, create, search, message, profile, public-profile, admin-users ]
+        groups: [ input, output, user, create, search, message, profile, public-profile, admin-users ]
       lastName:
-        groups: [ input, output, create, search, message, profile, public-profile, admin-users ]
+        groups: [ input, output, user, create, search, message, profile, public-profile, admin-users ]
       profilUrl:
-        groups: [ input, output, search, message, profile, public-profile, admin-users ]
+        groups: [ input, output, user, search, message, profile, public-profile, admin-users ]
       biographie:
         groups: [ input, output, create, search, profile, public-profile ]
       intensity:
@@ -42,6 +42,10 @@ App\Services\User\Entity\User:
         groups: [ input, profile ]
       newMatchNotification:
         groups: [ input, profile ]
+      newMessageEmail:
+        groups: [ input, profile ]
+      newMatchEmail:
+        groups: [ input, profile ]
       newsletter:
         groups: [ input, create, profile ]
       slackAccounts:
@@ -52,6 +56,8 @@ App\Services\User\Entity\User:
         groups: [ input ]
       domains:
         groups: [ admin-users ]
+      emailConfirmed:
+        groups: [ profile ]
       deleted:
         groups: [ admin-users ]
 

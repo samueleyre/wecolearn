@@ -1,5 +1,5 @@
 
-<form *ngIf="loaded" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm" >
+<form *ngIf="loaded" class="ProfileSettingsForm form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm" >
     <br>
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -21,39 +21,39 @@
 
                 <div class="row fieldContainer">
                     <div class="col-12">
-                        <h6 class="center">Je veux apprendre 📚</h6>
+                        <h6 class="ProfileSettingsForm-title">Je veux apprendre <app-emoji [emojiName]="'1F4C8'"></app-emoji></h6>
                         <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'" [type]="learnType" ></profile-form-tags>
                     </div>
                 </div>
 
                 <div class="row fieldContainer">
                     <div class="col-12">
-                        <h6 class="center">Mes projets 🚀</h6>
+                        <h6 class="ProfileSettingsForm-title">Mes projets <app-emoji [emojiName]="'1F9D1-200D-1F680'"></app-emoji></h6>
                         <br>
                         <profile-form-biography [parentForm]="userForm"></profile-form-biography>
                     </div>
                 </div>
                 <div class="row fieldContainer">
                     <div class="col-12">
-                        <h6 class="center">Je connais 🧠</h6>
+                        <h6 class="ProfileSettingsForm-title">Je connais <app-emoji [emojiName]="'E319'"></app-emoji></h6>
                         <profile-form-tags [parentForm]="userForm" [fieldName]="'know_tags'" [type]="knowType" ></profile-form-tags>
                     </div>
                 </div>
                 <div class="row fieldContainer">
                     <div class="col-12">
-                        <h6 class="center">J'ai envie de transmettre 👩‍🏫</h6>
+                        <h6 class="ProfileSettingsForm-title">J'ai envie de transmettre <app-emoji [emojiName]="'1F9D1-200D-1F3EB'"></app-emoji></h6>
                         <profile-form-tags [parentForm]="userForm" [fieldName]="'teach_tags'" [type]="teachType" ></profile-form-tags>
                     </div>
                 </div>
                 <div class="row fieldContainer">
                     <div class="col-12">
-                        <h6 class="center">L'intensité à laquelle je souhaite apprendre</h6>
+                        <h6 class="ProfileSettingsForm-title">L'intensité à laquelle je souhaite apprendre</h6>
                         <profile-form-intensity [parentForm]="userForm"></profile-form-intensity>
                     </div>
                 </div>
                 <div class="row fieldContainer">
                     <div class="col-12">
-                        <h6 class="center">Ma position</h6>
+                        <h6 class="ProfileSettingsForm-title">Ma position</h6>
                         <app-geolocation [parentForm]="userForm"></app-geolocation>
                     </div>
                 </div>

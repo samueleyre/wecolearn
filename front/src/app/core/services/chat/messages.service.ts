@@ -75,7 +75,7 @@ export class MessagesService {
     this.create.next(message);
   }
 
-  addMessageToUpdate(message: Message): void {
+  public addMessageToUpdate(message: Message): void {
     if (!message.message) {
       return;
     }

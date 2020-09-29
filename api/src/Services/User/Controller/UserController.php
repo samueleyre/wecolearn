@@ -10,6 +10,9 @@ use App\Services\User\Entity\PushNotificationSubscription;
 use App\Services\User\Entity\Subscription;
 use App\Services\User\Entity\Token;
 use App\Services\User\Entity\User;
+use App\Services\User\Event\EmailChangeConfirmed;
+use App\Services\User\Event\NewsletterWasChanged;
+use App\Services\User\Event\UserWasCreated;
 use App\Services\User\Service\ChangeEmailService;
 use App\Services\User\Service\CreateTokenForChangingPasswordService;
 use App\Services\User\Service\CreateUserService;
@@ -25,6 +28,7 @@ use PhpParser\Error;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\Get;
@@ -119,73 +123,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Post("/user/changesettings")
-     * @View( serializerGroups={"profile"})
-     * )
-     */
-    public function changeSettingsAction(
-        Request $request,
-        TokenStorageInterface $tokenStorage,
-        ChangeEmailService $changeEmailService
-    ) {
-        $user = $tokenStorage->getToken()->getUser();
-        $ret = [];
-        try {
-            if ($email = $request->get('email')) {
-                $email = strtolower($email);
-                $searchEmail = $this->getDoctrine()
-                    ->getRepository(User::class)->findOneBy(['emailCanonical' => $email]);
-
-                if ($user->getEmailCanonical() === $email) {
-                    $ret['noChange'] = true;
-                } elseif ($searchEmail) {
-                    $ret['duplicate'] = true;
-                } else {
-                    $user = $changeEmailService->process($user, $email);
-                }
-            } elseif (
-                ($password = $request->get('password')) &&
-                ($newPassword = $request->get('newPassword'))
-            ) {
-
-                $encoder = $this->encoderService->getEncoder($user);
-
-                if (!$encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
-                    return [
-                        'wrong'=> true,
-                    ];
-                }
-
-                $user->setPlainPassword($newPassword);
-
-                try {
-                    $this->userManager->updateUser($user);
-                    $ret['changed'] = true;
-                } catch (NotNullConstraintViolationException $e) {
-                    // Found the name of missed field
-                    $ret['notnull'] = true;
-                } catch (UniqueConstraintViolationException $e) {
-                    // Found the name of duplicate field
-                    $ret['duplicate'] = true;
-                } catch (\Exception $e) {
-
-                }
-            }
-        } catch (\Exception $e) {
-            exit();
-        }
-
-        $ret['user'] = $user;
-
-        return $ret;
-    }
-
-
-    /**
      * @Get("confirmEmail/{tokenString}")
      * @View( serializerGroups={"profile"})
      */
-    public function confirmEmailAction($tokenString, UserService $userService, TokenService $tokenService)
+    public function confirmEmailAction($tokenString, UserService $userService, TokenService $tokenService, EventDispatcherInterface $dispatcher)
     {
         $token = $this->getDoctrine()
             ->getRepository(Token::class)
@@ -196,8 +137,8 @@ class UserController extends AbstractController
         if ($token && ($user = $token->getUser())) {
             if (false === $user->getEmailConfirmed()) {
                 $user->setEmailConfirmed(true);
-                $ret['success'] = $userService
-                    ->patch($user, $user->getId());
+                $ret['success'] = $userService->patch($user, $user->getId());
+                $dispatcher->dispatch(new EmailChangeConfirmed($user),EmailChangeConfirmed::NAME);
             } else {
                 $ret['error'] = 'token_already_confirmed';
             }
@@ -514,6 +455,7 @@ class UserController extends AbstractController
 
         syslog(LOG_ERR, sprintf("########### SUBSCRIPTION WITH token : %s . ########################",$token));
 
+        // get subscriptions with same token
         $subscriptions = $em->getRepository(PushNotificationSubscription::class)->findBy(['user' => $user, 'token' => $token, 'type' => $type]);
 
         $update = false;
@@ -521,6 +463,11 @@ class UserController extends AbstractController
         syslog(LOG_ERR , count($subscriptions));
 
         if (0 === count($subscriptions)) {
+            $oldSubscriptions = $em->getRepository(PushNotificationSubscription::class)->findBy(['user' => $user, 'type' => $type]);
+            foreach ($oldSubscriptions as $oldSubscription) {
+                $em->remove($oldSubscription);
+            }
+            
             $subscription = new PushNotificationSubscription();
             $subscription->setUser($user);
             $subscription->setToken($token);

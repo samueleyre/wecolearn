@@ -33,10 +33,13 @@ export class User {
   public show_profil: boolean;
   public new_message_notification: boolean;
   public new_mail_notification: boolean;
+  public new_message_email: boolean;
+  public new_mail_email: boolean;
   public newsletter: boolean;
   public slack_accounts: SlackAccount[];
   public user_notified: Date;
   public notification_subscribe: boolean | null;
+  public email_confirmed: boolean;
 
   public created: any;
   public deleted: string | null;
@@ -67,11 +70,14 @@ export class User {
     this.show_profil = null;
     this.new_message_notification = null;
     this.new_mail_notification = null;
+    this.new_message_email = null;
+    this.new_mail_email = null;
     this.newsletter = null;
     this.slack_accounts = obj && obj.slack_accounts ? obj.slack_accounts : [];
     this.user_notified = null;
     this.notification_subscribe = false;
     this.roles = null;
+    this.email_confirmed = obj && obj.email_confirmed ? obj.email_confirmed : null;
     if (obj && obj.domains) {
       this.domains = obj.domains;
     }

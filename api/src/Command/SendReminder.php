@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Services\Chat\Constant\EmailConstant;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Services\Chat\Service\EmailService;
+use App\Services\Shared\Service\EmailService;
 
 
 /**
