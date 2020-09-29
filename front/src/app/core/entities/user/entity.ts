@@ -39,6 +39,7 @@ export class User {
   public slack_accounts: SlackAccount[];
   public user_notified: Date;
   public notification_subscribe: boolean | null;
+  public email_confirmed: boolean;
 
   public created: any;
   public deleted: string | null;
@@ -76,6 +77,7 @@ export class User {
     this.user_notified = null;
     this.notification_subscribe = false;
     this.roles = null;
+    this.email_confirmed = obj && obj.email_confirmed ? obj.email_confirmed : null;
     if (obj && obj.domains) {
       this.domains = obj.domains;
     }

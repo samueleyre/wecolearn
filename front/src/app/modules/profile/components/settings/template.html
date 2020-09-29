@@ -1,9 +1,9 @@
 
-<form class="form-horizontal" (ngSubmit)="f1.form.valid && submitChangeEmail(f1)" #f1="ngForm" novalidate>
+<form class="profilSettings form-horizontal" (ngSubmit)="f1.form.valid && submitChangeEmail(f1)" #f1="ngForm" novalidate>
   <fieldset>
 
     <div class="form-group">
-      <label for="email">Email</label>
+      <label class="profilSettings-emailLabel" for="email">Email <mat-icon color="primary" matTooltip="Email confirmé" *ngIf="user.email_confirmed">check</mat-icon><mat-icon color="warn" matTooltip="Vous n'avez pas encore confirmé votre email." *ngIf="!user.email_confirmed">error</mat-icon></label>
       <div *ngIf="!editing['newemail']">
         <span class="value-span">{{user.email}}</span>
         <button type="button" class="btn btn-sm btn-edit" (click)="makeEditable('newemail')"><i
