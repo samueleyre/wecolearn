@@ -7,17 +7,17 @@ export function cypress_signup(newUser: { first_name: string, last_name: string,
 
   it('choose city', () => {
     cy.get('mat-radio-button:first-child').click();
-    cy.get('#cityStep .btn-primary').click();
+    cy.get('#cityStep .card-footer-nextButton').click();
   });
 
   it('add tag', () => {
     cy.get('.mat-chip-input').type('polka').wait(1000).type('{downArrow}').type('{enter}');
-    cy.get('#learningStep .btn-primary').click();
+    cy.get('#learningStep .card-footer-nextButton').click();
   });
 
   it('add bio', () => {
     cy.get('textarea').type('Je veux devenir danseur pro.').type('{enter}');
-    cy.get('#projectStep .btn-primary').click();
+    cy.get('#projectStep .card-footer-nextButton').click();
   });
 
   it('credentials', () => {
@@ -25,7 +25,7 @@ export function cypress_signup(newUser: { first_name: string, last_name: string,
     cy.get('#lastNameInput').type(newUser.last_name);
     cy.get('#emailInput').type(newUser.email);
     cy.get('#passwordInput').type(newUser.password);
-    cy.get('#idStep .btn-primary').click();
+    cy.get('#idStep .card-footer-nextButton').click();
     cy.wait(3000);
   });
 }
