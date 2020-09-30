@@ -23,7 +23,7 @@ export class AuthOnboardingComponent extends AuthOnboardingBaseComponent{
     private _router: Router,
     private _toastr: ToastService,
   ) {
-    super(_fb, _authenticationService, _router);
+    super(_fb, _authenticationService, _router, _toastr);
   }
 
   setSelection($event:StepperSelectionEvent) {
@@ -42,20 +42,5 @@ export class AuthOnboardingComponent extends AuthOnboardingBaseComponent{
         this.firstnameInput.focus();
       },         500);
     }
-  }
-
-  submit() {
-    // only if on last index
-    this.signUp.subscribe(
-      () => {
-        this.login();
-      },
-      (error) => {
-        if (error.error && error.error.error && error.error.error === 'resource already used') {
-          this._toastr.error('Cette adresse email est déjà utilisée.');
-          this.emailControl.setErrors({ duplicate:true });
-        }
-      },
-    );
   }
 }
