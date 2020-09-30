@@ -11,6 +11,7 @@ import { AuthenticationService } from '~/core/services/auth/auth';
 import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardingComponents/baseComponent';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { NAV } from '~/config/navigation/nav';
+import { ToastService } from '~/core/services/toast.service';
 
 @Component({
   selector: 'profile-onboarding-mobile',
@@ -26,9 +27,10 @@ export class AuthOnboardingMobileComponent extends AuthOnboardingBaseComponent i
     private _fb: FormBuilder,
     private _authenticationService: AuthenticationService,
     private _router: Router,
+    private _toastr: ToastService,
     private _footerMobileService: FooterMobileService,
   ) {
-    super(_fb, _authenticationService, _router);
+    super(_fb, _authenticationService, _router, _toastr);
   }
 
   ngOnInit() {
@@ -72,18 +74,5 @@ export class AuthOnboardingMobileComponent extends AuthOnboardingBaseComponent i
 
   get nav() {
     return NAV;
-  }
-
-  submit() {
-    this.signUp.subscribe(
-      (response) => {
-        this.login();
-      },
-      (error) => {
-        if (error.error && error.error.error && error.error.error === 'resource already used') {
-          this.emailControl.setErrors({ duplicate:true });
-        }
-      },
-    );
   }
 }

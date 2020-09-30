@@ -4,7 +4,6 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { PATTERN } from '~/shared/config/pattern';
@@ -12,7 +11,8 @@ import { onBoardingSections } from '~/modules/auth/components/onBoardingComponen
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import {EnvEnum} from "~/core/enums/env.enum";
+import { EnvEnum } from '~/core/enums/env.enum';
+import { ToastService } from '~/core/services/toast.service';
 
 
 @Component({
@@ -42,12 +42,12 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
+    private toastr: ToastService,
   ) {
     super();
   }
 
   login() {
-    this.loading = true;
     this.authenticationService.login(this.userForm.value.email, this.userForm.value.password)
       .subscribe(
         (result) => {
@@ -61,6 +61,23 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
           this.loading = false;
         },
       );
+  }
+
+  submit() {
+    // only if on last index
+    this.loading = true;
+    this.signUp.subscribe(
+      () => {
+        this.login();
+      },
+      (error) => {
+        this.loading = false;
+        if (error.error && error.error.error && error.error.error === 'resource already used') {
+          this.toastr.error('Cette adresse email est déjà utilisée.');
+          this.emailControl.setErrors({ duplicate:true });
+        }
+      },
+    );
   }
 
   get tagInput(): HTMLDivElement {
