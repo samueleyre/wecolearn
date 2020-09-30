@@ -10,11 +10,12 @@
         <field name="hexcolor" column="hexcolor" length="20" type="string"/>
         <field name="emoji" column="emoji" type="string"/>
         <field name="created" column="created" type="datetime"/>
-        <one-to-many field="tags" target-entity="App\Services\Tag\Entity\Tag" mapped-by="tagDomain">
-            <cascade>
-                <cascade-persist/>
-                <cascade-merge/>
-            </cascade>
-        </one-to-many>
+        <many-to-many field="tags" target-entity="App\Services\Tag\Entity\Tag" mapped-by="tagDomains"/>
+<!--        <one-to-many field="tags" target-entity="App\Services\Tag\Entity\Tag" mapped-by="tagDomain">-->
+<!--            <cascade>-->
+<!--                <cascade-persist/>-->
+<!--                <cascade-merge/>-->
+<!--            </cascade>-->
+<!--        </one-to-many>-->
     </entity>
 </doctrine-mapping>
