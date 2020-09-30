@@ -102,7 +102,10 @@
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="hasValidationButton">
       <ion-button id="validate" (click)="submit()" [disabled]="!userForm.valid">
-        <ion-label>valider</ion-label>
+        <ion-label>
+          <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+          <ng-container *ngIf="!loading">valider</ng-container>
+        </ion-label>
         <mat-icon>chevron_right</mat-icon>
       </ion-button>
     </ion-buttons>
