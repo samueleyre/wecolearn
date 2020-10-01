@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+import { TagDomain } from '~/core/entities/tag/TagDomain';
+
 @Component({
   selector: 'app-emoji',
   templateUrl: './emoji.component.html',

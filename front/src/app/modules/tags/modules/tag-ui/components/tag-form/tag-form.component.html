@@ -1,4 +1,4 @@
-<form class="CreateEditTagForm" [formGroup]="createEditTagForm">
+<form class="CreateEditTagForm" [formGroup]="createEditTagForm" *ngIf="loaded">
   <mat-form-field appearance="outline">
     <mat-label>Nom</mat-label>
     <input matInput formControlName="name" required />
@@ -11,7 +11,14 @@
     </mat-select>
   </mat-form-field>
 
-  <app-tag-domain-autocomplete [parentForm]="createEditTagForm"></app-tag-domain-autocomplete>
+  <mat-form-field appearance="outline">
+    <mat-label>Domaines d'apprentissage</mat-label>
+    <mat-select formControlName="tag_domains" multiple [compareWith]="comparer">
+      <mat-option *ngFor="let tagDomain of tagDomains" [value]="tagDomain">{{tagDomain.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<!--  <app-tag-domain-autocomplete [parentForm]="createEditTagForm"></app-tag-domain-autocomplete>-->
 
   <mat-form-field *ngIf="!isCreating" appearance="outline">
     <mat-label>Importance</mat-label>
