@@ -1,11 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { Tag } from '~/core/entities/tag/entity';
 import { AdminTagService } from '~/modules/tags/services/admin-tag.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagTypeEnum, tagTypeFR, tagTypes } from '~/core/enums/tag/tag-type.enum';
 import { ToastService } from '~/core/services/toast.service';
+import { TagDomainsService } from '~/core/services/tag/tag-domains.service';
+import { TagDomain } from '~/core/entities/tag/TagDomain';
 
 
 @Component({
@@ -20,11 +24,17 @@ export class TagFormComponent extends DestroyObservable implements OnInit {
 
   @Output() onCloseEditTag = new EventEmitter();
 
+  loaded = false;
   createEditTagForm: FormGroup;
   isCreatingUpdating = false;
   types = tagTypes;
 
-  constructor(private _fb: FormBuilder, private _tagService: AdminTagService, private _toastr: ToastService) {
+  constructor(
+    private _fb: FormBuilder,
+    private _tagService: AdminTagService,
+    private _toastr: ToastService,
+    private _tagDomainsService: TagDomainsService,
+  ) {
     super();
   }
 
@@ -33,11 +43,12 @@ export class TagFormComponent extends DestroyObservable implements OnInit {
 
     this.updateValidators();
     if (this.createEditTagForm) {
+      console.log(tag.tag_domains);
       this.createEditTagForm.setValue({
         name: tag.name,
         type: tag.type,
         iteration: tag.iteration,
-        tag_domain: tag.tag_domain,
+        tag_domains: tag.tag_domains,
       });
 
       Object.keys(this.createEditTagForm.controls).forEach((key) => {
@@ -57,10 +68,28 @@ export class TagFormComponent extends DestroyObservable implements OnInit {
   }
 
   ngOnInit() {
+    this._tagDomainsService.list().subscribe((
+      () => {
+        this.loaded = true;
+        this.initForm();
+      }
+    ));
     if (!this.tag) {
       this.tag = new Tag();
     }
-    this.initForm();
+  }
+
+  get tagDomains$(): Observable<TagDomain[]> {
+    return this._tagDomainsService.tagDomains$;
+  }
+
+  get tagDomains(): TagDomain[] {
+    return this._tagDomainsService.entities;
+  }
+
+  comparer(o1: TagDomain, o2: TagDomain): boolean {
+    // if possible compare by object's id property - and not by reference.
+    return o1 && o2 ? o1.id === o2.id : true;
   }
 
   get controls() {
@@ -122,7 +151,7 @@ export class TagFormComponent extends DestroyObservable implements OnInit {
     this.createEditTagForm = this._fb.group({
       name: [tag.name, Validators.required],
       iteration: [tag.iteration, Validators.required],
-      tag_domain: [tag.tag_domain],
+      tag_domains: [tag.tag_domains],
       type: [tag.type, Validators.required],
     });
 

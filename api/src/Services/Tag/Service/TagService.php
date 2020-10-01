@@ -5,6 +5,7 @@ namespace App\Services\Tag\Service;
 use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Entity\TagDomain;
 use App\Services\User\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Hoa\Exception\Exception;
@@ -77,9 +78,11 @@ class TagService
             $oldTag->setIteration($iteration);
             $oldTag->setName($name);
 
-            if ($tag->getTagDomain()) {
-                $tagDomain = $this->em->getRepository(TagDomain::class)->find($tag->getTagDomain()->getId());
-                $oldTag->setTagDomain($tagDomain);
+            if (count($tag->getTagDomains()) > 0) {
+                foreach( $tag->getTagDomains() as $tagDomain) {
+                    $tagDomain = $this->em->getRepository(TagDomain::class)->find($tagDomain->getId());
+                    $oldTag->addTagDomain($tagDomain);
+                }
             }
 
             $this->em->persist($oldTag);
@@ -139,6 +142,17 @@ class TagService
     public function create(Tag $tag)
     {
         $this->initializeNewTag($tag);
+
+        // fill from database
+        $tagDomains = new ArrayCollection();
+        foreach ($tag->getTagDomains() as $td) {
+            $tagDomains->add($this->em->getRepository(TagDomain::class)->find($td->getId()));
+        }
+        $tag->getTagDomains()->clear();
+        foreach ($tagDomains as $td) {
+            $tag->addTagDomain($td);
+        }
+
         $this->em->persist($tag);
         $this->em->flush();
         return $tag;

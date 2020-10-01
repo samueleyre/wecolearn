@@ -20,7 +20,7 @@
       <li *ngFor="let tag of user.tags | tagPipe: 0:20">
         <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
           <span class="badge" [title]="tagDisplayTitle(tag)">
-            {{ tag.name }} <app-emoji *ngIf="tag.tag_domain" [emojiName]="tag.tag_domain.emoji"></app-emoji>
+            {{ tag.name }} <app-emoji *ngIf="tag.tag_domains.length > 0" [emojiName]="tag.tag_domains[0].emoji"></app-emoji>
           </span>
         </a></p>
       </li>
@@ -33,7 +33,7 @@
       <li *ngFor="let tag of user.tags | tagPipe: 1:20">
         <p><a title="Rechercher avec tag {{tag.name}}" (click)="searchByTag(tag)">
           <span class="badge" [title]="tagDisplayTitle(tag)">
-            {{ tag.name }} <app-emoji *ngIf="tag.tag_domain" [emojiName]="tag.tag_domain.emoji"></app-emoji>
+            {{ tag.name }} <app-emoji *ngIf="tag.tag_domains.length > 0" [emojiName]="tag.tag_domains[0].emoji"></app-emoji>
           </span>
         </a></p>
       </li>

@@ -2,9 +2,11 @@
 
 namespace App\Services\User\Repository;
 
+use App\Services\Tag\Entity\TagDomain;
 use App\Services\User\Entity\User;
 use App\Services\Tag\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 class UserRepository extends ServiceEntityRepository
@@ -129,7 +131,7 @@ class UserRepository extends ServiceEntityRepository
         $qb->innerJoin('user.tags', 't');
 
         if ($searchTagDomain) {
-            $qb->innerJoin('t.tagDomain', 'tagDomain');
+            $qb->innerJoin('t.tagDomains', 'tagDomain');
         }
 
         if ($domain) {
@@ -183,14 +185,18 @@ class UserRepository extends ServiceEntityRepository
                 $qb->andWhere(sprintf('t.type=1'));
             }
             $qb->addSelect('count( DISTINCT tagDomain.id) as commonTagDomains');
-            $qb->innerJoin('t.tagDomain', 'tagDomain');
-            $profileTagDomains = $profileTags
-                ->map(function (Tag $t) {
-                    return $t->getTagDomain();
-                })
-                ->filter(function ($tg) {
-                    return $tg;
-                });
+            $qb->innerJoin('t.tagDomains', 'tagDomain');
+            $profileTagDomains = new ArrayCollection();
+
+            foreach ($profileTags as $t) {
+                if (count($t->getTagDomains()) > 0) {
+                    foreach ($t->getTagDomains() as $td) {
+                        if (!$profileTagDomains->contains($td)) {
+                            $profileTagDomains->add($td);
+                        }
+                    };
+                }
+            }
 
             if (count($profileTagDomains) === 0) {
                 return [];

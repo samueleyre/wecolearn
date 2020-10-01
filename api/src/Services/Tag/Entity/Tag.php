@@ -11,7 +11,6 @@ class Tag
     public $id;
     public $name;
     public $type;
-    public $tagDomain;
     public $iteration;
     public $created;
     private $users;
@@ -177,18 +176,6 @@ class Tag
         return $this->users;
     }
 
-    public function getTagDomain(): ?TagDomain
-    {
-        return $this->tagDomain;
-    }
-
-    public function setTagDomain(?TagDomain $tagDomain): self
-    {
-        $this->tagDomain = $tagDomain;
-
-        return $this;
-    }
-
     /**
      * @return Collection|TagDomain[]
      */
@@ -214,4 +201,5 @@ class Tag
 
         return $this;
     }
+    
 }
