@@ -22,13 +22,12 @@ class TagDomainService
         $this->container = $container;
     }
 
-    public function create(TagDomain $tagDomain)
+    public function create(TagDomain &$tagDomain)
     {
         $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
         $tagDomain->setCreated($date);
         $this->em->persist($tagDomain);
         $this->em->flush();
-        return $tagDomain;
     }
 
     public function patchTagDomain(Tagdomain $tagDomain)

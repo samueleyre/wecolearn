@@ -33,7 +33,7 @@ export class TagDomainAutocompleteComponent extends DestroyObservable implements
       switchMap(value => this.tagDomainsService.findTagDomains(value)),
     );
 
-    const initialTagDomain = this.parentForm.get('tag_domain').value;
+    const initialTagDomain = this.parentForm.get('tag_domains').value; // todo: fix
 
     if (initialTagDomain) {
       this.tagDomainCtrl.setValue(initialTagDomain);
@@ -44,7 +44,7 @@ export class TagDomainAutocompleteComponent extends DestroyObservable implements
   public onTagDomainSelect(event: MatAutocompleteSelectedEvent) {
     clearTimeout(this.focusDebounceTimer);
     const tagDomain = event.option.value;
-    this.parentForm.get('tag_domain').setValue(tagDomain);
+    this.parentForm.get('tag_domain').setValue(tagDomain); // todo: fix
     this.selectedTagDomain = tagDomain;
   }
 

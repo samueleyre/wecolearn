@@ -44,7 +44,7 @@ class AdminTagController extends AbstractController
         TagService $tagService
     ) {
 
-        // change iteration | name | tagDomain
+        // change iteration | name | tagDomains
         return $tagService->patchTag($tag);
     }
 

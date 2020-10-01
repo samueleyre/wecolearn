@@ -90,7 +90,7 @@ import {BIO} from "~/config/bio.const";
   }
 
   tagDisplayTitle(tag: Tag): string {
-    return `${tag.name}${tag.tag_domain ? ` | ${tag.tag_domain.name}` : ''}`.trim();
+    return `${tag.name}${tag.tag_domains.length > 0 ? ` | ${tag.tag_domains[0].name}` : ''}`.trim();
   }
 
   getBio(bio): string {

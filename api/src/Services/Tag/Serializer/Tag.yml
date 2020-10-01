@@ -8,7 +8,7 @@ App\Services\Tag\Entity\Tag:
           groups: [ input, output, putTag, create, search, profile, public-profile, admin-users, admin-tags ]
         type:
           groups: [ input, output, create, search, profile, public-profile, admin-users, admin-tags ]
-        tagDomain:
+        tagDomains:
           groups: [ input, output, putTag, create, search, profile, public-profile, admin-users, admin-tags ]
         created:
           groups: [ admin-tags ]
