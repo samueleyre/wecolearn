@@ -34,7 +34,7 @@
     font-style: italic;
     color: #393939;;
     margin-top: 30px;
-    transition: opacity ease 1s;
+    //transition: opacity ease 1s;
     &-btn {
       font-weight: bold;
       margin-top: 10px;
@@ -45,6 +45,8 @@
     }
     &.hide {
       opacity: 0;
+    }
+    &:not(.hide) {
       transition: opacity ease 1s;
     }
   }
