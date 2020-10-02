@@ -20,12 +20,14 @@ class WelcomeNewMembers extends Command
 
     private $em;
     private $messageService;
+    private $environment;
 
-    public function __construct( EntityManagerInterface $em, MessageService $messageService)
+    public function __construct( EntityManagerInterface $em, MessageService $messageService, string $environment)
     {
 
         $this->em = $em;
         $this->messageService = $messageService;
+        $this->environment = $environment;
         parent::__construct();
 
     }
@@ -58,7 +60,13 @@ class WelcomeNewMembers extends Command
             return;
         }
 
+        $memberIndex = 0;
         foreach ($newMembers as $newMember) {
+
+//            limit emails on staging
+            if ($this->environment === 'staging' && $memberIndex > 0) {
+                break;
+            }
 
             $id = $newMember->getId();
 
@@ -88,6 +96,7 @@ class WelcomeNewMembers extends Command
 
             syslog(LOG_INFO, "welcomed user $id");
 
+            $memberIndex++;
         }
     }
 }

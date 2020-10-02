@@ -20,19 +20,21 @@ use App\Services\Shared\Service\EmailService;
 class SendReminder extends Command
 {
 
-  private $em;
-  private $emailService;
-  private $messageService ;
+    private $em;
+    private $emailService;
+    private $messageService;
+    private $environment;
 
-  public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService )
-  {
+    public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService, string $environment)
+    {
 
-    $this->em = $em;
-    $this->emailService = $emailService;
-    $this->messageService  = $messageService ;
-    parent::__construct();
+        $this->em = $em;
+        $this->emailService = $emailService;
+        $this->messageService = $messageService;
+        $this->environment = $environment;
+        parent::__construct();
 
-  }
+    }
 
     protected function configure()
     {
@@ -41,40 +43,47 @@ class SendReminder extends Command
             ->setDescription('Send Messages');
     }
 
-    protected function execute (InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
 
 //      get messages sent at a hour ago, not yet read and not yet notified.
-      $MessagesSortedClients = $this->em
-        ->getRepository(Message::class)
-        ->getUnReadMessagesByUser();
+        $MessagesSortedClients = $this->em
+            ->getRepository(Message::class)
+            ->getUnReadMessagesByUser();
 
-      foreach ($MessagesSortedClients as $clientId => $client) {
+        $clientIndex = 0;
+        foreach ($MessagesSortedClients as $clientId => $client) {
 
-        $messages = "";
-        $i = 0;
+//            limit emails on staging
+            if ($this->environment === 'staging' && $clientIndex > 0) {
+                break;
+            }
 
-        while ($i <= 2 && isset($client["messages"][$i])):
-          $MESSAGE = strip_tags($client["messages"][$i]->getMessage());
-          $FIRSTNAME = $client["messages"][$i]->getSender()->getFirstname();
-          $TIME = $client["messages"][$i]->getCreated()->format('H:i');
-          $DATE = $client["messages"][$i]->getCreated()->format('d-m-Y');
-          $messages.= '<p><b>'.$FIRSTNAME.'</b> : "'.$MESSAGE.'", le '.$DATE.' à '.$TIME.'</p><br>';
-          $i++;
-        endwhile;
+            $messages = "";
+            $i = 0;
+            while ($i <= 2 && isset($client["messages"][$i])):
+                $MESSAGE = strip_tags($client["messages"][$i]->getMessage());
+                $FIRSTNAME = $client["messages"][$i]->getSender()->getFirstname();
+                $TIME = $client["messages"][$i]->getCreated()->format('H:i');
+                $DATE = $client["messages"][$i]->getCreated()->format('d-m-Y');
+                $messages .= '<p><b>' . $FIRSTNAME . '</b> : "' . $MESSAGE . '", le ' . $DATE . ' à ' . $TIME . '</p><br>';
+                $i++;
+            endwhile;
 
-        $this->messageService->setReminderDate($clientId);
+            $this->messageService->setReminderDate($clientId);
 
-        $this->emailService
-          ->setData(EmailConstant::$Ids["MESSAGE_NOTIFS"],
-            [
-              "MESSAGES" => $messages,
-              "FIRSTNAME"=> $client["firstname"],
-              "USERNAME"=> $client["firstname"],
-            ],
-            $client["email"]
-          )
-          ->sendEmail();
+            $this->emailService
+                ->setData(EmailConstant::$Ids["MESSAGE_NOTIFS"],
+                    [
+                        "MESSAGES" => $messages,
+                        "FIRSTNAME" => $client["firstname"],
+                        "USERNAME" => $client["firstname"],
+                    ],
+                    $client["email"]
+                )
+                ->sendEmail();
 
-      }
+            $clientIndex++;
+        }
     }
 }
