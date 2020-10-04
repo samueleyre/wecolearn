@@ -5,6 +5,7 @@ namespace App\Services\User\Event;
 use App\Services\Shared\Service\EmailService;
 use App\Services\Chat\Service\NotificationService;
 use App\Services\Tag\Constant\TagConstant;
+use App\Services\Tag\Entity\Tag;
 use App\Services\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -84,26 +85,38 @@ class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
             })->toArray();
 
             if($matchingUser->getNewMatchNotification()) {
-                $this->notificationService->processNewMatchingProfil($matchingUser, $user );
+                try {
+                    $this->notificationService->processNewMatchingProfil($matchingUser, $user );
+                }
+                catch (\Exception $e){
+                    $this->sendEmail($matchingUser, $user, $commonTags);
+                }
+                catch (\Error $e){
+                    $this->sendEmail($matchingUser, $user, $commonTags);
+                }
             }
 
             else if ($matchingUser->getNewMatchEmail()) {
-                $this->emailService
-                    ->setData(
-                        15,
-                        [
-                            "HOST" => $this->host,
-                            "FIRSTNAME" => $matchingUser->getFirstName(),
-                            "MATCH_FIRSTNAME" => $user->getFirstName(),
-                            "MATCH_PROFIL_URL" => $user->getProfilUrl(),
-                            "TAGS" => array_values($commonTags), // reindex array with array_values
-                        ],
-                        $matchingUser->getEmail()
-                    )
-                    ->sendEmail();
+                $this->sendEmail($matchingUser, $user, $commonTags);
             }
 
         }
 
+    }
+
+    private function sendEmail(User $matchingUser, User $user, ArrayCollection $commonTags) {
+        $this->emailService
+            ->setData(
+                15,
+                [
+                    "HOST" => $this->host,
+                    "FIRSTNAME" => $matchingUser->getFirstName(),
+                    "MATCH_FIRSTNAME" => $user->getFirstName(),
+                    "MATCH_PROFIL_URL" => $user->getProfilUrl(),
+                    "TAGS" => array_values($commonTags), // reindex array with array_values
+                ],
+                $matchingUser->getEmail()
+            )
+            ->sendEmail();
     }
 }

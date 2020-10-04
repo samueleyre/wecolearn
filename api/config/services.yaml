@@ -29,6 +29,8 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
+
+    # SERVICES --------------
     App\Services\Shared\Service\EmailService:
         arguments:
             $deliveryAddress: '%delivery_address%'
@@ -54,15 +56,17 @@ services:
             $secret: '%mercure_jwt_key%'
             $domain: '%host%'
 
-    App\Services\Core\Provider\JwtProvider:
-        arguments:
-            $secret: '%mercure_jwt_key%'
-
     App\Services\Chat\Service\PushService:
         arguments:
             $vapidPrivate: '%vapid_private%'
             $vapidPublic : '%vapid_public%'
 
+    # PROVIDERS ------
+    App\Services\Core\Provider\JwtProvider:
+        arguments:
+            $secret: '%mercure_jwt_key%'
+
+    # SUBSCRIBERS ---------
     App\Services\Core\Exception\ExceptionSubscriber:
         arguments:  ['@service_container', '@logger']
         tags:
@@ -108,3 +112,12 @@ services:
         tags:
             - { name: 'kernel.event_subscriber' }
 
+    # COMMANDS
+
+    App\Command\SendReminder:
+        arguments:
+            $environment: '%environment%'
+
+    App\Command\WelcomeNewMembers:
+        arguments:
+            $environment: '%environment%'

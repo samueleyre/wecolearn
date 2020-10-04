@@ -31,6 +31,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
     private $manager;
     private $userManager;
     private $em;
+    private $tagDomains = [];
 
     private $container;
 
@@ -71,6 +72,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $tagDomain->setHexcolor('#ebb434');
 
             $this->tagDomainService->create($tagDomain);
+            array_push($this->tagDomains,$tagDomain);
         }
     }
 
@@ -122,6 +124,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $tag->setType(0);
             $tag->setCreated($date);
             $tag->setIteration(random_int(0, 100));
+            $tag->addTagDomain($this->tagDomains[random_int(0, count(TagDomainsConstant::$LIST)-1)]);
             array_push($tags, $tag);
         }
 

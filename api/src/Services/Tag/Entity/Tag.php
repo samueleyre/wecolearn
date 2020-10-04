@@ -11,14 +11,15 @@ class Tag
     public $id;
     public $name;
     public $type;
-    public $tagDomain;
     public $iteration;
     public $created;
     private $users;
+    private $tagDomains;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->tagDomains = new ArrayCollection();
     }
 
     /**
@@ -175,15 +176,30 @@ class Tag
         return $this->users;
     }
 
-    public function getTagDomain(): ?TagDomain
+    /**
+     * @return Collection|TagDomain[]
+     */
+    public function getTagDomains(): Collection
     {
-        return $this->tagDomain;
+        return $this->tagDomains;
     }
 
-    public function setTagDomain(?TagDomain $tagDomain): self
+    public function addTagDomain(TagDomain $tagDomain): self
     {
-        $this->tagDomain = $tagDomain;
+        if (!$this->tagDomains->contains($tagDomain)) {
+            $this->tagDomains[] = $tagDomain;
+        }
 
         return $this;
     }
+
+    public function removeTagDomain(TagDomain $tagDomain): self
+    {
+        if ($this->tagDomains->contains($tagDomain)) {
+            $this->tagDomains->removeElement($tagDomain);
+        }
+
+        return $this;
+    }
+    
 }
