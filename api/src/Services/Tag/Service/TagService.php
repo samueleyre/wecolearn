@@ -157,4 +157,8 @@ class TagService
         $this->em->flush();
         return $tag;
     }
+
+    public function resetCount() {
+
+    }
 }
