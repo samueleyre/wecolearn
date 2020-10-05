@@ -3,16 +3,9 @@
 namespace App\Services\Chat\Controller;
 
 use App\Services\Chat\Entity\Message;
-use App\Services\Chat\Service\BrockerService;
-use App\Services\Chat\Service\MessageSerializer;
 use App\Services\Chat\Service\MessageService;
-use App\Services\Chat\Service\NotificationService;
-use App\Services\Chat\Service\PushService;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\UserService;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerInterface;
-use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Patch;
@@ -21,9 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mercure\PublisherInterface;
-use Symfony\Component\Mercure\Update;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MessageController extends AbstractController

@@ -5,6 +5,7 @@ namespace App\Services\Tag\Controller;
 use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Service\TagService;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Patch;
@@ -93,5 +94,15 @@ class AdminTagController extends AbstractController
         TagService $tagService
     ) {
         return $tagService->delete($id);
+    }
+
+    /**
+     * @Get("admin/tags/resetCount")
+     */
+    public function resetCountAction(
+        EntityManager $em
+    ) {
+        $em->getRepository(Tag::class)->resetCount();
+        return new Response();
     }
 }
