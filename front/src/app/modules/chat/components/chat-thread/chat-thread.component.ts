@@ -3,14 +3,13 @@ import {
   OnInit,
   Input,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { takeUntil } from 'rxjs/operators';
 
 import { Thread } from '~/core/entities/thread/entity';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 
 import { ThreadsService } from '../../../../core/services/chat/threads.service';
+import {CurrentThreadService} from "~/core/services/chat/currentThread.service";
 
 
 @Component({
@@ -39,7 +38,7 @@ export class ChatThreadComponent extends DestroyObservable implements OnInit {
   }
 
   load(): void {
-    this.threadsService.currentThread
+    CurrentThreadService.currentThread
       .pipe(takeUntil(this.destroy$))
       .subscribe((currentThread: Thread) => {
         this.selected = currentThread && this._thread && (currentThread.id === this._thread.id);
