@@ -1,13 +1,13 @@
-import { filter, map, take, tap } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 
 import { Thread } from '~/core/entities/thread/entity';
 import { Message } from '~/core/entities/message/entity';
-import { User } from '~/core/entities/user/entity';
 import { MenuMobileService } from '~/core/services/layout/menu-mobile';
 import { ProfileService } from '~/core/services/user/profile.service';
+import { CurrentThreadService } from '~/core/services/chat/currentThread.service';
 
 import { MessagesService } from './messages.service';
 
@@ -16,24 +16,12 @@ import { MessagesService } from './messages.service';
   providedIn: 'root',
 })
 export class ThreadsService {
-  // `orderedThreads` contains a newest-first chronological list of threads
-  public orderedThreads: Observable<Thread[]>;
-
-  public orderedThreads$: BehaviorSubject<Thread[]> = new BehaviorSubject<Thread[]>([]);
-
-  // `currentThread` contains the currently selected thread
-  currentThread: BehaviorSubject<Thread> = new BehaviorSubject<Thread>(new Thread());
-
-  // `currentThreadMessages` contains the set of messages for the currently
-  // selected thread
-  currentThreadMessages: Observable<Message[]>;
-
   constructor(public messagesService: MessagesService, private _profileService: ProfileService) {
     this.initThreadsConstructor();
 
     this.initCurrentThreadsConstuctor();
 
-    this.currentThread.subscribe((thread) => {
+    CurrentThreadService.currentThread.subscribe((thread) => {
       // mark all the messages that it contains as read
       this.messagesService.markThreadAsRead.next(thread);
 
@@ -71,8 +59,8 @@ export class ThreadsService {
         const sortedThreads = _.sortBy(threads, (t: Thread) => new Date(t.lastMessage.created)).reverse();
 
         // select latest thread
-        if (!this.currentThread.getValue().id && sortedThreads.length > 0) {
-          this.currentThread.next(sortedThreads[0]);
+        if (!CurrentThreadService.currentThread.getValue().id && sortedThreads.length > 0) {
+          CurrentThreadService.currentThread.next(sortedThreads[0]);
         }
 
         this.orderedThreads$.next(sortedThreads);
@@ -82,7 +70,7 @@ export class ThreadsService {
 
   private initCurrentThreadsConstuctor() {
     // `currentThreadMessages` Observable that contains the set of messages for the currently selected thread
-    this.currentThreadMessages = combineLatest(this.currentThread, this.messagesService.messages)
+    this.currentThreadMessages = combineLatest(CurrentThreadService.currentThread, this.messagesService.messages)
       .pipe(
         map(([currentThread, messages]) => {
           if (currentThread && messages.length > 0) {
@@ -95,6 +83,19 @@ export class ThreadsService {
           return [];
         }));
   }
+
+  private threadExists(threadId): boolean {
+    return !!this.orderedThreads$.getValue().find(thread => thread.id === threadId);
+  }
+
+  // `orderedThreads` contains a newest-first chronological list of threads
+  public orderedThreads: Observable<Thread[]>;
+
+  public orderedThreads$: BehaviorSubject<Thread[]> = new BehaviorSubject<Thread[]>([]);
+
+  // `currentThreadMessages` contains the set of messages for the currently
+  // selected thread
+  currentThreadMessages: Observable<Message[]>;
 
   public setThreadById(id: number): void {
     this.orderedThreads.pipe(filter(ths => ths.length > 0), take(4)).subscribe((ths) => {
@@ -112,16 +113,12 @@ export class ThreadsService {
       this.messagesService.addMessage(new Message({ thread, id: -1, message: '' , sender: { id: -1 }, is_read: true }));
     }
 
-    this.currentThread.next(thread);
-  }
-
-  private threadExists(threadId): boolean {
-    return !!this.orderedThreads$.getValue().find(thread => thread.id === threadId);
+    CurrentThreadService.currentThread.next(thread);
   }
 
   reset(): void {
     this.orderedThreads$.next([]);
-    this.currentThread.next(new Thread());
+    CurrentThreadService.currentThread.next(new Thread());
   }
 }
 

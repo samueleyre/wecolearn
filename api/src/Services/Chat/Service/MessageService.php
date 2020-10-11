@@ -5,6 +5,8 @@ namespace App\Services\Chat\Service;
 use App\Services\Chat\Entity\Message;
 use App\Services\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerInterface;
 use Kreait\Firebase\Messaging;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Mercure\Update;
@@ -16,7 +18,7 @@ class MessageService
     private $bus;
     private $notificationService;
     private $pushMessage;
-    private $messageSerializer;
+    private $serializer;
     private $host;
 
     public function __construct(
@@ -24,14 +26,14 @@ class MessageService
         MessageBusInterface $bus,
         NotificationService $notificationService,
         PushService $pushMessage,
-        MessageSerializer $messageSerializer,
-        ContainerInterface $container
+        ContainerInterface $container,
+        SerializerInterface $serializer
     ) {
         $this->em = $em;
         $this->bus = $bus;
         $this->notificationService = $notificationService;
         $this->pushMessage = $pushMessage;
-        $this->messageSerializer = $messageSerializer;
+        $this->serializer = $serializer;
         $this->host = $container->getParameter('host');
     }
 
@@ -55,7 +57,11 @@ class MessageService
         ## SEND IT BY MERCURE PROTOCOLE FOR WEB
         $update = new Update(
             'https://wecolearn.com/message',
-            $this->messageSerializer->getMessagePayload($message),
+            $this->serializer->serialize(
+                [ 'message' => $message ],
+                'json',
+                SerializationContext::create()->setGroups(['message'])
+            ),
             ["https://{$this->host}/message/{$to->getId()}"]
         );
         $this->bus->dispatch($update);
@@ -88,12 +94,41 @@ class MessageService
 
         if ($oldMessage) {
             $oldMessage->setMessage($message->getMessage());
+
+            $messageHasBeenRead = false;
+            if ($message->getIsRead() !== $oldMessage->getIsRead()) {
+                $messageHasBeenRead = true;
+            }
+
             $oldMessage->setIsRead($message->getIsRead());
             $oldMessage->setUpdated($date = new \DateTime('now', new \DateTimeZone('Europe/Paris')));
 
-            $this->em->merge($oldMessage);
+            $this->em->persist($oldMessage);
             $this->em->flush();
+
+//            notify user
+            if ($messageHasBeenRead) {
+                ## PUSH INFO TO USER ON MOBILE
+                $this->notificationService->processIsRead( $message->getSender(), $message );
+
+                ## SEND IT BY MERCURE PROTOCOLE FOR WEB
+                $update = new Update(
+                    'https://wecolearn.com/message',
+                    $this->serializer->serialize(
+                        [ 'is_read' => $message ],
+                        'json',
+                        SerializationContext::create()->setGroups(['message'])
+                    ),
+                    ["https://{$this->host}/message/{$message->getSender()->getId()}"]
+                );
+                $this->bus->dispatch($update);
+
+            }
+
             return $oldMessage;
+        } else {
+            $id = $message->getId();
+            syslog(LOG_ERR, "message not found with id : $id");
         }
 
         return $message;

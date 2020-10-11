@@ -67,29 +67,21 @@ export class AppComponent {
           if (!environment.android) {
             const url = `${environment.mercureUrl}?topic=https://wecolearn.com/message`;
             new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
-              const message = new Message(JSON.parse(evt.data));
-              message.thread = new Thread({
-                id: message.sender.id,
-                name: message.sender.first_name,
-                image: message.sender.image,
-              });
-              this._zone.run(() => {
-                if (
-                  // on the current thread
-                  this._threadService.currentThread.getValue().id === message.sender.id
-                  && (
-                    // mobile
-                    new RegExp(NAV.currentDiscussion).test(this.router.url) && this._deviceService.isMobile()
-                    // desktop
-                    || this.router.url === NAV.discussion && this._deviceService.isDesktop()
-                  )
-                ) {
-                  message.is_read = true;
-                  this.messagesService.addMessageToUpdate(message);
-                  this.messagesService.pushUpdatedMessages().subscribe();
-                }
-                this.messagesService.addMessage(message);
-              });
+              const data = JSON.parse(evt.data);
+              if ('message' in data) {
+                const message = new Message(data.message);
+                message.thread = new Thread({
+                  id: message.sender.id,
+                  name: message.sender.first_name,
+                  image: message.sender.image,
+                });
+                this._zone.run(() => {
+                  this.messagesService.addMessage(message);
+                });
+              }
+              if ('is_read' in data) {
+                this.messagesService.updateIsRead.next(new Message(data.is_read));
+              }
             };
           }
 
@@ -111,6 +103,13 @@ export class AppComponent {
                         image: message.sender.image,
                       });
                       this.messagesService.addMessage(message);
+                    });
+                  }
+
+                  // if is_read
+                  if ('is_read' in notification.data) {
+                    this._zone.run(() => {
+                      this.messagesService.updateIsRead.next(new Message(JSON.parse(notification.data.message)));
                     });
                   }
                 },
