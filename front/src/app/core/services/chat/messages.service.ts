@@ -3,10 +3,14 @@ import { of as observableOf, Subject, Observable, of, BehaviorSubject, pipe } fr
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { ProfileService } from '~/core/services/user/profile.service';
+import { NAV } from '~/config/navigation/nav';
+import { CurrentThreadService } from '~/core/services/chat/currentThread.service';
 
 type IMessagesOperation = (messages: Message[]) => Message[];
 
@@ -32,12 +36,18 @@ export class MessagesService {
   // action streams
   create: Subject<Message> = new Subject<Message>();
   markThreadAsRead: Subject<Thread> = new Subject<Thread>();
+  updateIsRead: Subject<Message> = new Subject<Message>();
 
   get loading(): boolean {
     return this._loading$.value;
   }
 
-  constructor(public profileService: ProfileService, protected http: HttpClient) {
+  constructor(
+    private _profileService: ProfileService,
+    private _http: HttpClient,
+    private _router: Router,
+    private _deviceService: DeviceDetectorService,
+  ) {
     this.init();
   }
 
@@ -59,7 +69,8 @@ export class MessagesService {
     this.create.pipe(
       map((message: Message): IMessagesOperation => (messages: Message[]) => messages.concat(message))).subscribe(this.updates);
 
-    // `markThreadAsRead` takes a Thread and then puts an operation on the `updates` stream to mark the Messages as read
+    // `markThreadAsRead` takes a Thread and then puts an operation on the `updates`
+    // stream to mark the Messages as read and updates database
     this.markThreadAsRead.pipe(
       map((thread: Thread) => (messages: Message[]) => messages.map((message: Message) => {
         if (message.sender.id === thread.id && !message.is_read) {
@@ -68,10 +79,36 @@ export class MessagesService {
         }
         return message;
       }))).subscribe(this.updates);
+
+    // `updateIsRead` takes a Thread and then puts an operation on the `updates` stream but does not update database
+    this.updateIsRead.pipe(
+      map((updatedMessage: Message): IMessagesOperation => (messages: Message[]) => messages.map((message: Message) => {
+        if (message.id === updatedMessage.id) {
+          message.is_read = updatedMessage.is_read;
+        }
+        return message;
+      }))).subscribe(this.updates);
   }
 
   // an imperative function call to this action stream
   addMessage(message: Message): void {
+    // mark as read messages being received when chat is open
+    if (
+      !message.is_read
+
+      // on the current thread and is being received
+      && CurrentThreadService.currentThread.getValue().id === message.sender.id
+      && (
+        // mobile
+        new RegExp(NAV.currentDiscussion).test(this._router.url) && this._deviceService.isMobile()
+        // desktop
+        || this._router.url === NAV.discussion && this._deviceService.isDesktop()
+      )
+    ) {
+      message.is_read = true;
+      this.addMessageToUpdate(message);
+      this.pushUpdatedMessages().subscribe();
+    }
     this.create.next(message);
   }
 
@@ -88,7 +125,7 @@ export class MessagesService {
 
   pushUpdatedMessages(): Observable<object> {
     if (this.messagesToUpdate.length > 0) {
-      return this.http.patch(`/api/messages`, this.messagesToUpdate);
+      return this._http.patch(`/api/messages`, this.messagesToUpdate);
     }
 
     return observableOf(null);
@@ -100,7 +137,7 @@ export class MessagesService {
 
   private getMessages(): void {
     this._loading$.next(true);
-    this.http.get('/api/messages').subscribe(
+    this._http.get('/api/messages').subscribe(
       (array: any) => {
         this.reset();
         this.sentMessages = Object.values(array.sent_messages);
@@ -156,11 +193,11 @@ export class MessagesService {
   }
 
   public post(message: Message): Observable<Object> {
-    return this.http.post(`/api/message`, message);
+    return this._http.post(`/api/message`, message);
   }
 
   public patch(message: Message): Observable<Object> {
-    return this.http.patch(`/api/message`, message);
+    return this._http.patch(`/api/message`, message);
   }
 
   public reset(): void {

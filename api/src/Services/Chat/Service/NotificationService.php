@@ -31,81 +31,73 @@ class NotificationService
     }
 
 
-    public function processMessage(User $to, Message $message ) {
-
-        $deviceToken = null;
-
-        $subscriptions = $this->em->getRepository(PushNotificationSubscription::class)->findByUser( $to );
-
-        foreach( $subscriptions as $sub ) {
-
-            $deviceToken = $sub->getToken();
-
-            $notification = CloudMessage::withTarget('token', $deviceToken);
-
-            $config = Messaging\AndroidConfig::fromArray([
-                'ttl' => '3600s',
-                'priority' => 'normal',
-                'notification' => [
-                    'title' => 'Wecolearn',
-                    'body' => 'Vous avez un message',
-                    'icon' => 'ic_stat_icon',
-                    'color' => '#f7eb43',
-                    'sound' => 'default',
-
-                ],
-                'data'  => ['message' => $this->serializer->getMessagePayload($message)]
-            ]);
-            $notification = $notification->withAndroidConfig($config);
-
-            try {
-                $this->sender->send($notification);
-            }
-            catch (\Error $e) {
-                syslog(LOG_ERR, "could not send notif of message via firebase to android");
-            }
-            catch (\Exception $e) {
-                syslog(LOG_ERR, `could not send notif of message via firebase to android`);
-            }
-        }
+    public function processNewMatchingProfil(User $to, User $match) {
+        $this->processNotification(
+            $to,
+            ['user' => $this->serializer->getMatchPayload($match)],
+            'Wecolearn',
+            'Nouveau profil !'
+        );
     }
 
-    public function processNewMatchingProfil(User $to, User $match) {
+    public function processMessage(User $to, Message $message ) {
+        $this->processNotification(
+            $to,
+            ['message' => $this->serializer->getMessagePayload($message)],
+            'Wecolearn',
+            'Vous avez un message'
+        );
+    }
 
-        $deviceToken = null;
+    public function processIsRead(User $to, Message $message ) {
+        $this->processNotification(
+            $to,
+            ['is_read' => $this->serializer->getMessagePayload($message)]
+        );
+    }
+
+
+    public function processNotification(User $to, $data, $title = null, $body = null) {
+
+        $configData = [
+            'ttl' => '3600s',
+            'priority' => 'normal',
+            'data'  => $data
+        ];
+
+        if ($title) {
+            // notification displayed on screen
+            $configData['notification'] = [
+                'title' => $title,
+                'body' => $body,
+                'icon' => 'ic_stat_icon',
+                'color' => '#f7eb43',
+                'sound' => 'default',
+
+            ];
+        }
+
+        $config = Messaging\AndroidConfig::fromArray($configData);
 
         $subscriptions = $this->em->getRepository(PushNotificationSubscription::class)->findByUser( $to );
 
         foreach( $subscriptions as $sub ) {
 
-            $deviceToken = $sub->getToken();
-
-            $notification = CloudMessage::withTarget('token', $deviceToken);
-
-            $config = Messaging\AndroidConfig::fromArray([
-                'ttl' => '3600s',
-                'priority' => 'normal',
-                'notification' => [
-                    'title' => 'Wecolearn',
-                    'body' => 'Nouveau profil !',
-                    'icon' => 'ic_stat_icon',
-                    'color' => '#f7eb43',
-                    'sound' => 'default',
-
-                ],
-                'data'  => ['user' => $this->serializer->getMatchPayload($match)]
-            ]);
+            $notification = CloudMessage::withTarget('token', $sub->getToken());
             $notification = $notification->withAndroidConfig($config);
 
             try {
                 $this->sender->send($notification);
             }
+
             catch (\Error $e) {
-                syslog(LOG_ERR, `could not send notif of new match via firebase to android`);
+                syslog(LOG_ERR, "could not send notif via firebase to android : $e");
             }
+
             catch (\Exception $e) {
-                syslog(LOG_ERR, `could not send notif of new match via firebase to android`);
+                syslog(LOG_ERR, "could not send notif via firebase to android : $e");
             }
+
         }
     }
 }

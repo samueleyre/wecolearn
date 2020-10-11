@@ -17,6 +17,7 @@ import { CHAT } from '~/modules/chat/config/chat.const';
 import { ProfileService } from '~/core/services/user/profile.service';
 import { MessagesService } from '~/core/services/chat/messages.service';
 import { ThreadsService } from '~/core/services/chat/threads.service';
+import { CurrentThreadService } from '~/core/services/chat/currentThread.service';
 
 
 @Component({
@@ -53,7 +54,7 @@ export class ChatWindowBaseComponent extends DestroyObservable implements OnInit
     );
     this.draftMessage = new Message();
 
-    this.threadsService.currentThread.subscribe(
+    CurrentThreadService.currentThread.subscribe(
       (thread: Thread) => {
         this.loading = true;
         this.currentThread = thread;
