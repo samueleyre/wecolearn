@@ -9,8 +9,7 @@ fos_rest:
     formats:
       json: true
       xml:  false
-  routing_loader:
-    default_format: json
+  routing_loader: false
   serializer:
     serialize_null: true
     groups:               [output]
@@ -18,5 +17,3 @@ fos_rest:
   body_listener: true
   body_converter:
     enabled: true
-  access_denied_listener:
-    json: true

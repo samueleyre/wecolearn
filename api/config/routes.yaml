@@ -1,58 +1,58 @@
 root:
   prefix:   /
-  type: rest
+  type: annotation
   resource: App\Services\Core\Controller\RootController
 
 signin:
   path: /api/login_check
 
 signup:
-  type:     rest
+  type:     annotation
   prefix:   api
   resource: App\Services\User\Controller\SignUpController
 
 ping:
-  type:     rest
+  type:     annotation
   prefix:   api
   resource: App\Services\User\Controller\PingController
 
 user:
-  type:     rest
+  type:     annotation
   prefix:   api
   resource: App\Services\User\Controller\UserController
 
 profile:
   prefix: api
-  type: rest
+  type: annotation
   resource: App\Services\User\Controller\ProfileController
 
 tag:
-  type:     rest
+  type:     annotation
   prefix:   api
   resource: App\Services\Tag\Controller\TagController
 
 
 upload:
-  type:     rest
+  type:     annotation
   prefix:   api
   resource: App\Services\User\Controller\UploadController
 
 message:
-  type:     rest
+  type:     annotation
   prefix:   api
   resource: App\Services\Chat\Controller\MessageController
 
 adminTag:
-  type:     rest
+  type:     annotation
   prefix:   api
   resource: App\Services\Tag\Controller\AdminTagController
 
 adminTagDomain:
-  type:     rest
+  type:     annotation
   prefix:   api
   resource: App\Services\Tag\Controller\AdminTagDomainController
 
 adminDomain:
-  type:     rest
+  type:     annotation
   prefix:   api
   resource: App\Services\Domain\Controller\AdminDomainController
