@@ -104,7 +104,10 @@
         "paas": {
             "php-config": [
                 "date.timezone=Europe/Paris"
-            ]
+            ],
+            "engines": {
+                "composer": "2.x"
+            }
         }
-    }
+    },
 }
