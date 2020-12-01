@@ -4,7 +4,7 @@ nelmio_cors:
         allow_credentials: true
         allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
         allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
-        allow_headers: ['Content-Type', 'Authorization']
+        allow_headers: ['Content-Type', 'Authorization', 'Sentry-trace']
         expose_headers: ['Link']
         max_age: 3600
     paths:
@@ -13,6 +13,6 @@ nelmio_cors:
             allow_credentials: true
             allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
             allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
-            allow_headers: ['Accept', 'X-Custom-Auth','Content-Type', 'Authorization','X-Pagination','undefined']
+            allow_headers: ['Accept', 'X-Custom-Auth','Content-Type', 'Authorization','X-Pagination','undefined', 'Sentry-trace']
             expose_headers: ['Link']
             max_age: 3600
