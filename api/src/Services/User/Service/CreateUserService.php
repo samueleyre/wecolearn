@@ -72,7 +72,8 @@ class CreateUserService
         } catch (UniqueConstraintViolationException $e) {
             throw new ResourceAlreadyUsedException('resource already used');
         }
-        $this->dispatcher->dispatch(new UserWasCreated($user),UserWasCreated::NAME);
+
+//        $this->dispatcher->dispatch(new UserWasCreated($user),UserWasCreated::NAME);
 
         return $user;
     }
