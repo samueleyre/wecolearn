@@ -59,6 +59,10 @@ class CreateUserService
             $user->setCity('Lyon');
         }
 
+        if ($user->getNewsletter() == null) {
+            $user->setNewsletter(false);
+        }
+
         $user->setUsername($user->getEmail()); // todo: remove this someday
         $user = $this->generateUrlService->process($user);
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
