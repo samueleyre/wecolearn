@@ -26,6 +26,9 @@ export class FooterMobileService {
     router.events
       .subscribe((e) => {
         if (e instanceof NavigationEnd) {
+          // reset state
+          this.inputFocusState.next(false);
+
           this.setChanges(e.urlAfterRedirects);
         }
       });

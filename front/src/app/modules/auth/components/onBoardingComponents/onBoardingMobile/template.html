@@ -1,89 +1,97 @@
 <div class="Onboarding">
   <form (keydown.enter)="$event.preventDefault()" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
     <mat-horizontal-stepper [selectedIndex]="formTabSelection$ | async" (selectionChange)="setSelection($event)">
-        <ng-template matStepperIcon="edit">
-            <i class="fa fa-check"></i>
-        </ng-template>
-        <mat-step>
-          <div class="card">
-            <div class="card-header">
-              <h6 class="center">{{titles.city.title}}</h6>
-            </div>
-            <div class="card-body">
-              <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
-            </div>
-
+      <ng-template matStepperIcon="edit">
+        <i class="fa fa-check"></i>
+      </ng-template>
+      <mat-step>
+        <div class="card">
+          <div class="card-header">
+            <h6 class="center">{{titles.city.title}}</h6>
           </div>
-        </mat-step>
-        <mat-step>
-            <div class="card">
-                <div class="card-header">
-                  <h6 class="center">{{titles.tags.title}}</h6>
-                </div>
-                <div class="card-body">
-                    <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'" [type]="learnType" ></profile-form-tags>
-                    <p class="card-body-tagHints">
-                      <app-emoji emojiName="265F"></app-emoji><span>Echecs,</span>
-                      <app-emoji emojiName="1F431-200D-1F4BB"></app-emoji><span>Informatique,</span>
-                      <app-emoji emojiName="1F3B1"></app-emoji><span>Snooker,</span>
-                      <app-emoji emojiName="1F3BA"></app-emoji><span>Trompette,</span>
-                      <app-emoji emojiName="1FAC2"></app-emoji><span>Polka ...</span>
-                    </p>
-                </div>
+          <div class="card-body">
+            <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
+          </div>
+
+        </div>
+      </mat-step>
+      <mat-step>
+        <div class="card">
+          <div class="card-header">
+            <h6 class="center">{{titles.tags.title}}</h6>
+          </div>
+          <div class="card-body">
+            <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'"
+                               [type]="learnType"></profile-form-tags>
+            <p class="card-body-tagHints">
+              <app-emoji emojiName="265F"></app-emoji>
+              <span>Echecs,</span>
+              <app-emoji emojiName="1F431-200D-1F4BB"></app-emoji>
+              <span>Informatique,</span>
+              <app-emoji emojiName="1F3B1"></app-emoji>
+              <span>Snooker,</span>
+              <app-emoji emojiName="1F3BA"></app-emoji>
+              <span>Trompette,</span>
+              <app-emoji emojiName="1FAC2"></app-emoji>
+              <span>Polka ...</span>
+            </p>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step>
+        <div class="card">
+          <div class="card-header">
+            <h6 class="center">{{titles.bio.title}}</h6>
+          </div>
+          <div class="card-body">
+            <profile-form-biography [parentForm]="userForm"></profile-form-biography>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step>
+        <div class="card">
+          <div class="card-header">
+            <h6 class="center">{{titles.ids.title}}</h6>
+          </div>
+          <div class="card-body">
+            <div class="col-12">
+              <div class="col-12 no-padding">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Prénom</mat-label>
+                  <input appHideMenuMobileOnFocus id="firstNameInput" matInput placeholder=""
+                         formControlName="first_name">
+                </mat-form-field>
+              </div>
+              <div class="col-12 no-padding">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Nom</mat-label>
+                  <input appHideMenuMobileOnFocus id="lastNameInput" matInput placeholder=""
+                         formControlName="last_name">
+                </mat-form-field>
+              </div>
+              <div class="col-12 no-padding">
+                <auth-form-email [parentForm]="userForm" [error]="error"></auth-form-email>
+              </div>
+              <div class="col-12 no-padding">
+                <auth-form-password [parentForm]="userForm"></auth-form-password>
+              </div>
             </div>
-        </mat-step>
-        <mat-step>
-            <div class="card">
-                <div class="card-header">
-                  <h6 class="center">{{titles.bio.title}}</h6>
-                </div>
-                <div class="card-body">
-                    <profile-form-biography [parentForm]="userForm"></profile-form-biography>
-                </div>
+            <div class="col-12">
+              <p class="Onboarding-newsletter">
+                <mat-checkbox formControlName="newsletter">J'adhère à la newsletter</mat-checkbox>
+                <small>( surtout pour les apéros 🍻 & ateliers 🛠️ )</small>
+              </p>
             </div>
-        </mat-step>
-        <mat-step >
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="center">{{titles.ids.title}}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="col-12">
-                        <div class="col-12 no-padding">
-                          <mat-form-field appearance="legacy" >
-                            <mat-label>Prénom</mat-label>
-                            <input appHideMenuMobileOnFocus id="firstNameInput" matInput placeholder="" formControlName="first_name"  >
-                          </mat-form-field>
-                        </div>
-                        <div class="col-12 no-padding">
-                          <mat-form-field appearance="legacy">
-                            <mat-label>Nom</mat-label>
-                            <input appHideMenuMobileOnFocus id="lastNameInput" matInput placeholder="" formControlName="last_name"  >
-                          </mat-form-field>
-                        </div>
-                        <div class="col-12 no-padding">
-                            <auth-form-email [parentForm]="userForm" [error]="error"></auth-form-email>
-                        </div>
-                        <div class="col-12 no-padding">
-                            <auth-form-password [parentForm]="userForm"></auth-form-password>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                      <p class="Onboarding-newsletter">
-                        <mat-checkbox formControlName="newsletter">J'adhère à la newsletter</mat-checkbox>
-                        <small>( surtout pour les apéros 🍻 & ateliers 🛠️ )</small>
-                      </p>
-                    </div>
-                </div>
-                <div class="card-footer">
-                  <p class="Onboarding-conditions">
-                    En cliquant sur "valider", tu acceptes nos <a [routerLink]="nav.mentionsLegales" >Conditions Générales</a>.
-                  </p>
-                </div>
-            </div>
-        </mat-step>
+          </div>
+          <div class="card-footer">
+            <p class="Onboarding-conditions">
+              En cliquant sur "valider", tu acceptes nos <a [routerLink]="nav.mentionsLegales">Conditions Générales</a>.
+            </p>
+          </div>
+        </div>
+      </mat-step>
     </mat-horizontal-stepper>
-</form>
+  </form>
 </div>
 <div class="spaceForFooter"></div>
 <ion-footer *ngIf="showMobileOnBoardingFooter | async">
