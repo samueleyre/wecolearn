@@ -1,0 +1,6 @@
+<ion-chip *ngFor="let tag of tags">
+  <ion-label>{{tag.name}}</ion-label>
+  <mat-icon (click)="remove(tag)">close</mat-icon>
+</ion-chip>
+
+<ion-input (click)="searchForTag()"><mat-icon>add</mat-icon> ajouter</ion-input>

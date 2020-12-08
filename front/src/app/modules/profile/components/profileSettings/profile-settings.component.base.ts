@@ -9,7 +9,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { debounceTime, distinct, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinct, filter, takeUntil, tap } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { Tag } from '~/core/entities/tag/entity';
@@ -20,11 +20,9 @@ import { ProfileService } from '~/core/services/user/profile.service';
 import { ToastService } from '~/core/services/toast.service';
 
 @Component({
-  selector: 'app-profile-settings',
-  templateUrl: 'template.html',
-  styleUrls: ['./style.scss'],
+  template: '',
 })
-export class ProfileSettingsComponent extends DestroyObservable implements OnInit {
+export class ProfileSettingsComponentBase extends DestroyObservable implements OnInit {
   public tags = [];
 
   // loading = false;
@@ -42,9 +40,9 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
         @Inject(APP_BASE_HREF) r: string,
         private domainService: DomainService,
         private fb: FormBuilder,
-        private _deviceService: DeviceDetectorService,
-        private _profileService: ProfileService,
-        private _toastService: ToastService,
+        private deviceService: DeviceDetectorService,
+        private profileService: ProfileService,
+        private toastService: ToastService,
   ) {
     super();
   }
@@ -74,12 +72,13 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
         takeUntil(this.destroy$),
       )
       .subscribe(() => {
-        this._toastService.success('Modification prise en compte.', null, { timeOut: 1000 });
+        this.toastService.success('Modification prise en compte.', null, { timeOut: 1000 });
+        this.joinTags();
         this.submit();
       });
 
     // update data
-    this._profileService.get().subscribe();
+    this.profileService.get().subscribe();
   }
 
   load(): void {
@@ -97,7 +96,7 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
     // this.redirectURI = (environment.env === EnvEnum.PRODUCTION || environment.env === EnvEnum.STAGING) ?
     //   encodeURIComponent(`https://${subDomain}wecolearn.com/profilsettings`) : encodeURIComponent('http://0.0.0.0:8080/profilsettings');
 
-    this._profileService.entity$
+    this.profileService.entity$
       .pipe(
         filter(val => !!val),
       )
@@ -114,7 +113,7 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
   }
 
   get loaded() {
-    return this._profileService.entity;
+    return this.profileService.entity;
   }
 
   setProfileFormData(user: User) {
@@ -154,15 +153,13 @@ export class ProfileSettingsComponent extends DestroyObservable implements OnIni
   // }
 
   submit() {
-    this.joinTags();
-    this._profileService.patch({ tags: this.tags, ...this.userForm.value }).subscribe(
+    this.profileService.patch({ tags: this.tags, ...this.userForm.value }).subscribe(
       (user: User) => {},
       (error) => {
         console.log(error);
       },
     );
   }
-
 
   joinTags() {
     this.tags = [

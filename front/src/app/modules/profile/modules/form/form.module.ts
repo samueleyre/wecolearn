@@ -4,6 +4,7 @@ import { MatFormFieldModule, MatInputModule, MatSliderModule } from '@angular/ma
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
+import { IonicModule } from '@ionic/angular';
 
 import { CloudinaryModule } from '~/shared/modules/cloudinary/pipes/cloudinary.module';
 import { ProfileFormBiographyComponent } from '~/modules/profile/modules/form/components/biography/component';
@@ -20,6 +21,7 @@ import { ProfileImageModule } from '../profilImage/profileImage.module';
 import { ProfileFormLastnameComponent } from './components/lastname/component';
 import { ProfileFormFirstnameComponent } from './components/firstname/component';
 import { ProfileFormCityComponent } from './components/profile-form-city/profile-form-city.component';
+import { ProfileFormTagsMobileComponent } from './components/profile-form-tags-mobile/profile-form-tags-mobile.component';
 
 
 @NgModule({
@@ -34,19 +36,20 @@ import { ProfileFormCityComponent } from './components/profile-form-city/profile
     ProfileGeolocationComponent,
     ProfileFormCityComponent,
     ProfileFormTagsComponent,
+    ProfileFormTagsMobileComponent,
   ],
-  exports: [
-    ProfileFormFirstnameComponent,
-    ProfileFormLastnameComponent,
-    ProfileFormImageComponent,
-    ProfileFormBiographyComponent,
-    ProfileFormIntensityComponent,
-    ProfileFormGeolocationComponent,
-    ProfileGeolocationComponent,
-    ProfileFormCityComponent,
-    ProfileFormTagsComponent,
-
-  ],
+            exports: [
+              ProfileFormFirstnameComponent,
+              ProfileFormLastnameComponent,
+              ProfileFormImageComponent,
+              ProfileFormBiographyComponent,
+              ProfileFormIntensityComponent,
+              ProfileFormGeolocationComponent,
+              ProfileGeolocationComponent,
+              ProfileFormCityComponent,
+              ProfileFormTagsComponent,
+              ProfileFormTagsMobileComponent,
+            ],
   imports: [
     CommonModule,
     SharedModule,
@@ -61,6 +64,7 @@ import { ProfileFormCityComponent } from './components/profile-form-city/profile
     MaterialModule,
     MatAutocompleteModule,
     MatRadioModule,
+    IonicModule,
   ],
 })
 export class ProfileFormModule {
