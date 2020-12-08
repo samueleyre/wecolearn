@@ -1,0 +1,65 @@
+@import '../../../../../../../assets/scss/variables';
+
+.SearchBar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px 9px;
+  &-returnIcon {
+    padding-right: 48px;
+    padding-left: 12px;
+    margin-top: 5px;
+  }
+
+  &-option {
+    padding:8px;
+    background-color: #ffc600;
+    color: #310c31;
+  }
+
+  mat-form-field {
+    width: 100%;
+    ::ng-deep .mat-form-field-wrapper {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    ::ng-deep {
+      .mat-form-field-suffix {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+  }
+
+}
+
+.tagDomains {
+  &-container {
+    margin-top: 25px;
+  }
+  &-title {
+    margin-left: 10px;
+  }
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  &-box {
+    border: solid 2px $secondaryColor;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    //height: 75px;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-emoji {
+      font-size: 28px;
+    }
+    &-name {
+      font-size: 16px;
+      font-family: ralewaybold, OpenSansSerif, sans-serif;
+    }
+  }
+}
