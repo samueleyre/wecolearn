@@ -4,7 +4,7 @@ import {
   OnInit,
 } from '@angular/core';
 import * as L from 'leaflet';
-import { debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
+import {debounceTime, filter, skip, switchMap, takeUntil} from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -39,11 +39,10 @@ export class ProfileGeolocationComponent extends DestroyObservable implements On
   }
 
   ngOnInit() {
-    // this.initMap();
-
     this.addressCtrl.valueChanges
       .pipe(takeUntil(this.destroy$))
       .pipe(
+        skip(1),
         debounceTime(300),
         filter(val => !!val && val.length > 2),
         switchMap(value => this._geoService.findGeoDataByCityName(value)),

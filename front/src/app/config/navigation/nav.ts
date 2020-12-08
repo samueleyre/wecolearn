@@ -13,5 +13,6 @@ export const NAV = {
   cookiePolicy: '/doc/cookie-policy',
   manifest: '/doc/manifest',
   home: '/signin',
+  tagSearchBar: '/tag/searchBar',
   notFound: '/404',
 };

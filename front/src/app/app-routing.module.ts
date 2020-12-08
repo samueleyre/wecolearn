@@ -37,6 +37,11 @@ const wcRoutes: Routes = [
       ],
     },
     {
+      path: 'tag',
+      // todo: only mobile
+      loadChildren: () => import('./modules/tags/tags.module').then(mod => mod.TagsModule),
+    },
+    {
       path: '', component: ContainerComponent,
       children: [
         {

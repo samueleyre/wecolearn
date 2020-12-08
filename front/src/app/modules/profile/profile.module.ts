@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 import { CloudinaryModule } from '~/shared/modules/cloudinary/pipes/cloudinary.module';
 import { OpenThreadModule } from '~/modules/chat/modules/openThread/openThread.module';
@@ -12,7 +13,7 @@ import { SharedModule } from '~/shared/shared.module';
 
 import { ProfileComponent } from './components/profile/component';
 import { ProfilePageComponent } from './pages/profile/component';
-import { ProfileSettingsComponent } from './components/profileSettings/component';
+import { ProfileSettingsComponentBase } from './components/profileSettings/profile-settings.component.base';
 import { SettingsPageComponent } from './pages/settings/component';
 import { SettingsComponent } from './components/settings/component';
 import { ProfileFormModule } from './modules/form/form.module';
@@ -21,7 +22,8 @@ import { ProfileRouting } from './profile.routing';
 import { ToggleComponent } from './components/toggle/component';
 import { EmailNotificationSettingsComponent } from './components/notifications/component';
 import { ProfileImageModule } from './modules/profilImage/profileImage.module';
-import {IonicModule} from "@ionic/angular";
+import { ProfileSettingsDesktopComponent } from './components/profileSettings/profile-settings-desktop/profile-settings-desktop.component';
+import { ProfileSettingsMobileComponent } from './components/profileSettings/profile-settings-mobile/profile-settings-mobile.component';
 
 
 @NgModule({
@@ -29,13 +31,15 @@ import {IonicModule} from "@ionic/angular";
   declarations: [
     ProfileComponent,
     ProfilePageComponent,
-    ProfileSettingsComponent,
+    ProfileSettingsComponentBase,
     ProfileSettingsPageComponent,
     SettingsPageComponent,
     SettingsComponent,
     ToggleComponent,
     EmailNotificationSettingsComponent,
     ShowProfilSettingsComponent,
+    ProfileSettingsDesktopComponent,
+    ProfileSettingsMobileComponent,
   ],
   exports: [
     ProfileImageModule,
