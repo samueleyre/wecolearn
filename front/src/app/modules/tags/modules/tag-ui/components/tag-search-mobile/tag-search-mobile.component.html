@@ -1,24 +1,24 @@
 <div class="SearchBar" >
   <mat-icon (click)="return()" class="SearchBar-returnIcon">arrow_back</mat-icon>
   <mat-form-field color="accent" appearance="outline">
-    <input autocomplete="off" #searchBar type="text" autofocus matInput placeholder="Recherche" [disabled]="loading" [formControl]="searchInputControl" (keyup.backspace)="inputChangeByUser($event)" (keyup)="inputChangeByUser($event)" (focus)="activateSearchBar()">
+    <input autocomplete="off" #searchBar type="text" autofocus matInput placeholder="Recherche" [formControl]="searchInputControl" (keyup.backspace)="inputChangeByUser($event)" (keyup)="inputChangeByUser($event)" >
     <button *ngIf="!inputIsEmpty" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar($event)">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
 </div>
 
-<!--<div class="tagDomains-container" *ngIf="isActive && inputIsEmpty">-->
-<!--  <h6 class="tagDomains-title">Catégories populaires</h6>-->
-<!--  <div class="tagDomains" >-->
-<!--    <div class="tagDomains-box" [style.borderColor]="option.hexcolor ? option.hexcolor : null" (click)="searchByTagDomain(option)" *ngFor="let option of tagDomains$ | async">-->
-<!--      <span class="tagDomains-box-emoji">-->
-<!--        <app-emoji [emojiName]="option.emoji"></app-emoji>-->
-<!--      </span>-->
-<!--      <span class="tagDomains-box-name">{{option.name}}</span>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+<div class="tagDomains-container" *ngIf="inputIsEmpty">
+  <h6 class="tagDomains-title" *ngIf="(popularTagDomainsAsTags$ | async).length > 0">Catégories populaires</h6>
+  <div class="tagDomains" >
+    <div class="tagDomains-box" [style.borderColor]="option.tag_domains[0] ? option.tag_domains[0].hexcolor : null" (click)="select(option)" *ngFor="let option of popularTagDomainsAsTags$ | async">
+      <span class="tagDomains-box-emoji">
+        <app-emoji [emojiName]="option.tag_domains[0].emoji"></app-emoji>
+      </span>
+      <span class="tagDomains-box-name">{{option.name}}</span>
+    </div>
+  </div>
+</div>
 
 <ion-list *ngIf="!inputIsEmpty">
   <ion-item (click)="select(option)" *ngFor="let option of foundAutocompleteTags$ | async">

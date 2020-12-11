@@ -5,9 +5,14 @@
         Apprentissages
       </h2>
       <form [formGroup]="searchFilters">
+        <mat-radio-group formControlName="type">
+          <mat-radio-button value="0" >Apprentissage</mat-radio-button>
+          <mat-radio-button value="1" >Connaissance</mat-radio-button>
+          <mat-radio-button value="2" >Transmission</mat-radio-button>
+        </mat-radio-group>
         <mat-form-field appearance="outline">
           <mat-label>Rechercher</mat-label>
-          <input matInput placeholder="nom, type, domain" formControlName="query" />
+          <input matInput placeholder="nom, domaine" formControlName="query" />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
       </form>
@@ -26,6 +31,7 @@
         [hidden]="!tagsToShow && !tagsFiltered"
         [length]="countTags"
         [pageSize]="PAGE_SIZE"
+        [showFirstLastButtons]="true"
       ></mat-paginator>
     </div>
   </div>

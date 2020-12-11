@@ -33,6 +33,10 @@ export class APIService<T> {
     return this._entity$.value;
   }
 
+  get loading$(): Observable<boolean> {
+    return this._loading$.asObservable();
+  }
+
   get loading(): boolean {
     return this._loading$.value;
   }
