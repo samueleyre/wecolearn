@@ -7,7 +7,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { Tag } from '~/core/entities/tag/entity';
-import { TagService } from '~/core/services/tag/tag';
+import { TagService } from '~/core/services/tag/tag.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { alphaNumericValidator } from '~/modules/profile/modules/form/components/profile-form-tags/alphanumeric.validator';
 

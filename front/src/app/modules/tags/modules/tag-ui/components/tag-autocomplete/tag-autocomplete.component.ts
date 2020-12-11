@@ -6,7 +6,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { Tag } from '~/core/entities/tag/entity';
-import { TagService } from '~/core/services/tag/tag';
+import { TagService } from '~/core/services/tag/tag.service';
 import { tagTypeEmoji, TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 
 @Component({

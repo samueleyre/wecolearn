@@ -18,6 +18,9 @@ export class ProfileTagsSearchBarPageComponent implements OnInit {
   public origin: string;
   public tagType: TagTypeEnum;
 
+  // tag id list of exceptions not to show
+  public tagIdExceptions: number[];
+
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
@@ -25,9 +28,10 @@ export class ProfileTagsSearchBarPageComponent implements OnInit {
 
   ngOnInit() {
     this._route.queryParams.subscribe((params) => {
-      if ('origin' in params && 'tag_type' in params) {
+      if ('origin' in params && 'tag_type' in params && 'exceptions' in params) {
         this.origin = params['origin'];
         this.tagType = params['tag_type'];
+        this.tagIdExceptions = params['exceptions'].split(',').map(Number);
       } else {
         this._router.navigate(['/']);
       }

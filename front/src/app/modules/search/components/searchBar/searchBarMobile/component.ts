@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { map } from 'rxjs/operators';
 
-import { TagService } from '~/core/services/tag/tag';
+import { TagService } from '~/core/services/tag/tag.service';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { SearchService } from '~/core/services/search/search';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';

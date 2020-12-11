@@ -14,20 +14,22 @@ import { UsersComponent } from './pages/users/users.component';
 import { TagsComponent } from './pages/tags/tags.component';
 import { DomainsComponent } from './pages/domains/domains.component';
 import { TagDomainsComponent } from './pages/tag-domains/tag-domains.component';
+import {MatRadioModule} from '@angular/material';
 
 @NgModule({
   declarations: [UsersComponent, TagsComponent, DomainsComponent, TagDomainsComponent],
-  imports: [
-    AdminRoutingModule,
-    CommonModule,
-    MaterialModule,
-    UserUiModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatPaginatorModule,
-    TagUiModule,
-    TagDomainUiModule,
-    DomainUiModule,
-  ],
+            imports: [
+              AdminRoutingModule,
+              CommonModule,
+              MaterialModule,
+              UserUiModule,
+              FormsModule,
+              ReactiveFormsModule,
+              MatPaginatorModule,
+              TagUiModule,
+              TagDomainUiModule,
+              DomainUiModule,
+              MatRadioModule,
+            ],
 })
 export class AdminModule { }

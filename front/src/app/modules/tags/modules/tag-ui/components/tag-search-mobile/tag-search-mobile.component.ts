@@ -1,29 +1,28 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { TagService } from '~/core/services/tag/tag';
-import { TagDomainsService } from '~/core/services/tag/tag-domains.service';
-import { SearchService } from '~/core/services/search/search';
-import { FooterMobileService } from '~/core/services/layout/footer-mobile';
+import { TagService } from '~/core/services/tag/tag.service';
 import { Tag } from '~/core/entities/tag/entity';
-import {TagTypeEnum} from '~/core/enums/tag/tag-type.enum';
+import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { PopularTagDomainsAsTagsService } from '~/core/services/tag/popular-tag-domains-as-tags.service';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 @Component({
   selector: 'app-tag-search-mobile',
   templateUrl: './tag-search-mobile.component.html',
   styleUrls: ['./tag-search-mobile.component.scss'],
 })
-export class TagSearchMobileComponent implements OnInit {
+export class TagSearchMobileComponent extends DestroyObservable implements OnInit {
   @Input() returnLink: string;
   @Input() tagType: TagTypeEnum;
+  @Input() tagIdExceptions: number[];
   @Output() tag = new EventEmitter<Tag | null>();
 
   @ViewChild('searchBar', { static: false }) searchBar:ElementRef;
 
-  public searchBarActive = new BehaviorSubject(false);
   public foundAutocompleteTagsObservable: Observable<Tag[]>;
   public searchInputControl = new FormControl();
   public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
@@ -31,14 +30,10 @@ export class TagSearchMobileComponent implements OnInit {
 
   constructor(
     private _tagService: TagService,
-    private _tagDomainsService: TagDomainsService,
-    private _searchService: SearchService,
-    private _footerMobileService: FooterMobileService,
+    private _popularTagDomainAsTags: PopularTagDomainsAsTagsService,
     private _router: Router,
   ) {
-    this.searchBarActive.asObservable().subscribe((val) => {
-      this._footerMobileService.inputFocusState.next(val);
-    });
+    super();
   }
 
   ngOnInit() {
@@ -49,11 +44,10 @@ export class TagSearchMobileComponent implements OnInit {
       debounceTime(300),
       filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this._tagService.findTags(value, this.tagType)),
+      map(tags => tags.filter((tag => this.tagIdExceptions.indexOf(tag.id) === -1))),
     );
     this.foundAutocompleteTagsObservable.subscribe((tags) => {
-      if (this.searchBarActive.getValue()) {
-        this.foundAutocompleteTags$.next(tags);
-      }
+      this.foundAutocompleteTags$.next(tags);
     });
   }
 
@@ -64,18 +58,12 @@ export class TagSearchMobileComponent implements OnInit {
   }
 
   private initTagDomains(): void {
-    this._tagDomainsService.getPopularDomains().subscribe();
+    this._popularTagDomainAsTags.getPopularDomainsAsTags(15).subscribe();
   }
 
-  /**
-   * 6 first popular domains
-   */
-  get tagDomains$() {
-    return this._tagDomainsService.entities$.pipe(map(val => val.slice(0, 6)));
-  }
-
-  get loading(): boolean {
-    return this._searchService.loading;
+  get popularTagDomainsAsTags$(): Observable<Tag[]> {
+    // tslint:disable-next-line:no-magic-numbers
+    return this._popularTagDomainAsTags.entities$.pipe(map(tags => tags.filter((tag => this.tagIdExceptions.indexOf(tag.id) === -1))));
   }
 
   get inputIsEmpty(): boolean {
@@ -84,10 +72,6 @@ export class TagSearchMobileComponent implements OnInit {
 
   inputChangeByUser($event) {
     this.inputChangeByUser$.next($event.target.value);
-  }
-
-  activateSearchBar(): void {
-    this.searchBarActive.next(true);
   }
 
   select(tag?: Tag): void {

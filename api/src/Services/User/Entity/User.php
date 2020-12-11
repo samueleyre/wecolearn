@@ -5,6 +5,8 @@ namespace App\Services\User\Entity;
 use App\Services\Chat\Entity\Message;
 use App\Services\Domain\Entity\Domain;
 use App\Services\Tag\Entity\Tag;
+use DateTime;
+use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -12,79 +14,72 @@ use FOS\UserBundle\Model\User as BaseUser;
 class User extends BaseUser
 {
     protected $id;
-    public $firstName;
-    public $lastName;
-    public $emailConfirmed;
+    public ?string $firstName = "";
+    public ?string $lastName = "";
+    public bool $emailConfirmed = false;
     public $emailToken;
-    public $profilUrl;
-    private $created;
-    private $updated;
+    public string $profilUrl = "";
+    private DateTime $created;
+    private ?DateTime $updated = null;
     // for client header notifications
-    private $userUpdated;
+    private ?DateTime $userUpdated;
     // for client web and email notifications
-    private $userNotified; // not used anymore !
-    public $biographie;
-    public $intensity;
-    public $atmosphere;
-    public $latitude;
-    public $longitude;
-    public $city;
-    public $image;
+    private ?DateTime $userNotified; // not used anymore !
+    public string $biographie = "";
+    public ?int $intensity = null;
+    public ?int $atmosphere = null;
+    public ?float $latitude = null;
+    public ?float $longitude = null;
+    public ?string $city = null;
+    public ?Image $image = null;
     public $tags;
     public $sentMessages;
     public $receivedMessages;
 
     //  USER CONFIG ----------------------------------
-    public $showProfil;
+    public bool $showProfil = false;
 
     // subscribe to notifications
-    private $newMessageNotification;
-    private $newMatchNotification;
+    private bool $newMessageNotification = true;
+    private bool $newMatchNotification = true;
 
     // subscribe to emails
-    private $newMessageEmail;
-    private $newMatchEmail;
+    private bool $newMessageEmail = true;
+    private bool $newMatchEmail = true;
 
-    public $newsletter;
+    public bool $newsletter = false;
     //  public $slackAccounts;
     public $domains;
-    private $lastConnexion;
-    private $deleted;
-    private $notificationSubscribe = false;
+    private ?DateTime $lastConnexion;
+    private ?DateTime $deleted;
+    private bool $notificationSubscribe = false;
     private $subscriptions;
     private $pushNotificationSubscriptions;
-    private $oldEmail;
+    private ?string $oldEmail;
 
     public function __construct(array $parameters = [])
     {
         parent::__construct();
+
+        if (array_key_exists('id', $parameters)) {
+            $this->id = $parameters['id'];
+        }
+
         $this->tags = new ArrayCollection();
-        $this->created = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        $this->emailToken = new ArrayCollection();
+        $this->created = new DateTime('now', new DateTimeZone('Europe/Paris'));
+        $this->emailToken = array_key_exists('emailToken', $parameters) ? new ArrayCollection($parameters['emailToken']) : new ArrayCollection();
         $this->sentMessages = new ArrayCollection();
         $this->receivedMessages = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->pushNotificationSubscriptions = new ArrayCollection();
-
-        $this->domains = new ArrayCollection();
-        if (array_key_exists('id', $parameters)) {
-            $this->id = $parameters['id'];
-        }
-        if (array_key_exists('firstName', $parameters)) {
-            $this->firstName = $parameters['firstName'];
-        }
-        if (array_key_exists('lastName', $parameters)) {
-            $this->lastName = $parameters['lastName'];
-        }
-        if (array_key_exists('biographie', $parameters)) {
-            $this->biographie = $parameters['biographie'];
-        }
-        if (array_key_exists('tags', $parameters)) {
-            $this->tags = new ArrayCollection($parameters['tags']);
-        }
-        if (array_key_exists('oldEMail', $parameters)) {
-            $this->oldEMail = new ArrayCollection($parameters['oldEMail']);
-        }
+        $this->profilUrl = array_key_exists('profilUrl', $parameters) ? $parameters['profilUrl'] : '';
+        $this->domains = array_key_exists('domains', $parameters) ? $parameters['domains'] : new ArrayCollection();
+        $this->firstName = array_key_exists('firstName', $parameters) ? $parameters['firstName'] : '';
+        $this->lastName = array_key_exists('lastName', $parameters) ? $parameters['lastName'] : '';
+        $this->biographie = array_key_exists('biographie', $parameters) ? $parameters['biographie'] : null;
+        $this->tags = array_key_exists('tags', $parameters) ? new ArrayCollection($parameters['tags']) : new ArrayCollection();
+        $this->emailConfirmed = array_key_exists('emailConfirmed', $parameters) ? $parameters['emailConfirmed'] : false;
+        $this->image = array_key_exists('image', $parameters) ? $parameters['image'] : null;
 
     }
 
@@ -124,7 +119,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setEmailConfirmed($emailConfirmed)
+    public function setEmailConfirmed(bool $emailConfirmed): User
     {
         $this->emailConfirmed = $emailConfirmed;
 
@@ -136,7 +131,7 @@ class User extends BaseUser
      *
      * @return bool
      */
-    public function getEmailConfirmed()
+    public function getEmailConfirmed(): bool
     {
         return $this->emailConfirmed;
     }
@@ -148,7 +143,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addEmailToken(Token $emailToken)
+    public function addEmailToken(Token $emailToken): User
     {
         $this->emailToken[] = $emailToken;
 
@@ -168,7 +163,7 @@ class User extends BaseUser
     /**
      * Get emailToken.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getEmailToken()
     {
@@ -182,7 +177,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): User
     {
         $this->firstName = $firstName;
 
@@ -194,7 +189,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -206,7 +201,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): User
     {
         $this->lastName = $lastName;
 
@@ -218,7 +213,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -230,7 +225,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setProfilUrl($profilUrl)
+    public function setProfilUrl($profilUrl): User
     {
         $this->profilUrl = $profilUrl;
 
@@ -242,7 +237,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getProfilUrl()
+    public function getProfilUrl(): string
     {
         return $this->profilUrl;
     }
@@ -250,11 +245,11 @@ class User extends BaseUser
     /**
      * Set created.
      *
-     * @param \DateTime $created
+     * @param DateTime $created
      *
      * @return User
      */
-    public function setCreated($created)
+    public function setCreated($created): User
     {
         $this->created = $created;
 
@@ -264,9 +259,9 @@ class User extends BaseUser
     /**
      * Get created.
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreated()
+    public function getCreated(): DateTime
     {
         return $this->created;
     }
@@ -274,11 +269,11 @@ class User extends BaseUser
     /**
      * Set updated.
      *
-     * @param \DateTime $updated
+     * @param DateTime $updated
      *
      * @return User
      */
-    public function setUpdated($updated)
+    public function setUpdated($updated): User
     {
         $this->updated = $updated;
 
@@ -288,9 +283,9 @@ class User extends BaseUser
     /**
      * Get updated.
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getUpdated()
+    public function getUpdated(): DateTime
     {
         return $this->updated;
     }
@@ -298,11 +293,11 @@ class User extends BaseUser
     /**
      * Set userUpdated.
      *
-     * @param \DateTime $userUpdated
+     * @param DateTime $userUpdated
      *
      * @return User
      */
-    public function setUserUpdated($userUpdated)
+    public function setUserUpdated(DateTime $userUpdated): User
     {
         $this->userUpdated = $userUpdated;
 
@@ -312,9 +307,9 @@ class User extends BaseUser
     /**
      * Get userUpdated.
      *
-     * @return \DateTime
+     * @return DateTime | null
      */
-    public function getUserUpdated()
+    public function getUserUpdated(): ?DateTime
     {
         return $this->userUpdated;
     }
@@ -326,7 +321,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setBiographie($biographie)
+    public function setBiographie(string $biographie): User
     {
         $this->biographie = $biographie;
 
@@ -338,7 +333,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getBiographie()
+    public function getBiographie(): string
     {
         return $this->biographie;
     }
@@ -350,7 +345,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setLatitude($latitude)
+    public function setLatitude($latitude): User
     {
         $this->latitude = $latitude;
 
@@ -360,9 +355,9 @@ class User extends BaseUser
     /**
      * Get latitude.
      *
-     * @return float
+     * @return float | null
      */
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
@@ -374,7 +369,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setLongitude($longitude)
+    public function setLongitude($longitude): User
     {
         $this->longitude = $longitude;
 
@@ -384,9 +379,9 @@ class User extends BaseUser
     /**
      * Get longitude.
      *
-     * @return float
+     * @return float | null
      */
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
@@ -394,11 +389,11 @@ class User extends BaseUser
     /**
      * Set city.
      *
-     * @param float $city
+     * @param string $city
      *
      * @return User
      */
-    public function setCity($city)
+    public function setCity($city): User
     {
         $this->city = $city;
 
@@ -408,9 +403,9 @@ class User extends BaseUser
     /**
      * Get city.
      *
-     * @return float
+     * @return string | null
      */
-    public function getCity()
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -422,7 +417,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setIntensity($intensity)
+    public function setIntensity(int $intensity): User
     {
         $this->intensity = $intensity;
 
@@ -432,9 +427,9 @@ class User extends BaseUser
     /**
      * Get intensity.
      *
-     * @return int
+     * @return int | null
      */
-    public function getIntensity()
+    public function getIntensity(): ?int
     {
         return $this->intensity;
     }
@@ -446,7 +441,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setShowProfil($showProfil)
+    public function setShowProfil($showProfil): User
     {
         $this->showProfil = $showProfil;
 
@@ -458,7 +453,7 @@ class User extends BaseUser
      *
      * @return bool
      */
-    public function getShowProfil()
+    public function getShowProfil(): bool
     {
         return $this->showProfil;
     }
@@ -470,7 +465,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setNewMessageNotification($newMessageNotification)
+    public function setNewMessageNotification($newMessageNotification): User
     {
         $this->newMessageNotification = $newMessageNotification;
 
@@ -482,7 +477,7 @@ class User extends BaseUser
      *
      * @return bool
      */
-    public function getNewMessageNotification()
+    public function getNewMessageNotification(): bool
     {
         return $this->newMessageNotification;
     }
@@ -494,7 +489,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setNewMessageEmail($newMessageEmail)
+    public function setNewMessageEmail($newMessageEmail): User
     {
         $this->newMessageEmail = $newMessageEmail;
 
@@ -506,7 +501,7 @@ class User extends BaseUser
      *
      * @return bool
      */
-    public function getNewMessageEmail()
+    public function getNewMessageEmail(): bool
     {
         return $this->newMessageEmail;
     }
@@ -518,7 +513,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setImage(Image $image = null)
+    public function setImage(Image $image = null): User
     {
         $this->image = $image;
 
@@ -530,7 +525,7 @@ class User extends BaseUser
      *
      * @return Image
      */
-    public function getImage()
+    public function getImage(): Image
     {
         return $this->image;
     }
@@ -542,7 +537,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addTag(Tag $tag)
+    public function addTag(Tag $tag): User
     {
         $this->tags[] = $tag;
 
@@ -562,7 +557,7 @@ class User extends BaseUser
     /**
      * Get tags.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getTags()
     {
@@ -572,7 +567,7 @@ class User extends BaseUser
     /**
      * Set tags.
      *
-     * @param \Doctrine\Common\Collections\Collection
+     * @param Collection
      */
     public function setTags($tags)
     {
@@ -620,7 +615,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addSentMessage(Message $sentMessage)
+    public function addSentMessage(Message $sentMessage): User
     {
         $this->sentMessages[] = $sentMessage;
 
@@ -644,7 +639,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addReceivedMessage(Message $receivedMessage)
+    public function addReceivedMessage(Message $receivedMessage): User
     {
         $this->receivedMessages[] = $receivedMessage;
 
@@ -664,7 +659,7 @@ class User extends BaseUser
     /**
      * Get sentMessages.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getSentMessages()
     {
@@ -674,7 +669,7 @@ class User extends BaseUser
     /**
      * Get receivedMessages.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getReceivedMessages()
     {
@@ -688,7 +683,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addDomain(Domain $domain)
+    public function addDomain(Domain $domain): User
     {
         $this->domains[] = $domain;
 
@@ -708,7 +703,7 @@ class User extends BaseUser
     /**
      * Get domains.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getDomains()
     {
@@ -765,11 +760,11 @@ class User extends BaseUser
     /**
      * Set deleted.
      *
-     * @param \DateTime $deleted
+     * @param DateTime $deleted
      *
      * @return User
      */
-    public function setDeleted($deleted)
+    public function setDeleted($deleted): User
     {
         $this->deleted = $deleted;
 
@@ -779,9 +774,9 @@ class User extends BaseUser
     /**
      * Get deleted.
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDeleted()
+    public function getDeleted(): DateTime
     {
         return $this->deleted;
     }
@@ -789,11 +784,11 @@ class User extends BaseUser
     /**
      * Set lastConnexion.
      *
-     * @param \DateTime $lastConnexion
+     * @param DateTime $lastConnexion
      *
      * @return User
      */
-    public function setLastConnexion($lastConnexion)
+    public function setLastConnexion($lastConnexion): User
     {
         $this->lastConnexion = $lastConnexion;
 
@@ -803,9 +798,9 @@ class User extends BaseUser
     /**
      * Get lastConnexion.
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getLastConnexion()
+    public function getLastConnexion(): DateTime
     {
         return $this->lastConnexion;
     }
@@ -813,11 +808,11 @@ class User extends BaseUser
     /**
      * Set userNotified.
      *
-     * @param \DateTime $userNotified
+     * @param DateTime $userNotified
      *
      * @return User
      */
-    public function setUserNotified($userNotified)
+    public function setUserNotified($userNotified): User
     {
         $this->userNotified = $userNotified;
 
@@ -827,9 +822,9 @@ class User extends BaseUser
     /**
      * Get userNotified.
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getUserNotified()
+    public function getUserNotified(): DateTime
     {
         return $this->userNotified;
     }
@@ -910,7 +905,7 @@ class User extends BaseUser
         return $this;
     }
 
-    public function getNewsletter(): ?bool
+    public function getNewsletter(): bool
     {
         return $this->newsletter;
     }
@@ -922,7 +917,7 @@ class User extends BaseUser
         return $this;
     }
 
-    public function getNewMatchNotification(): ?bool
+    public function getNewMatchNotification(): bool
     {
         return $this->newMatchNotification;
     }

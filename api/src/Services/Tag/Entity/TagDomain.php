@@ -16,12 +16,15 @@ class TagDomain
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
-    private $name;
-    private $emoji;
-    private $hexcolor;
+    private ?int $id;
+    private ?string $name;
+    private ?string $emoji;
+    private ?string $hexcolor;
     private $tags;
-    private $created;
+
+//    tag representing general domain
+    private $linkedTag;
+    private ?\DateTimeInterface $created;
 
     public function __construct()
     {
@@ -105,6 +108,18 @@ class TagDomain
             $this->tags->removeElement($tag);
             $tag->removeTagDomain($this);
         }
+
+        return $this;
+    }
+
+    public function getLinkedTag(): ?Tag
+    {
+        return $this->linkedTag;
+    }
+
+    public function setLinkedTag(?Tag $linkedTag): self
+    {
+        $this->linkedTag = $linkedTag;
 
         return $this;
     }

@@ -3,16 +3,17 @@
 namespace App\Services\Tag\Entity;
 
 use App\Services\User\Entity\User;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 class Tag
 {
-    public $id;
-    public $name;
-    public $type;
-    public $iteration;
-    public $created;
+    public int $id;
+    public string $name;
+    public int $type;
+    public int $iteration;
+    public DateTime $created;
     private $users;
     private $tagDomains;
 
@@ -27,7 +28,7 @@ class Tag
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -39,7 +40,7 @@ class Tag
      *
      * @return Tag
      */
-    public function setId($id)
+    public function setId($id): Tag
     {
         $this->id = $id;
 
@@ -53,7 +54,7 @@ class Tag
      *
      * @return Tag
      */
-    public function setName($name)
+    public function setName(string $name): Tag
     {
         $this->name = $name;
 
@@ -65,7 +66,7 @@ class Tag
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -77,7 +78,7 @@ class Tag
      *
      * @return Tag
      */
-    public function setType($type)
+    public function setType(int $type): Tag
     {
         $this->type = $type;
 
@@ -89,7 +90,7 @@ class Tag
      *
      * @return int
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
@@ -101,7 +102,7 @@ class Tag
      *
      * @return Tag
      */
-    public function setIteration($iteration)
+    public function setIteration(int $iteration): Tag
     {
         $this->iteration = $iteration;
 
@@ -113,7 +114,7 @@ class Tag
      *
      * @return int
      */
-    public function getIteration()
+    public function getIteration(): int
     {
         return $this->iteration;
     }
@@ -121,11 +122,11 @@ class Tag
     /**
      * Set created.
      *
-     * @param \DateTime $created
+     * @param DateTime $created
      *
      * @return Tag
      */
-    public function setCreated($created)
+    public function setCreated(DateTime $created): Tag
     {
         $this->created = $created;
 
@@ -135,9 +136,9 @@ class Tag
     /**
      * Get created.
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreated()
+    public function getCreated(): DateTime
     {
         return $this->created;
     }
@@ -149,7 +150,7 @@ class Tag
      *
      * @return Tag
      */
-    public function addUser(User $user)
+    public function addUser(User $user): Tag
     {
         $this->users[] = $user;
 
@@ -169,7 +170,7 @@ class Tag
     /**
      * Get users.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return User[]
      */
     public function getUsers()
     {
@@ -179,7 +180,7 @@ class Tag
     /**
      * @return Collection|TagDomain[]
      */
-    public function getTagDomains(): Collection
+    public function getTagDomains()
     {
         return $this->tagDomains;
     }
