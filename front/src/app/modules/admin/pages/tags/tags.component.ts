@@ -64,12 +64,15 @@ export class TagsComponent extends DestroyObservable implements OnInit, AfterVie
         switchMap(() => {
           this.closeTagForm();
           const query = this.searchFilters ? this.searchFilters.controls.query.value : '';
+          const type = this.searchFilters ? Number(this.searchFilters.controls.type.value) : null;
           const page = this.paginator.pageIndex;
           const start = Number(page) * this.PAGE_SIZE;
           const end = Number(page) * this.PAGE_SIZE + this.PAGE_SIZE;
           this.tagsFiltered = this.tags.filter(
-            t => `${t.name} ${this.toFrenchType(t.type)} ${t.tag_domains.map(td => t.name).join(' ')}`.toLowerCase()
+            t => `${t.name} ${t.tag_domains.map(td => t.name).join(' ')}`.toLowerCase()
               .includes(query.toLowerCase()),
+          ).filter(
+            t => type === null || t.type === type,
           );
           return of(this.tagsFiltered.slice(start, end));
         }),
@@ -117,6 +120,7 @@ export class TagsComponent extends DestroyObservable implements OnInit, AfterVie
   private initSearchForm() {
     this.searchFilters = this.fb.group({
       query: [''],
+      type: [null],
     });
   }
 }

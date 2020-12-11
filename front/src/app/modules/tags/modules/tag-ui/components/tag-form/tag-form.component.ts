@@ -43,7 +43,6 @@ export class TagFormComponent extends DestroyObservable implements OnInit {
 
     this.updateValidators();
     if (this.createEditTagForm) {
-      console.log(tag.tag_domains);
       this.createEditTagForm.setValue({
         name: tag.name,
         type: tag.type,
