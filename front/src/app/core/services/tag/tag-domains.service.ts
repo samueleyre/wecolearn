@@ -5,6 +5,7 @@ import { finalize, tap } from 'rxjs/operators';
 
 import { APIService } from '~/core/services/crud/api';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
+import {Tag} from '~/core/entities/tag/entity';
 
 @Injectable({
   providedIn: 'root',
@@ -39,4 +40,5 @@ export class TagDomainsService extends APIService<TagDomain>{
         }),
       );
   }
+
 }

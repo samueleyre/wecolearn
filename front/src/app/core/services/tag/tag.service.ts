@@ -11,13 +11,14 @@ import { Tag } from '../../entities/tag/entity';
   providedIn: 'root',
 })
 export class TagService {
-  constructor(protected http: HttpClient) {}
+  public endPoint = '/api/tag';
+  constructor(private _http: HttpClient) {}
 
   public findTags(text?:string, type: TagTypeEnum = 0): Observable<Tag[]> {
     let filter = '';
     if (text) {
       filter = `?tagLetters=${text}&type=${type}`;
     }
-    return <Observable<Tag[]>>this.http.get(`/api/tag/find${filter}`);
+    return <Observable<Tag[]>>this._http.get(`${this.endPoint}/find${filter}`);
   }
 }

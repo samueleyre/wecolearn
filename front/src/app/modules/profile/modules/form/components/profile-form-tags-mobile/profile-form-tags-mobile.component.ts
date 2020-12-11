@@ -40,7 +40,11 @@ export class ProfileFormTagsMobileComponent implements OnInit {
     }
   }
 
+  private get exceptions(): number[] {
+    return this.parentForm.get(this.fieldName).value.map(tag => tag.id);
+  }
+
   public searchForTag() {
-    this._router.navigate([NAV.tagSearchBar], { queryParams: { tag_type: this.type, origin: this._router.url } });
+    this._router.navigate([NAV.tagSearchBar], { queryParams: { tag_type: this.type, origin: this._router.url, exceptions: this.exceptions.join(',') } });
   }
 }

@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { MatMenuTrigger } from '@angular/material/menu';
 
-import { TagService } from '~/core/services/tag/tag';
+import { TagService } from '~/core/services/tag/tag.service';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { DestroyObservable } from '~/core/components/destroy-observable';

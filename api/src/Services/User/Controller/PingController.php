@@ -4,6 +4,7 @@ namespace App\Services\User\Controller;
 
 use App\Services\Chat\Service\MercureCookieGenerator;
 use App\Services\User\Entity\User;
+use Exception;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -19,7 +20,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class PingController extends AbstractController
 {
-    private $userManager;
+    private UserManagerInterface $userManager;
 
     public function __construct(UserManagerInterface $userManager)
     {
@@ -29,9 +30,15 @@ class PingController extends AbstractController
     /**
      * @Get("ping" )
      *
-     * @throws \Exception
+     * @param Request $request
+     * @param TokenStorageInterface $tokenStorage
+     * @param SerializerInterface $serializer
+     * @param MercureCookieGenerator $cookieGenerator
+     * @param LoggerInterface $logger
+     * @return Response
+     * @throws Exception
      */
-    public function getAction(Request $request, TokenStorageInterface $tokenStorage, SerializerInterface $serializer, MercureCookieGenerator $cookieGenerator, LoggerInterface $logger)
+    public function getAction(Request $request, TokenStorageInterface $tokenStorage, SerializerInterface $serializer, MercureCookieGenerator $cookieGenerator, LoggerInterface $logger): Response
     {
         $user = $tokenStorage->getToken()->getUser();
         $user->setLastConnexion(new \DateTime('now', new \DateTimeZone('Europe/Paris')));

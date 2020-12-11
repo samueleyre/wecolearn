@@ -4,6 +4,7 @@ namespace App\Services\Tag\Controller;
 
 use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Entity\TagDomain;
+use Doctrine\Common\Collections\Collection;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,6 +62,28 @@ class TagController extends AbstractController
 
         return $ret;
     }
+
+    /**
+     * @Get("tag/domains-popular-as-tags")
+     * @return Collection|Tag[]
+     */
+    public function getTagPopularAction(Request $request)
+    {
+//      todo:  add cache to this request !
+        $limit = 8;
+        if ($request->get('limit')) {
+            $limit = $request->get('limit');
+        }
+
+        $tadDomains = $this->getDoctrine()
+            ->getRepository(TagDomain::class)
+            ->findBy([], null, $limit);
+
+        return array_map(function($tagDomain) {
+            return $tagDomain->getLinkedTag();
+        }, $tadDomains);
+    }
+
 
 
 

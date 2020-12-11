@@ -4,6 +4,7 @@ namespace App\Services\Tag\Repository;
 
 use App\Services\Tag\Entity\TagDomain;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
@@ -20,21 +21,23 @@ class TagDomainRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return TagDomain[] Returns an array of TagDomain objects
-    */
+     * @param $literal
+     * @return Collection|TagDomain[] Returns an array of TagDomain objects
+     */
     public function findByNameLike($literal)
     {
         $qb = $this->createQueryBuilder('t');
         if ($literal) {
             $qb->andwhere('t.name LIKE :literal')->setParameter('literal', '%'.$literal.'%');
         }
-        $qb->setMaxResults(5);
+        $qb->setMaxResults(50);
         return $qb->getQuery()->getResult();
     }
 
     /**
-    * @return TagDomain[] Returns an array of TagDomain objects
-    */
+     * @param $limit
+     * @return Collection|TagDomain[] Returns an array of TagDomain objects
+     */
     public function getPopular($limit)
     {
         $qb = $this->createQueryBuilder('td');

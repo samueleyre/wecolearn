@@ -11,11 +11,7 @@
         <field name="emoji" column="emoji" type="string"/>
         <field name="created" column="created" type="datetime"/>
         <many-to-many field="tags" target-entity="App\Services\Tag\Entity\Tag" mapped-by="tagDomains"/>
-<!--        <one-to-many field="tags" target-entity="App\Services\Tag\Entity\Tag" mapped-by="tagDomain">-->
-<!--            <cascade>-->
-<!--                <cascade-persist/>-->
-<!--                <cascade-merge/>-->
-<!--            </cascade>-->
-<!--        </one-to-many>-->
+        <one-to-one field="linkedTag" target-entity="App\Services\Tag\Entity\Tag">
+        </one-to-one>
     </entity>
 </doctrine-mapping>
