@@ -1,14 +1,14 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { debounceTime, filter, map, switchMap, takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {debounceTime, filter, map, switchMap} from 'rxjs/operators';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {Router} from '@angular/router';
 
-import { TagService } from '~/core/services/tag/tag.service';
-import { Tag } from '~/core/entities/tag/entity';
-import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
-import { PopularTagDomainsAsTagsService } from '~/core/services/tag/popular-tag-domains-as-tags.service';
-import { DestroyObservable } from '~/core/components/destroy-observable';
+import {TagService} from '~/core/services/tag/tag.service';
+import {Tag} from '~/core/entities/tag/entity';
+import {TagTypeEnum} from '~/core/enums/tag/tag-type.enum';
+import {PopularTagDomainsAsTagsService} from '~/core/services/tag/popular-tag-domains-as-tags.service';
+import {DestroyObservable} from '~/core/components/destroy-observable';
 
 @Component({
   selector: 'app-tag-search-mobile',
@@ -68,6 +68,10 @@ export class TagSearchMobileComponent extends DestroyObservable implements OnIni
 
   get inputIsEmpty(): boolean {
     return this.searchInputControl.value === null || this.searchInputControl.value === '';
+  }
+
+  get showTagDomains(): boolean {
+    return this.inputIsEmpty && this.tagType === TagTypeEnum.LEARN;
   }
 
   inputChangeByUser($event) {

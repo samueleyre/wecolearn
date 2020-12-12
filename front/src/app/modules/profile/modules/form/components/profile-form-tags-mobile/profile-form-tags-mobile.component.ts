@@ -18,7 +18,8 @@ export class ProfileFormTagsMobileComponent implements OnInit {
 
   constructor(
     private _router: Router,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }
@@ -45,6 +46,9 @@ export class ProfileFormTagsMobileComponent implements OnInit {
   }
 
   public searchForTag() {
-    this._router.navigate([NAV.tagSearchBar], { queryParams: { tag_type: this.type, origin: this._router.url, exceptions: this.exceptions.join(',') } });
+    this._router.navigate(
+      [NAV.tagSearchBar],
+      { queryParams: { tag_type: this.type, origin: this._router.url, exceptions: this.exceptions.join(',') } },
+      );
   }
 }

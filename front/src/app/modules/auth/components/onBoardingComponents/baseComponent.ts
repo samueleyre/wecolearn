@@ -25,7 +25,7 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
   public userForm = this.fb.group({
     first_name: null,
     last_name: null,
-    learn_tags: [],
+    learn_tags: [[]],
     biographie: null,
     latitude: null,
     longitude: null,

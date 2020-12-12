@@ -4,10 +4,11 @@
       <ng-template matStepperIcon="edit">
         <i class="fa fa-check"></i>
       </ng-template>
+
       <mat-step>
         <div class="card">
           <div class="card-header">
-            <h6 class="center">{{titles.city.title}}</h6>
+            <h5 class="center">{{titles.city.title}}</h5>
           </div>
           <div class="card-body">
             <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
@@ -18,30 +19,18 @@
       <mat-step>
         <div class="card">
           <div class="card-header">
-            <h6 class="center">{{titles.tags.title}}</h6>
+            <h5 class="center">{{titles.tags.title}}</h5>
           </div>
           <div class="card-body">
-            <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'"
-                               [type]="learnType"></profile-form-tags>
-            <p class="card-body-tagHints">
-              <app-emoji emojiName="265F"></app-emoji>
-              <span>Echecs,</span>
-              <app-emoji emojiName="1F431-200D-1F4BB"></app-emoji>
-              <span>Informatique,</span>
-              <app-emoji emojiName="1F3B1"></app-emoji>
-              <span>Snooker,</span>
-              <app-emoji emojiName="1F3BA"></app-emoji>
-              <span>Trompette,</span>
-              <app-emoji emojiName="1FAC2"></app-emoji>
-              <span>Polka ...</span>
-            </p>
+            <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'learn_tags'"
+                               [type]="learnType"></app-profile-form-tags-mobile>
           </div>
         </div>
       </mat-step>
       <mat-step>
         <div class="card">
           <div class="card-header">
-            <h6 class="center">{{titles.bio.title}}</h6>
+            <h5 class="center">{{titles.bio.title}}</h5>
           </div>
           <div class="card-body">
             <profile-form-biography [parentForm]="userForm"></profile-form-biography>
@@ -51,7 +40,7 @@
       <mat-step>
         <div class="card">
           <div class="card-header">
-            <h6 class="center">{{titles.ids.title}}</h6>
+            <h5 class="center">{{titles.ids.title}}</h5>
           </div>
           <div class="card-body">
             <div class="col-12">
