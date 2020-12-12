@@ -8,7 +8,7 @@
   </mat-form-field>
 </div>
 
-<div class="tagDomains-container" *ngIf="inputIsEmpty">
+<div class="tagDomains-container" *ngIf="showTagDomains">
   <h6 class="tagDomains-title" *ngIf="(popularTagDomainsAsTags$ | async).length > 0">Catégories populaires</h6>
   <div class="tagDomains" >
     <div class="tagDomains-box" [style.borderColor]="option.tag_domains[0] ? option.tag_domains[0].hexcolor : null" (click)="select(option)" *ngFor="let option of popularTagDomainsAsTags$ | async">

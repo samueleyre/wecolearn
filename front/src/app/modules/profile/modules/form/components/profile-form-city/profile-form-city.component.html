@@ -1,9 +1,9 @@
-<mat-radio-group [ngModel]="selectedCity" (ngModelChange)="setCity($event)" class="cities">
-  <mat-radio-button *ngFor="let city of cities" [value]="city">{{city.name}}</mat-radio-button>
+<mat-radio-group [formControl]="selectedCity" class="cities">
+  <mat-radio-button *ngFor="let city of cities" [value]="city" [checked]="selectedCity.value && selectedCity.value.name === city.name">{{city.name}}</mat-radio-button>
   <div *ngIf="showCityFields" >
     <mat-form-field appearance="legacy" >
       <mat-label>Chercher ma ville</mat-label>
-      <input appHideMenuMobileOnFocus matInput id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="" [formControl]="cityCtrl" [matAutocomplete]="auto" (focusout)="inputLostFocus()" >
+      <input appHideMenuMobileOnFocus matInput id="searchGeolocation" style="width: 80%; display: inline-block;" placeholder="" [formControl]="cityCtrl"  autocomplete="off" [matAutocomplete]="auto" (focusout)="inputLostFocus()" >
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCitySelect($event)">
         <mat-option *ngFor="let city of foundCities | async" [value]="city">
           {{ city.city }}, {{city.country}}

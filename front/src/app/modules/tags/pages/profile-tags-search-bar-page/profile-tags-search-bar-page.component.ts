@@ -30,7 +30,7 @@ export class ProfileTagsSearchBarPageComponent implements OnInit {
     this._route.queryParams.subscribe((params) => {
       if ('origin' in params && 'tag_type' in params && 'exceptions' in params) {
         this.origin = params['origin'];
-        this.tagType = params['tag_type'];
+        this.tagType = Number(params['tag_type']);
         this.tagIdExceptions = params['exceptions'].split(',').map(Number);
       } else {
         this._router.navigate(['/']);
