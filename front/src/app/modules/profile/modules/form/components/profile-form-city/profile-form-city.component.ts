@@ -30,7 +30,7 @@ export class ProfileFormCityComponent implements OnInit {
   public selectedSearchedCity: GeoDataInterface;
 
   // cities
-  public selectedCity: CityInterface;
+  public selectedCity = new FormControl();
   public cities: CityInterface[] = [
     {
       name: 'Lyon',
@@ -45,7 +45,7 @@ export class ProfileFormCityComponent implements OnInit {
       position: {
         lat: 15,
         lon: 16,
-        city: 'Lyon',
+        city: 'Paris',
       },
     },
     {
@@ -56,9 +56,7 @@ export class ProfileFormCityComponent implements OnInit {
         city: null,
       },
     },
-
   ];
-
 
   constructor(private _geoService: ProfileGeoService) {
   }
@@ -69,6 +67,29 @@ export class ProfileFormCityComponent implements OnInit {
       filter(val => !!val && val.length > 3),
       switchMap(value => this._geoService.findGeoDataByCityName(value)),
     );
+    this.selectedCity.valueChanges.subscribe((val) => {
+      this.updateParentForm(val.position);
+    });
+    this.initCity();
+  }
+
+  initCity() {
+    const cityName = this.parentForm.get('city').value;
+    const city: CityInterface = {
+      name: (cityName === 'Lyon' || cityName === 'Paris') ? cityName : 'Autre',
+      position: {
+        lat: Number(this.parentForm.get('latitude').value),
+        lon: Number(this.parentForm.get('longitude').value),
+        city: this.parentForm.get('city').value,
+      },
+    };
+    if (city.name && city.position.lat && city.position.lon) {
+      this.selectedCity.setValue(city);
+      if (city.name === 'Autre') {
+        this.selectedSearchedCity = city.position;
+        this.cityCtrl.setValue(city.position.city);
+      }
+    }
   }
 
   onCitySelect(city: MatAutocompleteSelectedEvent) {
@@ -83,7 +104,7 @@ export class ProfileFormCityComponent implements OnInit {
   }
 
   public get showCityFields():boolean {
-    return this.selectedCity && this.selectedCity.name === 'Autre';
+    return this.selectedCity.value && this.selectedCity.value.name === 'Autre';
   }
 
   public inputLostFocus() {
@@ -93,11 +114,6 @@ export class ProfileFormCityComponent implements OnInit {
         this.cityCtrl.setValue(this.selectedSearchedCity ? this.selectedSearchedCity.city : '');
       },
       300);
-  }
-
-  setCity(val: CityInterface) {
-    this.selectedCity = val;
-    this.updateParentForm(val.position);
   }
 
   updateParentForm(val: CityInterface['position']) {

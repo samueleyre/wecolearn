@@ -48,6 +48,11 @@ security:
             stateless: true
             anonymous: true
 
+        getPopularDomainsAsTags:
+            pattern: ^/api/tag/domains-popular-as-tags
+            stateless: true
+            anonymous: true
+
         resetPassword:
             pattern:   ^/api/resetPassword
             stateless: true
@@ -72,5 +77,6 @@ security:
         - { path: ^/api/confirmEmail, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/resetPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/tag/find, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/tag/domains-popular-as-tags, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/admin, roles: ROLES_ADMIN }
