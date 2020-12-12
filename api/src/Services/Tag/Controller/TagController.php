@@ -16,7 +16,7 @@ class TagController extends AbstractController
      */
     public function getTagAction(Request $request)
     {
-        $tagLetters = null;
+        $tagLetters = "";
         $type = null;
         if ($request->get('tagLetters')) {
             $tagLetters = $request->get('tagLetters');

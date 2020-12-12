@@ -1,6 +1,18 @@
+@import "variables";
 
-::ng-deep .mat-horizontal-content-container{
-  padding: 0 !important;
+
+::ng-deep {
+  .mat-horizontal-content-container {
+    padding: 0 !important;
+  }
+
+  .mat-step-header .mat-step-icon {
+    background-color: $secondaryColor;
+    color: white;
+  }
+  mat-step-header.mat-horizontal-stepper-header {
+    padding: 0 32px 0 32px;
+  }
 }
 
 .spaceForFooter {
@@ -13,16 +25,34 @@ ion-footer {
 }
 
 .Onboarding {
-  mat-horizontal-stepper{
+  mat-horizontal-stepper {
     background: none;
   }
-  .card{
+
+  app-profile-form-tags-mobile {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .card {
     min-height: 70vh;
-    .card-body{
-      align-items: center;
+    border: none;
+
+    &-header {
+      background: none;
+      border: none;
+      display: flex;
       justify-content: center;
+      align-items: flex-start;
+    }
+
+    .card-body {
+      align-items: center;
+      justify-content: flex-start;
       flex-direction: column;
       display: flex;
+
       &-tagHints {
         font-size: 19px;
         display: flex;
@@ -30,25 +60,29 @@ ion-footer {
         align-items: center;
         width: 100%;
         flex-wrap: wrap;
+
         app-emoji {
           width: 30px;
         }
+
         span {
           margin-right: 8px;
         }
+
         margin-top: 10px;
       }
-      > :first-child{
+
+      > :first-child {
         width: 100%
       }
     }
   }
 
-  .btn-container-first{
+  .btn-container-first {
     float: right;
   }
 
-  .btn-container{
+  .btn-container {
     display: flex;
     justify-content: space-between;
   }
@@ -56,6 +90,7 @@ ion-footer {
   &-conditions {
     text-align: center;
   }
+
   &-newsletter {
     text-align: center;
     margin-top: 20px;
@@ -64,4 +99,5 @@ ion-footer {
   }
 
 }
+
 
