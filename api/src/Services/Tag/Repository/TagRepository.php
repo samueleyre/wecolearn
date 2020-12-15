@@ -47,29 +47,33 @@ class TagRepository extends ServiceEntityRepository
     public function resetCount()
     {
 
-        $tags = $this->createQueryBuilder('t')
-            ->select('t')
-            ->where('t.type = 0')
-            ->getQuery()
-            ->getResult();
+        foreach (array(0, 1, 2) as $type) {
 
-        foreach ($tags as $tag) {
-            $iterationQuery = $this->createQueryBuilder('t')
-                ->select('count( u.id )')
-                ->join('t.users', 'u')
-                ->where('t.id = :tagId')
-                ->setParameter('tagId', $tag->getId());
+            $tags = $this->createQueryBuilder('t')
+                ->select('t')
+                ->where("t.type = $type")
+                ->getQuery()
+                ->getResult();
+
+            foreach ($tags as $tag) {
+                $iterationQuery = $this->createQueryBuilder('t')
+                    ->select('count( u.id )')
+                    ->join('t.users', 'u')
+                    ->where('t.id = :tagId')
+                    ->setParameter('tagId', $tag->getId());
 
                 $iteration = $iterationQuery->getQuery()->getSingleScalarResult();
 
-            $update = $this->createQueryBuilder('tag')
-                ->update()
-                ->set('tag.iteration', $iteration)
-                ->where('tag.id = :tagId')
-                ->setParameter('tagId', $tag->getId());
-            $update->getQuery()->getResult();
+                $update = $this->createQueryBuilder('tag')
+                    ->update()
+                    ->set('tag.iteration', $iteration)
+                    ->where('tag.id = :tagId')
+                    ->setParameter('tagId', $tag->getId());
+                $update->getQuery()->getResult();
 
+            }
         }
+
 
         syslog(LOG_INFO, 'iteration count updated');
     }
