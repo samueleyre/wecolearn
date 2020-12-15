@@ -73,6 +73,8 @@ export class TagsComponent extends DestroyObservable implements OnInit, AfterVie
               .includes(query.toLowerCase()),
           ).filter(
             t => type === null || t.type === type,
+          ).filter(
+            t => !this.searchFilters.controls.hasDomain.value || t.tag_domains.length === 0,
           );
           return of(this.tagsFiltered.slice(start, end));
         }),
@@ -82,8 +84,12 @@ export class TagsComponent extends DestroyObservable implements OnInit, AfterVie
       });
   }
 
-  get tags() {
+  get tags(): Tag[] {
     return this.tags$.value;
+  }
+
+  get toOrder(): number {
+    return this.tags.filter(t => t.tag_domains.length === 0).length;
   }
 
   get loaded(): boolean {
@@ -120,7 +126,8 @@ export class TagsComponent extends DestroyObservable implements OnInit, AfterVie
   private initSearchForm() {
     this.searchFilters = this.fb.group({
       query: [''],
-      type: [null],
+      type: [0],
+      hasDomain: [false],
     });
   }
 }
