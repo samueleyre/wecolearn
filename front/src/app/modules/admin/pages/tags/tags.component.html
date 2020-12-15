@@ -5,8 +5,10 @@
         Apprentissages
       </h2>
       <form [formGroup]="searchFilters">
+        <span *ngIf="toOrder > 0"><b>{{toOrder}}</b> apprentissages à trier</span>
+        <mat-checkbox formControlName="hasDomain">A trier</mat-checkbox>
         <mat-radio-group formControlName="type">
-          <mat-radio-button value="0" >Apprentissage</mat-radio-button>
+          <mat-radio-button value="0" checked>Apprentissage</mat-radio-button>
           <mat-radio-button value="1" >Connaissance</mat-radio-button>
           <mat-radio-button value="2" >Transmission</mat-radio-button>
         </mat-radio-group>
