@@ -11,14 +11,8 @@ class RootController extends AbstractController
     /**
      * @Get("/")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        return [
-            'weCoLearn aka' => [
-                'alexandre.moreira.pro@gmail.com',
-                'edouard.touraille@gmail.com',
-                'hello@samueleyre.com',
-            ],
-        ];
+        echo 'Api à usage pédagogique par hello@samueleyre.com';
     }
 }
