@@ -14,11 +14,7 @@ class RootController extends AbstractController
     public function indexAction(Request $request)
     {
         return [
-            'weCoLearn aka' => [
-                'alexandre.moreira.pro@gmail.com',
-                'edouard.touraille@gmail.com',
-                'hello@samueleyre.com',
-            ],
+            'This is the wecolearn api, contact us here : contact+api@wecolearn.com',
         ];
     }
 }

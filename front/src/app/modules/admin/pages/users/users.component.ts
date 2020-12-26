@@ -68,7 +68,7 @@ export class UsersComponent extends DestroyObservable implements OnInit {
           const start = Number(page) * this.PAGE_SIZE;
           const end = Number(page) * this.PAGE_SIZE + this.PAGE_SIZE;
           this.usersFiltered = this.users.filter(
-            u => `${u.email} ${u.first_name} ${u.last_name} ${u.tags.map(tag => tag.name)
+            u => `${u.email} ${u.first_name} ${u.city} ${u.last_name} ${u.tags.map(tag => tag.name)
               .join()}`.toLowerCase().includes(query.toLowerCase()),
           );
           return of(this.usersFiltered.slice(start, end));
