@@ -19,7 +19,7 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
   @Input() canEditUser = false;
   @Output() editUser = new EventEmitter<User>();
 
-  displayedColumns: string[] = ['name', 'email', 'role', 'domains', 'tags', 'actions'];
+  displayedColumns: string[] = ['name', 'email', 'role', 'domains', 'tags', 'city', 'actions'];
 
   constructor(
     public userService: AdminUsersService,
