@@ -66,37 +66,45 @@ services:
         arguments:
             $secret: '%mercure_jwt_key%'
 
+    # ASYNC MESSENGER HANDLERS ---------
+    App\Services\User\AsyncHandler\ConfirmEmailHandler:
+        arguments:
+            $host: '%host%'
+
+    App\Services\User\AsyncHandler\NotifyUserMatchHandler:
+        arguments:
+            $host: '%host%'
+
+
     # SUBSCRIBERS ---------
     App\Services\Core\Exception\ExceptionSubscriber:
         arguments:  ['@service_container', '@logger']
         tags:
             - { name: 'kernel.event_subscriber' }
 
-    App\Services\User\Event\ConfirmEmailSubscriber:
+    App\Services\User\SyncSubscriber\ConfirmEmailSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Services\User\SyncSubscriber\TokenWasCreatedSubscriber:
         arguments:
             $host: '%host%'
         tags:
             - { name: 'kernel.event_subscriber' }
 
-    App\Services\User\Event\TokenWasCreatedSubscriber:
-        arguments:
-            $host: '%host%'
-        tags:
-            - { name: 'kernel.event_subscriber' }
-
-    App\Services\User\Event\AddContactNewsletterSubscriber:
+    App\Services\User\SyncSubscriber\AddContactNewsletterSubscriber:
         arguments:
             $environment: '%environment%'
         tags:
             - { name: 'kernel.event_subscriber' }
 
-    App\Services\User\Event\UpdateContactNewsletterSubscriber:
+    App\Services\User\SyncSubscriber\UpdateContactNewsletterSubscriber:
         arguments:
             $environment: '%environment%'
         tags:
             - { name: 'kernel.event_subscriber' }
 
-    App\Services\User\Event\EmailWasChangedSubscriber:
+    App\Services\User\SyncSubscriber\EmailWasChangedSubscriber:
         arguments:
             $host: '%host%'
         tags:
@@ -106,9 +114,7 @@ services:
         tags:
             - { name: 'kernel.event_subscriber' }
 
-    App\Services\User\Event\NotifyNewUserMatchSubscriber:
-        arguments:
-            $host: '%host%'
+    App\Services\User\SyncSubscriber\NotifyNewUserMatchSubscriber:
         tags:
             - { name: 'kernel.event_subscriber' }
 

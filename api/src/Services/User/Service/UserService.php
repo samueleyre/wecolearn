@@ -5,7 +5,7 @@ namespace App\Services\User\Service;
 use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
 use App\Services\Tag\Entity\Tag;
-use App\Services\User\Event\NewsletterWasChanged;
+use App\Services\User\SyncEvent\NewsletterWasChanged;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
 use Psr\Log\LoggerInterface;
@@ -18,10 +18,10 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class UserService
 {
-    public $em;
-    private $securityStorage;
-    private $tagService;
-    private $dispatcher;
+    public EntityManagerInterface $em;
+    private TokenStorageInterface $securityStorage;
+    private TagService $tagService;
+    private EventDispatcherInterface $dispatcher;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -41,7 +41,7 @@ class UserService
         return $this->em->getRepository(User::class)->findBy(['enabled'=>true], ['created' => 'DESC']);
     }
 
-    public function findById(int $id): User
+    public function findById(int $id)
     {
         return $this->em->getRepository(User::class)->find($id);
     }

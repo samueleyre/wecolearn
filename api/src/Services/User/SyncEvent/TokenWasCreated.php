@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\User\Event;
+namespace App\Services\User\SyncEvent;
 
 use App\Services\User\Entity\Token;
 use App\Services\User\Entity\User;
