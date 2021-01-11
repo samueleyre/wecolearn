@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\User\Event;
+namespace App\Services\User\SyncSubscriber;
 
 use App\Services\Shared\Service\EmailService;
 use App\Services\Domain\Service\DomainService;
 use App\Services\User\Constant\TokenConstant;
-use App\Services\User\Event\EmailWasChanged;
+use App\Services\User\SyncEvent\EmailWasChanged;
 use App\Services\User\Service\TokenService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -13,17 +13,17 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class EmailWasChangedSubscriber implements EventSubscriberInterface
 {
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             EmailWasChanged::NAME => 'handle'
         ];
     }
 
-    private $em;
-    private $tokenService;
-    private $emailService;
-    private $host;
+    private EntityManagerInterface $em;
+    private TokenService $tokenService;
+    private EmailService $emailService;
+    private string $host;
 
     public function __construct(EntityManagerInterface $em , TokenService $tokenService, EmailService $emailService, string $host) {
         $this->em = $em;

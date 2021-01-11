@@ -3,7 +3,7 @@
 namespace App\Services\User\Service;
 
 use App\Services\User\Entity\User;
-use App\Services\User\Event\EmailWasChanged;
+use App\Services\User\SyncEvent\EmailWasChanged;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ChangeEmailService

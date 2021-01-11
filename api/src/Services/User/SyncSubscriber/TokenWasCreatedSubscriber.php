@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Services\User\Event;
+namespace App\Services\User\SyncSubscriber;
 
 use App\Services\Shared\Service\EmailService;
 use App\Services\Domain\Service\DomainService;
+use App\Services\User\SyncEvent\TokenWasCreated;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TokenWasCreatedSubscriber implements EventSubscriberInterface
 {
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             TokenWasCreated::NAME => 'handle'
         ];
     }
 
-    private $emailService;
-    private $domainService;
-    private $host;
+    private EmailService $emailService;
+    private DomainService $domainService;
+    private string $host;
 
     public function __construct(
         EmailService $emailService,

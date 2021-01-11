@@ -5,10 +5,28 @@ framework:
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
             # failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+             async_priority_high:
+               dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+               options:
+                 # queue_name is specific to the doctrine transport
+                 queue_name: high
+
+                 # for AMQP send to a separate exchange then queue
+                 #exchange:
+                 #    name: high
+                 #queues:
+                 #    messages_high: ~
+                 # or redis try "group"
+             async_priority_low:
+               dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+               options:
+                 queue_name: low
+
 
         routing:
             # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+             'App\Services\User\AsyncBusMessage\ConfirmEmailBusMessage': async_priority_high
+             'App\Services\User\AsyncBusMessage\NotifyUserMatchBusMessage': async_priority_low
+#             'App\Services\User\BusMessage\ConfirmPassword': async_priority_high
+#             'App\Services\User\BusMessage\UpdateNewsletter': async_priority_low

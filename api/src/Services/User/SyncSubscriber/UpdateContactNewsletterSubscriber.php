@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Services\User\Event;
+namespace App\Services\User\SyncSubscriber;
 
 use App\Services\Shared\Service\EmailService;
+use App\Services\User\SyncEvent\EmailChangeConfirmed;
+use App\Services\User\SyncEvent\NewsletterWasChanged;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UpdateContactNewsletterSubscriber implements EventSubscriberInterface
 {
 
-    private $emailService;
-    private $environment;
+    private EmailService $emailService;
+    private string $environment;
 
     public function __construct(
         EmailService $emailService,
@@ -20,7 +22,7 @@ class UpdateContactNewsletterSubscriber implements EventSubscriberInterface
         $this->environment = $environment;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             EmailChangeConfirmed::NAME => 'onEmailChange',

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Services\User\Event;
+namespace App\Services\User\SyncEvent;
 
 use App\Services\User\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class UserWasCreated extends Event
+class NewsletterWasChanged extends Event
 {
 
-    const NAME = 'User was created';
+    const NAME = 'Newsletter parameter was changed';
 
     private $user;
 

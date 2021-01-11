@@ -20,10 +20,10 @@ frontServer:
 	@docker-compose run angular bash -c "ng serve --host 0.0.0.0"
 
 fixPermissions:
-	sudo find api/ -type d -exec chmod 775 {} \;
-	sudo find front/ -type d -exec chmod 775 {} \;
-	sudo find api/ -type f -exec chmod 664 {} \;
-	sudo find front/ -type f -exec chmod 664 {} \;
+#	sudo find api/ -type d -exec chmod 775 {} \;
+#	sudo find front/ -type d -exec chmod 775 {} \;
+#	sudo find api/ -type f -exec chmod 664 {} \;
+#	sudo find front/ -type f -exec chmod 664 {} \;
 	sudo chown -R $(shell whoami):www-data ./api;
 	sudo chown -R $(shell whoami):www-data ./front
 

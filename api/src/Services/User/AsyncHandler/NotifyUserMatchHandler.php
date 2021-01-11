@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Services\User\Event;
 
-use App\Services\Shared\Service\EmailService;
+namespace App\Services\User\AsyncHandler;
+
 use App\Services\Chat\Service\NotificationService;
+use App\Services\Shared\Service\EmailService;
 use App\Services\Tag\Constant\TagConstant;
-use App\Services\Tag\Entity\Tag;
+use App\Services\User\AsyncBusMessage\NotifyUserMatchBusMessage;
 use App\Services\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
+class NotifyUserMatchHandler implements MessageHandlerInterface
 {
 
-    private $emailService;
-    private $notificationService;
-    private $container;
-    private $host;
-    private $em;
+    private EmailService $emailService;
+    private NotificationService $notificationService;
+    private ContainerInterface $container;
+    private string $host;
+    private EntityManagerInterface $em;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -36,17 +37,10 @@ class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
         $this->host = $host;
     }
 
-    public static function getSubscribedEvents()
-    {
-        return [
-            UserWasCreated::NAME => 'handle'
-        ];
-    }
-
-    public function handle(UserWasCreated $event)
+    public function __invoke(NotifyUserMatchBusMessage $notifyUserMatchBusMessage)
     {
 
-        $user = $event->getUser();
+        $user = $notifyUserMatchBusMessage->getUser();
 
         $matchingUsers = $this->em
             ->getRepository(User::class)
@@ -84,27 +78,21 @@ class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
                 return $tag->getName();
             })->toArray();
 
-            if($matchingUser->getNewMatchNotification()) {
+            if ($matchingUser->getNewMatchNotification()) {
                 try {
-                    $this->notificationService->processNewMatchingProfil($matchingUser, $user );
-                }
-                catch (\Exception $e){
+                    $this->notificationService->processNewMatchingProfil($matchingUser, $user);
+                } catch (\Exception | \Error $e) {
                     $this->sendEmail($matchingUser, $user, $commonTags);
                 }
-                catch (\Error $e){
-                    $this->sendEmail($matchingUser, $user, $commonTags);
-                }
-            }
-
-            else if ($matchingUser->getNewMatchEmail()) {
+            } else if ($matchingUser->getNewMatchEmail()) {
                 $this->sendEmail($matchingUser, $user, $commonTags);
             }
 
         }
-
     }
 
-    private function sendEmail(User $matchingUser, User $user, ArrayCollection $commonTags) {
+    private function sendEmail(User $matchingUser, User $user, ArrayCollection $commonTags)
+    {
         $this->emailService
             ->setData(
                 15,
@@ -113,7 +101,7 @@ class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
                     "FIRSTNAME" => $matchingUser->getFirstName(),
                     "MATCH_FIRSTNAME" => $user->getFirstName(),
                     "MATCH_PROFIL_URL" => $user->getProfilUrl(),
-                    "TAGS" => array_values($commonTags), // reindex array with array_values
+                    "TAGS" => array_values($commonTags->toArray()), // reindex array with array_values
                 ],
                 $matchingUser->getEmail()
             )
