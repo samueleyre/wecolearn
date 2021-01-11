@@ -10,7 +10,7 @@ namespace App\Services\User\Service;
 
 use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\User;
-use App\Services\User\Event\TokenWasCreated;
+use App\Services\User\SyncEvent\TokenWasCreated;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

@@ -25,7 +25,7 @@ class User extends BaseUser
     private ?DateTime $userUpdated;
     // for client web and email notifications
     private ?DateTime $userNotified; // not used anymore !
-    public string $biographie = "";
+    public ?string $biographie = null;
     public ?int $intensity = null;
     public ?int $atmosphere = null;
     public ?float $latitude = null;
@@ -317,11 +317,11 @@ class User extends BaseUser
     /**
      * Set biographie.
      *
-     * @param string $biographie
+     * @param ?string $biographie
      *
      * @return User
      */
-    public function setBiographie(string $biographie): User
+    public function setBiographie(?string $biographie): User
     {
         $this->biographie = $biographie;
 
@@ -331,9 +331,9 @@ class User extends BaseUser
     /**
      * Get biographie.
      *
-     * @return string
+     * @return ?string
      */
-    public function getBiographie(): string
+    public function getBiographie(): ?string
     {
         return $this->biographie;
     }

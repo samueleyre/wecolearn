@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Services\User\Event;
+
+namespace App\Services\User\AsyncHandler;
 
 use App\Services\Shared\Service\EmailService;
+use App\Services\User\AsyncBusMessage\ConfirmEmailBusMessage;
 use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Service\TokenService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class ConfirmEmailSubscriber implements EventSubscriberInterface
+class ConfirmEmailHandler implements MessageHandlerInterface
 {
 
-    private $tokenService;
-    private $emailService;
-    private $container;
-    private $host;
+    private TokenService $tokenService;
+    private EmailService $emailService;
+    private ContainerInterface $container;
+    private string $host;
 
     public function __construct(
         EmailService $emailService,
@@ -28,16 +30,9 @@ class ConfirmEmailSubscriber implements EventSubscriberInterface
         $this->host = $host;
     }
 
-    public static function getSubscribedEvents()
+    public function __invoke(ConfirmEmailBusMessage $confirmEmailBusMessage)
     {
-        return [
-            UserWasCreated::NAME => 'handle'
-        ];
-    }
-
-    public function handle( UserWasCreated $event ) {
-
-        $user = $event->getUser();
+        $user = $confirmEmailBusMessage->getUser();
 
         $token = $this->tokenService
             ->setNewToken($user, TokenConstant::$types["CONFIRMEMAIL"], true);

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Services\User\Event;
+namespace App\Services\User\SyncSubscriber;
 
 use App\Services\Shared\Service\EmailService;
 use App\Services\Chat\Service\NotificationService;
 use App\Services\Tag\Constant\TagConstant;
 use App\Services\User\Entity\User;
+use App\Services\User\SyncEvent\UserWasCreated;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -14,8 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class AddContactNewsletterSubscriber implements EventSubscriberInterface
 {
 
-    private $emailService;
-    private $environment;
+    private EmailService $emailService;
+    private string $environment;
 
     public function __construct(
         EmailService $emailService,
@@ -26,7 +27,7 @@ class AddContactNewsletterSubscriber implements EventSubscriberInterface
         $this->environment = $environment;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             UserWasCreated::NAME => 'handle'
