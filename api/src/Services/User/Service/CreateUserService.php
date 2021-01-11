@@ -6,7 +6,7 @@ use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\Domain\Service\AddDomainService;
 use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
-use App\Services\User\Event\UserWasCreated;
+use App\Services\User\SyncEvent\UserWasCreated;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -14,11 +14,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CreateUserService
 {
-    private $userManager;
-    private $dispatcher;
-    private $addDomainService;
-    private $generateUrlService;
-    private $tagService;
+    private UserManagerInterface $userManager;
+    private EventDispatcherInterface $dispatcher;
+    private AddDomainService $addDomainService;
+    private GenerateUrlService $generateUrlService;
+    private TagService $tagService;
 
     public function __construct(
         UserManagerInterface $userManager,
@@ -43,6 +43,7 @@ class CreateUserService
         if ($user->getTags()) {
             $user->setTags($this->tagService->beforePatchTags(new ArrayCollection(), $user->getTags()));
         }
+        dump(1);
         $user->setEnabled(true);
         $user->setShowProfil(true);
         $user->setEmailConfirmed(false);
@@ -68,6 +69,7 @@ class CreateUserService
         } catch (UniqueConstraintViolationException $e) {
             throw new ResourceAlreadyUsedException('resource already used');
         }
+
         $this->dispatcher->dispatch(new UserWasCreated($user),UserWasCreated::NAME);
 
         return $user;
