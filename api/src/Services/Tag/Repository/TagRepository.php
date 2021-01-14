@@ -13,7 +13,7 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
-    public function findAllOrderedByIteration(string $tagLetters, int $type = null)
+    public function findAllOrderedByIteration(string $tagLetters, int $type = null, int $max = 5)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('tag');
@@ -25,7 +25,7 @@ class TagRepository extends ServiceEntityRepository
             $qb->andwhere('tag.name LIKE :tagletters')->setParameter('tagletters', '%'.$tagLetters.'%');
         }
         $qb->orderBy('tag.iteration', 'DESC');
-        $qb->setMaxResults(3);
+        $qb->setMaxResults($max);
 
         $ret = $qb->getQuery()->getResult();
 

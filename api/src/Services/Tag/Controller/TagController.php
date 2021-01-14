@@ -17,6 +17,8 @@ class TagController extends AbstractController
     {
         $tagLetters = "";
         $type = null;
+        $max = 5;
+
         if ($request->get('tagLetters')) {
             $tagLetters = $request->get('tagLetters');
         }
@@ -25,9 +27,13 @@ class TagController extends AbstractController
             $type = $request->get('type');
         }
 
+        if ($request->get('max')) {
+            $max = $request->get('max');
+        }
+
         return $this->getDoctrine()
                 ->getRepository(Tag::class)
-                ->findAllOrderedByIteration($tagLetters, $type);
+                ->findAllOrderedByIteration($tagLetters, $type, $max);
     }
 
 
