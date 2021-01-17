@@ -43,7 +43,6 @@ class CreateUserService
         if ($user->getTags()) {
             $user->setTags($this->tagService->beforePatchTags(new ArrayCollection(), $user->getTags()));
         }
-        dump(1);
         $user->setEnabled(true);
         $user->setShowProfil(true);
         $user->setEmailConfirmed(false);
