@@ -1,2 +1,2 @@
-postdeploy: php bin/console doctrine:migrations:sync-metadata-storage; php bin/console --no-interaction do:migrations:migrate; php bin/console shapecode:cron:scan; php bin/console shapecode:cron:run; php bin/console messenger:consume
+postdeploy: php bin/console doctrine:migrations:sync-metadata-storage; php bin/console --no-interaction do:migrations:migrate; php bin/console shapecode:cron:scan; php bin/console shapecode:cron:run; php bin/console messenger:consume async_priority_high async_priority_low
 clock: php cron.php
