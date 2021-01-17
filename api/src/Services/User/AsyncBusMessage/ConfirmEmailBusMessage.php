@@ -2,20 +2,18 @@
 
 namespace App\Services\User\AsyncBusMessage;
 
-use App\Services\User\Entity\User;
-
 class ConfirmEmailBusMessage
 {
 
-    private User $user;
+    private float $userId;
 
-    public function __construct(User $user)
+    public function __construct(float $userId)
     {
-        $this->user = $user;
+        $this->userId = $userId;
     }
 
-    public function getUser(): User
+    public function getUserId(): float
     {
-        return $this->user;
+        return $this->userId;
     }
 }

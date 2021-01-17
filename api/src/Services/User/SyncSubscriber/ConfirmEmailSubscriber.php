@@ -28,6 +28,6 @@ class ConfirmEmailSubscriber implements EventSubscriberInterface
 
     public function handle(UserWasCreated $event)
     {
-        $this->messageBusInterface->dispatch(new ConfirmEmailBusMessage($event->getUser()));
+        $this->messageBusInterface->dispatch(new ConfirmEmailBusMessage($event->getUser()->getId()));
     }
 }

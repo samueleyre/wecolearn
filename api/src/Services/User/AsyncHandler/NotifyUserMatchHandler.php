@@ -39,8 +39,9 @@ class NotifyUserMatchHandler implements MessageHandlerInterface
 
     public function __invoke(NotifyUserMatchBusMessage $notifyUserMatchBusMessage)
     {
-
-        $user = $notifyUserMatchBusMessage->getUser();
+        $user = $this->em->getRepository(User::class)->find(
+            $notifyUserMatchBusMessage->getUserId()
+        );
 
         $matchingUsers = $this->em
             ->getRepository(User::class)
@@ -82,7 +83,9 @@ class NotifyUserMatchHandler implements MessageHandlerInterface
                 try {
                     $this->notificationService->processNewMatchingProfil($matchingUser, $user);
                 } catch (\Exception | \Error $e) {
-                    $this->sendEmail($matchingUser, $user, $commonTags);
+                    if ($matchingUser->getNewMatchEmail()) {
+                        $this->sendEmail($matchingUser, $user, $commonTags);
+                    }
                 }
             } else if ($matchingUser->getNewMatchEmail()) {
                 $this->sendEmail($matchingUser, $user, $commonTags);
