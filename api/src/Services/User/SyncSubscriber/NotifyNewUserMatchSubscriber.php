@@ -35,6 +35,6 @@ class NotifyNewUserMatchSubscriber implements EventSubscriberInterface
 
     public function handle(UserWasCreated $event)
     {
-        $this->messageBusInterface->dispatch(new NotifyUserMatchBusMessage($event->getUser()));;
+        $this->messageBusInterface->dispatch(new NotifyUserMatchBusMessage($event->getUser()->getId()));;
     }
 }
