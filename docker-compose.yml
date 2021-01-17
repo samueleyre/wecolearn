@@ -65,3 +65,11 @@ services:
       - DEBUG=1
     ports:
       - "3000:80"
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:80"
+  redisGui:
+    image: patrikx3/p3x-redis-ui:latest
+    ports:
+      - "7843:80"
