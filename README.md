@@ -8,7 +8,6 @@ docker, docker-compose ( avec sudo ), Make
 make install
 ``
 
-
 ### Créer la base de donnée
 
 ``
@@ -27,6 +26,12 @@ make loadFixtures
 docker-compose up webserver
 ``
 
+### Démarrer worker
+
+``
+make worker
+``
+
 
 ### Démarrer front 
 
@@ -42,7 +47,6 @@ make test
 ### Version mobile
 
 voir [front/README.md](https://github.com/samueleyre/wecolearn/blob/dev/front/README.md)
-
 
 
 ## Debug dev
