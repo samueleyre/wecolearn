@@ -19,6 +19,9 @@ runComposer:
 frontServer:
 	@docker-compose run angular bash -c "ng serve --host 0.0.0.0"
 
+worker:
+	@docker-compose exec api bash -c "php bin/console messenger:consume async_priority_high async_priority_low"
+
 fixPermissions:
 #	sudo find api/ -type d -exec chmod 775 {} \;
 #	sudo find front/ -type d -exec chmod 775 {} \;
