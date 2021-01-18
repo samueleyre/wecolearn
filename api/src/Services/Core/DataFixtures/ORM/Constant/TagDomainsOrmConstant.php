@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Core\Constant;
+namespace App\Services\Core\DataFixtures\ORM\Constant;
 
-class TagDomainsConstant
+class TagDomainsOrmConstant
 {
-    public static $LIST= [
+    public static array $LIST= [
         [
             "name"=>"Dance",
             "emoji"=>"1F5FF",
