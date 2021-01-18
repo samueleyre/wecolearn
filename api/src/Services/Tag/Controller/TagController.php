@@ -65,6 +65,7 @@ class TagController extends AbstractController
 
     /**
      * @Get("tag/domains-popular-as-tags")
+     * @param Request $request
      * @return Collection|Tag[]
      */
     public function getTagPopularAction(Request $request)
@@ -75,13 +76,17 @@ class TagController extends AbstractController
             $limit = $request->get('limit');
         }
 
-        $tadDomains = $this->getDoctrine()
+        $tagDomains = $this->getDoctrine()
             ->getRepository(TagDomain::class)
             ->findBy([], null, $limit);
 
-        return array_map(function($tagDomain) {
+        $linkedTags = array_map(function($tagDomain) {
             return $tagDomain->getLinkedTag();
-        }, $tadDomains);
+        }, $tagDomains);
+
+        return array_filter($linkedTags, function($linkedTag) {
+            return $linkedTag !== null;
+        });
     }
 
 

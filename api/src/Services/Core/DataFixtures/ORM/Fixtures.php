@@ -3,7 +3,7 @@
 namespace App\Services\Core\DataFixtures\ORM;
 
 use App\Services\Chat\Entity\Message;
-use App\Services\Core\Constant\TagDomainsConstant;
+use App\Services\Core\DataFixtures\ORM\Constant\TagDomainsOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\TagOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\UserConstant;
 use App\Services\Domain\Entity\Domain;
@@ -25,15 +25,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterface
 {
     private $generateUrlService;
-    private $userService;
-    private $tagService;
-    private $tagDomainService;
-    private $manager;
+    private UserService $userService;
+    private TagService $tagService;
+    private TagDomainService $tagDomainService;
+    private ObjectManager $manager;
     private $userManager;
-    private $em;
-    private $tagDomains = [];
+    private array $tagDomains = [];
+    private array $tags = [];
 
-    private $container;
+    private ?ContainerInterface $container;
 
     public function __construct(
         TagService $tagService,
@@ -54,25 +54,69 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
-        $this->em = $this->container->get('doctrine.orm.entity_manager');
         $this->generateUrlService = $this->container->get('generate_url_service');
         $this->userManager = $this->container->get('fos_user.user_manager');
         $this->addTagDomains();
+        $this->addTags();
         $this->addUsers();
     }
 
     private function addTagDomains() {
-        $tagDomains = TagDomainsConstant::$LIST;
+        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $tagDomains = TagDomainsOrmConstant::$LIST;
 
+        $index = 0;
         foreach ($tagDomains as $tagDomainParam) {
-            $tagDomain = new TagDomain();
 
+            // create learn tag associated to tagDomain
+            $tag = new Tag();
+            $tag->setName($tagDomainParam['name']);
+            $tag->setType(0);
+            $tag->setCreated($date);
+            $tag->setIteration(random_int(0, 100));
+
+            $tag = $this->tagService->create($tag);
+
+            $tagDomain = new TagDomain();
             $tagDomain->setName($tagDomainParam['name']);
             $tagDomain->setEmoji($tagDomainParam['emoji']);
             $tagDomain->setHexcolor('#ebb434');
+            $tagDomain->setLinkedTag($tag);
 
             $this->tagDomainService->create($tagDomain);
+
+            $tag->addTagDomain($tagDomain);
+            $this->tagService->patchTag($tag);
+
             array_push($this->tagDomains,$tagDomain);
+            $index++;
+        }
+
+
+    }
+
+    private function addTags() {
+        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+
+        // set Learn tags
+        for ($i = 0; $i < count(TagOrmConstant::$RAND); ++$i) {
+            $tag = new Tag();
+            $tag->setName(TagOrmConstant::$RAND[$i]);
+            $tag->setType(0);
+            $tag->setCreated($date);
+            $tag->setIteration(random_int(0, 100));
+            $tag->addTagDomain($this->tagDomains[random_int(0, count(TagDomainsOrmConstant::$LIST)-1)]);
+            array_push($this->tags, $tag);
+        }
+
+        // set all types of Tags
+        for ($i = 0; $i < count(TagOrmConstant::$RAND); ++$i) {
+            $tag = new Tag();
+            $tag->setName(TagOrmConstant::$RAND[$i]);
+            $tag->setType(random_int(1, 2));
+            $tag->setCreated($date);
+            $tag->setIteration(random_int(0, 100));
+            array_push($this->tags, $tag);
         }
     }
 
@@ -86,8 +130,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $fixedDomain = ['wecolearn'];
         $domain = new Domain();
         $domain->setName($fixedDomain[0]);
-
-        $tags = [];
 
         $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
@@ -116,27 +158,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setNewMatchEmail(true);
         $admin->setNewsletter(false);
         $this->userManager->updateUser($admin);
-
-        // set Learn tags
-        for ($i = 0; $i < count(TagOrmConstant::$RAND); ++$i) {
-            $tag = new Tag();
-            $tag->setName(TagOrmConstant::$RAND[$i]);
-            $tag->setType(0);
-            $tag->setCreated($date);
-            $tag->setIteration(random_int(0, 100));
-            $tag->addTagDomain($this->tagDomains[random_int(0, count(TagDomainsConstant::$LIST)-1)]);
-            array_push($tags, $tag);
-        }
-
-        // set all types of Tags
-        for ($i = 0; $i < count(TagOrmConstant::$RAND); ++$i) {
-            $tag = new Tag();
-            $tag->setName(TagOrmConstant::$RAND[$i]);
-            $tag->setType(random_int(1, 2));
-            $tag->setCreated($date);
-            $tag->setIteration(random_int(0, 100));
-            array_push($tags, $tag);
-        }
 
         // create the rest of our fixtures and affiliate tags to users
         for ($i = 0; $i < count($firstNames); ++$i) {
@@ -172,13 +193,13 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $this->manager->persist($domain);
 
             // tags
-            $randLearnTag = $tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
-            $randLearnTag2 = $tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
-            $randLearnTag3 = $tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
-            $randTag = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
-            $randTag2 = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
-            $randTag3 = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
-            $randTag4 = $tags[random_int(count(TagOrmConstant::$RAND), count($tags) - 1)];
+            $randLearnTag = $this->tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
+            $randLearnTag2 = $this->tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
+            $randLearnTag3 = $this->tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
+            $randTag = $this->tags[random_int(count(TagOrmConstant::$RAND), count($this->tags) - 1)];
+            $randTag2 = $this->tags[random_int(count(TagOrmConstant::$RAND), count($this->tags) - 1)];
+            $randTag3 = $this->tags[random_int(count(TagOrmConstant::$RAND), count($this->tags) - 1)];
+            $randTag4 = $this->tags[random_int(count(TagOrmConstant::$RAND), count($this->tags) - 1)];
             $randTags = [$randLearnTag, $randLearnTag2, $randLearnTag3, $randTag, $randTag2, $randTag3, $randTag4];
             $user->setTags($this->tagService->beforePatchTags(new ArrayCollection(), new ArrayCollection($randTags)));
 
