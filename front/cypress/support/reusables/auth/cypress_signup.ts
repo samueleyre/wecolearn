@@ -44,7 +44,10 @@ export function cypress_signup_mobile(newUser: { first_name: string, last_name: 
   });
 
   it('add tag', () => {
-    cy.get('.mat-chip-input').type('polka').wait(1000).type('{downArrow}').type('{enter}').blur();
+    cy.get('.addTagButton').click();
+    cy.get('.SearchBar input').type('polka').wait(1000);
+    cy.get('.tagAutocompleteItem').first().click();
+    // cy.get('.SearchBar #returnButton').click().wait(1000);
     cy.get('#next').click();
   });
 
