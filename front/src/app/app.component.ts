@@ -65,7 +65,7 @@ export class AppComponent {
 
           // subscribe to mercure updates
           if (!environment.android) {
-            const url = `${environment.mercureUrl}?topic=https://wecolearn.com/message`;
+            const url = `${environment.mercureUrl}?topic=${environment.publique}/message`;
             new EventSource(encodeURI(url), { withCredentials: true }).onmessage = (evt: MessageEvent) => {
               const data = JSON.parse(evt.data);
               if ('message' in data) {

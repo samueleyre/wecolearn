@@ -36,12 +36,12 @@ class UserService
     }
 
 
-    public function getAll()
+    public function getAll(): array
     {
         return $this->em->getRepository(User::class)->findBy(['enabled'=>true], ['created' => 'DESC']);
     }
 
-    public function findById(int $id)
+    public function findById(int $id): ?object
     {
         return $this->em->getRepository(User::class)->find($id);
     }

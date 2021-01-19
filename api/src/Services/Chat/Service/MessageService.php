@@ -34,7 +34,9 @@ class MessageService
         $this->notificationService = $notificationService;
         $this->pushMessage = $pushMessage;
         $this->serializer = $serializer;
-        $this->host = $container->getParameter('host');
+
+        $host = $container->getParameter('host');
+        $this->host = str_contains($host, 'localhost') ? "http://$host" : "https://$host";
     }
 
 
@@ -56,13 +58,13 @@ class MessageService
 
         ## SEND IT BY MERCURE PROTOCOLE FOR WEB
         $update = new Update(
-            'https://wecolearn.com/message',
+            ["{$this->host}/message"],
             $this->serializer->serialize(
                 [ 'message' => $message ],
                 'json',
                 SerializationContext::create()->setGroups(['message'])
             ),
-            ["https://{$this->host}/message/{$to->getId()}"]
+            ["{$this->host}/message/{$to->getId()}"]
         );
         $this->bus->dispatch($update);
 
@@ -113,13 +115,13 @@ class MessageService
 
                 ## SEND IT BY MERCURE PROTOCOLE FOR WEB
                 $update = new Update(
-                    'https://wecolearn.com/message',
+                    ["{$this->host}/message"],
                     $this->serializer->serialize(
                         [ 'is_read' => $message ],
                         'json',
                         SerializationContext::create()->setGroups(['message'])
                     ),
-                    ["https://{$this->host}/message/{$message->getSender()->getId()}"]
+                    ["{$this->host}/message/{$message->getSender()->getId()}"]
                 );
                 $this->bus->dispatch($update);
 
