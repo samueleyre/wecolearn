@@ -37,8 +37,10 @@ class MessageController extends AbstractController
     /**
      * @Get("messages")
      * @View(serializerGroups={"message"})
+     * @param TokenStorageInterface $tokenStorage
+     * @return array
      */
-    public function getMessagesAction(TokenStorageInterface $tokenStorage)
+    public function getMessagesAction(TokenStorageInterface $tokenStorage): array
     {
         $user = $tokenStorage->getToken()->getUser();
 
@@ -81,16 +83,18 @@ class MessageController extends AbstractController
     "message",
     class="App\Services\Chat\Entity\Message",
     converter="fos_rest.request_body",
-    options={"deserializationContext"={"groups"={"input"} } }
-    )
-     *
+    options={"deserializationContext"={"groups"={"input"} } })
+     * @param Message $message
+     * @param TokenStorageInterface $tokenStorage
+     * @param MessageService $messageService
+     * @return Response
      */
     public function postMessageAction(
-        Request $request,
         Message $message,
         TokenStorageInterface $tokenStorage,
         MessageService $messageService
-    ) {
+    ): Response
+    {
 
         $user = $tokenStorage->getToken()->getUser();
 
