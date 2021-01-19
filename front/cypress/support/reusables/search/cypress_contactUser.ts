@@ -3,6 +3,7 @@
 
 export function cypress_contactUser(index: number) {
   it('click on chat', () => {
+    cy.get('#searchNavButton').click();
     cy.get(`.SearchPage-cardsContainer-card:nth-child(${index}) open-thread`).click();
   });
 }

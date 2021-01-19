@@ -1,5 +1,12 @@
 @import 'variables';
 
+section.desktop {
+  height: 100%;
+  overflow: auto;
+  .card {
+    margin: 30px 0 100px 0;
+  }
+}
 
 section.mobile{
   background-color: $dashboardMobileBg;
