@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Kreait\Firebase\Messaging;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -20,6 +21,7 @@ class MessageService
     private $pushMessage;
     private $serializer;
     private $host;
+    private $logger;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -27,8 +29,10 @@ class MessageService
         NotificationService $notificationService,
         PushService $pushMessage,
         ContainerInterface $container,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        LoggerInterface $logger
     ) {
+        $this->logger = $logger;
         $this->em = $em;
         $this->bus = $bus;
         $this->notificationService = $notificationService;
@@ -66,6 +70,13 @@ class MessageService
             ),
             ["{$this->host}/message/{$to->getId()}"]
         );
+        syslog(LOG_INFO, "TOPIC :---------> {$this->host}/message");
+        syslog(LOG_ERR, "TOPIC :---------> {$this->host}/message");
+        syslog(LOG_DEBUG, "TOPIC :---------> {$this->host}/message");
+        syslog(LOG_INFO, "TARGET :---------> {$this->host}/message/{$to->getId()}");
+        syslog(LOG_ERR, "TARGET :---------> {$this->host}/message/{$to->getId()}");
+        syslog(LOG_DEBUG, "TARGET :---------> {$this->host}/message/{$to->getId()}");
+
         $this->bus->dispatch($update);
 
     }
