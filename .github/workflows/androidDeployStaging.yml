@@ -34,7 +34,7 @@ jobs:
           java-version: 11
       - name: Install capacitor plugins
         run : cd front && ./node_modules/@ionic/cli/bin/ionic capacitor update
-      - uses: eskatos/gradle-command-action@v1.3
+      - uses: eskatos/gradle-command-action@v1.3.0
         with:
           arguments: :app:bundleRelease
           gradle-executable: front/android/gradlew
