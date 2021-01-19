@@ -15,21 +15,23 @@ use Symfony\Component\HttpFoundation\Cookie;
  */
 class MercureCookieGenerator
 {
-    private $secret;
+    private string $secret;
+    private string $domain;
 
     public function __construct(string $secret, string $domain)
     {
         $this->secret = $secret;
-        $this->domain = $domain;
+        $this->domain = str_contains($domain, 'localhost') ? "http://$domain" : "https://$domain";
+
     }
 
     /*
      * @return Cookie
      */
-    public function generate(User $user)
+    public function generate(User $user): Cookie
     {
         $token = (new Builder())
-            ->withClaim('mercure', ['subscribe'=> ["https://{$this->domain}/message/{$user->getId()}"]])
+            ->withClaim('mercure', ['subscribe'=> ["{$this->domain}/message/{$user->getId()}"]])
             ->getToken(new Sha384(), new Key($this->secret));
 
         return new Cookie(
