@@ -1,5 +1,5 @@
 
-export function cypress_signup(newUser: { first_name: string, last_name: string, email: string; password: string }) {
+export function cypress_signup(newUser: { first_name: string, last_name: string, email: string; password: string, biographie: string }) {
   it('go to signup page', () => {
     cy.visit('/');
     cy.wait(2000); // prevent recurring bug
@@ -17,7 +17,7 @@ export function cypress_signup(newUser: { first_name: string, last_name: string,
   });
 
   it('add bio', () => {
-    cy.get('textarea').type('Je veux devenir danseur pro.').type('{enter}');
+    cy.get('textarea').type(newUser.biographie).type('{enter}');
     cy.get('#projectStep .card-footer-nextButton').click();
   });
 

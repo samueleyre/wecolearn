@@ -2,12 +2,13 @@
 import { DEBUG_CONFIG } from '../config/debug.config';
 import { CI_CONFIG } from '../config/ci.config';
 import { cypress_login } from '../support/reusables/auth/cypress_login';
-import { USER_CONFIG } from '../config/user.config';
+import { USER_CHANGES_CONFIG, USER_CONFIG } from '../config/user.config';
 import { cypress_signup } from '../support/reusables/auth/cypress_signup';
 import { closeCookiePolicy } from '../support/reusables/popins/cookiePolicy.cypress';
 import { cypress_logout } from '../support/reusables/auth/cypress_logout';
 import { cypress_sendMessage } from '../support/reusables/chat/cypress_sendMessage';
 import { cypress_contactUser } from '../support/reusables/search/cypress_contactUser';
+import { cypress_profile } from '../support/reusables/profile/cypress_profile';
 
 
 const isLocal = Cypress.env('ENV_NAME') && Cypress.env('ENV_NAME') === 'local';
@@ -56,6 +57,8 @@ context('E2E', () => {
     email: `contact+${new Date().toLocaleDateString()}@wecolearn.com`,
   };
 
+  const userChanges = USER_CHANGES_CONFIG;
+
   if (config.signup) {
     describe('signup', () => {
       cypress_signup(user);
@@ -67,6 +70,12 @@ context('E2E', () => {
     describe('signin', () => {
       cypress_login(user);
     });
+
+    if (config.profile) {
+      describe('profile', () => {
+        cypress_profile(userChanges);
+      });
+    }
 
     if (config.contactFirstMatch) {
       describe('contact first match', () => {

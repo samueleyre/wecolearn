@@ -1,27 +1,27 @@
 import { User } from '~/core/entities/user/entity';
 
 /// <reference types="Cypress" />
-import { closeNotification } from '../popins/notification.cypress';
-
-export function cypress_profile(currentProfile: User) {
-  it('navigate to admin', () => {
-    // cy.get('.Header-user').click();
-    // cy.get('.mat-menu-item:nth-child(1)').click();
-    // cy.wait(1000);
+export function cypress_profile(newProfileParameters: User) {
+  it('navigate to profile', () => {
+    cy.get('.nav-link').click();
+    cy.get('.mat-menu-item').first().click();
+    cy.wait(1000);
   });
 
-  it('click on profile', () => {
-    // cy.get('.mat-tab-link:nth-child(1)').click();
+  it('change firstname', () => {
+    cy.get('#firstnameInput').clear({ force: true }).type(newProfileParameters.first_name).wait(1000);
   });
 
-  it('change values : firstname, lastname', () => {
-    // cy.get('input.profile-firstname ')
-    //   .clear()
-    //   .type();
-    // cy.get('input.profile-lastname ')
-    //   .clear()
-    //   .type(patchedProfile.lastname);
+  it('change lastname', () => {
+    cy.get('#lastnameInput').focus().wait(1000).clear().type(newProfileParameters.last_name);
   });
 
-  closeNotification();
+  it('remove & add Tag', () => {
+    cy.get('#learnTagsFormContainer .tagsForm-remove').first().click();
+    cy.get('#learnTagsFormContainer input').type(newProfileParameters.learn_tags[0]).wait(1000).type('{downArrow}').type('{enter}');
+  });
+
+  it('change bio', () => {
+    cy.get('.biography textarea').clear().type(newProfileParameters.biographie);
+  });
 }
