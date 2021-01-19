@@ -8,6 +8,7 @@ import { cypress_logout_mobile } from '../support/reusables/auth/cypress_logout'
 import { cypress_sendMessage_mobile } from '../support/reusables/chat/cypress_sendMessage';
 import { cypress_contactUser } from '../support/reusables/search/cypress_contactUser';
 import { cypress_navToSearchTab_mobile } from '../support/reusables/nav/nav.cypress';
+import {cypress_searchByTag_mobile, cypress_searchByTagDomain_mobile} from '../support/reusables/search/cypress_search';
 
 
 const isLocal = Cypress.env('ENV_NAME') && Cypress.env('ENV_NAME') === 'local';
@@ -52,6 +53,16 @@ context('E2E - mobile', () => {
     describe('signin', () => {
       cypress_login(user);
     });
+
+    // search
+    if (config.search) {
+      describe('search for polka', () => {
+        cypress_searchByTag_mobile('polka');
+      });
+      describe('search for Dance ( domain )', () => {
+        cypress_searchByTagDomain_mobile();
+      });
+    }
 
     if (config.contactFirstMatch) {
       describe('contact first match', () => {

@@ -11,6 +11,8 @@ export const DEBUG_CONFIG = {
     signup: true,
     signin: true,
     contactFirstMatch: true,
+    profile: true,
+    search: true,
     sendMessage: true,
   },
 };

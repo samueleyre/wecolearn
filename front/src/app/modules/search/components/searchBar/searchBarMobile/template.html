@@ -2,7 +2,7 @@
   <mat-icon *ngIf="isActive" (click)="deactivateSearchBar()" class="SearchBar-returnIcon">arrow_back</mat-icon>
   <mat-form-field color="accent" appearance="outline">
     <input #searchBar type="text" matInput placeholder="Recherche" [disabled]="loading" [formControl]="searchInputControl" (keyup.backspace)="inputChangeByUser($event)" (keyup)="inputChangeByUser($event)" (focus)="activateSearchBar()">
-    <button *ngIf="searchBarHasValue" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar($event)">
+    <button id="resetBar" *ngIf="searchBarHasValue" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar($event)">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
@@ -32,7 +32,7 @@
 </div>
 
 <ion-list *ngIf="isActive && !inputIsEmpty">
-  <ion-item (click)="search(option)" *ngFor="let option of foundAutocompleteTags$ | async">
+  <ion-item class="tagAutocompleteItem" (click)="search(option)" *ngFor="let option of foundAutocompleteTags$ | async">
     {{option.name}}
   </ion-item>
 </ion-list>
