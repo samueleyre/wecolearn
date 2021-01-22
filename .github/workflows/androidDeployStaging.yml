@@ -38,7 +38,6 @@ jobs:
         with:
           arguments: :app:bundleRelease
           build-root-directory: front/android
-          wrapper-directory: front/android/gradle/wrapper
 
       # commit changes
       - name: Commit new android version
