@@ -1,4 +1,7 @@
-## Front de l'application WeColearn
+![release staging on playstore](https://github.com/samueleyre/wecolearn/workflows/release%20staging%20on%20playstore/badge.svg?branch=staging)
+
+
+## Front de l'application Wecolearn
 
 Voir le repo : https://gitlab.com/samueleyre/wecolearn/tree/dev pour les explications
 
