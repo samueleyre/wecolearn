@@ -1,5 +1,8 @@
 ![release staging on playstore](https://github.com/samueleyre/wecolearn/workflows/release%20staging%20on%20playstore/badge.svg?branch=staging)
 
+![tests before merge](https://github.com/samueleyre/wecolearn/workflows/tests%20before%20merge/badge.svg?branch=staging)
+
+
 
 ## Front de l'application Wecolearn
 
