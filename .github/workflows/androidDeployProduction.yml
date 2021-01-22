@@ -67,6 +67,6 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
           packageName: com.wecolearn.studio
-          releaseFile: front/android/app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: front/android/app/build/outputs/bundle/release/app-release.aab
           track: production
           whatsNewDirectory: front/android/app/whatsnew
