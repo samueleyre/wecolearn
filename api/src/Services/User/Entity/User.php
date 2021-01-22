@@ -52,7 +52,7 @@ class User extends BaseUser
     public $domains;
     private ?DateTime $lastConnexion;
     private ?DateTime $deleted;
-    private bool $notificationSubscribe = false;
+    private ?bool $notificationSubscribe = false;
     private $subscriptions;
     private $pushNotificationSubscriptions;
     private ?string $oldEmail;
