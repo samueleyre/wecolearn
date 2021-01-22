@@ -70,12 +70,6 @@ class MessageService
             ),
             ["{$this->host}/message/{$to->getId()}"]
         );
-        syslog(LOG_INFO, "TOPIC :---------> {$this->host}/message");
-        syslog(LOG_ERR, "TOPIC :---------> {$this->host}/message");
-        syslog(LOG_DEBUG, "TOPIC :---------> {$this->host}/message");
-        syslog(LOG_INFO, "TARGET :---------> {$this->host}/message/{$to->getId()}");
-        syslog(LOG_ERR, "TARGET :---------> {$this->host}/message/{$to->getId()}");
-        syslog(LOG_DEBUG, "TARGET :---------> {$this->host}/message/{$to->getId()}");
 
         $this->bus->dispatch($update);
 
