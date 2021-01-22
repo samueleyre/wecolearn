@@ -36,10 +36,14 @@ jobs:
         run : cd front && ./node_modules/@ionic/cli/bin/ionic capacitor update
       - uses: eskatos/gradle-command-action@v1
         with:
+          gradle-version: rc
           arguments: :app:bundleRelease
           build-root-directory: front/android
           wrapper-directory: front/android
-          gradle-executable: front/android  
+          gradle-executable: front/android/gradlew
+          wrapper-cache-enabled: false
+          dependencies-cache-enabled: false
+          configuration-cache-enabled: false
 
       # commit changes
       - name: Commit new android version
