@@ -44,7 +44,7 @@ configurer le téléphone en mode debuggage USB
 
 `ng build --configuration=android-$ENV`
 
-Remplacer $ENV par staging ou prod
+Remplacer $ENV par prod, staging ou staging-local
 
 ## Installer les dépendances
 
