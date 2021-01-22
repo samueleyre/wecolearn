@@ -39,6 +39,7 @@ jobs:
           arguments: :app:bundleRelease
           build-root-directory: front/android
           wrapper-directory: front/android
+          gradle-executable: front/android  
 
       # commit changes
       - name: Commit new android version
