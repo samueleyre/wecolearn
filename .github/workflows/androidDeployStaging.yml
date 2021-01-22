@@ -37,12 +37,8 @@ jobs:
       - uses: eskatos/gradle-command-action@v1
         with:
           arguments: :app:bundleRelease
-          gradle-executable: front/android/gradlew
           build-root-directory: front/android
           wrapper-directory: front/android/gradle/wrapper
-          wrapper-cache-enabled: false
-          dependencies-cache-enabled: false
-          configuration-cache-enabled: false
 
       # commit changes
       - name: Commit new android version
