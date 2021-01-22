@@ -28,7 +28,6 @@ jobs:
       - name: build angular
         run: cd front && node_modules/@angular/cli/bin/ng build --configuration=android-prod
 
-
       # build bundle
       - uses: actions/setup-java@v1
         with:
@@ -37,10 +36,11 @@ jobs:
         run : cd front && ./node_modules/@ionic/cli/bin/ionic capacitor update
       - uses: eskatos/gradle-command-action@v1
         with:
+          gradle-version: 6.5
           arguments: :app:bundleRelease
-          gradle-executable: front/android/gradlew
           build-root-directory: front/android
-          wrapper-directory: front/android/gradle/wrapper
+          wrapper-directory: front/android
+          gradle-executable: front/android/gradlew
 
       # commit changes
       - name: Commit new android version
@@ -68,5 +68,5 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
           packageName: com.wecolearn.studio
           releaseFile: front/android/app/build/outputs/bundle/release/app-release.aab
-          track: production
+          track: beta
           whatsNewDirectory: front/android/app/whatsnew
