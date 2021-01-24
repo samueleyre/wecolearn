@@ -1,9 +1,5 @@
 @import 'variables';
 
-//ion-content {
-//  background-color: $mainBgColor;
-//}
-
 ion-footer {
   position: fixed;
   bottom: 0;
@@ -32,6 +28,10 @@ ion-header {
   transition: .6s;
   height: 100vh;
   overflow: hidden;
+  .page-content {
+    height: calc(100vh - 60px);
+    overflow: auto;
+  }
 }
 
 
