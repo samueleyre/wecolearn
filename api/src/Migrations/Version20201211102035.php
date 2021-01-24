@@ -24,7 +24,7 @@ final class Version20201211102035 extends AbstractMigration
         $this->addSql('ALTER TABLE tagDomain ADD CONSTRAINT FK_8D1EEA799BB0041 FOREIGN KEY (linked_tag_id) REFERENCES tag (id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D1EEA799BB0041 ON tagDomain (linked_tag_id)');
         $this->addSql('INSERT INTO tag (name, type, iteration, created) SELECT name,0,0, CURDATE() FROM tagDomain WHERE 1') ;
-        $this->addSql('UPDATE `tagDomain` INNER JOIN tag SET `linked_tag_id`=tag.id WHERE tagDomain.name = tag.name UPDATE tagDomain (name, type) SELECT (name, 0) FROM tagDomain WHERE 1') ;
+        $this->addSql('UPDATE `tagDomain` INNER JOIN tag SET `linked_tag_id`=tag.id WHERE tagDomain.name = tag.name') ;
     }
 
     public function down(Schema $schema) : void
