@@ -4,7 +4,7 @@ name: release production on playstore
 # events but only for the master branch
 on:
   push:
-    branches: [ master-android ]
+    branches: [ master ]
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -68,5 +68,5 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
           packageName: com.wecolearn.studio
           releaseFile: front/android/app/build/outputs/bundle/release/app-release.aab
-          track: production
+          track: beta
           whatsNewDirectory: front/android/app/whatsnew
