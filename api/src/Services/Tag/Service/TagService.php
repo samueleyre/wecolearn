@@ -4,12 +4,9 @@ namespace App\Services\Tag\Service;
 
 use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Entity\TagDomain;
-use App\Services\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Hoa\Exception\Exception;
-use PhpParser\Error;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -92,14 +89,14 @@ class TagService
         throw new ResourceNotFoundException('tag not found');
     }
 
-    public function merge($params)
+    public function merge($params): ?object
     {
 
         $oldTag = $this->em->getRepository(Tag::class)->find($params['oldTagId']);
         $mergedTag = $this->em->getRepository(Tag::class)->find($params['mergedTagId']);
 
         if ($oldTag->getType() !== $mergedTag->getType()) {
-           throw new \RuntimeException('Must be of same type');
+           throw new \LogicException('Must be of same type');
         }
 
         // get userIds with old tag
