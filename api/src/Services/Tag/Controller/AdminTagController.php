@@ -71,12 +71,16 @@ class AdminTagController extends AbstractController
 
     /**
      * @Post("admin/tagMerge")
-    )
+     * )
+     * @param Request $request
+     * @param TagService $tagService
+     * @return object|null
      */
     public function postTagMergeAdminAction(
         Request $request,
         TagService $tagService
-    ) {
+    ): ?object
+    {
 
         return $tagService->merge(
             [

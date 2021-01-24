@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 
 class Tag
 {
-    public int $id;
+    public ?int $id;
     public string $name;
     public int $type;
     public int $iteration;
