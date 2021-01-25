@@ -523,9 +523,9 @@ class User extends BaseUser
     /**
      * Get image.
      *
-     * @return Image
+     * @return Image|null
      */
-    public function getImage(): Image
+    public function getImage(): ?Image
     {
         return $this->image;
     }
