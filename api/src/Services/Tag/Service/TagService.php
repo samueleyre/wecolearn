@@ -143,15 +143,15 @@ class TagService
     {
         $this->initializeNewTag($tag);
 
-        // fill from database
-        $tagDomains = new ArrayCollection();
-        foreach ($tag->getTagDomains() as $td) {
-            $tagDomains->add($this->em->getRepository(TagDomain::class)->find($td->getId()));
-        }
-        $tag->getTagDomains()->clear();
-        foreach ($tagDomains as $td) {
-            $tag->addTagDomain($td);
-        }
+//        // fill from database
+//        $tagDomains = new ArrayCollection();
+//        foreach ($tag->getTagDomains() as $td) {
+//            $tagDomains->add($this->em->getRepository(TagDomain::class)->find($td->getId()));
+//        }
+//        $tag->getTagDomains()->clear();
+//        foreach ($tagDomains as $td) {
+//            $tag->addTagDomain($td);
+//        }
 
         $this->em->persist($tag);
         $this->em->flush();
