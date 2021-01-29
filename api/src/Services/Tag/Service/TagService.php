@@ -143,6 +143,8 @@ class TagService
     {
         $this->initializeNewTag($tag);
 
+        $tag->setType(0);
+
 //        // fill from database
 //        $tagDomains = new ArrayCollection();
 //        foreach ($tag->getTagDomains() as $td) {
