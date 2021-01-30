@@ -24,10 +24,27 @@ class TagDomainService
 
     public function create(TagDomain &$tagDomain)
     {
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        $tagDomain->setCreated($date);
+
+        $tagDomain->create();
+        $sameNameTag = $this->em->getRepository(Tag::class)->findOneBy(['name'=>$tagDomain->getName()]);
+        if ($sameNameTag) {
+            // link existing tag
+            $tagDomain->setLinkedTag($sameNameTag);
+        }
+
+        if (!$sameNameTag) {
+            // create tag
+            $tag = new Tag();
+            $tag->setName($tagDomain->getName());
+            $tag->setType(0);
+            $tag->addTagDomain($tagDomain);
+            $tagDomain->setLinkedTag($tag);
+        }
+
         $this->em->persist($tagDomain);
+        $this->em->persist($tag);
         $this->em->flush();
+
     }
 
     public function patchTagDomain(Tagdomain $tagDomain)
@@ -44,6 +61,9 @@ class TagDomainService
             $this->em->flush();
             return $oldTagDomain;
         }
+        // update linkedtag
+
+
         throw new ResourceNotFoundException('tag domain not found');
     }
 

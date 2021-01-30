@@ -12,15 +12,17 @@ class Tag
     public ?int $id;
     public string $name;
     public int $type;
-    public int $iteration;
+    public ?int $iteration;
     public DateTime $created;
-    private $users;
-    private $tagDomains;
+    private Collection $users;
+    private Collection $tagDomains;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->tagDomains = new ArrayCollection();
+        $this->iteration = 0;
+        $this->created = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
     }
 
     /**
@@ -170,7 +172,7 @@ class Tag
     /**
      * Get users.
      *
-     * @return User[]
+     * @return Collection|User[]
      */
     public function getUsers()
     {

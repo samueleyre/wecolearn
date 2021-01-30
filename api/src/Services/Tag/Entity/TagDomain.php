@@ -17,18 +17,23 @@ class TagDomain
      * @ORM\Column(type="integer")
      */
     private ?int $id;
-    private ?string $name;
-    private ?string $emoji;
-    private ?string $hexcolor;
-    private $tags;
+    private string $name;
+    private string $emoji;
+    private string $hexcolor;
+    private Collection $tags;
 
 //    tag representing general domain
-    private $linkedTag;
-    private ?\DateTimeInterface $created;
+    private ?Tag $linkedTag;
+    private \DateTimeInterface $created;
 
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+    }
+
+    public function create()
+    {
+        $this->created = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
     }
 
     public function getId(): ?int
@@ -48,7 +53,7 @@ class TagDomain
         return $this;
     }
 
-    public function getCreated(): ?\DateTimeInterface
+    public function getCreated(): \DateTimeInterface
     {
         return $this->created;
     }
@@ -112,12 +117,12 @@ class TagDomain
         return $this;
     }
 
-    public function getLinkedTag(): ?Tag
+    public function getLinkedTag(): Tag
     {
         return $this->linkedTag;
     }
 
-    public function setLinkedTag(?Tag $linkedTag): self
+    public function setLinkedTag(Tag $linkedTag): self
     {
         $this->linkedTag = $linkedTag;
 

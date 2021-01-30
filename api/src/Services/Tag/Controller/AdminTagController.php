@@ -43,7 +43,8 @@ class AdminTagController extends AbstractController
     public function patchTagAdminAction(
         Tag $tag,
         TagService $tagService
-    ) {
+    ): object
+    {
 
         // change iteration | name | tagDomains
         return $tagService->patchTag($tag);

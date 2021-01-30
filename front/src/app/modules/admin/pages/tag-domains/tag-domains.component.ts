@@ -90,13 +90,8 @@ export class TagDomainsComponent extends DestroyObservable implements OnInit {
   }
 
   showEditForm(tag: TagDomain = null) {
-    const emptyTagDomain = new TagDomain();
-    this.editedTagDomain =
-      tag === null
-        ? emptyTagDomain
-        : tag;
-
-    this.isCreatingTagDomain = !this.editedTagDomain.id;
+    this.editedTagDomain = tag;
+    this.isCreatingTagDomain = !tag || !tag.id;
     this.editTagDomainFormVisible = true;
   }
 
