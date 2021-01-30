@@ -41,9 +41,9 @@ class UpdateContactNewsletterSubscriber implements EventSubscriberInterface
 
     public function onNewsletterChange(NewsletterWasChanged $event)
     {
-//        if($this->environment !== 'prod') {
-//            return;
-//        }
+        if($this->environment !== 'prod') {
+            return;
+        }
 
         $user = $event->getUser();
         $shouldBeBlacklisted = !$user->getNewsletter();
