@@ -82,8 +82,7 @@ class EmailService
     {
         try {
             $createContact = (new CreateContact())->setEmail($email)->setEmailBlacklisted($isBlackListed)->setUpdateEnabled(true);
-            $return = $this->sendInBlueApiContacts->createContact($createContact);
-            dump($return);
+            $this->sendInBlueApiContacts->createContact($createContact);
         }
         catch (\Exception $e) {
             syslog(LOG_ERR, "Couldn't add contact for newsletter: $e");
@@ -103,8 +102,7 @@ class EmailService
                     ['email'=>$email]
                 );
             }
-            $return = $this->sendInBlueApiContacts->updateContactWithHttpInfo($oldEmail, $createContact);
-            dump($return);
+            $this->sendInBlueApiContacts->updateContactWithHttpInfo($oldEmail, $createContact);
         }
         catch (\Exception $e) {
             syslog(LOG_ERR, "Couldn't update contact for newsletter: $e");
