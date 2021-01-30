@@ -12,7 +12,7 @@ import { ToastService } from '~/core/services/toast.service';
   styleUrls: ['./tag-domain-form.component.scss'],
 })
 export class TagDomainFormComponent extends DestroyObservable implements OnInit {
-  @Input() tagDomain: TagDomain;
+  @Input() tagDomain: TagDomain | null;
   @Input() isCreating: boolean;
   @Input() groupEditable: boolean;
 
@@ -54,7 +54,7 @@ export class TagDomainFormComponent extends DestroyObservable implements OnInit 
 
   ngOnInit() {
     if (!this.tagDomain) {
-      this.tagDomain = new TagDomain();
+      this.tagDomain = new TagDomain({ name: '', emoji: '', hexcolor: '' });
     }
     this.initForm();
   }

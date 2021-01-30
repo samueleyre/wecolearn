@@ -5,16 +5,18 @@ export class TagDomain {
   public hexcolor: string;
 
   constructor(obj?: {
-    id: number,
+    id?: number,
     name: string,
     emoji: string,
     hexcolor?: string,
   }) {
     if (obj) {
+      if ('id' in obj) {
+        this.id = obj.id;
+      }
       this.name = 'name' in obj ? obj.name : null;
       this.emoji = 'emoji' in obj ? obj.emoji : null;
       this.hexcolor = 'hexcolor' in obj ? obj.hexcolor : null;
-      this.id = 'id' in obj ? obj.id : null;
     }
   }
 }
