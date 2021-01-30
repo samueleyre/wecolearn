@@ -57,11 +57,16 @@ class TagDomainService
             $oldTagDomain->setName($name);
             $oldTagDomain->setEmoji($emoji);
             $oldTagDomain->setHexcolor($hexcolor);
+
+            // update linked tag
+            $linkedTag = $oldTagDomain->getLinkedTag();
+            $linkedTag->setName($name);
+
+            $this->em->persist($linkedTag);
             $this->em->persist($oldTagDomain);
             $this->em->flush();
             return $oldTagDomain;
         }
-        // update linkedtag
 
 
         throw new ResourceNotFoundException('tag domain not found');

@@ -126,6 +126,13 @@ class TagService
     public function delete(int $id)
     {
         $tag = $this->em->getRepository(Tag::class)->find($id);
+
+//        todo: if is linked to tagDomain -->> don't delete !
+        $isLinked = $this->em->getRepository(TagDomain::class)->findBy(['linkedTag'=>$tag]);
+        if ($isLinked) {
+            throw new \Exception('This tag is linked to a tagDomain !');
+        }
+
         $this->em->remove($tag);
         $this->em->flush();
         return new Response();
