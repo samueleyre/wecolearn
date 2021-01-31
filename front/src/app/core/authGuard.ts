@@ -8,7 +8,7 @@ import { Logged } from '~/core/services/auth/logged';
 import { ToastService } from '~/core/services/toast.service';
 import { ProfileService } from '~/core/services/user/profile.service';
 
-import { PingService } from './ping';
+import { PingService } from './services/auth/ping';
 
 @Injectable({
   providedIn: 'root',

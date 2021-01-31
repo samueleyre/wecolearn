@@ -20,7 +20,7 @@ import { NotFoundComponent } from './pages/notFound/component';
 // local modules
 import { WcRoutingModule } from './app-routing.module';
 // shared services
-import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
+import { HttpApiInterceptor } from './core/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
 
 registerLocaleData(fr);
