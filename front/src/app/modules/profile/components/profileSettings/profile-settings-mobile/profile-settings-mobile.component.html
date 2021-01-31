@@ -20,7 +20,7 @@
 
         <div class="row fieldContainer">
           <div class="col-12">
-            <h6 class="ProfileSettingsForm-title">Je veux apprendre
+            <h6 [id]="tagTypeEn(learnType)" class="ProfileSettingsForm-title">Je veux apprendre
               <app-emoji [emojiName]="'1F4C8'"></app-emoji>
             </h6>
             <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'learn_tags'"
@@ -39,7 +39,7 @@
         </div>
         <div class="row fieldContainer">
           <div class="col-12">
-            <h6 class="ProfileSettingsForm-title">Je connais
+            <h6 [id]="tagTypeEn(knowType)" class="ProfileSettingsForm-title">Je connais
               <app-emoji [emojiName]="'E319'"></app-emoji>
             </h6>
             <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'know_tags'" [type]="knowType"></app-profile-form-tags-mobile>
@@ -47,7 +47,7 @@
         </div>
         <div class="row fieldContainer">
           <div class="col-12">
-            <h6 class="ProfileSettingsForm-title">J'ai envie de transmettre
+            <h6 [id]="tagTypeEn(teachType)" class="ProfileSettingsForm-title">J'ai envie de transmettre
               <app-emoji [emojiName]="'1F9D1-200D-1F3EB'"></app-emoji>
             </h6>
             <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'teach_tags'"

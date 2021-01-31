@@ -44,11 +44,19 @@ export class FooterMobileService {
   }
 
   urlHasDashboardFooter(url: string): boolean {
-    return DASHBOARD_FOOTER_URLS.indexOf(url) !== -1;
+    return DASHBOARD_FOOTER_URLS.map(urlWithFooter => new RegExp(urlWithFooter).test(url)).reduce(
+      (isAnUrlWithFooter, urlHasFooter) => {
+        return isAnUrlWithFooter || urlHasFooter;
+      },
+    );
   }
 
   urlHasMainFooter(url: string): boolean {
-    return MAIN_FOOTER_URLS.indexOf(url) !== -1;
+    return MAIN_FOOTER_URLS.map(urlWithFooter => new RegExp(urlWithFooter).test(url)).reduce(
+      (isAnUrlWithFooter, urlHasFooter) => {
+        return isAnUrlWithFooter || urlHasFooter;
+      },
+    );
   }
 
   urlHasNoScroll(url: string): boolean {

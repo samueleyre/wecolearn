@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Tag } from '~/core/entities/tag/entity';
-import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { tagTypeEN, TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 
 /*
 Page dedicated to search for profile tags on mobile
@@ -39,6 +39,11 @@ export class ProfileTagsSearchBarPageComponent implements OnInit {
   }
 
   goBackToPageWithForm(tag: Tag | null) {
-    this._router.navigate([this.origin], { queryParams: { tag_id: tag.id, tag_name: tag.name, tag_type: this.tagType } });
+    this._router.navigate(
+      [this.origin.split('#')[0]],
+      {
+        queryParams: { tag_id: tag.id, tag_name: tag.name, tag_type: this.tagType },
+        fragment: tagTypeEN[this.tagType],
+      });
   }
 }

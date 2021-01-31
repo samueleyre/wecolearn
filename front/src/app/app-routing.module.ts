@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 
 import { MainComponent } from '~/core/layouts/dashboard/component';
 import { ContainerComponent } from '~/core/layouts/main/component';
 import { LandingPageComponent } from '~/modules/auth/pages/landing/component';
 import { IonicContainerComponent } from '~/core/layouts/ionic-container/ionic-container.component';
 
-import { AuthGuard } from './core/services/auth/authGuard';
+import { AuthGuard } from './core/authGuard';
 import { NotFoundComponent } from './pages/notFound/component';
 
 
 const wcRoutes: Routes = [
   { path: '', component: IonicContainerComponent, children: [
-      { path: 'signin', component: LandingPageComponent, pathMatch: 'full' },
-      { path: '', redirectTo: '/dashboard/search', pathMatch: 'full' },
+    { path: 'signin', component: LandingPageComponent, pathMatch: 'full' },
+    { path: '', redirectTo: '/dashboard/search', pathMatch: 'full' },
     {
       path: 'dashboard', component: MainComponent, canActivate: [AuthGuard],
       children: [
@@ -33,12 +33,11 @@ const wcRoutes: Routes = [
           path: 'admin',
           loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
         },
-
       ],
     },
     {
       path: 'tag',
-      // todo: only mobile
+          // todo: only mobile
       loadChildren: () => import('./modules/tags/tags.module').then(mod => mod.TagsModule),
     },
     {
@@ -59,7 +58,7 @@ const wcRoutes: Routes = [
         },
       ],
     },
-      { path: '**', redirectTo: '404' },
+    { path: '**', redirectTo: '404' },
   ],
   },
 
