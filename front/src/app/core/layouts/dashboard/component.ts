@@ -65,7 +65,9 @@ export class MainComponent extends DestroyObservable implements OnInit {
   }
 
   onActivate(event) {
-    document.getElementsByTagName('ion-content')[0].scrollToTop();
+    if (!this._deviceService.isMobile()) {
+      document.getElementsByTagName('ion-content')[0].scrollToTop();
+    }
   }
 
   private initOnlineNotif(): void {

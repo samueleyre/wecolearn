@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { tagTypeEN, TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { Tag } from '~/core/entities/tag/entity';
 import { NAV } from '~/config/navigation/nav';
 

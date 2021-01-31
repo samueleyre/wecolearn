@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 
 import { ToastService } from '~/core/services/toast.service';
 
-import { Logged } from './logged';
-import { HeaderBag } from './headerBag';
-import { TokenService } from './token';
-import { environment } from '../../../../environments/environment';
+import { Logged } from './services/auth/logged';
+import { HeaderBag } from './services/auth/headerBag';
+import { TokenService } from './services/auth/token';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
