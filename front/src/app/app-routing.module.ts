@@ -42,6 +42,11 @@ const wcRoutes: Routes = [
           data: { admin: true },
           loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
         },
+        {
+          path: '',
+          redirectTo: '/dashboard/search',
+          pathMatch: 'full',
+        },
       ],
     },
     {

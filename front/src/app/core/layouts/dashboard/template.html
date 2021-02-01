@@ -1,3 +1,4 @@
+<!-- DESKTOP -->
 <div id="wrapper" *ngIf="!isMobile">
   <dash-menu></dash-menu>
   <div id="page-content-wrapper">
@@ -8,6 +9,8 @@
   </div>
 </div>
 
+
+<!-- MOBILE -->
 <ion-header *ngIf="showMobileHeader | async">
   <app-header-mobile ></app-header-mobile>
 </ion-header>
