@@ -38,6 +38,10 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
     );
   }
 
+  get settingsLink() {
+    return NAV.settings;
+  }
+
   private initReturn() {
     // onload
     if (this.router.url) {
@@ -57,13 +61,13 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
   setNavigation(path: string) {
     this.showReturn = this.menuMobileService.urlHasReturnButton(path);
 
-    // get return link, if profile page go te previous page
-    this.returnLink = (/dashboard\/profile\//.test(path)) ?
+    // get return link, if public profile page go te previous page
+    this.returnLink = new RegExp(NAV.profilePublic).test(path) ?
       this._wcRouter.getReturnLink(NAV.search)
       : MenuMobileService.getReturnLink(path);
 
     this.showDiscussionUser = MenuMobileService.showDiscussionUser(path);
-    this.showSettings = path === NAV.profile;
+    this.showSettings = new RegExp(NAV.profileSettings).test(path);
     this.title = this.menuMobileService.getUrlTitle(path) ;
   }
 }

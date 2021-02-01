@@ -6,7 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
-import { PASSWORD } from '~/core/const/validators.const';
+import { PASSWORD } from '~/config/validators.const';
 import { passwordMatchValidator } from '~/modules/auth/validators/password-match.validator';
 import { ToastService } from '~/core/services/toast.service';
 

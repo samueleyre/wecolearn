@@ -3,7 +3,7 @@ import { NAV } from '~/config/navigation/nav';
 export const REDIRECT_URLS = {
   returnUrls : {
     profile : [
-      NAV.profileSettings,
+      NAV.settings,
     ],
     chat : [
       NAV.discussion,

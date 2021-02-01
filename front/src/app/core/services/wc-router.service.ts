@@ -16,7 +16,11 @@ export class WcRouterService {
     _router.events
       .pipe(filter((evt: any) => evt instanceof RoutesRecognized), pairwise())
       .subscribe((events: RoutesRecognized[]) => {
-        this._previousUrl = events[0].urlAfterRedirects;
+        const previous = events[0].urlAfterRedirects;
+        const current = events[1].urlAfterRedirects;
+        if (current !== previous + '/mobile') {
+          this._previousUrl = previous;
+        }
       });
   }
 

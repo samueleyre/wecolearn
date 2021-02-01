@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { TagService } from '~/core/services/tag/tag.service';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
-import { SearchService } from '~/core/services/search/search';
+import { SearchService } from '~/core/services/search/search.service';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagDomain } from '~/core/entities/tag/TagDomain';

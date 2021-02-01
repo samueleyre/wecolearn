@@ -6,6 +6,7 @@ export const RETURN_URLS =
     NAV.signup,
     NAV.confirmEmail,
     NAV.signup,
-    'dashboard/profile/',
+    NAV.profilePublic,
+    NAV.settings,
     'doc',
   ];

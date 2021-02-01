@@ -4,7 +4,7 @@
     <img alt="image de {{card.first_name}}" defaultProfileImage src="{{card.image | cloudinaryImagePipe}}" />
   </div>
   <div class="card-header">
-    <h5 class="card-title"><a routerLink="/dashboard/profile/{{card.profil_url}}"><strong>{{card.first_name}} </strong> {{card.last_name}}</a></h5>
+    <h5 class="card-title"><a [routerLink]="profilePublicLink+'/'+card.profil_url"><strong>{{card.first_name}} </strong> {{card.last_name}}</a></h5>
     <div class="card-container" *ngIf="card.tags"></div>
     <div *ngIf="card.tags">
       <div class="learning">
@@ -22,7 +22,7 @@
       <text-limit [text]="getBio(card.biographie)" [classes]="'card-text'" [id]="card.profil_url"></text-limit>
     </div>
     <div class="card-footer">
-      <button routerLink="/dashboard/profile/{{card.profil_url}}" mat-stroked-button >
+      <button [routerLink]="profilePublicLink+'/'+card.profil_url" mat-stroked-button >
         Voir plus
       </button>
       <open-thread [user]="card"></open-thread>

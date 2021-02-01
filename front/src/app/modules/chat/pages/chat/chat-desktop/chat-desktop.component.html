@@ -1,0 +1,16 @@
+<div class="container-fluid" *ngIf="!loading">
+  <div class="row" *ngIf="!(emptyChat)">
+    <div class="col-2 no-padding threads-column">
+      <chat-threads></chat-threads>
+    </div>
+    <div class="col-10 no-padding">
+      <app-chat-window-desktop></app-chat-window-desktop>
+    </div>
+  </div>
+  <div class="row" *ngIf="emptyChat">
+    <div class="col-12 center">
+      <br><br><br>
+      Vous n'avez pas encore commencé de discussion.
+    </div>
+  </div>
+</div>

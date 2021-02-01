@@ -10,36 +10,42 @@ import { ShowProfilSettingsComponent } from '~/modules/profile/components/showPr
 import { MaterialModule } from '~/shared/modules/material/material.module';
 import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
 import { SharedModule } from '~/shared/shared.module';
+import { ProfileSettingsComponentBase } from '~/modules/profile/pages/profileSettings/profile-settings.component.base';
+import { ProfileSettingsDesktopComponent } from '~/modules/profile/pages/profileSettings/profile-settings-desktop/profile-settings-desktop.component';
+import { ProfileSettingsMobileComponent } from '~/modules/profile/pages/profileSettings/profile-settings-mobile/profile-settings-mobile.component';
 
 import { ProfileComponent } from './components/profile/component';
-import { ProfilePageComponent } from './pages/profile/component';
-import { ProfileSettingsComponentBase } from './components/profileSettings/profile-settings.component.base';
-import { SettingsPageComponent } from './pages/settings/component';
+import { ProfileComponentBase } from './pages/profile/profile.component.base';
+import { SettingsComponentBase } from './pages/settings/settings.component.base';
 import { SettingsComponent } from './components/settings/component';
 import { ProfileFormModule } from './modules/form/form.module';
-import { ProfileSettingsPageComponent } from './pages/profileSettings/component';
 import { ProfileRouting } from './profile.routing';
 import { ToggleComponent } from './components/toggle/component';
 import { EmailNotificationSettingsComponent } from './components/notifications/component';
 import { ProfileImageModule } from './modules/profilImage/profileImage.module';
-import { ProfileSettingsDesktopComponent } from './components/profileSettings/profile-settings-desktop/profile-settings-desktop.component';
-import { ProfileSettingsMobileComponent } from './components/profileSettings/profile-settings-mobile/profile-settings-mobile.component';
+import { SettingsMobileComponent } from './pages/settings/settings-mobile/settings-mobile.component';
+import { SettingsDesktopComponent } from './pages/settings/settings-desktop/settings-desktop.component';
+import { ProfileDesktopComponent } from './pages/profile/profile-desktop/profile-desktop.component';
+import { ProfileMobileComponent } from './pages/profile/profile-mobile/profile-mobile.component';
 
 
 @NgModule({
 
   declarations: [
     ProfileComponent,
-    ProfilePageComponent,
-    ProfileSettingsComponentBase,
-    ProfileSettingsPageComponent,
-    SettingsPageComponent,
+    ProfileComponentBase,
+    SettingsComponentBase,
     SettingsComponent,
     ToggleComponent,
     EmailNotificationSettingsComponent,
     ShowProfilSettingsComponent,
+    ProfileSettingsComponentBase,
     ProfileSettingsDesktopComponent,
     ProfileSettingsMobileComponent,
+    SettingsMobileComponent,
+    SettingsDesktopComponent,
+    ProfileDesktopComponent,
+    ProfileMobileComponent,
   ],
   exports: [
     ProfileImageModule,

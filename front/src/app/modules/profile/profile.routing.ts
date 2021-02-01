@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ProfileSettingsPageComponent } from './pages/profileSettings/component';
-import { ProfilePageComponent } from './pages/profile/component';
-import { SettingsPageComponent } from './pages/settings/component';
-
+import { ProfileSettingsDesktopComponent } from '~/modules/profile/pages/profileSettings/profile-settings-desktop/profile-settings-desktop.component';
+import { ProfileSettingsMobileComponent } from '~/modules/profile/pages/profileSettings/profile-settings-mobile/profile-settings-mobile.component';
+import { SettingsDesktopComponent } from '~/modules/profile/pages/settings/settings-desktop/settings-desktop.component';
+import { SettingsMobileComponent } from '~/modules/profile/pages/settings/settings-mobile/settings-mobile.component';
+import { ProfileDesktopComponent } from '~/modules/profile/pages/profile/profile-desktop/profile-desktop.component';
+import { ProfileMobileComponent } from '~/modules/profile/pages/profile/profile-mobile/profile-mobile.component';
 
 const routes: Routes = [
 
-  {
-    path: '', component: ProfileSettingsPageComponent, pathMatch: 'full',
-  },
-  {
-    path: 'settings', component: SettingsPageComponent, pathMatch: 'full',
-  },
-  {
-    path: ':profileUrl', component: ProfilePageComponent,
-  },
+  { path: 'home', data: { desktopOnly: true }, component: ProfileSettingsDesktopComponent, pathMatch: 'full' },
+  { path: 'home/mobile', component: ProfileSettingsMobileComponent, pathMatch: 'full' },
+
+  { path: 'settings', data: { desktopOnly: true }, component: SettingsDesktopComponent, pathMatch: 'full' },
+  { path: 'settings/mobile', component: SettingsMobileComponent, pathMatch: 'full' },
+
+  { path: 'public/:profileUrl', data: { desktopOnly: true }, component: ProfileDesktopComponent },
+  { path: 'public/:profileUrl/mobile', component: ProfileMobileComponent },
 
 ];
 

@@ -16,7 +16,7 @@ import { PATTERN } from '~/shared/config/pattern';
 import { ProfileService } from '~/core/services/user/profile.service';
 import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { PASSWORD } from '~/core/const/validators.const';
+import { PASSWORD } from '~/config/validators.const';
 import { passwordMatchValidator } from '~/modules/auth/validators/password-match.validator';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { ToastService } from '~/core/services/toast.service';

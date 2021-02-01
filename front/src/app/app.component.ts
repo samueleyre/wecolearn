@@ -16,9 +16,10 @@ import { IconService } from '~/core/services/icon.service';
 import { MessagesService } from '~/core/services/chat/messages.service';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
-import { MessagerieService } from '~/core/services/messagerie/service';
+import { MessagerieService } from '~/core/services/messagerie/messagerie.service';
+import { NAV } from '~/config/navigation/nav';
 import { ThreadsService } from '~/core/services/chat/threads.service';
-import { SeoService } from '~/core/services/seo';
+import { SeoService } from '~/core/services/seo.service';
 import { User } from '~/core/entities/user/entity';
 
 import { DomainService } from './core/services/domain/domain';
@@ -161,7 +162,7 @@ export class AppComponent {
                   if ('user' in notification.notification.data) {
                     this._zone.run(() => {
                       const user = new User(JSON.parse(notification.notification.data.user));
-                      this.router.navigateByUrl(`/dashboard/profile/${user.profil_url}`);
+                      this.router.navigateByUrl(`${NAV.profilePublic}/${user.profil_url}`);
                     });
                   }
                 });

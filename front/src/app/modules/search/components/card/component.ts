@@ -11,8 +11,9 @@ import { DomainService } from '~/core/services/domain/domain';
 import { chat } from '~/config/chat';
 import { Tag } from '~/core/entities/tag/entity';
 import { ProfileService } from '~/core/services/user/profile.service';
-import { SearchService } from '~/core/services/search/search';
+import { SearchService } from '~/core/services/search/search.service';
 import {BIO} from "~/config/bio.const";
+import {NAV} from '~/config/navigation/nav';
 
 
 @Component({
@@ -74,6 +75,10 @@ import {BIO} from "~/config/bio.const";
     //       );
     //   }
     // }
+  }
+
+  get profilePublicLink() {
+    return NAV.profilePublic;
   }
 
   isSearchTag(tag: Tag) {

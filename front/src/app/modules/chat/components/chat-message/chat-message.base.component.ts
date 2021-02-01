@@ -7,6 +7,7 @@ import * as moment from 'moment';
 
 import { Message } from '~/core/entities/message/entity';
 import { CHAT } from '~/modules/chat/config/chat.const';
+import { NAV } from '~/config/navigation/nav';
 
 
 @Component({
@@ -33,5 +34,9 @@ export class ChatMessageBaseComponent implements OnInit {
     } else {
       this.msgContainerClass = 'info-message';
     }
+  }
+
+  get profilePublicLink() {
+    return NAV.profilePublic;
   }
 }
