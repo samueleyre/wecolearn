@@ -53,7 +53,7 @@ export class MenuMobileService {
         return NAV.discussion;
       }
       if (REDIRECT_URLS.returnUrls.profile.some(rx => new RegExp(rx).test(url))) {
-        return NAV.profile;
+        return NAV.profileSettings;
       }
       if (REDIRECT_URLS.returnUrls.search.some(rx => new RegExp(rx).test(url))) {
         return NAV.search;

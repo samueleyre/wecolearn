@@ -8,7 +8,7 @@ import { User } from '~/core/entities/user/entity';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { NAV } from '~/config/navigation/nav';
 import { Tag } from '~/core/entities/tag/entity';
-import { SearchService } from '~/core/services/search/search';
+import { SearchService } from '~/core/services/search/search.service';
 import { BIO } from '~/config/bio.const';
 
 

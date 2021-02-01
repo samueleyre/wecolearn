@@ -1,0 +1,11 @@
+<section>
+  <div *ngIf="user$ | async as user" class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <br>
+        <user-settings [user]="user"></user-settings>
+        <br>
+      </div>
+    </div>
+  </div>
+</section>

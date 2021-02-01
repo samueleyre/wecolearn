@@ -2,7 +2,6 @@ import {
     Component, OnDestroy,
     OnInit,
 } from '@angular/core';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 
@@ -13,28 +12,26 @@ import { NAV } from '~/config/navigation/nav';
 
 @Component({
   selector: 'app-chat',
-  templateUrl: 'template.html',
-  styleUrls: ['./style.scss'],
+  template: '',
 })
 
-export class ChatPageComponent extends DestroyObservable implements OnInit, OnDestroy {
+export class ChatComponentBase extends DestroyObservable implements OnInit, OnDestroy {
   constructor(
-    private _threadsService: ThreadsService,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    private _messagesService: MessagesService,
-    private _deviceService: DeviceDetectorService,
+    private threadsService: ThreadsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private messagesService: MessagesService,
   ) {
     super();
   }
 
   ngOnInit() {
-    this._route.paramMap
+    this.route.paramMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((params: ParamMap) => {
         if (params.has('userId')) {
-          this._threadsService.setThreadById(Number(params.get('userId')));
-          this._router.navigate(
+          this.threadsService.setThreadById(Number(params.get('userId')));
+          this.router.navigate(
             [NAV.discussion], {
               queryParams: {},
               queryParamsHandling: 'merge',
@@ -44,14 +41,10 @@ export class ChatPageComponent extends DestroyObservable implements OnInit, OnDe
   }
 
   get loading(): boolean {
-    return this._messagesService.loading;
+    return this.messagesService.loading;
   }
 
   get emptyChat(): boolean {
-    return this._threadsService.orderedThreads$.value.length === 0;
-  }
-
-  get isMobile(): boolean {
-    return this._deviceService.isMobile();
+    return this.threadsService.orderedThreads$.value.length === 0;
   }
 }

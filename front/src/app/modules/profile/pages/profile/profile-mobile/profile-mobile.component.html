@@ -1,0 +1,11 @@
+<section>
+  <div class="container-fluid" *ngIf="user$ | async as user">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 no-padding">
+        <br><br>
+        <profile [user]="user"></profile>
+        <br><br>
+      </div>
+    </div>
+  </div>
+</section>

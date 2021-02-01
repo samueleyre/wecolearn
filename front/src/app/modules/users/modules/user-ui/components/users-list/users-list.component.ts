@@ -8,6 +8,7 @@ import { User } from '~/core/entities/user/entity';
 import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { ToastService } from '~/core/services/toast.service';
+import {NAV} from '~/config/navigation/nav';
 
 @Component({
   selector: 'app-users-list',
@@ -30,6 +31,10 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
   }
 
   ngOnInit() {}
+
+  get profilePublicLink() {
+    return NAV.profilePublic;
+  }
 
   ngAfterViewInit() {}
 

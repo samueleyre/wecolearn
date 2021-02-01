@@ -10,7 +10,7 @@ import { SafeHtml } from '@angular/platform-browser';
 import { City } from '~/core/entities/city/entity';
 import { city } from '~/config/city';
 
-import { SearchService } from '../../../../core/services/search/search';
+import { SearchService } from '../../../../core/services/search/search.service';
 
 @Component({
   selector: 'app-citybar',

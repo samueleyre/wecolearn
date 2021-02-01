@@ -16,7 +16,6 @@ import { CloudinaryModule } from '~/shared/modules/cloudinary/pipes/cloudinary.m
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
 import { SearchBarComponent } from '~/modules/search/components/searchBar/searchBarDesktop/component';
 import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
-import { SearchComponent } from '~/modules/search/pages/search/search.component';
 import { SearchComponentBase } from '~/modules/search/pages/search/search.component.base';
 import { MaterialModule } from '~/shared/modules/material/material.module';
 import { SharedModule } from '~/shared/shared.module';
@@ -31,7 +30,6 @@ import { SearchDesktopComponent } from './pages/search/search-desktop/search-des
 @NgModule({
 
   declarations: [
-    SearchComponent,
     SearchComponentBase,
     CardComponent,
     CityBarComponent,

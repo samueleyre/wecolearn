@@ -6,7 +6,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { TagService } from '~/core/services/tag/tag.service';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
-import { SearchService } from '~/core/services/search/search';
+import { SearchService } from '~/core/services/search/search.service';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 

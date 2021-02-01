@@ -4,37 +4,33 @@ import {
     OnDestroy,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { NAV } from '~/config/navigation/nav';
 import { UserService } from '~/core/services/user/user.service';
-import { WcRouterService } from '~/core/services/wc-router.service';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 
 @Component({
-  templateUrl: 'template.html',
-  styleUrls : ['./style.scss'],
+  template: '',
 })
-export class ProfilePageComponent implements OnInit, OnDestroy {
+export class ProfileComponentBase extends DestroyObservable implements OnInit, OnDestroy {
   public user$: Observable<User>;
-  private readonly onDestroy = new Subject<void>();
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
               private router: Router,
-              private deviceService: DeviceDetectorService,
-              private _wcRouter: WcRouterService,
   ) {
+    super();
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.user$ = this.userService.get({}, params.get('profileUrl'));
       this.user$.pipe(
-        takeUntil(this.onDestroy),
+        takeUntil(this.destroy$),
       ).subscribe(
         () => {},
         (err) => {
@@ -42,17 +38,5 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
         },
       );
     });
-  }
-
-  get isMobile() {
-    return this.deviceService.isMobile();
-  }
-
-  get returnLink() {
-    return this._wcRouter.getReturnLink(NAV.search);
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroy.next();
   }
 }

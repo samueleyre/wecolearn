@@ -6,6 +6,7 @@ import { User } from '~/core/entities/user/entity';
 import { MenuService } from '~/core/services/layout/menu';
 import { ThreadsService } from '~/core/services/chat/threads.service';
 import { ProfileService } from '~/core/services/user/profile.service';
+import { NAV } from '~/config/navigation/nav';
 
 @Component({
   selector: 'dash-menu',
@@ -29,5 +30,9 @@ export class MenuComponent implements OnInit {
 
   get isAdmin(): boolean {
     return this._profileService.isAdmin;
+  }
+
+  get nav() {
+    return NAV;
   }
 }

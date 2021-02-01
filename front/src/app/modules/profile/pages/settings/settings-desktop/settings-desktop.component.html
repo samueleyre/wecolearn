@@ -1,4 +1,4 @@
-<section *ngIf="!isMobile" class="desktop">
+<section class="desktop">
   <div *ngIf="user$ | async as user" class="container-fluid">
     <div class="row">
       <div class="col-12 offset-md-1 col-md-10">
@@ -10,18 +10,6 @@
             <user-settings [user]="user"></user-settings>
           </div>
         </div>
-        <br>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section *ngIf="isMobile">
-  <div *ngIf="user$ | async as user" class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <br>
-        <user-settings [user]="user"></user-settings>
         <br>
       </div>
     </div>

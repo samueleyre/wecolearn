@@ -1,1 +1,1 @@
-<p [ngClass]="classes" >{{displayText}}<a *ngIf="textToBig" routerLink="/dashboard/profile/{{id}}"> ...</a></p>
+<p [ngClass]="classes" >{{displayText}}<a *ngIf="textToBig" [routerLink]="profilePublicLink+'/'+id"> ...</a></p>

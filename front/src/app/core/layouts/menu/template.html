@@ -3,27 +3,27 @@
 
   <ul class="sidebar-nav" >
     <li id="sidebar-logo">
-      <a routerLink="/dashboard/search">
+      <a [routerLink]="nav.search">
         <mat-icon id="complete-logo" svgIcon="logo-full"></mat-icon>
         <mat-icon id="mini-logo" svgIcon="logo-mini"></mat-icon>
       </a>
     </li>
     <li id="profil-picture" class="img-fluid mx-auto">
-      <a routerLink="/dashboard/profile">
+      <a [routerLink]="nav.profileSettings">
         <wc-profil-image [image]="me.image" [menu]=true></wc-profil-image>
       </a>
     </li>
     <li id="profil-name">
-      <a routerLink="/dashboard/profile"><h2><strong>{{me.first_name}}</strong> {{me.last_name}}</h2></a>
+      <a [routerLink]="nav.profileSettings"><h2><strong>{{me.first_name}}</strong> {{me.last_name}}</h2></a>
     </li>
     <li class="sidebar-link" id="searchNavButton">
-      <a routerLink="/dashboard/search" routerLinkActive="is-active">
+      <a [routerLink]="nav.search" routerLinkActive="is-active">
         <i class="fas fa-search"></i>
         <p>Rechercher</p>
       </a>
     </li>
     <li class="sidebar-link">
-      <a routerLink="/dashboard/discussion" routerLinkActive="is-active">
+      <a [routerLink]="nav.discussion" routerLinkActive="is-active">
         <i class="fas fa-comment"></i>
         <p>Discussion</p>
         <span class="fa-stack fa-2x" *ngIf="countNotRead$ | async as countNotRead">
@@ -36,25 +36,25 @@
     <p class="sidebar-nav-sectionTitle">Admin</p>
     <ul class="sidebar-nav">
       <li class="sidebar-link">
-        <a routerLink="/dashboard/admin/users" routerLinkActive="is-active">
+        <a [routerLink]="nav.adminUsers" routerLinkActive="is-active">
           <i class="fas fa-people-carry"></i>
           <p>Utilisateurs</p>
         </a>
       </li>
       <li class="sidebar-link">
-        <a routerLink="/dashboard/admin/tags" routerLinkActive="is-active">
+        <a [routerLink]="nav.adminTags" routerLinkActive="is-active">
           <i class="fas fa-tags"></i>
           <p>Apprentissages</p>
         </a>
       </li>
       <li class="sidebar-link">
-        <a routerLink="/dashboard/admin/tag-domains" routerLinkActive="is-active">
+        <a [routerLink]="nav.adminTagDomains" routerLinkActive="is-active">
           <i class="fas fa-book"></i>
           <p>Domaines 📚</p>
         </a>
       </li>
       <li class="sidebar-link">
-        <a routerLink="/dashboard/admin/domains" routerLinkActive="is-active">
+        <a [routerLink]="nav.adminDomains" routerLinkActive="is-active">
           <i class="fas fa-globe-europe"></i>
           <p>Domaines 🌐</p>
         </a>

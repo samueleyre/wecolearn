@@ -1,0 +1,13 @@
+<section *ngIf="!loading" class="container-fluid">
+  <div class="row" *ngIf="!(emptyChat)">
+    <div class="col-12 no-padding">
+      <chat-threads-mobile></chat-threads-mobile>
+    </div>
+  </div>
+  <div class="row" *ngIf="emptyChat">
+    <div class="col-12 center">
+      <br><br><br>
+      Vous n'avez pas encore commencé de discussion.
+    </div>
+  </div>
+</section>

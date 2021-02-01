@@ -1,28 +1,21 @@
-import {
-  Component,
-  OnInit,
-  Injectable,
-  Inject, ViewChild, Input,
-} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { APP_BASE_HREF, Location } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
+import { FormBuilder } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { debounceTime, distinct, filter, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
-import { User } from '~/core/entities/user/entity';
-import { Tag } from '~/core/entities/tag/entity';
-import { DomainService } from '~/core/services/domain/domain';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { DomainService } from '~/core/services/domain/domain';
 import { ProfileService } from '~/core/services/user/profile.service';
 import { ToastService } from '~/core/services/toast.service';
+import { User } from '~/core/entities/user/entity';
+import { Tag } from '~/core/entities/tag/entity';
+import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 
 @Component({
   template: '',
 })
-export class ProfileSettingsComponentBase extends DestroyObservable implements OnInit {
+export class ProfileSettingsComponentBase extends DestroyObservable {
   public tags = [];
 
   // loading = false;
@@ -37,12 +30,12 @@ export class ProfileSettingsComponentBase extends DestroyObservable implements O
   // rocketChatId: string;
 
   constructor(
-        @Inject(APP_BASE_HREF) r: string,
-        private domainService: DomainService,
-        private fb: FormBuilder,
-        private deviceService: DeviceDetectorService,
-        private profileService: ProfileService,
-        private toastService: ToastService,
+    @Inject(APP_BASE_HREF) r: string,
+    private domainService: DomainService,
+    private fb: FormBuilder,
+    private deviceService: DeviceDetectorService,
+    private profileService: ProfileService,
+    private toastService: ToastService,
   ) {
     super();
   }
@@ -55,7 +48,7 @@ export class ProfileSettingsComponentBase extends DestroyObservable implements O
     biographie: null,
     know_tags: [],
     teach_tags: [],
-    intensity: null,
+    intensity: 1,
     slack_accounts: [],
     latitude: null,
     longitude: null,
