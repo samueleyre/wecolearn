@@ -3,7 +3,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-import { ProfileSettingsComponentBase } from '~/modules/profile/components/profileSettings/profile-settings.component.base';
+import { ProfileSettingsComponentBase } from '~/modules/profile/pages/profileSettings/profile-settings.component.base';
 import { DomainService } from '~/core/services/domain/domain';
 import { ProfileService } from '~/core/services/user/profile.service';
 import { ToastService } from '~/core/services/toast.service';

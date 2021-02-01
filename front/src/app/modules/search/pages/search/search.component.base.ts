@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 import { Tag } from '~/core/entities/tag/entity';
-import { SearchService } from '~/core/services/search/search';
+import { SearchService } from '~/core/services/search/search.service';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
 import { NAV } from '~/config/navigation/nav';
 import { ProfileService } from '~/core/services/user/profile.service';
@@ -18,7 +18,8 @@ import { SEARCH } from '../../config/main';
 
 @Component({
   template: '',
-})export class SearchComponentBase implements OnInit, AfterViewInit {
+})
+export class SearchComponentBase implements OnInit, AfterViewInit {
   public cards: any[] = [];
   public scrolling;
   public searchInput = null;

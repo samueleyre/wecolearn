@@ -1,4 +1,5 @@
 import { Component, Injectable, OnInit, Input } from '@angular/core';
+import {NAV} from '~/config/navigation/nav';
 
 @Component({
   selector: 'text-limit',
@@ -16,6 +17,10 @@ export class TextLimitComponent implements OnInit {
     if (this.text) {
       this.displayText = this.textToBig ? this.extract : this.text;
     }
+  }
+
+  get profilePublicLink() {
+    return NAV.profilePublic;
   }
 
   get textToBig() {

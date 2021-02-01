@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
-import {ExtraOptions, RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { MainComponent } from '~/core/layouts/dashboard/component';
 import { ContainerComponent } from '~/core/layouts/main/component';
 import { LandingPageComponent } from '~/modules/auth/pages/landing/component';
 import { IonicContainerComponent } from '~/core/layouts/ionic-container/ionic-container.component';
+import { MobileGuard } from '~/core/mobile.guard';
 
-import { AuthGuard } from './core/authGuard';
+import { AuthGuard } from './core/auth.guard';
 import { NotFoundComponent } from './pages/notFound/component';
 
 
@@ -15,22 +16,30 @@ const wcRoutes: Routes = [
     { path: 'signin', component: LandingPageComponent, pathMatch: 'full' },
     { path: '', redirectTo: '/dashboard/search', pathMatch: 'full' },
     {
-      path: 'dashboard', component: MainComponent, canActivate: [AuthGuard],
+      path: 'dashboard',
+      component: MainComponent,
+      canActivate: [AuthGuard],
+      canActivateChild: [MobileGuard],
       children: [
         {
+          canLoad: [AuthGuard],
           path: 'profile',
           loadChildren: () => import('./modules/profile/profile.module').then(mod => mod.ProfileModule),
         },
         {
+          canLoad: [AuthGuard],
           path: 'search',
           loadChildren: () => import('./modules/search/search.module').then(mod => mod.SearchModule),
         },
         {
+          canLoad: [AuthGuard],
           path: 'discussion',
           loadChildren: () => import('./modules/chat/chat.module').then(mod => mod.ChatModule),
         },
         {
+          canLoad: [AuthGuard],
           path: 'admin',
+          data: { admin: true },
           loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
         },
       ],

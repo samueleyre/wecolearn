@@ -1,6 +1,10 @@
 import { NAV } from '~/config/navigation/nav';
 
-export const DASHBOARD_FOOTER_URLS = [NAV.profile, NAV.discussion, NAV.search];
+export const DASHBOARD_FOOTER_URLS = [
+  NAV.profileSettings,
+  NAV.discussion,
+  NAV.search,
+];
 export const MAIN_FOOTER_URLS = [
   NAV.aboutUs,
   NAV.mentionsLegales,

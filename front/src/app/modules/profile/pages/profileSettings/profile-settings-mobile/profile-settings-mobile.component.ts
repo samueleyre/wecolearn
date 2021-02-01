@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -7,9 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomainService } from '~/core/services/domain/domain';
 import { ProfileService } from '~/core/services/user/profile.service';
 import { ToastService } from '~/core/services/toast.service';
-import { ProfileSettingsComponentBase } from '~/modules/profile/components/profileSettings/profile-settings.component.base';
 import { Tag } from '~/core/entities/tag/entity';
 import { tagTypeEN, TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { ProfileSettingsComponentBase } from '~/modules/profile/pages/profileSettings/profile-settings.component.base';
 
 @Component({
   selector: 'app-profile-settings-mobile',

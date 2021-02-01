@@ -18,18 +18,20 @@ import { ChatMessageBaseComponent } from './components/chat-message/chat-message
 import { ChatThreadComponent } from './components/chat-thread/chat-thread.component';
 import { ChatThreadsComponent } from './components/chat-threads/chat-threads.component';
 import { ChatWindowBaseComponent } from './components/chat-window/chat-window.base.component';
-import { ChatPageComponent } from './pages/chat/component';
+import { ChatComponentBase } from './pages/chat/chat.component.base';
 import { ChatRouting } from './chat.routing';
 import { ChatWindowDesktopComponent } from './components/chat-window/chat-window-desktop/chat-window-desktop.component';
 import { ChatWindowMobileComponent } from './components/chat-window/chat-window-mobile/chat-window-mobile.component';
 import { ChatMessageDesktopComponent } from './components/chat-message/chat-message-desktop/chat-message-desktop.component';
 import {IonicModule} from "@ionic/angular";
+import { ChatMobileComponent } from './pages/chat/chat-mobile/chat-mobile.component';
+import { ChatDesktopComponent } from './pages/chat/chat-desktop/chat-desktop.component';
 
 
 @NgModule({
 
   declarations: [
-    ChatPageComponent,
+    ChatComponentBase,
     ChatMessageBaseComponent,
     ChatMessageDesktopComponent,
     ChatMessageMobileComponent,
@@ -43,6 +45,8 @@ import {IonicModule} from "@ionic/angular";
     ChatWindowDesktopComponent,
     ChatWindowMobileComponent,
     ChatMessageDesktopComponent,
+    ChatMobileComponent,
+    ChatDesktopComponent,
   ],
   exports: [
 

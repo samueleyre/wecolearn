@@ -7,10 +7,10 @@ import { DomainsComponent } from '~/modules/admin/pages/domains/domains.componen
 import { TagDomainsComponent } from '~/modules/admin/pages/tag-domains/tag-domains.component';
 
 const adminRoutes: Routes = [
-  { path: 'users', component: UsersComponent, data: { admin: true } },
-  { path: 'tags', component: TagsComponent, data: { admin: true } },
-  { path: 'tag-domains', component: TagDomainsComponent, data: { admin: true } },
-  { path: 'domains', component: DomainsComponent, data: { admin: true } },
+  { path: 'users', component: UsersComponent },
+  { path: 'tags', component: TagsComponent },
+  { path: 'tag-domains', component: TagDomainsComponent },
+  { path: 'domains', component: DomainsComponent },
 ];
 
 @NgModule({

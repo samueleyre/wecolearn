@@ -11,7 +11,7 @@ import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
 
-import { SearchService } from '../../../../core/services/search/search';
+import { SearchService } from '../../../../core/services/search/search.service';
 
 @Component({
   template: '',
