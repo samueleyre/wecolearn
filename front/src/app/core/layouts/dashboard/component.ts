@@ -14,7 +14,6 @@ import { NoConnectionToastComponent } from '~/shared/components/no-connection-to
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-layout',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
@@ -65,7 +64,7 @@ export class MainComponent extends DestroyObservable implements OnInit {
   }
 
   onActivate(event) {
-    if (!this._deviceService.isMobile()) {
+    if (!window.location.hash) {
       document.getElementsByTagName('ion-content')[0].scrollToTop();
     }
   }
