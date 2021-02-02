@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { TokenService } from './token';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { TokenService } from './token';
 export class HeaderBag {
   static token: string = null;
 
-  constructor(private tokenService: TokenService) {
+  constructor(private tokenService: SessionService) {
   }
 
   static get(): any {
@@ -20,7 +20,7 @@ export class HeaderBag {
   }
 
   load(): Observable<void> {
-    return this.tokenService.get().pipe(map((token: string) => {
+    return this.tokenService.getAsObs().pipe(map((token: string) => {
       HeaderBag.token = token;
     }));
   }

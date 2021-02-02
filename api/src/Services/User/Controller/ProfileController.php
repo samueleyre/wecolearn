@@ -27,20 +27,26 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProfileController extends AbstractController
 {
     /**
      * @Get("profile")
      * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"profile"})
-     **/
+     * @param TokenStorageInterface $tokenStorage
+     * @param DomainService $domainService
+     * @param UserService $userService
+     * @param LoggerInterface $logger
+     * @return UserInterface
+     */
     public function getProfileAction(
-        Request $request,
         TokenStorageInterface $tokenStorage,
         DomainService $domainService,
         UserService $userService,
         LoggerInterface $logger
-    ) {
+    ): UserInterface
+    {
         $user = $tokenStorage->getToken()->getUser();
 
         $subDomain = $domainService->getSubDomain();

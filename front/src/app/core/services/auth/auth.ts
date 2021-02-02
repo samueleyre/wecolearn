@@ -10,7 +10,7 @@ import { ToastService } from '~/core/services/toast.service';
 import { MessagesService } from '~/core/services/chat/messages.service';
 import { ThreadsService } from '~/core/services/chat/threads.service';
 
-import { TokenService } from './token';
+import { SessionService } from './session.service';
 import { Logged } from './logged';
 
 
@@ -19,7 +19,7 @@ import { Logged } from './logged';
 })
 export class AuthenticationService {
   constructor(private http: HttpClient,
-              private tokenService: TokenService,
+              private tokenService: SessionService,
               private router: Router,
               private _toastr: ToastService,
               private _messageService: MessagesService,
@@ -79,7 +79,7 @@ export class AuthenticationService {
     // clear token remove user from local storage to log user out
     this.resetLogin();
     if (returnHome) {
-      this.router.navigate([NAV.home]).then(() => {
+      this.router.navigate([NAV.landing]).then(() => {
         // reset cache from services
         this._messageService.reset();
         this._threadsService.reset();

@@ -10,6 +10,7 @@ import { AuthOnboardingMobileComponent } from '~/modules/auth/components/onBoard
 import { MaterialModule } from '~/shared/modules/material/material.module';
 import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardingComponents/baseComponent';
 import { FooterModule } from '~/shared/modules/footer/footer.module';
+import { SharedModule } from '~/shared/shared.module';
 
 import { LandingPartnersComponent } from './components/landing/partners/component';
 import { LandingProcessComponent } from './components/landing/process/component';
@@ -25,20 +26,20 @@ import { ConfirmEmailComponent } from './components/confirmEmail/component';
 import { SigninComponent } from './components/signin/component';
 import { SlackConnexionComponent } from './components/slackConnexion/component';
 import { SignupComponent } from './components/signup/component';
-import { LandingPageComponent } from './pages/landing/component';
 import { SignupPageComponent } from './pages/subscribe/component';
 import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/component';
 import { SendPasswordConfirmationEmailComponent } from './components/sendConfirmationEmail/component';
 import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirmationEmail/component';
 import { ResetPasswordFormComponent } from './components/passwordResetForm/component';
-import {SharedModule} from "~/shared/shared.module";
+import { LandingMobileComponent } from './pages/landing/landing-mobile/landing-mobile.component';
+import { LandingDesktopComponent } from './pages/landing/landing-desktop/landing-desktop.component';
+import { LandingAndroidComponent } from './pages/landing/landing-android/landing-android.component';
 
 
 @NgModule({
 
   declarations: [
       // pages
-    LandingPageComponent,
     SignupPageComponent,
     ResetPasswordFormPageComponent,
     SendPasswordConfirmationEmailPageComponent,
@@ -60,6 +61,9 @@ import {SharedModule} from "~/shared/shared.module";
     AuthOnboardingBaseComponent,
     AuthOnboardingPageComponent,
     AuthOnboardingMobileComponent,
+    LandingMobileComponent,
+    LandingDesktopComponent,
+    LandingAndroidComponent,
   ],
   exports: [
   ],
