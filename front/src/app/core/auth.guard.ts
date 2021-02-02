@@ -58,10 +58,14 @@ export class AuthGuard implements CanLoad, CanActivate {
         return observableOf({ status });
       }),
       map((response: Response) => {
-        if (401 === response.status || 403 === response.status) {
+        if (401 === response.status) {
           this._router.navigate([NAV.landing]).then(() => {
             Logged.set(false);
           });
+          return false;
+        }
+        if (403 === response.status) {
+          this._router.navigate([NAV.search]);
           return false;
         }
         Logged.set(true);
