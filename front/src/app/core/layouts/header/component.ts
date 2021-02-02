@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     Logged.get().subscribe((logged: boolean) => {
-      this._profileService.get().subscribe((client: User) => {
+      this._profileService.entity$.subscribe((client: User) => {
         this.currentUser = client;
       });
     });

@@ -9,12 +9,13 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
 @Component({
   selector: 'app-ionic-container',
   templateUrl: './ionic-container.component.html',
+  styleUrls: ['./ionic-container.component.scss'],
 })
 export class IonicContainerComponent extends DestroyObservable implements OnInit {
   public disableScroll: Observable<boolean>;
 
   constructor(
-    private deviceService: DeviceDetectorService,
+    private _deviceService: DeviceDetectorService,
     public footerMobileService: FooterMobileService,
   ) {
     super();
@@ -23,10 +24,14 @@ export class IonicContainerComponent extends DestroyObservable implements OnInit
   ngOnInit() {
     this.disableScroll = this.footerMobileService.disableScrollingOnIonContent.asObservable().pipe(
       map(urlWithHeader =>
-        this.deviceService.isMobile() && urlWithHeader,
+        this._deviceService.isMobile() && urlWithHeader,
       ),
       distinctUntilChanged(),
       takeUntil(this.destroy$),
     );
+  }
+
+  get isMobile(): boolean {
+    return this._deviceService.isMobile();
   }
 }

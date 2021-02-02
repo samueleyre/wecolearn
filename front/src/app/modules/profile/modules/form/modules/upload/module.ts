@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FileUploadModule } from 'ng2-file-upload';
 
-import { TokenService } from '~/core/services/auth/token';
+import { SessionService } from '~/core/services/auth/session.service';
 import { HeaderBag } from '~/core/services/auth/headerBag';
 
 import { UploadComponent } from './component';
@@ -20,7 +20,7 @@ import { UploadComponent } from './component';
   ],
   providers: [
     HeaderBag,
-    TokenService,
+    SessionService,
   ],
   entryComponents: [
     UploadComponent,

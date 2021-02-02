@@ -186,5 +186,9 @@ export class AppComponent {
         console.log('completed ========');
       });
   }
+
+  get isMobile(): boolean {
+    return this._deviceService.isMobile();
+  }
 }
 

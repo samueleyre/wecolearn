@@ -11,7 +11,7 @@ import { ToastService } from '~/core/services/toast.service';
 
 import { Logged } from './services/auth/logged';
 import { HeaderBag } from './services/auth/headerBag';
-import { TokenService } from './services/auth/token';
+import { SessionService } from './services/auth/session.service';
 import { environment } from '../../environments/environment';
 
 
@@ -26,7 +26,7 @@ export class HttpApiInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     public headerBag: HeaderBag,
-    private tokenService: TokenService,
+    private tokenService: SessionService,
     private _toastr: ToastService,
   ) {
   }
@@ -61,11 +61,7 @@ export class HttpApiInterceptor implements HttpInterceptor {
 
       const clonedRequest: HttpRequest<any> = req.clone(update);
       return next.handle(clonedRequest).pipe(tap(
-        (event: HttpEvent<any>) => {
-          if (event instanceof HttpResponse && event.url.match(/api/)) {
-              // Logged.set( true );
-          }
-        },
+        (event: HttpEvent<any>) => {},
         (err: any) => {
           console.log('error', JSON.stringify(err) , JSON.stringify(req));
           if (err instanceof HttpErrorResponse) {
@@ -77,7 +73,10 @@ export class HttpApiInterceptor implements HttpInterceptor {
               Logged.set(false);
             }
             if (err.status === 404) {
-              this._toastr.error('Une erreur est survenue');
+              this._toastr.error('Cette ressource n\'est pas disponible');
+            }
+            if (err.status === 500) {
+              this._toastr.error('Une erreur est survenue.');
             }
           }
         }));

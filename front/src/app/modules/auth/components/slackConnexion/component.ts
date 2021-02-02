@@ -7,7 +7,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { DomainService } from '~/core/services/domain/domain';
 import { environment } from '~/../environments/environment';
-import { TokenService } from '~/core/services/auth/token';
+import { SessionService } from '~/core/services/auth/session.service';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import {EnvEnum} from "~/core/enums/env.enum";
 
@@ -26,7 +26,7 @@ export class SlackConnexionComponent implements OnInit {
 
   constructor(
       private domainService: DomainService,
-      private tokenService: TokenService,
+      private tokenService: SessionService,
       private activatedRoute: ActivatedRoute,
       private authenticationService: AuthenticationService,
       private router: Router,

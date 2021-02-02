@@ -21,7 +21,7 @@ export class ProfileService extends APIService<User> {
     super(_http);
   }
 
-  get profile(): User {
+  get profile(): User | null {
     return this.entity;
   }
 

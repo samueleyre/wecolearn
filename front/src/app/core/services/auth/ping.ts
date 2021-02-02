@@ -7,14 +7,14 @@ import { Router } from '@angular/router';
 import { User } from '~/core/entities/user/entity';
 import { ProfileService } from '~/core/services/user/profile.service';
 
-import { TokenService } from './token';
+import { SessionService } from './session.service';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class PingService {
-  constructor(private _router: Router, private _tokenService: TokenService, private _http: HttpClient,
+  constructor(private _router: Router, private _tokenService: SessionService, private _http: HttpClient,
               private _profileService: ProfileService,
   ) {}
 

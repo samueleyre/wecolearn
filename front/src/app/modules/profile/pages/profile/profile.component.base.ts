@@ -4,8 +4,8 @@ import {
     OnDestroy,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import { catchError, takeUntil } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
 import { NAV } from '~/config/navigation/nav';
@@ -28,14 +28,11 @@ export class ProfileComponentBase extends DestroyObservable implements OnInit, O
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.user$ = this.userService.get({}, params.get('profileUrl'));
-      this.user$.pipe(
-        takeUntil(this.destroy$),
-      ).subscribe(
-        () => {},
-        (err) => {
+      this.user$ = this.userService.get({}, params.get('profileUrl')).pipe(
+        catchError((err) => {
           this.router.navigate([NAV.notFound]);
-        },
+          return of(null);
+        }),
       );
     });
   }

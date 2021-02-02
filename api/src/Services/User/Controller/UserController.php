@@ -4,28 +4,20 @@ namespace App\Services\User\Controller;
 
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\Domain\Service\DomainService;
-use App\Services\Tag\Entity\Tag;
 use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\PushNotificationSubscription;
 use App\Services\User\Entity\Subscription;
 use App\Services\User\Entity\Token;
 use App\Services\User\Entity\User;
 use App\Services\User\SyncEvent\EmailChangeConfirmed;
-use App\Services\User\SyncEvent\NewsletterWasChanged;
-use App\Services\User\SyncEvent\UserWasCreated;
-use App\Services\User\Service\ChangeEmailService;
 use App\Services\User\Service\CreateTokenForChangingPasswordService;
 use App\Services\User\Service\CreateUserService;
 use App\Services\User\Service\SearchService;
 use App\Services\User\Service\TokenService;
 use App\Services\User\Service\UserService;
-use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
-use PhpParser\Error;
-use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -38,15 +30,15 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Delete;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserController extends AbstractController
 {
 
-    private $userManager;
-    private $encoderService;
+    private UserManagerInterface $userManager;
+    private EncoderFactoryInterface $encoderService;
 
     public function __construct(UserManagerInterface $userManager, EncoderFactoryInterface $encoderService)
     {
@@ -57,8 +49,11 @@ class UserController extends AbstractController
     /**
      * @Get("user/{profileUrl}")
      * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"public-profile"})
-     **/
-    public function getPublicProfileAction(string $profileUrl)
+     * @param string $profileUrl
+     * @return User
+     * @throws \Exception
+     */
+    public function getPublicProfileAction(string $profileUrl): User
     {
         $user = $this
             ->getDoctrine()
@@ -66,12 +61,10 @@ class UserController extends AbstractController
             ->findOneByProfilUrl($profileUrl);
 
         if ($user instanceof User) {
-            $ret = $user;
-        } else {
-            throw new \Exception('not found');
+            return $user;
         }
 
-        return $ret;
+        throw new NotFoundHttpException('not found');
     }
 
     /**
