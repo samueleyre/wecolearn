@@ -13,7 +13,7 @@ export const NAV = {
   mentionsLegales: '/doc/mentionslegales',
   cookiePolicy: '/doc/cookie-policy',
   manifest: '/doc/manifest',
-  home: '/signin',
+  landing: '/auth/signin',
   tagSearchBar: '/tag/searchBar',
   notFound: '/404',
   adminUsers: '/dashboard/admin/users',

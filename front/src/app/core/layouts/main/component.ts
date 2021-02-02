@@ -6,6 +6,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
+import { NAV } from '~/config/navigation/nav';
 
 @Component({
   selector: 'app-container',
@@ -46,12 +47,16 @@ export class ContainerComponent extends DestroyObservable implements OnInit{
   }
 
   onActivate(event) {
-    if (!window.location.hash) {
+    if (!window.location.hash && this._deviceService.isMobile()) {
       document.getElementsByTagName('ion-content')[0].scrollToTop();
     }
   }
 
   get isAndroid() {
     return environment.android;
+  }
+
+  get isNotLandingPage() {
+    return !(new RegExp(NAV.landing).test(window.location.pathname));
   }
 }

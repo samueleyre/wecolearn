@@ -3,20 +3,16 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanA
 import { Observable } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
-export class MobileGuard implements CanActivate, CanActivateChild {
+export class MobileGuard implements CanActivateChild {
   constructor(
     private _deviceService: DeviceDetectorService,
     private _router: Router,
   ) {}
-
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this._deviceService.isMobile();
-  }
 
   canActivateChild(
     next: ActivatedRouteSnapshot,
@@ -28,6 +24,14 @@ export class MobileGuard implements CanActivate, CanActivateChild {
       }
       return true;
     }
+    if ('mobileNavigatorOnly' in next.data) {
+      if (environment.android) {
+        this._router.navigate([state.url + '/android']);
+        return false;
+      }
+      return true;
+    }
+
     return true;
   }
 }

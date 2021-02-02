@@ -1,11 +1,9 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { DeviceDetectorService } from 'ngx-device-detector';
-import { takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { User } from '~/core/entities/user/entity';
 import { ProfileService } from '~/core/services/user/profile.service';
-import {DestroyObservable} from '~/core/components/destroy-observable';
+import { DestroyObservable } from '~/core/components/destroy-observable';
 
 @Component({
   template: '',
@@ -20,7 +18,5 @@ import {DestroyObservable} from '~/core/components/destroy-observable';
 
   ngOnInit(): void {
     this.user$ = this.profileService.get();
-    this.user$.pipe(takeUntil(this.destroy$)).subscribe();
   }
-
 }

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MainComponent } from '~/core/layouts/dashboard/component';
 import { ContainerComponent } from '~/core/layouts/main/component';
-import { LandingPageComponent } from '~/modules/auth/pages/landing/component';
 import { IonicContainerComponent } from '~/core/layouts/ionic-container/ionic-container.component';
 import { MobileGuard } from '~/core/mobile.guard';
 
@@ -13,7 +12,6 @@ import { NotFoundComponent } from './pages/notFound/component';
 
 const wcRoutes: Routes = [
   { path: '', component: IonicContainerComponent, children: [
-    { path: 'signin', component: LandingPageComponent, pathMatch: 'full' },
     { path: '', redirectTo: '/dashboard/search', pathMatch: 'full' },
     {
       path: 'dashboard',
@@ -51,11 +49,11 @@ const wcRoutes: Routes = [
     },
     {
       path: 'tag',
-          // todo: only mobile
       loadChildren: () => import('./modules/tags/tags.module').then(mod => mod.TagsModule),
     },
     {
       path: '', component: ContainerComponent,
+      canActivateChild: [MobileGuard],
       children: [
         {
           path: 'doc',
@@ -72,6 +70,7 @@ const wcRoutes: Routes = [
         },
       ],
     },
+    { path: 'signin', redirectTo: '/auth/signin', pathMatch: 'full' },
     { path: '**', redirectTo: '404' },
   ],
   },
