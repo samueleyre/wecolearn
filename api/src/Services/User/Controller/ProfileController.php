@@ -24,7 +24,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\View;
+use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -77,8 +79,12 @@ class ProfileController extends AbstractController
      *       converter="fos_rest.request_body",
      *       options={"deserializationContext"={"groups"={"input"} } }
      * )
+     * @param User $user
+     * @param TokenStorageInterface $tokenStorage
+     * @param UserService $userService
+     * @return UserInterface
      */
-    public function patchProfileAction(User $user, TokenStorageInterface $tokenStorage, UserService $userService )
+    public function patchProfileAction(User $user, TokenStorageInterface $tokenStorage, UserService $userService ): UserInterface
     {
         return $userService
             ->patch($user);
@@ -88,6 +94,12 @@ class ProfileController extends AbstractController
      * @Post("/profile/changesettings")
      * @View( serializerGroups={"profile"})
      * )
+     * @param Request $request
+     * @param TokenStorageInterface $tokenStorage
+     * @param ChangeEmailService $changeEmailService
+     * @param UserManagerInterface $userManager
+     * @param EncoderFactoryInterface $encoderService
+     * @return UserInterface
      */
     public function changeSettingsAction(
         Request $request,
@@ -95,20 +107,20 @@ class ProfileController extends AbstractController
         ChangeEmailService $changeEmailService,
         UserManagerInterface $userManager,
         EncoderFactoryInterface $encoderService
-    ) {
+    ): UserInterface
+    {
         $user = $tokenStorage->getToken()->getUser();
-        $ret = [];
         if ($email = $request->get('email')) {
             $email = strtolower($email);
             $searchEmail = $this->getDoctrine()
                 ->getRepository(User::class)->findOneBy(['emailCanonical' => $email]);
 
             if ($user->getEmailCanonical() === $email) {
-                $ret['noChange'] = true;
+                throw new HttpException(304, 'no change');
             } elseif ($searchEmail) {
-                $ret['duplicate'] = true;
+                throw new HttpException(409, 'duplicate');
             } else {
-                $user = $changeEmailService->process($user, $email);
+                return $changeEmailService->process($user, $email);
             }
         } elseif (
             ($password = $request->get('password')) &&
@@ -118,27 +130,22 @@ class ProfileController extends AbstractController
             $encoder = $encoderService->getEncoder($user);
 
             if (!$encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
-                return ['wrong'=> true];
+                throw new HttpException(400, 'wrong password');
             }
 
             $user->setPlainPassword($newPassword);
 
             try {
                 $userManager->updateUser($user);
-                $ret['changed'] = true;
+                return $user;
             } catch (NotNullConstraintViolationException $e) {
                 // Found the name of missed field
-                $ret['notnull'] = true;
-            } catch (UniqueConstraintViolationException $e) {
-                // Found the name of duplicate field
-                $ret['duplicate'] = true;
+                throw new HttpException(400, 'not null');
             } catch (\Exception $e) {
                 syslog(LOG_ERR, "error changing password $e");
             }
         }
 
-        $ret['user'] = $user;
-        return $ret;
     }
 
 

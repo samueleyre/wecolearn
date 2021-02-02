@@ -7,8 +7,9 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
-import { map, takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { User } from '~/core/entities/user/entity';
 import { environment } from '~/../environments/environment';
@@ -20,7 +21,7 @@ import { PASSWORD } from '~/config/validators.const';
 import { passwordMatchValidator } from '~/modules/auth/validators/password-match.validator';
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { ToastService } from '~/core/services/toast.service';
-import {EnvEnum} from "~/core/enums/env.enum";
+import { EnvEnum } from '~/core/enums/env.enum';
 
 
 @Component({
@@ -80,44 +81,31 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
     this.callApi({
       password: this.password.value,
       newPassword: this.newPassword.value,
-    }).subscribe((result: boolean) => {
-      if (result) {
-        this.initEditable();
-        this.newPasswordForm.reset();
-      }
+    }).subscribe((user) => {
+      this.initEditable();
+      this.newPasswordForm.reset();
     });
   }
 
-  callApi(data: object): Observable<boolean> {
+  callApi(data: object): Observable<User> {
     const type = Object.keys(data)[0];
-
-    return this.profileService.changeParameter(data).pipe(map(
-      (response) => {
-        if (response['wrong']) {
-          this._toastr.error('Le mot de passe est incorrect.');
-          return false;
-        }
-        if (response['duplicate']) {
-          this._toastr.error('Cette adresse email est déjà utilisée.');
-          return false;
-        }
-        if (response['changed']) {
-          this._toastr.success('Le mot de passe a été modifié');
-          return true;
-        }
-        if (response['error']) {
-          console.error(response['error']);
-          return false;
-        }
-        if (type === 'email') {
+    return this.profileService.changeParameter(data).pipe(tap(
+      (user: User) => {
+        if ('email' === type) {
           this._toastr.success('Un email vous a été envoyé pour confirmer votre nouvel email');
-          this.user = response['user'];
-          return true;
         }
-        return true;
+        if ('password' === type) {
+          this._toastr.success('Le mot de passe a été modifié');
+        }
+        this.user = user;
       },
-      (error) => {
-        console.log(error);
+      (error: HttpErrorResponse) => {
+        if (error.status === 400) {
+          this._toastr.error('Le mot de passe est incorrect.');
+        }
+        if (error.status === 409) {
+          this._toastr.error('Cette adresse email est déjà utilisée.');
+        }
       },
     ));
   }

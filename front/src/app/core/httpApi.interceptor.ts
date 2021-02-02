@@ -65,13 +65,18 @@ export class HttpApiInterceptor implements HttpInterceptor {
         (err: any) => {
           console.log('error', JSON.stringify(err) , JSON.stringify(req));
           if (err instanceof HttpErrorResponse) {
-            if (err.error['msg']) {
+            if (err.error && err.error.msg) {
               this._toastr.error(err.error['msg']);
             }
-            if (err.status === 401 || err.status === 403) {
+            if (err.status === 401) {
+              this._toastr.error("Vous n'êtes pas connecté.");
               this.tokenService.clear();
               Logged.set(false);
             }
+            if (err.status === 403) {
+              this._toastr.error("Vous n'êtes pas autorisé.");
+            }
+
             if (err.status === 404) {
               this._toastr.error('Cette ressource n\'est pas disponible');
             }
@@ -79,6 +84,7 @@ export class HttpApiInterceptor implements HttpInterceptor {
               this._toastr.error('Une erreur est survenue.');
             }
           }
+          return err;
         }));
     }));
   }
