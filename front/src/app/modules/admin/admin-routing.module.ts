@@ -11,6 +11,8 @@ const adminRoutes: Routes = [
   { path: 'tags', component: TagsComponent },
   { path: 'tag-domains', component: TagDomainsComponent },
   { path: 'domains', component: DomainsComponent },
+  { path: '', redirectTo: '/dashboard/admin/users', pathMatch: 'full' },
+
 ];
 
 @NgModule({
