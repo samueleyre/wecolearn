@@ -10,15 +10,16 @@ import { AuthOnboardingPageComponent } from './pages/onBoarding/component';
 import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirmationEmail/component';
 import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/component';
 
-
+const motherRoute = 'auth';
 const routes: Routes = [
-  { path: 'signin', data: { desktopOnly: true }, component: LandingDesktopComponent },
-  { path: 'signin/mobile', data: { mobileNavigatorOnly: true }, component: LandingMobileComponent },
-  { path: 'signin/android', component: LandingAndroidComponent },
+  { path: 'signin', data: { surface: ['desktop'], redirectTo: motherRoute + '/mobile' }, component: LandingDesktopComponent },
+  { path: 'signin/mobile', data: { surface: ['mobile'], redirectTo: motherRoute + '/android' }, component: LandingMobileComponent },
+  { path: 'signin/android', data: { surface: ['android'], redirectTo: motherRoute }, component: LandingAndroidComponent },
   { path: 'subscribe', component: AuthOnboardingPageComponent },
   { path: 'password/email', component: SendPasswordConfirmationEmailPageComponent },
   { path: 'password/reset', component: ResetPasswordFormPageComponent },
   { path: 'confirm', component: ConfirmEmailComponent },
+  { path: '', redirectTo: 'signin', pathMatch: 'full' },
 ];
 
 @NgModule({
