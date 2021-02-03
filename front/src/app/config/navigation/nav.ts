@@ -3,6 +3,7 @@ export const NAV = {
   confirmEmail: '/auth/password/email',
   resetPassword: '/auth/password/reset',
   search: '/dashboard/search',
+  dashHome: '/dashboard',
   profilePublic: '/dashboard/profile/public',
   profileSettings: '/dashboard/profile/home',
   settings: '/dashboard/profile/settings',
