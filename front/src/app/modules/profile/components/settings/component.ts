@@ -70,10 +70,8 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
   }
 
   submitChangeEmail(f: NgForm) {
-    this.callApi({ email: this.newemail }).subscribe((result: boolean) => {
-      if (result) {
-        this.initEditable();
-      }
+    this.callApi({ email: this.newemail }).subscribe((user: User) => {
+      this.initEditable();
     });
   }
 
@@ -110,10 +108,10 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
     ));
   }
 
-  initEditable(value: boolean = false) {
+  initEditable() {
     this.editing = {
-      newemail: value,
-      newpassword: value,
+      newemail: false,
+      newpassword: false,
     };
   }
 
