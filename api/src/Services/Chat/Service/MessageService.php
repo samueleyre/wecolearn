@@ -15,13 +15,13 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class MessageService
 {
-    private $em;
-    private $bus;
-    private $notificationService;
-    private $pushMessage;
-    private $serializer;
-    private $host;
-    private $logger;
+    private EntityManagerInterface $em;
+    private MessageBusInterface $bus;
+    private NotificationService $notificationService;
+    private PushService $pushMessage;
+    private SerializerInterface $serializer;
+    private string $host;
+    private LoggerInterface $logger;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -83,7 +83,7 @@ class MessageService
         return $this;
     }
 
-    public function patchMessages(array $messages)
+    public function patchMessages(array $messages): array
     {
         $patchedMessages = [];
         foreach ($messages as $message) {
