@@ -4,7 +4,7 @@ namespace App\Services\Chat\Constant;
 
 class EmailConstant
 {
-    public static $Ids = [
-    'MESSAGE_NOTIFS' => 5,
+    public static array $Ids = [
+    'MESSAGE_NOTIFS' => 20,
   ];
 }
