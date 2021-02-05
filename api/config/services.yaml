@@ -123,6 +123,7 @@ services:
     App\Command\SendReminder:
         arguments:
             $environment: '%environment%'
+            $host: '%host%'
 
     App\Command\WelcomeNewMembers:
         arguments:

@@ -4,6 +4,8 @@ namespace App\Command;
 
 use App\Services\Chat\Entity\Message;
 use App\Services\Chat\Service\MessageService;
+use App\Services\Core\Constant\FrontNavConstant;
+use Oro\ORM\Query\AST\Platform\Functions\Mysql\Date;
 use Shapecode\Bundle\CronBundle\Annotation\CronJob;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,18 +22,20 @@ use App\Services\Shared\Service\EmailService;
 class SendReminder extends Command
 {
 
-    private $em;
-    private $emailService;
-    private $messageService;
-    private $environment;
+    private EntityManagerInterface $em;
+    private EmailService $emailService;
+    private MessageService $messageService;
+    private string $environment;
+    private string $host;
 
-    public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService, string $environment)
+    public function __construct(EntityManagerInterface $em, EmailService $emailService, MessageService $messageService, string $environment, string $host)
     {
 
         $this->em = $em;
         $this->emailService = $emailService;
         $this->messageService = $messageService;
         $this->environment = $environment;
+        $this->host = str_contains($host, 'localhost') ? "http://$host" : "https://$host";
         parent::__construct();
 
     }
@@ -51,6 +55,9 @@ class SendReminder extends Command
             ->getRepository(Message::class)
             ->getUnReadMessagesByUser();
 
+        $linkToDiscussions = $this->host . '/' . FrontNavConstant::$Nav['discussion'];
+        $linkToSettings = $this->host . '/' . FrontNavConstant::$Nav['settings'];
+
         $clientIndex = 0;
         foreach ($MessagesSortedClients as $clientId => $client) {
 
@@ -60,13 +67,17 @@ class SendReminder extends Command
             }
 
             $messages = "";
+            $preheader = "";
             $i = 0;
             while ($i <= 2 && isset($client["messages"][$i])):
                 $MESSAGE = strip_tags($client["messages"][$i]->getMessage());
                 $FIRSTNAME = $client["messages"][$i]->getSender()->getFirstname();
-                $TIME = $client["messages"][$i]->getCreated()->format('H:i');
-                $DATE = $client["messages"][$i]->getCreated()->format('d-m-Y');
-                $messages .= '<p><b>' . $FIRSTNAME . '</b> : "' . $MESSAGE . '", le ' . $DATE . ' à ' . $TIME . '</p><br>';
+                $TIME = $client["messages"][$i]->getCreated()->format('H\hi');
+                $DATE = $client["messages"][$i]->getCreated()->format('d M Y');
+                $messages .= '<p><b>' . $FIRSTNAME . '</b></p><p style="font-size:20px; padding: 5px 0">' . $MESSAGE . '</p><p style="font-size:10px">' . $DATE . ' à ' . $TIME . '</p><br>';
+                if ($i === 0) {
+                    $preheader .= $FIRSTNAME . ': ' . $MESSAGE;
+                }
                 $i++;
             endwhile;
 
@@ -78,6 +89,9 @@ class SendReminder extends Command
                         "MESSAGES" => $messages,
                         "FIRSTNAME" => $client["firstname"],
                         "USERNAME" => $client["firstname"],
+                        "DISCUSSION_LINK" => $linkToDiscussions,
+                        "PARAMETERS_LINK" => $linkToSettings,
+                        "PREHEADER" => $preheader,
                     ],
                     $client["email"]
                 )
