@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { map, takeUntil } from 'rxjs/operators';
 
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardingComponents/baseComponent';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { NAV } from '~/config/navigation/nav';

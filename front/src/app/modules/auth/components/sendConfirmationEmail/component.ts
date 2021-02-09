@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { ToastService } from '~/core/services/toast.service';
 
 import { environment } from '../../../../../environments/environment';

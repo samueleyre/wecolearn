@@ -15,6 +15,7 @@ export const NAV = {
   cookiePolicy: '/doc/cookie-policy',
   manifest: '/doc/manifest',
   landing: '/auth/signin',
+  signin: '/auth/signin',
   tagSearchBar: '/tag/searchBar',
   notFound: '/404',
   adminUsers: '/dashboard/admin/users',

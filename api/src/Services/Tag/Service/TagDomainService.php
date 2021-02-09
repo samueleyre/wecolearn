@@ -11,8 +11,8 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class TagDomainService
 {
-    public $em;
-    public $container;
+    public EntityManagerInterface $em;
+    public ContainerInterface $container;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -39,15 +39,15 @@ class TagDomainService
             $tag->setType(0);
             $tag->addTagDomain($tagDomain);
             $tagDomain->setLinkedTag($tag);
+            $this->em->persist($tag);
         }
 
         $this->em->persist($tagDomain);
-        $this->em->persist($tag);
         $this->em->flush();
 
     }
 
-    public function patchTagDomain(Tagdomain $tagDomain)
+    public function patchTagDomain(Tagdomain $tagDomain): object
     {
         $name = $tagDomain->getName();
         $emoji = $tagDomain->getEmoji();

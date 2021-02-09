@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use App\Services\Core\Constant\FrontNavConstant;
 
 class NotifyUserMatchHandler implements MessageHandlerInterface
 {
@@ -34,11 +35,12 @@ class NotifyUserMatchHandler implements MessageHandlerInterface
         $this->emailService = $emailService;
         $this->notificationService = $notificationService;
         $this->container = $container;
-        $this->host = $host;
+        $this->host = str_contains($host, 'localhost') ? "http://$host" : "https://$host";
     }
 
     public function __invoke(NotifyUserMatchBusMessage $notifyUserMatchBusMessage)
     {
+
         $user = $this->em->getRepository(User::class)->find(
             $notifyUserMatchBusMessage->getUserId()
         );
@@ -94,17 +96,24 @@ class NotifyUserMatchHandler implements MessageHandlerInterface
         }
     }
 
-    private function sendEmail(User $matchingUser, User $user, ArrayCollection $commonTags)
+    private function sendEmail(User $matchingUser, User $user, array $commonTags)
     {
+
+        $MatchPublicProfilLink = $this->host . '/' . FrontNavConstant::$Nav['publicProfile'] . '/' . $user->getProfilUrl();
+        $linkToSettings = $this->host . '/' . FrontNavConstant::$Nav['settings'];
+        $preheader = $matchingUser->getFirstName() . ' est aussi intéressé·e par cet apprentissage : ' . $commonTags[0] .'                ';
+
         $this->emailService
             ->setData(
-                15,
+                21,
                 [
                     "HOST" => $this->host,
                     "FIRSTNAME" => $matchingUser->getFirstName(),
                     "MATCH_FIRSTNAME" => $user->getFirstName(),
-                    "MATCH_PROFIL_URL" => $user->getProfilUrl(),
-                    "TAGS" => array_values($commonTags->toArray()), // reindex array with array_values
+                    "MATCH_PROFIL_LINK" => $MatchPublicProfilLink,
+                    "PARAMETERS_LINK" => $linkToSettings,
+                    "PREHEADER" => $preheader,
+                    "TAGS" => $commonTags,
                 ],
                 $matchingUser->getEmail()
             )

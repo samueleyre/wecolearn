@@ -5,7 +5,7 @@ import { LandingDesktopComponent } from '~/modules/auth/pages/landing/landing-de
 import { LandingMobileComponent } from '~/modules/auth/pages/landing/landing-mobile/landing-mobile.component';
 import { LandingAndroidComponent } from '~/modules/auth/pages/landing/landing-android/landing-android.component';
 
-import { ConfirmEmailComponent } from './components/confirmEmail/component';
+import { ConfirmEmailComponent } from './pages/confirmEmail/component';
 import { AuthOnboardingPageComponent } from './pages/onBoarding/component';
 import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirmationEmail/component';
 import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/component';

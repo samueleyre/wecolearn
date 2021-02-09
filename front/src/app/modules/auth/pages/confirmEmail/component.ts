@@ -5,9 +5,10 @@ import {
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { ToastService } from '~/core/services/toast.service';
-import {NAV} from '~/config/navigation/nav';
+import { Logged } from '~/core/services/auth/logged';
+import { NAV } from '~/config/navigation/nav';
 
 
 @Component({
@@ -17,6 +18,7 @@ import {NAV} from '~/config/navigation/nav';
 
 export class ConfirmEmailComponent implements OnInit {
   public loading = true;
+  private redirect = NAV.dashHome;
 
   constructor(
         private router: Router,
@@ -24,12 +26,15 @@ export class ConfirmEmailComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private http: HttpClient,
         private _toastr: ToastService,
-) { }
+) {
+    Logged.get().subscribe((logged: boolean) => {
+      if (!logged) {
+        this.redirect = NAV.signin;
+      }
+    });
+  }
 
   ngOnInit() {
-        // reset login status
-    this.authenticationService.logout();
-
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       const token = params['token'];
       if (token) {
@@ -37,13 +42,13 @@ export class ConfirmEmailComponent implements OnInit {
           .subscribe((result: any) => {
             this.loading = false;
             if (result.success) {
-              this.router.navigate(['/']).then(() => {
+              this.router.navigate([this.redirect]).then(() => {
                 this._toastr.success('Votre email a bien été confirmé !');
               });
             } else {
               const message = 'Une erreur est survenue, vérifiez que vous avez bien ouvert le dernier email' +
                 ' et qu\'il ne date pas de plus de 14 jours.';
-              this.router.navigate(['/']).then(() => {
+              this.router.navigate([this.redirect]).then(() => {
                 this._toastr.error(message);
               });
             }

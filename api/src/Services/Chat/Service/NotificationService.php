@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 class NotificationService
 {
 
-    private $sender;
-    private $serializer;
-    private $em;
+    private Messaging $sender;
+    private MessageSerializer $serializer;
+    private EntityManagerInterface $em;
 
     public function __construct(
         Messaging $sender,
@@ -31,7 +31,8 @@ class NotificationService
     }
 
 
-    public function processNewMatchingProfil(User $to, User $match) {
+    public function processNewMatchingProfil(User $to, User $match): ?\Exception
+    {
         $this->processNotification(
             $to,
             ['user' => $this->serializer->getMatchPayload($match)],
@@ -41,19 +42,25 @@ class NotificationService
     }
 
     public function processMessage(User $to, Message $message ) {
-        $this->processNotification(
-            $to,
-            ['message' => $this->serializer->getMessagePayload($message)],
-            'Wecolearn',
-            'Vous avez un message'
-        );
+        try {
+            $this->processNotification(
+                $to,
+                ['message' => $this->serializer->getMessagePayload($message)],
+                'Wecolearn',
+                'Vous avez un message'
+            );
+        } catch (\Exception $e) {
+        }
     }
 
     public function processIsRead(User $to, Message $message ) {
-        $this->processNotification(
-            $to,
-            ['is_read' => $this->serializer->getMessagePayload($message)]
-        );
+        try {
+            $this->processNotification(
+                $to,
+                ['is_read' => $this->serializer->getMessagePayload($message)]
+            );
+        } catch (\Exception $e) {
+        }
     }
 
 
@@ -81,6 +88,7 @@ class NotificationService
 
         $subscriptions = $this->em->getRepository(PushNotificationSubscription::class)->findByUser( $to );
 
+        $sent = false;
         foreach( $subscriptions as $sub ) {
 
             $notification = CloudMessage::withTarget('token', $sub->getToken());
@@ -88,16 +96,17 @@ class NotificationService
 
             try {
                 $this->sender->send($notification);
+                $sent = true;
             }
 
-            catch (\Error $e) {
+            catch (\Error | \Exception $e) {
                 syslog(LOG_ERR, "could not send notif via firebase to android : $e");
             }
-
-            catch (\Exception $e) {
-                syslog(LOG_ERR, "could not send notif via firebase to android : $e");
-            }
-
         }
+
+        if (!$sent) {
+            throw new \Exception('user can\'t be notified on android');
+        }
+
     }
 }

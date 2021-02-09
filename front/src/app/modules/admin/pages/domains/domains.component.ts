@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { DomainFormComponent } from '~/modules/domains/modules/domain-ui/components/domain-form/domain-form.component';
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { AdminDomainService } from '~/modules/domains/services/admin-domain.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { Domain } from '~/core/entities/domain/domain';

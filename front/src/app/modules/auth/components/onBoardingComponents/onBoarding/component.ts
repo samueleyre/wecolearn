@@ -5,7 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardingComponents/baseComponent';
 import { ToastService } from '~/core/services/toast.service';
 import { onBoardingSections } from '~/modules/auth/components/onBoardingComponents/onBoarding.const';

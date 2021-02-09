@@ -6,7 +6,7 @@ import { BehaviorSubject, merge, Observable, of, pipe } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, skipUntil, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 import { UserFormComponent } from '~/modules/users/modules/user-ui/components/user-form/user-form.component';

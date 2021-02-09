@@ -18,9 +18,9 @@ use Doctrine\ORM\EntityManagerInterface;
 class WelcomeNewMembers extends Command
 {
 
-    private $em;
-    private $messageService;
-    private $environment;
+    private EntityManagerInterface $em;
+    private MessageService $messageService;
+    private string $environment;
 
     public function __construct( EntityManagerInterface $em, MessageService $messageService, string $environment)
     {
@@ -39,7 +39,7 @@ class WelcomeNewMembers extends Command
             ->setDescription('admin ( samuel eyre ) welcomes new members at 12 am');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
         $newMembers = $this->em
@@ -57,7 +57,7 @@ class WelcomeNewMembers extends Command
 
         if (!$admin) {
             syslog(LOG_ERR, "could not find main admin in database !");
-            return;
+            exit();
         }
 
         $memberIndex = 0;
