@@ -32,6 +32,10 @@ class SignUpController extends AbstractController
     options={"deserializationContext"={"groups"={"create"} } }
     )
      * @View( serializerGroups={"profile"})
+     * @param User $user
+     * @param Request $request
+     * @param CreateUserService $service
+     * @return User|JsonResponse
      */
     public function postNewUserAction(
         User $user,

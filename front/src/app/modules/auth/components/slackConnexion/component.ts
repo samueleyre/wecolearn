@@ -8,7 +8,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DomainService } from '~/core/services/domain/domain';
 import { environment } from '~/../environments/environment';
 import { SessionService } from '~/core/services/auth/session.service';
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import {EnvEnum} from "~/core/enums/env.enum";
 
 

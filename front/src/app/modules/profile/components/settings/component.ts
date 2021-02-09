@@ -19,7 +19,7 @@ import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { PASSWORD } from '~/config/validators.const';
 import { passwordMatchValidator } from '~/modules/auth/validators/password-match.validator';
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { ToastService } from '~/core/services/toast.service';
 import { EnvEnum } from '~/core/enums/env.enum';
 

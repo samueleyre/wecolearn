@@ -6,7 +6,7 @@ import { debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, tap }
 
 import { Tag } from '~/core/entities/tag/entity';
 import { TagFormComponent } from '~/modules/tags/modules/tag-ui/components/tag-form/tag-form.component';
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { AdminTagService } from '~/modules/tags/services/admin-tag.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagTypeEnum, tagTypeFR } from '~/core/enums/tag/tag-type.enum';

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { User } from '~/core/entities/user/entity';
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { DomainService } from '~/core/services/domain/domain';
 import { environment } from '~/../environments/environment';
 import { ERRORS } from '~/config/errors';

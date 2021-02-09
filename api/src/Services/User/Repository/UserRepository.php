@@ -8,6 +8,7 @@ use App\Services\Tag\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Exception;
 
 class UserRepository extends ServiceEntityRepository
 {
@@ -235,8 +236,10 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * @return User[]
+     * @throws Exception
      */
-    public function getDeletedUsers() {
+    public function getDeletedUsers(): array
+    {
 
         $thirtyDaysEarlier = new \DateTime('- 30 Days', new \DateTimeZone('Europe/Paris'));
 
@@ -249,8 +252,10 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * @return User[]
+     * @throws Exception
      */
-    public function getNewUsers() {
+    public function getNewUsers(): array
+    {
 
         $twoDaysEarlier = new \DateTime('- 2 Days', new \DateTimeZone('Europe/Paris'));
 

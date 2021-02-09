@@ -5,7 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { PATTERN } from '~/shared/config/pattern';
 import { onBoardingSections } from '~/modules/auth/components/onBoardingComponents/onBoarding.const';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';

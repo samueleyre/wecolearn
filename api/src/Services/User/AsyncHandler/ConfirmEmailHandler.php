@@ -32,7 +32,7 @@ class ConfirmEmailHandler implements MessageHandlerInterface
         $this->tokenService = $tokenService;
         $this->emailService = $emailService;
         $this->container = $container;
-        $this->host = $host;
+        $this->host = str_contains($host, 'localhost') ? "http://$host" : "https://$host";
     }
 
     public function __invoke(ConfirmEmailBusMessage $confirmEmailBusMessage)
@@ -44,13 +44,17 @@ class ConfirmEmailHandler implements MessageHandlerInterface
         $token = $this->tokenService
             ->setNewToken($user, TokenConstant::$types["CONFIRMEMAIL"], true);
 
+        $confirmLink = $this->host."/auth/confirm?token=".$token->getToken();
+        $preheader = "Bienvenue sur Wecolearn, " . $user->getFirstName() . " !                                   ";
+
         $this->emailService
             ->setData(
-                9,
+                22,
                 [
-                    "TOKEN" => $token->getToken(),
                     "HOST" => $this->host,
-                    "FIRSTNAME" => $user->getFirstName()
+                    "FIRSTNAME" => $user->getFirstName(),
+                    "CONFIRM_LINK" => $confirmLink,
+                    "PREHEADER" => $preheader
                 ],
                 $user->getEmail()
             )
