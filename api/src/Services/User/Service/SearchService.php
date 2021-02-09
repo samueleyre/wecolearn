@@ -18,7 +18,7 @@ class SearchService
     }
 
 
-    public function search($searchParameters, $filter, User $user = null, $domain = "wecolearn")
+    public function search($searchParameters, $filter, User $user = null, $domain = "wecolearn"): array
     {
 
         $searchTag = null;

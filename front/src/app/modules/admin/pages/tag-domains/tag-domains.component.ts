@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
 import { TagDomainFormComponent } from '~/modules/tags/modules/tag-domain-ui/components/tag-domain-form/tag-domain-form.component';

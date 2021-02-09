@@ -22,7 +22,7 @@ import { SendPasswordConfirmationEmailMobileComponent } from './components/sendC
 import { AuthOnboardingPageComponent } from './pages/onBoarding/component';
 import { AuthOnboardingComponent } from './components/onBoardingComponents/onBoarding/component';
 import { AuthRouting } from './auth.routing';
-import { ConfirmEmailComponent } from './components/confirmEmail/component';
+import { ConfirmEmailComponent } from './pages/confirmEmail/component';
 import { SigninComponent } from './components/signin/component';
 import { SlackConnexionComponent } from './components/slackConnexion/component';
 import { SignupComponent } from './components/signup/component';

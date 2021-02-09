@@ -34,7 +34,7 @@ class CreateUserService
         $this->tagService = $tagService;
     }
 
-    public function process(User $user)
+    public function process(User $user): User
     {
 
         $user = $this->addDomainService->process($user);
@@ -53,7 +53,7 @@ class CreateUserService
         $user->setIntensity(5);
 
         if (!$user->getLatitude()) {
-            // set lyon if missing
+            // todo: in config file !
             $user->setLatitude(45.75);
             $user->setLongitude(4.85);
             $user->setCity('Lyon');
@@ -61,6 +61,8 @@ class CreateUserService
 
         $user->setUsername($user->getEmail()); // todo: remove this someday
         $user = $this->generateUrlService->process($user);
+
+//        todo: in constructor !
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
         $user->setCreated($date);
         try {

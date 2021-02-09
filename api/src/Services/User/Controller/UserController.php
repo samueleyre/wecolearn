@@ -70,13 +70,19 @@ class UserController extends AbstractController
     /**
      * @Post("user/matchs")
      * @View( serializerGroups={"search"})
+     * @param Request $request
+     * @param TokenStorageInterface $tokenStorage
+     * @param DomainService $domainService
+     * @param SearchService $searchService
+     * @return array
      */
     public function getUserMatchsAction(
         Request $request,
         TokenStorageInterface $tokenStorage,
         DomainService $domainService,
         SearchService $searchService
-    ) {
+    ): array
+    {
 
         // parameters :
         // first, max, tag, tag_domain, global, useProfileTags, userLearnTags, userLearnTagDomains, userKnowTags, userKnowTagDomains
@@ -118,8 +124,13 @@ class UserController extends AbstractController
     /**
      * @Get("confirmEmail/{tokenString}")
      * @View( serializerGroups={"profile"})
+     * @param $tokenString
+     * @param UserService $userService
+     * @param TokenService $tokenService
+     * @param EventDispatcherInterface $dispatcher
+     * @return array
      */
-    public function confirmEmailAction($tokenString, UserService $userService, TokenService $tokenService, EventDispatcherInterface $dispatcher)
+    public function confirmEmailAction($tokenString, UserService $userService, TokenService $tokenService, EventDispatcherInterface $dispatcher): array
     {
         $token = $this->getDoctrine()
             ->getRepository(Token::class)

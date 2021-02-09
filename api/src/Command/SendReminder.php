@@ -5,7 +5,6 @@ namespace App\Command;
 use App\Services\Chat\Entity\Message;
 use App\Services\Chat\Service\MessageService;
 use App\Services\Core\Constant\FrontNavConstant;
-use Oro\ORM\Query\AST\Platform\Functions\Mysql\Date;
 use Shapecode\Bundle\CronBundle\Annotation\CronJob;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -76,7 +75,7 @@ class SendReminder extends Command
                 $DATE = $client["messages"][$i]->getCreated()->format('d M Y');
                 $messages .= '<p><b>' . $FIRSTNAME . '</b></p><p style="font-size:20px; padding: 5px 0">' . $MESSAGE . '</p><p style="font-size:10px">' . $DATE . ' à ' . $TIME . '</p><br>';
                 if ($i === 0) {
-                    $preheader .= $FIRSTNAME . ': ' . $MESSAGE;
+                    $preheader .= $FIRSTNAME . ' : ' . $MESSAGE . '               ';
                 }
                 $i++;
             endwhile;

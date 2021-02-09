@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Logged } from '~/core/services/auth/logged';
-import { AuthenticationService } from '~/core/services/auth/auth';
+import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { User } from '~/core/entities/user/entity';
 import { NAV } from '~/config/navigation/nav';
 import { ProfileService } from '~/core/services/user/profile.service';
