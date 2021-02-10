@@ -1,0 +1,8 @@
+<span class="savingInput" *ngIf="saving">
+  <mat-spinner
+  [diameter]="16"
+  color="secondary"></mat-spinner>
+</span>
+<span class="savingInput-text" *ngIf="saving === false && dirty">
+  enregistré <mat-icon>check</mat-icon>
+</span>

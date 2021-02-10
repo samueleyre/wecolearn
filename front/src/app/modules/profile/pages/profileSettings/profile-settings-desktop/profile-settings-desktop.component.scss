@@ -3,4 +3,21 @@
 section {
   padding-bottom: 30px;
   padding-top: 30px;
+
+  h1 {
+    padding: 20px;
+  }
+
+  .ProfileSettingsForm {
+    &-firstname-container {
+      margin-bottom: 10px;
+    }
+
+    &-profilImage-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
+

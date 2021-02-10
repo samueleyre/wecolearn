@@ -1,5 +1,18 @@
 @import '../profile-settings.component.base';
 
 section {
+  padding-top: 40px;
   background-color: $dashboardMobileBg;
+  .ProfileSettingsForm {
+    &-title {
+      text-align: center;
+    }
+    .fieldContainer {
+      padding-bottom: 15px;
+    }
+    &-firstname-container {
+      margin-bottom: 10px;
+    }
+  }
+
 }

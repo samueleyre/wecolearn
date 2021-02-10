@@ -2,7 +2,8 @@ import { Component, Inject, OnDestroy } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, map, mapTo, takeUntil, tap } from 'rxjs/operators';
+import { merge } from 'rxjs';
 
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { DomainService } from '~/core/services/domain/domain';
@@ -16,29 +17,31 @@ import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
   template: '',
 })
 export class ProfileSettingsComponentBase extends DestroyObservable {
-  public tags = [];
-
-  // loading = false;
-  // private error = {
-  //   slack: '',
-  // };
-
-  // private redirectURI: string;
-  // hasSlack: boolean;
-  // hasRocketChat: boolean;
-  // hasSlackAccount = false;
-  // rocketChatId: string;
-
   constructor(
     @Inject(APP_BASE_HREF) r: string,
     private domainService: DomainService,
     private fb: FormBuilder,
     private deviceService: DeviceDetectorService,
     private profileService: ProfileService,
-    private toastService: ToastService,
   ) {
     super();
   }
+
+  public tags = [];
+  public savingInput = {
+    first_name: null,
+    last_name: null,
+    image: null,
+    learn_tags: null,
+    biographie: null,
+    know_tags: null,
+    teach_tags: null,
+    intensity: null,
+    slack_accounts: null,
+    latitude: null,
+    longitude: null,
+    city: null,
+  };
 
   public userForm = this.fb.group({
     first_name: null,
@@ -57,38 +60,15 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
 
 
   ngOnInit() {
-    this.load();
+    this.subscribeToUpdates();
 
-    this.userForm.valueChanges
-      .pipe(
-        debounceTime(1000),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(() => {
-        this.toastService.success('Modification prise en compte.', null, { timeOut: 1000 });
-        this.joinTags();
-        this.submit();
-      });
+    this.autoSaveChanges();
 
-    // update data
+    // get newest values from api
     this.profileService.get().subscribe();
   }
 
-  load(): void {
-    // let subDomain = this.domainService.getSubDomain();
-    // this.hasSlack = this.domainService.hasSlack();
-    // this.hasRocketChat = this.domainService.hasRocketChat();
-
-    // // TODO : set as enum
-    // if (subDomain === 'wecolearn') {
-    //   subDomain = '';
-    // } else {
-    //   subDomain += '.';
-    // }
-
-    // this.redirectURI = (environment.env === EnvEnum.PRODUCTION || environment.env === EnvEnum.STAGING) ?
-    //   encodeURIComponent(`https://${subDomain}wecolearn.com/profilsettings`) : encodeURIComponent('http://0.0.0.0:8080/profilsettings');
-
+  private subscribeToUpdates(): void {
     this.profileService.entity$
       .pipe(
         filter(val => !!val),
@@ -97,12 +77,98 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
       .subscribe((user) => {
         this.setProfileFormData(user);
       });
+  }
 
-    // this.activatedRoute.queryParams.subscribe((params: Params) => {
-    //   if (params && params['code']) {
-    //     this.slackConnect(params['code'], this.redirectURI);
-    //   }
-    // });
+  private autoSaveChanges(): void {
+    const textFields = [
+      'first_name',
+      'last_name',
+      'biographie',
+    ];
+
+    const textObsList = [];
+    for (const textFieldsKey of textFields) {
+      textObsList.push(
+        this.userForm.get(textFieldsKey).valueChanges.pipe(mapTo(textFieldsKey)),
+      );
+    }
+
+    const textObs = merge(...textObsList)
+      .pipe(
+        tap((field:string) => this.savingInput[field] = true),
+        debounceTime(3000),
+      );
+
+    const immediateFields = [
+      'learn_tags',
+      'know_tags',
+      'teach_tags',
+      'image',
+    ];
+
+    const immediateObsList = [];
+    for (const immediateFieldsKey of immediateFields) {
+      immediateObsList.push(
+        this.userForm.get(immediateFieldsKey).valueChanges.pipe(mapTo(immediateFieldsKey)),
+      );
+    }
+
+    const immediateObs = merge(...immediateObsList)
+      .pipe(tap((field:string) => {
+        this.savingInput[field] = true;
+      }));
+
+    const slideFields = [
+      'intensity',
+    ];
+
+    const slideObsList = [];
+    for (const slideFieldsKey of slideFields) {
+      slideObsList.push(
+        this.userForm.get(slideFieldsKey).valueChanges.pipe(mapTo(slideFieldsKey)),
+      );
+    }
+
+    const slideObs = merge(...slideObsList)
+      .pipe(
+        tap((field:string) => this.savingInput[field] = true),
+        debounceTime(2000),
+      );
+
+    const otherFields = [
+      'latitude',
+      'longitude',
+      'city',
+    ];
+
+    const otherObsList = [];
+    for (const otherFieldsKey of otherFields) {
+      otherObsList.push(
+        this.userForm.get(otherFieldsKey).valueChanges.pipe(mapTo(otherFieldsKey)),
+      );
+    }
+
+    const otherObs = merge(...otherObsList)
+      .pipe(
+        tap((field:string) => this.savingInput[field] = true),
+        debounceTime(2000),
+      );
+
+    // merge everything and subscribe
+    merge(
+      textObs,
+      otherObs,
+      immediateObs,
+      slideObs,
+    )
+    .pipe(tap(val => console.log(val)))
+    .pipe(
+      // tap((field:string) => this.savingInput[field] = true),
+      takeUntil(this.destroy$),
+    )
+    .subscribe((val) => {
+      this.submit();
+    });
   }
 
   get loaded() {
@@ -112,13 +178,6 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
   setProfileFormData(user: User) {
     this.userForm.patchValue(user, { emitEvent: false });
     this.setTags(user);
-
-    // if (!this.client['latitude']) {
-    //   this.setDefaultLatLong();
-    // }
-
-    // this.hasSlackAccount = (null !== this.clientService.getSlackAccount(client, 'slack'));
-    // this.rocketChatId = this.clientService.getSlackAccount(client, 'rocketchat');
   }
 
   setTags(user: User) {
@@ -127,31 +186,24 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
     this.userForm.controls.teach_tags.setValue(user.tags.filter((tag: Tag) => tag.type === 2), { emitEvent: false });
   }
 
-  // slackConnect(code: string, redirectUri: string) {
-  //   this.loading = true;
-  //   this.authenticationService.slackConnect(code, redirectUri).subscribe(
-  //     (result) => {
-  //       this.loading = false;
-  //       if (result['error']) {
-  //         this.error.slack = result['error'];
-  //       } else {
-  //         this.setClient(result);
-  //       }
-  //     },
-  //     (error) => {
-  //       this.error.slack = 'Une erreur est survenue';
-  //       this.loading = false;
-  //     },
-  //       );
-  // }
-
   submit() {
+    this.joinTags();
     this.profileService.patch({ tags: this.tags, ...this.userForm.value }).subscribe(
-      (user: User) => {},
+      (user: User) => {
+        this.resetSavingInput();
+      },
       (error) => {
         console.log(error);
       },
     );
+  }
+
+  private resetSavingInput():void {
+    for (const key of Object.keys(this.savingInput)) {
+      if (this.savingInput[key] === true) {
+        this.savingInput[key] = false;
+      }
+    }
   }
 
   joinTags() {
@@ -173,34 +225,4 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
   get knowType(): TagTypeEnum {
     return TagTypeEnum.KNOW;
   }
-
-
-  // setDefaultLatLong() {
-  //   this.client['latitude'] = 45.764043; // tslint:disable-line no-magic-numbers
-  //   this.client['longitude'] = 4.835659; // tslint:disable-line no-magic-numbers
-  //   this.zoom = 4;
-  // }
-
-
-  // private connectRocketChat() {
-  //   const subDomain = this.domainService.getSubDomain();
-  //
-  //   let found = false;
-  //   for (let i = 0; i < this.client.slack_accounts.length; i++) { // tslint:disable-line
-  //           // for rocketchat we use subodmain as an id for a rocketchat team
-  //     if (this.client.slack_accounts[i].slack_team.type === 'rocketchat' &&
-  //       this.client.slack_accounts[i].slack_team.team_id === subDomain) {
-  //       this.client.slack_accounts[i].account_id = this.rocketChatId;
-  //       found = true;
-  //     }
-  //   }
-  //   if (!found) {
-  //     const newTeam = new SlackTeam(null, subDomain, subDomain, 'rocketchat');
-  //     const newAccount = new SlackAccount(null, null, this.rocketChatId, newTeam);
-  //     this.client.slack_accounts.push(newAccount);
-  //   }
-  //
-  //
-  //   this.submit();
-  // }
 }
