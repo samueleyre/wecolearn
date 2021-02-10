@@ -1,14 +1,16 @@
-import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ActivatedRoute, Router } from '@angular/router';
+import {distinctUntilChanged, filter, take, takeUntil, tap} from 'rxjs/operators';
+import { merge } from 'rxjs';
 
 import { DomainService } from '~/core/services/domain/domain';
 import { ProfileService } from '~/core/services/user/profile.service';
 import { ToastService } from '~/core/services/toast.service';
 import { Tag } from '~/core/entities/tag/entity';
-import {tagTypeEN, TagTypeEnum, tagTypes} from '~/core/enums/tag/tag-type.enum';
+import { tagTypeEN, TagTypeEnum, tagTypes } from '~/core/enums/tag/tag-type.enum';
 import { ProfileSettingsComponentBase } from '~/modules/profile/pages/profileSettings/profile-settings.component.base';
 
 @Component({
@@ -30,8 +32,20 @@ export class ProfileSettingsMobileComponent extends ProfileSettingsComponentBase
     private _location: Location,
   ) {
     super(_r, _domainService, _fb, _deviceService, _profileService);
-    _route.queryParams.subscribe((params) => {
-      if ('tag_id' in params && 'tag_type' in params && 'tag_name' in params) {
+
+    const routeWithParams$ = _route.queryParams.pipe(
+      take(1),
+      filter(params => !('tag_id' in params && 'tag_type' in params && 'tag_name' in params)),
+      tap((params) => {
+        // get newest values from api
+        this._profileService.get().subscribe();
+      }),
+    );
+
+    const routeWithoutParams$ = _route.queryParams.pipe(
+      filter(params => 'tag_id' in params && 'tag_type' in params && 'tag_name' in params),
+      take(1),
+      tap((params) => {
         // remove query params
         this._router.navigate(
           [],
@@ -39,15 +53,27 @@ export class ProfileSettingsMobileComponent extends ProfileSettingsComponentBase
             relativeTo: _route,
           }).then(() => {
             this.addTag(
-            new Tag({
-              id: Number(params.tag_id),
-              type: Number(params.tag_type),
-              name: params.tag_name,
-            }),
-          );
+              new Tag({
+                id: Number(params.tag_id),
+                type: Number(params.tag_type),
+                name: params.tag_name,
+              }),
+            );
           });
-      }
-    });
+      }),
+    );
+
+    merge(
+      routeWithParams$,
+      routeWithoutParams$,
+    ).pipe(
+      takeUntil(this.destroy$),
+    ).subscribe();
+  }
+
+  ngOnInit() {
+    super.subscribeToUpdates();
+    super.autoSaveChanges();
   }
 
   ngAfterViewInit() {
@@ -66,25 +92,11 @@ export class ProfileSettingsMobileComponent extends ProfileSettingsComponentBase
   }
 
   public addTag(tag: Tag): void {
-    const tagCtrl = this.userForm.get(this.tagTypeEn(tag.type))
+    const tagCtrl = this.userForm.get(this.tagTypeEn(tag.type) + '_tags');
     const tags = tagCtrl.value;
     if (!tags.find(t => t.id === tag.id)) {
       tags.push(tag);
       tagCtrl.setValue(tags);
     }
   }
-
-  // getTagControlByType(tagType: TagTypeEnum): FormControl {
-  //   const tagTypeCasted = Number(tagType);
-  //   if (tagTypeCasted === TagTypeEnum.LEARN) {
-  //     return <FormControl>this.userForm.get('learn_tags');
-  //   }
-  //   if (tagTypeCasted === TagTypeEnum.KNOW) {
-  //     return <FormControl>this.userForm.get('learn_tags');
-  //   }
-  //   if (tagTypeCasted === TagTypeEnum.TEACH) {
-  //     return <FormControl>this.userForm.get('teach_tags');
-  //   }
-  //   console.error('tag type is not defined');
-  // }
 }
