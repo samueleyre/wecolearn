@@ -1,5 +1,5 @@
-<section>
-  <form *ngIf="loaded" class="ProfileSettingsForm form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
+<section *ngIf="loaded">
+  <form  class="ProfileSettingsForm form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
     <div class="container-fluid">
       <div class="row justify-content-center">
         <profile-form-image [parentForm]="userForm" (onChange)="submit()"></profile-form-image>

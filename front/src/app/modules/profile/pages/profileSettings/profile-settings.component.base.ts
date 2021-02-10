@@ -68,7 +68,7 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
     this.profileService.get().subscribe();
   }
 
-  private subscribeToUpdates(): void {
+  protected subscribeToUpdates(): void {
     this.profileService.entity$
       .pipe(
         filter(val => !!val),
@@ -79,7 +79,7 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
       });
   }
 
-  private autoSaveChanges(): void {
+  protected autoSaveChanges(): void {
     const textFields = [
       'first_name',
       'last_name',
@@ -114,9 +114,12 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
     }
 
     const immediateObs = merge(...immediateObsList)
-      .pipe(tap((field:string) => {
-        this.savingInput[field] = true;
-      }));
+      .pipe(
+        debounceTime(200), // prevent bug
+        tap((field:string) => {
+          this.savingInput[field] = true;
+        }),
+      );
 
     const slideFields = [
       'intensity',
@@ -161,9 +164,7 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
       immediateObs,
       slideObs,
     )
-    .pipe(tap(val => console.log(val)))
     .pipe(
-      // tap((field:string) => this.savingInput[field] = true),
       takeUntil(this.destroy$),
     )
     .subscribe((val) => {
