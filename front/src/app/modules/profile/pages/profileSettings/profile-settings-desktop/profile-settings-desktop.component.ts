@@ -22,6 +22,6 @@ export class ProfileSettingsDesktopComponent extends ProfileSettingsComponentBas
     private _profileService: ProfileService,
     private _toastService: ToastService,
   ) {
-    super(_r, _domainService, _fb, _deviceService, _profileService, _toastService);
+    super(_r, _domainService, _fb, _deviceService, _profileService);
   }
 }

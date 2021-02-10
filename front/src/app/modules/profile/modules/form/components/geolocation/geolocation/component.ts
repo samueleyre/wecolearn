@@ -3,10 +3,9 @@ import {
   Input, OnDestroy,
   OnInit,
 } from '@angular/core';
-import * as L from 'leaflet';
-import {debounceTime, filter, skip, switchMap, takeUntil} from 'rxjs/operators';
+import { debounceTime, filter, skip, switchMap, takeUntil } from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { GeoDataInterface, ProfileGeoService } from '~/modules/profile/services/profile-geo.service';

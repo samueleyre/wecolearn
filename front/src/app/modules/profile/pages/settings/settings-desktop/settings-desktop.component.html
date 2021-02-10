@@ -1,16 +1,9 @@
-<section class="desktop">
-  <div *ngIf="user$ | async as user" class="container-fluid">
-    <div class="row">
-      <div class="col-12 offset-md-1 col-md-10">
-        <div class="card">
-          <div class="card-header page-bloc-title">
-            <h2 class="center">Paramètres</h2>
-          </div>
-          <div class="card-body">
-            <user-settings [user]="user"></user-settings>
-          </div>
-        </div>
-        <br>
+<section *ngIf="user$ | async as user">
+  <h1 class="center">Paramètres</h1>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+        <user-settings [user]="user"></user-settings>
       </div>
     </div>
   </div>

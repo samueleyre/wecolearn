@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'profile-form-lastname',
@@ -9,14 +9,19 @@ import { FormGroup } from '@angular/forms';
 export class ProfileFormLastnameComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Output() onBlur = new EventEmitter();
+  @Input() saving;
 
   ngOnInit(): void {
     //
   }
 
   blur() {
-    if (this.parentForm.controls.last_name.dirty) {
+    if (this.lastNameControl.dirty) {
       this.onBlur.next();
     }
+  }
+
+  public get lastNameControl(): FormControl {
+    return <FormControl>this.parentForm.get('last_name');
   }
 }

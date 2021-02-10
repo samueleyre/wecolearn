@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Form, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'profile-form-biography',
@@ -9,14 +9,19 @@ import { FormGroup } from '@angular/forms';
 export class ProfileFormBiographyComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Output() onBlur = new EventEmitter();
+  @Input() saving: boolean | null;
 
   ngOnInit(): void {
     //
   }
 
   blur() {
-    if (this.parentForm.controls.biographie.dirty) {
+    if (this.bioCtrl.dirty) {
       this.onBlur.next();
     }
+  }
+
+  public get bioCtrl(): FormControl {
+    return <FormControl>this.parentForm.get('biographie');
   }
 }
