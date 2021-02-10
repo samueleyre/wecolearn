@@ -1,0 +1,9 @@
+@import "variables";
+
+.savingInput {
+  display: inline-flex;
+  &-text, mat-icon {
+    color: transparentize($correctColor, 0.2);
+
+  }
+}

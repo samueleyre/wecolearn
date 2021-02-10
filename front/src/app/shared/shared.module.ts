@@ -9,11 +9,12 @@ import { CopyComponent } from '~/shared/components/copy/component';
 import { HideMenuMobileOnFocusDirective } from '~/shared/directives/hide-menu-mobile-on-focus.directive';
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
 import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';
-import { ConfirmDialogComponent } from '~/core/components/dialog/confirm-dialog.component';
 
 import { NoConnectionToastComponent } from './components/no-connection-toast/no-connection-toast.component';
 import { AndroidLinkComponent } from './components/android-link/android-link.component';
 import { EmojiComponent } from './components/emoji/emoji.component';
+import { SavingInputComponent } from './components/saving-input/saving-input.component';
+import {MatProgressSpinnerModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -22,17 +23,19 @@ import { EmojiComponent } from './components/emoji/emoji.component';
     NoConnectionToastComponent,
     AndroidLinkComponent,
     EmojiComponent,
+    SavingInputComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ProfileImageModule,
-    PipesModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
+            imports: [
+              CommonModule,
+              RouterModule,
+              FormsModule,
+              ReactiveFormsModule,
+              ProfileImageModule,
+              PipesModule,
+              MatButtonModule,
+              MatIconModule,
+              MatProgressSpinnerModule,
+            ],
   exports: [
     CommonModule,
     ProfileImageModule,
@@ -40,7 +43,7 @@ import { EmojiComponent } from './components/emoji/emoji.component';
     EmojiComponent,
     HideMenuMobileOnFocusDirective,
     AndroidLinkComponent,
-    // NoConnectionToastComponent,
+    SavingInputComponent,
   ],
   entryComponents: [NoConnectionToastComponent],
 })

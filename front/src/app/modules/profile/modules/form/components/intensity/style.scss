@@ -1,7 +1,14 @@
-mat-slider{
-  width: 100%;
+.intensity {
+  margin-top: 20px;
+  max-width: 350px;
+  mat-slider{
+    width: 100%;
+  }
+  .text {
+    margin-bottom: 0;
+  }
 }
 
-.text {
-  margin-bottom: 0;
-}
+
+
+

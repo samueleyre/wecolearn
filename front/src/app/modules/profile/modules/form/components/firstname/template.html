@@ -1,5 +1,6 @@
-<mat-form-field appearance="legacy" [formGroup]="parentForm">
-  <mat-label>Prénom</mat-label>
+<mat-form-field appearance="fill" [formGroup]="parentForm">
+  <mat-label>Prénom </mat-label>
   <input id="firstnameInput" matInput placeholder="" appHideMenuMobileOnFocus formControlName="first_name" (blur)="blur()" >
+  <mat-hint><app-saving-input [saving]="saving" [dirty]="firstNameControl.dirty"></app-saving-input></mat-hint>
 </mat-form-field>
 

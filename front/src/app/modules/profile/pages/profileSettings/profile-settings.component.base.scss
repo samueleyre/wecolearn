@@ -1,11 +1,10 @@
 @import 'variables';
 
 .ProfileSettingsForm {
-  &-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &-page {
+    background-color: white;
   }
+
 
   @media (max-width: $smScreen) {
     margin: 0 15px;
@@ -21,7 +20,7 @@
 
 
 .fieldContainer{
-  border: #ececec solid 1px;
+  //border: #ececec solid 1px;
   padding-top: 15px;
   background-color: white;
   ::ng-deep h6{

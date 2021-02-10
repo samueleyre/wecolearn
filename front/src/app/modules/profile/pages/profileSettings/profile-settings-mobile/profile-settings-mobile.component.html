@@ -1,149 +1,68 @@
 <section>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 no-padding">
-        <form *ngIf="loaded" class="ProfileSettingsForm form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
-          <br>
-          <div class="container-fluid">
-            <div class="row justify-content-center">
-              <div class="col-12 col-lg-10 col-xl-8">
-                <div class="row">
-                  <div class="col-12 col-md-6 order-2 order-md-1">
-                    <div class="col-12 no-padding">
-                      <profile-form-firstname [parentForm]="userForm"></profile-form-firstname>
-                    </div>
-                    <div class="col-12 no-padding">
-                      <profile-form-lastname [parentForm]="userForm"></profile-form-lastname>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6 order-1 order-md-2" style="text-align: center;">
-                    <profile-form-image [parentForm]="userForm" (onChange)="submit()"></profile-form-image>
-                    <br>
-                  </div>
-                </div>
-
-                <div class="row fieldContainer">
-                  <div class="col-12">
-                    <h6 [id]="tagTypeEn(learnType)" class="ProfileSettingsForm-title">Je veux apprendre
-                      <app-emoji [emojiName]="'1F4C8'"></app-emoji>
-                    </h6>
-                    <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'learn_tags'"
-                                                  [type]="learnType"></app-profile-form-tags-mobile>
-                  </div>
-                </div>
-
-                <div class="row fieldContainer">
-                  <div class="col-12">
-                    <h6 class="ProfileSettingsForm-title">Mes projets
-                      <app-emoji [emojiName]="'1F9D1-200D-1F680'"></app-emoji>
-                    </h6>
-                    <br>
-                    <profile-form-biography [parentForm]="userForm"></profile-form-biography>
-                  </div>
-                </div>
-                <div class="row fieldContainer">
-                  <div class="col-12">
-                    <h6 [id]="tagTypeEn(knowType)" class="ProfileSettingsForm-title">Je connais
-                      <app-emoji [emojiName]="'E319'"></app-emoji>
-                    </h6>
-                    <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'know_tags'" [type]="knowType"></app-profile-form-tags-mobile>
-                  </div>
-                </div>
-                <div class="row fieldContainer">
-                  <div class="col-12">
-                    <h6 [id]="tagTypeEn(teachType)" class="ProfileSettingsForm-title">J'ai envie de transmettre
-                      <app-emoji [emojiName]="'1F9D1-200D-1F3EB'"></app-emoji>
-                    </h6>
-                    <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'teach_tags'"
-                                                  [type]="teachType"></app-profile-form-tags-mobile>
-                  </div>
-                </div>
-                <div class="row fieldContainer">
-                  <div class="col-12">
-                    <h6 class="ProfileSettingsForm-title">L'intensité à laquelle je souhaite apprendre</h6>
-                    <profile-form-intensity [parentForm]="userForm"></profile-form-intensity>
-                  </div>
-                </div>
-                <div class="row fieldContainer">
-                  <div class="col-12">
-                    <h6 class="ProfileSettingsForm-title">Ma position</h6>
-                    <app-geolocation [parentForm]="userForm"></app-geolocation>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <!--   SLACK -->
-
-
-          <!--      <div *ngIf="!hasSlackAccount && hasSlack" class="form-group" id="connectSlackAccount">-->
-          <!--        <label class="col-md-6 control-label label-form">-->
-          <!--          <span>Slack</span>-->
-          <!--        </label>-->
-          <!--        <div class="col-md-12">-->
-          <!--          <div class="slackLoginContainer">-->
-          <!--            <a href="https://slack.com/oauth/authorize?scope=identity.basic identity.email identity.avatar&client_id=5014201828.445316374448&redirect_uri={{redirectURI}}">-->
-          <!--              <button class="btn btn-primary" type="button">-->
-          <!--                <img class="slackIcon"-->
-          <!--                     src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI2MHB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA2MCA2MCIgd2lkdGg9IjYwcHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjx0aXRsZS8+PGRlc2MvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBpZD0iU29jaWFsX2ljb25zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNTIxLjAwMDAwMCwgLTEwNTQuMDAwMDAwKSI+PGcgaWQ9IlNsYWNrIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MjEuMDAwMDAwLCAxMDU0LjAwMDAwMCkiPjxwYXRoIGQ9Ik0wLDMwIEMwLDEzLjQzMTQ1NjcgMTMuNDMxNDU2NywwIDMwLDAgQzQ2LjU2ODU0MzMsMCA2MCwxMy40MzE0NTY3IDYwLDMwIEM2MCw0Ni41Njg1NDMzIDQ2LjU2ODU0MzMsNjAgMzAsNjAgQzEzLjQzMTQ1NjcsNjAgMCw0Ni41Njg1NDMzIDAsMzAgWiIgZmlsbD0iI0ZGRkZGRiIgaWQ9ImJhY2siLz48ZyBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0LjAwMDAwMCwgMTQuMDAwMDAwKSI+PHBhdGggZD0iTTIwLjc0NTQ0MjYsMS45Nzk4MDMyNyBDMjAuMjU5MTQ3NSwwLjQ4Mjg4NTI0NiAxOC42NTE1NDEsLTAuMzM2MjYyMjk1IDE3LjE1NDg4NTMsMC4xNTAyOTUwODIgQzE1LjY1Nzk2NzMsMC42MzY1OTAxNjQgMTQuODM4ODE5NiwyLjI0NDE5NjcyIDE1LjMyNTM3NywzLjc0MDg1MjQ2IEwyMi42OTM3NzA1LDI2LjQxMTU0MSBDMjMuMTk5NzM3OCwyNy44MDk4MzYxIDI0LjcxMDI5NTEsMjguNTk1NjcyMSAyNi4xNjAyNjIzLDI4LjE3ODM2MDYgQzI3LjY3MjY1NTgsMjcuNzQyOTUwOSAyOC41OTQ2MjMsMjYuMTM2NjU1NyAyOC4xMTIsMjQuNjUxMjc4NyBDMjguMDkzNjM5NCwyNC41OTQ2MjMgMjAuNzQ1NDQyNiwxLjk3OTgwMzI3IDIwLjc0NTQ0MjYsMS45Nzk4MDMyNyIgZmlsbD0iI0RGQTIyRiIgaWQ9IlNoYXBlIi8+PHBhdGggZD0iTTkuMzI4MjYyMyw1LjY4OTQ0MjYzIEM4Ljg0MTcwNDkxLDQuMTkyNzg2ODkgNy4yMzQwOTgzNiwzLjM3MzYzOTM1IDUuNzM3NDQyNjMsMy44NTk5MzQ0MyBDNC4yNDA1MjQ1OSw0LjM0NjIyOTUxIDMuNDIxMzc3MDUsNS45NTM4MzYwNiAzLjkwNzkzNDQzLDcuNDUwNzU0MSBMMTEuMjc2MzI3OSwzMC4xMjE0NDI2IEMxMS43ODIyOTUxLDMxLjUxOTczNzggMTMuMjkyODUyNSwzMi4zMDU1NzM4IDE0Ljc0MjgxOTYsMzEuODg4IEMxNi4yNTUyMTMxLDMxLjQ1Mjg1MjUgMTcuMTc3MTgwNCwyOS44NDY1NTc0IDE2LjY5NDU1NzQsMjguMzYwOTE4IEMxNi42NzYxOTY4LDI4LjMwNDUyNDYgOS4zMjgyNjIzLDUuNjg5NDQyNjMgOS4zMjgyNjIzLDUuNjg5NDQyNjMiIGZpbGw9IiMzQ0IxODciIGlkPSJTaGFwZSIvPjxwYXRoIGQ9Ik0zMC4wMjAxOTY4LDIwLjc1NTY3MjEgQzMxLjUxNzExNDgsMjAuMjY5Mzc3IDMyLjMzNiwxOC42NjE3NzA1IDMxLjg0OTcwNDksMTcuMTY0ODUyNSBDMzEuMzYzNDA5OSwxNS42NjgxOTY4IDI5Ljc1NTgwMzMsMTQuODQ5MDQ5MSAyOC4yNTkxNDc1LDE1LjMzNTM0NDMgTDUuNTg4NDU5MDEsMjIuNzA0IEM0LjE5MDE2Mzk0LDIzLjIwOTcwNDkgMy40MDQzMjc4OCwyNC43MjAyNjIzIDMuODIxNjM5MzUsMjYuMTcwMjI5NSBDNC4yNTcwNDkxOCwyNy42ODI2MjMgNS44NjMzNDQyNiwyOC42MDQ1OTAxIDcuMzQ4NzIxMzEsMjguMTIxOTY3MyBDNy40MDUzNzcwNSwyOC4xMDM2MDY1IDMwLjAyMDE5NjgsMjAuNzU1NjcyMSAzMC4wMjAxOTY4LDIwLjc1NTY3MjEiIGZpbGw9IiNDRTFFNUIiIGlkPSJTaGFwZSIvPjxwYXRoIGQ9Ik0xMC4zMTM0NDI2LDI3LjE1ODgxOTYgQzExLjc4OTExNDgsMjYuNjc5MzQ0MyAxMy42OTEwMTY0LDI2LjA2MTM3NyAxNS43MzE5MzQ0LDI1LjM5ODI5NTEgQzE1LjI1MjQ1OSwyMy45MjI2MjMgMTQuNjM0NDkxOCwyMi4wMjA0NTkgMTMuOTcxMTQ3NSwxOS45NzkyNzg4IEw4LjU1MjM5MzQ0LDIxLjc0MDU5MDEgTDEwLjMxMzQ0MjYsMjcuMTU4ODE5NiIgZmlsbD0iIzM5MjUzOCIgaWQ9IlNoYXBlIi8+PHBhdGggZD0iTTIxLjczMDg4NTMsMjMuNDQ4OTE4IEMyMy43Nzk0MDk5LDIyLjc4MzQ3NTQgMjUuNjgzNDA5OSwyMi4xNjQ3MjEzIDI3LjE0OTM3NywyMS42ODgzOTM1IEMyNi42Njk5MDE2LDIwLjIxMjcyMTMgMjYuMDUxNjcyMSwxOC4zMTAwMzI4IDI1LjM4ODMyNzksMTYuMjY4MzI3OSBMMTkuOTY5NTczOCwxOC4wMjk2Mzk0IEwyMS43MzA4ODUzLDIzLjQ0ODkxOCIgZmlsbD0iI0JCMjQyQSIgaWQ9IlNoYXBlIi8+PHBhdGggZD0iTTI2LjMxMDU1NzQsOS4zMzgyMjk1MSBDMjcuODA3MjEzMSw4Ljg1MTkzNDQzIDI4LjYyNjM2MDYsNy4yNDQzMjc4OCAyOC4xNDAwNjU2LDUuNzQ3NDA5ODQgQzI3LjY1Mzc3MDUsNC4yNTA3NTQxIDI2LjA0NjE2MzksMy40MzE2MDY1NiAyNC41NDkyNDU5LDMuOTE3OTAxNjQgTDEuODc4NTU3MzcsMTEuMjg2NTU3NCBDMC40ODAyNjIyOTUsMTEuNzkyMjYyMyAtMC4zMDU1NzM3NywxMy4zMDI4MTk2IDAuMTEyLDE0Ljc1Mjc4NjkgQzAuNTQ3MTQ3NTQxLDE2LjI2NTE4MDQgMi4xNTM0NDI2MiwxNy4xODcxNDc1IDMuNjM5MDgxOTYsMTYuNzA0NTI0NiBDMy42OTU0NzU0MSwxNi42ODYxNjM5IDI2LjMxMDU1NzQsOS4zMzgyMjk1MSAyNi4zMTA1NTc0LDkuMzM4MjI5NTEiIGZpbGw9IiM3MkM1Q0QiIGlkPSJTaGFwZSIvPjxwYXRoIGQ9Ik02LjYwMjc1NDEsMTUuNzQxNjM5NCBDOC4wNzg0MjYyMywxNS4yNjIxNjM5IDkuOTgwODUyNDYsMTQuNjQzOTM0NCAxMi4wMjIwMzI4LDEzLjk4MDg1MjUgQzExLjM1NjU5MDIsMTEuOTMyMDY1NiAxMC43Mzc4MzYxLDEwLjAyODA2NTYgMTAuMjYxNTA4Miw4LjU2MTgzNjA2IEw0Ljg0MTQ0MjYzLDEwLjMyMzQwOTggTDYuNjAyNzU0MSwxNS43NDE2Mzk0IiBmaWxsPSIjMjQ4QzczIiBpZD0iU2hhcGUiLz48cGF0aCBkPSJNMTguMDE5OTM0NCwxMi4wMzIgQzIwLjA2ODk4MzYsMTEuMzY2Mjk1MSAyMS45NzMyNDU5LDEwLjc0NzU0MSAyMy40Mzk0NzU0LDEwLjI3MDk1MDggQzIyLjc3Mzc3MDUsOC4yMjE5MDE2NCAyMi4xNTUwMTY0LDYuMzE3Mzc3MDUgMjEuNjc4NDI2Miw0Ljg1MDg4NTI1IEwxNi4yNTg2MjMsNi42MTI0NTkwMSBMMTguMDE5OTM0NCwxMi4wMzIiIGZpbGw9IiM2MjgwM0EiIGlkPSJTaGFwZSIvPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4="-->
-          <!--                     alt="Inscription avec slack">-->
-          <!--                Connecter le compte slack-->
-          <!--              </button>-->
-          <!--            </a>-->
-          <!--            <img *ngIf="loading"-->
-          <!--                 src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>-->
-          <!--            <div *ngIf="error.slack" class="alert alert-danger">{{error.slack}}</div>-->
-          <!--          </div>-->
-          <!--          <p class="help-input">-->
-          <!--            Connecter le compte slack permettra aux autres apprenants d'ouvrir une conversation directement-->
-          <!--            sur le slack de votre communauté.-->
-          <!--          </p>-->
-
-          <!--          &lt;!&ndash; <button type="button" class="btn btn-secondary" name="slack" (click)='connectSlackAccount()'>Connecter le compte slack</button> &ndash;&gt;-->
-          <!--        </div>-->
-          <!--      </div>-->
-
-          <!--      &lt;!&ndash; Textarea &ndash;&gt;-->
-          <!--      <div *ngIf="hasRocketChat" class="form-group">-->
-          <!--        <label class="col-md-12 control-label label-form">Nom d'utilisateur du chat de la communauté</label>-->
-          <!--        <div class="col-md-12" *ngIf="!editing.rocketchatid">-->
-          <!--          <label for="rocketchatconnect" (click)="makeEditable('rocketchatid')">-->
-          <!--          <span *ngIf="rocketChatId" class="value-span">{{rocketChatId}}-->
-          <!--            <button type="button" class="btn btn-sm btn-edit"><i class="fas fa-pencil-alt"-->
-          <!--                                                                 aria-hidden="true"></i></button></span>-->
-          <!--            <button *ngIf="!rocketChatId" id="rocketchatconnect" type="button" class="btn btn-primary">-->
-          <!--              Connecter le chat de la communauté-->
-          <!--            </button>-->
-          <!--          </label>-->
-          <!--          <p class="help-input">-->
-          <!--            Connecter le compte rocketchat permettra aux autres apprenants d'ouvrir une conversation-->
-          <!--            directement sur le rocketchat de la communauté.-->
-          <!--          </p>-->
-          <!--        </div>-->
-          <!--        <div *ngIf="editing.rocketchatid" class="col-md-12">-->
-          <!--          <input placeholder="Nom d'utilisateur tel que définit dans votre profil" id="rocketchatid"-->
-          <!--                 class="form-control" [(ngModel)]="rocketChatId" name="rocketChatId"-->
-          <!--                 #rochetchatid="ngModel">-->
-          <!--          <div class="btn-container">-->
-          <!--            <button type="button" name="submit" (click)="connectRocketChat()"-->
-          <!--                    class="btn btn-sm btn-primary">-->
-          <!--              Enregistrer-->
-          <!--            </button>-->
-          <!--          </div>-->
-          <!--          <p class="help-input">-->
-          <!--            Vous trouverez le nom d'utilisateur dans la partie profil de votre commpte sur le chat de la-->
-          <!--            communauté-->
-          <!--          </p>-->
-          <!--        </div>-->
-          <!--      </div>-->
-          <!--    </div>-->
-
-
-        </form>
-
+  <form *ngIf="loaded" class="ProfileSettingsForm form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <profile-form-image [parentForm]="userForm" (onChange)="submit()"></profile-form-image>
+      </div>
+      <div class="row">
+        <div class="col-12 no-padding ProfileSettingsForm-firstname-container">
+          <profile-form-firstname [saving]="savingInput.first_name"
+                                  [parentForm]="userForm"></profile-form-firstname>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 no-padding">
+          <profile-form-lastname [saving]="savingInput.last_name" [parentForm]="userForm"></profile-form-lastname>
+        </div>
+      </div>
+      <div class="row fieldContainer">
+        <div class="col-12 no-padding">
+          <h6 [id]="tagTypeEn(learnType)" class="ProfileSettingsForm-title">Je veux apprendre
+            <app-emoji [emojiName]="'1F4C8'"></app-emoji>
+          </h6>
+          <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'learn_tags'"
+                                        [type]="learnType"></app-profile-form-tags-mobile>
+        </div>
+      </div>
+      <div class="row fieldContainer">
+        <div class="col-12 no-padding">
+          <h6 class="ProfileSettingsForm-title">Mes projets
+            <app-emoji [emojiName]="'1F9D1-200D-1F680'"></app-emoji>
+          </h6>
+          <profile-form-biography [saving]="savingInput.biographie"
+                                  [parentForm]="userForm"></profile-form-biography>
+        </div>
+      </div>
+      <div class="row fieldContainer">
+        <div class="col-12 no-padding">
+          <h6 [id]="tagTypeEn(knowType)" class="ProfileSettingsForm-title">Je connais
+            <app-emoji [emojiName]="'E319'"></app-emoji>
+          </h6>
+          <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'know_tags'"
+                                        [type]="knowType"></app-profile-form-tags-mobile>
+        </div>
+      </div>
+      <div class="row fieldContainer">
+        <div class="col-12 no-padding">
+          <h6 [id]="tagTypeEn(teachType)" class="ProfileSettingsForm-title">J'ai envie de transmettre
+            <app-emoji [emojiName]="'1F9D1-200D-1F3EB'"></app-emoji>
+          </h6>
+          <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'teach_tags'"
+                                        [type]="teachType"></app-profile-form-tags-mobile>
+        </div>
+      </div>
+      <div class="row fieldContainer">
+        <div class="col-12 no-padding">
+          <h6 class="ProfileSettingsForm-title">L'intensité à laquelle je souhaite apprendre</h6>
+          <profile-form-intensity [parentForm]="userForm"></profile-form-intensity>
+        </div>
+      </div>
+      <div class="row fieldContainer">
+        <div class="col-12">
+          <h6 class="ProfileSettingsForm-title">Ma position</h6>
+          <app-geolocation [parentForm]="userForm"></app-geolocation>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </section>
