@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "com.wecolearn.studio",
+    "sha256_cert_fingerprints": ["8C:98:4E:07:DD:1E:9A:5F:82:48:23:E5:27:4F:D7:DE:6A:BC:B2:AD:05:FF:4F:60:E9:98:2C:FE:13:EB:0E:F9"] }
+}]
