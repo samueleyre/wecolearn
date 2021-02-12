@@ -58,7 +58,7 @@ export class ProfileService extends APIService<User> {
   // }
 
   deleteAccount(): Observable<object> {
-    return super.get(`${this.endPoint}/delete`);
+    return this._http.get(`${this.endPoint}/delete`);
   }
 
   // /**
