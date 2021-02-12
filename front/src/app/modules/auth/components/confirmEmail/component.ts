@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { AuthenticationService } from '~/core/services/auth/auth';
 import { ToastService } from '~/core/services/toast.service';
+import {NAV} from '~/config/navigation/nav';
 
 
 @Component({
@@ -49,7 +50,7 @@ export class ConfirmEmailComponent implements OnInit {
           });
       } else {
         this.loading = false;
-        this._toastr.error('Une erreur est survenue.');
+        this.router.navigate([NAV.notFound]);
       }
     });
   }
