@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
   Plugins,
-  PushNotification,
   PushNotificationToken,
-  PushNotificationActionPerformed } from '@capacitor/core';
+} from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 
 import { NotificationService } from '~/shared/components/notification/service';
@@ -34,34 +33,38 @@ export class MessagerieService {
       if (environment.android) {
         PushNotifications.addListener('registration', (token: PushNotificationToken) => {
           // console.log('####### registration #######: token = ' + token.value);
-          this._pushSubscriptionService.checkIfExistOrAddAndSubscribeNotif({
-            id: token.value,
-            type: 'android',
-          }).subscribe(() => {
-            // tslint:disable-next-line:no-multi-spaces
-          },           () => {
+          this._pushSubscriptionService.checkIfExistOrAddAndSubscribeNotif(
+            {
+              id: token.value,
+              type: 'android',
+            }).subscribe(
+            () => {
+              // tslint:disable-next-line:no-multi-spaces
+            },
+            () => {
 
-          });
+            });
         });
 
 
-        PushNotifications.addListener('registrationError',
-                                      (error: any) => {
+        PushNotifications.addListener(
+          'registrationError',
+          (error: any) => {
 
-                                      },
+          },
         );
       }
 
       this._notificationService.requestPermission().then(
         () => {
           this._pushSubscriptionService.process()
-          .then(() => {
-            subscriber.next(true);
-            this._type.next('push');
-            // tslint:disable-next-line:no-multi-spaces
-          },    (error) => {
-            console.log(error);
-          });
+            .then(() => {
+              subscriber.next(true);
+              this._type.next('push');
+              // tslint:disable-next-line:no-multi-spaces
+            },    (error) => {
+              console.log(error);
+            });
         },
         (error) => {
           console.log(error);

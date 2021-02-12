@@ -26,6 +26,7 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -151,6 +152,8 @@ class ProfileController extends AbstractController
 
     /**
      * @Get("/profile/delete")
+     * @param UserService $userService
+     * @return Response
      */
     public function deleteProfileAction(
         UserService $userService

@@ -109,6 +109,7 @@ class UserService
     public function delete(int $id)
     {
         $user = $this->findById($id);
+        $user->setEnabled(false);
         $user->setDeleted(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
         $this->em->merge($user);
         $this->em->flush();
