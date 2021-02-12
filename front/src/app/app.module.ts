@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/angular';
-
 import { APP_INITIALIZER, ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import fr from '@angular/common/locales/fr';
 import { APP_BASE_HREF, registerLocaleData } from '@angular/common';
@@ -8,6 +7,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { IonicModule } from '@ionic/angular';
 import { Network } from '@ionic-native/network/ngx';
+import { Router } from '@angular/router';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 // shared modules
 import { CoreModule } from '~/core/core.module';
@@ -21,7 +22,6 @@ import { WcRoutingModule } from './app-routing.module';
 // shared services
 import { HttpApiInterceptor } from './core/services/auth/httpApiInterceptor';
 import { getBaseLocation } from './core/services/layout/baseUrl';
-import { Router } from '@angular/router';
 
 registerLocaleData(fr);
 
@@ -40,6 +40,7 @@ registerLocaleData(fr);
   ],
   providers: [
     Network,
+    Deeplinks,
     {
       provide: APP_BASE_HREF,
       useFactory: getBaseLocation,

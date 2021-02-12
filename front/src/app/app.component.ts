@@ -1,11 +1,15 @@
-import { Component, NgZone, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { distinctUntilChanged, filter } from 'rxjs/operators';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import {
   Plugins,
   PushNotification,
-  PushNotificationActionPerformed } from '@capacitor/core';
+  PushNotificationActionPerformed,
+} from '@capacitor/core';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { DeeplinkMatch } from '@ionic-native/deeplinks';
+import { Platform } from '@ionic/angular';
 
 import { Logged } from '~/core/services/auth/logged';
 import { IconService } from '~/core/services/icon.service';
@@ -13,7 +17,6 @@ import { MessagesService } from '~/core/services/chat/messages.service';
 import { Message } from '~/core/entities/message/entity';
 import { Thread } from '~/core/entities/thread/entity';
 import { MessagerieService } from '~/core/services/messagerie/service';
-import { NAV } from '~/config/navigation/nav';
 import { ThreadsService } from '~/core/services/chat/threads.service';
 import { SeoService } from '~/core/services/seo';
 import { User } from '~/core/entities/user/entity';
@@ -27,20 +30,22 @@ const { PushNotifications } = Plugins;
 @Component({
   selector: 'app-wecolearn',
   templateUrl: 'app.component.html',
-  styleUrls : ['./app.component.scss'],
+  styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   constructor(
-      private router: Router,
-      private domainService: DomainService,
-      private _deviceService: DeviceDetectorService,
-      private iconService: IconService,
-      private _seoService: SeoService,
-      private _zone: NgZone,
-      private _threadService: ThreadsService,
-      public messagesService: MessagesService,
-      public messagerieService: MessagerieService,
+    private router: Router,
+    private domainService: DomainService,
+    private _deviceService: DeviceDetectorService,
+    private iconService: IconService,
+    private _seoService: SeoService,
+    private _zone: NgZone,
+    private _threadService: ThreadsService,
+    public messagesService: MessagesService,
+    public messagerieService: MessagerieService,
+    private _deeplinks: Deeplinks,
+    private _platform: Platform,
   ) {
     // set subdomain
     router.events
@@ -50,7 +55,6 @@ export class AppComponent {
         this._seoService.updateSeoTitleAndTags(event.urlAfterRedirects);
       });
 
-
     this.initMessagerieService();
     this.iconService.init();
   }
@@ -58,7 +62,26 @@ export class AppComponent {
   private initMessagerieService() {
     Logged.get().pipe(distinctUntilChanged()).subscribe(
       (logged) => {
-        let subs: any = { unsubscribe : null };
+        let subs: any = { unsubscribe: null };
+
+        if (environment.android) {
+          // manage deeplinks on android
+          this._platform.ready().then(() => {
+            this._deeplinks.route(
+              {}).subscribe(
+              (match: DeeplinkMatch) => {
+                console.log('Successfully matched route', JSON.stringify(match));
+              },
+              (nomatch) => {
+                console.error('Got a deeplink that didn\'t match', JSON.stringify(nomatch));
+                const path = nomatch.$link.url.replace('https://wecolearn.com', '');
+                console.log('path', path);
+                this.router.navigateByUrl(path);
+
+              });
+          });
+        }
+
         if (logged) {
           // get all messages every time logged or app is reloaded
           this.messagesService.initMessages();
@@ -85,8 +108,8 @@ export class AppComponent {
             };
           }
 
-          // subscribe to android notifications
           if (environment.android) {
+            // subscribe to android notifications
             try {
               PushNotifications.addListener(
                 'pushNotificationReceived',
@@ -146,7 +169,6 @@ export class AppComponent {
               console.log(error);
             }
           }
-
 
           subs = this.messagerieService.init().subscribe(
             (available) => {
