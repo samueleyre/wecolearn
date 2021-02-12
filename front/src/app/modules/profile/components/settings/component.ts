@@ -22,6 +22,7 @@ import { passwordMatchValidator } from '~/modules/auth/validators/password-match
 import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { ToastService } from '~/core/services/toast.service';
 import { EnvEnum } from '~/core/enums/env.enum';
+import { NAV } from '~/config/navigation/nav';
 
 
 @Component({
@@ -130,20 +131,21 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((choice) => {
         if (choice) {
-          this.profileService.deleteAccount().subscribe((response) => {
-            if (response['ok']) {
-              this._toastr.info('Votre compte a bien été supprimé, ainsi que tout l\'historique de vos messages.');
-              this.router.navigate(['/']);
-            } else {
+          this.profileService.deleteAccount().subscribe(
+            (response) => {
+              this._authenticationService.resetLogin();
+              this.router.navigate([NAV.landing]).then(() => {
+                this._toastr.info('Votre compte a bien été supprimé, ainsi que tout l\'historique de vos messages.');
+              });
+            },
+            () => {
               this._toastr.error('Une erreur est survenue');
-            }
-          });
+            });
         }
       });
   }
 
   // password
-
   private initPasswordForm() {
     this.newPasswordForm = this._fb.group(
       {
