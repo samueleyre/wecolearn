@@ -1,7 +1,8 @@
 import {
         Component,
-        OnInit,
    } from '@angular/core';
+
+import { NAV } from '~/config/navigation/nav';
 
 
 @Component({
@@ -9,12 +10,8 @@ import {
   styleUrls : ['./style.scss'],
 })
 
-export class NotFoundComponent implements OnInit {
-  constructor() {
-    //
-  }
-
-  ngOnInit() {
-    //
-  }
+export class NotFoundComponent {
+  // get landingPageLink(): string {
+  //   return NAV.landing;
+  // }
 }
