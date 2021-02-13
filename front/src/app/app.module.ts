@@ -9,6 +9,7 @@ import { IonicModule } from '@ionic/angular';
 import { Network } from '@ionic-native/network/ngx';
 import { Router } from '@angular/router';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { MatButtonModule } from '@angular/material';
 
 // shared modules
 import { CoreModule } from '~/core/core.module';
@@ -32,6 +33,7 @@ registerLocaleData(fr);
     DeviceDetectorModule.forRoot(),
     IonicModule.forRoot(),
     CommonModule,
+    MatButtonModule,
   ],
   declarations: [
     AppComponent,
