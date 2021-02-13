@@ -52,11 +52,15 @@ export class ContainerComponent extends DestroyObservable implements OnInit{
     }
   }
 
-  get isAndroid() {
+  get landingPage(): string {
+    return NAV.landing;
+  }
+
+  get isAndroid(): boolean {
     return environment.android;
   }
 
-  get isNotLandingPage() {
+  get isNotLandingPage(): boolean {
     return !(new RegExp(NAV.landing).test(window.location.pathname));
   }
 }

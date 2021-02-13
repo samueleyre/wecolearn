@@ -12,9 +12,9 @@ import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/compon
 
 const motherRoute = 'auth';
 const routes: Routes = [
-  { path: 'signin', data: { surface: ['desktop'], redirectTo: motherRoute + '/mobile' }, component: LandingDesktopComponent },
-  { path: 'signin/mobile', data: { surface: ['mobile'], redirectTo: motherRoute + '/android' }, component: LandingMobileComponent },
-  { path: 'signin/android', data: { surface: ['android'], redirectTo: motherRoute }, component: LandingAndroidComponent },
+  { path: 'signin', data: { surface: ['desktop'], redirectTo: motherRoute + '/signin/mobile' }, component: LandingDesktopComponent },
+  { path: 'signin/mobile', data: { surface: ['mobile'], redirectTo: motherRoute + '/signin/android' }, component: LandingMobileComponent },
+  { path: 'signin/android', data: { surface: ['android'], redirectTo: motherRoute + '/signin' }, component: LandingAndroidComponent },
   { path: 'subscribe', component: AuthOnboardingPageComponent },
   { path: 'password/email', component: SendPasswordConfirmationEmailPageComponent },
   { path: 'password/reset', component: ResetPasswordFormPageComponent },

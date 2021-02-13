@@ -1,11 +1,11 @@
 import { concatMap, tap } from 'rxjs/operators';
 import {
-  HttpResponse, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor,
+  HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor,
   HttpRequest, HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { ToastService } from '~/core/services/toast.service';
 
@@ -13,6 +13,7 @@ import { Logged } from './services/auth/logged';
 import { HeaderBag } from './services/auth/headerBag';
 import { SessionService } from './services/auth/session.service';
 import { environment } from '../../environments/environment';
+import {NAV} from '~/config/navigation/nav';
 
 
 @Injectable({
@@ -24,9 +25,9 @@ export class HttpApiInterceptor implements HttpInterceptor {
 
 
   constructor(
-    private router: Router,
-    public headerBag: HeaderBag,
-    private tokenService: SessionService,
+    private _location: Location,
+    private _headerBag: HeaderBag,
+    private _tokenService: SessionService,
     private _toastr: ToastService,
   ) {
   }
@@ -34,7 +35,7 @@ export class HttpApiInterceptor implements HttpInterceptor {
   public intercept(req: HttpRequest<any>,
                    next: HttpHandler): Observable<HttpEvent<any>> {
     const update = {};
-    return this.headerBag.load().pipe(concatMap(() => {
+    return this._headerBag.load().pipe(concatMap(() => {
       if (req.url.includes('assets/icons')) {
         return next.handle(req);
       }
@@ -69,8 +70,10 @@ export class HttpApiInterceptor implements HttpInterceptor {
               this._toastr.error(err.error['msg']);
             }
             if (err.status === 401) {
-              this._toastr.error("Vous n'êtes pas connecté.");
-              this.tokenService.clear();
+              if (!['', NAV.signin, NAV.notFound].some(val => val === this._location.path())) {
+                this._toastr.error("Vous n'êtes pas connecté.");
+              }
+              this._tokenService.clear();
               Logged.set(false);
             }
             if (err.status === 403) {
