@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route, UrlSegment, CanActivate } from '@angular/router';
-import { BehaviorSubject, Observable, of as observableOf, timer } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, concat, Observable, of, of as observableOf, throwError, timer } from 'rxjs';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Logged } from '~/core/services/auth/logged';
 import { ToastService } from '~/core/services/toast.service';
@@ -36,48 +36,51 @@ export class AuthGuard implements CanLoad, CanActivate {
   }
 
   private isAllowed(isAdminRoute: boolean): Observable<boolean> | boolean {
-    // no token stored
-    if (!this._tokenService.newToken && !this._tokenService.get()) {
-      this._router.navigate([NAV.landing]).then(() => {
-        Logged.set(false);
-      });
-      return false;
-    }
 
-    const obs = this._tempResponse ? this._tempResponse$ : this._pingService.ping().pipe(
+    const pingObs = this._tempResponse ? this._tempResponse$ : this._pingService.ping().pipe(
       tap(response => this.timer(response)),
     );
 
-    return obs.pipe(
-      take(1), // for tempResponse$
-      catchError((error: Response) => {
-        let status = 500;
-        if (error.status === 401 || error.status === 403) { // unauthorized or forbidden
-          status = error.status;
-        }
-        return observableOf({ status });
-      }),
-      map((response: Response) => {
-        if (401 === response.status) {
-          this._router.navigate([NAV.landing]).then(() => {
-            Logged.set(false);
-          });
-          return false;
-        }
-        if (403 === response.status) {
-          this._router.navigate([NAV.search]);
-          return false;
-        }
-        Logged.set(true);
+    return this._tokenService.hasAsObs()
+      .pipe(
+        switchMap((hasTokenInStorage) => {
+          if (!this._tokenService.newToken && !hasTokenInStorage) {
+            this._router.navigate([NAV.landing]).then(() => {
+              Logged.set(false);
+            });
+            return of(false);
+          }
+          return pingObs.pipe(
+            take(1), // for tempResponse$
+            catchError((error: Response) => {
+              let status = 500;
+              if (error.status === 401 || error.status === 403) { // unauthorized or forbidden
+                status = error.status;
+              }
+              return observableOf({ status });
+            }),
+            map((response: Response) => {
+              if (401 === response.status) {
+                this._router.navigate([NAV.landing]).then(() => {
+                  Logged.set(false);
+                });
+                return false;
+              }
+              if (403 === response.status) {
+                this._router.navigate([NAV.search]);
+                return false;
+              }
+              Logged.set(true);
 
-        if (isAdminRoute && !this._profileService.isAdmin) {
-          this._router.navigate(['/']).then(() => {
-            this._toastr.error('Vous n\'êtes pas autorisé à accéder à cette page.');
-          });
-          return false;
-        }
-        return true;
-      }));
+              if (isAdminRoute && !this._profileService.isAdmin) {
+                this._router.navigate(['/']).then(() => {
+                  this._toastr.error('Vous n\'êtes pas autorisé à accéder à cette page.');
+                });
+                return false;
+              }
+              return true;
+            }));
+        }));
   }
 
   canLoad(

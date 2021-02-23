@@ -15,16 +15,21 @@ export class SessionService {
 
   public set(token: string): void {
     this.newToken = token;
-    this.localStorage.setItem('token', token).subscribe();
+    this.localStorage.setItemSubscribe('token', token);
   }
 
   public getAsObs(): Observable<string> {
     return <Observable<string>>this.localStorage.getItem<string>('token');
   }
 
-  public get(): string {
-    return localStorage.getItem('token');
+  public hasAsObs(): Observable<boolean> {
+    return <Observable<boolean>>this.localStorage.getItem<boolean>('token');
   }
+
+
+  // public get(): string {
+  //   return localStorage.getItem('token');
+  // }
 
   public clear(): void {
     this.localStorage.removeItem('token').subscribe();
