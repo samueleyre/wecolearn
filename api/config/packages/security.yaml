@@ -43,6 +43,11 @@ security:
             stateless: true
             anonymous: true
 
+        inviteFriend:
+            pattern: ^/api/inviteFriend
+            stateless: true
+            anonymous: true
+
         findTag:
             pattern:   ^/api/tag/find
             stateless: true
@@ -75,6 +80,7 @@ security:
         - { path: ^/api/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/signup, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/confirmEmail, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/inviteFriend, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/resetPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/tag/find, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/tag/domains-popular-as-tags, roles: IS_AUTHENTICATED_ANONYMOUSLY }
