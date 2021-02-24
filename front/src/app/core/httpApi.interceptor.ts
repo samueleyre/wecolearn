@@ -81,7 +81,7 @@ export class HttpApiInterceptor implements HttpInterceptor {
             }
 
             if (err.status === 404) {
-              this._toastr.error('Cette ressource n\'est pas disponible');
+              // this._toastr.error('Cette ressource n\'est pas disponible');
             }
             if (err.status === 500) {
               this._toastr.error('Une erreur est survenue.');

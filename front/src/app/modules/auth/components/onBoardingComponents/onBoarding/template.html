@@ -10,104 +10,68 @@
       <ng-template matStepperIcon="done">
         <mat-icon>done_all</mat-icon>
       </ng-template>
-      <mat-step label="Ville" >
-        <div class="card" id="cityStep">
-          <div class="card-header">
-            <h6 class="center">{{titles.city.title}} <app-emoji [emojiName]="'1F3E1'"></app-emoji></h6>
-          </div>
-          <div class="card-body">
-            <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
-          </div>
-          <div class="card-footer">
-            <div class="btn-container-first">
-              <button class="card-footer-nextButton" type="button" mat-raised-button color="primary" matStepperNext>Suivant ></button>
-            </div>
-          </div>
-        </div>
-      </mat-step>
       <mat-step label="Apprentissage" >
-        <div class="card" id="learningStep">
-          <div class="card-header">
-            <h6 class="center">{{titles.tags.title}} <app-emoji [emojiName]="'1F4C8'"></app-emoji></h6>
-          </div>
-          <div class="card-body">
+        <div class="Onboarding-step" id="learningStep">
+          <h4 class="Onboarding-step-title">{{titles.tags.title}}</h4>
             <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'" [type]="learnType" ></profile-form-tags>
-            <p class="card-body-tagHints">
+            <p class="Onboarding-step-tagHints">
               <app-emoji emojiName="265F"></app-emoji><span>Echecs,</span>
               <app-emoji emojiName="1F431-200D-1F4BB"></app-emoji><span>Informatique,</span>
-              <app-emoji emojiName="1F3B1"></app-emoji><span>Snooker,</span>
-              <app-emoji emojiName="1F3BA"></app-emoji><span>Trompette,</span>
-              <app-emoji emojiName="1FAC2"></app-emoji><span>Polka ...</span>
+              <app-emoji emojiName="1F5E3"></app-emoji><span>Espagnol ...</span>
             </p>
-          </div>
-          <div class="card-footer">
-            <div class="btn-container">
-              <button type="button" mat-raised-button color="accent" matStepperPrevious>< Retour</button>
-              <button class="card-footer-nextButton" type="button" mat-raised-button color="primary" matStepperNext>Suivant ></button>
-            </div>
-          </div>
+        </div>
+        <div class="Onboarding-nav-container Onboarding-nav-container-first">
+          <button class="Onboarding-nav-nextButton" type="button" mat-raised-button color="primary" matStepperNext>Suivant ></button>
+        </div>
+      </mat-step>
+      <mat-step label="Ville" >
+        <div class="Onboarding-step" id="cityStep">
+          <h4 class="Onboarding-step-title">{{titles.city.title}}</h4>
+          <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
+        </div>
+        <div class="Onboarding-nav-container">
+          <button type="button" mat-raised-button color="accent" matStepperPrevious>< Retour</button>
+          <button class="Onboarding-nav-nextButton" type="button" mat-raised-button color="primary" matStepperNext>Suivant ></button>
         </div>
       </mat-step>
       <mat-step label="Projets" >
-        <div class="card" id="projectStep">
-          <div class="card-header">
-            <h6 class="center">{{titles.bio.title}}</h6>
-          </div>
-          <div class="card-body">
-            <profile-form-biography [parentForm]="userForm"></profile-form-biography>
-          </div>
-          <div class="card-footer">
-            <div class="btn-container">
-              <button type="button" mat-raised-button color="accent" matStepperPrevious>< Retour</button>
-              <button class="card-footer-nextButton" type="button" mat-raised-button color="primary" matStepperNext>Suivant ></button>
-            </div>
-          </div>
+        <div class="Onboarding-step" id="projectStep">
+          <h4 class="Onboarding-step-title">{{titles.bio.title}}</h4>
+          <profile-form-biography [parentForm]="userForm"></profile-form-biography>
+        </div>
+        <div class="Onboarding-nav-container">
+          <button type="button" mat-raised-button color="accent" matStepperPrevious>< Retour</button>
+          <button class="Onboarding-nav-nextButton" type="button" mat-raised-button color="primary" matStepperNext>Suivant ></button>
         </div>
       </mat-step>
       <mat-step label="Identifiants"  >
-        <div class="card" id="idStep">
-          <div class="card-header">
-            <h6 class="center">{{titles.ids.title}}</h6>
+
+        <div class="Onboarding-step" id="idStep">
+          <h4 class="Onboarding-step-title">{{titles.ids.title}}</h4>
+          <div class="Onboarding-step-id col-12 col-md-6 col-xl-4">
+              <mat-form-field appearance="fill" >
+                <mat-label>Prénom</mat-label>
+                <input id="firstNameInput" matInput placeholder="" formControlName="first_name"  >
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Nom</mat-label>
+                <input id="lastNameInput" matInput placeholder="" formControlName="last_name"  >
+              </mat-form-field>
+              <auth-form-email [parentForm]="userForm"></auth-form-email>
+              <auth-form-password [parentForm]="userForm"></auth-form-password>
           </div>
-          <div class="card-body">
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="col-12 no-padding">
-                <mat-form-field appearance="legacy" >
-                  <mat-label>Prénom</mat-label>
-                  <input id="firstNameInput" matInput placeholder="" formControlName="first_name"  >
-                </mat-form-field>
-              </div>
-              <div class="col-12 no-padding">
-                <mat-form-field appearance="legacy">
-                  <mat-label>Nom</mat-label>
-                  <input id="lastNameInput" matInput placeholder="" formControlName="last_name"  >
-                </mat-form-field>
-              </div>
-              <div class="col-12 no-padding">
-                <auth-form-email [parentForm]="userForm"></auth-form-email>
-              </div>
-              <div class="col-12 no-padding">
-                <auth-form-password [parentForm]="userForm"></auth-form-password>
-              </div>
-            </div>
-            <div class="col-12">
-              <p class="Onboarding-newsletter">
-                <mat-checkbox formControlName="newsletter">J'adhère à la newsletter ( surtout pour les apéros 🍻 & ateliers 🛠️ )</mat-checkbox>
-              </p>
-            </div>
-          </div>
-          <div class="card-footer">
-            <p class="Onboarding-conditions">
-              En cliquant sur "créer mon compte", tu acceptes nos <a href="https://wecolearn.com/doc/mentionslegales">Conditions Générales</a>.
+          <div class="col-12">
+            <p class="Onboarding-newsletter">
+              <mat-checkbox formControlName="newsletter">J'adhère à la newsletter ( surtout pour les apéros 🍻 & ateliers 🛠️ )</mat-checkbox>
             </p>
-            <div class="btn-container">
-              <button type="button" mat-raised-button color="accent" matStepperPrevious>< Retour</button>
-              <button class="card-footer-nextButton" type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid" matStepperNext>
-                <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Créer mon compte
-              </button>
-            </div>
           </div>
+        </div>
+        <div class="Onboarding-nav-container">
+          <button type="button" mat-raised-button color="accent" matStepperPrevious>< Retour</button>
+          <button class="Onboarding-nav-nextButton" type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid" matStepperNext>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Créer mon compte
+          </button>
         </div>
       </mat-step>
     </mat-horizontal-stepper>

@@ -9,6 +9,7 @@ import { TagDomain } from '~/core/entities/tag/TagDomain';
 })
 export class EmojiComponent {
   @Input() emojiName;
+  @Input() width = '29';
 
 //  temp until android is update and database changed
   public isEmoji(emojiCode): boolean {
