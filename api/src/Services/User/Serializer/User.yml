@@ -4,7 +4,7 @@ App\Services\User\Entity\User:
     access_order:     alphabetical
     properties:
       id:
-        groups: [ input, user, search, message, profile, public-profile,  admin-users, thread ]
+        groups: [ input, id, user, search, message, profile, public-profile,  admin-users, thread ]
       created:
         groups: [ input, profile, admin-users]
       firstName:

@@ -49,7 +49,7 @@ class UserService
         return $this->em->getRepository(User::class)->find($id);
     }
 
-    public function patch(User $params, $id = null)
+    public function patch(User $params, $id = null): User
     {
 
         // todo: separate in different methods

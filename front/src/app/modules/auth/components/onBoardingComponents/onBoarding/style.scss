@@ -1,52 +1,60 @@
 .Onboarding {
-  mat-horizontal-stepper{
+  mat-horizontal-stepper {
     background: none;
   }
+
   button {
     font-weight: bold;
   }
-  .card{
-    min-height: 50vh;
-    .card-body{
-      align-items: center;
+
+  &-step {
+    min-height: 400px;
+    &-title {
+      margin: 60px 0 30px;
+      text-align: center;
+    }
+    &-tagHints {
+      font-size: 19px;
+      display: flex;
       justify-content: center;
+      align-items: center;
+      width: 100%;
+      flex-wrap: wrap;
+
+      app-emoji {
+        width: 30px;
+      }
+
+      span {
+        margin-right: 8px;
+      }
+
+      margin-top: 10px;
+    }
+    &-id {
       display: flex;
       flex-direction: column;
-      > :first-child{
-        width: 100%
-      }
-      &-tagHints {
-        font-size: 19px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        flex-wrap: wrap;
-        app-emoji {
-          width: 30px;
-        }
-        span {
-          margin-right: 8px;
-        }
-        margin-top: 10px;
-      }
+      margin: auto;
     }
   }
-  .btn-container-first{
-    float: right;
-  }
-  .btn-container{
+  &-nav-container {
     display: flex;
     justify-content: space-between;
+    &-first {
+      justify-content: flex-end;
+    }
   }
+
 
   &-conditions {
     text-align: center;
   }
+
   &-newsletter {
     text-align: center;
     margin-top: 20px;
   }
+
   .spinner-border {
     margin-bottom: 9px;
   }
