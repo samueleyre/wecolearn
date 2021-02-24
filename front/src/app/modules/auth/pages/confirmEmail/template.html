@@ -1,6 +1,22 @@
 <div class="confirm">
-  <h2>Confirmation de l'email...</h2>
+  <h2 *ngIf="loading">Confirmation de l'email...</h2>
+  <h2 class="confirm-title-success" *ngIf="!loading">Email confirmée ! <mat-icon color="accent">done</mat-icon></h2>
   <div class="confirm--loading">
     <mat-spinner *ngIf="loading"></mat-spinner>
+  </div>
+  <div *ngIf="!loading" class="confirm-inviteFriendForm-container">
+    <app-emoji width="90" emojiName="1F331"></app-emoji>
+    <p>
+      Aidez-nous à faire grandir le réseau en invitant un·e ami·e à vous rejoindre !
+    </p>
+    <div class="confirm-inviteFriendForm">
+      <form [formGroup]="inviteFriendsForm" (keyup.enter)="inviteFriendsForm.dirty && inviteFriendsForm.valid && sendInvite()" (ngSubmit)="sendInvite()">
+        <auth-form-email [parentForm]="inviteFriendsForm"></auth-form-email>
+        <button mat-raised-button [disabled]="!inviteFriendsForm.dirty || !inviteFriendsForm.valid" type="submit" color="primary" style="font-weight: bold;">Envoyer</button>
+      </form>
+    </div>
+  </div>
+  <div class="confirm-returnHome">
+    <button routerLink="/" mat-raised-button color="accent" style="font-weight: bold">Retourner à la page d'accueil</button>
   </div>
 </div>

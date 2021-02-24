@@ -556,11 +556,16 @@ class User extends BaseUser
 
     /**
      * Get tags.
-     *
-     * @return Collection
+     * @param int|null $type ( 0 | 1 | 2 )
+     * @return Collection | Tag[]
      */
-    public function getTags()
+    public function getTags(?int $type = null)
     {
+        if ($type !== null) {
+            return $this->tags->filter(function (Tag $tag) use ($type) {
+                return $tag->getType() === $type;
+            });
+        }
         return $this->tags;
     }
 

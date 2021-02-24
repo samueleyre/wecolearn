@@ -1,6 +1,7 @@
-<mat-form-field appearance="legacy" [formGroup]="parentForm">
+<mat-form-field appearance="fill" [formGroup]="parentForm">
   <mat-label>Email</mat-label>
-  <input appHideMenuMobileOnFocus id="emailInput" matInput type="email" placeholder="Email" formControlName="email">
+  <input appHideMenuMobileOnFocus id="emailInput" matInput type="email" placeholder="exemple@domaine.fr" formControlName="email">
+  <mat-icon matSuffix>email</mat-icon>
   <mat-error *ngIf="parentForm.controls.email.hasError('duplicate')">
     Cette adresse email est déjà utilisée.
   </mat-error>

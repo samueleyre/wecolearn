@@ -4,6 +4,7 @@ namespace App\Services\User\Controller;
 
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\Domain\Service\DomainService;
+use App\Services\User\AsyncBusMessage\InviteFriendBusMessage;
 use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\PushNotificationSubscription;
 use App\Services\User\Entity\Subscription;
@@ -16,6 +17,7 @@ use App\Services\User\Service\SearchService;
 use App\Services\User\Service\TokenService;
 use App\Services\User\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use FOS\UserBundle\Model\UserManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -31,6 +33,7 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
@@ -51,7 +54,7 @@ class UserController extends AbstractController
      * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"public-profile"})
      * @param string $profileUrl
      * @return User
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPublicProfileAction(string $profileUrl): User
     {
@@ -101,12 +104,12 @@ class UserController extends AbstractController
             'userKnowTagDomains' => $request->get('userKnowTagDomains', false),
         ];
 
-        $tag = $request->get('tag', ['id'=>null, 'name'=>null]);
+        $tag = $request->get('tag', ['id' => null, 'name' => null]);
         $tagDomain = $request->get('tagDomain', null);
 
         if (
-            ( array_key_exists('id', $tag) && $tag['id'] )
-            || ( array_key_exists('name', $tag) && $tag['name'] )
+            (array_key_exists('id', $tag) && $tag['id'])
+            || (array_key_exists('name', $tag) && $tag['name'])
         ) {
             $filter['tag'] = $tag;
         } else if ($tagDomain) {
@@ -128,31 +131,50 @@ class UserController extends AbstractController
      * @param UserService $userService
      * @param TokenService $tokenService
      * @param EventDispatcherInterface $dispatcher
-     * @return array
+     * @return User
+     * @throws Exception
      */
-    public function confirmEmailAction($tokenString, UserService $userService, TokenService $tokenService, EventDispatcherInterface $dispatcher): array
+    public function confirmEmailAction($tokenString, UserService $userService, TokenService $tokenService, EventDispatcherInterface $dispatcher): User
     {
         $token = $this->getDoctrine()
             ->getRepository(Token::class)
             ->findOneBy(['token' => $tokenString, 'type' => TokenConstant::$types['CONFIRMEMAIL']]);
 
-        $ret = [];
-
         if ($token && ($user = $token->getUser())) {
             if (false === $user->getEmailConfirmed()) {
                 $user->setEmailConfirmed(true);
-                $ret['success'] = $userService->patch($user, $user->getId());
-                $dispatcher->dispatch(new EmailChangeConfirmed($user),EmailChangeConfirmed::NAME);
+                $ret = $userService->patch($user, $user->getId());
+                $tokenService->remove($token);
+                $dispatcher->dispatch(new EmailChangeConfirmed($user), EmailChangeConfirmed::NAME);
+                return $ret;
             } else {
-                $ret['error'] = 'token_already_confirmed';
+                throw new Exception("token_already_confirmed", 409);
             }
 
-            $tokenService->remove($token);
-        } else {
-            $ret['error'] = 'confirmation_token_not_found';
+        }
+        throw new Exception("confirmation_token_not_found", 404);
+
+    }
+
+    /**
+     * @Post("inviteFriend")
+     * @View( serializerGroups={"id"})
+     * @param Request $request
+     * @param MessageBusInterface $messageBusInterface
+     * @throws Exception
+     */
+    public function inviteFriendAction(Request $request, MessageBusInterface $messageBusInterface)
+    {
+
+        $friendEmail = $request->get('email');
+
+//        todo: use uuid !
+        $id = $request->get('userId');
+        if (!$friendEmail || !$id) {
+            throw new Exception('missing data', 500);
         }
 
-        return $ret;
+        $messageBusInterface->dispatch(new InviteFriendBusMessage($id, $friendEmail));
     }
 
 //          ---------------
@@ -169,7 +191,8 @@ class UserController extends AbstractController
     public function findUserAction(
         Integer $id,
         UserService $userService
-    ) {
+    )
+    {
         return $userService->findById($id);
     }
 
@@ -180,23 +203,25 @@ class UserController extends AbstractController
      */
     public function getUsersAction(
         UserService $userService
-    ) {
+    )
+    {
         return $userService->getAll();
     }
 
     /**
      * @Post("admin/user")
      * @ParamConverter(
-        "user",
-        class="App\Services\User\Entity\User",
-        converter="fos_rest.request_body",
-        options={"deserializationContext"={"groups"={"input"} } }
-        )
+    "user",
+    class="App\Services\User\Entity\User",
+    converter="fos_rest.request_body",
+    options={"deserializationContext"={"groups"={"input"} } }
+    )
      */
     public function addUserAction(
         User $user,
         CreateUserService $service
-    ) {
+    )
+    {
         $user->setPassword('NotDefinedYet');
 
         try {
@@ -228,7 +253,8 @@ class UserController extends AbstractController
     public function deleteUserAction(
         int $id,
         UserService $userService
-    ) {
+    )
+    {
         return $userService->delete($id);
     }
 
@@ -245,14 +271,15 @@ class UserController extends AbstractController
     public function sendEmailForPasswordResetAction(
         Request $request,
         CreateTokenForChangingPasswordService $service
-    ) {
+    )
+    {
         try {
             $ret = null;
             if ($email = $request->query->get('email')) {
                 $ret = [];
                 try {
                     $res = $service->process($email);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     exit();
                 }
                 if ($res instanceof Token) {
@@ -261,7 +288,7 @@ class UserController extends AbstractController
                     $ret['error'] = 'NOT_FOUND';
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             exit();
         }
 
@@ -275,7 +302,8 @@ class UserController extends AbstractController
     public function resetPasswordAction(
         Request $request,
         TokenService $tokenService
-    ) {
+    )
+    {
         $ret = null;
         try {
             if (($password = $request->request->get('password')) && ($token = $request->request->get('token'))) {
@@ -297,7 +325,7 @@ class UserController extends AbstractController
                     $ret['error'] = 'Token non valide';
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             exit();
         }
 
@@ -370,13 +398,9 @@ class UserController extends AbstractController
 //
 
 
-
-
 //             ---------------
 //    --------- NOTIFICATIONS -------------
 //             ---------------
-
-
 
 
 //    /**
@@ -457,34 +481,34 @@ class UserController extends AbstractController
             $type = TokenConstant::$types['ANDROID_NOTIFICATION_SUBSCRIPTION'];
         }
 
-        syslog(LOG_ERR, sprintf("########### SUBSCRIPTION WITH token : %s . ########################",$token));
+        syslog(LOG_ERR, sprintf("########### SUBSCRIPTION WITH token : %s . ########################", $token));
 
         // get subscriptions with same token
         $subscriptions = $em->getRepository(PushNotificationSubscription::class)->findBy(['user' => $user, 'token' => $token, 'type' => $type]);
 
         $update = false;
 
-        syslog(LOG_ERR , count($subscriptions));
+        syslog(LOG_ERR, count($subscriptions));
 
         if (0 === count($subscriptions)) {
             $oldSubscriptions = $em->getRepository(PushNotificationSubscription::class)->findBy(['user' => $user, 'type' => $type]);
             foreach ($oldSubscriptions as $oldSubscription) {
                 $em->remove($oldSubscription);
             }
-            
+
             $subscription = new PushNotificationSubscription();
             $subscription->setUser($user);
             $subscription->setToken($token);
             $subscription->setType($type);
 
-            $em->persist( $subscription );
-            $em->persist( $user );
+            $em->persist($subscription);
+            $em->persist($user);
             $em->flush();
 
         }
 
 
-        return ['success' => true ];
+        return ['success' => true];
     }
 
 
