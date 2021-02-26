@@ -46,7 +46,7 @@ class UserService
         return $this->em->getRepository(User::class)->find($id);
     }
 
-    public function patch(User $params, $id = null)
+    public function patch($params, $id = null)
     {
 
         // todo: separate in different methods
@@ -93,6 +93,8 @@ class UserService
 
         // insert or update "slack" accounts
         //    $patchedUser->setSlackAccounts($this->patchSlackAccounts($patchedUser, $user->getSlackAccounts()));
+//        temp fix
+       $patchedUser->setShowProfil(true);
 
         $this->em->persist($patchedUser);
         $this->em->flush();
