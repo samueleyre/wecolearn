@@ -46,14 +46,15 @@ class TagService
                 if (!$oldUserTags->contains($existingTag)) {
                     $this->addIterationTag($existingTag);
                 }
-                $newTag = $existingTag;
 
+                if(!$patchedTags->contains($existingTag)) {
+                    $patchedTags->add($existingTag);
+                }
             // otherwise create it
             } else {
-                $this->create($newTag);
+                $patchedTags->add($this->create($newTag));
             }
 
-            $patchedTags->add($newTag);
         }
 
         return $patchedTags;
