@@ -91,6 +91,20 @@ export class APIService<T> {
       );
   }
 
+  put(entity: object): Observable<T> {
+    this._loading$.next(true);
+    return this.http.put(`${this.endPoint}`, entity)
+      .pipe(
+        tap((data: T) => {
+          this._entity$.next(data);
+          this._loaded$.next(true);
+        }),
+        finalize(() => {
+          this._loading$.next(false);
+        }),
+      );
+  }
+
   post(entity: T): Observable<T> {
     this._loading$.next(true);
     return this.http.post(`${this.endPoint}`, entity)

@@ -20,7 +20,7 @@ import {NAV} from '~/config/navigation/nav';
   providedIn: 'root',
 })
 export class HttpApiInterceptor implements HttpInterceptor {
-  private APIMETHODS = ['POST', 'GET', 'PATCH', 'DELETE'];
+  private APIMETHODS = ['POST', 'GET', 'PUT', 'PATCH', 'DELETE'];
   private api = environment.origin;
 
 

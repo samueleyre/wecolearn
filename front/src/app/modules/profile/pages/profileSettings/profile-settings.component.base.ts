@@ -189,7 +189,7 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
 
   submit() {
     this.joinTags();
-    this.profileService.patch({ tags: this.tags, ...this.userForm.value }).subscribe(
+    this.profileService.put({ tags: this.tags, ...this.userForm.value }).subscribe(
       (user: User) => {
         this.resetSavingInput();
       },

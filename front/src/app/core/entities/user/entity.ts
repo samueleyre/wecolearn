@@ -32,9 +32,9 @@ export class User {
   public image?: Image;
   public show_profil?: boolean;
   public new_message_notification?: boolean;
-  public new_mail_notification?: boolean;
   public new_message_email?: boolean;
-  public new_mail_email?: boolean;
+  public new_match_notification?: boolean;
+  public new_match_email?: boolean;
   public newsletter?: boolean;
   public slack_accounts?: SlackAccount[];
   public user_notified?: Date;
@@ -108,14 +108,14 @@ export class User {
       if ('new_message_notification' in obj) {
         this.new_message_notification = obj.new_message_notification;
       }
-      if ('new_mail_notification' in obj) {
-        this.new_mail_notification = obj.new_mail_notification;
-      }
       if ('new_message_email' in obj) {
         this.new_message_email = obj.new_message_email;
       }
-      if ('new_mail_email' in obj) {
-        this.new_mail_email = obj.new_mail_email;
+      if ('new_match_notification' in obj) {
+        this.new_match_notification = obj.new_match_notification;
+      }
+      if ('new_match_email' in obj) {
+        this.new_match_email = obj.new_match_email;
       }
       if ('newsletter' in obj) {
         this.newsletter = obj.newsletter;

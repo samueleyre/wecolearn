@@ -14,17 +14,15 @@ use App\Services\User\Entity\User;
 use App\Services\User\Service\ChangeEmailService;
 use App\Services\User\Service\UserService;
 use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Hoa\Exception\Exception;
+use JMS\Serializer\SerializerInterface;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\View;
-use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -72,7 +70,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Patch("/profile")
+     * @Put("/profile")
      * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"profile"})
      * @ParamConverter(
      *       "user",
@@ -80,15 +78,39 @@ class ProfileController extends AbstractController
      *       converter="fos_rest.request_body",
      *       options={"deserializationContext"={"groups"={"input"} } }
      * )
-     * @param User $user
-     * @param TokenStorageInterface $tokenStorage
+     * @param Request $request
      * @param UserService $userService
      * @return UserInterface
      */
-    public function patchProfileAction(User $user, TokenStorageInterface $tokenStorage, UserService $userService ): UserInterface
+    public function putProfileAction(User $user, Request $request, UserService $userService): UserInterface
     {
-        return $userService
-            ->patch($user);
+
+        $authorizedFields = [
+            'first_name',
+            'last_name',
+            'biographie',
+            'intensity',
+            'latitude',
+            'longitude',
+            'city',
+            'tags',
+            'show_profil',
+            'new_message_notification',
+            'new_match_notification',
+            'new_message_mail',
+            'new_match_email',
+            'newsletter',
+        ];
+
+        $userParams = [];
+        for ($i = 0; $i < count($authorizedFields); ++$i) {
+            $getMethod = 'get' . str_replace('_', '', ucwords($authorizedFields[$i], '_'));
+            if ($request->get($authorizedFields[$i]) !== null) {
+                $userParams[$authorizedFields[$i]] = $user->$getMethod();
+            }
+        }
+
+        return $userService->put($userParams);
     }
 
     /**
@@ -157,7 +179,8 @@ class ProfileController extends AbstractController
      */
     public function deleteProfileAction(
         UserService $userService
-    ) {
+    )
+    {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         return $userService->delete($user->getId());
     }

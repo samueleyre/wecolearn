@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { APIService } from '~/core/services/crud/api';
 import { User } from '~/core/entities/user/entity';
 import { UserRoleEnum } from '~/core/enums/user/user-role.enum';
+import { UserPutInterface } from '~/core/interfaces/user/user-put.interface';
 
 
 /*
@@ -37,15 +38,8 @@ export class ProfileService extends APIService<User> {
     return this._http.get('/api/messages/new');
   }
 
-  filterPatch(client: User) {
-    client.received_messages = [];
-    client.messages = [];
-    client.sent_messages = [];
-    return client;
-  }
-
-  patch(user: User) {
-    return super.patch(this.filterPatch(user));
+  put(params: UserPutInterface) {
+    return super.put(params);
   }
 
   changeParameter(data: object): Observable<any> {
