@@ -188,6 +188,11 @@ class Tag
         return $this->tagDomains;
     }
 
+    public function setTagDomains(Collection $tags)
+    {
+        $this->tagDomains = $tags;
+    }
+
     public function addTagDomain(TagDomain $tagDomain): self
     {
         if (!$this->tagDomains->contains($tagDomain)) {

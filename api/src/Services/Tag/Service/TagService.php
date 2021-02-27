@@ -79,12 +79,13 @@ class TagService
             $oldTag->setIteration($iteration);
             $oldTag->setName($name);
 
-            if (count($tag->getTagDomains()) > 0) {
-                foreach( $tag->getTagDomains() as $tagDomain) {
-                    $tagDomain = $this->em->getRepository(TagDomain::class)->find($tagDomain->getId());
-                    $oldTag->addTagDomain($tagDomain);
-                }
+            $newTagDomains = new ArrayCollection();
+            foreach($tag->getTagDomains() as $tagDomain) {
+                $tagDomain = $this->em->getRepository(TagDomain::class)->find($tagDomain->getId());
+                $newTagDomains->add($tagDomain);
             }
+
+            $oldTag->setTagDomains($newTagDomains);
 
             $this->em->persist($oldTag);
             $this->em->flush();
