@@ -17,7 +17,8 @@ import { environment } from '~/../environments/environment';
   styleUrls: ['./style.scss'],
 })
 export class EmailNotificationSettingsComponent {
-  constructor(private _profileService: ProfileService, private _toastr: ToastService) {}
+  constructor(private _profileService: ProfileService, private _toastr: ToastService) {
+  }
 
   @Input() user: User;
 
@@ -28,14 +29,22 @@ export class EmailNotificationSettingsComponent {
   submit() {
     setTimeout(
       () => {
-        this._profileService.patch(this.user).subscribe(
+        this._profileService.put(
+          {
+            new_message_notification: this.user.new_message_notification,
+            new_match_notification: this.user.new_match_notification,
+            new_message_email: this.user.new_message_email,
+            new_match_email: this.user.new_match_email,
+            newsletter: this.user.newsletter,
+          },
+        ).subscribe(
           (entity: User) => {
             this._toastr.success('Modification prise en compte');
           },
           (error) => {
             console.log(error);
           },
-      );
+        );
       },
       0);
   }

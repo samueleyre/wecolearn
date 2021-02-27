@@ -9,16 +9,17 @@ use Doctrine\Common\Collections\Collection;
 
 class Tag
 {
-    public ?int $id;
-    public string $name;
+    public ?int $id = null;
+    public string $name = '';
     public int $type;
-    public ?int $iteration;
+    public ?int $iteration = null;
     public DateTime $created;
     private Collection $users;
     private Collection $tagDomains;
 
     public function __construct()
     {
+        $this->type = 0;
         $this->users = new ArrayCollection();
         $this->tagDomains = new ArrayCollection();
         $this->iteration = 0;

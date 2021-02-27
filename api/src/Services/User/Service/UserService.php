@@ -6,7 +6,10 @@ use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
 use App\Services\Tag\Entity\Tag;
 use App\Services\User\SyncEvent\NewsletterWasChanged;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\Collection;
 use phpDocumentor\Reflection\Types\Integer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -46,7 +49,7 @@ class UserService
         return $this->em->getRepository(User::class)->find($id);
     }
 
-    public function patch($params, $id = null)
+    public function patch(User $params, $id = null)
     {
 
         // todo: separate in different methods
@@ -93,14 +96,43 @@ class UserService
 
         // insert or update "slack" accounts
         //    $patchedUser->setSlackAccounts($this->patchSlackAccounts($patchedUser, $user->getSlackAccounts()));
-//        temp fix
-       $patchedUser->setShowProfil(true);
 
         $this->em->persist($patchedUser);
         $this->em->flush();
 
         if ($params->getNewsletter() !== null) {
             if ($oldValueForNewsletter !== $params->getNewsletter()) {
+                $this->dispatcher->dispatch(new NewsletterWasChanged($patchedUser),NewsletterWasChanged::NAME);
+            }
+        }
+
+        return $patchedUser;
+    }
+
+    public function put($params)
+    {
+
+        // we get it from security storage to avoid modifying other clients
+        $patchedUser = $this->securityStorage->getToken()->getUser();
+
+        foreach ($params as $key => $value) {
+            if ($key === 'tags') {
+                // insert or update new tags in database
+                $patchedUser->setTags($this->tagService->beforePatchTags($patchedUser->getTags(), $value));
+            } else {
+                $setMethod = 'set'.str_replace('_', '', ucwords($key, '_'));
+                if ($value !== null) {
+                    $patchedUser->$setMethod($value);
+                }
+            }
+        }
+
+        $this->em->persist($patchedUser);
+        $this->em->flush();
+
+        if (isset($params['newsletter'])) {
+            $oldValueForNewsletter = $patchedUser->getNewsletter();
+            if ($oldValueForNewsletter !== $params['newsletter']) {
                 $this->dispatcher->dispatch(new NewsletterWasChanged($patchedUser),NewsletterWasChanged::NAME);
             }
         }

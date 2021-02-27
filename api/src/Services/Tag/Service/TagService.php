@@ -31,29 +31,32 @@ class TagService
         $tag->setCreated($date);
     }
 
-    public function beforePatchTags(Collection $oldUserTags, Collection $tags)
+    public function beforePatchTags(Collection $oldUserTags, Collection $newTags)
     {
-        for ($i = 0; $i < count($tags); ++$i) {
-            $oldTag = $this->em
-                ->getRepository(Tag::class)
-                ->findOneBy(['name' => $tags[$i]->getName(), 'type' => $tags[$i]->getType()]);
+        $patchedTags = new ArrayCollection();
+        foreach ($newTags as $newTag) {
 
-            if ($oldTag) {
-                if (!$oldUserTags->contains($oldTag)) {
-                    $this->addIterationTag($oldTag);
+            $existingTag = ($newTag->id)
+                ? $this->em->getRepository(Tag::class)->find($newTag->getId())
+                : $this->em->getRepository(Tag::class)
+                    ->findOneBy(['name' => $newTag->getName(), 'type' => $newTag->getType()]);
+
+            // if exists, add to collection
+            if ($existingTag) {
+                if (!$oldUserTags->contains($existingTag)) {
+                    $this->addIterationTag($existingTag);
                 }
-                // if tag already exists, we get the old one and replace it in the persisted variable
-                $tags[$i] = $oldTag;
+                $newTag = $existingTag;
+
+            // otherwise create it
             } else {
-                $this->initializeNewTag($tags[$i]);
+                $this->create($newTag);
             }
 
-            if (!$oldUserTags->contains($tags[$i])) {
-                $oldUserTags->add($tags[$i]);
-            }
+            $patchedTags->add($newTag);
         }
 
-        return $oldUserTags;
+        return $patchedTags;
     }
 
     public function getAll()

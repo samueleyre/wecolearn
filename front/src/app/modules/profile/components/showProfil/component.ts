@@ -44,7 +44,7 @@ export class ShowProfilSettingsComponent {
   submit() {
     setTimeout(
       () => {
-        this._profileService.patch(this.user).subscribe(
+        this._profileService.put({ show_profil: this.user.show_profil }).subscribe(
           (entity: User) => {
             this._toastr.success('Modification prise en compte');
           },
