@@ -21,15 +21,35 @@ export class MobileGuard implements CanActivateChild {
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    console.log(state.url);
+
     if ('surface' in next.data) {
-      const redirectTo = 'redirectTo' in next.data ? next.data.redirectTo : NAV.dashHome;
       const surface = <('mobile' | 'desktop' | 'android')[]>next.data.surface;
       if (
         surface.includes('mobile') && !this._deviceService.isMobile()
       || surface.includes('android') && !environment.android
       || surface.includes('desktop') && (environment.android || this._deviceService.isMobile())
       ) {
-        this._router.navigate([redirectTo]);
+
+        let redirectUrl = NAV.dashHome;
+        const redirectExtension = 'redirectTo' in next.data ? next.data.redirectTo : null;
+
+        console.log(redirectExtension);
+
+        if (redirectExtension !== null) {
+          if (redirectExtension === 'mobile') {
+            redirectUrl = state.url + '/mobile';
+          } else if (redirectExtension === 'desktop') {
+            redirectUrl = state.url + '/desktop';
+          } else if (redirectExtension === 'android') {
+            redirectUrl = state.url + '/android';
+          } else if (redirectExtension === '') {
+            redirectUrl = state.url.replace(/\/android|\/mobile|\/dekstop/, '');
+          }
+        }
+
+        console.log({ redirectUrl });
+        this._router.navigate([redirectUrl]);
         return false;
       }
 

@@ -8,17 +8,16 @@ import { SettingsMobileComponent } from '~/modules/profile/pages/settings/settin
 import { ProfileDesktopComponent } from '~/modules/profile/pages/profile/profile-desktop/profile-desktop.component';
 import { ProfileMobileComponent } from '~/modules/profile/pages/profile/profile-mobile/profile-mobile.component';
 
-const motherRoute = 'dashboard/profile';
-const routes: Routes = [
+  const routes: Routes = [
 
-  { path: 'home', data: { surface: ['desktop'], redirectTo: motherRoute + '/home/mobile' }, component: ProfileSettingsDesktopComponent, pathMatch: 'full' },
-  { path: 'home/mobile', data: { surface: ['mobile'], redirectTo: motherRoute + '/home' }, component: ProfileSettingsMobileComponent, pathMatch: 'full' },
+  { path: 'home', data: { surface: ['desktop'], redirectTo: 'mobile' }, component: ProfileSettingsDesktopComponent, pathMatch: 'full' },
+  { path: 'home/mobile', data: { surface: ['mobile'], redirectTo: '' }, component: ProfileSettingsMobileComponent, pathMatch: 'full' },
 
-  { path: 'settings', data: { surface: ['desktop'], redirectTo: motherRoute + '/settings/mobile' }, component: SettingsDesktopComponent, pathMatch: 'full' },
-  { path: 'settings/mobile', data: { surface: ['mobile'], redirectTo: motherRoute + '/settings' }, component: SettingsMobileComponent, pathMatch: 'full' },
+  { path: 'settings', data: { surface: ['desktop'], redirectTo: 'mobile' }, component: SettingsDesktopComponent, pathMatch: 'full' },
+  { path: 'settings/mobile', data: { surface: ['mobile'], redirectTo: '' }, component: SettingsMobileComponent, pathMatch: 'full' },
 
-  { path: 'public/:profileUrl', data: { desktopOnly: true }, component: ProfileDesktopComponent },
-  { path: 'public/:profileUrl/mobile', component: ProfileMobileComponent },
+  { path: 'public/:profileUrl', data: { surface: ['desktop'], redirectTo: 'mobile' }, component: ProfileDesktopComponent },
+  { path: 'public/:profileUrl/mobile', data: { surface: ['mobile'], redirectTo: '' }, component: ProfileMobileComponent },
 
   { path: '', redirectTo: 'home' },
 
