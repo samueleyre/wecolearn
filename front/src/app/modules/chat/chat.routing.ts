@@ -7,10 +7,9 @@ import { ChatMobileComponent } from '~/modules/chat/pages/chat/chat-mobile/chat-
 
 import { ChatComponentBase } from './pages/chat/chat.component.base';
 
-const motherRoute = 'dashboard/discussion';
 const routes: Routes = [
-  { path: 'list', data: { surface: ['desktop'], redirectTo: motherRoute + '/list/mobile' }, component: ChatDesktopComponent, pathMatch: 'full' },
-  { path: 'list/mobile', data: { surface: ['mobile'], redirectTo: motherRoute + '/list' }, component: ChatMobileComponent, pathMatch: 'full' },
+  { path: 'list', data: { surface: ['desktop'], redirectTo: 'mobile' }, component: ChatDesktopComponent, pathMatch: 'full' },
+  { path: 'list/mobile', data: { surface: ['mobile'], redirectTo: '' }, component: ChatMobileComponent, pathMatch: 'full' },
   { path: 'list/:userId', component: ChatComponentBase },
   { path: 'current/:userId', component: ChatWindowPageComponent, pathMatch: 'full' },
 
