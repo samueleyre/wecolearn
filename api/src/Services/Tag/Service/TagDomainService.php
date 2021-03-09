@@ -2,6 +2,7 @@
 
 namespace App\Services\Tag\Service;
 
+use App\Services\Tag\Constant\TagConstant;
 use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Entity\TagDomain;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,10 +27,12 @@ class TagDomainService
     {
 
         $tagDomain->create();
-        $sameNameTag = $this->em->getRepository(Tag::class)->findOneBy(['name'=>$tagDomain->getName()]);
+        $sameNameTag = $this->em->getRepository(Tag::class)->findOneBy(['name'=>$tagDomain->getName(), 'type'=> TagConstant::$types['LEARNING']]);
         if ($sameNameTag) {
             // link existing tag
             $tagDomain->setLinkedTag($sameNameTag);
+            $sameNameTag->addTagDomain($tagDomain);
+            $this->em->persist($sameNameTag);
         }
 
         if (!$sameNameTag) {
