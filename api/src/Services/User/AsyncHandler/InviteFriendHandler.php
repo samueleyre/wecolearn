@@ -4,6 +4,8 @@
 namespace App\Services\User\AsyncHandler;
 
 use App\Services\Shared\Service\EmailService;
+use App\Services\Tag\Entity\Tag;
+use App\Services\Tag\Entity\TagDomain;
 use App\Services\User\AsyncBusMessage\InviteFriendBusMessage;
 use App\Services\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +34,13 @@ class InviteFriendHandler implements MessageHandlerInterface
         $user = $this->em->getRepository(User::class)->find(
             $inviteFriendBusMessage->getUserId()
         );
-        $learnTags = $user->getTags(0);
+        $learnTags = $user->getTags(0)->filter(function(Tag $tag) {
+//                if tag represents a tagdomain
+            $linkedTagDomains = $tag->getTagDomains()->filter(function(TagDomain $tagD) use ($tag) {
+                return $tagD->getLinkedTag()->getId() === $tag->getId();
+            });
+            return $linkedTagDomains->count() === 0;
+        });
         $tagNames = $learnTags->map(function ($tag) {
             return $tag->getName();
         })->toArray();

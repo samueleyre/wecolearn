@@ -6,6 +6,8 @@ namespace App\Services\User\AsyncHandler;
 use App\Services\Chat\Service\NotificationService;
 use App\Services\Shared\Service\EmailService;
 use App\Services\Tag\Constant\TagConstant;
+use App\Services\Tag\Entity\Tag;
+use App\Services\Tag\Entity\TagDomain;
 use App\Services\User\AsyncBusMessage\NotifyUserMatchBusMessage;
 use App\Services\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -77,9 +79,19 @@ class NotifyUserMatchHandler implements MessageHandlerInterface
                     return $userTag->getId() === $tag->getId() && $tag->getType() === TagConstant::$types['LEARNING'];
                 });
                 return count($userHasTag) > 0;
+            })->filter(function(Tag $tag) {
+//                if tag represents a tagdomain
+                $linkedTagDomains = $tag->getTagDomains()->filter(function(TagDomain $tagD) use ($tag) {
+                   return $tagD->getLinkedTag()->getId() === $tag->getId();
+                });
+                return $linkedTagDomains->count() === 0;
             })->map(function ($tag) {
                 return $tag->getName();
             })->toArray();
+
+            if (count($commonTags) === 0) {
+                continue;
+            }
 
             if ($matchingUser->getNewMatchNotification()) {
                 try {
