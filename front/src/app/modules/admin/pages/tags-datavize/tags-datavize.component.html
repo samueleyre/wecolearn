@@ -1,0 +1,12 @@
+<app-dash-page-layout title="Les domaines de votre communauté">
+  <div *ngIf="loaded" class="TagsDatavize">
+    <div class="TagsDatavize-box-container" *ngFor="let tagDId of tagDomainIds">
+      <h6 class="TagsDatavize-box-title"><app-emoji [emojiName]="tagsGroupedByDomain[tagDId].tagDomain.emoji"></app-emoji>{{tagsGroupedByDomain[tagDId].tagDomain.name}}</h6>
+      <div class="TagsDatavize-box" [style.borderColor]="tagsGroupedByDomain[tagDId].tagDomain.hexcolor + 20">
+        <div *ngFor="let tag of tagsGroupedByDomain[tagDId].tags" class="TagsDatavize-box-tag">
+          <span [style.borderColor]="tagsGroupedByDomain[tagDId].tagDomain.hexcolor" [style.fontSize]="getFontSize(tag.iteration)">{{tag.name}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-dash-page-layout>

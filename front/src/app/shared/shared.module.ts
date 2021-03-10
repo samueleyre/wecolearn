@@ -14,6 +14,9 @@ import { AndroidLinkComponent } from './components/android-link/android-link.com
 import { EmojiComponent } from './components/emoji/emoji.component';
 import { SavingInputComponent } from './components/saving-input/saving-input.component';
 
+import { DashPageLayoutComponent } from '../shared/layouts/dash-page-layout/dash-page-layout.component';
+
+
 @NgModule({
   declarations: [
     CopyComponent,
@@ -22,6 +25,7 @@ import { SavingInputComponent } from './components/saving-input/saving-input.com
     AndroidLinkComponent,
     EmojiComponent,
     SavingInputComponent,
+    DashPageLayoutComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +45,7 @@ import { SavingInputComponent } from './components/saving-input/saving-input.com
     AndroidLinkComponent,
     SavingInputComponent,
     MaterialModule,
+    DashPageLayoutComponent,
   ],
   entryComponents: [NoConnectionToastComponent],
 })

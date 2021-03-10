@@ -24,7 +24,7 @@ import { IonicContainerComponent } from './layouts/ionic-container/ionic-contain
   declarations: [
     ConfirmDialogComponent,
 
-    // Layouts
+              // Layouts
     MainComponent,
     MenuComponent,
     HeaderMobileComponent,
@@ -47,4 +47,5 @@ import { IonicContainerComponent } from './layouts/ionic-container/ionic-contain
   ],
   entryComponents: [ConfirmDialogComponent],
 })
-export class CoreModule {}
+export class CoreModule {
+}
