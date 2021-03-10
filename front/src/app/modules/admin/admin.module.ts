@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatRadioModule } from '@angular/material';
 
 import { UserUiModule } from '~/modules/users/modules/user-ui/user-ui.module';
 import { MaterialModule } from '~/shared/modules/material/material.module';
@@ -14,10 +15,11 @@ import { UsersComponent } from './pages/users/users.component';
 import { TagsComponent } from './pages/tags/tags.component';
 import { DomainsComponent } from './pages/domains/domains.component';
 import { TagDomainsComponent } from './pages/tag-domains/tag-domains.component';
-import {MatRadioModule} from '@angular/material';
+import { TagsDatavizeComponent } from './pages/tags-datavize/tags-datavize.component';
+import {SharedModule} from '~/shared/shared.module';
 
 @NgModule({
-  declarations: [UsersComponent, TagsComponent, DomainsComponent, TagDomainsComponent],
+  declarations: [UsersComponent, TagsComponent, DomainsComponent, TagDomainsComponent, TagsDatavizeComponent],
             imports: [
               AdminRoutingModule,
               CommonModule,
@@ -30,6 +32,7 @@ import {MatRadioModule} from '@angular/material';
               TagDomainUiModule,
               DomainUiModule,
               MatRadioModule,
+              SharedModule,
             ],
 })
 export class AdminModule { }

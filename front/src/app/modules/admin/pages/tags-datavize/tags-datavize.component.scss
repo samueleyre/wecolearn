@@ -1,0 +1,27 @@
+.TagsDatavize {
+  display: flex;
+  flex-wrap: wrap;
+  &-box {
+    &-container {
+      margin: 22px;
+    }
+    border: 8px solid;
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 450px;
+    &-title {
+      text-align: center;
+    }
+    &-tag {
+      margin: 5px;
+      span {
+        padding: 6px 20px;
+        border: 2px solid;
+        border-radius: 6px;
+        display: block;
+      }
+    }
+  }
+}
