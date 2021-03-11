@@ -16,49 +16,64 @@
     <li id="profil-name">
       <a [routerLink]="nav.profileSettings"><h2><strong>{{me.first_name}}</strong> {{me.last_name}}</h2></a>
     </li>
-    <li class="sidebar-link" id="searchNavButton">
-      <a [routerLink]="nav.search" routerLinkActive="is-active">
-        <i class="fas fa-search"></i>
-        <p>Rechercher</p>
-      </a>
-    </li>
-    <li class="sidebar-link">
-      <a [routerLink]="nav.discussion" routerLinkActive="is-active">
-        <i class="fas fa-comment"></i>
-        <p>Discussion</p>
-        <span class="fa-stack fa-2x" *ngIf="countNotRead$ | async as countNotRead">
+  </ul>
+  <div class="sidebar-nav-container">
+    <ul class="sidebar-nav">
+      <li class="sidebar-link" id="searchNavButton">
+        <a [routerLink]="nav.search" routerLinkActive="is-active">
+          <i class="fas fa-search"></i>
+          <p>Rechercher</p>
+        </a>
+      </li>
+      <li class="sidebar-link">
+        <a [routerLink]="nav.discussion" routerLinkActive="is-active">
+          <i class="fas fa-comment"></i>
+          <p>Discussion</p>
+          <span class="fa-stack fa-2x" *ngIf="countNotRead$ | async as countNotRead">
           <small class="sidebar-countUnRead fa-stack-1x">{{countNotRead}}</small>
         </span>
-      </a>
-    </li>
-  </ul>
-  <ng-container *ngIf="isAdmin">
-    <p class="sidebar-nav-sectionTitle">Admin</p>
-    <ul class="sidebar-nav">
-      <li class="sidebar-link">
-        <a [routerLink]="nav.adminUsers" routerLinkActive="is-active">
-          <i class="fas fa-people-carry"></i>
-          <p>Utilisateurs</p>
-        </a>
-      </li>
-      <li class="sidebar-link">
-        <a [routerLink]="nav.adminTags" routerLinkActive="is-active">
-          <i class="fas fa-tags"></i>
-          <p>Apprentissages</p>
-        </a>
-      </li>
-      <li class="sidebar-link">
-        <a [routerLink]="nav.adminTagDomains" routerLinkActive="is-active">
-          <i class="fas fa-book"></i>
-          <p>Domaines</p>
-        </a>
-      </li>
-      <li class="sidebar-link">
-        <a [routerLink]="nav.adminDomains" routerLinkActive="is-active">
-          <i class="fas fa-globe-europe"></i>
-          <p>Communautés</p>
         </a>
       </li>
     </ul>
-  </ng-container>
+    <ng-container *ngIf="isAdmin">
+      <p class="sidebar-nav-sectionTitle">Admin</p>
+      <ul class="sidebar-nav">
+        <li class="sidebar-link">
+          <a [routerLink]="nav.adminUsers" routerLinkActive="is-active">
+            <i class="fas fa-people-carry"></i>
+            <p>Utilisateurs</p>
+          </a>
+        </li>
+        <li class="sidebar-link">
+          <a [routerLink]="nav.adminTags" routerLinkActive="is-active">
+            <i class="fas fa-tags"></i>
+            <p>Apprentissages</p>
+          </a>
+        </li>
+        <li class="sidebar-link">
+          <a [routerLink]="nav.adminTagDomains" routerLinkActive="is-active">
+            <i class="fas fa-book"></i>
+            <p>Domaines</p>
+          </a>
+        </li>
+        <li class="sidebar-link">
+          <a [routerLink]="nav.adminDomains" routerLinkActive="is-active">
+            <i class="fas fa-globe-europe"></i>
+            <p>Communautés</p>
+          </a>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="isAdmin">
+      <p class="sidebar-nav-sectionTitle">Communauté</p>
+      <ul class="sidebar-nav">
+        <li class="sidebar-link">
+          <a [routerLink]="nav.adminCommunityTags" routerLinkActive="is-active">
+            <i class="fas fa-tags"></i>
+            <p>Apprentissages</p>
+          </a>
+        </li>
+      </ul>
+    </ng-container>
+  </div>
 </div>

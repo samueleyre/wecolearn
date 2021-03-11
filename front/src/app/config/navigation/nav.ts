@@ -22,4 +22,5 @@ export const NAV = {
   adminTags: '/dashboard/admin/tags',
   adminTagDomains: '/dashboard/admin/tag-domains',
   adminDomains: '/dashboard/admin/domains',
+  adminCommunityTags: '/dashboard/community/tags',
 };

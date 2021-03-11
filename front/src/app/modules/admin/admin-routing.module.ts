@@ -5,11 +5,9 @@ import { UsersComponent } from '~/modules/admin/pages/users/users.component';
 import { TagsComponent } from '~/modules/admin/pages/tags/tags.component';
 import { DomainsComponent } from '~/modules/admin/pages/domains/domains.component';
 import { TagDomainsComponent } from '~/modules/admin/pages/tag-domains/tag-domains.component';
-import { TagsDatavizeComponent } from '~/modules/admin/pages/tags-datavize/tags-datavize.component';
 
 const adminRoutes: Routes = [
   { path: 'users', component: UsersComponent },
-  { path: 'tags/datavize', component: TagsDatavizeComponent },
   { path: 'tags', component: TagsComponent },
   { path: 'tag-domains', component: TagDomainsComponent },
   { path: 'tag-domains', component: TagDomainsComponent },
