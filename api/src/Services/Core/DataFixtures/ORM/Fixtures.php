@@ -62,31 +62,17 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
     }
 
     private function addTagDomains() {
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
         $tagDomains = TagDomainsOrmConstant::$LIST;
 
         $index = 0;
         foreach ($tagDomains as $tagDomainParam) {
 
-            // create learn tag associated to tagDomain
-            $tag = new Tag();
-            $tag->setName($tagDomainParam['name']);
-            $tag->setType(0);
-            $tag->setCreated($date);
-            $tag->setIteration(random_int(0, 100));
-
-            $tag = $this->tagService->create($tag);
-
             $tagDomain = new TagDomain();
             $tagDomain->setName($tagDomainParam['name']);
             $tagDomain->setEmoji($tagDomainParam['emoji']);
-            $tagDomain->setHexcolor('#ebb434');
-            $tagDomain->setLinkedTag($tag);
+            $tagDomain->setHexcolor($tagDomainParam['hexcolor']);
 
             $this->tagDomainService->create($tagDomain);
-
-            $tag->addTagDomain($tagDomain);
-            $this->tagService->patchTag($tag);
 
             array_push($this->tagDomains,$tagDomain);
             $index++;
@@ -96,14 +82,12 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
     }
 
     private function addTags() {
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         // set Learn tags
         for ($i = 0; $i < count(TagOrmConstant::$RAND); ++$i) {
             $tag = new Tag();
             $tag->setName(TagOrmConstant::$RAND[$i]);
             $tag->setType(0);
-            $tag->setCreated($date);
             $tag->setIteration(random_int(0, 100));
             $tag->addTagDomain($this->tagDomains[random_int(0, count(TagDomainsOrmConstant::$LIST)-1)]);
             array_push($this->tags, $tag);
@@ -114,7 +98,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $tag = new Tag();
             $tag->setName(TagOrmConstant::$RAND[$i]);
             $tag->setType(random_int(1, 2));
-            $tag->setCreated($date);
             $tag->setIteration(random_int(0, 100));
             array_push($this->tags, $tag);
         }
@@ -143,7 +126,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setLastName('Eyre');
         $admin = $this->generateUrlService->process($admin);
         $admin->setEmailConfirmed(true);
-        $admin->setCreated($date);
         $admin->setBiographie('');
         $admin->setIntensity(random_int(0, 45));
         $admin->setLatitude(45.75);
@@ -174,7 +156,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $user->setLastName($lastNames[$i]);
             $user->setEmailConfirmed(true);
             $user = $this->generateUrlService->process($user);
-            $user->setCreated($date);
             $user->setBiographie(UserConstant::$BIO);
             $user->setIntensity(random_int(0, 45));
             $user->setLatitude(45.75);
@@ -205,7 +186,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
 
             // default image
             $image = new Image();
-            $image->setCreated($date);
             $image->setFileName('default');
             $image->setPublicId('8563756134c1dcedf3948085cbf86576');
             $image->setVersion('1549462499');
