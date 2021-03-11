@@ -12,7 +12,12 @@
     flex-wrap: wrap;
     max-width: 450px;
     &-title {
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      app-emoji {
+        padding-right: 5px;
+      }
     }
     &-tag {
       margin: 5px;
