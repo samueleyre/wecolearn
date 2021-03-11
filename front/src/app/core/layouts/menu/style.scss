@@ -1,4 +1,5 @@
 @import 'variables';
+@import "extendables";
 
 #complete-logo {
   width: 180px;
@@ -17,6 +18,50 @@
   overflow-y: hidden;
   background: #310c31;
   transition: .6s;
+
+  .sidebar {
+    &-nav {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &-sectionTitle {
+        margin-top: 40px;
+        text-align: center;
+        color: white;
+        font-style: italic;
+      }
+
+      ul {
+        flex-direction: column;
+        margin-bottom: 0;
+      }
+
+      li {
+        line-height: 60px;
+        text-align: center;
+        justify-content: center;
+        vertical-align: middle;
+        min-height: 10px;
+      }
+
+      svg {
+        display: flex;
+        justify-content: center;
+      }
+
+      &-container {
+        overflow-y: auto;
+        max-height: calc(100vh - 54px - 240px - 60px);
+        @extend %wc-thin-scroll-bar-square;
+      }
+
+    }
+
+    &-countUnRead {
+      color: $secondaryColor;
+    }
+  }
 }
 
 #profil-picture {
@@ -24,11 +69,6 @@
   padding-bottom: 14px;
 }
 
-.sidebar{
-  &-countUnRead {
-    color: $secondaryColor;
-  }
-}
 
 @media only screen and (max-width: $smScreen) {
 
@@ -83,116 +123,91 @@
 }
 
 
-  .sidebar-nav {
-    padding: 0;
-    list-style: none;
-    &-sectionTitle {
-      margin-top: 40px;
-      text-align: center;
-      color: white;
-      font-style: italic;
-    }
-    ul {
-      flex-direction: column;
-    }
-    li {
-      line-height: 60px;
-      text-align: center;
-      justify-content: center;
-      vertical-align: middle;
-      min-height: 10px;
-    }
-    svg {
-      display: flex;
-      justify-content: center;
-    }
-  }
+.sidebar-link a {
+  display: flex;
+  text-decoration: none;
+  color: white;
+  /* flex-direction: column; */
+  /* text-indent: 16px; */
+  box-sizing: border-box;
+  border-left: 4px solid transparent;
+  margin-right: 4px;
+  border-bottom: 1px solid rgb(29, 8, 29);
+}
 
-  .sidebar-link a {
-    display: flex;
-    text-decoration: none;
-    color: white;
-    /* flex-direction: column; */
-    /* text-indent: 16px; */
+.sidebar-wrapper #menu-toggle {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sidebar-link i, .sidebar-link mat-icon {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 20px;
+  padding-left: 25px;
+  transition: .6s;
+}
+
+.sidebar-link p {
+  margin-bottom: 0;
+}
+
+#sidebar-logo {
+  background: rgb(29, 8, 29);
+  display: flex;
+}
+
+.sidebar-nav #profil-img {
+  margin-top: 30px;
+  transition: .6s;
+  padding: 15px;
+  width: 200px;
+  height: 200px;
+  //border-radius: 50%;
+  //object-fit: cover
+
+}
+
+
+.sidebar-nav #profil-name h2 {
+  font-size: 15px;
+  color: #fff;
+  padding-bottom: 35px;
+  border-bottom: 1px solid rgb(29, 8, 29);
+  margin: 0;
+
+}
+
+#profil-name a {
+  text-decoration: none;
+}
+
+.sidebar-link a {
+  &:hover, &.is-active {
+    background: rgb(37, 10, 37);
+    color: #ffc600;
     box-sizing: border-box;
-    border-left: 4px solid transparent;
-    margin-right: 4px;
-    border-bottom: 1px solid rgb(29, 8, 29);
-  }
-
-  .sidebar-wrapper #menu-toggle {
-    position: absolute;
+    border-left: 4px solid #ffc600;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .sidebar-link i, .sidebar-link mat-icon {
-    font-size: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-right: 20px;
-    padding-left: 25px;
-    transition: .6s;
-  }
-
-  .sidebar-link p {
-    margin-bottom: 0;
-  }
-
-  #sidebar-logo {
-    background: rgb(29, 8, 29);
-    display: flex;
-  }
-
-  .sidebar-nav #profil-img {
-    margin-top: 30px;
-    transition: .6s;
-    padding: 15px;
-    width: 200px;
-    height: 200px;
-    //border-radius: 50%;
-    //object-fit: cover
 
   }
+}
 
 
-  .sidebar-nav #profil-name h2 {
-    font-size: 15px;
-    color: #fff;
-    padding-bottom: 35px;
-    border-bottom: 1px solid rgb(29, 8, 29);
-    margin: 0;
-
-  }
-
-  #profil-name a {
-    text-decoration: none;
-  }
-
-  .sidebar-link a {
-    &:hover, &.is-active {
-      background: rgb(37, 10, 37);
-      color: #ffc600;
-      box-sizing: border-box;
-      border-left: 4px solid #ffc600;
-      display: flex;
-
-    }
-  }
+#menu-toggle {
+  padding: 0;
+  color: #310c31;
+  font-size: 20px;
+}
 
 
-  #menu-toggle {
-    padding: 0;
-    color: #310c31;
-    font-size: 20px;
-  }
-
-
-  .picture {
-    width: 50%;
-  }
+.picture {
+  width: 50%;
+}
 
 
 
