@@ -15,7 +15,7 @@ class Image
 
     public function __construct()
     {
-        $this->created = new \DateTime();
+        $this->created = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
     }
 
     /**
