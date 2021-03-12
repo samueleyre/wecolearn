@@ -44,12 +44,16 @@
 
 }
 
+* {
+  font-family: $mainFont;
+}
+
 html{
   background-color: #f5f5f5;
   font-family: $mainFont;
 }
 
-p , span, label {
+p , span, label, li {
   font-family: $mainFont;
 }
 
