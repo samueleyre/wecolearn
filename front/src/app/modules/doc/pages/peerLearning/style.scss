@@ -1,26 +1,16 @@
 @import 'variables';
 
-
-section{
-  margin-top: 30px;
-  margin-bottom: 30px;
-  .row {
-    margin-bottom: 70px;
-  }
-
-}
-
 .docBlock {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 85px;
   width: 100%;
   &-image {
     text-align: right;
     max-height: 267px;
     overflow: hidden;
-    max-width: 500px;
+    max-width: 400px;
     margin-top: auto;
     margin-bottom: auto;
     img {
@@ -34,7 +24,7 @@ section{
       color: var(--main-color-2);
       font-size: 34px;
     }
-    max-width: 500px;
+    max-width: 400px;
     padding: 20px;
     justify-content: center;
     flex-direction: column;
