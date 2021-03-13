@@ -34,6 +34,8 @@ import { ResetPasswordFormComponent } from './components/passwordResetForm/compo
 import { LandingMobileComponent } from './pages/landing/landing-mobile/landing-mobile.component';
 import { LandingDesktopComponent } from './pages/landing/landing-desktop/landing-desktop.component';
 import { LandingAndroidComponent } from './pages/landing/landing-android/landing-android.component';
+import { LandingPresentationComponent } from './components/landing/landing-presentation/landing-presentation.component';
+import { LandingLayoutComponent } from './components/landing/landing-layout/landing-layout.component';
 
 
 @NgModule({
@@ -64,6 +66,8 @@ import { LandingAndroidComponent } from './pages/landing/landing-android/landing
     LandingMobileComponent,
     LandingDesktopComponent,
     LandingAndroidComponent,
+    LandingPresentationComponent,
+    LandingLayoutComponent,
   ],
   exports: [
   ],
