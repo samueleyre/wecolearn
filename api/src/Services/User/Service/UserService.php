@@ -2,22 +2,16 @@
 
 namespace App\Services\User\Service;
 
+use App\Services\Domain\Entity\Domain;
 use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
-use App\Services\Tag\Entity\Tag;
 use App\Services\User\SyncEvent\NewsletterWasChanged;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Type;
-use phpDocumentor\Reflection\Types\Collection;
-use phpDocumentor\Reflection\Types\Integer;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Tests\Test\Constraint\ResponseHeaderSameTest;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class UserService
 {
@@ -25,17 +19,20 @@ class UserService
     private TokenStorageInterface $securityStorage;
     private TagService $tagService;
     private EventDispatcherInterface $dispatcher;
+    private UserManagerInterface $userManager;
 
     public function __construct(
         EntityManagerInterface $em,
         TokenStorageInterface $securityStorage,
         TagService $tagService,
+        UserManagerInterface $userManager,
         EventDispatcherInterface $dispatcher
     ) {
+        $this->dispatcher = $dispatcher;
         $this->em = $em;
         $this->securityStorage = $securityStorage;
         $this->tagService = $tagService;
-        $this->dispatcher = $dispatcher;
+        $this->userManager = $userManager;
     }
 
 
@@ -49,7 +46,7 @@ class UserService
         return $this->em->getRepository(User::class)->find($id);
     }
 
-    public function patch(User $params, $id = null): User
+    public function patch(User $params, $id = null)
     {
 
         // todo: separate in different methods
@@ -62,7 +59,7 @@ class UserService
 
         $oldValueForNewsletter = $patchedUser->getNewsletter();
 
-        $parameters = [
+        $allowedParameters = [
             'emailConfirmed',
             'firstName',
             'lastName',
@@ -72,7 +69,6 @@ class UserService
             'latitude',
             'longitude',
             'city',
-            'tags',
             'showProfil',
             'newMessageNotification',
             'newMatchNotification',
@@ -81,9 +77,9 @@ class UserService
             'newsletter',
         ];
 
-        for ($i = 0; $i < count($parameters); ++$i) {
-            $getMethod = 'get'.ucfirst($parameters[$i]);
-            $setMethod = 'set'.ucfirst($parameters[$i]);
+        for ($i = 0; $i < count($allowedParameters); ++$i) {
+            $getMethod = 'get'.ucfirst($allowedParameters[$i]);
+            $setMethod = 'set'.ucfirst($allowedParameters[$i]);
             if ($params->$getMethod() !== null) {
                 $patchedUser->$setMethod($params->$getMethod());
             }
@@ -94,8 +90,6 @@ class UserService
             $patchedUser->setTags($this->tagService->beforePatchTags($patchedUser->getTags(), $params->getTags()));
         }
 
-        // insert or update "slack" accounts
-        //    $patchedUser->setSlackAccounts($this->patchSlackAccounts($patchedUser, $user->getSlackAccounts()));
 
         $this->em->persist($patchedUser);
         $this->em->flush();
@@ -107,6 +101,43 @@ class UserService
         }
 
         return $patchedUser;
+    }
+
+    public function patchAdmin($id, $params)
+    {
+
+        $patchedUser = $this->findById($id);
+
+        foreach ($params as $key => $value) {
+            if ($key === 'tags') {
+                // insert or update new tags in database
+                $patchedUser->setTags($this->tagService->beforePatchTags($patchedUser->getTags(), $value));
+            } else if ($key == 'domains') {
+                $patchedUser->setDomains($value->map(function($domain) {
+                    return $this->em->getRepository(Domain::class)->find($domain->getId());
+                }));
+            } else {
+                $setMethod = 'set'.str_replace('_', '', ucwords($key, '_'));
+                if ($value !== null) {
+                    $patchedUser->$setMethod($value);
+                }
+            }
+        }
+
+//        Can't have an admin with 2 domaines
+        if (
+            $patchedUser->hasRole('ROLE_ADMIN')
+            && count($patchedUser->getDomains()) > 1
+        ) {
+            throw new HttpException(400, "Can't have 2 domaines for an admin");
+        }
+
+
+        $this->em->persist($patchedUser);
+        $this->em->flush();
+
+        return $patchedUser;
+
     }
 
     public function put($params)

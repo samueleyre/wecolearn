@@ -38,12 +38,6 @@ export class SigninMobileComponent implements OnInit {
   ngOnInit() {
     // reset login status
     this.authenticationService.logout();
-    let subDomain = this.domainService.getSubDomain();
-    if (subDomain === 'wecolearn') {
-      subDomain = '';
-    } else {
-      subDomain += '.';
-    }
     this.pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
   }
 

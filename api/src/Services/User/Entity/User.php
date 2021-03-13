@@ -715,52 +715,17 @@ class User extends BaseUser
         return $this->domains;
     }
 
-    //  /**
-    //   * Add slackAccount
-    //   *
-    //   * @param SlackAccount $slackAccount
-    //   *
-    //   * @return User
-    //   */
-    //  public function addSlackAccount(SlackAccount $slackAccount)
-    //  {
-//    $this->slackAccounts[] = $slackAccount;
-//
-//    return $this;
-    //  }
-//
-    //  /**
-    //   * Remove slackAccount
-    //   *
-    //   * @param SlackAccount $slackAccount
-    //   */
-    //  public function removeSlackAccount(SlackAccount $slackAccount)
-    //  {
-//    $this->slackAccounts->removeElement($slackAccount);
-    //  }
-//
-    //  /**
-    //   * Get slackAccounts
-    //   *
-    //   * @return \Doctrine\Common\Collections\Collection
-    //   */
-    //  public function getSlackAccounts()
-    //  {
-//    return $this->slackAccounts;
-    //  }
-//
-//
-    //  /**
-    //   * Set slackAccounts
-    //   *
-    //   * @param \Doctrine\Common\Collections\Collection
-    //   */
-    //  public function setSlackAccounts($slackAccounts)
-    //  {
-//    $this->slackAccounts = $slackAccounts;
-    //  }
-//
-//
+    /**
+     * Set domains.
+     *
+     * @param Collection $domains
+     * @return User
+     */
+    public function setDomains(Collection $domains): self
+    {
+        $this->domains = $domains;
+        return $this;
+    }
 
     /**
      * Set deleted.

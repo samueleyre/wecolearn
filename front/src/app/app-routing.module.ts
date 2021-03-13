@@ -37,7 +37,7 @@ const wcRoutes: Routes = [
         {
           canLoad: [AuthGuard],
           path: 'admin',
-          data: { admin: true },
+          data: { superAdmin: true },
           loadChildren: () => import('./modules/admin/admin.module').then(mod => mod.AdminModule),
         },
         {

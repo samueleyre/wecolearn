@@ -24,7 +24,6 @@ import { AuthOnboardingComponent } from './components/onBoardingComponents/onBoa
 import { AuthRouting } from './auth.routing';
 import { ConfirmEmailComponent } from './pages/confirmEmail/component';
 import { SigninComponent } from './components/signin/component';
-import { SlackConnexionComponent } from './components/slackConnexion/component';
 import { SignupComponent } from './components/signup/component';
 import { SignupPageComponent } from './pages/subscribe/component';
 import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/component';
@@ -48,7 +47,6 @@ import { LandingLayoutComponent } from './components/landing/landing-layout/land
     SendPasswordConfirmationEmailMobileComponent,
     SigninComponent,
     SigninMobileComponent,
-    SlackConnexionComponent,
     SignupComponent,
     SignupMobileComponent,
     ResetPasswordFormComponent,

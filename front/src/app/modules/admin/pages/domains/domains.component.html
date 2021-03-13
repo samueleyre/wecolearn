@@ -2,7 +2,7 @@
   <div class="Domains-list" [hidden]="editDomainFormVisible">
     <div class="Domains-list-header">
       <h2>
-        Nom de domaines
+        Gestion des communautés
       </h2>
       <form [formGroup]="searchFilters">
         <mat-form-field appearance="outline">
@@ -32,7 +32,7 @@
   <div
     class="Domains-add"
   >
-    <button mat-flat-button class="large" *ngIf="!editDomainFormVisible" (click)="showEditForm()" color="primary">
+    <button mat-raised-button *ngIf="!editDomainFormVisible" (click)="showEditForm()" color="primary">
       + Ajouter un domaine
     </button>
     <div *ngIf="editDomainFormVisible">

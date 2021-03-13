@@ -35,7 +35,7 @@ export class AuthGuard implements CanLoad, CanActivate {
     return this._tempResponse$.getValue();
   }
 
-  private isAllowed(isAdminRoute: boolean): Observable<boolean> | boolean {
+  private isAllowed(isAdminRoute: boolean, isSuperAdminRoute: boolean): Observable<boolean> | boolean {
 
     const pingObs = this._tempResponse ? this._tempResponse$ : this._pingService.ping().pipe(
       tap(response => this.timer(response)),
@@ -72,7 +72,10 @@ export class AuthGuard implements CanLoad, CanActivate {
               }
               Logged.set(true);
 
-              if (isAdminRoute && !this._profileService.isAdmin) {
+              if (
+                isAdminRoute && (!this._profileService.isAdmin && !this._profileService.isSuperAdmin) ||
+                isSuperAdminRoute && !this._profileService.isSuperAdmin
+              ) {
                 this._router.navigate(['/']).then(() => {
                   this._toastr.error('Vous n\'êtes pas autorisé à accéder à cette page.');
                 });
@@ -86,11 +89,11 @@ export class AuthGuard implements CanLoad, CanActivate {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    return this.isAllowed('data' in route && 'admin' in route.data);
+    return this.isAllowed('data' in route && 'admin' in route.data, 'data' in route && 'superAdmin' in route.data);
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.isAllowed('admin' in route.data);
+    return this.isAllowed('admin' in route.data, 'superAdmin' in route.data);
   }
 }
 
