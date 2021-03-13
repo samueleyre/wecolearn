@@ -1,5 +1,5 @@
 <section class="SigninMobile">
-  <div class="SigninMobile-application" *ngIf="!isAndroid">
+  <div class="SigninMobile-application" *ngIf="isAndroid">
     <span>Télécharger l'application !</span>
     <app-android-link [text]="'Android'"></app-android-link>
   </div>

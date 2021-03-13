@@ -1,10 +1,12 @@
 .SigninMobile {
-  height: 100vh;
+  height: 100%;
   &-application {
     display: flex;
     align-items: center;
     //border-bottom: solid grey 1px;
-    background-color: #f8f8f8;
+    background-color: var(--main-color-1);
+    color: white;
+    font-weight: bold;
     justify-content: space-between;
     padding: 15px 15px;
     margin-bottom: 5px;

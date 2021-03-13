@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { environment } from '~/../environments/environment';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'landing-signin-mobile',
@@ -10,7 +8,10 @@ import { environment } from '~/../environments/environment';
 })
 
 export class LandingSigninMobileComponent {
+  constructor(private device: DeviceDetectorService) {
+  }
+
   public get isAndroid() {
-    return environment.android;
+    return this.device.getDeviceInfo().device.toLowerCase() === 'android';
   }
 }
