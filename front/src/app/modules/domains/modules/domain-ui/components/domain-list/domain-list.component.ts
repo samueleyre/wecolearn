@@ -3,9 +3,9 @@ import { takeUntil } from 'rxjs/operators';
 
 import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { Domain } from '~/core/entities/domain/domain';
-import { AdminDomainService } from '~/modules/domains/services/admin-domain.service';
+import { Community } from '~/core/entities/domain/community';
 import { ToastService } from '~/core/services/toast.service';
+import {AdminCommunityService} from '~/core/services/admin/admin-community.service';
 
 @Component({
   selector: 'app-domain-list',
@@ -13,14 +13,14 @@ import { ToastService } from '~/core/services/toast.service';
   styleUrls: ['./domain-list.component.scss'],
 })
 export class DomainListComponent extends DestroyObservable implements OnInit {
-  @Input() domains: Domain[] = [];
+  @Input() domains: Community[] = [];
   @Input() canEditDomain = false;
-  @Output() editDomain = new EventEmitter<Domain>();
+  @Output() editDomain = new EventEmitter<Community>();
 
   displayedColumns: string[] = ['name', 'count'];
 
   constructor(
-    private _domainService: AdminDomainService,
+    private _communityService: AdminCommunityService,
     private _toastr: ToastService,
     private _dialogService: DialogService,
   ) {
@@ -31,13 +31,13 @@ export class DomainListComponent extends DestroyObservable implements OnInit {
 
   ngAfterViewInit() {}
 
-  onDelete(domain: Domain) {
+  onDelete(domain: Community) {
     this._dialogService
       .confirm('Domains', 'Voulez-vous supprimer ce domaine ?')
       .pipe(takeUntil(this.destroy$))
       .subscribe((hasConfirmed) => {
         if (hasConfirmed) {
-          this._domainService
+          this._communityService
             .deleteAndList(domain.id)
             .pipe(takeUntil(this.destroy$))
             .subscribe(
@@ -52,7 +52,7 @@ export class DomainListComponent extends DestroyObservable implements OnInit {
       });
   }
 
-  public onEdit(domain: Domain) {
+  public onEdit(domain: Community) {
     this.editDomain.emit(domain);
   }
 }

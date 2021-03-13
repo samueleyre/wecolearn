@@ -6,9 +6,9 @@ import { debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, tap }
 
 import { DomainFormComponent } from '~/modules/domains/modules/domain-ui/components/domain-form/domain-form.component';
 import { AuthenticationService } from '~/core/services/auth/auth.service';
-import { AdminDomainService } from '~/modules/domains/services/admin-domain.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { Domain } from '~/core/entities/domain/domain';
+import { Community } from '~/core/entities/domain/community';
+import {AdminCommunityService} from '~/core/services/admin/admin-community.service';
 
 @Component({
   selector: 'app-domains',
@@ -16,9 +16,9 @@ import { Domain } from '~/core/entities/domain/domain';
   styleUrls: ['./domains.component.scss'],
 })
 export class DomainsComponent extends DestroyObservable implements OnInit, AfterViewInit  {
-  domainsToShow: Domain[];
-  domains$: BehaviorSubject<Domain[]> = new BehaviorSubject(null);
-  domainsFiltered: Domain[];
+  domainsToShow: Community[];
+  domains$: BehaviorSubject<Community[]> = new BehaviorSubject(null);
+  domainsFiltered: Community[];
 
   searchFilters: FormGroup;
   editDomainFormVisible = false;
@@ -28,12 +28,12 @@ export class DomainsComponent extends DestroyObservable implements OnInit, After
   @ViewChild(DomainFormComponent, { static: false }) domainForm: DomainFormComponent;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  public editedDomain: Domain;
+  public editedDomain: Community;
   canEditDomain$: Observable<boolean>;
 
   constructor(
     private _authenticationService: AuthenticationService,
-    private _domainService: AdminDomainService,
+    private _communityService: AdminCommunityService,
     private _fb: FormBuilder,
   ) {
     super();
@@ -41,7 +41,7 @@ export class DomainsComponent extends DestroyObservable implements OnInit, After
 
   ngOnInit() {
     // listen to domain list
-    this._domainService.domains$.pipe(takeUntil(this.destroy$)).subscribe((domains) => {
+    this._communityService.communities$.pipe(takeUntil(this.destroy$)).subscribe((domains) => {
       this.domains$.next(domains);
     });
     this.loadDomains();
@@ -89,8 +89,8 @@ export class DomainsComponent extends DestroyObservable implements OnInit, After
     return this.domainsFiltered && this.domainsFiltered.length;
   }
 
-  showEditForm(domain: Domain = null) {
-    const emptyDomain = new Domain();
+  showEditForm(domain: Community = null) {
+    const emptyDomain = new Community();
     this.editedDomain =
       domain === null
         ? emptyDomain
@@ -105,7 +105,7 @@ export class DomainsComponent extends DestroyObservable implements OnInit, After
   }
 
   private loadDomains() {
-    this._domainService.list().subscribe();
+    this._communityService.list().subscribe();
   }
 
   private initSearchForm() {

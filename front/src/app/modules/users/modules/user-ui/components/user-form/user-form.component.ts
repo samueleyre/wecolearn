@@ -7,9 +7,10 @@ import { USER_ROLES, USER_ROLES_FR, UserRoleEnum } from '~/core/enums/user/user-
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { PATTERN } from '~/shared/config/pattern';
 import { ToastService } from '~/core/services/toast.service';
+import { EnvEnum } from '~/core/enums/env.enum';
+import { AdminCommunityService } from '~/core/services/admin/admin-community.service';
 
 import { environment } from '../../../../../../../environments/environment';
-import {EnvEnum} from "~/core/enums/env.enum";
 
 @Component({
   selector: 'app-user-form',
@@ -28,8 +29,22 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
 
   public roles = USER_ROLES;
 
-  constructor(private _fb: FormBuilder, private _userService: AdminUsersService, private _toastr: ToastService) {
+  constructor(
+    private _fb: FormBuilder,
+    private _userService: AdminUsersService,
+    private _toastr: ToastService,
+    private _communityService: AdminCommunityService,
+  ) {
     super();
+    this.loadCommunities();
+  }
+
+  get communities$() {
+    return this._communityService.communities$;
+  }
+
+  private loadCommunities() {
+    this._communityService.list().subscribe();
   }
 
   updateFormValues() {
@@ -41,7 +56,8 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
-        roles: user.roles,
+        roles: user.roles.length > 0 ? user.roles : [UserRoleEnum.USER],
+        domains: user.domains,
       });
 
       Object.keys(this.createEditUserForm.controls).forEach((key) => {
@@ -75,11 +91,6 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
     this.isCreatingUpdating = true;
 
     const formVal = { ...this.createEditUserForm.value };
-
-    if (!this.isCreating) {
-      delete formVal.roles;
-    }
-
     const errM = (err) => {
       if (err.status === 409) this._toastr.error('Cette adresse email est déjà utilisée');
       this.isCreatingUpdating = false;
@@ -111,9 +122,7 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
   }
 
   updateValidators(isCreating: boolean = this.isCreating) {
-    if (this.createEditUserForm) {
-      this.createEditUserForm.controls['roles'].setValidators(isCreating ? Validators.required : null);
-    }
+  //   no validators to update
   }
 
   public getFrenchRole(role: UserRoleEnum): string {
@@ -129,12 +138,23 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
       first_name: [user.first_name, Validators.required],
       last_name: [user.last_name, Validators.required],
       email: [user.email, [Validators.required, Validators.pattern(pattern)]],
-      roles: [user.roles],
+      roles: user.roles.length > 0 ? user.roles : [UserRoleEnum.USER],
+      domains: [user.domains, Validators.required],
     });
 
     this.updateValidators(isCreating);
 
     this.updateFormValues();
+  }
+
+  compareIds(tagOption: { id: number }, tagSelection: { id: number }): boolean {
+    return tagOption && tagSelection ? tagOption.id === tagSelection.id : tagOption === tagSelection;
+  }
+
+  compareRoles(rolesOption: UserRoleEnum[], rolesSelection: UserRoleEnum[]): boolean {
+    console.log({ rolesOption });
+    console.log({ rolesSelection });
+    return rolesOption && rolesSelection ? rolesOption[0] === rolesSelection[0] : rolesOption === rolesSelection;
   }
 }
 
