@@ -30,21 +30,17 @@ export class MobileGuard implements CanActivateChild {
       || surface.includes('android') && !environment.android
       || surface.includes('desktop') && (environment.android || this._deviceService.isMobile())
       ) {
-
         let redirectUrl = NAV.dashHome;
         const redirectExtension = 'redirectTo' in next.data ? next.data.redirectTo : null;
 
         console.log(redirectExtension);
 
         if (redirectExtension !== null) {
+          redirectUrl = state.url.replace(/\/android|\/mobile/, '');
           if (redirectExtension === 'mobile') {
-            redirectUrl = state.url + '/mobile';
-          } else if (redirectExtension === 'desktop') {
-            redirectUrl = state.url + '/desktop';
+            redirectUrl += '/mobile';
           } else if (redirectExtension === 'android') {
-            redirectUrl = state.url + '/android';
-          } else if (redirectExtension === '') {
-            redirectUrl = state.url.replace(/\/android|\/mobile|\/dekstop/, '');
+            redirectUrl += '/android';
           }
         }
 

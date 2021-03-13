@@ -1,0 +1,18 @@
+@import "variables";
+
+
+.LandingSection {
+  padding: 100px 20px;
+  &--light {
+    background-color: rgb(238, 238, 238);
+  }
+  &--dark {
+    color: white;
+    background-color: $primaryColor;
+  }
+  &-title {
+    text-align: center;
+    font-size: 2.5rem;
+    padding-bottom: 100px;
+  }
+}
