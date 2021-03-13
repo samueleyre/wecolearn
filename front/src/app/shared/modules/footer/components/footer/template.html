@@ -2,35 +2,38 @@
 
   <hr>
 
-    <br>
+  <br>
 
-    <div class="container">
-        <div class="row justify-content-between">
-            <div class="col-12 col-md-4">
-              <a class="networkLink" target="_blank" href="{{socialLinks.meetupLink}}"><i class="fab fa-meetup"></i></a>
-              <a class="networkLink" target="_blank" href="{{socialLinks.faceBookLink}}"><i class="fab fa-facebook-f"></i></a>
-              <a class="networkLink" target="_blank" href="{{socialLinks.twitterLink}}"><i class="fab fa-twitter"></i></a>
-              <a class="networkLink" target="_blank" href="{{socialLinks.slackLink}}"><i class="fab fa-slack"></i></a>
-                <br>
-                <br>
-              <p><a href="mailto:contact@wecolearn.com">contact@wecolearn.com</a></p>
-            </div>
-            <div class="col-12 col-md-4" >
-                <a class="pageLink" routerLink="{{navLinks.landing}}" routerLinkActive="hide">Accueil</a>
-                <a class="pageLink" target="_blank" href="{{socialLinks.blogLink}}" >Actualités</a>
-                <a class="pageLink" routerLink="{{navLinks.manifest}}" routerLinkActive="hide">Manifeste</a>
-                <a class="pageLink" routerLink="{{navLinks.aboutUs}}" routerLinkActive="hide">Qui sommes-nous ?</a>
-                <a class="pageLink" routerLink="{{navLinks.peerLearning}}" routerLinkActive="hide">Pourquoi faire du peer-learning ?</a>
-              <a class="pageLink" routerLink="{{navLinks.cgu}}" routerLinkActive="hide">Conditions générales d'utilisation</a>
-              <a class="pageLink" routerLink="{{navLinks.cookiePolicy}}" routerLinkActive="hide">Politique des cookies</a>
-              <a class="pageLink" routerLink="{{navLinks.privacyPolicy}}" routerLinkActive="hide">Politique de confidentialité</a>
-                <a class="pageLink" routerLink="{{navLinks.mentionsLegales}}" routerLinkActive="hide">Mentions Légales</a>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-12 col-md-4">
+        <a class="networkLink" target="_blank" href="{{socialLinks.meetupLink}}"><i class="fab fa-meetup"></i></a>
+        <a class="networkLink" target="_blank" href="{{socialLinks.faceBookLink}}"><i class="fab fa-facebook-f"></i></a>
+        <a class="networkLink" target="_blank" href="{{socialLinks.twitterLink}}"><i class="fab fa-twitter"></i></a>
+        <a class="networkLink" target="_blank" href="{{socialLinks.linkedinLink}}"><i class="fab fa-linkedin"></i></a>
+        <a class="networkLink" target="_blank" href="{{socialLinks.slackLink}}"><i class="fab fa-slack"></i></a>
+        <br>
+        <br>
+        <p><a href="mailto:contact@wecolearn.com">contact@wecolearn.com</a></p>
+      </div>
+      <div class="col-12 col-md-4">
+        <a class="pageLink" routerLink="{{navLinks.landing}}" routerLinkActive="hide">Accueil</a>
+        <a class="pageLink" target="_blank" href="{{socialLinks.blogLink}}">Actualités</a>
+        <a class="pageLink" routerLink="{{navLinks.manifest}}" routerLinkActive="hide">Manifeste</a>
+        <a class="pageLink" routerLink="{{navLinks.aboutUs}}" routerLinkActive="hide">Qui sommes-nous ?</a>
+        <a class="pageLink" routerLink="{{navLinks.peerLearning}}" routerLinkActive="hide">Pourquoi faire du
+          peer-learning ?</a>
+        <a class="pageLink" routerLink="{{navLinks.cgu}}" routerLinkActive="hide">Conditions générales d'utilisation</a>
+        <a class="pageLink" routerLink="{{navLinks.cookiePolicy}}" routerLinkActive="hide">Politique des cookies</a>
+        <a class="pageLink" routerLink="{{navLinks.privacyPolicy}}" routerLinkActive="hide">Politique de
+          confidentialité</a>
+        <a class="pageLink" routerLink="{{navLinks.mentionsLegales}}" routerLinkActive="hide">Mentions Légales</a>
+      </div>
     </div>
+  </div>
 
-    <div class="copyright">
-      © <span>{{ now | date: 'yyyy' }}</span> - Wecolearn
-    </div>
-    <br>
+  <div class="copyright">
+    © <span>{{ now | date: 'yyyy' }}</span> - Wecolearn
+  </div>
+  <br>
 </section>
