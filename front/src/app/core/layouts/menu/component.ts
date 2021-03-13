@@ -32,6 +32,10 @@ export class MenuComponent implements OnInit {
     return this._profileService.isAdmin;
   }
 
+  get isSuperAdmin(): boolean {
+    return this._profileService.isSuperAdmin;
+  }
+
   get nav() {
     return NAV;
   }

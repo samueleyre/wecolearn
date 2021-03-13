@@ -31,7 +31,11 @@ export class ProfileService extends APIService<User> {
   }
 
   get isAdmin(): boolean {
-    return this.profile.roles.includes(UserRoleEnum.ADMIN);
+    return this.profile.roles.includes(UserRoleEnum.ADMIN) || this.profile.roles.includes(UserRoleEnum.SUPER_ADMIN);
+  }
+
+  get isSuperAdmin(): boolean {
+    return this.profile.roles.includes(UserRoleEnum.SUPER_ADMIN);
   }
 
   pullMessages(): Observable<object> { // TODO : probably check for any kind of update, if other

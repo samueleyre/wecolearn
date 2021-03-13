@@ -52,7 +52,6 @@ export class AppComponent {
     _router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        _domainService.setSubDomain();
         _seoService.updateSeoTitleAndTags(event.urlAfterRedirects);
       });
 

@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AdminDomainService } from '~/modules/domains/services/admin-domain.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { Domain } from '~/core/entities/domain/domain';
+import { Community } from '~/core/entities/domain/community';
 import { ToastService } from '~/core/services/toast.service';
+import {AdminCommunityService} from '~/core/services/admin/admin-community.service';
 
 
 @Component({
@@ -13,21 +13,21 @@ import { ToastService } from '~/core/services/toast.service';
   styleUrls: ['./domain-form.component.scss'],
 })
 export class DomainFormComponent extends DestroyObservable implements OnInit {
-  @Input() domain: Domain;
+  @Input() domain: Community;
   @Input() isCreating: boolean;
   @Input() groupEditable: boolean;
 
-  @Output() onCloseEditDomain: EventEmitter<Domain> = new EventEmitter<Domain>();
+  @Output() onCloseEditDomain: EventEmitter<Community> = new EventEmitter<Community>();
 
   createEditDomainForm: FormGroup;
   isCreatingUpdating = false;
 
-  constructor(private _fb: FormBuilder, private _domainService: AdminDomainService, private _toastr: ToastService) {
+  constructor(private _fb: FormBuilder, private _communityService: AdminCommunityService, private _toastr: ToastService) {
     super();
   }
 
   updateFormValues() {
-    const domain: Domain = this.domain;
+    const domain: Community = this.domain;
 
     if (this.createEditDomainForm) {
       this.createEditDomainForm.setValue({
@@ -48,7 +48,7 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
 
   ngOnInit() {
     if (!this.domain) {
-      this.domain = new Domain();
+      this.domain = new Community();
     }
     this.initForm();
   }
@@ -67,13 +67,13 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
     }
 
     const errM = (err) => {
-      if (err.status === 409) this._toastr.error('Ce nom de domaine est déjà utilisé');
+      if (err.status === 409) this._toastr.error('Ce nom de communauté est déjà utilisé');
       this.isCreatingUpdating = false;
       throw err;
     };
 
     if (this.isCreating) {
-      this._domainService.createAndList(formVal).subscribe(
+      this._communityService.createAndList(formVal).subscribe(
         (data) => {
           const domain = data[0];
           this.isCreatingUpdating = false;
@@ -84,7 +84,7 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
         },
         errM);
     } else {
-      this._domainService.patchAndList({ ...formVal, id: this.domain.id }).subscribe(
+      this._communityService.patchAndList({ ...formVal, id: this.domain.id }).subscribe(
         (data) => {
           const domain = data[0];
           this.isCreatingUpdating = false;
@@ -97,7 +97,7 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
 
   private initForm(
     isCreating: boolean = this.isCreating,
-    domain: Domain = this.domain,
+    domain: Community = this.domain,
   ): void {
     this.createEditDomainForm = this._fb.group({
       name: [domain.name, Validators.required],
