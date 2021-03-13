@@ -4,13 +4,13 @@ App\Services\User\Entity\User:
     access_order:     alphabetical
     properties:
       id:
-        groups: [ input, id, user, search, message, profile, public-profile,  admin-users, thread ]
+        groups: [ admin-user-patch, input, id, user, search, message, profile, public-profile,  admin-users, thread ]
       created:
         groups: [ input, profile, admin-users]
       firstName:
-        groups: [ input, output, user, create, search, message, profile, public-profile, admin-users ]
+        groups: [ admin-user-patch, input, output, user, create, search, message, profile, public-profile, admin-users ]
       lastName:
-        groups: [ input, output, user, create, search, message, profile, public-profile, admin-users ]
+        groups: [ admin-user-patch, input, output, user, create, search, message, profile, public-profile, admin-users ]
       profilUrl:
         groups: [ input, output, user, search, message, profile, public-profile, admin-users ]
       biographie:
@@ -24,7 +24,7 @@ App\Services\User\Entity\User:
       longitude:
         groups: [ input, create, admin-users, profile ]
       city:
-        groups: [ input, create, admin-users, profile ]
+        groups: [ admin-user-patch, input, create, admin-users, profile ]
       tags:
         groups: [ input, create, search, profile, public-profile, admin-users ]
       sentMessages:
@@ -37,7 +37,7 @@ App\Services\User\Entity\User:
         type: App\Services\User\Entity\Image
         groups: [ input, output, search, message, profile, public-profile ]
       showProfil:
-        groups: [ input, profile, admin-users ]
+        groups: [ admin-user-patch, input, profile, admin-users ]
       newMessageNotification:
         groups: [ input, profile ]
       newMatchNotification:
@@ -55,7 +55,7 @@ App\Services\User\Entity\User:
       notificationSubscribe:
         groups: [ input ]
       domains:
-        groups: [ admin-users ]
+        groups: [ admin-user-patch, admin-users ]
       emailConfirmed:
         groups: [ profile ]
       deleted:

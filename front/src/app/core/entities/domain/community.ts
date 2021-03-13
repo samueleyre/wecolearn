@@ -1,4 +1,4 @@
-export class Domain {
+export class Community {
   public id: number | null;
   public name: string;
   public count?: number;
