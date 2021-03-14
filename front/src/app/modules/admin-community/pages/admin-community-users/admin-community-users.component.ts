@@ -1,22 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { BehaviorSubject, merge, Observable, of, pipe } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, skipUntil, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { User } from '~/core/entities/user/entity';
+import { UserFormComponent } from '~/modules/users/modules/user-ui/components/user-form/user-form.component';
 import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { AdminUsersService } from '~/modules/users/services/admin-users.service';
-import { UserFormComponent } from '~/modules/users/modules/user-ui/components/user-form/user-form.component';
+import { CommunityAdminUsersService } from '~/core/services/communityAdmin/admin-users.service';
 import { ToastService } from '~/core/services/toast.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss'],
+  selector: 'app-admin-community-users',
+  templateUrl: './admin-community-users.component.html',
+  styleUrls: ['./admin-community-users.component.scss'],
 })
-export class UsersComponent extends DestroyObservable implements OnInit {
+export class AdminCommunityUsersComponent extends DestroyObservable implements OnInit {
   usersToShow: User[];
   users$: BehaviorSubject<User[]> = new BehaviorSubject(null);
   usersFiltered: User[];
@@ -34,16 +34,16 @@ export class UsersComponent extends DestroyObservable implements OnInit {
 
   constructor(
     public authenticationService: AuthenticationService,
-    public userService: AdminUsersService,
-    private fb: FormBuilder,
+    private _userService: CommunityAdminUsersService,
     private _toastr: ToastService,
+    private fb: FormBuilder,
   ) {
     super();
   }
 
   ngOnInit() {
     // listen to user list
-    this.userService.users$.pipe(takeUntil(this.destroy$)).subscribe((users) => {
+    this._userService.users$.pipe(takeUntil(this.destroy$)).subscribe((users) => {
       this.users$.next(users.filter(user => user.deleted === null));
     });
     this.loadUsers();
@@ -69,7 +69,7 @@ export class UsersComponent extends DestroyObservable implements OnInit {
           const start = Number(page) * this.PAGE_SIZE;
           const end = Number(page) * this.PAGE_SIZE + this.PAGE_SIZE;
           this.usersFiltered = this.users.filter(
-            u => `${u.email} ${u.first_name} ${u.city} ${u.last_name} ${u.tags.map(tag => tag.name)
+            u => `${u.email} ${u.first_name} ${u.last_name} ${u.tags.map(tag => tag.name)
               .join()}`.toLowerCase().includes(query.toLowerCase()),
           );
           return of(this.usersFiltered.slice(start, end));
@@ -113,22 +113,12 @@ export class UsersComponent extends DestroyObservable implements OnInit {
     this.editUserFormVisible = false;
   }
 
-  private loadUsers() {
-    this.userService.list().subscribe();
-  }
-
-  private initSearchForm() {
-    this.searchFilters = this.fb.group({
-      query: [''],
-    });
-  }
-
   private errM(err) {
     if (err.status === 409) this._toastr.error('Cette adresse email est déjà utilisée');
   }
 
   createUser(params) {
-    this.userService.createAndList(params).subscribe(
+    this._userService.createAndList(params).subscribe(
       (data) => {
         const user = data[0];
         this.closeUserForm();
@@ -141,7 +131,7 @@ export class UsersComponent extends DestroyObservable implements OnInit {
   }
 
   updateUser(params) {
-    this.userService.putAndList({ ...params, id: this.editedUser.id }).subscribe(
+    this._userService.putAndList({ ...params, id: this.editedUser.id }).subscribe(
       (data) => {
         this.closeUserForm();
         this._toastr.success(`Les informations ont bien été modifiées`);
@@ -149,8 +139,18 @@ export class UsersComponent extends DestroyObservable implements OnInit {
       this.errM);
   }
 
+  private loadUsers() {
+    this._userService.list().subscribe();
+  }
+
+  private initSearchForm() {
+    this.searchFilters = this.fb.group({
+      query: [''],
+    });
+  }
+
   deleteUser(user) {
-    this.userService
+    this._userService
       .deleteAndList(user.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(

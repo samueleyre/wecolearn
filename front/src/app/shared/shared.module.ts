@@ -45,6 +45,7 @@ import { DashPageLayoutComponent } from '../shared/layouts/dash-page-layout/dash
     AndroidLinkComponent,
     SavingInputComponent,
     MaterialModule,
+    ReactiveFormsModule,
     DashPageLayoutComponent,
   ],
   entryComponents: [NoConnectionToastComponent],
