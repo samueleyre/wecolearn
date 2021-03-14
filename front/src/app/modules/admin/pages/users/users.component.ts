@@ -92,10 +92,16 @@ export class UsersComponent extends DestroyObservable implements OnInit {
   }
 
   showEditForm(user: User = null) {
-    const emptyUser = new User();
+    const newUser = new User({
+      first_name: null,
+      last_name: null,
+      email: null,
+      roles: [],
+      domains: [],
+    });
     this.editedUser =
       user === null
-        ? emptyUser
+        ? newUser
         : user;
 
     this.isCreatingUser = !this.editedUser.id;

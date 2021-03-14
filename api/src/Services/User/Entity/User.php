@@ -579,40 +579,6 @@ class User extends BaseUser
         $this->tags = $tags;
     }
 
-    //  /**
-    //   * Add selected
-    //   *
-    //   * @param Selection $selected
-    //   *
-    //   * @return User
-    //   */
-    //  public function addSelected(Selection $selected)
-    //  {
-//    $this->selected[] = $selected;
-//
-//    return $this;
-    //  }
-//
-    //  /**
-    //   * Remove selected
-    //   *
-    //   * @param Selection $selected
-    //   */
-    //  public function removeSelected(Selection $selected)
-    //  {
-//    $this->selected->removeElement($selected);
-    //  }
-//
-    //  /**
-    //   * Get selected
-    //   *
-    //   * @return \Doctrine\Common\Collections\Collection
-    //   */
-    //  public function getSelected()
-    //  {
-//    return $this->selected;
-    //  }
-
     /**
      * Add sentMessage.
      *
