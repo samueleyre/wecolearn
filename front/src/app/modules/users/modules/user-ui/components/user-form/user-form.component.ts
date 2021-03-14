@@ -50,13 +50,14 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
   updateFormValues() {
     const user: User = this.user;
 
+    console.log({ user })
     this.updateValidators();
     if (this.createEditUserForm) {
       this.createEditUserForm.setValue({
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
-        roles: user.roles.length > 0 ? user.roles : [UserRoleEnum.USER],
+        roles: user.roles && user.roles.length > 0 ? user.roles : [UserRoleEnum.USER],
         domains: user.domains,
       });
 
@@ -78,7 +79,15 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
 
   ngOnInit() {
     if (!this.user) {
-      this.user = new User();
+      this.user = new User(
+        {
+          first_name: null,
+          last_name: null,
+          email: null,
+          roles: [],
+          domains: [],
+        },
+      );
     }
     this.initForm();
   }
@@ -110,7 +119,7 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
         },
         errM);
     } else {
-      this._userService.patchAndList({ ...formVal, id: this.user.id }).subscribe(
+      this._userService.putAndList({ ...formVal, id: this.user.id }).subscribe(
         (data) => {
           const user = data[0];
           this.isCreatingUpdating = false;
@@ -138,7 +147,7 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
       first_name: [user.first_name, Validators.required],
       last_name: [user.last_name, Validators.required],
       email: [user.email, [Validators.required, Validators.pattern(pattern)]],
-      roles: user.roles.length > 0 ? user.roles : [UserRoleEnum.USER],
+      roles: user.roles && user.roles.length > 0 ? user.roles : [UserRoleEnum.USER],
       domains: [user.domains, Validators.required],
     });
 
@@ -152,8 +161,6 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
   }
 
   compareRoles(rolesOption: UserRoleEnum[], rolesSelection: UserRoleEnum[]): boolean {
-    console.log({ rolesOption });
-    console.log({ rolesSelection });
     return rolesOption && rolesSelection ? rolesOption[0] === rolesSelection[0] : rolesOption === rolesSelection;
   }
 }
