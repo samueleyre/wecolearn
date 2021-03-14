@@ -28,17 +28,17 @@ class UploadController extends AbstractController
 
         $user = $tokenStorage->getToken()->getUser();
 
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
+//        move this to service !
         if (null !== $user->getImage()) {
             $image = $user->getImage();
+            $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
             $image->setUpdated($date);
             $image->setVersion($image->getVersion() + 1);
             $uploadService->uploadImage($image, $request->files->get('file'), $user->getId());
             $imageService->patch($image);
         } else {
             $image = new Image();
-            $image->setCreated($date);
             $image->setUser($user);
             $uploadService->uploadImage($image, $request->files->get('file'), $user->getId());
             $imageService->post($image);

@@ -25,12 +25,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserAdminController extends AbstractController
+class UserCommunityAdminController extends AbstractController
 {
 
 
     /**
-     * @Get("admin/user/{id}")
+     * @Get("community-admin/user/{id}")
      * @View(serializerEnableMaxDepthChecks=true,
      *     serializerGroups={"output", "receivedMessages":{"output", "sender":{"search"}}})
      **
@@ -41,11 +41,11 @@ class UserAdminController extends AbstractController
         UserService $userService
     )
     {
-        return $userService->findById($id);
+        return $userService->findInCommunityById($id);
     }
 
     /**
-     * @Get("admin/users")
+     * @Get("community-admin/users")
      * @View( serializerGroups={"admin-users"})
      * @return object[]
      */
@@ -53,11 +53,11 @@ class UserAdminController extends AbstractController
         UserService $userService
     )
     {
-        return $userService->getAll();
+        return $userService->getAllInCommunity();
     }
 
     /**
-     * @Post("admin/user")
+     * @Post("community-admin/user")
      * @ParamConverter(
     "user",
     class="App\Services\User\Entity\User",
@@ -68,13 +68,13 @@ class UserAdminController extends AbstractController
     public function addUserAction(
         User $user,
         CreateUserService $service
-    )
+    ): User
     {
-        return $service->process($user, $user->getRoles());
+        return $service->process($user);
     }
 
     /**
-     * @Put("admin/user")
+     * @Put("community-admin/user")
      * @ParamConverter(
      *       "user",
      *       class="App\Services\User\Entity\User",
@@ -91,11 +91,7 @@ class UserAdminController extends AbstractController
             'first_name',
             'last_name',
             'biographie',
-            'roles',
-            'domains'
         ];
-
-//        todo: add email change option !
 
         for ($i = 0; $i < count($authorizedFields); ++$i) {
             $getMethod = 'get' . str_replace('_', '', ucwords($authorizedFields[$i], '_'));
@@ -104,11 +100,11 @@ class UserAdminController extends AbstractController
             }
         }
 
-        return $userService->patchAdmin($user->getId(), $userParams);
+        return $userService->patchCommunityAdmin($user->getId(), $userParams);
     }
 
     /**
-     * @Delete("admin/user/{id}")
+     * @Delete("community-admin/user/{id}")
      * @return string
      */
     public function deleteUserAction(
@@ -116,7 +112,7 @@ class UserAdminController extends AbstractController
         UserService $userService
     )
     {
-        return $userService->delete($id);
+        return $userService->removeFromCommunity($id);
     }
 
 }
