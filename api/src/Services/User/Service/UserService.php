@@ -6,6 +6,7 @@ use App\Services\Domain\Entity\Domain;
 use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
 use App\Services\User\SyncEvent\NewsletterWasChanged;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -44,7 +45,7 @@ class UserService
     public function getAllInCommunity(): array
     {
         $concernedDomain = $this->getCommunityOfAdmin();
-        return $this->em->getRepository(User::class)->findBy(['enabled'=>true, 'domains' => [$concernedDomain]], ['created' => 'DESC']);
+        return $this->em->getRepository(User::class)->findEnabledByCommunity($concernedDomain->getId());
     }
 
 
@@ -116,7 +117,7 @@ class UserService
         return $patchedUser;
     }
 
-    public function patchCommunityAdmin($id, $params)
+    public function putCommunityAdmin($id, $params): ?object
     {
         $patchedUser = $this->findById($id);
         foreach ($params as $key => $value) {
@@ -131,7 +132,7 @@ class UserService
         return $patchedUser;
     }
 
-    public function patchAdmin($id, $params)
+    public function putAdmin($id, $params): ?object
     {
 
         $patchedUser = $this->findById($id);
@@ -212,8 +213,10 @@ class UserService
         $user = $this->findById($id);
         $userDomains = $user->getDomains();
 
-        if ($userDomains.count() > 1) {
+        if ($userDomains->count() > 1) {
             $user->removeDomain($concernedDomain);
+            $this->em->persist($user);
+            $this->em->flush();
         } else if ($userDomains[0]->getId() === $concernedDomain->getId()) {
             $this->delete($id);
         }
@@ -242,6 +245,9 @@ class UserService
     private function getCommunityOfAdmin()
     {
         $adminUser = $this->securityStorage->getToken()->getUser();
+        dump($adminUser);
+        dump($adminUser->getDomains());
+        dump($adminUser->getDomains()[0]);
         return $adminUser->getDomains()[0];
     }
 

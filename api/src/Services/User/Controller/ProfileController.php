@@ -14,6 +14,7 @@ use App\Services\User\Entity\User;
 use App\Services\User\Service\ChangeEmailService;
 use App\Services\User\Service\UserService;
 use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
+use Exception;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -35,37 +36,17 @@ class ProfileController extends AbstractController
      * @Get("profile")
      * @View(serializerEnableMaxDepthChecks=true, serializerGroups={"profile"})
      * @param TokenStorageInterface $tokenStorage
-     * @param DomainService $domainService
      * @param UserService $userService
-     * @param LoggerInterface $logger
      * @return UserInterface
+     * @throws Exception
      */
     public function getProfileAction(
         TokenStorageInterface $tokenStorage,
-        DomainService $domainService,
-        UserService $userService,
-        LoggerInterface $logger
+        UserService $userService
     ): UserInterface
     {
-        $user = $tokenStorage->getToken()->getUser();
-
-        $subDomain = $domainService->getSubDomain();
-
-        $domain = $domainService->getSubDomainEntity($subDomain);
-
-        if (!$domain) {
-            $logger->error('Subdomain not found :', [$subDomain]);
-            $user->addDomain(new Domain($subDomain));
-        } elseif (false === $user->getDomains()->indexOf($domain)) {
-            $user->addDomain($domain);
-        }
-
         $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        $user->setUserUpdated($date);
-
-        $userService->patch($user);
-
-        return $user;
+        return $userService->put(['userUpdated' => $date]);
     }
 
     /**
@@ -163,7 +144,7 @@ class ProfileController extends AbstractController
             } catch (NotNullConstraintViolationException $e) {
                 // Found the name of missed field
                 throw new HttpException(400, 'not null');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 syslog(LOG_ERR, "error changing password $e");
             }
         }
