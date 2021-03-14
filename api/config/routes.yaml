@@ -26,6 +26,11 @@ userAdmin:
   prefix:   api
   resource: App\Services\User\Controller\UserAdminController
 
+userCommunityAdmin:
+  type:     annotation
+  prefix:   api
+  resource: App\Services\User\Controller\UserCommunityAdminController
+
 profile:
   prefix: api
   type: annotation

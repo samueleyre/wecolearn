@@ -47,14 +47,23 @@
       </h2>
 
       <div class="Users-form">
-        <app-user-form
-          [isCreating]="isCreatingUser"
+        <app-user-form *ngIf="isCreatingUser"
+          [fields]="['first_name', 'last_name', 'email']"
+          [isCreating]="true"
           [user]="editedUser"
           [groupEditable]="true"
           (onCloseEditUser)="closeUserForm()"
           (createUser)="createUser($event)"
+        ></app-user-form>
+        <app-user-form *ngIf="!isCreatingUser"
+          [fields]="['first_name', 'last_name']"
+          [isCreating]="false"
+          [user]="editedUser"
+          [groupEditable]="true"
+          (onCloseEditUser)="closeUserForm()"
           (updateUser)="updateUser($event)"
         ></app-user-form>
+
       </div>
     </div>
   </div>

@@ -19,13 +19,15 @@ import { environment } from '../../../../../../../environments/environment';
 })
 export class UserFormComponent extends DestroyObservable implements OnInit {
   @Input() user: User;
+  @Input() fields: (keyof User)[] = ['first_name', 'last_name', 'email', 'roles', 'domains'];
   @Input() isCreating: boolean;
   @Input() groupEditable: boolean;
 
   @Output() onCloseEditUser: EventEmitter<User> = new EventEmitter<User>();
+  @Output() createUser: EventEmitter<User> = new EventEmitter<User>();
+  @Output() updateUser: EventEmitter<User> = new EventEmitter<User>();
 
   createEditUserForm: FormGroup;
-  isCreatingUpdating = false;
 
   public roles = USER_ROLES;
 
@@ -49,17 +51,26 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
 
   updateFormValues() {
     const user: User = this.user;
-
-    console.log({ user })
     this.updateValidators();
     if (this.createEditUserForm) {
-      this.createEditUserForm.setValue({
+      const baseValues = {
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
-        roles: user.roles && user.roles.length > 0 ? user.roles : [UserRoleEnum.USER],
+        roles: user.roles.length > 0 ? user.roles : [[UserRoleEnum.USER]],
         domains: user.domains,
-      });
+      };
+
+      const values = this.fields.reduce(
+        (selectValues, field) => {
+          return {
+            ...selectValues,
+            [field]: baseValues[field],
+          };
+        },
+        {});
+
+      this.createEditUserForm.setValue(values);
 
       Object.keys(this.createEditUserForm.controls).forEach((key) => {
         this.createEditUserForm.controls[key].setErrors(null);
@@ -97,41 +108,23 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
   }
 
   public onUpdateUser(): void {
-    this.isCreatingUpdating = true;
-
     const formVal = { ...this.createEditUserForm.value };
-    const errM = (err) => {
-      if (err.status === 409) this._toastr.error('Cette adresse email est déjà utilisée');
-      this.isCreatingUpdating = false;
-      throw err;
-    };
+
+    for (const field in this.fields) {
+      if (!(field in formVal)) {
+        delete formVal[field];
+      }
+    }
 
     if (this.isCreating) {
-      this._userService.createAndList(formVal).subscribe(
-        (data) => {
-          const user = data[0];
-          this.isCreatingUpdating = false;
-          this._toastr.success(
-          `Un email a été envoyé à ${user.email}`,
-          `L'utilisateur ${user.first_name} ${user.last_name} a été créé`,
-        );
-          this.onCloseEditUser.emit(user);
-        },
-        errM);
+      this.createUser.emit(formVal);
     } else {
-      this._userService.putAndList({ ...formVal, id: this.user.id }).subscribe(
-        (data) => {
-          const user = data[0];
-          this.isCreatingUpdating = false;
-          this._toastr.success(`Les informations ont bien été modifiées`);
-          this.onCloseEditUser.emit(user);
-        },
-        errM);
+      this.updateUser.emit(formVal);
     }
   }
 
   updateValidators(isCreating: boolean = this.isCreating) {
-  //   no validators to update
+    //   no validators to update
   }
 
   public getFrenchRole(role: UserRoleEnum): string {
@@ -139,21 +132,27 @@ export class UserFormComponent extends DestroyObservable implements OnInit {
   }
 
   private initForm(
-    isCreating: boolean = this.isCreating,
     user: User = this.user,
   ): void {
     const pattern = (environment.env === EnvEnum.PRODUCTION) ? PATTERN.email : PATTERN.emailLocalTestingOnly;
-    this.createEditUserForm = this._fb.group({
+    const baseConfig = {
       first_name: [user.first_name, Validators.required],
       last_name: [user.last_name, Validators.required],
       email: [user.email, [Validators.required, Validators.pattern(pattern)]],
-      roles: user.roles && user.roles.length > 0 ? user.roles : [UserRoleEnum.USER],
+      roles: user.roles && user.roles.length > 0 ? user.roles : [[UserRoleEnum.USER]],
       domains: [user.domains, Validators.required],
-    });
+    };
 
-    this.updateValidators(isCreating);
+    const config = this.fields.reduce(
+      (customConfig, field) => {
+        return {
+          ...customConfig,
+          [field]: baseConfig[field],
+        };
+      },
+      {});
 
-    this.updateFormValues();
+    this.createEditUserForm = this._fb.group(config);
   }
 
   compareIds(tagOption: { id: number }, tagSelection: { id: number }): boolean {
