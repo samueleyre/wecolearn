@@ -42,7 +42,7 @@ const wcRoutes: Routes = [
         },
         {
           canLoad: [AuthGuard],
-          path: 'community',
+          path: 'community-admin',
           data: { admin: true },
           loadChildren: () => import('./modules/admin-community/admin-community.module').then(mod => mod.AdminCommunityModule),
         },

@@ -12,6 +12,7 @@ use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\CreateUserService;
 use App\Services\User\Service\UserService;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Post;
@@ -24,6 +25,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserCommunityAdminController extends AbstractController
 {
@@ -67,9 +69,12 @@ class UserCommunityAdminController extends AbstractController
      */
     public function addUserAction(
         User $user,
-        CreateUserService $service
+        CreateUserService $service,
+        TokenStorageInterface $tokenStorage
     ): User
     {
+        // community admin can only create user in his/her community
+        $user->setDomains($tokenStorage->getToken()->getUser()->getDomains());
         return $service->process($user);
     }
 
@@ -100,7 +105,7 @@ class UserCommunityAdminController extends AbstractController
             }
         }
 
-        return $userService->patchCommunityAdmin($user->getId(), $userParams);
+        return $userService->putCommunityAdmin($user->getId(), $userParams);
     }
 
     /**

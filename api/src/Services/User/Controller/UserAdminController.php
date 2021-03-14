@@ -104,7 +104,7 @@ class UserAdminController extends AbstractController
             }
         }
 
-        return $userService->patchAdmin($user->getId(), $userParams);
+        return $userService->putAdmin($user->getId(), $userParams);
     }
 
     /**

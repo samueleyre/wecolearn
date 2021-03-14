@@ -19,11 +19,11 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
   @Input() users: User[] = [];
   @Input() canEditUser = false;
   @Output() editUser = new EventEmitter<User>();
+  @Output() deleteUser = new EventEmitter<User>();
 
   displayedColumns: string[] = ['name', 'email', 'role', 'domains', 'tags', 'city', 'actions'];
 
   constructor(
-    public userService: AdminUsersService,
     private _toastr: ToastService,
     private dialogService: DialogService,
   ) {
@@ -44,17 +44,7 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
       .pipe(takeUntil(this.destroy$))
       .subscribe((hasConfirmed) => {
         if (hasConfirmed) {
-          this.userService
-            .deleteAndList(user.id)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(
-              () => {
-                this._toastr.success(`L'utilisateur ${user.first_name} ${user.last_name} a été supprimé`);
-              },
-              (err) => {
-                this._toastr.error(err.message);
-              },
-            );
+          this.deleteUser.emit(user);
         }
       });
   }

@@ -264,4 +264,16 @@ class UserRepository extends ServiceEntityRepository
         ->getQuery()->getResult();
 
     }
+
+
+    public function findEnabledByCommunity($communityId)
+    {
+        return $this->createQueryBuilder('user')
+            ->innerJoin('user.domains', 'community')
+            ->where("community.id = :c_id")->setParameter('c_id', $communityId)
+            ->andWhere('user.enabled = true')
+            ->orderBy('user.created', 'DESC')
+            ->getQuery()->getResult();
+
+    }
 }
