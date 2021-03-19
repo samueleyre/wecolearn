@@ -2,7 +2,7 @@ import {
   Component,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 
 import { AuthenticationService } from '~/core/services/auth/auth.service';
@@ -13,6 +13,9 @@ import { environment } from '~/../environments/environment';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { EnvEnum } from '~/core/enums/env.enum';
 import { ToastService } from '~/core/services/toast.service';
+import { Tag } from '~/core/entities/tag/entity';
+import { OnBoardingService } from '~/modules/auth/services/on-boarding-mobile.service';
+import {NAV} from '~/config/navigation/nav';
 
 
 @Component({
@@ -42,9 +45,49 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
+    private route: ActivatedRoute,
     private toastr: ToastService,
+    private onBoardingService: OnBoardingService,
   ) {
     super();
+    this.route.queryParams.subscribe((params) => {
+      if (
+        'tag_name' in params || 'step' in params
+      ) {
+        // remove query params
+        this.router.navigate(
+          [],
+          {
+            relativeTo: this.route,
+          }).then(() => {
+            if ('tag_name' in params) {
+              const tag = new Tag({
+                type: 0,
+                name: params.tag_name,
+              });
+              if ('tag_id' in params) {
+                tag.id = Number(params.tag_id);
+              }
+              this.addTag(tag);
+            }
+            if ('step' in params) {
+              // set step
+              this.onBoardingService.signInTab = Number(params['step']);
+            }
+          });
+      }
+    });
+  }
+
+  public addTag(tag: Tag): void {
+    const tags = this.userForm.get('learn_tags').value;
+    if (
+      'id' in tag && !tags.find(t => t.id === tag.id)
+      || !tags.find(t => t.name === tag.name)
+    ) {
+      tags.push(tag);
+      this.userForm.get('learn_tags').setValue(tags);
+    }
   }
 
   login() {
@@ -103,5 +146,9 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
 
   get learnType(): TagTypeEnum {
     return TagTypeEnum.LEARN;
+  }
+
+  get nav() {
+    return NAV;
   }
 }

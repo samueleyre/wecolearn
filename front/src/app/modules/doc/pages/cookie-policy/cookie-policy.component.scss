@@ -1,3 +1,10 @@
 p {
   text-align: justify;
 }
+li {
+  overflow-wrap: break-word;
+}
+
+.table-container {
+  overflow-x: auto;
+}

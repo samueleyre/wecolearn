@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
+import { debounceTime, delay, filter, map, share, switchMap, tap, timeout } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ export class TagSearchMobileComponent extends DestroyObservable implements OnIni
 
   @ViewChild('searchBar', { static: false }) searchBar:ElementRef;
 
-  public foundAutocompleteTagsObservable: Observable<Tag[]>;
+  public addYourOwnTag$ = new BehaviorSubject<string>(null);
   public searchInputControl = new FormControl();
   public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
   public inputChangeByUser$ = new Subject<string>();
@@ -39,15 +39,33 @@ export class TagSearchMobileComponent extends DestroyObservable implements OnIni
   ngOnInit() {
     this.initTagDomains();
 
-    this.foundAutocompleteTagsObservable = this.inputChangeByUser$.asObservable().pipe(
-      // tslint:disable-next-line:no-magic-numbers
+    const inputChangeByUserAsObservable = this.inputChangeByUser$.asObservable();
+    const foundAutocompleteTagsNotFiltered$ = inputChangeByUserAsObservable.pipe(
+      tap(() => this.addYourOwnTag$.next(null)),
       debounceTime(300),
       filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this._tagService.findTags(value, this.tagType)),
-      map(tags => tags.filter((tag => this.tagIdExceptions.indexOf(tag.id) === -1))),
+      map(tags => tags.filter(filterExceptionsById)),
+      share(),
     );
-    this.foundAutocompleteTagsObservable.subscribe((tags) => {
+
+    const filterExceptionsById = tag => this.tagIdExceptions.indexOf(tag.id) === -1;
+
+    foundAutocompleteTagsNotFiltered$.pipe(
+    ).subscribe((tags) => {
       this.foundAutocompleteTags$.next(tags);
+    });
+
+    foundAutocompleteTagsNotFiltered$.pipe(
+      delay(2000),
+      map(tags => !this.inputIsEmpty
+            && this.inputValue.length > 3
+            && tags.length < 1,
+      ),
+    ).subscribe((noResult) => {
+      if (noResult) {
+        this.addYourOwnTag$.next(this.inputValue);
+      }
     });
   }
 
@@ -55,6 +73,10 @@ export class TagSearchMobileComponent extends DestroyObservable implements OnIni
     setTimeout(() => { // prevent Expression changed error
       this.searchBar.nativeElement.focus();
     });
+  }
+
+  public get addYourOwnTag() {
+    return this.addYourOwnTag$.value;
   }
 
   private initTagDomains(): void {
@@ -68,6 +90,18 @@ export class TagSearchMobileComponent extends DestroyObservable implements OnIni
 
   get inputIsEmpty(): boolean {
     return this.searchInputControl.value === null || this.searchInputControl.value === '';
+  }
+
+  get inputValue(): string {
+    return this.searchInputControl.value;
+  }
+
+  // get showAddYourOwnTagOption() {
+  //   return !this.inputIsEmpty && this.inputValue.length > 3 && (this.foundAutocompleteTags$.value.length < 1);
+  // }
+
+  addTagByName(tagName) {
+    this.select(new Tag({ name: tagName, type: this.tagType }));
   }
 
   get showTagDomains(): boolean {

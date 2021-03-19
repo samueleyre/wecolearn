@@ -25,3 +25,13 @@
     {{option.name}}
   </ion-item>
 </ion-list>
+
+
+<div *ngIf="addYourOwnTag$ | async" class="SearchBar-noTagFound">
+  <p>
+    Vous ne trouvez pas votre apprentissage ? Ajoutez-le !
+  </p>
+  <button color="primary" mat-raised-button (click)="addTagByName(addYourOwnTag)"><mat-icon>add</mat-icon>{{addYourOwnTag}}</button>
+</div>
+
+

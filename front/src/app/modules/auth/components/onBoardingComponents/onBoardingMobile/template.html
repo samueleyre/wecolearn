@@ -38,21 +38,21 @@
         </div>
       </mat-step>
       <mat-step>
-        <div class="card">
+        <div class="card identifiants">
           <div class="card-header">
             <h5 class="center">{{titles.ids.title}}</h5>
           </div>
           <div class="card-body">
             <div class="col-12">
               <div class="col-12 no-padding">
-                <mat-form-field appearance="legacy">
+                <mat-form-field appearance="fill">
                   <mat-label>Prénom</mat-label>
                   <input appHideMenuMobileOnFocus id="firstNameInput" matInput placeholder=""
                          formControlName="first_name">
                 </mat-form-field>
               </div>
               <div class="col-12 no-padding">
-                <mat-form-field appearance="legacy">
+                <mat-form-field appearance="fill">
                   <mat-label>Nom</mat-label>
                   <input appHideMenuMobileOnFocus id="lastNameInput" matInput placeholder=""
                          formControlName="last_name">
@@ -74,7 +74,8 @@
           </div>
           <div class="card-footer">
             <p class="Onboarding-conditions">
-              En cliquant sur "valider", tu acceptes nos <a [routerLink]="nav.mentionsLegales">Conditions Générales</a>.
+              En cliquant sur "valider", tu acceptes nos <a [routerLink]="nav.cgu">Conditions Générales d'Utilisation</a>, notre
+              <a [routerLink]="nav.privacyPolicy">Politique de Confidentialité</a> et notre <a [routerLink]="nav.cookiePolicy">Politique des Cookies</a>.
             </p>
           </div>
         </div>

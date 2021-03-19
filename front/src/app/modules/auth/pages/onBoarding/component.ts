@@ -1,27 +1,25 @@
 import {
   Component,
-  Injectable, OnInit,
 } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
+
+import { environment } from '../../../../../environments/environment';
 
 
 @Component({
   templateUrl: 'template.html',
   styleUrls : ['./style.scss'],
 })
-export class AuthOnboardingPageComponent implements OnInit {
+export class AuthOnboardingPageComponent {
   constructor(
     private deviceService: DeviceDetectorService,
-  ) {
-    //
-  }
-
-  ngOnInit(): void {
-    //
-  }
-
+  ) {}
 
   get isMobile() {
     return this.deviceService.isMobile();
+  }
+
+  get isAndroidApp() {
+    return environment.android;
   }
 }

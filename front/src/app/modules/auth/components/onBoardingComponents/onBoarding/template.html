@@ -16,7 +16,7 @@
             <profile-form-tags [parentForm]="userForm" [fieldName]="'learn_tags'" [type]="learnType" ></profile-form-tags>
             <p class="Onboarding-step-tagHints">
               <app-emoji emojiName="265F"></app-emoji><span>Echecs,</span>
-              <app-emoji emojiName="1F431-200D-1F4BB"></app-emoji><span>Informatique,</span>
+              <app-emoji emojiName="1F5A5"></app-emoji><span>Informatique,</span>
               <app-emoji emojiName="1F5E3"></app-emoji><span>Espagnol ...</span>
             </p>
         </div>
@@ -63,6 +63,10 @@
           <div class="col-12">
             <p class="Onboarding-newsletter">
               <mat-checkbox formControlName="newsletter">J'adhère à la newsletter ( surtout pour les apéros 🍻 & ateliers 🛠️ )</mat-checkbox>
+            </p>
+            <p class="Onboarding-conditions">
+              En cliquant sur "créer mon compte", tu acceptes nos <a [target]="'_blank'" [href]="getLink(nav.cgu)">Conditions Générales d'Utilisation</a>, notre
+              <a target="_blank" [href]="getLink(nav.privacyPolicy)">Politique de Confidentialité</a> et notre <a target="_blank" [href]="getLink(nav.cookiePolicy)">Politique des Cookies</a>.
             </p>
           </div>
         </div>
