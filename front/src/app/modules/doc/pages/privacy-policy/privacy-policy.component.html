@@ -27,10 +27,10 @@
     utilisateurs peuvent consulter à l'adresse ci-après :
   </p>
   <p>
-    <a href="https://wecolearn.com/doc/mentionslegales">https://wecolearn.com/doc/mentionslegales</a>
+    <a target="_blank" [href]="getLink(nav.mentionsLegales)">{{getLink(nav.mentionsLegales)}}</a>
   </p>
   <p>
-    <a href="https://wecolearn.com/doc/cgu">https://wecolearn.com/doc/cgu</a>
+    <a target="_blank" [href]="getLink(nav.cgu)">{{getLink(nav.cgu)}}</a>
   </p>
 
   <h2>Article 2 : Principes généraux en matière de collecte et de traitement de données
@@ -293,7 +293,7 @@
     Article 6 : Utilisation des fichiers "cookies"
   </h2>
   <p>
-    <a href="https://wecolearn.com/doc/cookie-policy">Voir la politique des cookies.</a>
+    <a target="_blank" [href]="getLink(nav.cookiePolicy)">Voir la politique des cookies.</a>
   </p>
   <h2>
     Article 7 : Conditions de modification de la politique de confidentialité
@@ -302,7 +302,7 @@
     La présente politique de confidentialité peut être consultée à tout moment à l'adresse ci-après indiquée :
   </p>
   <p>
-    <a href="https://wecolearn.com/doc/privacy-policy">https://wecolearn.com/doc/privacy-policy</a>
+    <a target="_blank" [href]="getLink(nav.privacyPolicy)">{{getLink(nav.privacyPolicy)}}</a>
   </p>
   <p>
     L'éditeur du site se réserve le droit de la modifier afin de garantir sa conformité avec le droit en vigueur. Par conséquent, l'utilisateur est invité à venir consulter régulièrement cette politique de confidentialité afin de se tenir informé des derniers changements qui lui seront apportés.

@@ -60,6 +60,10 @@ export class ContainerComponent extends DestroyObservable implements OnInit{
     return environment.android;
   }
 
+  get isMobile(): boolean {
+    return this._deviceService.isMobile();
+  }
+
   get isNotLandingPage(): boolean {
     return !(new RegExp(NAV.landing).test(window.location.pathname));
   }

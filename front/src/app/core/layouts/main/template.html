@@ -1,4 +1,4 @@
-<section *ngIf="!isAndroid && isNotLandingPage">
+<section *ngIf="!isMobile && isNotLandingPage">
   <div class="container-fluid">
     <div class="row">
       <div class="brand">
@@ -8,6 +8,9 @@
   </div>
 </section>
 
+<div *ngIf="isMobile && !isAndroid && isNotLandingPage">
+  <app-header-mobile></app-header-mobile>
+</div>
 
 <div class="mainContainer-content" *ngIf="!isAndroid">
   <router-outlet (activate)="onActivate($event)"></router-outlet>

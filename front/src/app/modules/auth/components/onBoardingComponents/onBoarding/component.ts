@@ -9,7 +9,8 @@ import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardingComponents/baseComponent';
 import { ToastService } from '~/core/services/toast.service';
 import { onBoardingSections } from '~/modules/auth/components/onBoardingComponents/onBoarding.const';
-import { Tag } from '~/core/entities/tag/entity';
+import { OnBoardingService } from '~/modules/auth/services/on-boarding-mobile.service';
+import {environment} from '../../../../../../environments/environment';
 
 
 @Component({
@@ -24,34 +25,9 @@ export class AuthOnboardingComponent extends AuthOnboardingBaseComponent{
     private _router: Router,
     private _route: ActivatedRoute,
     private _toastr: ToastService,
+    private _onBoardingService: OnBoardingService,
   ) {
-    super(_fb, _authenticationService, _router, _toastr);
-    _route.queryParams.subscribe((params) => {
-      if ('tag_id' in params && 'tag_name' in params) {
-        // remove query params
-        _router.navigate(
-          [],
-          {
-            relativeTo: this._route,
-          }).then(() => {
-            this.addTag(
-            new Tag({
-              id: Number(params.tag_id),
-              type: 0,
-              name: params.tag_name,
-            }),
-          );
-          });
-      }
-    });
-  }
-
-  addTag(tag: Tag): void {
-    const tags = this.userForm.get('learn_tags').value;
-    if (!tags.find(t => t.id === tag.id)) {
-      tags.push(tag);
-      this.userForm.get('learn_tags').setValue(tags);
-    }
+    super(_fb, _authenticationService, _router, _route, _toastr, _onBoardingService);
   }
 
   setSelection($event:StepperSelectionEvent) {
@@ -70,5 +46,9 @@ export class AuthOnboardingComponent extends AuthOnboardingBaseComponent{
         this.firstnameInput.focus();
       },         500);
     }
+  }
+
+  getLink(link) {
+    return `${environment.publique}${link}`;
   }
 }

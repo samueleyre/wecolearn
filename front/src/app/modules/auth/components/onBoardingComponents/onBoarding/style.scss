@@ -1,4 +1,22 @@
+@import "variables";
+
 .Onboarding {
+  ::ng-deep {
+    .mat-step-header .mat-step-icon {
+      &:not(.mat-step-icon-selected) {
+        background-color: $secondaryColor;
+      }
+      color: white;
+      &-selected {
+        background-color: $primaryColor;
+      }
+    }
+
+    mat-step-header.mat-horizontal-stepper-header {
+      padding: 0 32px 0 32px;
+    }
+  }
+
   mat-horizontal-stepper {
     background: none;
   }
@@ -26,7 +44,7 @@
       }
 
       span {
-        margin-right: 8px;
+        margin-right: 10px;
       }
 
       margin-top: 10px;
@@ -48,6 +66,9 @@
 
   &-conditions {
     text-align: center;
+    a {
+      font-weight: bold;
+    }
   }
 
   &-newsletter {

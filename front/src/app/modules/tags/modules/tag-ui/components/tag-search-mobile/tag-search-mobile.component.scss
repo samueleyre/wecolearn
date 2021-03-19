@@ -1,4 +1,4 @@
-@import '../../../../../../../assets/scss/variables';
+@import 'variables';
 
 .SearchBar {
   display: flex;
@@ -30,7 +30,16 @@
       }
     }
   }
-
+  &-noTagFound {
+    text-align: center;
+    button {
+      font-weight: bold;
+      ::ng-deep .mat-button-wrapper{
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
 }
 
 .tagDomains {

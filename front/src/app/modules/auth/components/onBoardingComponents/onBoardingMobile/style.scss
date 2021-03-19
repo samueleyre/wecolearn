@@ -7,9 +7,15 @@
   }
 
   .mat-step-header .mat-step-icon {
+    &:not(.mat-step-icon-selected) {
     background-color: $secondaryColor;
+    }
     color: white;
+    &-selected {
+      background-color: $primaryColor;
+    }
   }
+
   mat-step-header.mat-horizontal-stepper-header {
     padding: 0 32px 0 32px;
   }
@@ -38,6 +44,11 @@ ion-footer {
   .card {
     min-height: 70vh;
     border: none;
+    &.identifiants {
+      mat-form-field{
+        width: 100%;
+      }
+    }
 
     &-header {
       background: none;
@@ -52,7 +63,6 @@ ion-footer {
       justify-content: flex-start;
       flex-direction: column;
       display: flex;
-
       &-tagHints {
         font-size: 19px;
         display: flex;
@@ -89,6 +99,9 @@ ion-footer {
 
   &-conditions {
     text-align: center;
+    a {
+      font-weight: bold;
+    }
   }
 
   &-newsletter {

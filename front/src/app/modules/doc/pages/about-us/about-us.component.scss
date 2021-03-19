@@ -7,21 +7,25 @@
 }
 
 .teamProfile{
+  max-width: 100%;
   &-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 100%;
   }
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   margin-bottom: 50px;
-  &:first-child {
-    margin-right: 20px;
-  }
-  &:nth-child(2) {
-    margin-left: 20px;
+  @media screen and (min-width: $smScreen){
+    &:first-child {
+      margin-right: 20px;
+    }
+    &:nth-child(2) {
+      margin-left: 20px;
+    }
   }
   h3 {
     color: $secondaryColor;
@@ -36,6 +40,7 @@
     text-align: justify;
     padding: 5px;
     font-size: 1.2rem;
+    max-width: 100%;
   }
   &-image {
     overflow: hidden;
