@@ -61,8 +61,10 @@ export class HeaderMobileComponent extends DestroyObservable implements OnInit, 
   setNavigation(path: string) {
     this.showReturn = this.menuMobileService.urlHasReturnButton(path);
 
-    // get return link, if public profile page go te previous page
-    this.returnLink = new RegExp(NAV.profilePublic).test(path) ?
+    const isProfilePage = new RegExp(NAV.profilePublic).test(path);
+    const isDocPage = new RegExp(/doc/).test(path);
+    // if public profile or doc page go te previous page
+    this.returnLink = isProfilePage || isDocPage ?
       this._wcRouter.getReturnLink(NAV.search)
       : MenuMobileService.getReturnLink(path);
 

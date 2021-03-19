@@ -21,8 +21,6 @@ export class MobileGuard implements CanActivateChild {
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log(state.url);
-
     if ('surface' in next.data) {
       const surface = <('mobile' | 'desktop' | 'android')[]>next.data.surface;
       if (
@@ -33,8 +31,6 @@ export class MobileGuard implements CanActivateChild {
         let redirectUrl = NAV.dashHome;
         const redirectExtension = 'redirectTo' in next.data ? next.data.redirectTo : null;
 
-        console.log(redirectExtension);
-
         if (redirectExtension !== null) {
           redirectUrl = state.url.replace(/\/android|\/mobile/, '');
           if (redirectExtension === 'mobile') {
@@ -44,7 +40,6 @@ export class MobileGuard implements CanActivateChild {
           }
         }
 
-        console.log({ redirectUrl });
         this._router.navigate([redirectUrl]);
         return false;
       }
