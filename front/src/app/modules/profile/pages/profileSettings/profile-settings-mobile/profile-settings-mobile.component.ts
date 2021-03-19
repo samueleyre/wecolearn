@@ -3,7 +3,7 @@ import { APP_BASE_HREF, Location } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ActivatedRoute, Router } from '@angular/router';
-import {distinctUntilChanged, filter, take, takeUntil, tap} from 'rxjs/operators';
+import { distinctUntilChanged, filter, take, takeUntil, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
 
 import { DomainService } from '~/core/services/domain/domain';
@@ -43,7 +43,7 @@ export class ProfileSettingsMobileComponent extends ProfileSettingsComponentBase
     );
 
     const routeWithoutParams$ = _route.queryParams.pipe(
-      filter(params => 'tag_id' in params && 'tag_type' in params && 'tag_name' in params),
+      filter(params => 'tag_type' in params && 'tag_name' in params),
       take(1),
       tap((params) => {
         // remove query params
@@ -52,13 +52,14 @@ export class ProfileSettingsMobileComponent extends ProfileSettingsComponentBase
           {
             relativeTo: _route,
           }).then(() => {
-            this.addTag(
-              new Tag({
-                id: Number(params.tag_id),
-                type: Number(params.tag_type),
-                name: params.tag_name,
-              }),
-            );
+            const tag = new Tag({
+              type: Number(params.tag_type),
+              name: params.tag_name,
+            });
+            if ('tag_id' in params) {
+              tag.id = Number(params.tag_id);
+            }
+            this.addTag(tag);
           });
       }),
     );
@@ -94,7 +95,10 @@ export class ProfileSettingsMobileComponent extends ProfileSettingsComponentBase
   public addTag(tag: Tag): void {
     const tagCtrl = this.userForm.get(this.tagTypeEn(tag.type) + '_tags');
     const tags = tagCtrl.value;
-    if (!tags.find(t => t.id === tag.id)) {
+    if (
+      'id' in tag && !tags.find(t => t.id === tag.id)
+      || !tags.find(t => t.name === tag.name)
+    ) {
       tags.push(tag);
       tagCtrl.setValue(tags);
     }
