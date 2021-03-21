@@ -14,6 +14,7 @@ class Domain
     public $users;
     public ?int $count;
     public ?Image $image;
+    public ?bool $isMain;
 
     /**
      * Constructor.
@@ -128,6 +129,16 @@ class Domain
     public function getImage(): ?Image
     {
         return $this->image;
+    }
+
+    /**
+     * Get isMain.
+     *
+     * @return ?bool
+     */
+    public function getIsMain(): ?bool
+    {
+        return $this->isMain;
     }
 
 }
