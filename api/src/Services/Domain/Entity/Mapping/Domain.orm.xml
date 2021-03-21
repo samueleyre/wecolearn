@@ -7,6 +7,7 @@
             <generator strategy="AUTO"/>
         </id>
         <field name="name" unique="true" />
+        <field name="isMain" type="boolean" nullable="true" />
         <many-to-many field="users" target-entity="App\Services\User\Entity\User" mapped-by="domains" />
         <one-to-one field="image" target-entity="App\Services\Shared\Entity\Image" inversed-by="domain">
             <cascade>
