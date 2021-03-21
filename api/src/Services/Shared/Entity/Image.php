@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Services\User\Entity;
+namespace App\Services\Shared\Entity;
+
+use App\Services\Domain\Entity\Domain;
+use App\Services\User\Entity\User;
 
 class Image
 {
     private $file;
-    public $id;
-    public $user;
+    public ?int $id;
+    public ?User $user;
+    public ?Domain $domain;
     public $filename;
     public $publicId;
     public $version;
@@ -162,6 +166,30 @@ class Image
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set domain.
+     *
+     * @param Domain|null $domain
+     *
+     * @return Image
+     */
+    public function setDomain(Domain $domain = null): Image
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }
+
+    /**
+     * Get domain.
+     *
+     * @return Domain|null
+     */
+    public function getDomain(): ?Domain
+    {
+        return $this->domain;
     }
 
     /**

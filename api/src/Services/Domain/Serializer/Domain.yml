@@ -8,6 +8,8 @@ App\Services\Domain\Entity\Domain:
           groups: [ input, output, admin-users, admin-domains ]
         count:
           groups: [ admin-domains ]
+        image:
+          groups: [ input, output, admin-domains ]
         created:
           groups: [ admin-domains ]
 

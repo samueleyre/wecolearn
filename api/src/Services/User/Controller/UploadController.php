@@ -3,33 +3,32 @@
 namespace App\Services\User\Controller;
 
 use App\Services\Shared\Service\UploadService;
-use App\Services\User\Entity\Image;
+use App\Services\Shared\Entity\Image;
 use App\Services\User\Service\ImageService;
 use App\Services\User\Service\UserService;
 use FOS\RestBundle\Controller\Annotations\Post;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UploadController extends AbstractController
 {
+
+//    todo: move to profile controller
+
     /**
-     * @Post("uploads")
+     * @Post("profile/uploadProfileImage")
      */
-    public function postUploadAction(
+    public function postUploadProfileImageAction(
         Request $request,
         TokenStorageInterface $tokenStorage,
         UserService $userService,
         UploadService $uploadService,
-        ImageService $imageService,
-        LoggerInterface $logger
+        ImageService $imageService
     ) {
 
         $user = $tokenStorage->getToken()->getUser();
 
-
-//        move this to service !
         if (null !== $user->getImage()) {
             $image = $user->getImage();
             $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));

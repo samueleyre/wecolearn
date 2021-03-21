@@ -2,7 +2,7 @@
 
 namespace App\Services\Shared\Service;
 
-use App\Services\User\Entity\Image;
+use App\Services\Shared\Entity\Image;
 use Cloudinary\Uploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;

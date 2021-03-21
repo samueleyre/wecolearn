@@ -34,7 +34,7 @@ App\Services\User\Entity\User:
         groups: [ input ]
         max_depth: 4
       image:
-        type: App\Services\User\Entity\Image
+        type: App\Services\Shared\Entity\Image
         groups: [ input, output, search, message, profile, public-profile ]
       showProfil:
         groups: [ admin-user-patch, input, profile, admin-users ]

@@ -11,7 +11,7 @@ use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Entity\TagDomain;
 use App\Services\Tag\Service\TagDomainService;
 use App\Services\Tag\Service\TagService;
-use App\Services\User\Entity\Image;
+use App\Services\Shared\Entity\Image;
 use App\Services\User\Entity\Token;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\UserService;

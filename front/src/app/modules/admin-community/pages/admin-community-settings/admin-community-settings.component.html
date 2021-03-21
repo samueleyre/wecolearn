@@ -1,0 +1,23 @@
+<section class="AdminCommunitySettings" *ngIf="loaded">
+  <h1 class="center">Paramètres de la communauté</h1>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+        <form [formGroup]="communityForm">
+          <div class="AdminCommunitySettings-imageUpload">
+            <label>Image de la communauté</label>
+            <app-upload-form-image [parentForm]="communityForm" url="/api/community-admin/uploadCommunityImage" ></app-upload-form-image>
+          </div>
+          <hr>
+          <div class="AdminCommunitySettings-name">
+            <mat-form-field appearance="fill" >
+              <mat-label>Nom</mat-label>
+              <input id="communityNameInput" matInput appHideMenuMobileOnFocus formControlName="name" >
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="changeName()" [disabled]="!communityNameControl.dirty">Enregistrer le changement</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
