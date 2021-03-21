@@ -4,6 +4,9 @@ namespace App\Services\Domain\Service;
 
 use App\Services\Domain\Constant\DomainConstant;
 use App\Services\Domain\Entity\Domain;
+use App\Services\Shared\Entity\Image;
+use App\Services\Shared\Service\UploadService;
+use App\Services\User\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,13 +15,18 @@ class DomainService
     public $em;
     private $host;
     private $environment;
+    private $uploadService;
+    private $imageService;
 
-    public function __construct(EntityManagerInterface $em, $host, $environment)
+    public function __construct(EntityManagerInterface $em, $host, $environment, UploadService $uploadService, ImageService $imageService)
     {
         $this->em = $em;
         $this->host = $host;
         $this->environment = $environment;
         $this->request = new Request();
+        $this->uploadService = $uploadService;
+        $this->imageService = $imageService;
+
     }
 
     public function setRequest(Request $request)
@@ -74,13 +82,41 @@ class DomainService
         return $this->em->getRepository(Domain::class)->findAll();
     }
 
-    public function patchName(int $id, string $name)
+    public function put($domain, $params)
     {
-        $domain = $this->em->getRepository(Domain::class)->find($id);
-        $domain->setName($name);
-        $this->em->merge($domain);
+        foreach ($params as $key => $value) {
+            $setMethod = 'set'.str_replace('_', '', ucwords($key, '_'));
+            if ($value !== null) {
+                $domain->$setMethod($value);
+            }
+        }
+
+        $this->em->persist($domain);
         $this->em->flush();
+
         return $domain;
+    }
+
+    public function updateImage($community, $file)
+    {
+        if (null !== $community->getImage()) {
+            $image = $community->getImage();
+            $image->refreshUpdated();
+            $image->setVersion($image->getVersion() + 1);
+            $this->uploadService->uploadImage($image, $file, $community->getId());
+            $this->imageService->patch($image);
+        } else {
+            $image = new Image();
+            $image->setDomain($community);
+            $this->uploadService->uploadImage($image, $file, $community->getId());
+            $this->imageService->post($image);
+        }
+
+        $community->setImage($image);;
+        $this->em->persist($community);
+        $this->em->flush();
+        return $community;
+
     }
 
     public function create(Domain $domain)

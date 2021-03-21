@@ -66,3 +66,8 @@ adminDomain:
   type:     annotation
   prefix:   api
   resource: App\Services\Domain\Controller\AdminDomainController
+
+communityAdminDomain:
+  type:     annotation
+  prefix:   api
+  resource: App\Services\Domain\Controller\CommunityAdminDomainController

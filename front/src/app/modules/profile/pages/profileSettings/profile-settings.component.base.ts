@@ -17,6 +17,8 @@ import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
   template: '',
 })
 export class ProfileSettingsComponentBase extends DestroyObservable {
+  public userId;
+
   constructor(
     @Inject(APP_BASE_HREF) r: string,
     private domainService: DomainService,
@@ -75,6 +77,7 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe((user) => {
+        this.userId = user.id;
         this.setProfileFormData(user);
       });
   }

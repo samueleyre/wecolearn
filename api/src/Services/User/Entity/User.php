@@ -4,6 +4,7 @@ namespace App\Services\User\Entity;
 
 use App\Services\Chat\Entity\Message;
 use App\Services\Domain\Entity\Domain;
+use App\Services\Shared\Entity\Image;
 use App\Services\Tag\Entity\Tag;
 use DateTime;
 use DateTimeZone;

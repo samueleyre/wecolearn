@@ -2,19 +2,22 @@
 
 namespace App\Services\Domain\Entity;
 
+use App\Services\Shared\Entity\Image;
 use App\Services\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 class Domain
 {
-    public $id;
-    public $name;
+    public ?int $id;
+    public string $name;
     public $users;
-    public $count;
+    public ?int $count;
+    public ?Image $image;
 
     /**
      * Constructor.
+     * @param string|null $name
      */
     public function __construct(string $name = null)
     {
@@ -102,4 +105,29 @@ class Domain
     {
         return $this->count;
     }
+
+    /**
+     * Set image.
+     *
+     * @param Image|null $image
+     *
+     * @return Domain
+     */
+    public function setImage(Image $image = null): Domain
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image.
+     *
+     * @return Image|null
+     */
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
 }

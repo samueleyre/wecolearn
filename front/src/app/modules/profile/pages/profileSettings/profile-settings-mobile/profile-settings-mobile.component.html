@@ -2,7 +2,7 @@
   <form  class="ProfileSettingsForm form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
     <div class="container-fluid">
       <div class="row justify-content-center">
-        <profile-form-image [parentForm]="userForm" (onChange)="submit()"></profile-form-image>
+        <app-upload-form-image [parentForm]="userForm" url="/api/profile/uploadProfileImage"></app-upload-form-image>
       </div>
       <div class="row">
         <div class="col-12 no-padding ProfileSettingsForm-firstname-container">
