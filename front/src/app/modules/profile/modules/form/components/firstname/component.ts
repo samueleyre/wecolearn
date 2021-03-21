@@ -22,4 +22,6 @@ export class ProfileFormFirstnameComponent implements OnInit {
   get firstNameControl(): FormControl {
     return <FormControl>this.parentForm.get('first_name');
   }
+
+
 }

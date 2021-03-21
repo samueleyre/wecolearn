@@ -26,4 +26,5 @@ export const NAV = {
   adminDomains: '/dashboard/admin/domains',
   CommunityAdminTags: '/dashboard/community-admin/tags',
   CommunityAdminUsers: '/dashboard/community-admin/users',
+  CommunityAdminSettings: '/dashboard/community-admin/settings',
 };

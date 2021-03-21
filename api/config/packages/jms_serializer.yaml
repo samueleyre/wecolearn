@@ -20,3 +20,6 @@ jms_serializer:
             Message:
                 namespace_prefix: "App\\Services\\Chat\\Entity"
                 path:             "%kernel.project_dir%/src/Services/Chat/Serializer"
+            Shared:
+                namespace_prefix: "App\\Services\\Shared\\Entity"
+                path: "%kernel.project_dir%/src/Services/Shared/Serializer"

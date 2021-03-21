@@ -2,7 +2,6 @@
   <button id="changeImageButton" *ngIf="!editing"  type="button" class="btn btn-sm btn-edit" (click)="editing=true"><i
           class="fas fa-pencil-alt" aria-hidden="true"></i>
   </button>
-  <upload *ngIf="editing" [url]="'/api/uploads'" [filename]="userId"
-          (complete)="onComplete($event)" (error)="onError($event)"></upload>
+  <upload *ngIf="editing" [url]="url" (complete)="onComplete($event)" (error)="onError($event)"></upload>
 
 

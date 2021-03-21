@@ -12,7 +12,7 @@ import { IonicModule } from '@ionic/angular';
 import { ProfileImageModule } from '~/modules/profile/modules/profilImage/profileImage.module';
 import { OpenThreadModule } from '~/modules/chat/modules/openThread/openThread.module';
 import { SearchBarMobileComponent } from '~/modules/search/components/searchBar/searchBarMobile/component';
-import { CloudinaryModule } from '~/shared/modules/cloudinary/pipes/cloudinary.module';
+import { CloudinaryModule } from '~/shared/modules/cloudinary/cloudinary.module';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
 import { SearchBarComponent } from '~/modules/search/components/searchBar/searchBarDesktop/component';
 import { PipesModule } from '~/shared/modules/pipesModule/pipes.module';

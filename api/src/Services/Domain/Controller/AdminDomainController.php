@@ -4,9 +4,7 @@ namespace App\Services\Domain\Controller;
 
 use App\Services\Domain\Entity\Domain;
 use App\Services\Domain\Service\DomainService;
-use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
