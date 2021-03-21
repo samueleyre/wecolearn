@@ -10,6 +10,8 @@ App\Services\Domain\Entity\Domain:
           groups: [ admin-domains ]
         image:
           groups: [ input, output, admin-domains ]
+        isMain:
+          groups: [ output ]
         created:
           groups: [ admin-domains ]
 
