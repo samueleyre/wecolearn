@@ -30,7 +30,6 @@ export class AdminCommunityUsersComponent extends DestroyObservable implements O
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   public editedUser: User;
-  canEditUser$: Observable<boolean>;
 
   constructor(
     public authenticationService: AuthenticationService,

@@ -18,7 +18,6 @@
     <div class="Users-list-table">
       <app-users-list
         *ngIf="usersToShow"
-        [canEditUser]="canEditUser$ | async"
         [users]="usersToShow"
         (editUser)="showEditForm($event)"
         (deleteUser)="deleteUser($event)"
