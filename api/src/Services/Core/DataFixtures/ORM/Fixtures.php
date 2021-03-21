@@ -120,7 +120,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin = new User();
         $admin->setUsername('admin');
         $admin->setEmail('samuel@wecolearn.com');
-        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setRoles(['ROLE_SUPER_ADMIN']);
         $admin->setPlainPassword('admin1234');
         $admin->setFirstName('Samuel');
         $admin->setLastName('Eyre');
