@@ -8,7 +8,9 @@ import { User } from '~/core/entities/user/entity';
 import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { ToastService } from '~/core/services/toast.service';
-import {NAV} from '~/config/navigation/nav';
+import { NAV } from '~/config/navigation/nav';
+
+type userAdminActionsType = 'edit' | 'revoke' | 'delete';
 
 @Component({
   selector: 'app-users-list',
@@ -17,11 +19,10 @@ import {NAV} from '~/config/navigation/nav';
 })
 export class UsersListComponent extends DestroyObservable implements OnInit, AfterViewInit {
   @Input() users: User[] = [];
-  @Input() canEditUser = false;
   @Output() editUser = new EventEmitter<User>();
   @Output() deleteUser = new EventEmitter<User>();
-
-  displayedColumns: string[] = ['name', 'email', 'role', 'domains', 'tags', 'city', 'actions'];
+  @Input() displayedColumns: string[] = ['name', 'email', 'role', 'domains', 'tags', 'city', 'actions'];
+  @Input() actions : userAdminActionsType[] = ['edit', 'delete'];
 
   constructor(
     private _toastr: ToastService,
@@ -38,9 +39,25 @@ export class UsersListComponent extends DestroyObservable implements OnInit, Aft
 
   ngAfterViewInit() {}
 
+
+  can(action: userAdminActionsType) {
+    return this.actions.includes(action);
+  }
+
   onDelete(user: User) {
     this.dialogService
       .confirm('Utilisateurs', 'Voulez-vous supprimer cet utilisateur ?')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((hasConfirmed) => {
+        if (hasConfirmed) {
+          this.deleteUser.emit(user);
+        }
+      });
+  }
+
+  onRevoke(user: User) {
+    this.dialogService
+      .confirm('Utilisateurs', 'Voulez-vous retirer cet utilisateur de la communauté ?')
       .pipe(takeUntil(this.destroy$))
       .subscribe((hasConfirmed) => {
         if (hasConfirmed) {

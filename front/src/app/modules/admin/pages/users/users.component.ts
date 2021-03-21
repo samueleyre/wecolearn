@@ -30,7 +30,6 @@ export class UsersComponent extends DestroyObservable implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   public editedUser: User;
-  canEditUser$: Observable<boolean>;
 
   constructor(
     public authenticationService: AuthenticationService,

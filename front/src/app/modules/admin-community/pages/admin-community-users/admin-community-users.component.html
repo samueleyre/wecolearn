@@ -18,8 +18,9 @@
     <div class="Users-list-table">
       <app-users-list
         *ngIf="usersToShow"
-        [canEditUser]="canEditUser$ | async"
         [users]="usersToShow"
+        [displayedColumns]="['name', 'email', 'tags', 'actions']"
+        [actions]="['edit', 'revoke']"
         (editUser)="showEditForm($event)"
         (deleteUser)="deleteUser($event)"
       ></app-users-list>
@@ -34,8 +35,8 @@
   <div
     class="Users-add"
   >
-    <button mat-flat-button class="large" *ngIf="!editUserFormVisible" (click)="showEditForm()" color="primary">
-      + Ajouter un utilisateur
+    <button mat-raised-button class="font-weight-bold" *ngIf="!editUserFormVisible" (click)="showEditForm()" color="primary">
+      <mat-icon>add</mat-icon> Ajouter un utilisateur
     </button>
     <div *ngIf="editUserFormVisible">
       <h2 *ngIf="isCreatingUser">
