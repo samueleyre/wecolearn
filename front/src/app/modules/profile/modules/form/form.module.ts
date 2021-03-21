@@ -6,17 +6,16 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { IonicModule } from '@ionic/angular';
 
-import { CloudinaryModule } from '~/shared/modules/cloudinary/pipes/cloudinary.module';
+import { CloudinaryModule } from '~/shared/modules/cloudinary/cloudinary.module';
 import { ProfileFormBiographyComponent } from '~/modules/profile/modules/form/components/biography/component';
 import { ProfileFormIntensityComponent } from '~/modules/profile/modules/form/components/intensity/component';
 import { ProfileFormGeolocationComponent } from '~/modules/profile/modules/form/components/geolocation/component';
 import { ProfileGeolocationComponent } from '~/modules/profile/modules/form/components/geolocation/geolocation/component';
-import { UploadModule } from '~/modules/profile/modules/form/modules/upload/module';
+import { UploadModule } from '~/shared/modules/cloudinary/components/upload/module';
 import { MaterialModule } from '~/shared/modules/material/material.module';
 import { SharedModule } from '~/shared/shared.module';
 
 import { ProfileFormTagsComponent } from './components/profile-form-tags/component';
-import { ProfileFormImageComponent } from './components/image/component';
 import { ProfileImageModule } from '../profilImage/profileImage.module';
 import { ProfileFormLastnameComponent } from './components/lastname/component';
 import { ProfileFormFirstnameComponent } from './components/firstname/component';
@@ -29,7 +28,6 @@ import { ProfileFormTagsMobileComponent } from './components/profile-form-tags-m
   declarations: [
     ProfileFormFirstnameComponent,
     ProfileFormLastnameComponent,
-    ProfileFormImageComponent,
     ProfileFormBiographyComponent,
     ProfileFormIntensityComponent,
     ProfileFormGeolocationComponent,
@@ -38,18 +36,17 @@ import { ProfileFormTagsMobileComponent } from './components/profile-form-tags-m
     ProfileFormTagsComponent,
     ProfileFormTagsMobileComponent,
   ],
-            exports: [
-              ProfileFormFirstnameComponent,
-              ProfileFormLastnameComponent,
-              ProfileFormImageComponent,
-              ProfileFormBiographyComponent,
-              ProfileFormIntensityComponent,
-              ProfileFormGeolocationComponent,
-              ProfileGeolocationComponent,
-              ProfileFormCityComponent,
-              ProfileFormTagsComponent,
-              ProfileFormTagsMobileComponent,
-            ],
+  exports: [
+    ProfileFormFirstnameComponent,
+    ProfileFormLastnameComponent,
+    ProfileFormBiographyComponent,
+    ProfileFormIntensityComponent,
+    ProfileFormGeolocationComponent,
+    ProfileGeolocationComponent,
+    ProfileFormCityComponent,
+    ProfileFormTagsComponent,
+    ProfileFormTagsMobileComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -57,7 +54,6 @@ import { ProfileFormTagsMobileComponent } from './components/profile-form-tags-m
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    UploadModule,
     ProfileImageModule,
     CloudinaryModule,
     MatSliderModule,

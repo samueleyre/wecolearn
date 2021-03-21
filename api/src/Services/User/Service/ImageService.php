@@ -2,7 +2,7 @@
 
 namespace App\Services\User\Service;
 
-use App\Services\User\Entity\Image;
+use App\Services\Shared\Entity\Image;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ImageService
@@ -23,7 +23,7 @@ class ImageService
 
     public function patch(Image $image)
     {
-        $this->em->merge($image);
+        $this->em->persist($image);
         $this->em->flush();
         return $this;
     }

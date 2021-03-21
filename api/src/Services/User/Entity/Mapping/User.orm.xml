@@ -26,7 +26,7 @@
         <field name="latitude" type="float" nullable="true" />
         <field name="longitude" type="float" nullable="true" />
         <field name="city" type="string" nullable="true" />
-        <one-to-one field="image" target-entity="App\Services\User\Entity\Image" inversed-by="user">
+        <one-to-one field="image" target-entity="App\Services\Shared\Entity\Image" inversed-by="user">
             <cascade>
                 <cascade-persist/>
                 <cascade-merge/>

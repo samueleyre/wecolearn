@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { CloudinaryModule } from '~/shared/modules/cloudinary/pipes/cloudinary.module';
+import { CloudinaryModule } from '~/shared/modules/cloudinary/cloudinary.module';
 import { OpenThreadModule } from '~/modules/chat/modules/openThread/openThread.module';
 import { PasswordDifficultyModule } from '~/modules/auth/modules/passwordDifficulty/passwordDifficulty.module';
 import { ShowProfilSettingsComponent } from '~/modules/profile/components/showProfil/component';

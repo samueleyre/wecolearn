@@ -1,4 +1,4 @@
-App\Services\User\Entity\Image:
+App\Services\Shared\Entity\Image:
     exclusion_policy: all
     access_order:     alphabetical
     properties:

@@ -44,4 +44,10 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Services/Chat/Entity/Mapping'
                 prefix: 'App\Services\Chat\Entity'
                 alias: Message
+            Shared:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Services/Shared/Entity/Mapping'
+                prefix: 'App\Services\Shared\Entity'
+                alias: Shared
 
