@@ -18,7 +18,7 @@ class SearchService
     }
 
 
-    public function search($searchParameters, $filter, User $user = null, $domain = "wecolearn"): array
+    public function search($searchParameters, $filter, User $user = null): array
     {
 
         $searchTag = null;
@@ -74,7 +74,6 @@ class SearchService
                     $result = $this->searchRequest(
                         $user,
                         $filter,
-                        $domain,
                         $searchTag,
                         $latitude,
                         $longitude,
@@ -104,7 +103,6 @@ class SearchService
                     'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
-                    'domain' => $domain,
                     'parameters' => $searchParameters,
                     'distance' => $searchParameters['global'] ? -1 : 15
                 ]);
@@ -129,7 +127,6 @@ class SearchService
                     'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
-                    'domain' => $domain,
                     'parameters' => $searchParameters,
                     'distance' => $searchParameters['global'] ? -1 : 15
                 ]);
@@ -156,7 +153,6 @@ class SearchService
                     'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
-                    'domain' => $domain,
                     'parameters' => $searchParameters,
                     'distance' => $searchParameters['global'] ? -1 : 15
                 ]);
@@ -178,7 +174,6 @@ class SearchService
     private function searchRequest(
         $user,
         $filter,
-        $domain,
         $searchTag,
         $latitude,
         $longitude,
@@ -199,7 +194,6 @@ class SearchService
                     'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
-                    'domain' => $domain,
                     'parameters' => $searchParameters,
                     'distance' => $distance
                 ]);
@@ -220,7 +214,6 @@ class SearchService
                     'max' => $filter['max'],
                     'latitude'=>$latitude,
                     'longitude'=>$longitude,
-                    'domain'=>$domain,
                     'parameters'=>$searchParameters,
                     'distance'=>$distance
                 ]);
@@ -242,7 +235,6 @@ class SearchService
                     'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
-                    'domain' => $domain,
                     'parameters' => $searchParameters,
                     'distance' => $distance
                 ]);
@@ -264,7 +256,6 @@ class SearchService
                     'max' => $filter['max'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
-                    'domain' => $domain,
                     'parameters' => $searchParameters,
                     'distance' => $distance
                 ]);
