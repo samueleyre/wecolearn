@@ -24,7 +24,7 @@
   <div class="SearchBar-filters">
     <mat-form-field *ngIf="showCommunities" class="SearchBar-filters-community" appearance="outline">
       <mat-label>Communauté</mat-label>
-      <mat-select (selectionChange)="setCommunity($event)" [(value)]="selectedCommunity">
+      <mat-select [ngModel]="selectedCommunity" (ngModelChange)="setCommunity($event)">
         <mat-select-trigger>
           <div class="SearchBar-filters-community-option">
             <span>{{selectedCommunity.name}}</span>

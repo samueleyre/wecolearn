@@ -69,8 +69,8 @@ import { Community } from '~/core/entities/domain/community';
     this._searchService.searchAgainWithSamefilters();
   }
 
-  public setCommunity(val: MatSelectChange) {
-    this._searchService.setCommunity(val.value);
+  public setCommunity(val) {
+    this._searchService.setCommunity(val);
     this._searchService.searchAgainWithSamefilters();
   }
 }
