@@ -12,6 +12,8 @@ import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
 
 import { SearchService } from '../../../../core/services/search/search.service';
+import {Community} from '~/core/entities/domain/community';
+import {ProfileService} from '~/core/services/user/profile.service';
 
 @Component({
   template: '',
@@ -28,7 +30,7 @@ import { SearchService } from '../../../../core/services/search/search.service';
   constructor(
         private tagService: TagService,
         private searchService: SearchService,
-    ) {
+  ) {
     super();
     this.tagService = tagService;
   }
@@ -38,12 +40,7 @@ import { SearchService } from '../../../../core/services/search/search.service';
   }
 
   get searchBarHasValue(): boolean {
-    // if (typeof this.searchInputControl.value === 'string') {
     return !!this.searchInputControl.value;
-    // }
-    // if (this.searchInputControl.value && typeof this.searchInputControl.value === 'object') {
-    //   return !!this.searchInputControl.value.name;
-    // }
   }
 
   @ViewChild('searchBar', { static: false }) searchBarField: ElementRef;
@@ -125,8 +122,4 @@ import { SearchService } from '../../../../core/services/search/search.service';
       this.foundAutocompleteTags$.next([]);
     }
   }
-
-  // displayAutocomplete(tag: Tag): string {
-  //   return tag ? tag.name : '';
-  // }
 }

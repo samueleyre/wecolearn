@@ -5,6 +5,8 @@ export class Community {
   public name: string;
   public count?: number;
   public image?: Image;
+  // tslint:disable-next-line:variable-name
+  public is_main?: boolean;
 
   constructor(obj?: any) {
     this.name = obj && obj.name ? obj.name : null;
@@ -16,6 +18,10 @@ export class Community {
       if ('image' in obj) {
         this.image = new Image(obj.image);
       }
+      if ('is_main' in obj) {
+        this.is_main = obj.is_main;
+      }
+
     }
   }
 }

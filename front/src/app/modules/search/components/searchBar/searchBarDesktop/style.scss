@@ -1,10 +1,17 @@
 @import 'variables';
 
 .SearchBar {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  &-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
 
   &-option {
     padding:8px;
@@ -15,21 +22,29 @@
 
   mat-form-field {
     width: 400px;
-    ::ng-deep .mat-form-field-wrapper {
-      padding-bottom: 0;
-      margin-bottom: 0;
-    }
   }
   & > button {
     margin-left: 20px;
   }
-  margin-bottom: 2px;
-  &-globalMode {
-    span {
-      font-family: raleway, OpenSansSerif, sans-serif;
+  &-filters {
+    display: flex;
+    align-items: center;
+    &-globalMode {
+      span { // todo: should be global !
+        font-family: $mainFont;
+      }
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 20px;
     }
-    margin-left: 20px;
-    margin-top: 20px;
+    &-community {
+      margin-left: 10px;
+      &-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
   }
 }
 
