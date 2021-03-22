@@ -3,15 +3,15 @@ App\Services\Domain\Entity\Domain:
     access_order:     alphabetical
     properties:
         id:
-          groups: [ input, output, admin-users, admin-user-patch, admin-domains ]
+          groups: [ input, output, admin-users, admin-user-patch, admin-domains, profile ]
         name:
-          groups: [ input, output, admin-users, admin-domains ]
+          groups: [ input, output, admin-users, admin-domains, profile ]
         count:
           groups: [ admin-domains ]
         image:
-          groups: [ input, output, admin-domains ]
+          groups: [ input, output, admin-domains, profile ]
         isMain:
-          groups: [ output ]
+          groups: [ output, profile ]
         created:
           groups: [ admin-domains ]
 

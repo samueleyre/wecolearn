@@ -55,7 +55,7 @@ App\Services\User\Entity\User:
       notificationSubscribe:
         groups: [ input ]
       domains:
-        groups: [ admin-user-patch, admin-users ]
+        groups: [ profile, admin-user-patch, admin-users ]
       emailConfirmed:
         groups: [ profile ]
       deleted:

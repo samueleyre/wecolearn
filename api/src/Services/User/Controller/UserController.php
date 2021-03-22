@@ -88,15 +88,18 @@ class UserController extends AbstractController
     {
 
         // parameters :
-        // first, max, tag, tag_domain, global, useProfileTags, userLearnTags, userLearnTagDomains, userKnowTags, userKnowTagDomains
+        // first, max, tag, tag_domain, global, useProfileTags, userLearnTags, userLearnTagDomains, userKnowTags, userKnowTagDomains, domain
 
         $filter = [
             'first' => $request->get('first', 0),
             'max' => $request->get('max', 12),
         ];
 
+        $domain = $request->get('domain');
+
         $searchParameters = [
             'global' => $request->get('global', false),
+            'domainId' => $domain ? $domain['id'] : null,
             'useProfileTags' => $request->get('useProfileTags', true),
             'userLearnTags' => $request->get('userLearnTags', true),
             'userLearnTagDomains' => $request->get('userLearnTagDomains', false),
@@ -118,10 +121,8 @@ class UserController extends AbstractController
 
         $user = $tokenStorage->getToken()->getUser();
 
-        $domain = $domainService->getSubDomain();
-
         return $searchService
-            ->search($searchParameters, $filter, $user, $domain);
+            ->search($searchParameters, $filter, $user);
     }
 
     /**

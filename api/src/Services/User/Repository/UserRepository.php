@@ -24,7 +24,7 @@ class UserRepository extends ServiceEntityRepository
 //        $max = 15,
 //        $latitude = null,
 //        $longitude = null,
-//        $domain = wecolearn,
+//        $domainId = null,
 //        $parameters = [ userLearnTags | userKnowTags | userLearnTagDomains | userKnowTagDomains | searchLearnTag ],
 //        $distance = 100
 
@@ -43,12 +43,6 @@ class UserRepository extends ServiceEntityRepository
         } else {
             $latitude = $searchParameters['latitude'];
             $longitude = $searchParameters['longitude'];
-        }
-
-        if (!array_key_exists('domain', $searchParameters)) {
-            $domain = 'wecolearn';
-        } else {
-            $domain = $searchParameters['domain'];
         }
 
         if (!array_key_exists('user', $searchParameters)) {
@@ -88,6 +82,8 @@ class UserRepository extends ServiceEntityRepository
         }
 
         $parameters = $searchParameters['parameters'];
+
+        $domainId = array_key_exists('domainId', $parameters) ? $parameters['domainId'] : null;
 
         $profileTags = [];
 
@@ -135,7 +131,7 @@ class UserRepository extends ServiceEntityRepository
             $qb->innerJoin('t.tagDomains', 'tagDomain');
         }
 
-        if ($domain) {
+        if ($domainId) {
             $qb->innerJoin('user.domains', 'd');
         }
 
@@ -156,8 +152,8 @@ class UserRepository extends ServiceEntityRepository
             $qb->andWhere(sprintf('tagDomain.id=%s', $searchTagDomain->getId()));
         }
 
-        if ($domain) {
-            $qb->andWhere('d.name = :s')->setParameter('s', $domain);
+        if ($domainId) {
+            $qb->andWhere('d.id = :s')->setParameter('s', $domainId);
         }
 
         // search for same tags from profile

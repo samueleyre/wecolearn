@@ -1,6 +1,6 @@
 import { finalize, map, tap } from 'rxjs/operators';
-import { Injectable, NgZone } from '@angular/core';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 
@@ -9,6 +9,8 @@ import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
+import { Community } from '~/core/entities/domain/community';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 import { SEARCH } from '../../../modules/search/config/main';
 
@@ -26,6 +28,7 @@ export class SearchService extends APIService<User> {
   static max = SEARCH.default.max;
   static first = 0;
   public globalMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public community$: BehaviorSubject<Community|null> = new BehaviorSubject<Community|null>(null);
   public useProfileTagsMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   currentFoundMatchs$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   currentFoundAddress: any[] = [];
@@ -33,8 +36,19 @@ export class SearchService extends APIService<User> {
   public endPoint = '/api/user/matchs';
   public searchMetaSubject: BehaviorSubject<{ [key in SearchMeta]: boolean }> = new BehaviorSubject(null);
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private _profileService: ProfileService) {
     super(_http);
+    this.setCommunity(this.defaultCommunity);
+  }
+
+  get communities(): Community[] {
+    return this._profileService.profile.domains;
+    // todo: filter main domain & unshit main domain with hard image & name
+  }
+
+  get defaultCommunity() {
+    // todo: make user select default community
+    return this.communities.filter(domain => !domain.is_main)[0];
   }
 
   get searchType():string {
@@ -86,6 +100,7 @@ export class SearchService extends APIService<User> {
     }
     filters['max'] = SEARCH.default.max;
     filters['global'] = this.globalMode;
+    filters['domain'] = this.community;
     if (SearchService.first > 0) {
       // scroll search
       // keep same type of search
@@ -157,12 +172,20 @@ export class SearchService extends APIService<User> {
     return this.globalMode$.getValue();
   }
 
+  get community() {
+    return this.community$.getValue();
+  }
+
   get useProfileTagsMode() {
     return this.useProfileTagsMode$.getValue();
   }
 
   setGlobalMode(isGlobal: boolean) {
     this.globalMode$.next(isGlobal);
+  }
+
+  setCommunity(community: Community) {
+    this.community$.next(community);
   }
 
   setUseProfileTagsMode(bool) {
