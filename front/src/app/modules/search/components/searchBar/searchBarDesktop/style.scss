@@ -48,3 +48,6 @@
   }
 }
 
+::ng-deep .mat-option.mat-selected {
+  color: $primaryColor !important;
+}
