@@ -1,4 +1,5 @@
-<div class="SearchBar">
+<div class="SearchBar-container">
+  <div class="SearchBar">
     <mat-form-field color="accent" appearance="outline">
       <input #searchBar type="text" matInput placeholder="Rechercher des profils par apprentissage"
              [disabled]="loading"
@@ -19,9 +20,31 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-  <div class="SearchBar-globalMode">
-    <mat-checkbox [ngModel]="globalMode" (ngModelChange)="setGlobalMode($event)">
-      <span [matTooltip]="'Sur toute la planète !'">recherche globale 🌏</span>
-    </mat-checkbox>
+  </div>
+  <div class="SearchBar-filters">
+    <mat-form-field *ngIf="showCommunities" class="SearchBar-filters-community" appearance="outline">
+      <mat-label>Communauté</mat-label>
+      <mat-select (selectionChange)="setCommunity($event)" [(value)]="selectedCommunity">
+        <mat-select-trigger>
+          <div class="SearchBar-filters-community-option">
+            <span>{{selectedCommunity.name}}</span>
+            <img defaultProfileImage [src]="selectedCommunity.image | cloudinaryImagePipe"
+                 style="width: 30px; height: 30px"/>
+          </div>
+        </mat-select-trigger>
+        <mat-option *ngFor="let community of communities" [value]="community">
+          <div class="SearchBar-filters-community-option">
+            <span>{{community.name}}</span>
+            <img defaultProfileImage [src]="community.image | cloudinaryImagePipe"
+                 style="width: 30px; height: 30px"/>
+          </div>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="SearchBar-filters-globalMode">
+      <mat-checkbox [ngModel]="globalMode" (ngModelChange)="setGlobalMode($event)">
+        <span [matTooltip]="'Sur toute la planète !'">recherche globale 🌏</span>
+      </mat-checkbox>
+    </div>
   </div>
 </div>

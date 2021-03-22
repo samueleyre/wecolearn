@@ -3,18 +3,22 @@ import {
   OnInit,
 } from '@angular/core';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatSelectChange } from '@angular/material';
 
 import { TagService } from '~/core/services/tag/tag.service';
 import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/search-bar.base.component';
 import { SearchService } from '~/core/services/search/search.service';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
+import { Community } from '~/core/entities/domain/community';
 
 @Component({
   selector: 'app-searchbar',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })export class SearchBarComponent extends SearchBarBaseComponent implements OnInit {
+  selectedCommunity: Community;
+
   constructor(
         private _tagService: TagService,
         private _searchService: SearchService,
@@ -27,6 +31,15 @@ import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
     this.foundAutocompleteTagsObservable.subscribe((tags) => {
       this.foundAutocompleteTags$.next(tags);
     });
+    this.selectedCommunity = this._searchService.community;
+  }
+
+  get communities() {
+    return this._searchService.communities;
+  }
+
+  get showCommunities() {
+    return this.communities.filter(domain => !domain.is_main).length > 0;
   }
 
   selectOption($event: MatAutocompleteSelectedEvent): void {
@@ -53,6 +66,11 @@ import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 
   public setGlobalMode(val) {
     super.setGlobalMode(val);
+    this._searchService.searchAgainWithSamefilters();
+  }
+
+  public setCommunity(val: MatSelectChange) {
+    this._searchService.setCommunity(val.value);
     this._searchService.searchAgainWithSamefilters();
   }
 }
