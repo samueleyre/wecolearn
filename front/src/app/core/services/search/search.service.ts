@@ -29,6 +29,7 @@ export class SearchService extends APIService<User> {
   static first = 0;
   public globalMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public community$: BehaviorSubject<Community|null> = new BehaviorSubject<Community|null>(null);
+  private _communities$ = new BehaviorSubject<Community[]|[]>([]);
   public useProfileTagsMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   currentFoundMatchs$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   currentFoundAddress: any[] = [];
@@ -38,11 +39,12 @@ export class SearchService extends APIService<User> {
 
   constructor(private _http: HttpClient, private _profileService: ProfileService) {
     super(_http);
+    this._communities$.next(this._profileService.profile.domains);
     this.setCommunity(this.defaultCommunity);
   }
 
   get communities(): Community[] {
-    return this._profileService.profile.domains;
+    return this._communities$.value;
     // todo: filter main domain & unshit main domain with hard image & name
   }
 
