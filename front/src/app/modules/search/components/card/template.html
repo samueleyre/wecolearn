@@ -1,5 +1,7 @@
 <div class="card">
-  <div class="card-img-top"></div>
+  <div class="card-img-top">
+    <span class="card-img-top-city"*ngIf="showCity && card.city">{{card.city}}</span>
+  </div>
   <div class="profil-img">
     <img alt="image de {{card.first_name}}" defaultProfileImage src="{{card.image | cloudinaryImagePipe}}" />
   </div>

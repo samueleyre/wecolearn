@@ -16,6 +16,17 @@
     border-bottom-right-radius: 5px;
   }
 
+  &-img-top {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    &-city {
+      font-family: $boldFont;
+      padding: 10px 1.25rem;
+      color: #787878;
+    }
+  }
+
   &-title{
     padding: 20px;
     margin-bottom: 0;

@@ -21,6 +21,7 @@ import { NAV } from '~/config/navigation/nav';
 })export class CardComponent implements OnInit {
   @Input() card: User;
   @Input() searchTag: Tag;
+  @Input() showCity = false;
 
   public tags: Tag[] = [];
 
