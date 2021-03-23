@@ -1,7 +1,7 @@
 <section *ngIf="loaded">
   <form  class="ProfileSettingsForm form-horizontal" (ngSubmit)="submit()" [formGroup]="userForm">
     <div class="container-fluid">
-      <div class="row justify-content-center">
+      <div class="ProfileSettingsForm-image row justify-content-center">
         <app-upload-form-image [parentForm]="userForm" url="/api/profile/uploadProfileImage"></app-upload-form-image>
       </div>
       <div class="row">

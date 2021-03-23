@@ -5,6 +5,9 @@
     background-color: white;
   }
 
+  &-image {
+    margin-bottom: 25px;
+  }
 
   @media (max-width: $smScreen) {
     margin: 0 15px;
