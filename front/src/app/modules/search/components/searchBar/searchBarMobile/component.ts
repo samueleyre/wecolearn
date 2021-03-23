@@ -3,6 +3,7 @@ import {
   OnInit, Output,
 } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { MatSelectChange } from '@angular/material';
 
 import { TagService } from '~/core/services/tag/tag.service';
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
@@ -41,6 +42,16 @@ import { TagDomainsService } from '~/core/services/tag/tag-domains.service';
         this.foundAutocompleteTags$.next(tags);
       }
     });
+  }
+
+  public setGlobalMode(val) {
+    super.setGlobalMode(val);
+    this._searchService.searchAgainWithSamefilters();
+  }
+
+  public setCommunity(val) {
+    super.setCommunity(val);
+    this._searchService.searchAgainWithSamefilters();
   }
 
   private initTagDomains(): void {

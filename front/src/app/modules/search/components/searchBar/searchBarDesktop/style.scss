@@ -45,6 +45,11 @@
         align-items: center;
       }
     }
+    ::ng-deep {
+      .mat-form-field-infix {
+        padding: 0.6em 0;
+      }
+    }
   }
 }
 
