@@ -20,7 +20,7 @@
     </div>
     <div *ngIf="cards.length > 0" class="SearchPage-cardsContainer">
       <div *ngFor="let card of cards" class="SearchPage-cardsContainer-card">
-        <app-card [card]="card" [searchTag]="currentSearchTag"></app-card>
+        <app-card [showCity]="globalMode" [card]="card" [searchTag]="currentSearchTag"></app-card>
       </div>
     </div>
   </div>

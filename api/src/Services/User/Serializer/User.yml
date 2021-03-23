@@ -24,7 +24,7 @@ App\Services\User\Entity\User:
       longitude:
         groups: [ input, create, admin-users, profile ]
       city:
-        groups: [ admin-user-patch, input, create, admin-users, profile ]
+        groups: [ admin-users, admin-user-patch, create, input, search, profile ]
       tags:
         groups: [ input, create, search, profile, public-profile, admin-users ]
       sentMessages:

@@ -191,6 +191,10 @@ export class SearchComponentBase implements OnInit, AfterViewInit {
     return (val instanceof Tag) ? val : null;
   }
 
+  get globalMode(): boolean {
+    return this.searchService.globalMode;
+  }
+
   get loading(): boolean {
     return this.searchService.loading;
   }
