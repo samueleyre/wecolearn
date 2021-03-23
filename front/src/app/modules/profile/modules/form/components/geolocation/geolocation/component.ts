@@ -90,8 +90,8 @@ export class ProfileGeolocationComponent extends DestroyObservable implements On
 
 
   private update(lat: number, lon: number, city: string) {
-    this.latitudeControl.setValue(lat);
-    this.longitudeControl.setValue(lon);
+    this.latitudeControl.setValue(lat.toFixed(2));
+    this.longitudeControl.setValue(lon.toFixed(2));
     this.cityControl.setValue(city);
   }
 }
