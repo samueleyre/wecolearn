@@ -10,15 +10,12 @@ import { SearchBarBaseComponent } from '~/modules/search/components/searchBar/se
 import { SearchService } from '~/core/services/search/search.service';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
-import { Community } from '~/core/entities/domain/community';
 
 @Component({
   selector: 'app-searchbar',
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })export class SearchBarComponent extends SearchBarBaseComponent implements OnInit {
-  selectedCommunity: Community;
-
   constructor(
         private _tagService: TagService,
         private _searchService: SearchService,
@@ -31,15 +28,6 @@ import { Community } from '~/core/entities/domain/community';
     this.foundAutocompleteTagsObservable.subscribe((tags) => {
       this.foundAutocompleteTags$.next(tags);
     });
-    this.selectedCommunity = this._searchService.community;
-  }
-
-  get communities() {
-    return this._searchService.communities;
-  }
-
-  get showCommunities() {
-    return this.communities.filter(domain => !domain.is_main).length > 0;
   }
 
   selectOption($event: MatAutocompleteSelectedEvent): void {
@@ -70,7 +58,7 @@ import { Community } from '~/core/entities/domain/community';
   }
 
   public setCommunity(val: MatSelectChange) {
-    this._searchService.setCommunity(val.value);
+    super.setCommunity(val.value);
     this._searchService.searchAgainWithSamefilters();
   }
 }
