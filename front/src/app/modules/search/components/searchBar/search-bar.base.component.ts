@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '
 import { debounceTime, filter, skipWhile, switchMap, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { MatAutocompleteTrigger } from '@angular/material';
+import { MatAutocompleteTrigger, MatSelectChange } from '@angular/material';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 import { TagService } from '~/core/services/tag/tag.service';
@@ -10,10 +10,10 @@ import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
+import { Community } from '~/core/entities/domain/community';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 import { SearchService } from '../../../../core/services/search/search.service';
-import {Community} from '~/core/entities/domain/community';
-import {ProfileService} from '~/core/services/user/profile.service';
 
 @Component({
   template: '',
@@ -26,6 +26,7 @@ import {ProfileService} from '~/core/services/user/profile.service';
   public autocompleteDisabled = false;
   public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
   public inputChangeByUser$ = new Subject<string>();
+  public selectedCommunity: Community;
 
   constructor(
         private tagService: TagService,
@@ -55,9 +56,14 @@ import {ProfileService} from '~/core/services/user/profile.service';
     this.searchService.setGlobalMode(val);
   }
 
+  public setCommunity(val) {
+    this.searchService.setCommunity(val);
+  }
+
   ngOnInit() {
     this.globalMode = this.searchService.globalMode;
     this.useProfileTagsMode = this.searchService.useProfileTagsMode;
+    this.selectedCommunity = this.searchService.community;
 
     this.searchService.getSearchInputObs().subscribe((val?: Tag | TagDomain) => {
       this.searchInputControl.setValue(val ? val.name : null);
@@ -69,6 +75,14 @@ import {ProfileService} from '~/core/services/user/profile.service';
       filter(val => val !== '' && val !== null && val !== undefined && typeof val === 'string'),
       switchMap(value => this.tagService.findTags(value)),
     );
+  }
+
+  get communities() {
+    return this.searchService.communities;
+  }
+
+  get showCommunities() {
+    return this.communities.filter(domain => !domain.is_main).length > 0;
   }
 
   inputChangeByUser($event) {

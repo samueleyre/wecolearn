@@ -11,7 +11,17 @@
 <div class="Actions-container" [hidden]="!(isActive)">
   <ion-list>
     <ion-item>
-      <ion-label>Recherche globale 🌏</ion-label>
+      <ion-label>Communauté</ion-label>
+      <ion-select interface="popover" (ionChange)="setCommunity($event.detail.value)" [value]="selectedCommunity">
+        <ion-select-option *ngFor="let community of communities" [value]="community">
+          {{community.name}}
+          <img defaultProfileImage [src]="community.image | cloudinaryImagePipe"
+               style="width: 30px; height: 30px" alt="image de la communauté {{community.name}}"/>
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Globale 🌏</ion-label>
       <ion-toggle [checked]="globalMode"
                   (ionChange)="setGlobalMode($event.detail.checked)"
       ></ion-toggle>
