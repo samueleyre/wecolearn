@@ -22,6 +22,9 @@ import { environment } from '../../../../../../environments/environment';
   public complete: EventEmitter<any> = new EventEmitter();
 
   @Output()
+  public cancel: EventEmitter<any> = new EventEmitter();
+
+  @Output()
   public error: EventEmitter<any> = new EventEmitter();
 
   @Input() url;
@@ -45,7 +48,7 @@ import { environment } from '../../../../../../environments/environment';
     };
   }
 
-  cancel() {
-    this.complete.emit();
+  onCancel() {
+    this.cancel.emit();
   }
 }
