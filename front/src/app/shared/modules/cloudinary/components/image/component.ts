@@ -32,4 +32,8 @@ export class UploadFormImageComponent implements OnInit {
   onError(status: number) {
     this._toastr.error('Une erreur est survenu lors de téléversement, essayer une image plus petite !');
   }
+
+  onCancel() {
+    this.editing = false;
+  }
 }
