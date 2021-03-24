@@ -93,6 +93,8 @@ class NotifyUserMatchHandler implements MessageHandlerInterface
                 continue;
             }
 
+            $commonTags = array_values($commonTags);
+
             if ($matchingUser->getNewMatchNotification()) {
                 try {
                     $this->notificationService->processNewMatchingProfil($matchingUser, $user);
