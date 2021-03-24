@@ -39,7 +39,12 @@ export class SearchService extends APIService<User> {
 
   constructor(private _http: HttpClient, private _profileService: ProfileService) {
     super(_http);
-    this._communities$.next(this._profileService.profile.domains);
+    this._communities$.next(
+      [
+        { id: null, name: 'Grand public', is_main: true }, // we don't get it from api as some users don't have it
+        ...this._profileService.profile.domains.filter(domain => !domain.is_main),
+      ],
+    );
     this.setCommunity(this.defaultCommunity);
   }
 
