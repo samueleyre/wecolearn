@@ -59,7 +59,7 @@ class Tag
      */
     public function setName(string $name): Tag
     {
-        $this->name = $name;
+        $this->name = ucfirst($name);
 
         return $this;
     }
