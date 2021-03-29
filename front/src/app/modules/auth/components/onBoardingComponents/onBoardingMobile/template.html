@@ -4,18 +4,6 @@
       <ng-template matStepperIcon="edit">
         <i class="fa fa-check"></i>
       </ng-template>
-
-      <mat-step>
-        <div class="card">
-          <div class="card-header">
-            <h5 class="center">{{titles.city.title}}</h5>
-          </div>
-          <div class="card-body">
-            <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
-          </div>
-
-        </div>
-      </mat-step>
       <mat-step>
         <div class="card">
           <div class="card-header">
@@ -25,6 +13,17 @@
             <app-profile-form-tags-mobile [parentForm]="userForm" [fieldName]="'learn_tags'"
                                [type]="learnType"></app-profile-form-tags-mobile>
           </div>
+        </div>
+      </mat-step>
+      <mat-step>
+        <div class="card">
+          <div class="card-header">
+            <h5 class="center">{{titles.city.title}}</h5>
+          </div>
+          <div class="card-body">
+            <app-profile-form-city [parentForm]="userForm"></app-profile-form-city>
+          </div>
+
         </div>
       </mat-step>
       <mat-step>
