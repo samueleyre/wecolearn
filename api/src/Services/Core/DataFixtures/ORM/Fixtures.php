@@ -103,6 +103,10 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         }
     }
 
+    private function addCommunities() {
+
+    }
+
     private function addUsers()
     {
         $firstNames = UserConstant::$FIRSTNAMES;
