@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
 import { AdminTagService } from '~/modules/tags/services/admin-tag.service';
@@ -26,6 +26,9 @@ export class TagsDatavizeComponent extends DestroyObservable implements OnInit {
     this.tagService.tags$
       .pipe(
         filter(tags => tags.length > 0),
+        map(tags => tags.filter(tag => tag.type === 0
+          && !tag.tag_domains.find(td => td.name === tag.name)), // todo : compare ids ! (requires changes on back )
+        ),
         takeUntil(this.destroy$),
       )
       .subscribe((tags) => {
