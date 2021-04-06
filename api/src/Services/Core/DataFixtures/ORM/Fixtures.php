@@ -3,6 +3,7 @@
 namespace App\Services\Core\DataFixtures\ORM;
 
 use App\Services\Chat\Entity\Message;
+use App\Services\Core\DataFixtures\ORM\Constant\CommunityOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\TagDomainsOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\TagOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\UserConstant;
@@ -17,6 +18,7 @@ use App\Services\User\Entity\User;
 use App\Services\User\Service\UserService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -32,6 +34,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
     private $userManager;
     private array $tagDomains = [];
     private array $tags = [];
+    private array $domains = [];
 
     private ?ContainerInterface $container;
 
@@ -58,6 +61,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $this->userManager = $this->container->get('fos_user.user_manager');
         $this->addTagDomains();
         $this->addTags();
+        $this->addCommunities();
         $this->addUsers();
     }
 
@@ -105,6 +109,16 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
 
     private function addCommunities() {
 
+        $domains = CommunityOrmConstant::$COMMUNITIES;
+
+        foreach ($domains as $domain) {
+            $newDomain = new Domain();
+            $newDomain->setName($domain['name']);
+            $newDomain->setIsMain($domain['is_main']);
+            $this->manager->persist($newDomain);
+            array_push($this->domains, $newDomain);
+        }
+
     }
 
     private function addUsers()
@@ -113,12 +127,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $lastNames = UserConstant::$LASTNAMES;
 
         $userList = [];
-
-        $fixedDomain = ['wecolearn'];
-        $domain = new Domain();
-        $domain->setName($fixedDomain[0]);
-
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         //Here we create a User with the Admin role
         $admin = new User();
@@ -136,7 +144,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setLongitude(4.85);
         $admin->setCity('Lyon');
         $admin->setEnabled(true);
-        $admin->addDomain($domain);
+        $admin->addDomain($this->domains[0]);
         $admin->setShowProfil(false);
         $admin->setNewMessageNotification(false);
         $admin->setNewMatchNotification(false);
@@ -144,6 +152,8 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setNewMatchEmail(true);
         $admin->setNewsletter(false);
         $this->userManager->updateUser($admin);
+
+        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         // create the rest of our fixtures and affiliate tags to users
         for ($i = 0; $i < count($firstNames); ++$i) {
@@ -166,7 +176,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $user->setLongitude(4.85);
             $user->setCity('Lyon');
             $user->setEnabled(true);
-            $user->addDomain($domain);
+            $user->addDomain($this->domains[random_int(0, 2)]);
             $user->setShowProfil(true);
             $user->setLastLogin($date);
             $user->setNewMessageNotification(true);
@@ -175,7 +185,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $user->setNewMatchEmail(true);
             $user->setNewsletter(true);
             array_push($userList, $user);
-            $this->manager->persist($domain);
 
             // tags
             $randLearnTag = $this->tags[random_int(0, count(TagOrmConstant::$RAND)-1)];
@@ -203,16 +212,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $token->setToken('token'.$i);
             $token->setType(random_int(0, 100));
             $this->manager->persist($token);
-
-//            $slackTeam->setName('team' . $i);
-//            $slackTeam->setType('type' . $i);
-//            $slackTeam->setTeamId('Team' . $i);
-//            $this->manager->persist($slackTeam);
-
-//            $slackAccount->setUser($user);
-//            $slackAccount->setAccountId($user->getEmail());
-//            $slackAccount->setSlackTeam($slackTeam);
-//            $this->manager->persist($slackAccount);
 
 //             Here we create many messages
             $message = new Message();

@@ -6,7 +6,17 @@ class CommunityOrmConstant
 {
     public static array $COMMUNITIES = [
         [
-            'name' => 'TUBA Lyon'
+            'name' => 'Wecolearn',
+            'is_main'=> true
+        ],
+        [
+            'name' => 'Coworking Lyon',
+            'is_main'=> false
+        ],
+        [
+            'name' => "Club d'échecs",
+            'is_main'=> false
         ]
+
     ];
 }
