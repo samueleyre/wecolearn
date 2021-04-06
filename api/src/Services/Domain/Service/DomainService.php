@@ -121,6 +121,7 @@ class DomainService
 
     public function create(Domain $domain)
     {
+        $domain->isMain = false;
         $this->em->persist($domain);
         $this->em->flush();
         return $domain;

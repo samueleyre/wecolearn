@@ -9,22 +9,19 @@ use Doctrine\Common\Collections\Collection;
 
 class Domain
 {
-    public ?int $id;
+    public ?int $id = null;
     public string $name;
     public $users;
-    public ?int $count;
-    public ?Image $image;
-    public ?bool $isMain;
+    public ?int $count = null;
+    public ?Image $image = null;
+    public ?bool $isMain = null;
 
     /**
      * Constructor.
-     * @param string|null $name
+     * @param $params
      */
-    public function __construct(string $name = null)
+    public function __construct()
     {
-        if ($name) {
-            $this->name = $name;
-        }
         $this->users = new ArrayCollection();
     }
 
@@ -130,6 +127,19 @@ class Domain
     {
         return $this->image;
     }
+
+    /**
+     * Set isMain.
+     *
+     * @param bool $isMain
+     * @return Domain
+     */
+    public function setIsMain(bool $isMain): Domain
+    {
+        $this->isMain = $isMain;
+        return $this;
+    }
+
 
     /**
      * Get isMain.
