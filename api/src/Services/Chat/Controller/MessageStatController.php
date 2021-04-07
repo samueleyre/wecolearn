@@ -21,8 +21,7 @@ class MessageStatController extends AbstractController
         $user = $tokenStorage->getToken()->getUser();
 
         if(
-            !$user->isSuperAdmin()
-            || !$user->hasDomain($communityId)
+            !($user->isSuperAdmin() || $user->hasDomain($communityId))
         ) {
             throw new \Exception('Pas autorisé !', 403);
         }
