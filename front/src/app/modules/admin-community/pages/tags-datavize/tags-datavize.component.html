@@ -1,4 +1,4 @@
-<app-dash-page-layout title="Les domaines de votre communauté">
+<app-dash-page-layout title="L'apprentissage dans votre communauté">
   <div *ngIf="loaded" class="TagsDatavize">
     <div class="TagsDatavize-box-container" *ngFor="let tagDId of tagDomainIds">
       <h6 class="TagsDatavize-box-title"><app-emoji [emojiName]="tagsGroupedByDomain[tagDId].tagDomain.emoji"></app-emoji>{{tagsGroupedByDomain[tagDId].tagDomain.name}}</h6>

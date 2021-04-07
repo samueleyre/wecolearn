@@ -1,0 +1,32 @@
+<app-dash-page-layout title="Statistiques d'usage">
+  <div class="AdminCommunityMessageStats">
+    <h3>Global</h3>
+    <div *ngIf="stats$ | async as stats" class="AdminCommunityMessageStats-main">
+      <div>
+        <h2>{{stats.global.conversations}}</h2>
+        <p>conversation<span *ngIf="stats.global.conversations > 1">s</span></p>
+      </div>
+      <div>
+        <h2>{{stats.global.people}}</h2>
+        <p>membre<span *ngIf="stats.global.people > 1">s</span></p>
+      </div>
+      <div>
+        <h2>{{stats.global.averageConversation}}</h2>
+        <p>conversation<span *ngIf="stats.global.averageConversation > 1">s</span> par personne</p>
+      </div>
+    </div>
+    <h3>Activité de la semaine passée</h3>
+    <div *ngIf="stats$ | async as stats" class="AdminCommunityMessageStats-pastWeek">
+      <div>
+        <h2>{{stats.lastWeek.conversations}}</h2>
+        <p>nouvelle<span *ngIf="stats.lastWeek.conversations > 1">s</span> conversation<span
+          *ngIf="stats.lastWeek.conversations > 1">s</span></p>
+      </div>
+      <div>
+        <h2>{{stats.lastWeek.people}}</h2>
+        <p>nouveau<span *ngIf="stats.lastWeek.people > 1">x</span> membre<span
+          *ngIf="stats.lastWeek.people > 1">s</span></p>
+      </div>
+    </div>
+  </div>
+</app-dash-page-layout>

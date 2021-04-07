@@ -10,6 +10,7 @@ import { CloudinaryModule } from '~/shared/modules/cloudinary/cloudinary.module'
 
 import { AdminCommunityUsersComponent } from './pages/admin-community-users/admin-community-users.component';
 import { AdminCommunitySettingsComponent } from './pages/admin-community-settings/admin-community-settings.component';
+import { AdminCommunityMessageStatsComponent } from './pages/admin-community-message-stats/admin-community-message-stats.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { AdminCommunitySettingsComponent } from './pages/admin-community-setting
     TagsDatavizeComponent,
     AdminCommunityUsersComponent,
     AdminCommunitySettingsComponent,
+    AdminCommunityMessageStatsComponent,
   ],
   imports: [
     SharedModule,

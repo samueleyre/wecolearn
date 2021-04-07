@@ -10,7 +10,10 @@ use DateTime;
 use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Expr\Comparison;
 use FOS\UserBundle\Model\User as BaseUser;
+use phpDocumentor\Reflection\Types\Integer;
 
 class User extends BaseUser
 {
@@ -680,6 +683,20 @@ class User extends BaseUser
     public function getDomains()
     {
         return $this->domains;
+    }
+
+    /**
+     * Has domain.
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function hasDomain(int $id)
+    {
+        $expr = new Comparison('id', '=', $id);
+        $criteria = new Criteria();
+        $criteria->where($expr);
+        return !$this->domains->matching($criteria)->isEmpty();
     }
 
     /**
