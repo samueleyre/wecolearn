@@ -273,4 +273,30 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
 
     }
+
+    public function countInCommunity($communityId, $enabled = true)
+    {
+        return $this->createQueryBuilder('user')
+            ->select('count(user)')
+            ->innerJoin('user.domains', 'community')
+            ->where("community.id = :c_id")->setParameter('c_id', $communityId)
+            ->andWhere('user.enabled = :enabled')->setParameter('enabled', $enabled)
+            ->andWhere('user.roles not like :role')->setParameter('role', "%ADMIN%")
+            ->getQuery()->getSingleScalarResult();
+    }
+
+    public function countPastWeekNewUsersInCommunity($communityId, $enabled = true)
+    {
+
+        $lastWeek = new \DateTime('- 7 Days', new \DateTimeZone('Europe/Paris'));
+
+        return $this->createQueryBuilder('user')
+            ->select('count(user)')
+            ->innerJoin('user.domains', 'community')
+            ->andWhere('user.created > :lastWeek')->setParameter('lastWeek', $lastWeek)
+            ->andWhere('user.enabled = :enabled')->setParameter('enabled', $enabled)
+            ->andWhere('user.roles not like :role')->setParameter('role', "%ADMIN%")
+            ->andWhere("community.id = :c_id")->setParameter('c_id', $communityId)
+            ->getQuery()->getSingleScalarResult();
+    }
 }

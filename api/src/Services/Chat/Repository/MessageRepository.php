@@ -152,4 +152,33 @@ class MessageRepository extends ServiceEntityRepository
 
         return $ret;
     }
+
+    public function countConversationsInCommunity($id)
+    {
+        return $this->createQueryBuilder('message')
+            ->select('count(message)')
+            ->innerJoin('message.sender', "sender")
+            ->innerJoin('sender.domains', "community")
+            ->where('community.id = :communityId')->setParameter('communityId', $id)
+            ->andWhere('sender.roles not like :role')->setParameter('role', "%ADMIN%")
+            ->getQuery()
+            ->getSingleScalarResult();
+
+    }
+
+    public function countPastWeekConversationsInCommunity($id)
+    {
+        $lastWeek = new \DateTime('- 7 Days', new \DateTimeZone('Europe/Paris'));
+
+        return $this->createQueryBuilder('message')
+            ->select('count(message)')
+            ->innerJoin('message.sender', "sender")
+            ->innerJoin('sender.domains', "community")
+            ->andWhere('message.created > :lastWeek')->setParameter('lastWeek', $lastWeek)
+            ->andWhere('community.id = :communityId')->setParameter('communityId', $id)
+            ->andWhere('sender.roles not like :role')->setParameter('role', "%ADMIN%")
+            ->getQuery()
+            ->getSingleScalarResult();
+
+    }
 }

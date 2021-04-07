@@ -245,9 +245,6 @@ class UserService
     private function getCommunityOfAdmin()
     {
         $adminUser = $this->securityStorage->getToken()->getUser();
-        dump($adminUser);
-        dump($adminUser->getDomains());
-        dump($adminUser->getDomains()[0]);
         return $adminUser->getDomains()[0];
     }
 

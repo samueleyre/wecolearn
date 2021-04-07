@@ -52,6 +52,11 @@ message:
   prefix:   api
   resource: App\Services\Chat\Controller\MessageController
 
+messageStat:
+  type:     annotation
+  prefix:   api
+  resource: App\Services\Chat\Controller\MessageStatController
+
 adminTag:
   type:     annotation
   prefix:   api

@@ -26,8 +26,10 @@
         padding: 6px 20px;
         border: 2px solid;
         border-radius: 6px;
-        display: block;
         height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }
