@@ -4,6 +4,7 @@ namespace App\Services\Core\DataFixtures\ORM;
 
 use App\Services\Chat\Entity\Message;
 use App\Services\Core\DataFixtures\ORM\Constant\CommunityOrmConstant;
+use App\Services\Core\DataFixtures\ORM\Constant\MessageConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\TagDomainsOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\TagOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\UserConstant;
@@ -153,15 +154,18 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setNewsletter(false);
         $this->userManager->updateUser($admin);
 
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         // create the rest of our fixtures and affiliate tags to users
         for ($i = 0; $i < count($firstNames); ++$i) {
             $user = new user();
             $token = new Token();
-//            $slackTeam = new SlackTeam();
-//            $slackAccount = new SlackAccount();
 
+            $daysAgo = random_int(1, 45);
+            $createdDate = new \DateTime("- $daysAgo Days", new \DateTimeZone('Europe/Paris'));
+
+
+            $user->setCreated($createdDate);
             $user->setUsername($firstNames[$i].$i);
             $user->setEmail('samuel.eyre+'.$i.'@hotmail.fr');
             $user->setRoles(['ROLE_USER']);
@@ -178,7 +182,7 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $user->setEnabled(true);
             $user->addDomain($this->domains[random_int(0, 2)]);
             $user->setShowProfil(true);
-            $user->setLastLogin($date);
+            $user->setLastLogin($today);
             $user->setNewMessageNotification(true);
             $user->setNewMatchNotification(true);
             $user->setNewMessageEmail(true);
@@ -208,16 +212,19 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $user->setImage($image);
 
             $token->setUser($user);
-            $token->setCreated($date);
+            $token->setCreated($today);
             $token->setToken('token'.$i);
             $token->setType(random_int(0, 100));
             $this->manager->persist($token);
 
-//             Here we create many messages
+
+            $daysAgo = random_int(1, 45);
+            $messageCreatedDate = new \DateTime("- $daysAgo Days", new \DateTimeZone('Europe/Paris'));
+
             $message = new Message();
-            $message->setCreated($date);
+            $message->setCreated($messageCreatedDate);
             $message->setIsRead(true);
-            $message->setMessage('Salut ! Tu t\'intéresses à la batterie ?');
+            $message->setMessage(MessageConstant::$MESSAGES[random_int(0,count(MessageConstant::$MESSAGES)-1)]);
             $message->setSender($user);
             $message->setReceiver($admin);
             $this->manager->persist($message);
