@@ -62,6 +62,11 @@ adminTag:
   prefix:   api
   resource: App\Services\Tag\Controller\AdminTagController
 
+communityAdminTag:
+  type:     annotation
+  prefix:   api
+  resource: App\Services\Tag\Controller\CommunityAdminTagController
+
 adminTagDomain:
   type:     annotation
   prefix:   api
