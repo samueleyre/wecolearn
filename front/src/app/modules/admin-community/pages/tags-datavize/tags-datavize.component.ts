@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
-import { AdminTagService } from '~/modules/tags/services/admin-tag.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagsGroupedByDomainInterface } from '~/core/interfaces/tag/tags-grouped-by-domain.interface';
+import { CommunityAdminTagService } from '~/modules/tags/services/community-admin-tag.service';
+import { ProfileService } from '~/core/services/user/profile.service';
 
 
 @Component({
@@ -17,13 +18,14 @@ export class TagsDatavizeComponent extends DestroyObservable implements OnInit {
   maxIteration = 10;
 
   constructor(
-    private tagService: AdminTagService,
+    private _communityAdminTag: CommunityAdminTagService,
+    private _profileService: ProfileService,
   ) {
     super();
   }
 
   ngOnInit() {
-    this.tagService.tags$
+    this._communityAdminTag.tagsInCommunity$
       .pipe(
         filter(tags => tags.length > 0),
         map(tags => tags.filter(tag => tag.type === 0
@@ -85,6 +87,7 @@ export class TagsDatavizeComponent extends DestroyObservable implements OnInit {
   }
 
   private loadTags() {
-    this.tagService.list().subscribe();
+    const user = this._profileService.profile;
+    this._communityAdminTag.get(user.domains[0].id).subscribe();
   }
 }

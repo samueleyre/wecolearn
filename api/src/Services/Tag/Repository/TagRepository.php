@@ -77,4 +77,17 @@ class TagRepository extends ServiceEntityRepository
 
         syslog(LOG_INFO, 'iteration count updated');
     }
+
+    public function getAllInCommunityByImportance(int $communityId, $type = 0)
+    {
+        $qb = $this->createQueryBuilder('t')
+                ->innerJoin('t.users', 'u')
+                ->innerJoin('u.domains', 'd')
+                ->andWhere('d.id = :communityId')->setParameter('communityId', $communityId)
+                ->andWhere('u.enabled = :enabled')->setParameter('enabled', true)
+                ->andWhere('t.type = :type')->setParameter('type', $type)
+                ->orderBy('t.iteration', 'DESC');
+        
+        return $qb->getQuery()->getResult();
+    }
 }
