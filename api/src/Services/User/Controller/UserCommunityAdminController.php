@@ -10,9 +10,11 @@ namespace App\Services\User\Controller;
 
 use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\User\Entity\User;
+use App\Services\User\Service\CommunityAdminUserService;
 use App\Services\User\Service\CreateUserService;
 use App\Services\User\Service\UserService;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Exception;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Post;
@@ -48,7 +50,7 @@ class UserCommunityAdminController extends AbstractController
 
     /**
      * @Get("community-admin/users")
-     * @View( serializerGroups={"admin-users"})
+     * @View( serializerGroups={"community-admin-users"})
      * @return object[]
      */
     public function getUsersAction(
@@ -66,16 +68,21 @@ class UserCommunityAdminController extends AbstractController
     converter="fos_rest.request_body",
     options={"deserializationContext"={"groups"={"input"} } }
     )
+     * @View( serializerGroups={"community-admin-user-patch"})
      */
     public function addUserAction(
         User $user,
-        CreateUserService $service,
+        CommunityAdminUserService $service,
         TokenStorageInterface $tokenStorage
-    ): User
+    )
     {
         // community admin can only create user in his/her community
-        $user->setDomains($tokenStorage->getToken()->getUser()->getDomains());
-        return $service->process($user);
+        $domain = $tokenStorage->getToken()->getUser()->getDomains()[0];
+        try {
+            return $service->addUserToCommunity($user->getEmail(), $domain);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
+        }
     }
 
     /**
@@ -87,7 +94,7 @@ class UserCommunityAdminController extends AbstractController
      *       options={"deserializationContext"={"groups"={"admin-user-patch"} } }
      * )
      * @param Request $request
-     * @View( serializerGroups={"admin-user-patch"})
+     * @View( serializerGroups={"community-admin-user-patch"})
      */
     public function putUserAction(User $user, Request $request, UserService $userService)
     {

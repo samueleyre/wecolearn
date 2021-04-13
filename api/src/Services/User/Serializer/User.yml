@@ -1,64 +1,128 @@
 App\Services\User\Entity\User:
-    exclusion_policy: all
-    xml_root_name:    page
-    access_order:     alphabetical
-    properties:
-      id:
-        groups: [ admin-user-patch, input, id, user, search, message, profile, public-profile,  admin-users, thread ]
-      created:
-        groups: [ input, profile, admin-users]
-      firstName:
-        groups: [ admin-user-patch, input, output, user, create, search, message, profile, public-profile, admin-users ]
-      lastName:
-        groups: [ admin-user-patch, input, output, user, create, search, message, profile, public-profile, admin-users ]
-      profilUrl:
-        groups: [ input, output, user, search, message, profile, public-profile, admin-users ]
-      biographie:
-        groups: [ input, output, create, search, profile, public-profile ]
-      intensity:
-        groups: [ input, profile, public-profile ]
-      atmosphere:
-        groups: [ input, profile, public-profile ]
-      latitude:
-        groups: [ input, create, admin-users, profile ]
-      longitude:
-        groups: [ input, create, admin-users, profile ]
-      city:
-        groups: [ admin-users, admin-user-patch, create, input, search, profile ]
-      tags:
-        groups: [ input, create, search, profile, public-profile, admin-users ]
-      sentMessages:
-        groups: [ input ]
-        max_depth: 4
-      receivedMessages:
-        groups: [ input ]
-        max_depth: 4
-      image:
-        type: App\Services\Shared\Entity\Image
-        groups: [ input, output, search, message, profile, public-profile ]
-      showProfil:
-        groups: [ admin-user-patch, input, profile, admin-users ]
-      newMessageNotification:
-        groups: [ input, profile ]
-      newMatchNotification:
-        groups: [ input, profile ]
-      newMessageEmail:
-        groups: [ input, profile ]
-      newMatchEmail:
-        groups: [ input, profile ]
-      newsletter:
-        groups: [ input, create, profile ]
-      slackAccounts:
-        groups: [ input, search ]
-      userNotified:
-        groups: [ input ]
-      notificationSubscribe:
-        groups: [ input ]
-      domains:
-        groups: [ profile, admin-user-patch, admin-users ]
-      emailConfirmed:
-        groups: [ profile ]
-      deleted:
-        groups: [ admin-users ]
+  exclusion_policy: all
+  xml_root_name: page
+  access_order: alphabetical
+  properties:
+    id:
+      groups: [
+          admin-users,
+          admin-user-patch,
+          community-admin-users,
+          community-admin-user-patch,
+          id,
+          input,
+          message,
+          profile,
+          public-profile,
+          search,
+          thread,
+          user
+      ]
+    created:
+      groups: [
+          admin-users,
+          community-admin-users,
+          input,
+          profile
+      ]
+    firstName:
+      groups: [
+          admin-users,
+          admin-user-patch,
+          community-admin-users,
+          community-admin-user-patch,
+          create,
+          input,
+          message,
+          output,
+          profile,
+          public-profile,
+          search,
+          user
+      ]
+    lastName:
+      groups: [
+          admin-users,
+          admin-user-patch,
+          community-admin-users,
+          community-admin-user-patch,
+          create,
+          input,
+          message,
+          output,
+          profile,
+          public-profile,
+          search,
+          user
+      ]
+    profilUrl:
+      groups: [ input, output, user, search, message, profile, public-profile, admin-users ]
+    biographie:
+      groups: [ input, output, create, search, profile, public-profile ]
+    intensity:
+      groups: [ input, profile, public-profile ]
+    atmosphere:
+      groups: [ input, profile, public-profile ]
+    latitude:
+      groups: [ input, create, admin-users, profile ]
+    longitude:
+      groups: [ input, create, admin-users, profile ]
+    city:
+      groups: [
+          admin-users,
+          admin-user-patch,
+          create,
+          input,
+          profile,
+          search
+      ]
+    tags:
+      groups: [
+          admin-users,
+          community-admin-users,
+          community-admin-user-patch,
+          create,
+          input,
+          profile,
+          public-profile,
+          search
+      ]
+    sentMessages:
+      groups: [ input ]
+      max_depth: 4
+    receivedMessages:
+      groups: [ input ]
+      max_depth: 4
+    image:
+      type: App\Services\Shared\Entity\Image
+      groups: [ input, output, search, message, profile, public-profile ]
+    showProfil:
+      groups: [ admin-user-patch, input, profile, admin-users ]
+    newMessageNotification:
+      groups: [ input, profile ]
+    newMatchNotification:
+      groups: [ input, profile ]
+    newMessageEmail:
+      groups: [ input, profile ]
+    newMatchEmail:
+      groups: [ input, profile ]
+    newsletter:
+      groups: [ input, create, profile ]
+    slackAccounts:
+      groups: [ input, search ]
+    userNotified:
+      groups: [ input ]
+    notificationSubscribe:
+      groups: [ input ]
+    domains:
+      groups: [
+          admin-users,
+          admin-user-patch,
+          profile
+      ]
+    emailConfirmed:
+      groups: [ profile ]
+    deleted:
+      groups: [ admin-users ]
 
 

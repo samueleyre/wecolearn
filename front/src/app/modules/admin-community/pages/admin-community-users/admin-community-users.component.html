@@ -19,8 +19,8 @@
       <app-users-list
         *ngIf="usersToShow"
         [users]="usersToShow"
-        [displayedColumns]="['name', 'email', 'tags', 'actions']"
-        [actions]="['edit', 'revoke']"
+        [displayedColumns]="['name', 'tags', 'actions']"
+        [actions]="['revoke']"
         (editUser)="showEditForm($event)"
         (deleteUser)="deleteUser($event)"
       ></app-users-list>
@@ -36,7 +36,7 @@
     class="Users-add"
   >
     <button mat-raised-button class="font-weight-bold" *ngIf="!editUserFormVisible" (click)="showEditForm()" color="primary">
-      <mat-icon>add</mat-icon> Ajouter un utilisateur
+      <mat-icon>add</mat-icon> Ajouter un utilisateur déjà présent sur la plateforme
     </button>
     <div *ngIf="editUserFormVisible">
       <h2 *ngIf="isCreatingUser">
@@ -49,7 +49,7 @@
 
       <div class="Users-form">
         <app-user-form *ngIf="isCreatingUser"
-          [fields]="['first_name', 'last_name', 'email']"
+          [fields]="['email']"
           [isCreating]="true"
           [user]="editedUser"
           [groupEditable]="true"
