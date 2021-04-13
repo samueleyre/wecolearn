@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Services\User\Entity;
+namespace App\Services\Shared\Entity;
 
+
+use App\Services\Domain\Entity\Domain;
+use App\Services\User\Entity\User;
 
 class Token
 {
@@ -11,6 +14,8 @@ class Token
     public $token;
 
     public $user;
+
+    public $domain;
 
     public $type;
 
@@ -129,8 +134,32 @@ class Token
      *
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
+    }
+
+    /**
+     * Set domain
+     *
+     * @param Domain|null $domain
+     *
+     * @return Token
+     */
+    public function setDomain(Domain $domain = null): Token
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }
+
+    /**
+     * Get domain
+     *
+     * @return Domain
+     */
+    public function getDomain(): Domain
+    {
+        return $this->domain;
     }
 }

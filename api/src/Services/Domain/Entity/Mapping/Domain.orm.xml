@@ -17,5 +17,13 @@
             </cascade>
             <join-column on-delete="SET NULL" name="imageId" nullable="true"/>
         </one-to-one>
+        <one-to-one field="inviteToken" target-entity="App\Services\Shared\Entity\Token" inversed-by="domain">
+            <cascade>
+                <cascade-persist/>
+                <cascade-merge/>
+                <cascade-remove/>
+            </cascade>
+            <join-column on-delete="SET NULL" name="inviteTokenId" nullable="true"/>
+        </one-to-one>
     </entity>
 </doctrine-mapping>
