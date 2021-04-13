@@ -3,7 +3,12 @@ FOS\UserBundle\Model\User:
     access_order:     alphabetical
     properties:
         email:
-          groups: [ input, create, profile, admin-users ]
+          groups: [
+              input,
+              create,
+              profile,
+              admin-users,
+          ]
         password:
           groups: [ input, create ]
         roles:

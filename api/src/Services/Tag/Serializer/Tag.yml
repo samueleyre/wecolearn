@@ -1,19 +1,52 @@
 App\Services\Tag\Entity\Tag:
-    exclusion_policy: all
-    access_order:     alphabetical
-    properties:
-        id:
-          groups: [ input, output, putTag, search, profile, public-profile, admin-tags ]
-        name:
-          groups: [ input, output, putTag, create, search, profile, public-profile, admin-users, admin-tags ]
-        type:
-          groups: [ input, output, create, search, profile, public-profile, admin-users, admin-tags ]
-        tagDomains:
-          groups: [ input, output, putTag, create, search, profile, public-profile, admin-users, admin-tags ]
-        created:
-          groups: [ admin-tags ]
-        iteration:
-          groups: [ input, putTag, admin-tags ]
+  exclusion_policy: all
+  access_order: alphabetical
+  properties:
+    id:
+      groups: [
+          admin-tags,
+          community-admin-users,
+          community-admin-user-patch,
+          input,
+          output,
+          putTag,
+          profile,
+          public-profile,
+          search
+      ]
+    name:
+      groups: [
+          admin-tags,
+          admin-users,
+          community-admin-users,
+          community-admin-user-patch,
+          create,
+          input,
+          output,
+          profile,
+          public-profile,
+          putTag,
+          search
+      ]
+    type:
+      groups: [
+          admin-users,
+          admin-tags,
+          community-admin-users,
+          community-admin-user-patch,
+          create,
+          input,
+          output,
+          profile,
+          public-profile,
+          search
+      ]
+    tagDomains:
+      groups: [ input, output, putTag, create, search, profile, public-profile, admin-users, admin-tags ]
+    created:
+      groups: [ admin-tags ]
+    iteration:
+      groups: [ input, putTag, admin-tags ]
 
 
 
