@@ -2,7 +2,7 @@
 
 namespace App\Services\User\SyncEvent;
 
-use App\Services\User\Entity\Token;
+use App\Services\Shared\Entity\Token;
 use App\Services\User\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 

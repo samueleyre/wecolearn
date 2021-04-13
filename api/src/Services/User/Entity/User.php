@@ -5,6 +5,7 @@ namespace App\Services\User\Entity;
 use App\Services\Chat\Entity\Message;
 use App\Services\Domain\Entity\Domain;
 use App\Services\Shared\Entity\Image;
+use App\Services\Shared\Entity\Token;
 use App\Services\Tag\Entity\Tag;
 use DateTime;
 use DateTimeZone;
@@ -13,7 +14,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Comparison;
 use FOS\UserBundle\Model\User as BaseUser;
-use phpDocumentor\Reflection\Types\Integer;
 
 class User extends BaseUser
 {

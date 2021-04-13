@@ -3,7 +3,7 @@
 namespace App\Services\User\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use App\Services\User\Entity\Token;
+use App\Services\Shared\Entity\Token;
 
 class TokenService
 {

@@ -3,6 +3,7 @@
 namespace App\Services\Domain\Entity;
 
 use App\Services\Shared\Entity\Image;
+use App\Services\Shared\Entity\Token;
 use App\Services\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,10 +16,10 @@ class Domain
     public ?int $count = null;
     public ?Image $image = null;
     public ?bool $isMain = null;
+    public ?Token $inviteToken = null;
 
     /**
      * Constructor.
-     * @param $params
      */
     public function __construct()
     {
@@ -149,6 +150,30 @@ class Domain
     public function getIsMain(): ?bool
     {
         return $this->isMain;
+    }
+
+    /**
+     * Add inviteToken.
+     *
+     * @param Token $inviteToken
+     *
+     * @return Domain
+     */
+    public function addInviteToken(Token $inviteToken): Domain
+    {
+        $this->inviteToken[] = $inviteToken;
+
+        return $this;
+    }
+
+    /**
+     * Remove inviteToken.
+     *
+     * @param Token $inviteToken
+     */
+    public function removeInviteToken(Token $inviteToken)
+    {
+        $this->inviteToken->removeElement($inviteToken);
     }
 
 }
