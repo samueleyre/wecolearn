@@ -113,20 +113,27 @@ export class AdminCommunityUsersComponent extends DestroyObservable implements O
   }
 
   private errM(err) {
-    if (err.status === 409) this._toastr.error('Cette adresse email est déjà utilisée');
+    console.log(err);
+    if (err.status === 409) {
+      this._toastr.error('Ce compte est déjà associé');
+    }
+    if (err.status === 404) {
+      this._toastr.error("Cette adresse mail n'est pas présente sur la plateforme");
+    }
   }
 
   createUser(params) {
     this._userService.createAndList(params).subscribe(
       (data) => {
-        const user = data[0];
+        const user = this._userService.user;
         this.closeUserForm();
         this._toastr.success(
-          `Un email a été envoyé à ${user.email}`,
-          `L'utilisateur ${user.first_name} ${user.last_name} a été créé`,
+          `Un email a été envoyé à ${params.email}`,
+          `L'utilisateur ${user.first_name} ${user.last_name} a été ajouté`,
         );
       },
-      this.errM);
+      err => this.errM(err),
+    );
   }
 
   updateUser(params) {
@@ -135,7 +142,8 @@ export class AdminCommunityUsersComponent extends DestroyObservable implements O
         this.closeUserForm();
         this._toastr.success(`Les informations ont bien été modifiées`);
       },
-      this.errM);
+      err => this.errM(err),
+    );
   }
 
   private loadUsers() {

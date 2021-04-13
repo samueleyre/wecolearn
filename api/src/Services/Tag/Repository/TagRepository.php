@@ -87,7 +87,7 @@ class TagRepository extends ServiceEntityRepository
                 ->andWhere('u.enabled = :enabled')->setParameter('enabled', true)
                 ->andWhere('t.type = :type')->setParameter('type', $type)
                 ->orderBy('t.iteration', 'DESC');
-        
+
         return $qb->getQuery()->getResult();
     }
 }

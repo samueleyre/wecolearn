@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { APIService } from '~/core/services/crud/api';
 import { User } from '~/core/entities/user/entity';
+import {switchMap, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,15 @@ export class CommunityAdminUsersService extends APIService<User>{
   }
 
   createAndList(user: User): Observable<User[]> {
-    return this.postAndList(user);
+    this._loading$.next(true);
+    return this._http.post(`${this.endPoint}`, user).pipe(
+      tap((patchedUser: User) => this._entity$.next(patchedUser)),
+      switchMap(() => this.list()),
+    );
+  }
+
+  get user() {
+    return this.entity;
   }
 
   get users$() {
