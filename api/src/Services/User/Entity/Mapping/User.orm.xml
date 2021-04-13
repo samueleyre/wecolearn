@@ -9,7 +9,7 @@
         <field name="firstName" column="firstName" type="string" length="255" nullable="true" />
         <field name="lastName" column="lastName" type="string" length="255" nullable="true"/>
         <field name="emailConfirmed" column="emailConfirmed" type="boolean" />
-        <one-to-many field="emailToken" target-entity="App\Services\User\Entity\Token" mapped-by="user">
+        <one-to-many field="emailToken" target-entity="App\Services\Shared\Entity\Token" mapped-by="user">
             <cascade>
                 <cascade-persist/>
                 <cascade-merge/>

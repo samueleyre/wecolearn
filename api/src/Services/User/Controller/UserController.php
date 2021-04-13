@@ -8,7 +8,7 @@ use App\Services\User\AsyncBusMessage\InviteFriendBusMessage;
 use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\PushNotificationSubscription;
 use App\Services\User\Entity\Subscription;
-use App\Services\User\Entity\Token;
+use App\Services\Shared\Entity\Token;
 use App\Services\User\Entity\User;
 use App\Services\User\SyncEvent\EmailChangeConfirmed;
 use App\Services\User\Service\CreateTokenForChangingPasswordService;
