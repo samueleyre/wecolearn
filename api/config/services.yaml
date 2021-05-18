@@ -79,6 +79,10 @@ services:
         arguments:
             $host: '%host%'
 
+    App\Services\User\AsyncHandler\NotifyUserCommunityInviteHandler:
+        arguments:
+            $host: '%host%'
+
 
     # SUBSCRIBERS ---------
     App\Services\Core\Exception\ExceptionSubscriber:

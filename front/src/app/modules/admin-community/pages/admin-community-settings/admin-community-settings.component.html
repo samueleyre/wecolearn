@@ -10,12 +10,22 @@
           </div>
           <hr>
           <div class="AdminCommunitySettings-name">
+            <label>Nom de la communauté</label>
             <mat-form-field appearance="fill" >
-              <mat-label>Nom</mat-label>
               <input id="communityNameInput" matInput appHideMenuMobileOnFocus formControlName="name" >
             </mat-form-field>
             <button mat-raised-button color="primary" type="button" (click)="changeName()" [disabled]="!communityNameControl.dirty">Enregistrer le changement</button>
           </div>
+          <hr>
+          <div class="AdminCommunitySettings-link" >
+            <label>Lien d'invitation à la communauté</label>
+            <mat-form-field appearance="outline" *ngIf="hasLink">
+              <input id="communityLinkInput" [disabled]="true" matInput formControlName="link" >
+            </mat-form-field>
+            <button *ngIf="hasLink" mat-raised-button color="primary" type="button" (click)="changeNewInviteLink()">Générer un nouveau lien d'invitation</button>
+            <button *ngIf="!hasLink" mat-raised-button color="primary" type="button" (click)="changeNewInviteLink()">Générer un lien d'invitation</button>
+          </div>
+
         </form>
       </div>
     </div>

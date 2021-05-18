@@ -38,16 +38,42 @@ class TokenService
         return $token;
     }
 
-
-
-    public function post(Token $token)
+    public function createNewToken($type, $user = null, $domain = null): Token
     {
-        $this->em->merge($token);
+        $token = new Token();
+        $token->setToken(bin2hex(random_bytes(16)));
+        $token->setType($type);
+
+//        for domain related tokens
+        if ($domain) {
+            $token->setDomain();
+        }
+
+//        for user related tokens
+        if ($user) {
+            $token->setUser($user);
+        }
+
+        $this->post($token);
+
+        return $token;
+    }
+
+    public function patch(Token $token): TokenService
+    {
+        $this->em->persist($token);
         $this->em->flush();
         return $this;
     }
 
-    public function remove(Token $token)
+    public function post(Token $token): TokenService
+    {
+        $this->em->persist($token);
+        $this->em->flush();
+        return $this;
+    }
+
+    public function remove(Token $token): TokenService
     {
         $this->em->remove($token);
         $this->em->flush();

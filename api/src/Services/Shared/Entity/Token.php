@@ -162,4 +162,11 @@ class Token
     {
         return $this->domain;
     }
+
+    public function generateNewToken(): Token
+    {
+        $this->setToken(bin2hex(random_bytes(16)));
+
+        return $this;
+    }
 }
