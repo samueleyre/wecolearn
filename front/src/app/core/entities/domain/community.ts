@@ -1,4 +1,5 @@
 import { Image } from '~/core/entities/image/entity';
+import { TokenEntity } from '~/core/entities/shared/token.entity';
 
 export class Community {
   public id: number | null;
@@ -7,6 +8,7 @@ export class Community {
   public image?: Image;
   // tslint:disable-next-line:variable-name
   public is_main?: boolean;
+  public inviteToken?: TokenEntity;
 
   constructor(obj?: any) {
     this.name = obj && obj.name ? obj.name : null;
@@ -21,7 +23,9 @@ export class Community {
       if ('is_main' in obj) {
         this.is_main = obj.is_main;
       }
-
+      if ('inviteToken' in obj) {
+        this.inviteToken = new TokenEntity(obj.inviteToken);
+      }
     }
   }
 }

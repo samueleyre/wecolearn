@@ -41,7 +41,7 @@ class UserCommunityAdminController extends AbstractController
      * @return object
      */
     public function findUserAction(
-        Integer $id,
+        int $id,
         UserService $userService
     )
     {
@@ -55,7 +55,7 @@ class UserCommunityAdminController extends AbstractController
      */
     public function getUsersAction(
         UserService $userService
-    )
+    ): array
     {
         return $userService->getAllInCommunity();
     }

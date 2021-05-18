@@ -268,6 +268,7 @@ class UserRepository extends ServiceEntityRepository
             ->innerJoin('user.domains', 'community')
             ->where("community.id = :c_id")->setParameter('c_id', $communityId)
             ->andWhere('user.enabled = true')
+            ->andWhere('user.deleted is NULL')
             ->andWhere('user.roles not like :role')->setParameter('role', "%ADMIN%")
             ->orderBy('user.created', 'DESC')
             ->getQuery()->getResult();

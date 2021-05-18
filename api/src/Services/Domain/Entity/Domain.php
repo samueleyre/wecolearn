@@ -153,27 +153,27 @@ class Domain
     }
 
     /**
-     * Add inviteToken.
+     * Set inviteToken.
      *
      * @param Token $inviteToken
-     *
      * @return Domain
      */
-    public function addInviteToken(Token $inviteToken): Domain
+    public function setInviteToken(Token $inviteToken): Domain
     {
-        $this->inviteToken[] = $inviteToken;
-
+        $this->inviteToken = $inviteToken;
         return $this;
     }
 
+
     /**
-     * Remove inviteToken.
+     * Get inviteToken.
      *
-     * @param Token $inviteToken
+     * @return ?Token
      */
-    public function removeInviteToken(Token $inviteToken)
+    public function getInviteToken(): ?Token
     {
-        $this->inviteToken->removeElement($inviteToken);
+        return $this->inviteToken;
     }
+
 
 }

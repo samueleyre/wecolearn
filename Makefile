@@ -38,3 +38,6 @@ test:
 	cd front; yarn test:e2e; cd ..
 	@make loadFixtures
 	cd front; yarn test:e2e:mobile
+
+readDump:
+	@docker-compose exec api bash -c "php bin/console server:dump"

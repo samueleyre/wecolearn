@@ -26,6 +26,7 @@ export class AdminCommunitySettingsComponent extends DestroyObservable implement
     {
       image: null,
       name: null,
+      link: null,
     },
   );
 
@@ -34,6 +35,7 @@ export class AdminCommunitySettingsComponent extends DestroyObservable implement
       (community) => {
         this.communityForm.get('image').setValue(community.image);
         this.communityForm.get('name').setValue(community.name);
+        this.communityForm.get('link').setValue(community.inviteToken ? community.inviteToken.token : null);
       },
     );
     this._communityAdminService.get().subscribe();
@@ -56,6 +58,21 @@ export class AdminCommunitySettingsComponent extends DestroyObservable implement
           this.updateName();
         }
       });
+  }
+
+  get hasLink(): boolean {
+    return !!this.communityForm.get('link').value;
+  }
+
+  changeNewInviteLink() {
+    this._communityAdminService.generateNewInviteToken().subscribe(
+      () => {
+        this._toastr.success('Un nouveau token a été généré');
+      },
+      () => {
+
+      },
+    );
   }
 
   updateName() {
