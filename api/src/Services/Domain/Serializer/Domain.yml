@@ -4,6 +4,7 @@ App\Services\Domain\Entity\Domain:
     properties:
         id:
           groups: [
+              admin-community,
               admin-users,
               admin-user-patch,
               admin-domains,
@@ -13,6 +14,7 @@ App\Services\Domain\Entity\Domain:
           ]
         name:
           groups: [
+              admin-community,
               admin-users,
               admin-domains,
               input,
@@ -20,11 +22,27 @@ App\Services\Domain\Entity\Domain:
               profile
           ]
         count:
-          groups: [ admin-domains ]
+          groups: [
+              admin-community,
+              admin-domains
+          ]
         image:
-          groups: [ input, output, admin-domains, profile ]
+          groups: [
+              admin-community,
+              admin-domains,
+              input,
+              output,
+              profile
+          ]
         isMain:
-          groups: [ output, profile ]
+          groups: [
+              output, profile
+          ]
+        inviteToken:
+          groups: [
+              admin-community,
+              admin-domains
+          ]
         created:
           groups: [ admin-domains ]
 

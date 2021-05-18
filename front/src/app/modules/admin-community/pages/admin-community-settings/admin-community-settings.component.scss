@@ -13,8 +13,9 @@ section {
     display: flex;
     justify-content: space-between;
   }
-  &-name {
+  &-name, &-link {
     display: flex;
     flex-direction: column;
   }
+
 }

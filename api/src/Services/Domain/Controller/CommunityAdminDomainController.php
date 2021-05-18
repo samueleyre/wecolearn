@@ -5,18 +5,19 @@ namespace App\Services\Domain\Controller;
 use App\Services\Domain\Entity\Domain;
 use App\Services\Domain\Service\DomainService;
 use App\Services\Shared\Service\UploadService;
-use App\Services\User\Entity\User;
+use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Service\ImageService;
-use App\Services\User\Service\UserService;
+use App\Services\User\Service\TokenService;
 use Exception;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Put;
+use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class CommunityAdminDomainController extends AbstractController
 {
@@ -25,6 +26,7 @@ class CommunityAdminDomainController extends AbstractController
     /**
      * @Get("community-admin/community")
      * @param TokenStorageInterface $tokenStorage
+     * @View( serializerGroups={"admin-community"})
      * @return mixed
      */
     public function getCommunityAction(
@@ -98,6 +100,39 @@ class CommunityAdminDomainController extends AbstractController
 
         return $domainService->updateImage($community, $request->files->get('file'));
 
+    }
+
+    /**
+     * @Get("community-admin/generateNewInviteUrl")
+     * @param TokenStorageInterface $tokenStorage
+     * @param TokenService $tokenService
+     * @return Response
+     * @throws Exception
+     */
+    public function generateNewInviteUrlAction(
+        TokenStorageInterface $tokenStorage,
+        TokenService $tokenService
+    ): Response
+    {
+
+        $user = $tokenStorage->getToken()->getUser();
+
+        // get community of user
+        $community = $user->getDomains()[0];
+        if(!$community) {
+            throw new Exception('User does not have a community', 400);
+        }
+
+        $inviteToken = $community->getInviteToken();
+
+        if( $inviteToken ) {
+            $inviteToken->generateNewToken();
+            $tokenService->patch($inviteToken);
+        } else {
+            $tokenService->createNewToken(TokenConstant::$types["COMMUNITY_INVITE"], null, $community);
+        }
+
+        return new Response();
     }
 
 

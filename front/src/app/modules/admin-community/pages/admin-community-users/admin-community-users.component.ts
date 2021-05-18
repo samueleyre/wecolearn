@@ -43,7 +43,7 @@ export class AdminCommunityUsersComponent extends DestroyObservable implements O
   ngOnInit() {
     // listen to user list
     this._userService.users$.pipe(takeUntil(this.destroy$)).subscribe((users) => {
-      this.users$.next(users.filter(user => user.deleted === null));
+      this.users$.next(users);
     });
     this.loadUsers();
     this.initSearchForm();
