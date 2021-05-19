@@ -1,10 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { Community } from '~/core/entities/domain/community';
 import { ToastService } from '~/core/services/toast.service';
-import {AdminCommunityService} from '~/core/services/admin/admin-community.service';
+import { AdminCommunityService } from '~/core/services/admin/admin-community.service';
+import { CommunityAdminUsersService } from '~/core/services/communityAdmin/community-admin-users.service';
+import { User } from '~/core/entities/user/entity';
+import { AdminUsersService } from '~/modules/users/services/admin-users.service';
 
 
 @Component({
@@ -16,13 +21,19 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
   @Input() domain: Community;
   @Input() isCreating: boolean;
   @Input() groupEditable: boolean;
+  usersInCommunity$: BehaviorSubject<User[]> = new BehaviorSubject(null);
 
   @Output() onCloseEditDomain: EventEmitter<Community> = new EventEmitter<Community>();
 
   createEditDomainForm: FormGroup;
   isCreatingUpdating = false;
 
-  constructor(private _fb: FormBuilder, private _communityService: AdminCommunityService, private _toastr: ToastService) {
+  constructor(
+    private _fb: FormBuilder,
+    private _communityService: AdminCommunityService,
+    private _userService: AdminUsersService,
+    private _toastr: ToastService,
+  ) {
     super();
   }
 
@@ -32,6 +43,7 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
     if (this.createEditDomainForm) {
       this.createEditDomainForm.setValue({
         name: domain.name,
+        community_admins: domain.community_admins,
       });
 
       Object.keys(this.createEditDomainForm.controls).forEach((key) => {
@@ -47,10 +59,28 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
   }
 
   ngOnInit() {
+    this._userService.users$.pipe(
+      tap(users => console.log({ users })),
+      takeUntil(this.destroy$),
+    ).subscribe((users) => {
+      this.usersInCommunity$.next(users);
+    });
+    this.loadUsers();
+
     if (!this.domain) {
       this.domain = new Community();
     }
     this.initForm();
+  }
+
+  private loadUsers() {
+    const filter = this.domain && this.domain.id ? { domain_id: this.domain.id } : {};
+    this._userService.list(
+      {
+        ...filter,
+        onlyAdmin: true,
+      },
+    ).subscribe();
   }
 
   get controls() {
@@ -101,8 +131,13 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
   ): void {
     this.createEditDomainForm = this._fb.group({
       name: [domain.name, Validators.required],
+      community_admins: [domain.community_admins, Validators.required],
     });
 
     this.updateFormValues();
+  }
+
+  compareIds(tagOption: { id: number }, tagSelection: { id: number }): boolean {
+    return tagOption && tagSelection ? tagOption.id === tagSelection.id : tagOption === tagSelection;
   }
 }

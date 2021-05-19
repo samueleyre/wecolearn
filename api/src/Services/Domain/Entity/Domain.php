@@ -17,6 +17,7 @@ class Domain
     public ?Image $image = null;
     public ?bool $isMain = null;
     public ?Token $inviteToken = null;
+    public $communityAdmins;
 
     /**
      * Constructor.
@@ -24,6 +25,7 @@ class Domain
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->communityAdmins = new ArrayCollection();
     }
 
     /**
@@ -173,6 +175,42 @@ class Domain
     public function getInviteToken(): ?Token
     {
         return $this->inviteToken;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getCommunityAdmins(): Collection
+    {
+        return $this->communityAdmins;
+    }
+
+    public function setCommunityAdmins(Collection $communityAdmins): self
+    {
+        $this->communityAdmins = $communityAdmins;
+        return $this;
+    }
+
+    public function addCommunityAdmin(User $communityAdmin): self
+    {
+        if (!$this->communityAdmins->contains($communityAdmin)) {
+            $this->communityAdmins[] = $communityAdmin;
+            $communityAdmin->setAdminDomain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommunityAdmin(User $communityAdmin): self
+    {
+        if ($this->communityAdmins->removeElement($communityAdmin)) {
+            // set the owning side to null (unless already changed)
+            if ($communityAdmin->getAdminDomain() === $this) {
+                $communityAdmin->setAdminDomain(null);
+            }
+        }
+
+        return $this;
     }
 
 

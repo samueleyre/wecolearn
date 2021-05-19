@@ -42,10 +42,9 @@ class UserService
         return $this->em->getRepository(User::class)->findBy(['enabled'=>true], ['created' => 'DESC']);
     }
 
-    public function getAllInCommunity(): array
+    public function getAllInCommunity($concernedDomainId, $adminIncluded = false): array
     {
-        $concernedDomain = $this->getCommunityOfAdmin();
-        return $this->em->getRepository(User::class)->findEnabledByCommunity($concernedDomain->getId());
+        return $this->em->getRepository(User::class)->findEnabledByCommunity($concernedDomainId, $adminIncluded);
     }
 
 
@@ -154,12 +153,12 @@ class UserService
             }
         }
 
-        if (
-            $patchedUser->hasRole('ROLE_ADMIN')
-            && count($patchedUser->getDomains()) > 1
-        ) {
-            throw new HttpException(400, "Can't have 2 domaines for an admin");
-        }
+//        if (
+//            $patchedUser->hasRole('ROLE_ADMIN')
+//            && count($patchedUser->getDomains()) > 1
+//        ) {
+//            throw new HttpException(400, "Can't have 2 domaines for an admin");
+//        }
 
         if (
             $patchedUser->hasRole('ROLE_ADMIN')
@@ -245,7 +244,7 @@ class UserService
     private function getCommunityOfAdmin()
     {
         $adminUser = $this->securityStorage->getToken()->getUser();
-        return $adminUser->getDomains()[0];
+        return $adminUser->getAdminDomain();
     }
 
 }

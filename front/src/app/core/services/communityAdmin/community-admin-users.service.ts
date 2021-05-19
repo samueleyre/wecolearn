@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { APIService } from '~/core/services/crud/api';
 import { User } from '~/core/entities/user/entity';
-import {switchMap, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

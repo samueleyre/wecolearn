@@ -10,7 +10,8 @@ App\Services\Domain\Entity\Domain:
               admin-domains,
               input,
               output,
-              profile
+              profile,
+              super-admin
           ]
         name:
           groups: [
@@ -19,12 +20,14 @@ App\Services\Domain\Entity\Domain:
               admin-domains,
               input,
               output,
-              profile
+              profile,
+              super-admin
           ]
         count:
           groups: [
               admin-community,
-              admin-domains
+              admin-domains,
+              super-admin
           ]
         image:
           groups: [
@@ -32,18 +35,31 @@ App\Services\Domain\Entity\Domain:
               admin-domains,
               input,
               output,
-              profile
+              profile,
+              super-admin
           ]
         isMain:
           groups: [
-              output, profile
+              output,
+              profile,
+              super-admin
           ]
         inviteToken:
           groups: [
               admin-community,
-              admin-domains
+              admin-domains,
+              super-admin
+          ]
+        communityAdmins:
+          groups: [
+              input,
+              admin-domains,
+              super-admin
           ]
         created:
-          groups: [ admin-domains ]
+          groups: [
+              admin-domains,
+              super-admin
+          ]
 
 

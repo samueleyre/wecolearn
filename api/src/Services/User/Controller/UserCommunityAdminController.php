@@ -54,10 +54,12 @@ class UserCommunityAdminController extends AbstractController
      * @return object[]
      */
     public function getUsersAction(
+        TokenStorageInterface $tokenStorage,
         UserService $userService
     ): array
     {
-        return $userService->getAllInCommunity();
+        $domain = $tokenStorage->getToken()->getUser()->getAdminDomain();
+        return $userService->getAllInCommunity($domain->getId());
     }
 
     /**
@@ -77,7 +79,7 @@ class UserCommunityAdminController extends AbstractController
     )
     {
         // community admin can only create user in his/her community
-        $domain = $tokenStorage->getToken()->getUser()->getDomains()[0];
+        $domain = $tokenStorage->getToken()->getUser()->getAdminDomain();
         try {
             return $service->addUserToCommunity($user->getEmail(), $domain);
         } catch (\Exception $e) {

@@ -8,7 +8,7 @@ import { User } from '~/core/entities/user/entity';
 import { UserFormComponent } from '~/modules/users/modules/user-ui/components/user-form/user-form.component';
 import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { CommunityAdminUsersService } from '~/core/services/communityAdmin/admin-users.service';
+import { CommunityAdminUsersService } from '~/core/services/communityAdmin/community-admin-users.service';
 import { ToastService } from '~/core/services/toast.service';
 
 @Component({

@@ -35,7 +35,7 @@ export class AdminCommunitySettingsComponent extends DestroyObservable implement
       (community) => {
         this.communityForm.get('image').setValue(community.image);
         this.communityForm.get('name').setValue(community.name);
-        this.communityForm.get('link').setValue(community.inviteToken ? community.inviteToken.token : null);
+        this.communityForm.get('link').setValue(community.invite_token ? community.invite_token.token : null);
       },
     );
     this._communityAdminService.get().subscribe();
