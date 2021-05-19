@@ -60,6 +60,7 @@ class User extends BaseUser
     private $subscriptions;
     private $pushNotificationSubscriptions;
     private ?string $oldEmail;
+    public ?Domain $adminDomain = null;
 
     public function __construct(array $parameters = [])
     {
@@ -78,6 +79,7 @@ class User extends BaseUser
         $this->pushNotificationSubscriptions = new ArrayCollection();
         $this->profilUrl = array_key_exists('profilUrl', $parameters) ? $parameters['profilUrl'] : '';
         $this->domains = array_key_exists('domains', $parameters) ? $parameters['domains'] : new ArrayCollection();
+        $this->adminDomain = array_key_exists('adminDomain', $parameters) ? $parameters['adminDomain'] : new ArrayCollection();
         $this->firstName = array_key_exists('firstName', $parameters) ? $parameters['firstName'] : '';
         $this->lastName = array_key_exists('lastName', $parameters) ? $parameters['lastName'] : '';
         $this->biographie = array_key_exists('biographie', $parameters) ? $parameters['biographie'] : 'null';
@@ -906,4 +908,24 @@ class User extends BaseUser
 
         return $this;
     }
+
+    public function getAdminDomain(): ?Domain
+    {
+        return $this->adminDomain;
+    }
+
+    public function setAdminDomain(?Domain $adminDomain): self
+    {
+        $this->adminDomain = $adminDomain;
+
+        return $this;
+    }
+
+    public function isCommunityAdmin()
+    {
+        return $this->hasRole('ROLE_ADMIN');
+    }
+
 }
+
+

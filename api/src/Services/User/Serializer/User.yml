@@ -16,7 +16,8 @@ App\Services\User\Entity\User:
           public-profile,
           search,
           thread,
-          user
+          user,
+          super-admin
       ]
     created:
       groups: [
@@ -38,7 +39,8 @@ App\Services\User\Entity\User:
           profile,
           public-profile,
           search,
-          user
+          user,
+          super-admin
       ]
     lastName:
       groups: [
@@ -53,7 +55,8 @@ App\Services\User\Entity\User:
           profile,
           public-profile,
           search,
-          user
+          user,
+          super-admin
       ]
     profilUrl:
       groups: [ input, output, user, search, message, profile, public-profile, admin-users ]

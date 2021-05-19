@@ -3,6 +3,12 @@
     <mat-label>Nom</mat-label>
     <input matInput formControlName="name" required />
   </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Admins</mat-label>
+    <mat-select multiple [compareWith]="compareIds" required formControlName="community_admins">
+      <mat-option *ngFor="let user of usersInCommunity$ | async" [value]="user">{{ user.first_name | titlecase }} {{ user.last_name | titlecase }}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <div>
     <button

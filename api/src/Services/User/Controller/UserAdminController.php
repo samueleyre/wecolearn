@@ -12,6 +12,7 @@ use App\Services\Core\Exception\ResourceAlreadyUsedException;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\CreateUserService;
 use App\Services\User\Service\UserService;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Post;
@@ -50,10 +51,23 @@ class UserAdminController extends AbstractController
      * @return object[]
      */
     public function getUsersAction(
+        Request $params,
         UserService $userService
     )
     {
-        return $userService->getAll();
+        if ($params->get("domain_id")) {
+            $users = $userService->getAllInCommunity($params->get("domain_id"), true);
+        } else {
+            $users = $userService->getAll();
+        }
+
+        if ($params->get("onlyAdmin")) {
+            $users = array_values(array_filter($users, function(User $user) {
+                return $user->isCommunityAdmin() || $user->isSuperAdmin();
+            }));
+        }
+
+        return $users;
     }
 
     /**
