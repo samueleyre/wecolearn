@@ -262,15 +262,19 @@ class UserRepository extends ServiceEntityRepository
     }
 
 
-    public function findEnabledByCommunity($communityId)
+    public function findEnabledByCommunity($communityId, $adminIncluded = false)
     {
-        return $this->createQueryBuilder('user')
+        $qb = $this->createQueryBuilder('user')
             ->innerJoin('user.domains', 'community')
             ->where("community.id = :c_id")->setParameter('c_id', $communityId)
             ->andWhere('user.enabled = true')
-            ->andWhere('user.deleted is NULL')
-            ->andWhere('user.roles not like :role')->setParameter('role', "%ADMIN%")
-            ->orderBy('user.created', 'DESC')
+            ->andWhere('user.deleted is NULL');
+
+        if (!$adminIncluded) {
+            $qb->andWhere('user.roles not like :role')->setParameter('role', "%ADMIN%");
+        }
+
+        return $qb->orderBy('user.created', 'DESC')
             ->getQuery()->getResult();
 
     }

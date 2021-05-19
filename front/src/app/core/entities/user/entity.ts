@@ -148,4 +148,12 @@ export class User {
       }
     }
   }
+
+  get isCommunityAdmin() {
+    return this.roles.includes(UserRoleEnum.ADMIN);
+  }
+
+  get isSuperAdmin() {
+    return this.roles.includes(UserRoleEnum.SUPER_ADMIN);
+  }
 }

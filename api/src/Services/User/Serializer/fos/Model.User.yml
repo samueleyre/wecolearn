@@ -8,12 +8,17 @@ FOS\UserBundle\Model\User:
               create,
               profile,
               admin-users,
+              super-admin
           ]
         password:
-          groups: [ input, create ]
+          groups: [
+              input,
+              create
+          ]
         roles:
           groups: [
               admin-users,
               admin-user-patch,
-              profile
+              profile,
+              super-admin
           ]

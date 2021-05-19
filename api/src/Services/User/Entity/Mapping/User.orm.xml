@@ -100,6 +100,9 @@
         <field name="oldEmail" type="string" nullable="true" />
         <field name="lastConnexion" type="datetime" nullable="true" column="lastConnexion"/>
         <field name="deleted" type="datetime" nullable="true" />
+        <many-to-one field="adminDomain" target-entity="App\Services\Domain\Entity\Domain"
+                     inversed-by="communityAdmins">
+        </many-to-one>
     </entity>
 </doctrine-mapping>
 

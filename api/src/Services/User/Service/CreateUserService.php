@@ -75,12 +75,12 @@ class CreateUserService
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
         $user->setCreated($date);
 
-        if (
-            $user->hasRole('ROLE_ADMIN')
-            && count($user->getDomains()) > 1
-        ) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, "Can't have 2 domaines for an admin");
-        }
+//        if (
+//            $user->hasRole('ROLE_ADMIN')
+//            && count($user->getDomains()) > 1
+//        ) {
+//            throw new HttpException(Response::HTTP_BAD_REQUEST, "Can't have 2 domaines for an admin");
+//        }
 
         if (
             $user->hasRole('ROLE_ADMIN')

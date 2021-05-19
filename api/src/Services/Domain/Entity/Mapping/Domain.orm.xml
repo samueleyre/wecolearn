@@ -25,5 +25,11 @@
             </cascade>
             <join-column on-delete="SET NULL" name="inviteTokenId" nullable="true"/>
         </one-to-one>
+        <one-to-many field="communityAdmins" target-entity="App\Services\User\Entity\User" mapped-by="adminDomain">
+<!--            <cascade>-->
+<!--                <cascade-persist/>-->
+<!--                <cascade-merge/>-->
+<!--            </cascade>-->
+        </one-to-many>
     </entity>
 </doctrine-mapping>

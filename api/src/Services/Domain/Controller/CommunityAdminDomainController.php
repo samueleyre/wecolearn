@@ -34,7 +34,7 @@ class CommunityAdminDomainController extends AbstractController
     ) {
 
         $user = $tokenStorage->getToken()->getUser();
-        return $user->getDomains()[0];
+        return $user->getAdminDomain();
     }
 
 
@@ -68,7 +68,7 @@ class CommunityAdminDomainController extends AbstractController
             }
         }
 
-        $domain = $tokenStorage->getToken()->getUser()->getDomains()[0];
+        $domain = $tokenStorage->getToken()->getUser()->getAdminDomain();
 
         return $domainService->put($domain, $params);
 
@@ -93,9 +93,9 @@ class CommunityAdminDomainController extends AbstractController
         $user = $tokenStorage->getToken()->getUser();
 
         // get community of user
-        $community = $user->getDomains()[0];
+        $community = $user->getAdminDomain();
         if(!$community) {
-            throw new Exception('User does not have a community', 400);
+            throw new Exception('admin user does not have a community', 400);
         }
 
         return $domainService->updateImage($community, $request->files->get('file'));
@@ -118,7 +118,7 @@ class CommunityAdminDomainController extends AbstractController
         $user = $tokenStorage->getToken()->getUser();
 
         // get community of user
-        $community = $user->getDomains()[0];
+        $community = $user->getAdminDomain();
         if(!$community) {
             throw new Exception('User does not have a community', 400);
         }

@@ -5,6 +5,7 @@ namespace App\Services\Domain\Controller;
 use App\Services\Domain\Entity\Domain;
 use App\Services\Domain\Service\DomainService;
 use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -14,33 +15,35 @@ class AdminDomainController extends AbstractController
 {
     /**
      * @Get("admin/domains")
-     * @View( serializerGroups={"admin-domains"})
+     * @View( serializerGroups={"super-admin"})
      */
     public function getDomainsAdminAction(
         DomainService $domainService
     ) {
         $domains = $domainService->getAll();
         foreach ($domains as $domain) {
+            dump($domain->getCommunityAdmins());
             $domain->countUsers();
         }
         return $domains;
     }
 
-//    /**
-//     * @Patch("admin/domain")
-//     * @ParamConverter(
-//    "domain",
-//    class="App\Services\Domain\Entity\Domain",
-//    converter="fos_rest.request_body",
-//    options={"deserializationContext"={"groups"={"input"} } }
-//    )
-//     */
-//    public function patchDomainAdminAction(
-//        Domain $domain,
-//        DomainService $domainService
-//    ) {
-//        return $domainService->patchName($domain->getId(), $domain->getName());
-//    }
+    /**
+     * @Patch("admin/domain")
+     * @ParamConverter(
+    "domain",
+    class="App\Services\Domain\Entity\Domain",
+    converter="fos_rest.request_body",
+    options={"deserializationContext"={"groups"={"input"} } }
+    )
+     * @View( serializerGroups={"super-admin"})
+     */
+    public function patchDomainAdminAction(
+        Domain $domain,
+        DomainService $domainService
+    ) {
+        return $domainService->adminPatchDomain($domain);
+    }
 
     /**
      * @Post("admin/domain")
