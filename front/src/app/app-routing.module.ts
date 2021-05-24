@@ -47,6 +47,11 @@ const wcRoutes: Routes = [
           loadChildren: () => import('./modules/admin-community/admin-community.module').then(mod => mod.AdminCommunityModule),
         },
         {
+          canLoad: [AuthGuard],
+          path: 'community',
+          loadChildren: () => import('./modules/community/domains.module').then(mod => mod.DomainsModule),
+        },
+        {
           path: '',
           redirectTo: '/dashboard/search',
           pathMatch: 'full',

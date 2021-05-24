@@ -4,7 +4,7 @@ import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { Community } from '~/core/entities/domain/community';
+import { CommunityEntity } from '~/core/entities/community/community.entity';
 import { ToastService } from '~/core/services/toast.service';
 import { AdminCommunityService } from '~/core/services/admin/admin-community.service';
 import { CommunityAdminUsersService } from '~/core/services/communityAdmin/community-admin-users.service';
@@ -18,12 +18,12 @@ import { AdminUsersService } from '~/modules/users/services/admin-users.service'
   styleUrls: ['./domain-form.component.scss'],
 })
 export class DomainFormComponent extends DestroyObservable implements OnInit {
-  @Input() domain: Community;
+  @Input() domain: CommunityEntity;
   @Input() isCreating: boolean;
   @Input() groupEditable: boolean;
   usersInCommunity$: BehaviorSubject<User[]> = new BehaviorSubject(null);
 
-  @Output() onCloseEditDomain: EventEmitter<Community> = new EventEmitter<Community>();
+  @Output() onCloseEditDomain: EventEmitter<CommunityEntity> = new EventEmitter<CommunityEntity>();
 
   createEditDomainForm: FormGroup;
   isCreatingUpdating = false;
@@ -38,7 +38,7 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
   }
 
   updateFormValues() {
-    const domain: Community = this.domain;
+    const domain: CommunityEntity = this.domain;
 
     if (this.createEditDomainForm) {
       this.createEditDomainForm.setValue({
@@ -68,7 +68,7 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
     this.loadUsers();
 
     if (!this.domain) {
-      this.domain = new Community();
+      this.domain = new CommunityEntity();
     }
     this.initForm();
   }
@@ -127,7 +127,7 @@ export class DomainFormComponent extends DestroyObservable implements OnInit {
 
   private initForm(
     isCreating: boolean = this.isCreating,
-    domain: Community = this.domain,
+    domain: CommunityEntity = this.domain,
   ): void {
     this.createEditDomainForm = this._fb.group({
       name: [domain.name, Validators.required],

@@ -34,6 +34,8 @@ class CommunityAdminDomainController extends AbstractController
     ) {
 
         $user = $tokenStorage->getToken()->getUser();
+        $domain = $user->getAdminDomain();
+        dump($domain->getInviteToken());
         return $user->getAdminDomain();
     }
 

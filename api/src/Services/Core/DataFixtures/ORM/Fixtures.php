@@ -9,17 +9,17 @@ use App\Services\Core\DataFixtures\ORM\Constant\TagDomainsOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\TagOrmConstant;
 use App\Services\Core\DataFixtures\ORM\Constant\UserConstant;
 use App\Services\Domain\Entity\Domain;
+use App\Services\Shared\Entity\Token;
 use App\Services\Tag\Entity\Tag;
 use App\Services\Tag\Entity\TagDomain;
 use App\Services\Tag\Service\TagDomainService;
 use App\Services\Tag\Service\TagService;
 use App\Services\Shared\Entity\Image;
-use App\Services\User\Shared\Token;
+use App\Services\User\Constant\TokenConstant;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\UserService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -116,10 +116,51 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $newDomain = new Domain();
             $newDomain->setName($domain['name']);
             $newDomain->setIsMain($domain['is_main']);
+            $token = new Token();
+            $token->setToken(bin2hex(random_bytes(16)));
+            $token->setType(TokenConstant::$types["COMMUNITY_INVITE"]);
+            $token->setDomain($newDomain);
+            $newDomain->setInviteToken($token);
+            $this->manager->persist($token);
             $this->manager->persist($newDomain);
             array_push($this->domains, $newDomain);
         }
 
+    }
+
+    private function addCommunityAdmins() {
+
+        foreach ($this->domains as $domain) {
+
+            // community admins
+            //Here we create a User with the Admin role
+            $communityAdmin = new User();
+            $communityAdmin->setUsername("admin".$domain->getId());
+            $communityAdmin->setEmail("samuel+".$domain->getId()."@wecolearn.com");
+            $communityAdmin->setRoles(['ROLE_ADMIN']);
+            $communityAdmin->setPlainPassword('admin1234');
+            $communityAdmin->setFirstName($domain->getName());
+            $communityAdmin->setLastName("admin");
+            $communityAdmin = $this->generateUrlService->process($communityAdmin);
+            $communityAdmin->setEmailConfirmed(true);
+            $communityAdmin->setBiographie('');
+            $communityAdmin->setIntensity(random_int(0, 45));
+            $communityAdmin->setLatitude(45.75);
+            $communityAdmin->setLongitude(4.85);
+            $communityAdmin->setCity('Lyon');
+            $communityAdmin->setEnabled(true);
+            $communityAdmin->addDomain($domain);
+            $communityAdmin->setAdminDomain($domain);
+            $domain->addCommunityAdmin($communityAdmin);
+            $this->manager->persist($domain);
+            $communityAdmin->setShowProfil(false);
+            $communityAdmin->setNewMessageNotification(false);
+            $communityAdmin->setNewMatchNotification(false);
+            $communityAdmin->setNewMessageEmail(true);
+            $communityAdmin->setNewMatchEmail(true);
+            $communityAdmin->setNewsletter(false);
+            $this->userManager->updateUser($communityAdmin);
+        }
     }
 
     private function addUsers()
@@ -153,6 +194,8 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setNewMatchEmail(true);
         $admin->setNewsletter(false);
         $this->userManager->updateUser($admin);
+
+        $this->addCommunityAdmins();
 
         $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 

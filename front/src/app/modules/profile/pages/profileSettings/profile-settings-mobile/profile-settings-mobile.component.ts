@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { distinctUntilChanged, filter, take, takeUntil, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
 
-import { DomainService } from '~/core/services/domain/domain';
+import { CommunityService } from '~/core/services/community/community.service';
 import { ProfileService } from '~/core/services/user/profile.service';
 import { ToastService } from '~/core/services/toast.service';
 import { Tag } from '~/core/entities/tag/entity';
@@ -23,7 +23,7 @@ export class ProfileSettingsMobileComponent extends ProfileSettingsComponentBase
 
   constructor(
     @Inject(APP_BASE_HREF) _r: string,
-    private _domainService: DomainService,
+    private _domainService: CommunityService,
     private _fb: FormBuilder,
     private _deviceService: DeviceDetectorService,
     private _profileService: ProfileService,

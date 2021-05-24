@@ -1,0 +1,9 @@
+.JoinLink {
+  &--loading {
+   display: flex;
+   justify-content: space-around;
+  }
+  &-message {
+    text-align: center;
+  }
+}

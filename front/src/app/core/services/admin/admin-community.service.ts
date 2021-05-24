@@ -3,18 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { APIService } from '~/core/services/crud/api';
-import { Community } from '~/core/entities/domain/community';
+import { CommunityEntity } from '~/core/entities/community/community.entity';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AdminCommunityService extends APIService<Community>{
+export class AdminCommunityService extends APIService<CommunityEntity>{
   public endPoint = '/api/admin/domain';
   constructor(private _http: HttpClient) {
     super(_http);
   }
 
-  createAndList(domain: Community): Observable<Community[]> {
+  createAndList(domain: CommunityEntity): Observable<CommunityEntity[]> {
     return this.postAndList(domain);
   }
 

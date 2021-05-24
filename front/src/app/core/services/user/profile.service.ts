@@ -23,7 +23,7 @@ export class ProfileService extends APIService<User> {
   }
 
   get profile(): User | null {
-    return this.entity;
+    return new User(this.entity);
   }
 
   setProfile(user): void {
