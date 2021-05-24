@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { User } from '~/core/entities/user/entity';
 import { AuthenticationService } from '~/core/services/auth/auth.service';
-import { DomainService } from '~/core/services/domain/domain';
+import { CommunityService } from '~/core/services/community/community.service';
 import { environment } from '~/../environments/environment';
 import { ERRORS } from '~/config/errors';
 import {PATTERN} from "~/shared/config/pattern";
@@ -36,7 +36,7 @@ export class SignupMobileComponent implements OnInit {
   constructor(
       private router: Router,
       private authenticationService: AuthenticationService,
-      private domainService: DomainService,
+      private domainService: CommunityService,
   ) {
     this.users = [];
     this.user = new User();

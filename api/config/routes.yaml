@@ -81,3 +81,8 @@ communityAdminDomain:
   type:     annotation
   prefix:   api
   resource: App\Services\Domain\Controller\CommunityAdminDomainController
+
+community:
+  type:     annotation
+  prefix:   api
+  resource: App\Services\Domain\Controller\CommunityController

@@ -1,5 +1,5 @@
 import { UserRoleEnum } from '~/core/enums/user/user-role.enum';
-import { Community } from '~/core/entities/domain/community';
+import { CommunityEntity } from '~/core/entities/community/community.entity';
 
 // tslint:disable variable-name
 import { Tag } from '../tag/entity';
@@ -14,7 +14,7 @@ export class User {
   public first_name: string;
   public last_name: string;
   public roles: UserRoleEnum[];
-  public domains?: Community[];
+  public domains?: CommunityEntity[];
   public profil_url?: string;
   public biographie?: string;
   public intensity?: number;

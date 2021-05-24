@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { AuthenticationService } from '~/core/services/auth/auth.service';
-import { DomainService } from '~/core/services/domain/domain';
+import { CommunityService } from '~/core/services/community/community.service';
 import { NAV } from '~/config/navigation/nav';
 import { CookieNotificationService } from '~/core/services/cookie-notification.service';
 import { PATTERN } from '~/shared/config/pattern';
@@ -33,7 +33,7 @@ export class SigninComponent implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private domainService: DomainService,
+    private domainService: CommunityService,
     private cookieNotification: CookieNotificationService,
     private _toastr: ToastService,
   ) {

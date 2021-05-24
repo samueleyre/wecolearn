@@ -10,7 +10,7 @@ import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
-import { Community } from '~/core/entities/domain/community';
+import { CommunityEntity } from '~/core/entities/community/community.entity';
 import { ProfileService } from '~/core/services/user/profile.service';
 
 import { SearchService } from '../../../../core/services/search/search.service';
@@ -26,7 +26,7 @@ import { SearchService } from '../../../../core/services/search/search.service';
   public autocompleteDisabled = false;
   public foundAutocompleteTags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
   public inputChangeByUser$ = new Subject<string>();
-  public selectedCommunity: Community;
+  public selectedCommunity: CommunityEntity;
 
   constructor(
         private tagService: TagService,

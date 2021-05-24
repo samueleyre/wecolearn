@@ -1,0 +1,8 @@
+App\Services\Shared\Entity\Token:
+    exclusion_policy: all
+    access_order:     alphabetical
+    properties:
+        token:
+          groups: [ admin-community ]
+
+

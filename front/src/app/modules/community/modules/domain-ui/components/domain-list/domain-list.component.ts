@@ -3,7 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { Community } from '~/core/entities/domain/community';
+import { CommunityEntity } from '~/core/entities/community/community.entity';
 import { ToastService } from '~/core/services/toast.service';
 import { AdminCommunityService } from '~/core/services/admin/admin-community.service';
 
@@ -13,9 +13,9 @@ import { AdminCommunityService } from '~/core/services/admin/admin-community.ser
   styleUrls: ['./domain-list.component.scss'],
 })
 export class DomainListComponent extends DestroyObservable implements OnInit {
-  @Input() domains: Community[] = [];
+  @Input() domains: CommunityEntity[] = [];
   @Input() canEditDomain = false;
-  @Output() editDomain = new EventEmitter<Community>();
+  @Output() editDomain = new EventEmitter<CommunityEntity>();
 
   displayedColumns: string[] = ['name', 'count', 'communityAdmins', 'actions'];
 
@@ -31,7 +31,7 @@ export class DomainListComponent extends DestroyObservable implements OnInit {
 
   ngAfterViewInit() {}
 
-  onDelete(domain: Community) {
+  onDelete(domain: CommunityEntity) {
     this._dialogService
       .confirm('Domains', 'Voulez-vous supprimer cette communauté ?')
       .pipe(takeUntil(this.destroy$))
@@ -52,7 +52,7 @@ export class DomainListComponent extends DestroyObservable implements OnInit {
       });
   }
 
-  public onEdit(domain: Community) {
+  public onEdit(domain: CommunityEntity) {
     this.editDomain.emit(domain);
   }
 }
