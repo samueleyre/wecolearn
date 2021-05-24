@@ -8,8 +8,6 @@
 
 namespace App\Services\User\Controller;
 
-use App\Services\Domain\Entity\Domain;
-use App\Services\Domain\Service\DomainService;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\ChangeEmailService;
 use App\Services\User\Service\UserService;

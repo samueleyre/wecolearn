@@ -5,13 +5,16 @@ namespace App\Services\Domain\Service;
 use App\Services\Domain\Constant\DomainConstant;
 use App\Services\Domain\Entity\Domain;
 use App\Services\Shared\Entity\Image;
+use App\Services\Shared\Entity\Token;
 use App\Services\Shared\Service\UploadService;
 use App\Services\Tag\Entity\TagDomain;
 use App\Services\User\Entity\User;
 use App\Services\User\Service\ImageService;
+use App\Services\User\Service\TokenService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class DomainService
 {
@@ -20,8 +23,9 @@ class DomainService
     private $environment;
     private $uploadService;
     private $imageService;
+    private $tokenService;
 
-    public function __construct(EntityManagerInterface $em, $host, $environment, UploadService $uploadService, ImageService $imageService)
+    public function __construct(EntityManagerInterface $em, $host, $environment, UploadService $uploadService, ImageService $imageService, TokenService $tokenService)
     {
         $this->em = $em;
         $this->host = $host;
@@ -29,6 +33,7 @@ class DomainService
         $this->request = new Request();
         $this->uploadService = $uploadService;
         $this->imageService = $imageService;
+        $this->tokenService = $tokenService;
 
     }
 
@@ -169,6 +174,8 @@ class DomainService
         $domain->isMain = false;
         $this->em->persist($domain);
         $this->em->flush();
+
+        $this->tokenService->createFirstInviteToken($domain);
         return $domain;
     }
 
@@ -178,5 +185,39 @@ class DomainService
         $this->em->remove($domain);
         $this->em->flush();
         return $domain;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function addUserToCommunityWithInviteToken(User $user, string $tokenName): bool
+    {
+        try {
+            $token = $this->em->getRepository(Token::class)->findOneBy(['token'=>$tokenName]);
+            $community = $token->getDomain();
+        }
+        catch (\Exception $e) {
+            throw new HttpException(400, "token not valid");
+        }
+
+        $this->addUserToCommunity($user, $community);
+        return true;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function addUserToCommunity(User $user, Domain $domain): User
+    {
+        try {
+            $user->addDomain($domain);
+            $this->em->persist($user);
+            $this->em->flush();
+        }
+        catch (\Exception $e) {
+            throw new HttpException(409, 'already in community');
+        }
+
+        return $user;
     }
 }

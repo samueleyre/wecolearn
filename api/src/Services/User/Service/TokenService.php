@@ -2,6 +2,8 @@
 
 namespace App\Services\User\Service;
 
+use App\Services\Domain\Entity\Domain;
+use App\Services\User\Constant\TokenConstant;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Services\Shared\Entity\Token;
 
@@ -46,7 +48,9 @@ class TokenService
 
 //        for domain related tokens
         if ($domain) {
-            $token->setDomain();
+            $token->setDomain($domain);
+            $domain->setInviteToken($token);
+            $this->em->persist($domain);
         }
 
 //        for user related tokens
@@ -54,8 +58,22 @@ class TokenService
             $token->setUser($user);
         }
 
-        $this->post($token);
+        $this->em->persist($token);
+        $this->em->flush();
 
+        return $token;
+    }
+
+    public function createFirstInviteToken(Domain $domain): Token
+    {
+        $token = new Token();
+        $token->setToken(bin2hex(random_bytes(16)));
+        $token->setType(TokenConstant::$types["COMMUNITY_INVITE"]);
+        $token->setDomain($domain);
+        $domain->setInviteToken($token);
+        $this->em->persist($domain);
+        $this->em->persist($token);
+        $this->em->flush();
         return $token;
     }
 

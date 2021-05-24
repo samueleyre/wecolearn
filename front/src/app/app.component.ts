@@ -22,7 +22,7 @@ import { ThreadsService } from '~/core/services/chat/threads.service';
 import { SeoService } from '~/core/services/seo.service';
 import { User } from '~/core/entities/user/entity';
 
-import { DomainService } from './core/services/domain/domain';
+import { CommunityService } from './core/services/community/community.service';
 import { environment } from '../environments/environment';
 
 const { PushNotifications } = Plugins;
@@ -37,7 +37,7 @@ const { PushNotifications } = Plugins;
 export class AppComponent {
   constructor(
     private _router: Router,
-    private _domainService: DomainService,
+    private _domainService: CommunityService,
     private _deviceService: DeviceDetectorService,
     private _iconService: IconService,
     private _seoService: SeoService,

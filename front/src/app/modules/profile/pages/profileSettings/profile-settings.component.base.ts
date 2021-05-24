@@ -6,9 +6,8 @@ import { debounceTime, filter, map, mapTo, takeUntil, tap } from 'rxjs/operators
 import { merge } from 'rxjs';
 
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { DomainService } from '~/core/services/domain/domain';
+import { CommunityService } from '~/core/services/community/community.service';
 import { ProfileService } from '~/core/services/user/profile.service';
-import { ToastService } from '~/core/services/toast.service';
 import { User } from '~/core/entities/user/entity';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagTypeEnum } from '~/core/enums/tag/tag-type.enum';
@@ -21,7 +20,7 @@ export class ProfileSettingsComponentBase extends DestroyObservable {
 
   constructor(
     @Inject(APP_BASE_HREF) r: string,
-    private domainService: DomainService,
+    private domainService: CommunityService,
     private fb: FormBuilder,
     private deviceService: DeviceDetectorService,
     private profileService: ProfileService,

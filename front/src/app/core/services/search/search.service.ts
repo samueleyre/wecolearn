@@ -9,7 +9,7 @@ import { User } from '~/core/entities/user/entity';
 import { SearchMeta } from '~/core/enums/search/searchMeta.enum';
 import { Tag } from '~/core/entities/tag/entity';
 import { TagDomain } from '~/core/entities/tag/TagDomain';
-import { Community } from '~/core/entities/domain/community';
+import { CommunityEntity } from '~/core/entities/community/community.entity';
 import { ProfileService } from '~/core/services/user/profile.service';
 
 import { SEARCH } from '../../../modules/search/config/main';
@@ -28,8 +28,8 @@ export class SearchService extends APIService<User> {
   static max = SEARCH.default.max;
   static first = 0;
   public globalMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public community$: BehaviorSubject<Community|null> = new BehaviorSubject<Community|null>(null);
-  private _communities$ = new BehaviorSubject<Community[]|[]>([]);
+  public community$: BehaviorSubject<CommunityEntity|null> = new BehaviorSubject<CommunityEntity|null>(null);
+  private _communities$ = new BehaviorSubject<CommunityEntity[]|[]>([]);
   public useProfileTagsMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   currentFoundMatchs$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   currentFoundAddress: any[] = [];
@@ -48,7 +48,7 @@ export class SearchService extends APIService<User> {
     this.setCommunity(this.defaultCommunity);
   }
 
-  get communities(): Community[] {
+  get communities(): CommunityEntity[] {
     return this._communities$.value;
     // todo: filter main domain & unshit main domain with hard image & name
   }
@@ -191,7 +191,7 @@ export class SearchService extends APIService<User> {
     this.globalMode$.next(isGlobal);
   }
 
-  setCommunity(community: Community) {
+  setCommunity(community: CommunityEntity) {
     this.community$.next(community);
   }
 

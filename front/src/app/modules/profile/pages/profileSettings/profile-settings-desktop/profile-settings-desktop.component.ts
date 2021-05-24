@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { ProfileSettingsComponentBase } from '~/modules/profile/pages/profileSettings/profile-settings.component.base';
-import { DomainService } from '~/core/services/domain/domain';
+import { CommunityService } from '~/core/services/community/community.service';
 import { ProfileService } from '~/core/services/user/profile.service';
 import { ToastService } from '~/core/services/toast.service';
 
@@ -16,7 +16,7 @@ import { ToastService } from '~/core/services/toast.service';
 export class ProfileSettingsDesktopComponent extends ProfileSettingsComponentBase implements OnInit {
   constructor(
     @Inject(APP_BASE_HREF) _r: string,
-    private _domainService: DomainService,
+    private _domainService: CommunityService,
     private _fb: FormBuilder,
     private _deviceService: DeviceDetectorService,
     private _profileService: ProfileService,

@@ -79,10 +79,10 @@ class User extends BaseUser
         $this->pushNotificationSubscriptions = new ArrayCollection();
         $this->profilUrl = array_key_exists('profilUrl', $parameters) ? $parameters['profilUrl'] : '';
         $this->domains = array_key_exists('domains', $parameters) ? $parameters['domains'] : new ArrayCollection();
-        $this->adminDomain = array_key_exists('adminDomain', $parameters) ? $parameters['adminDomain'] : new ArrayCollection();
+        $this->adminDomain = array_key_exists('adminDomain', $parameters) ? $parameters['adminDomain'] : null;
         $this->firstName = array_key_exists('firstName', $parameters) ? $parameters['firstName'] : '';
         $this->lastName = array_key_exists('lastName', $parameters) ? $parameters['lastName'] : '';
-        $this->biographie = array_key_exists('biographie', $parameters) ? $parameters['biographie'] : 'null';
+        $this->biographie = array_key_exists('biographie', $parameters) ? $parameters['biographie'] : null;
         $this->tags = array_key_exists('tags', $parameters) ? new ArrayCollection($parameters['tags']) : new ArrayCollection();
         $this->emailConfirmed = array_key_exists('emailConfirmed', $parameters) ? $parameters['emailConfirmed'] : false;
         $this->image = array_key_exists('image', $parameters) ? $parameters['image'] : null;

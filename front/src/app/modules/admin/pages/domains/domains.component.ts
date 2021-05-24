@@ -4,10 +4,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
-import { DomainFormComponent } from '~/modules/domains/modules/domain-ui/components/domain-form/domain-form.component';
+import { DomainFormComponent } from '~/modules/community/modules/domain-ui/components/domain-form/domain-form.component';
 import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
-import { Community } from '~/core/entities/domain/community';
+import { CommunityEntity } from '~/core/entities/community/community.entity';
 import {AdminCommunityService} from '~/core/services/admin/admin-community.service';
 
 @Component({
@@ -16,9 +16,9 @@ import {AdminCommunityService} from '~/core/services/admin/admin-community.servi
   styleUrls: ['./domains.component.scss'],
 })
 export class DomainsComponent extends DestroyObservable implements OnInit, AfterViewInit  {
-  domainsToShow: Community[];
-  domains$: BehaviorSubject<Community[]> = new BehaviorSubject(null);
-  domainsFiltered: Community[];
+  domainsToShow: CommunityEntity[];
+  domains$: BehaviorSubject<CommunityEntity[]> = new BehaviorSubject(null);
+  domainsFiltered: CommunityEntity[];
 
   searchFilters: FormGroup;
   editDomainFormVisible = false;
@@ -28,7 +28,7 @@ export class DomainsComponent extends DestroyObservable implements OnInit, After
   @ViewChild(DomainFormComponent, { static: false }) domainForm: DomainFormComponent;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  public editedDomain: Community;
+  public editedDomain: CommunityEntity;
   canEditDomain$: Observable<boolean>;
 
   constructor(
@@ -89,8 +89,8 @@ export class DomainsComponent extends DestroyObservable implements OnInit, After
     return this.domainsFiltered && this.domainsFiltered.length;
   }
 
-  showEditForm(domain: Community = null) {
-    const emptyDomain = new Community();
+  showEditForm(domain: CommunityEntity = null) {
+    const emptyDomain = new CommunityEntity();
     this.editedDomain =
       domain === null
         ? emptyDomain
