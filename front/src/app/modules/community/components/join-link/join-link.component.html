@@ -1,8 +1,13 @@
-<div class="JoinLink">
-  <div class="JoinLink--loading" *ngIf="loading">
-    <mat-spinner></mat-spinner>
+<app-dash-page-layout title="Rejoindre une communauté">
+  <div class="JoinLink">
+    <div class="JoinLink--loading" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="community" class="JoinLink-success">
+      <p>Vous avez été ajouté à la communauté <b>{{community.name}}</b>, vous pouvez maintenant rencontrer d'autres membres de <b>{{community.name}}</b> !</p>
+      <div>
+        <button mat-raised-button color="primary" title="rechercher dans une communauté" [queryParams]="{community_id:community.id}" [routerLink]="searchPageLink">Découvrir la communauté</button>
+      </div>
+    </div>
   </div>
-  <div class="JoinLink-message">
-    <p>Vous avez été ajouté à la communauté {{community.name}}, vous pourrez rencontrer d'autres membres de la communauté !</p>
-  </div>
-</div>
+</app-dash-page-layout>

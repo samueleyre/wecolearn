@@ -190,7 +190,7 @@ class DomainService
     /**
      * @throws \Exception
      */
-    public function addUserToCommunityWithInviteToken(User $user, string $tokenName): bool
+    public function addUserToCommunityWithInviteToken(User $user, string $tokenName): Domain
     {
         try {
             $token = $this->em->getRepository(Token::class)->findOneBy(['token'=>$tokenName]);
@@ -201,7 +201,7 @@ class DomainService
         }
 
         $this->addUserToCommunity($user, $community);
-        return true;
+        return $community;
     }
 
     /**
