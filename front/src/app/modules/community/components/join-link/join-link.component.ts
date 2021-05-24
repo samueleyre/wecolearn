@@ -39,4 +39,8 @@ export class JoinLinkComponent implements OnInit {
       });
     });
   }
+
+  get searchPageLink(): string {
+    return NAV.search;
+  }
 }
