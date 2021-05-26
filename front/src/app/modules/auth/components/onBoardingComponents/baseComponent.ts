@@ -15,7 +15,8 @@ import { EnvEnum } from '~/core/enums/env.enum';
 import { ToastService } from '~/core/services/toast.service';
 import { Tag } from '~/core/entities/tag/entity';
 import { OnBoardingService } from '~/modules/auth/services/on-boarding-mobile.service';
-import {NAV} from '~/config/navigation/nav';
+import { NAV } from '~/config/navigation/nav';
+import { CommunityService } from '~/core/services/community/community.service';
 
 
 @Component({
@@ -38,8 +39,8 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
     newsletter: true,
   });
 
-  error:string;
-  loading = false;
+  public error: string;
+  public loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -48,11 +49,12 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
     private route: ActivatedRoute,
     private toastr: ToastService,
     private onBoardingService: OnBoardingService,
+    private communityService: CommunityService,
   ) {
     super();
     this.route.queryParams.subscribe((params) => {
       if (
-        'tag_name' in params || 'step' in params
+        'tag_name' in params || 'step' in params || 'community_token' in params
       ) {
         // remove query params
         this.router.navigate(
@@ -72,7 +74,11 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
             }
             if ('step' in params) {
               // set step
-              this.onBoardingService.signInTab = Number(params['step']);
+              this.onBoardingService.signUpTab = Number(params['step']);
+            }
+            if ('community_token' in params) {
+              this.checkCommunityToken(params['community_token']);
+              this.onBoardingService.communityToken = params['community_token'];
             }
           });
       }
@@ -141,7 +147,7 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
 
   get signUp(): Observable<any> {
     const tags = this.userForm.value.learn_tags ? this.userForm.value.learn_tags : []; // bug of null tags parameter
-    return this.authenticationService.signUp({ tags, ...this.userForm.value });
+    return this.authenticationService.signUp({ tags, ...this.userForm.value }, this.onBoardingService.communityToken);
   }
 
   get learnType(): TagTypeEnum {
@@ -150,5 +156,17 @@ export class AuthOnboardingBaseComponent extends DestroyObservable {
 
   get nav() {
     return NAV;
+  }
+
+  private checkCommunityToken(communityToken: string) {
+    this.communityService.checkJoinToken(communityToken).subscribe(
+      (response: boolean) => {
+      //
+      },
+      (err) => {
+        this.router.navigate([NAV.landing]).then(() => {
+          this.toastr.error("Ce lien d'invitation n'est pas valide");
+        });
+      });
   }
 }

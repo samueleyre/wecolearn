@@ -11,7 +11,12 @@ export class CommunityService {
   constructor(private _http: HttpClient) {
   }
 
-  public joinLink(token: string): Observable<any> {
+  public activateJoinToken(token: string): Observable<any> {
     return this._http.get(`${this.endPoint}/invite/${token}`);
   }
+
+  public checkJoinToken(token: string): Observable<any> {
+    return this._http.get(`${this.endPoint}/invite-check/${token}`);
+  }
+
 }

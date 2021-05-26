@@ -11,6 +11,7 @@ import { ToastService } from '~/core/services/toast.service';
 import { onBoardingSections } from '~/modules/auth/components/onBoardingComponents/onBoarding.const';
 import { OnBoardingService } from '~/modules/auth/services/on-boarding-mobile.service';
 import {environment} from '../../../../../../environments/environment';
+import {CommunityService} from '~/core/services/community/community.service';
 
 
 @Component({
@@ -26,8 +27,9 @@ export class AuthOnboardingComponent extends AuthOnboardingBaseComponent{
     private _route: ActivatedRoute,
     private _toastr: ToastService,
     private _onBoardingService: OnBoardingService,
+    private _communityService: CommunityService,
   ) {
-    super(_fb, _authenticationService, _router, _route, _toastr, _onBoardingService);
+    super(_fb, _authenticationService, _router, _route, _toastr, _onBoardingService, _communityService);
   }
 
   setSelection($event:StepperSelectionEvent) {

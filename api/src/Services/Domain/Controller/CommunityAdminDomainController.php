@@ -32,13 +32,8 @@ class CommunityAdminDomainController extends AbstractController
     public function getCommunityAction(
         TokenStorageInterface $tokenStorage
     ) {
-
-        $user = $tokenStorage->getToken()->getUser();
-        $domain = $user->getAdminDomain();
-        dump($domain->getInviteToken());
-        return $user->getAdminDomain();
+        return $tokenStorage->getToken()->getUser()->getAdminDomain();
     }
-
 
     /**
      * @Put("community-admin/community")

@@ -26,8 +26,9 @@ export class AuthenticationService {
               private _threadsService: ThreadsService,
   ) {}
 
-  signUp(user: User): Observable<any> {
-    return this.http.post('/api/signup', user);
+  signUp(user: User, communityToken: string = null): Observable<any> {
+    const communityURI = communityToken ? `/${communityToken}` : '';
+    return this.http.post(`/api/signup${communityURI}`, user);
   }
 
   login(email: string, password: string): Observable<boolean> {
