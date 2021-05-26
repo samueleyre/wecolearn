@@ -26,7 +26,7 @@ export class JoinLinkComponent implements OnInit {
 
   ngOnInit() {
     this._route.paramMap.subscribe((params) => {
-      this._communityService.joinLink(params.get('token')).pipe(
+      this._communityService.activateJoinToken(params.get('token')).pipe(
         tap(() => this.loading = false),
         catchError((err) => {
           this._router.navigate([NAV.dashHome]).then(() => {
