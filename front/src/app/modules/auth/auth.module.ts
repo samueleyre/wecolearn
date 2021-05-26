@@ -17,15 +17,12 @@ import { LandingProcessComponent } from './components/landing/process/component'
 import { LandingSigninComponent } from './components/landing/signin/component';
 import { LandingSigninMobileComponent } from './components/landing/signinMobile/component';
 import { SigninMobileComponent } from './components/signinMobile/component';
-import { SignupMobileComponent } from './components/signupMobile/component';
 import { SendPasswordConfirmationEmailMobileComponent } from './components/sendConfirmationEmailMobile/component';
 import { AuthOnboardingPageComponent } from './pages/onBoarding/component';
 import { AuthOnboardingComponent } from './components/onBoardingComponents/onBoarding/component';
 import { AuthRouting } from './auth.routing';
 import { ConfirmEmailComponent } from './pages/confirmEmail/component';
 import { SigninComponent } from './components/signin/component';
-import { SignupComponent } from './components/signup/component';
-import { SignupPageComponent } from './pages/subscribe/component';
 import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/component';
 import { SendPasswordConfirmationEmailComponent } from './components/sendConfirmationEmail/component';
 import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirmationEmail/component';
@@ -41,14 +38,11 @@ import { LandingLayoutComponent } from './components/landing/landing-layout/land
 
   declarations: [
       // pages
-    SignupPageComponent,
     ResetPasswordFormPageComponent,
     SendPasswordConfirmationEmailPageComponent,
     SendPasswordConfirmationEmailMobileComponent,
     SigninComponent,
     SigninMobileComponent,
-    SignupComponent,
-    SignupMobileComponent,
     ResetPasswordFormComponent,
     SendPasswordConfirmationEmailComponent,
     ConfirmEmailComponent,

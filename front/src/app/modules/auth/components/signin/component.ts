@@ -11,9 +11,9 @@ import { NAV } from '~/config/navigation/nav';
 import { CookieNotificationService } from '~/core/services/cookie-notification.service';
 import { PATTERN } from '~/shared/config/pattern';
 import { ToastService } from '~/core/services/toast.service';
+import { EnvEnum } from '~/core/enums/env.enum';
 
 import { environment } from '../../../../../environments/environment';
-import {EnvEnum} from "~/core/enums/env.enum";
 
 
 @Component({
