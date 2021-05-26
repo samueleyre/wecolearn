@@ -22,20 +22,21 @@ export class OnBoardingService {
     password: [null, [Validators.required, Validators.minLength(6)]],
     newsletter: true,
   });
+  public communityToken: string = null;
 
   constructor(
     private _fb: FormBuilder,
   ) {}
 
-  set signInTab(val: number) {
+  set signUpTab(val: number) {
     this._formTabSelection$.next(val);
   }
 
-  get signInTab$(): Observable<number> {
+  get signUpTab$(): Observable<number> {
     return this._formTabSelection$.asObservable();
   }
 
-  get signInTabCurrent(): number {
+  get signUpTabCurrent(): number {
     return this._formTabSelection$.getValue();
   }
 

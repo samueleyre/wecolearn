@@ -12,6 +12,7 @@ import { AuthOnboardingBaseComponent } from '~/modules/auth/components/onBoardin
 import { FooterMobileService } from '~/core/services/layout/footer-mobile';
 import { ToastService } from '~/core/services/toast.service';
 import { OnBoardingService } from '~/modules/auth/services/on-boarding-mobile.service';
+import { CommunityService } from '~/core/services/community/community.service';
 
 @Component({
   selector: 'profile-onboarding-mobile',
@@ -31,36 +32,36 @@ export class AuthOnboardingMobileComponent extends AuthOnboardingBaseComponent i
     private _toastr: ToastService,
     private _footerMobileService: FooterMobileService,
     private _onBoardingService: OnBoardingService,
+    private _communityService: CommunityService,
   ) {
-    super(_fb, _authenticationService, _router, _route, _toastr, _onBoardingService);
-    this.formTabSelection$ = this._onBoardingService.signInTab$;
+    super(_fb, _authenticationService, _router, _route, _toastr, _onBoardingService, _communityService);
+    this.formTabSelection$ = this._onBoardingService.signUpTab$;
     this.showMobileOnBoardingFooter = this._footerMobileService.inputFocusState.asObservable().pipe(map(val => !val));
     this.userForm = this._onBoardingService.userForm;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   changedSelection(val: number): void {
-    this._onBoardingService.signInTab = val;
+    this._onBoardingService.signUpTab = val;
   }
 
   setSelection($event: StepperSelectionEvent): void {
     if ($event.selectedIndex !== this.selectedIndex) {
-      this._onBoardingService.signInTab = $event.selectedIndex;
+      this._onBoardingService.signUpTab = $event.selectedIndex;
     }
   }
 
   get selectedIndex(): number {
-    return this._onBoardingService.signInTabCurrent;
+    return this._onBoardingService.signUpTabCurrent;
   }
 
   nextPage(): void {
-    this._onBoardingService.signInTab = this.selectedIndex + 1;
+    this._onBoardingService.signUpTab = this.selectedIndex + 1;
   }
 
   previousPage(): void {
-    this._onBoardingService.signInTab = this.selectedIndex - 1;
+    this._onBoardingService.signUpTab = this.selectedIndex - 1;
   }
 
   get hasPrevious() {

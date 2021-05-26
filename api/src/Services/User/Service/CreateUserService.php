@@ -2,8 +2,7 @@
 
 namespace App\Services\User\Service;
 
-use App\Services\Core\Exception\ResourceAlreadyUsedException;
-use App\Services\Domain\Service\AddDomainService;
+use App\Services\Domain\Service\DomainService;
 use App\Services\Tag\Service\TagService;
 use App\Services\User\Entity\User;
 use App\Services\User\SyncEvent\UserWasCreated;
@@ -18,28 +17,32 @@ class CreateUserService
 {
     private UserManagerInterface $userManager;
     private EventDispatcherInterface $dispatcher;
-    private AddDomainService $addDomainService;
     private GenerateUrlService $generateUrlService;
     private TagService $tagService;
+    private DomainService $domainService;
 
     public function __construct(
         UserManagerInterface $userManager,
         EventDispatcherInterface $dispatcher,
-        AddDomainService $addDomainService,
         GenerateUrlService $generateUrlService,
-        TagService $tagService
+        TagService $tagService,
+        DomainService $domainService
     ) {
         $this->userManager = $userManager;
         $this->dispatcher = $dispatcher;
-        $this->addDomainService = $addDomainService;
         $this->generateUrlService = $generateUrlService;
         $this->tagService = $tagService;
+        $this->domainService = $domainService;
     }
 
     public function process(User $user, $roles = ['ROLE_USER']): User
     {
 
-        $user = $this->addDomainService->process($user);
+//        if no domain set default domain
+        if ($user->getDomains() === null || $user->getDomains()->count() === 0) {
+            $user->addDomain($this->domainService->defaultDomain());
+        }
+
         $user->setRoles($roles);
         if (!$user->getPassword()) {
             $user->setPlainPassword(random_bytes(10));
@@ -74,13 +77,6 @@ class CreateUserService
 //        todo: in constructor !
         $date = new \DateTime("now", new \DateTimeZone('Europe/Paris'));
         $user->setCreated($date);
-
-//        if (
-//            $user->hasRole('ROLE_ADMIN')
-//            && count($user->getDomains()) > 1
-//        ) {
-//            throw new HttpException(Response::HTTP_BAD_REQUEST, "Can't have 2 domaines for an admin");
-//        }
 
         if (
             $user->hasRole('ROLE_ADMIN')

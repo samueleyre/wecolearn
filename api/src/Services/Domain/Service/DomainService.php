@@ -220,4 +220,9 @@ class DomainService
 
         return $user;
     }
+
+    public function defaultDomain(): Domain
+    {
+        return $this->em->getRepository(Domain::class)->findOneBy(["isMain" => true]);
+    }
 }

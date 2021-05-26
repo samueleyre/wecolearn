@@ -63,6 +63,11 @@ security:
             stateless: true
             anonymous: true
 
+        checkCommunityInviteToken:
+            pattern:   ^/api/community/invite-check
+            stateless: true
+            anonymous: true
+
         api:
             pattern:   ^/api
             stateless: true
@@ -84,6 +89,7 @@ security:
         - { path: ^/api/resetPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/tag/find, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/tag/domains-popular-as-tags, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/community/invite-check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/admin, roles: ROLES_SUPER_ADMIN }
         - { path: ^/api/community-admin, roles: ROLES_ADMIN }
