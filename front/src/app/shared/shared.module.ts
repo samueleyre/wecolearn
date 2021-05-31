@@ -15,6 +15,7 @@ import { EmojiComponent } from './components/emoji/emoji.component';
 import { SavingInputComponent } from './components/saving-input/saving-input.component';
 
 import { DashPageLayoutComponent } from '../shared/layouts/dash-page-layout/dash-page-layout.component';
+import {MatTooltipModule} from '@angular/material';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { DashPageLayoutComponent } from '../shared/layouts/dash-page-layout/dash
     DashPageLayoutComponent,
   ],
   imports: [
+    MatTooltipModule,
     CommonModule,
     RouterModule,
     FormsModule,
@@ -37,6 +39,7 @@ import { DashPageLayoutComponent } from '../shared/layouts/dash-page-layout/dash
     MaterialModule,
   ],
   exports: [
+    MatTooltipModule,
     CommonModule,
     ProfileImageModule,
     CopyComponent,

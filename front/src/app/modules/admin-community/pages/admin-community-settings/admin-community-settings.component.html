@@ -20,10 +20,11 @@
           <div class="AdminCommunitySettings-link" >
             <label>Lien d'invitation à la communauté</label>
             <mat-form-field appearance="outline" *ngIf="hasLink">
-              <input id="communityLinkInput" [disabled]="true" matInput formControlName="link" >
+              <input id="communityLinkInput" [disabled]="true" matInput [value]="link">
+              <copy [data]="link"></copy>
             </mat-form-field>
-            <button *ngIf="hasLink" mat-raised-button color="primary" type="button" (click)="changeNewInviteLink()">Générer un nouveau lien d'invitation</button>
-            <button *ngIf="!hasLink" mat-raised-button color="primary" type="button" (click)="changeNewInviteLink()">Générer un lien d'invitation</button>
+            <button *ngIf="hasLink" class="bold" mat-raised-button color="primary" type="button" (click)="changeNewInviteLink()">Générer un nouveau lien d'invitation</button>
+            <button *ngIf="!hasLink" class="bold" mat-raised-button color="primary" type="button" (click)="changeNewInviteLink()">Générer un lien d'invitation</button>
           </div>
 
         </form>
