@@ -1,2 +1,3 @@
-<button class="btn btn-secondary" (click)="copy()"> <i class="fa fa-copy"></i> </button>
-<input style="display: none;" type="text" id="copy{{rand}}" value="{{data}}">
+<mat-icon mat-icon-button matSuffix (click)="copy()">content_copy</mat-icon>
+<span matTooltip="Copié !" #tooltip="matTooltip"></span>
+<input style="display: none;"  type="text" id="copy{{rand}}" value="{{data}}">
