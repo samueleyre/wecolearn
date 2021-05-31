@@ -5,12 +5,13 @@ import { filter, switchMap } from 'rxjs/operators';
 
 import { APIService } from '~/core/services/crud/api';
 import { CommunityEntity } from '~/core/entities/community/community.entity';
+import { ENDPOINTS } from '~/config/api/end-points.const';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommunityAdminService extends APIService<CommunityEntity>{
-  public endPoint = '/api/community-admin/community';
+  public endPoint = ENDPOINTS.communityAdmin.community;
   constructor(private _http: HttpClient) {
     super(_http);
   }
@@ -20,7 +21,7 @@ export class CommunityAdminService extends APIService<CommunityEntity>{
   }
 
   generateNewInviteToken(): Observable<CommunityEntity> {
-    return this._http.get('/api/community-admin/generateNewInviteUrl').pipe(
+    return this._http.get(ENDPOINTS.communityAdmin.generateInviteUrl).pipe(
       switchMap(() => this.get()),
     );
   }

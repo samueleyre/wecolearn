@@ -27,23 +27,23 @@ export function cypress_signup(newUser: User) {
   });
 }
 
-export function cypress_signup_mobile(newUser: { first_name: string, last_name: string, email: string; password: string }) {
+export function cypress_signup_mobile(newUser: User) {
   it('go to signup page', () => {
     cy.visit('/');
     cy.wait(2000); // prevent recurring bug
     cy.get('#signupButton').click();
   });
 
-  it('choose city', () => {
-    cy.get('mat-radio-button:first-child label').click();
+  it('add tag', () => {
+    cy.get('.addTagButton').click();
+    cy.get('.SearchBar input').type(newUser.learn_tags[0]).wait(1000);
+    cy.get('.tagAutocompleteItem').first().click();
+    // cy.get('.SearchBar #returnButton').click().wait(1000);
     cy.get('#next').click();
   });
 
-  it('add tag', () => {
-    cy.get('.addTagButton').click();
-    cy.get('.SearchBar input').type('polka').wait(1000);
-    cy.get('.tagAutocompleteItem').first().click();
-    // cy.get('.SearchBar #returnButton').click().wait(1000);
+  it('choose city', () => {
+    cy.get('mat-radio-button:first-child label').click();
     cy.get('#next').click();
   });
 

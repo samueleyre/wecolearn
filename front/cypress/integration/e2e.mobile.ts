@@ -1,18 +1,23 @@
+import { User } from '~/core/entities/user/entity';
+
 // <reference types="Cypress" />
 import { DEBUG_CONFIG } from '../config/debug.config';
 import { CI_CONFIG } from '../config/ci.config';
 import { cypress_login } from '../support/reusables/auth/cypress_login';
-import { USER_CONFIG } from '../config/user.config';
+import { NEW_COMMUNITY_USER_CONFIG, USER_CONFIG } from '../config/user.config';
 import { cypress_signup_mobile } from '../support/reusables/auth/cypress_signup';
 import { cypress_logout_mobile } from '../support/reusables/auth/cypress_logout';
 import { cypress_sendMessage_mobile } from '../support/reusables/chat/cypress_sendMessage';
-import { cypress_contactUser, cypress_contactUser_mobile } from '../support/reusables/search/cypress_contactUser';
+import { cypress_contactUser_mobile } from '../support/reusables/search/cypress_contactUser';
 import { cypress_navToSearchTab_mobile } from '../support/reusables/nav/nav.cypress';
 import { cypress_searchByTag_mobile, cypress_searchByTagDomain_mobile } from '../support/reusables/search/cypress_search';
+import {
+  cypress_community_admin_getLinkFromApi,
+} from '../support/reusables/community-admin/community_params.cypress';
 
 
 const isLocal = Cypress.env('ENV_NAME') && Cypress.env('ENV_NAME') === 'local';
-const config = isLocal ? DEBUG_CONFIG.e2e : CI_CONFIG.e2e;
+const config = isLocal ? DEBUG_CONFIG.e2eMobile : CI_CONFIG.e2eMobile;
 
 /*
 
@@ -74,6 +79,23 @@ context('E2E - mobile', () => {
     if (config.sendMessage) {
       describe('send message', () => {
         cypress_sendMessage_mobile();
+      });
+    }
+  }
+
+  if (config.community) {
+    if (config.community.getLink_mobile) {
+      describe('get & go to link from api', () => {
+        cypress_community_admin_getLinkFromApi();
+      });
+    }
+    const newCommunityUser = <User>{
+      ...NEW_COMMUNITY_USER_CONFIG,
+      email: `contact+communitymobile1-${new Date().toLocaleDateString()}@wecolearn.com`,
+    };
+    if (config.community.createAccountFromInviteLink) {
+      describe('create account from invite link', () => {
+        cypress_signup_mobile(newCommunityUser);
       });
     }
   }
