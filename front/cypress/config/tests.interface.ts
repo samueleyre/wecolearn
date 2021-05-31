@@ -5,4 +5,10 @@ export interface TestsInterface {
   profile: boolean;
   search: boolean;
   sendMessage: boolean;
+  community: {
+    adminSignin: boolean;
+    copyInviteLink: boolean;
+    createAccountFromInviteLink: boolean;
+  };
+
 }

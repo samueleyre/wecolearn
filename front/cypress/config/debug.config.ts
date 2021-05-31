@@ -8,11 +8,16 @@ import { TestsInterface } from './tests.interface';
  */
 export const DEBUG_CONFIG = {
   e2e: <TestsInterface>{
-    signup: true,
-    signin: true,
-    contactFirstMatch: true,
-    profile: true,
-    search: true,
-    sendMessage: true,
+    signup: false,
+    signin: false,
+    contactFirstMatch: false,
+    profile: false,
+    search: false,
+    sendMessage: false,
+    community : {
+      adminSignin: true,
+      copyInviteLink: true,
+      createAccountFromInviteLink: true,
+    },
   },
 };

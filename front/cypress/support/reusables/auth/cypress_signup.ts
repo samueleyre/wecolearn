@@ -1,13 +1,9 @@
+import {User} from '~/core/entities/user/entity';
 
-export function cypress_signup(newUser: { first_name: string, last_name: string, email: string; password: string, biographie: string }) {
-  it('go to signup page', () => {
-    cy.visit('/');
-    cy.wait(2000); // prevent recurring bug
-    cy.get('#signupButton').click();
-  });
+export function cypress_signup(newUser: User) {
 
   it('add tag', () => {
-    cy.get('.mat-chip-input').type('polka').wait(1000).type('{downArrow}').type('{enter}');
+    cy.get('.mat-chip-input').type(newUser.learn_tags[0]).wait(1000).type('{downArrow}').type('{enter}');
     cy.get('.mat-horizontal-stepper-content:nth-child(1) .Onboarding-nav-nextButton').click();
   });
 
