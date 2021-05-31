@@ -6,6 +6,8 @@ import { CommunityAdminService } from '~/core/services/communityAdmin/community-
 import { DialogService } from '~/core/services/dialog.service';
 import { DestroyObservable } from '~/core/components/destroy-observable';
 import { ToastService } from '~/core/services/toast.service';
+import {NAV} from '~/config/navigation/nav';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-community-settings',
@@ -47,6 +49,10 @@ export class AdminCommunitySettingsComponent extends DestroyObservable implement
 
   get communityNameControl(): FormControl {
     return <FormControl>this.communityForm.get('name');
+  }
+
+  get link(): string {
+    return `${environment.publique}${NAV.signup}?community_token=${this.communityForm.get('link').value}`;
   }
 
   changeName() {

@@ -39,7 +39,7 @@ class CreateUserService
     {
 
 //        if no domain set default domain
-        if ($user->getDomains() === null || $user->getDomains()->count() === 0) {
+        if ($user->getDomains() === null || count($user->getDomains()) === 0) {
             $user->addDomain($this->domainService->defaultDomain());
         }
 
