@@ -9,6 +9,7 @@ import { User } from '~/core/entities/user/entity';
 import { ToastService } from '~/core/services/toast.service';
 import { MessagesService } from '~/core/services/chat/messages.service';
 import { ThreadsService } from '~/core/services/chat/threads.service';
+import { ENDPOINTS } from '~/config/api/end-points.const';
 
 import { SessionService } from './session.service';
 import { Logged } from './logged';
@@ -32,7 +33,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string): Observable<boolean> {
-    return this.http.post('/api/login_check', { email, password }).pipe(
+    return this.http.post(ENDPOINTS.auth.signIn, { email, password }).pipe(
         map((response: Response) => this.loginResponse(response)));
   }
 

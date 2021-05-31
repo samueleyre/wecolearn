@@ -11,7 +11,7 @@ import { cypress_logout } from '../support/reusables/auth/cypress_logout';
 import { cypress_sendMessage } from '../support/reusables/chat/cypress_sendMessage';
 import { cypress_contactUser } from '../support/reusables/search/cypress_contactUser';
 import { cypress_profile } from '../support/reusables/profile/cypress_profile';
-import { cypress_community_admin_copyInviteLinkAndGoToIt } from '../support/reusables/community-admin/community-params.cypress';
+import { cypress_community_admin_copyInviteLinkAndGoToIt } from '../support/reusables/community-admin/community_params.cypress';
 
 
 const isLocal = Cypress.env('ENV_NAME') && Cypress.env('ENV_NAME') === 'local';
@@ -44,7 +44,7 @@ context('E2E', () => {
     win.indexedDB.deleteDatabase('ngStorage');
   });
   Cypress.Cookies.defaults({
-    whitelist: ['mercureAuthorization'],
+    whitelist: ['mercureAuthorization', 'Authorization'],
   });
 
 

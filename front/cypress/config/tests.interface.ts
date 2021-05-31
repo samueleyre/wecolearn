@@ -12,3 +12,16 @@ export interface TestsInterface {
   };
 
 }
+export interface TestsMobileInterface {
+  signup: boolean;
+  signin: boolean;
+  contactFirstMatch: boolean;
+  profile: boolean;
+  search: boolean;
+  sendMessage: boolean;
+  community: {
+    adminSignin: boolean;
+    getLink_mobile: boolean;
+    createAccountFromInviteLink: boolean;
+  };
+}
