@@ -22,7 +22,6 @@ class AdminDomainController extends AbstractController
     ) {
         $domains = $domainService->getAll();
         foreach ($domains as $domain) {
-            dump($domain->getCommunityAdmins());
             $domain->countUsers();
         }
         return $domains;
