@@ -12,7 +12,7 @@ jobs:
       - name: Install scalingo CLI
         run : curl -O https://cli-dl.scalingo.com/install && bash install
       - name: Load fixtures on staging
-        run : scalingo login --api-token ${{ secrets.scalingo_staging_token }}; scalingo --region osc-fr1 -a wecolearn-api-staging run "php bin/console doctrine:schema:drop --force --no-interaction\
+        run : scalingo login --api-token ${{ secrets.scalingo_staging_token }}; scalingo --region osc-fr1 -a wecolearn-api-staging run "php bin/console doctrine:schema:drop --force\
           && php bin/console doctrine:schema:update --force --no-interaction\
           && php bin/console do:fi:lo -v --no-interaction"
       - name: Install cypress
