@@ -4109,6 +4109,11 @@ copy-webpack-plugin@5.1.1:
     serialize-javascript "^2.1.2"
     webpack-log "^2.0.0"
 
+cordova-install-referrer-api@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/cordova-install-referrer-api/-/cordova-install-referrer-api-0.0.1.tgz#94f95e76ed145d25a88ed40d4539d24eb3dd3953"
+  integrity sha512-p9Ya7pw9qa1dqDUEaivJSc3pYfY2KW1i1FEB6ymzQCfsZCPBxQvjQUxnI9I+aLlvCKbrMZMTBezHmK/2SwdZcg==
+
 core-js-compat@^3.6.2:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.6.5.tgz#2a51d9a4e25dfd6e690251aa81f99e3c05481f1c"
