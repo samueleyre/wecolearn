@@ -27,6 +27,7 @@ import { environment } from '../environments/environment';
 
 const { PushNotifications } = Plugins;
 
+const { Storage } = Plugins;
 
 @Component({
   selector: 'app-wecolearn',
@@ -46,7 +47,7 @@ export class AppComponent {
     private _messagesService: MessagesService,
     private _messagerieService: MessagerieService,
     private _deeplinks: Deeplinks,
-    private _platform: Platform,
+    private _platform: Platform
   ) {
     // set subdomain
     _router.events
@@ -57,6 +58,7 @@ export class AppComponent {
 
     this.initMessagerieService();
     _iconService.init();
+    this.initPlaystoreReferrer();
   }
 
   private initMessagerieService() {
@@ -179,6 +181,12 @@ export class AppComponent {
       (error) => {
         console.log('error', error);
       });
+  }
+
+  initPlaystoreReferrer() {
+    Storage.get({ key: 'referrer' }).then((ret) => {
+      console.log('referrer: ', ret.value);
+    });
   }
 
   get isMobile(): boolean {
