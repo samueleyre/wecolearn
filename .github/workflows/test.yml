@@ -14,7 +14,7 @@ jobs:
       - name: Load fixtures on staging
         run : scalingo login --api-token ${{ secrets.scalingo_staging_token }}; scalingo --region osc-fr1 -a wecolearn-api-staging run "php bin/console doctrine:schema:drop --force --no-interaction && php bin/console doctrine:schema:update --force --no-interaction && php bin/console do:fi:lo -v --no-interaction"
       - name: Install cypress
-        run: cd front; yarn add cypress@^4.4.1; yarn add @cypress/webpack-preprocessor@^4.1.0;
+        run: cd front; yarn add cypress@^7.5.0; yarn add @cypress/webpack-preprocessor@^5.9.0;
       - name: Run desktop tests on staging front
         run: cd front; CYPRESS_BASE_URL=https://staging.wecolearn.com $(npm bin)/cypress run --env ENV_NAME=staging --spec cypress/integration/e2e.ts --config video=false,chromeWebSecurity=false
       - name: Run mobile tests on staging front
