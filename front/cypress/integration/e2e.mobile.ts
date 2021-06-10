@@ -30,7 +30,7 @@ context('E2E - mobile', () => {
     win.indexedDB.deleteDatabase('ngStorage');
   });
   Cypress.Cookies.defaults({
-    whitelist: ['mercureAuthorization'],
+    preserve: ['mercureAuthorization'],
   });
 
   before(() => {
