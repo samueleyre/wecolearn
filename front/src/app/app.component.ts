@@ -21,10 +21,10 @@ import { NAV } from '~/config/navigation/nav';
 import { ThreadsService } from '~/core/services/chat/threads.service';
 import { SeoService } from '~/core/services/seo.service';
 import { User } from '~/core/entities/user/entity';
+import { ToastService } from '~/core/services/toast.service';
 
 import { CommunityService } from './core/services/community/community.service';
 import { environment } from '../environments/environment';
-import {ToastService} from '~/core/services/toast.service';
 
 const { PushNotifications } = Plugins;
 
@@ -187,8 +187,8 @@ export class AppComponent {
 
   initPlaystoreReferrer() {
     Storage.get({ key: 'referrer' }).then((ret) => {
-      console.log('referrer: ', ret.value);
-      this._toastr.info(ret.value, 'Referrer');
+      console.log('referrer: ', ret);
+      this._toastr.info(JSON.stringify(ret), 'Referrer');
     });
   }
 
