@@ -46,6 +46,7 @@
     "@sentry/angular": "^5.27.6",
     "@sentry/tracing": "^5.27.6",
     "bootstrap": "^4.2.1",
+    "capacitor-install-referrer": "^0.0.3",
     "core-js": "3.0.1",
     "hammerjs": "^2.0.8",
     "ionic-plugin-deeplinks": "1.0.19",

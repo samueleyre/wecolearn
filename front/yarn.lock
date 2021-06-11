@@ -1140,6 +1140,13 @@
   dependencies:
     tslib "^1.9.0"
 
+"@capacitor/core@latest":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-3.0.1.tgz#9e4498034b9e23ac7f3fcfd395fe79185c5d7779"
+  integrity sha512-17iFkpICdOdTqfbKh3oXFYbwXn9dSxLe85PWeptXSW5jkiHN/YhI+iedRpcukv1QXkR1P629B+7kDqBcrzKL9w==
+  dependencies:
+    tslib "^2.1.0"
+
 "@cypress/listr-verbose-renderer@^0.4.1":
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/@cypress/listr-verbose-renderer/-/listr-verbose-renderer-0.4.1.tgz#a77492f4b11dcc7c446a34b3e28721afd33c642a"
@@ -3478,6 +3485,13 @@ canonical-path@1.0.0:
   resolved "https://registry.yarnpkg.com/canonical-path/-/canonical-path-1.0.0.tgz#fcb470c23958def85081856be7a86e904f180d1d"
   integrity sha512-feylzsbDxi1gPZ1IjystzIQZagYYLvfKrSuygUCgf7z6x790VEzze5QEkdSV1U58RA7Hi0+v6fv4K54atOzATg==
 
+capacitor-install-referrer@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/capacitor-install-referrer/-/capacitor-install-referrer-0.0.3.tgz#263844476600a5a4a0384228ce0040e2e7c62efd"
+  integrity sha512-S084FNbxOtsUO1fzJjt/BMja6SbSdjXptRyQ6B/TT2VHTO935fu5z7KDttmsdv6sHYLNwcK2QbOgDdHLHq81dA==
+  dependencies:
+    "@capacitor/core" latest
+
 capture-stack-trace@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/capture-stack-trace/-/capture-stack-trace-1.0.1.tgz#a6c0bbe1f38f3aa0b92238ecb6ff42c344d4135d"
@@ -4108,11 +4122,6 @@ copy-webpack-plugin@5.1.1:
     schema-utils "^1.0.0"
     serialize-javascript "^2.1.2"
     webpack-log "^2.0.0"
-
-cordova-install-referrer-api@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/cordova-install-referrer-api/-/cordova-install-referrer-api-0.0.1.tgz#94f95e76ed145d25a88ed40d4539d24eb3dd3953"
-  integrity sha512-p9Ya7pw9qa1dqDUEaivJSc3pYfY2KW1i1FEB6ymzQCfsZCPBxQvjQUxnI9I+aLlvCKbrMZMTBezHmK/2SwdZcg==
 
 core-js-compat@^3.6.2:
   version "3.6.5"
@@ -11558,6 +11567,11 @@ tslib@^1.10.0, tslib@^1.9.3:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
+
+tslib@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
+  integrity sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
 
 tslint-config-airbnb@^5.11.1:
   version "5.11.2"
