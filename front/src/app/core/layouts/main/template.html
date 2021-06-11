@@ -17,7 +17,7 @@
 </div>
 <main-footer *ngIf="showMainFooter | async"></main-footer>
 
-<ion-header *ngIf="isAndroid">
+<ion-header *ngIf="isAndroid && isNotLandingPage">
   <app-header-mobile></app-header-mobile>
 </ion-header>
 <router-outlet *ngIf="isAndroid" (activate)="onActivate($event)"></router-outlet>

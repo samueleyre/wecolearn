@@ -5,8 +5,8 @@ import { SearchMobileComponent } from '~/modules/search/pages/search/search-mobi
 import { SearchDesktopComponent } from '~/modules/search/pages/search/search-desktop/search-desktop.component';
 
 const routes: Routes = [
-  { path: '', data: { surface: ['desktop'], redirectTo: 'mobile' }, component: SearchDesktopComponent, pathMatch: 'full' },
-  { path: 'mobile', data: { surface: ['mobile'], redirectTo: '' }, component: SearchMobileComponent, pathMatch: 'full' },
+  { path: '', data: { surface: ['desktop'] }, component: SearchDesktopComponent, pathMatch: 'full' },
+  { path: 'mobile', data: { surface: ['mobile', 'android'] }, component: SearchMobileComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

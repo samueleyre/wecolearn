@@ -11,9 +11,9 @@ import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirma
 import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/component';
 
 const routes: Routes = [
-  { path: 'signin', data: { surface: ['desktop'], redirectTo: 'mobile' }, component: LandingDesktopComponent },
-  { path: 'signin/mobile', data: { surface: ['mobile'], redirectTo: 'android' }, component: LandingMobileComponent },
-  { path: 'signin/android', data: { surface: ['android'], redirectTo: '' }, component: LandingAndroidComponent },
+  { path: 'signin', data: { surface: ['desktop'] }, component: LandingDesktopComponent },
+  { path: 'signin/mobile', data: { surface: ['mobile'] }, component: LandingMobileComponent },
+  { path: 'signin/android', data: { surface: ['android'] }, component: LandingAndroidComponent },
   { path: 'subscribe', component: AuthOnboardingPageComponent },
   { path: 'password/email', component: SendPasswordConfirmationEmailPageComponent },
   { path: 'password/reset', component: ResetPasswordFormPageComponent },
