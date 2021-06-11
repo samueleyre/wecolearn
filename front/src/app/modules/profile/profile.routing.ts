@@ -10,14 +10,14 @@ import { ProfileMobileComponent } from '~/modules/profile/pages/profile/profile-
 
   const routes: Routes = [
 
-  { path: 'home', data: { surface: ['desktop'], redirectTo: 'mobile' }, component: ProfileSettingsDesktopComponent, pathMatch: 'full' },
-  { path: 'home/mobile', data: { surface: ['mobile'], redirectTo: '' }, component: ProfileSettingsMobileComponent, pathMatch: 'full' },
+  { path: 'home', data: { surface: ['desktop'] }, component: ProfileSettingsDesktopComponent, pathMatch: 'full' },
+  { path: 'home/mobile', data: { surface: ['mobile', 'android'] }, component: ProfileSettingsMobileComponent, pathMatch: 'full' },
 
-  { path: 'settings', data: { surface: ['desktop'], redirectTo: 'mobile' }, component: SettingsDesktopComponent, pathMatch: 'full' },
-  { path: 'settings/mobile', data: { surface: ['mobile'], redirectTo: '' }, component: SettingsMobileComponent, pathMatch: 'full' },
+  { path: 'settings', data: { surface: ['desktop'] }, component: SettingsDesktopComponent, pathMatch: 'full' },
+  { path: 'settings/mobile', data: { surface: ['mobile', 'android'] }, component: SettingsMobileComponent, pathMatch: 'full' },
 
-  { path: 'public/:profileUrl', data: { surface: ['desktop'], redirectTo: 'mobile' }, component: ProfileDesktopComponent },
-  { path: 'public/:profileUrl/mobile', data: { surface: ['mobile'], redirectTo: '' }, component: ProfileMobileComponent },
+  { path: 'public/:profileUrl', data: { surface: ['desktop'] }, component: ProfileDesktopComponent },
+  { path: 'public/:profileUrl/mobile', data: { surface: ['mobile, android'] }, component: ProfileMobileComponent },
 
   { path: '', redirectTo: 'home' },
 

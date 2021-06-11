@@ -98,6 +98,3 @@ const wcRoutes: Routes = [
 })
 export class WcRoutingModule {
 }
-
-
-// { path: 'communities', component: CommunitiesComponent },

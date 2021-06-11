@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
+import { environment } from '../../../../../../environments/environment';
+
 @Component({
   selector: 'landing-signin-mobile',
   templateUrl: 'template.html',
@@ -12,6 +14,8 @@ export class LandingSigninMobileComponent {
   }
 
   public get isAndroid() {
-    return this.device.getDeviceInfo().device.toLowerCase() === 'android';
+    // is on Android device but not on installed app
+    return this.device.getDeviceInfo().device.toLowerCase() === 'android'
+      && !environment.android;
   }
 }
