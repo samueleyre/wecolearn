@@ -24,6 +24,7 @@ import { User } from '~/core/entities/user/entity';
 
 import { CommunityService } from './core/services/community/community.service';
 import { environment } from '../environments/environment';
+import {ToastService} from '~/core/services/toast.service';
 
 const { PushNotifications } = Plugins;
 
@@ -47,7 +48,8 @@ export class AppComponent {
     private _messagesService: MessagesService,
     private _messagerieService: MessagerieService,
     private _deeplinks: Deeplinks,
-    private _platform: Platform
+    private _platform: Platform,
+    private _toastr: ToastService,
   ) {
     // set subdomain
     _router.events
@@ -186,6 +188,7 @@ export class AppComponent {
   initPlaystoreReferrer() {
     Storage.get({ key: 'referrer' }).then((ret) => {
       console.log('referrer: ', ret.value);
+      this._toastr.info(ret.value, 'Referrer');
     });
   }
 
