@@ -172,6 +172,14 @@ class DomainService
     public function create(Domain $domain)
     {
         $domain->isMain = false;
+        $communityAdmins = $domain->getCommunityAdmins();
+        $domain->setCommunityAdmins(new ArrayCollection());
+        foreach($communityAdmins as $communityAdmin) {
+            $currentCommunityAdmin = $this->em->getRepository(User::class)->find($communityAdmin->getId());
+            $currentCommunityAdmin->setAdminDomain($domain);
+            $domain->addCommunityAdmin($currentCommunityAdmin);
+            $this->em->persist($currentCommunityAdmin);
+        }
         $this->em->persist($domain);
         $this->em->flush();
 
