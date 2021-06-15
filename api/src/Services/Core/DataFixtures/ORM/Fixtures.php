@@ -187,6 +187,9 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
         $admin->setCity('Lyon');
         $admin->setEnabled(true);
         $admin->addDomain($this->domains[0]);
+        $mainDomain = $this->domains[0];
+        $mainDomain->addCommunityAdmin($admin);
+        $this->manager->persist($mainDomain);
         $admin->setShowProfil(false);
         $admin->setNewMessageNotification(false);
         $admin->setNewMatchNotification(false);
