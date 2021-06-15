@@ -186,10 +186,12 @@ export class AppComponent {
   }
 
   initPlaystoreReferrer() {
-    Storage.get({ key: 'referrer' }).then((ret) => {
-      console.log('referrer: ', ret);
-      this._toastr.info(JSON.stringify(ret), 'Referrer');
-    });
+    // not working yet
+    // Storage.get({ key: 'referrer' }).then((ret) => {
+
+      // console.log('referrer: ', ret);
+      // this._toastr.info(JSON.stringify(ret), 'Referrer');
+    // });
   }
 
   get isMobile(): boolean {
