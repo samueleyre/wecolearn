@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route, UrlSegment, CanActivate } from '@angular/router';
 import { BehaviorSubject, concat, Observable, of, of as observableOf, throwError, timer } from 'rxjs';
-import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
+import {catchError, filter, map, switchMap, take, tap} from 'rxjs/operators';
 
 import { Logged } from '~/core/services/auth/logged';
 import { ToastService } from '~/core/services/toast.service';
@@ -36,7 +36,6 @@ export class AuthGuard implements CanLoad, CanActivate {
   }
 
   private isAllowed(isAdminRoute: boolean, isSuperAdminRoute: boolean): Observable<boolean> | boolean {
-
     const pingObs = this._tempResponse ? this._tempResponse$ : this._pingService.ping().pipe(
       tap(response => this.timer(response)),
     );
@@ -60,13 +59,13 @@ export class AuthGuard implements CanLoad, CanActivate {
               return observableOf({ status });
             }),
             map((response: Response) => {
-              if (401 === response.status) {
+              if (response && 401 === response.status) {
                 this._router.navigate([NAV.landing]).then(() => {
                   Logged.set(false);
                 });
                 return false;
               }
-              if (403 === response.status) {
+              if (response && 403 === response.status) {
                 this._router.navigate([NAV.search]);
                 return false;
               }
