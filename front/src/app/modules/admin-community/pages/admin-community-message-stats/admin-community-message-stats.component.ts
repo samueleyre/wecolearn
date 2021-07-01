@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { CommunityAdminMessageStatsService } from '~/core/services/communityAdmin/community-admin-message-stats.service';
 import { ProfileService } from '~/core/services/user/profile.service';
-import {StatsInterface} from '~/core/interfaces/stats/stats.interface';
+import { StatsInterface } from '~/core/interfaces/stats/stats.interface';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class AdminCommunityMessageStatsComponent implements OnInit {
 
   ngOnInit() {
     const user = this._profileService.profile;
-    this._messageStatsService.get(user.domains[0].id).subscribe();
+    this._messageStatsService.get(user.admin_domain.id).subscribe();
   }
 
   get stats$(): Observable<StatsInterface> {

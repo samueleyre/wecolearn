@@ -127,5 +127,6 @@ App\Services\User\Entity\User:
       groups: [ profile ]
     deleted:
       groups: [ admin-users ]
-
+    adminDomain:
+      groups: [ profile ]
 
