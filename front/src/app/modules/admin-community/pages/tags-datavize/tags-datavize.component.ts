@@ -88,6 +88,6 @@ export class TagsDatavizeComponent extends DestroyObservable implements OnInit {
 
   private loadTags() {
     const user = this._profileService.profile;
-    this._communityAdminTag.get(user.domains[0].id).subscribe();
+    this._communityAdminTag.get(user.admin_domain.id).subscribe();
   }
 }

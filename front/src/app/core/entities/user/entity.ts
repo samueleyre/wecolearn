@@ -42,6 +42,7 @@ export class User {
   public email_confirmed?: boolean;
   public created?: any;
   public deleted?: string;
+  public admin_domain?: CommunityEntity;
 
 
   constructor(obj?: any) {
@@ -143,6 +144,9 @@ export class User {
       if ('domains' in obj) {
         this.domains = obj.domains;
       }
+      if ('admin_domain' in obj) {
+        this.admin_domain = obj.admin_domain;
+      }
       if ('deleted' in obj) {
         this.deleted = obj.deleted;
       }
@@ -150,7 +154,7 @@ export class User {
   }
 
   get isCommunityAdmin() {
-    return this.roles.includes(UserRoleEnum.ADMIN);
+    return this.roles.includes(UserRoleEnum.ADMIN) && this.admin_domain !== null;
   }
 
   get isSuperAdmin() {
