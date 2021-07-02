@@ -16,13 +16,13 @@ import { LandingPartnersComponent } from './components/landing/partners/componen
 import { LandingProcessComponent } from './components/landing/process/component';
 import { LandingSigninComponent } from './components/landing/signin/component';
 import { LandingSigninMobileComponent } from './components/landing/signinMobile/component';
-import { SigninMobileComponent } from './components/signinMobile/component';
+import { SigninMobileComponent } from './components/signin/signinMobile/component';
 import { SendPasswordConfirmationEmailMobileComponent } from './components/sendConfirmationEmailMobile/component';
 import { AuthOnboardingPageComponent } from './pages/onBoarding/component';
 import { AuthOnboardingComponent } from './components/onBoardingComponents/onBoarding/component';
 import { AuthRouting } from './auth.routing';
 import { ConfirmEmailComponent } from './pages/confirmEmail/component';
-import { SigninComponent } from './components/signin/component';
+import { SigninBaseComponent } from './components/signin/component';
 import { ResetPasswordFormPageComponent } from './pages/resetPasswordForm/component';
 import { SendPasswordConfirmationEmailComponent } from './components/sendConfirmationEmail/component';
 import { SendPasswordConfirmationEmailPageComponent } from './pages/sendConfirmationEmail/component';
@@ -32,6 +32,7 @@ import { LandingDesktopComponent } from './pages/landing/landing-desktop/landing
 import { LandingAndroidComponent } from './pages/landing/landing-android/landing-android.component';
 import { LandingPresentationComponent } from './components/landing/landing-presentation/landing-presentation.component';
 import { LandingLayoutComponent } from './components/landing/landing-layout/landing-layout.component';
+import { SigninDesktopComponent } from './components/signin/signin-desktop/signin-desktop.component';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { LandingLayoutComponent } from './components/landing/landing-layout/land
     ResetPasswordFormPageComponent,
     SendPasswordConfirmationEmailPageComponent,
     SendPasswordConfirmationEmailMobileComponent,
-    SigninComponent,
+    SigninBaseComponent,
     SigninMobileComponent,
     ResetPasswordFormComponent,
     SendPasswordConfirmationEmailComponent,
@@ -60,6 +61,7 @@ import { LandingLayoutComponent } from './components/landing/landing-layout/land
     LandingAndroidComponent,
     LandingPresentationComponent,
     LandingLayoutComponent,
+    SigninDesktopComponent,
   ],
   exports: [
   ],
