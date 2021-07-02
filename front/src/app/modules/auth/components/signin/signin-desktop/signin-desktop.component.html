@@ -1,0 +1,14 @@
+<form [formGroup]="loginFormGroup" (ngSubmit)="loginFormGroup.valid && submit()">
+  <auth-form-email [parentForm]="loginFormGroup"></auth-form-email>
+  <auth-form-password [showPasswordButton]="true" [parentForm]="loginFormGroup"></auth-form-password>
+  <p><a href="" routerLink="/auth/password/email"> Mot de passe oublié?</a></p>
+  <div class="form-buttons d-flex justify-content-between">
+    <button id="signupButton"  class="ml-auto mr-3" type="button" mat-raised-button color="primary" [routerLink]="subscribeLink">
+      S'inscrire
+    </button>
+    <button id="signinButton"  type="submit" mat-raised-button color="accent" [disabled]="!loginFormGroup.valid || loading">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Connexion
+    </button>
+  </div>
+</form>

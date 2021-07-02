@@ -6,10 +6,13 @@ import { FormGroup } from '@angular/forms';
   templateUrl: 'template.html',
   styleUrls: ['./style.scss'],
 })
-export class AuthFormPasswordComponent implements OnInit {
+export class AuthFormPasswordComponent {
   @Input() parentForm: FormGroup;
+  @Input() showPasswordButton = false;
+  @Input() showPWDStrength = false;
+  public passwordType: 'text' | 'password' = 'password';
 
-  ngOnInit(): void {
-    //
+  public onPasswordTypeToggle() {
+    this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
   }
 }

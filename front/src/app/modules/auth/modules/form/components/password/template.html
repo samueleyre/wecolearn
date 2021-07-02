@@ -1,8 +1,9 @@
 <mat-form-field appearance="fill" [formGroup]="parentForm">
   <mat-label>Mot de passe</mat-label>
-  <input appHideMenuMobileOnFocus id="passwordInput" matInput placeholder="*******" formControlName="password"
-         type="password">
-  <mat-icon matSuffix>vpn_key</mat-icon>
+  <input [type]="passwordType" name="password" appHideMenuMobileOnFocus id="passwordInput" matInput placeholder="*******" formControlName="password" >
+  <mat-icon class="pointer" (click)="onPasswordTypeToggle()" matSuffix *ngIf="showPasswordButton && passwordType === 'password'">visibility</mat-icon>
+  <mat-icon class="pointer" (click)="onPasswordTypeToggle()" matSuffix *ngIf="showPasswordButton && passwordType !== 'password'">visibility_off</mat-icon>
+  <mat-icon *ngIf="!showPasswordButton" matSuffix>vpn_key</mat-icon>
   <mat-error *ngIf="parentForm.controls.password.hasError('required')">
     Le mot de passe est <strong>obligatoire</strong>
   </mat-error>
@@ -10,5 +11,5 @@
     Le mot de passe doit faire au moins 6 caractères.
   </mat-error>
 </mat-form-field>
-<password-strength-bar [passwordToCheck]="parentForm.value.password"
+<password-strength-bar *ngIf="showPWDStrength" [passwordToCheck]="parentForm.value.password"
                        [barLabel]="'Difficulté du mot de passe'"></password-strength-bar>
