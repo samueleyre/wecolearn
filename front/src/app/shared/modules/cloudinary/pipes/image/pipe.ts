@@ -8,7 +8,7 @@ import { image as defaultImage } from '~/config/image';
   pure: false,
 })
 export class CloudinaryImagePipe implements PipeTransform {
-  transform(image: Image): any {
+  transform(image: Image, extension = 'jpg'): any {
     if (!image) {
       return defaultImage.default_200px;
     }
@@ -16,6 +16,6 @@ export class CloudinaryImagePipe implements PipeTransform {
     if (image.version) {
       version = `v${image.version}/`;
     }
-    return `https://res.cloudinary.com/wecolearn/image/upload/c_scale,w_324/${version}images/${image.public_id}.jpg`;
+    return `https://res.cloudinary.com/wecolearn/image/upload/c_scale,w_324/${version}images/${image.public_id}.${extension}`;
   }
 }
