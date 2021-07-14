@@ -5,9 +5,9 @@ App\Services\Shared\Entity\Image:
         id:
           groups: [ input, output ]
         version:
-          groups: [ output, search, profile, public-profile, message]
+          groups: [ output, search, profile, public-profile, message, admin-community]
         publicId:
-          groups: [ output, search, profile, public-profile, message ]
+          groups: [ output, search, profile, public-profile, message, admin-community ]
         created:
           groups: [ output]
         filename:
