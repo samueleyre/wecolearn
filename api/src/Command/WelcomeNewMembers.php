@@ -50,7 +50,7 @@ class WelcomeNewMembers extends Command
 
         $searchingAdmins = $this->em->getRepository(User::class)->findBy(['firstName'=>'Samuel']);
         foreach($searchingAdmins as $searchingAdmin) {
-            if ($searchingAdmin->hasRole('ROLE_ADMIN')) {
+            if ($searchingAdmin->hasRole('ROLE_SUPER_ADMIN')) {
                 $admin = $searchingAdmin;
             }
         }
