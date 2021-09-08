@@ -23,6 +23,7 @@ import { AuthenticationService } from '~/core/services/auth/auth.service';
 import { ToastService } from '~/core/services/toast.service';
 import { EnvEnum } from '~/core/enums/env.enum';
 import { NAV } from '~/config/navigation/nav';
+import { passwordMatchV2Validator } from '~/modules/auth/validators/password-match-v2.validator';
 
 
 @Component({
@@ -159,10 +160,9 @@ export class SettingsComponent extends DestroyObservable implements OnInit {
         ],
         password_verification: [
           '',
-          [Validators.required, Validators.minLength(PASSWORD.min), Validators.maxLength(PASSWORD.max)],
+          [Validators.required, Validators.minLength(PASSWORD.min), Validators.maxLength(PASSWORD.max), passwordMatchV2Validator],
         ],
       },
-      { validator: passwordMatchValidator },
     );
   }
 

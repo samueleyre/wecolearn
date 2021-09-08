@@ -31,10 +31,8 @@
 </form>
 <hr>
 <form [formGroup]="newPasswordForm" >
-  <fieldset>
-
-    <div class="form-group" *ngIf="!editing['newpassword']">
-      <label>Mot de passe</label>
+  <div class="" *ngIf="!editing['newpassword']">
+      <p>Mot de passe</p>
       <div>
         <span class="value-span">********</span>
         <button type="button" class="btn btn-sm btn-edit" (click)="makeEditable('newpassword')"><i
@@ -42,54 +40,9 @@
       </div>
     </div>
     <ng-container *ngIf="editing['newpassword']">
-      <div class="form-group">
-        <label for="password">Mot de passe actuel</label>
-        <input type="password" id="password" class="form-control showvalidity"
-               formControlName="password" required/>
-        <mat-error *ngIf="password.touched && password.hasError('required')" >Le mot de passe est invalide</mat-error>
-        <mat-error *ngIf="password.hasError('minlength')" >
-          Le mot de passe doit faire au minimum 6 caractères.
-        </mat-error>
-        <mat-error *ngIf="password.hasError('maxlength')" >
-          Le mot de passe ne peut pas faire plus de 128 caractères.
-        </mat-error>
-      </div>
-      <div class="form-group">
-        <label for="new_password">Nouveau mot de passe</label>
-        <input type="password" id="new_password" #passwordValue class="form-control showvalidity"
-               (input)="onPasswordInput()" formControlName="new_password" required/>
-        <mat-error *ngIf="newPassword.touched && newPassword.hasError('required')" >Le mot de passe est invalide</mat-error>
-        <mat-error *ngIf="newPassword.hasError('minlength')" >
-          Le mot de passe doit faire au minimum 6 caractères.
-        </mat-error>
-        <mat-error *ngIf="newPassword.hasError('maxlength')" >
-          Le mot de passe ne peut pas faire plus de 128 caractères.
-        </mat-error>
-        <password-strength-bar [passwordToCheck]="passwordValue.value"></password-strength-bar>
-      </div>
-      <div class="form-group">
-        <label for="passwordVerification">Confirmation du mot de passe</label>
-        <input type="password" id="passwordVerification" class="form-control showvalidity" name="passwordVerification"
-               (input)="onPasswordInput()" formControlName="password_verification" required/>
-        <mat-error *ngIf="passwordVerification.touched && passwordVerification.hasError('required')">Le mot de passe est invalide</mat-error>
-        <mat-error *ngIf="passwordVerification.hasError('minlength')" >
-          Le mot de passe doit faire au minimum 6 caractères.
-        </mat-error>
-        <mat-error *ngIf="passwordVerification.hasError('maxlength')" >
-          Le mot de passe ne peut pas faire plus de 128 caractères.
-        </mat-error>
-        <mat-error
-          *ngIf="
-            passwordVerification.touched &&
-            passwordVerification.hasError('passwordMismatch') &&
-            !passwordVerification.hasError('required') &&
-            !passwordVerification.hasError('minLength') &&
-            !passwordVerification.hasError('maxLength')
-          "
-        >
-          Les mots de passe ne correspondent pas.
-        </mat-error>
-      </div>
+      <auth-form-password [showPasswordButton]="true" [parentForm]="newPasswordForm" label="Ancien mot de passe" id="password" name="password"></auth-form-password>
+      <auth-form-password [showPasswordButton]="true" [parentForm]="newPasswordForm" label="Nouveau mot de passe" id="new_password" name="new_password"></auth-form-password>
+      <auth-form-password [compareError]="true" [showPasswordButton]="true" [parentForm]="newPasswordForm" label="Confirmation du nouveau mot de passe" id="password_verification" name="password_verification"></auth-form-password>
     </ng-container>
 
     <div *ngIf="editing['newpassword']" class="form-group">
@@ -101,9 +54,6 @@
         <button id="submitPassword" [disabled]="!newPasswordForm.valid" type="submit" (click)="submitNewPassword()" class="btn btn-primary">Changer mot de passe</button>
       </div>
     </div>
-
-
-  </fieldset>
 </form>
 
 <showProfilSettings [user]="user"></showProfilSettings>

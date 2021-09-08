@@ -27,6 +27,7 @@ import { SettingsMobileComponent } from './pages/settings/settings-mobile/settin
 import { SettingsDesktopComponent } from './pages/settings/settings-desktop/settings-desktop.component';
 import { ProfileDesktopComponent } from './pages/profile/profile-desktop/profile-desktop.component';
 import { ProfileMobileComponent } from './pages/profile/profile-mobile/profile-mobile.component';
+import {AuthFormModule} from '~/modules/auth/modules/form/form.module';
 
 
 @NgModule({
@@ -50,22 +51,23 @@ import { ProfileMobileComponent } from './pages/profile/profile-mobile/profile-m
   exports: [
     ProfileImageModule,
   ],
-  imports: [
-    CommonModule,
-    ProfileImageModule,
-    ProfileRouting,
-    FormsModule,
-    PipesModule,
-    CloudinaryModule,
-    OpenThreadModule,
-    ProfileFormModule,
-    FormsModule,
-    ReactiveFormsModule,
-    PasswordDifficultyModule,
-    MaterialModule,
-    IonicModule,
-    SharedModule,
-  ],
+            imports: [
+              CommonModule,
+              ProfileImageModule,
+              ProfileRouting,
+              FormsModule,
+              PipesModule,
+              CloudinaryModule,
+              OpenThreadModule,
+              ProfileFormModule,
+              FormsModule,
+              ReactiveFormsModule,
+              PasswordDifficultyModule,
+              MaterialModule,
+              IonicModule,
+              SharedModule,
+              AuthFormModule,
+            ],
 })
 export class ProfileModule {
 }

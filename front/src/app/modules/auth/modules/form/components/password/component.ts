@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -10,6 +10,10 @@ export class AuthFormPasswordComponent {
   @Input() parentForm: FormGroup;
   @Input() showPasswordButton = false;
   @Input() showPWDStrength = false;
+  @Input() label = 'Mot de passe';
+  @Input() name = 'password';
+  @Input() id = 'passwordInput';
+  @Input() compareError = false;
   public passwordType: 'text' | 'password' = 'password';
 
   public onPasswordTypeToggle() {
