@@ -25,6 +25,7 @@ import { ToastService } from '~/core/services/toast.service';
 
 import { CommunityService } from './core/services/community/community.service';
 import { environment } from '../environments/environment';
+import {MetaService} from '~/core/services/meta.service';
 
 const { PushNotifications } = Plugins;
 
@@ -43,6 +44,7 @@ export class AppComponent {
     private _deviceService: DeviceDetectorService,
     private _iconService: IconService,
     private _seoService: SeoService,
+    private _metaService: MetaService,
     private _zone: NgZone,
     private _threadService: ThreadsService,
     private _messagesService: MessagesService,
@@ -60,6 +62,7 @@ export class AppComponent {
 
     this.initMessagerieService();
     _iconService.init();
+    _metaService.updateThemeColor();
     this.initPlaystoreReferrer();
   }
 
