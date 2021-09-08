@@ -70,7 +70,7 @@ class WelcomeNewMembers extends Command
 
             $id = $newMember->getId();
 
-            if ($newMember->hasRole('ROLE_ADMIN')) {
+            if ($newMember->hasRole('ROLE_ADMIN') || $newMember->hasRole('ROLE_SUPER_ADMIN')) {
                 continue;
             }
 
@@ -79,7 +79,7 @@ class WelcomeNewMembers extends Command
             $messages = $newMember->getReceivedMessages();
             foreach ($messages as $message) {
                 // if sender is admin
-                if ($message->getSender()->hasRole('ROLE_ADMIN')) {
+                if ($message->getSender()->hasRole('ROLE_ADMIN') || $message->getSender()->hasRole('ROLE_SUPER_ADMIN')) {
                     $hasReceivedContactFromAdmin = true;
                 }
             }
