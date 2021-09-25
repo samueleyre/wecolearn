@@ -1140,6 +1140,11 @@
   dependencies:
     tslib "^1.9.0"
 
+"@capacitor/ios@^2.1.2":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-2.5.0.tgz#867b155c4a827631ab0884319e33f8dad15bc781"
+  integrity sha512-KVgSxKCUllbDJg+hJxZrZy81Xy1rv9T/d0sXcdP0a6uLOf+QceAqxmSnuRIw7dqehC0WLChWvOKrgzIevMarRA==
+
 "@cypress/listr-verbose-renderer@^0.4.1":
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/@cypress/listr-verbose-renderer/-/listr-verbose-renderer-0.4.1.tgz#a77492f4b11dcc7c446a34b3e28721afd33c642a"
