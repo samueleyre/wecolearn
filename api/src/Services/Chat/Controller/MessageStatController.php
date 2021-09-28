@@ -46,7 +46,7 @@ class MessageStatController extends AbstractController
             "global" => [
                 "conversations" => floatval($numberOfConversationsInCommunity),
                 "people" => floatval($numberOfPeopleInCommunity),
-                "averageConversation" => round($numberOfPeopleInCommunity / (floatval($numberOfConversationsInCommunity) > 0 ? $numberOfConversationsInCommunity : 1), 4)
+                "averageConversation" => round($numberOfConversationsInCommunity / (floatval($numberOfPeopleInCommunity) > 0 ? $numberOfPeopleInCommunity : 1), 4)
             ],
             "lastWeek" => [
                 "conversations" => floatval($numberOfConversationsInCommunityLastWeek),

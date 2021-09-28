@@ -4,7 +4,7 @@
     <div *ngIf="stats$ | async as stats" class="AdminCommunityMessageStats-main">
       <div>
         <h2>{{stats.global.conversations}}</h2>
-        <p>conversation<span *ngIf="stats.global.conversations > 1">s</span></p>
+        <p>échange<span *ngIf="stats.global.conversations > 1">s</span></p>
       </div>
       <div>
         <h2>{{stats.global.people}}</h2>
@@ -12,15 +12,14 @@
       </div>
       <div>
         <h2>{{stats.global.averageConversation | number: '1.0-0' }}</h2>
-        <p>conversation<span *ngIf="stats.global.averageConversation > 1">s</span> par personne</p>
+        <p>prise<span *ngIf="stats.global.averageConversation > 1">s</span> de contact<span *ngIf="stats.global.averageConversation > 1">s</span> par membre</p>
       </div>
     </div>
     <h3>Activité de la semaine passée</h3>
     <div *ngIf="stats$ | async as stats" class="AdminCommunityMessageStats-pastWeek">
       <div>
         <h2>{{stats.lastWeek.conversations}}</h2>
-        <p>nouvelle<span *ngIf="stats.lastWeek.conversations > 1">s</span> conversation<span
-          *ngIf="stats.lastWeek.conversations > 1">s</span></p>
+        <p>échange<span *ngIf="stats.lastWeek.conversations > 1">s</span></p>
       </div>
       <div>
         <h2>{{stats.lastWeek.people}}</h2>
