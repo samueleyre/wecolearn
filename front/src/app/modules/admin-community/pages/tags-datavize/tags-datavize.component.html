@@ -1,10 +1,20 @@
 <app-dash-page-layout title="Les apprentissages dans votre communauté">
   <div *ngIf="loaded" class="TagsDatavize">
     <div class="TagsDatavize-box-container" *ngFor="let tagDId of tagDomainIds">
-      <h6 class="TagsDatavize-box-title"><app-emoji [emojiName]="tagsGroupedByDomain[tagDId].tagDomain.emoji"></app-emoji>{{tagsGroupedByDomain[tagDId].tagDomain.name}}</h6>
+      <h6 class="TagsDatavize-box-title">
+        <span class="TagsDatavize-box-title-text">
+          <app-emoji [emojiName]="tagsGroupedByDomain[tagDId].tagDomain.emoji"></app-emoji>
+          {{tagsGroupedByDomain[tagDId].tagDomain.name}}
+        </span>
+        <span class="TagsDatavize-box-title-count">{{tagsGroupedByDomain[tagDId].iterations}} apprenant<span *ngIf="tagsGroupedByDomain[tagDId].iterations > 1">s</span></span>
+      </h6>
       <div class="TagsDatavize-box" [style.borderColor]="tagsGroupedByDomain[tagDId].tagDomain.hexcolor + 20">
         <div *ngFor="let tag of tagsGroupedByDomain[tagDId].tags" class="TagsDatavize-box-tag">
-          <span [style.borderColor]="tagsGroupedByDomain[tagDId].tagDomain.hexcolor" [style.fontSize]="getFontSize(tag.iteration)">{{tag.name}}</span>
+          <span class="TagsDatavize-box-tag-text" [style.borderColor]="tagsGroupedByDomain[tagDId].tagDomain.hexcolor" [style.fontSize]="getFontSize(tag.iteration)">
+            <span class="TagsDatavize-box-tag-count" [style.borderColor]="tagsGroupedByDomain[tagDId].tagDomain.hexcolor"
+                  [style.width]="getFontSize(tag.iteration, 20)" [style.height]="getFontSize(tag.iteration, 20)">{{tag.iteration}}</span>
+            {{tag.name}}
+          </span>
         </div>
       </div>
     </div>

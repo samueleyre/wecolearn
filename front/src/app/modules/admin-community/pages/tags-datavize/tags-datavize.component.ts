@@ -72,14 +72,14 @@ export class TagsDatavizeComponent extends DestroyObservable implements OnInit {
     return Object.values(this.tags$.value).sort((a, b) => b.iterations - a.iterations).map(el => el.tagDomain.id);
   }
 
-  getFontSize(iteration: number) {
+  getFontSize(iteration: number, calibration = 0) {
     const maxFontSize = 34;
     const minFontSize = 14;
     const maxIteration = this.maxIteration;
     const minIteration = 1;
 
     const size = (iteration - minIteration) * (maxFontSize - minFontSize) / (maxIteration - minIteration) + minFontSize;
-    return Math.floor(size) + 'px';
+    return Math.floor(size + calibration) + 'px';
   }
 
   get loaded(): boolean {
