@@ -96,8 +96,6 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
             $tag->setType(0);
             $tag->setIteration(random_int(0, 100));
             foreach( $tagData['tag_domaine_indexes'] as $tagDomainIndex ) {
-                dump($tagDomainIndex);
-                dump($this->tagDomains[$tagDomainIndex]);
                 $tag->addTagDomain($this->tagDomains[$tagDomainIndex]);
             }
             array_push($this->tags, $tag);
