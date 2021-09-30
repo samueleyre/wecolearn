@@ -90,18 +90,24 @@ class Fixtures extends Fixture implements FixtureInterface, ContainerAwareInterf
 
         // set Learn tags
         for ($i = 0; $i < count(TagOrmConstant::$RAND); ++$i) {
+            $tagData = TagOrmConstant::$RAND[$i];
             $tag = new Tag();
-            $tag->setName(TagOrmConstant::$RAND[$i]);
+            $tag->setName($tagData['name']);
             $tag->setType(0);
             $tag->setIteration(random_int(0, 100));
-            $tag->addTagDomain($this->tagDomains[random_int(0, count(TagDomainsOrmConstant::$LIST)-1)]);
+            foreach( $tagData['tag_domaine_indexes'] as $tagDomainIndex ) {
+                dump($tagDomainIndex);
+                dump($this->tagDomains[$tagDomainIndex]);
+                $tag->addTagDomain($this->tagDomains[$tagDomainIndex]);
+            }
             array_push($this->tags, $tag);
         }
 
         // set all types of Tags
         for ($i = 0; $i < count(TagOrmConstant::$RAND); ++$i) {
+            $tagData = TagOrmConstant::$RAND[$i];
             $tag = new Tag();
-            $tag->setName(TagOrmConstant::$RAND[$i]);
+            $tag->setName($tagData['name']);
             $tag->setType(random_int(1, 2));
             $tag->setIteration(random_int(0, 100));
             array_push($this->tags, $tag);
