@@ -306,6 +306,9 @@ button.close{
 
 ion-button.ios{
   --box-shadow:none;
+  button {
+    --box-shadow:none;
+  }
 }
 
 /*UPLOAD INPUT*/
