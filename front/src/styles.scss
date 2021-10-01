@@ -282,9 +282,8 @@ button.close{
 .btn.focus, .btn:focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(254, 94, 56, 0.13);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(254, 94, 56, 0.13);
 }
-
-
 
 .btn-edit {
   /*border: transparent;*/
@@ -305,7 +304,9 @@ button.close{
   background-color: #9eb2c5;
 }
 
-
+ion-button.ios{
+  --box-shadow:none;
+}
 
 /*UPLOAD INPUT*/
 
