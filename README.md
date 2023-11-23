@@ -1,3 +1,8 @@
+# Wecolearn
+
+Une application web et mobile de mise en relation d'apprenants basé sur Angular et Symfony. Le projet n'est plus en développement depuis septembre 2021. 
+
+
 ## Dépendances
 
 docker, docker-compose ( avec sudo ), Make
